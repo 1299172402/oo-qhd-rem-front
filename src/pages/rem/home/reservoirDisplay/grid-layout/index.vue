@@ -88,7 +88,7 @@
                     <el-input style="width: 300px"  v-model="mailtitle"></el-input>
                 </el-form-item>
                 <el-form-item label="邮件内容:">
-                    <el-input style="width: 400px" v-model="content" type="textarea"> </el-input>
+                    <el-input style="width: 400px" v-model="content" :rows="3" type="textarea"> </el-input>
                 </el-form-item>
                 <el-form-item style="margin-left:150px;">
                     <el-button class="cancelBtn" style="text-align: center" @click="dialog = false">取 消</el-button>
@@ -158,7 +158,7 @@ export default {
             dialog:false,
             mailBox:'sh_326yykf',
             mailtitle:'油藏看板',
-            content:'油藏看板',
+            content:`尊敬的用户：\n您好!\n附件为油藏看板请您查看。`,
             singleHeight: (document.body.clientHeight - this.heightFromBottom) / this.rowNum, // 单个行高
             screenWidth: document.body.clientWidth, // 屏幕宽度
             screenHeight: document.body.clientHeight, // 屏幕高度

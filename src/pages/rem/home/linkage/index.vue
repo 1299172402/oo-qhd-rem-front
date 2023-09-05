@@ -66,10 +66,10 @@ export default {
                     boxBottomText: [{
                         name: '智能配产器调控模型',
                         warningShowFlag: false,
-                        alarmTime:"",
+                        alarmTime: "",
                         url: `https://ipm.${this.baseUrl}/#/intelligentDispensing/intelligentSubMining?page=reservoirDisplay/linkage`
-                    },{name:'举升设备调控模型', warningShowFlag: false,} ,
-                        {name:'智能测试模型',warningShowFlag: false,}],
+                    }, {name: '举升设备调控模型', warningShowFlag: false,},
+                        {name: '智能测试模型', warningShowFlag: false,}],
                     //弹出框自定义样式
                     boxStyle: {
                         pWidth: 'width:11vw',
@@ -80,6 +80,7 @@ export default {
                     showFlag: false,
                     //预警信息接口返回的编号是否属于该项
                     typeIdList: [],
+                    alarmPageCode:[],
                     //是否展示预警信息（轮询预警信息接口）
                     warningShowFlag: false,
                 },
@@ -88,7 +89,7 @@ export default {
                     boxText: '智能分注井调控测试',
                     boxBottomText: [{
                         name: '智能分注井调控测试',
-                        warningShowFlag: false, alarmTime:"",
+                        warningShowFlag: false, alarmTime: "",
                         url: `https://ipm.${this.baseUrl}/#/intelligentDispensing?link=rem&page=reservoirDisplay/linkage`
                     }],
                     boxBottomContent: [[{name: '智能配水器调控模型', warningShowFlag: false, url: ''}, '智能测试模型']],
@@ -98,21 +99,22 @@ export default {
                     imgUrl: new URL('./topBox/22.png', import.meta.url).href,
                     showFlag: false,
                     typeIdList: [],
+                    alarmPageCode:[],
                     warningShowFlag: false,
                 },
-
                 {
                     style: 'position:absolute;left: 57%;top: 60%;width:20%;height:40%;',
                     boxText: '注采调控油藏方案',
                     boxBottomText: [{
                         name: '分层注水优化',
                         warningShowFlag: false,
-                        alarmPageCode: 'MIPFSW', alarmTime:"",
+                        alarmPageCode: 'MIPFSW',
+                        alarmTime: "",
                         url: `https://rem.${this.baseUrl}/#/injection/optimization?page=reservoirDisplay/linkage`
                     },
                         {
-                            name:'产液结构优化', warningShowFlag: false,
-                    }],
+                            name: '产液结构优化', warningShowFlag: false,
+                        }],
                     boxBottomContent: [['智能滚动配注模型'], ['流场调控模型']],
                     boxStyle: {
                         pWidth: 'width:11vw'
@@ -121,6 +123,7 @@ export default {
                     showFlag: false,
                     typeIdList: [],
                     warningShowFlag: false,
+                    alarmPageCode:[],
                     analysisUrl: `https://rem.${this.baseUrl}/#/injection/optimization?page=reservoirDisplay/linkage`
                 },
                 {
@@ -130,19 +133,19 @@ export default {
                         {
                             name: '注采连通分析',
                             warningShowFlag: false,
-                            alarmPageCode: 'LOWGPC', alarmTime:"",
+                            alarmPageCode: 'LOWGPC', alarmTime: "",
                             url: `https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance?link=linkage&page=reservoirDisplay/linkage`
                         },
                         {
                             name: '注采平衡分析',
                             warningShowFlag: false,
-                            alarmPageCode: 'BTOBAR', alarmTime:"",
+                            alarmPageCode: 'BTOBAR', alarmTime: "",
                             url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=1&page=reservoirDisplay/linkage`
                         },
                         {
                             name: '采出状况分析',
                             warningShowFlag: false,
-                            alarmPageCode: 'TTOBAR', alarmTime:"",
+                            alarmPageCode: 'TTOBAR', alarmTime: "",
                             url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?link=2&page=reservoirDisplay/linkage`
                         }
                     ],
@@ -154,6 +157,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
+                    alarmPageCode:[],
                     imgUrl: new URL('./topBox/13.png', import.meta.url).href,//暂无图片
                     showFlag: false,
                     typeIdList: [],
@@ -164,7 +168,7 @@ export default {
                     boxText: '剩余油分布',
                     boxBottomText: [{
                         name: '动态分析法/数模剩余油分析',
-                        warningShowFlag: false, alarmTime:"",
+                        warningShowFlag: false, alarmTime: "",
                         url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=reservoirDisplay/linkage`
                     }],
                     boxStyle: {
@@ -173,6 +177,7 @@ export default {
                     imgUrl: new URL('./topBox/11.png', import.meta.url).href,
                     showFlag: false,
                     typeIdList: [],
+                    alarmPageCode:[],
                     warningShowFlag: false,
                 },
                 {
@@ -181,7 +186,7 @@ export default {
                     boxBottomText: [{
                         name: '层间/平面矛盾分析',
                         warningShowFlag: false,
-                        alarmPageCode: 'TYOBAR', alarmTime:"",
+                        alarmPageCode: 'TYOBAR', alarmTime: "",
                         url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage`
                     }],
                     boxStyle: {
@@ -190,6 +195,7 @@ export default {
                     imgUrl: new URL('./topBox/25.png', import.meta.url).href,
                     showFlag: false,
                     typeIdList: [],
+                    alarmPageCode:[],
                     warningShowFlag: false,
                 },
                 {
@@ -199,21 +205,21 @@ export default {
                         {
                             name: '年度产量运行预警',
                             warningShowFlag: false,
-                            alarmPageCode: 'QOIWTT', alarmTime:"",
+                            alarmPageCode: 'QOIWTT', alarmTime: "",
                             url: `https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=linkage`
                         }
                     ],
                     boxBottomContent: [
                         [{
                             name: '年度产量趋势预测',
-                            warningShowFlag: false, alarmTime:"",
+                            warningShowFlag: false, alarmTime: "",
                             url: `https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?name=linkage`
                         }]
                     ],
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    alarmPageCode: 'OSTOPF',
+                    alarmPageCode: ['OSTOPF'],
                     imgUrl: new URL('./topBox/21.png', import.meta.url).href,
                     showFlag: false,
                     typeIdList: [],
@@ -227,7 +233,7 @@ export default {
                     boxBottomText: [
                         {
                             name: '动设备健康管理模型',
-                            warningShowFlag: false, alarmTime:"",
+                            warningShowFlag: false, alarmTime: "",
                             url: `https://efm.${this.baseUrl}/#/equipment/mechanical?page=reservoirDisplay/linkage`
                         }
                     ],
@@ -236,6 +242,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/12.png', import.meta.url).href,
                     showFlag: false,
+                    alarmPageCode: ['BJ-SBSS-001', 'BJ-SBSS-002', 'BJ-SBSS-003', 'BJ-SBSS-090'],
                     typeIdList: ['BJ-SBSS-001', 'BJ-SBSS-002', 'BJ-SBSS-003', 'BJ-SBSS-004', 'BJ-SBSS-005', 'BJ-SBSS-009', 'BJ-SBSS-010', 'BJ-SBSS-011', 'BJ-SBSS-012', 'BJ-SBSS-013'],
                     warningShowFlag: false,
                 },
@@ -245,10 +252,10 @@ export default {
                     boxBottomText: [{
                         name: '注采调控最优化方案',
                         warningShowFlag: false,
-                        alarmPageCode: 'OISAAE', alarmTime:"",
+                        alarmPageCode: 'OISAAE', alarmTime: "",
                         url: `https://ipm.${this.baseUrl}/#/waterflood/merge?page=reservoirDisplay/linkage`
                     }, {
-                        name: '配注微调策略', alarmTime:"",
+                        name: '配注微调策略', alarmTime: "",
                         url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=reservoirDisplay/linkage`
                     }],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
@@ -258,6 +265,7 @@ export default {
                     imgUrl: new URL('./topBox/26.png', import.meta.url).href,
                     showFlag: false,
                     typeIdList: [],
+                    alarmPageCode:[],
                     warningShowFlag: false,
                 },
                 {
@@ -266,23 +274,23 @@ export default {
                     boxBottomText: [
                         {
                             name: '混输海管设计输量',
-                            warningShowFlag: false, alarmTime:"",
+                            warningShowFlag: false, alarmTime: "",
                             url: `https://prm-pom.${this.baseUrl}/#/home/pipe?page=reservoirDisplay/linkage`
                         },
                         {
-                            name: '注水海管设计输量', alarmTime:"",
+                            name: '注水海管设计输量', alarmTime: "",
                             url: `https://prm-pom.${this.baseUrl}/#/home/pipe?page=reservoirDisplay/linkage`
                         }
                     ],
                     boxBottomContent: [
                         [{
                             name: '管输动态模型',
-                            warningShowFlag: false, alarmTime:"",
+                            warningShowFlag: false, alarmTime: "",
                             url: `https://prm-pom.${this.baseUrl}/#/home/pipe?page=reservoirDisplay/linkage`
                         }],
                         [{
                             name: '管输动态模型',
-                            warningShowFlag: false, alarmTime:"",
+                            warningShowFlag: false, alarmTime: "",
                             url: `https://prm-pom.${this.baseUrl}/#/home/pipe?page=reservoirDisplay/linkage`
                         }]
                     ],
@@ -291,6 +299,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/10.png', import.meta.url).href,
                     showFlag: false,
+                    alarmPageCode:[],
                     typeIdList: ['BJ-SC-002'],
                     warningShowFlag: false,
                 },
@@ -300,22 +309,22 @@ export default {
                     boxBottomText: [
                         {
                             name: '混输液处理能力',
-                            warningShowFlag: false, alarmTime:"",
+                            warningShowFlag: false, alarmTime: "",
                             url: `https://prm-pom.${this.baseUrl}/#/home/plat?page=reservoirDisplay/linkage`
                         },
                         {
                             name: '生产水处理能力',
-                            warningShowFlag: false, alarmTime:"",
+                            warningShowFlag: false, alarmTime: "",
                             url: `https://prm-pom.${this.baseUrl}/#/home/plat?page=reservoirDisplay/linkage`
                         }
                     ],
                     boxBottomContent: [
                         [{
-                            name: '地面平衡调配-流程监控模型', alarmTime:"",
+                            name: '地面平衡调配-流程监控模型', alarmTime: "",
                             url: `https://prm-pom.${this.baseUrl}/#/home/plat?page=reservoirDisplay/linkage`
                         }],
                         [{
-                            name: '地面平衡调配-流程监控模型', alarmTime:"",
+                            name: '地面平衡调配-流程监控模型', alarmTime: "",
                             url: `https://prm-pom.${this.baseUrl}/#/home/plat?page=reservoirDisplay/linkage`
                         }]
                     ],
@@ -324,6 +333,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/28.png', import.meta.url).href,
                     showFlag: false,
+                    alarmPageCode:[],
                     typeIdList: ['BJ-SC-003'],
                     warningShowFlag: false,
                 },
@@ -334,77 +344,79 @@ export default {
         },
         async matchAndOutput(array1, array2) {
             const set = new Set(array1.map(item => item.alarmPageCode));
+            const result = array2.filter(item => item.alarmPageCode.some(code => set.has(code)));
+            const filteredChild = this.filterchild(this.currentLists, set);
+            return { result, filteredChild };
+        },
+        async matchAndOutputchild(array1, array2) {
+            const set = new Set(array1.map(item => item.alarmPageCode));
             const result = array2.filter(item => set.has(item.alarmPageCode));
             const filteredChild = this.filterchild(this.currentLists, set);
             return {result, filteredChild};
         },
 
         findIndex(array, obj) {
-            return array.indexOf(obj);
+            return array.findIndex(item => item === obj);
         },
-
 // 获取报警信息接口
         async getWarningInfo() {
             this.currentLists.map((i, index) => {
                 i.warningShowFlag = false;
-                i.alarmTime = ''
-                if(i.boxBottomText){
-                    i?.boxBottomText.map((j)=>{
+                i.alarmTime = '';
+                if (i.boxBottomText) {
+                    i?.boxBottomText.map((j) => {
                         j.warningShowFlag = false;
-                        j.alarmTime = ''
-                    })
+                        j.alarmTime = '';
+                    });
                 }
             });
+
             const data = {
-                authorizedPersonnel: this.$store.getters["user/name"],
-                alarmTime: new Date().format('YYYY-MM-dd')
+                authorizedPersonnel: this.$store.getters['user/name'],
+                alarmTime: new Date().format('YYYY-MM-dd'),
             };
+
             try {
-                const [res1, res2] = await Promise.all([
+                const [res1] = await Promise.all([
                     queryLinkageAlarmInfo(data),
-                    request({
-                        url: `/gem001b/queryAlcAlarm`,
-                        method: "get",
-                        headers: {
-                            showLoading: false
-                        }
-                    })
                 ]);
+
                 let isConditionMet = false;
                 // 获取含有标识的对象
                 const {result, filteredChild} = await this.matchAndOutput(res1.data.data, this.currentLists);
                 // 获取在数组的下标
-                const index = result.map(item => this.findIndex(this.currentLists, item));
-                const childindex = filteredChild.map(item => this.findIndex(this.currentLists, item));
+                const index = result.map((item) => this.findIndex(this.currentLists, item));
+                const childindex = filteredChild.map((item) => this.findIndex(this.currentLists, item));
                 // 匹配数组中的标识设置为true
                 for (let i = 0; i < childindex.length; i++) {
-                    let a = this.currentLists[childindex[i]].boxBottomText
-                    const {result: childResult} = await this.matchAndOutput(res1.data.data, a);
-                    const number = childResult.map(item => this.findIndex(a, item));
-                    if(number.length>1){
-                        number.map((n,index)=>{
-                            this.currentLists[childindex[i]].boxBottomText[n].warningShowFlag = true
-                            res1.data.data.map((j)=>{
-                                if(j.alarmPageCode == this.currentLists[childindex[i]].boxBottomText[n].alarmPageCode){
-                                    this.currentLists[childindex[i]].boxBottomText[n].alarmTime = j.alarmTime
+                    let a = this.currentLists[childindex[i]].boxBottomText;
+                    const {result: childResult} = await this.matchAndOutputchild(res1.data.data, a);
+                    const number = childResult.map((item) => this.findIndex(a, item));
+                    if (number.length > 1) {
+                        number.map((n, index) => {
+                            this.currentLists[childindex[i]].boxBottomText[n].warningShowFlag = true;
+                            res1.data.data.map((j) => {
+                                if (this.currentLists[childindex[i]].boxBottomText[n].alarmPageCode.includes(j.alarmPageCode)) {
+                                    this.currentLists[childindex[i]].boxBottomText[n].alarmTime = j.alarmTime;
                                 }
-                            })
-                        })
-                    }else{
-                        this.currentLists[childindex[i]].boxBottomText[number[0]].warningShowFlag = true
-                        res1.data.data.map((j)=>{
-                            if(j.alarmPageCode ==this.currentLists[childindex[i]].boxBottomText[number[0]].alarmPageCode){
-                                this.currentLists[childindex[i]].boxBottomText[number[0]].alarmTime = j.alarmTime
+                            });
+                        });
+                    } else {
+                        this.currentLists[childindex[i]].boxBottomText[number[0]].warningShowFlag = true;
+                        res1.data.data.map((j) => {
+                            if (this.currentLists[childindex[i]].boxBottomText[number[0]].alarmPageCode.includes(j.alarmPageCode)) {
+                                this.currentLists[childindex[i]].boxBottomText[number[0]].alarmTime = j.alarmTime;
                             }
-                        })
+                        });
                     }
-                    this.currentLists[childindex[i]].warningShowFlag = true
+                    this.currentLists[childindex[i]].warningShowFlag = true;
                     isConditionMet = true;
                 }
                 for (let i = 0; i < index.length; i++) {
                     this.currentLists[index[i]].warningShowFlag = true;
                     isConditionMet = true;
                 }
+
                 // res2?.data.data.forEach(item => {
                 //     this.currentLists.forEach((i, index) => {
                 //         if (i.typeIdList.includes(item.typeId)) {
@@ -413,22 +425,24 @@ export default {
                 //         }
                 //     });
                 // });
+
                 // 如果无报警开启定时器，有报警关闭定时器和箭头图片
                 if (isConditionMet === false) {
                     this.timmer = setInterval(() => {
-                        this.arrowFun()
-                    }, 100 * 50)
+                        this.arrowFun();
+                    }, 100 * 50);
                 } else {
                     clearInterval(this.timmer);
-                    this.currentLists.forEach(item => {
-                        item.showFlag = false
-                    })
+                    this.currentLists.forEach((item) => {
+                        item.showFlag = false;
+                    });
                     for (let i = 0; i < 7; i++) {
-                        this.$el.querySelectorAll('img')[i].style.display = 'none'
+                        this.$el.querySelectorAll('img')[i].style.display = 'none';
                     }
                 }
             } catch (error) {
                 // 错误处理
+                console.error(error)
                 this.$message.error('系统错误请重新尝试或联系运维人员！');
             }
         },
@@ -451,25 +465,25 @@ export default {
             clearInterval(this.timmer)
         },
         startTimer(url) {
-                const hasTrueValue = this.currentLists.some(item => {
-                    if (Array.isArray(item.boxBottomText)) {
-                        return item.boxBottomText.some(subItem => subItem.warningShowFlag === true);
-                    } else {
-                        return item.warningShowFlag === true;
-                    }
-                });
-                if(url){
-                    let index = this.findIndex(this.currentLists,url)
-                    this.currentLists[index].warningShowFlag = false
-                }
-                if (hasTrueValue == true) {
-                    clearInterval(this.timmer)
+            const hasTrueValue = this.currentLists.some(item => {
+                if (Array.isArray(item.boxBottomText)) {
+                    return item.boxBottomText.some(subItem => subItem.warningShowFlag === true);
                 } else {
-                    clearInterval(this.timmer)
-                    this.timmer = setInterval(() => {
-                        this.arrowFun()
-                    }, 5000)
+                    return item.warningShowFlag === true;
                 }
+            });
+            if (url) {
+                let index = this.findIndex(this.currentLists, url)
+                this.currentLists[index].warningShowFlag = false
+            }
+            if (hasTrueValue == true) {
+                clearInterval(this.timmer)
+            } else {
+                clearInterval(this.timmer)
+                this.timmer = setInterval(() => {
+                    this.arrowFun()
+                }, 5000)
+            }
         }
     },
     data() {
@@ -500,6 +514,7 @@ video {
 
 .container {
     height: calc(100% - 20px);
+
     .topBanner {
         width: 100%;
         height: 38px;

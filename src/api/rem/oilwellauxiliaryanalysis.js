@@ -25,3 +25,9 @@ export function queryWellGroupInjDynamicData({ wellGroupId,month,ogfId } = {}) {
         method: "get",
     });
 }
+export function getWellGroupsByBlock({ blockId,month } = {}) {
+    return request({
+        url: `ipm/api/analyzeWellGroup/getWellGroupsByBlock?blockId=${ blockId || "" }&month=${ month || "" }`,
+        method: "get",
+    });
+}

@@ -24,7 +24,7 @@
                     v-model="queryData.secondMonth"
                     type="month"
                     placeholder="选择月"
-                   
+
                 >
                 </el-date-picker>
             </el-form-item>
@@ -39,24 +39,26 @@
                 :key="itemKey"
             >
                 <el-table-column type="index" label="序号" fixed width="100" header-align="center"></el-table-column>
-                <el-table-column prop="wellNo" label="井号" fixed min-width="130" header-align="center"></el-table-column>
+                <el-table-column prop="wellNo" label="井号" fixed min-width="130"
+                                 header-align="center"></el-table-column>
                 <el-table-column prop="layerName" label="层位" min-width="200" header-align="center"></el-table-column>
                 <el-table-column header-align="center">
                     <template slot="header">
                         <div>{{ firstMonth }}注水情况</div>
                     </template>
                     <el-table-column prop="dosage01" :label="`配注量\n(m³/d)`" min-width="160"
-                                    header-align="center"></el-table-column>
+                                     header-align="center"></el-table-column>
                     <el-table-column prop="injectionRatio01" label="注采比" min-width="100" header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.injectionRatio01 !== null && scope.row.injectionRatio01 !== ''">{{scope.row.injectionRatio01}}</span>
+                            <span
+                                v-if="scope.row.injectionRatio01 !== null && scope.row.injectionRatio01 !== ''">{{ scope.row.injectionRatio01 }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionStrength01" min-width="160" :label="`注水强度\n(m³*d.m)`"
-                                    header-align="center">
+                                     header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.injectionStrength01 !== null && scope.row.injectionStrength01 !== ''">{{scope.row.injectionStrength01}}</span>
+                            <span v-if="scope.row.injectionStrength01 !== null && scope.row.injectionStrength01 !== ''">{{ scope.row.injectionStrength01 }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
@@ -66,15 +68,16 @@
                         <div>{{ secondMonth }}注水情况</div>
                     </template>
                     <el-table-column prop="dosage02" :label="`配注量\n(m³/d)`" min-width="160"
-                                    header-align="center"></el-table-column>
+                                     header-align="center"></el-table-column>
                     <el-table-column prop="injectionRatio02" label="注采比" min-width="100" header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{scope.row.injectionRatio02}}</span>
+                            <span
+                                v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{ scope.row.injectionRatio02 }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionStrength02" min-width="160" :label="`注水强度\n(m³*d.m)`"
-                                    header-align="center">
+                                     header-align="center">
                     </el-table-column>
                 </el-table-column>
                 <el-table-column header-align="center">
@@ -83,31 +86,37 @@
                     </template>
                     <el-table-column :label="`配注量\n(m³/d)`" min-width="120" header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.dosage02 !== null && scope.row.dosage02 !== ''">{{scope.row.dosage02-scope.row.dosage01}}</span>
+                            <span
+                                v-if="scope.row.dosage02 !== null && scope.row.dosage02 !== ''">{{ Number(scope.row.dosage02 - scope.row.dosage01).toFixed(2) }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionRatio02" min-width="140" label="注采比" header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{(scope.row.injectionRatio02 - scope.row.injectionRatio01).toFixed(2)}}</span>
+                            <span
+                                v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{ (scope.row.injectionRatio02 - scope.row.injectionRatio01).toFixed(2) }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column :label="`注水强度\n(m³*d.m)`" min-width="160" header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.injectionStrength02 !== null && scope.row.injectionStrength02 !== ''">{{ scope.row.injectionStrength02 - scope.row.injectionStrength01}}</span>
+                            <span v-if="scope.row.injectionStrength02 !== null && scope.row.injectionStrength02 !== ''">{{ (scope.row.injectionStrength02 - scope.row.injectionStrength01).toFixed(2) }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                 </el-table-column>
-                <el-table-column prop="fieldName" min-width="130" label="备注" header-align="center"></el-table-column>
+<!--                <el-table-column prop="fieldName" min-width="130" label="备注" header-align="center"></el-table-column>-->
             </el-table>
         </page-panel-new>
     </el-form>
 </template>
 
 <script>
-import {getWellGroupInjectionDynamic,queryWellGroupInjDynamicData} from "@/api/rem/oilwellauxiliaryanalysis.js";
+import {
+    getWellGroupInjectionDynamic,
+    queryWellGroupInjDynamicData,
+    getWellGroupsByBlock
+} from "@/api/rem/oilwellauxiliaryanalysis.js";
 import {exportExcel} from "@/lib/exportExcel.js";
 import {queryLinkageAlarmInfo} from "@/api/rem/injectionproductionlinkage";
 import request from "@/utils/request";
@@ -163,6 +172,13 @@ export default {
             y--;
             m = "11";
         }
+        let params = {
+            blockId: '3FC9A818F5BC43B88270DB80BBB3018F',
+            month: '2023-08'
+        }
+        getWellGroupsByBlock(params).then((res) => {
+            console.log(res)
+        })
         this.queryData.secondMonth = y + "-" + m.substr(m.length - 2, 2);
         this.queryData.firstMonth = y + "-" + x.substr(m.length - 2, 2);
         this.secondMonth = y + "-" + m.substr(m.length - 2, 2);
@@ -170,11 +186,10 @@ export default {
         this.doSearch();
     },
     methods: {
-        doSearch(){
+        doSearch() {
             this.getdata()
         },
         async getdata() {
-            console.log(123)
             this.secondMonth = this.queryData.secondMonth;
             this.firstMonth = this.queryData.firstMonth;
             this.itemKey++;
@@ -184,15 +199,13 @@ export default {
 
             let firstMonth = {
                 ogfId: this.oilFieldId,
-                fieldLayerId: this.layerId,
-                wellGroupId:this.wellGroupId,
+                wellGroupId: '',
                 month: this.queryData.firstMonth + '-01',
             };
 
             let secondMonth = {
                 ogfId: this.oilFieldId,
-                fieldLayerId: this.layerId,
-                wellGroupId: this.wellGroupId,
+                wellGroupId: '',
                 month: this.queryData.secondMonth + '-01',
             };
             try {
@@ -200,20 +213,28 @@ export default {
                     queryWellGroupInjDynamicData(firstMonth),
                     queryWellGroupInjDynamicData(secondMonth)
                 ]);
-                let data = [
-                    {
-                        wellNo:res1.data.data[0].wellNo,
-                        layerName:res1.data.data[0].layerName,
-                        dosage01:res1.data.data[0].injectionAmount,
-                        injectionRatio01:res1.data.data[0].iocRatio,
-                        injectionStrength01:res1.data.data[0].waterInjectionIntensity,
-                        dosage02:res2.data.data[0].injectionAmount,
-                        injectionRatio02:res2.data.data[0].iocRatio,
-                        injectionStrength02:res2.data.data[0].waterInjectionIntensity,
+                res1.data.data.map((n) => {
+                    let data = {
+                        wellNo: n.wellNo,
+                        layerName: n.layerName,
+                        dosage01: n.injectionAmount,
+                        injectionRatio01: n.iocRatio,
+                        injectionStrength01: n.waterInjectionIntensity,
                     }
-                ]
-                this.tableData = data
-                // 继续其他操作...
+                    this.tableData.push(data)
+                })
+                res2.data.data.map((j) => {
+                    this.tableData.map((item, index) => {
+                        if (item.wellNo == j.wellNo && item.layerName == j.layerName) {
+                            let data = {
+                                dosage02: j.injectionAmount,
+                                injectionRatio02: j.iocRatio,
+                                injectionStrength02: j.waterInjectionIntensity,
+                            }
+                            this.tableData[index] = {...item, ...data}
+                        }
+                    })
+                })
             } catch (error) {
                 // 处理错误
                 console.error(error);
@@ -250,6 +271,7 @@ export default {
         line-height: 22px;
         white-space: pre;
     }
+
     ::v-deep .cell:empty {
         &::before {
             content: "-";
