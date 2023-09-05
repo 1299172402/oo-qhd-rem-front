@@ -51,14 +51,18 @@
                     <el-table-column prop="injectionRatio01" label="注采比" min-width="100" header-align="center">
                         <template slot-scope="scope">
                             <span
-                                v-if="scope.row.injectionRatio01 !== null && scope.row.injectionRatio01 !== ''">{{ scope.row.injectionRatio01 }}</span>
+                                v-if="scope.row.injectionRatio01 !== null && scope.row.injectionRatio01 !== ''">{{
+                                    scope.row.injectionRatio01
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionStrength01" min-width="160" :label="`注水强度\n(m³*d.m)`"
                                      header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.injectionStrength01 !== null && scope.row.injectionStrength01 !== ''">{{ scope.row.injectionStrength01 }}</span>
+                            <span v-if="scope.row.injectionStrength01 !== null && scope.row.injectionStrength01 !== ''">{{
+                                    scope.row.injectionStrength01
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
@@ -72,7 +76,9 @@
                     <el-table-column prop="injectionRatio02" label="注采比" min-width="100" header-align="center">
                         <template slot-scope="scope">
                             <span
-                                v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{ scope.row.injectionRatio02 }}</span>
+                                v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{
+                                    scope.row.injectionRatio02
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
@@ -87,25 +93,31 @@
                     <el-table-column :label="`配注量\n(m³/d)`" min-width="120" header-align="center">
                         <template slot-scope="scope">
                             <span
-                                v-if="scope.row.dosage02 !== null && scope.row.dosage02 !== ''">{{ Number(scope.row.dosage02 - scope.row.dosage01).toFixed(2) }}</span>
+                                v-if="scope.row.dosage02 !== null && scope.row.dosage02 !== ''">{{
+                                    Number(scope.row.dosage02 - scope.row.dosage01).toFixed(2)
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionRatio02" min-width="140" label="注采比" header-align="center">
                         <template slot-scope="scope">
                             <span
-                                v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{ (scope.row.injectionRatio02 - scope.row.injectionRatio01).toFixed(2) }}</span>
+                                v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{
+                                    (scope.row.injectionRatio02 - scope.row.injectionRatio01).toFixed(2)
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column :label="`注水强度\n(m³*d.m)`" min-width="160" header-align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.injectionStrength02 !== null && scope.row.injectionStrength02 !== ''">{{ (scope.row.injectionStrength02 - scope.row.injectionStrength01).toFixed(2) }}</span>
+                            <span v-if="scope.row.injectionStrength02 !== null && scope.row.injectionStrength02 !== ''">{{
+                                    (scope.row.injectionStrength02 - scope.row.injectionStrength01).toFixed(2)
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                 </el-table-column>
-<!--                <el-table-column prop="fieldName" min-width="130" label="备注" header-align="center"></el-table-column>-->
+                <!--                <el-table-column prop="fieldName" min-width="130" label="备注" header-align="center"></el-table-column>-->
             </el-table>
         </page-panel-new>
     </el-form>
@@ -129,6 +141,7 @@ export default {
         layerId: {},
         //井组id
         wellGroupId: {},
+        wellGrouplist: [],
     },
     data() {
         return {
@@ -136,6 +149,7 @@ export default {
             tableData: [],
             secondMonth: "",
             firstMonth: "",
+            wellGroupname: "",
             itemKey: 0,
             queryData: {
                 month: "",
@@ -159,6 +173,7 @@ export default {
         };
     },
     mounted() {
+        this.wellGroupname = (this.wellGrouplist?.find(obj => obj.wellGroupId == this.wellGroupId))?.wellGroupName;
         var date = new Date();
         var months = date.getMonth() + 1;
         var m = "0" + (months - 1);
@@ -172,13 +187,6 @@ export default {
             y--;
             m = "11";
         }
-        let params = {
-            blockId: '3FC9A818F5BC43B88270DB80BBB3018F',
-            month: '2023-08'
-        }
-        getWellGroupsByBlock(params).then((res) => {
-            console.log(res)
-        })
         this.queryData.secondMonth = y + "-" + m.substr(m.length - 2, 2);
         this.queryData.firstMonth = y + "-" + x.substr(m.length - 2, 2);
         this.secondMonth = y + "-" + m.substr(m.length - 2, 2);
@@ -190,23 +198,18 @@ export default {
             this.getdata()
         },
         async getdata() {
+            this.tableData = []
             this.secondMonth = this.queryData.secondMonth;
             this.firstMonth = this.queryData.firstMonth;
             this.itemKey++;
-            if (this.blockId == '3FC9A818F5BC43B88270DB80BBB3018F') {
-                this.blockId = '';
-            }
-
             let firstMonth = {
-                ogfId: this.oilFieldId,
-                wellGroupId: '',
-                month: this.queryData.firstMonth + '-01',
+                wellGroupName: this.wellGroupname,
+                month: this.queryData.firstMonth,
             };
 
             let secondMonth = {
-                ogfId: this.oilFieldId,
-                wellGroupId: '',
-                month: this.queryData.secondMonth + '-01',
+                wellGroupName: this.wellGroupname,
+                month: this.queryData.secondMonth,
             };
             try {
                 const [res1, res2] = await Promise.all([
