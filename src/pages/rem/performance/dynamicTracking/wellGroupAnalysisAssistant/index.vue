@@ -67,7 +67,7 @@
                 </el-tabs>
                 
                 <keep-alive :include="[]" :max="10" v-if="selectBlock">
-                    <component :is="component" ref="componentCustom" :oilFieldId="selectOilField" :blockId="selectBlock" :wellCentre="wellCentre" :wellGroupId="selectWellGroup" @childPara="changeChildParam"></component>
+                    <component :is="component" ref="componentCustom" :oilFieldId="selectOilField" :blockId="selectBlock" :wellCentre="wellCentre" :wellGrouplist="newWellGroup" :wellGroupId="selectWellGroup" @childPara="changeChildParam"></component>
                 </keep-alive>
                 
             </pagePanelNew>

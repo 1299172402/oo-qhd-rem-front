@@ -197,7 +197,7 @@
                                  label="评价结论"></el-table-column>
                 <el-table-column prop="injDuration" min-width="150" :label="`生产时长\n(h)`"></el-table-column>
                 <el-table-column prop="injDaily" min-width="150" :label="`注入量\n(m³)`"></el-table-column>
-                <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(mPa)`"></el-table-column>
+                <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(MPa)`"></el-table-column>
                 <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`">
                     <template slot-scope="scope">
                         {{Number(scope.row.injAllocationRate).toFixed(2)}}

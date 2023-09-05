@@ -23,8 +23,8 @@
                           height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column type="index" label="序号"></el-table-column>
                     <el-table-column prop="time" label="时间"> </el-table-column>
-                    <el-table-column prop="flowingPress" :label="`流压\n(Mpa)`"></el-table-column>
-                    <el-table-column prop="oilPress" :label="`油压\n(Mpa)`"></el-table-column>
+                    <el-table-column prop="flowingPress" :label="`流压\n(MPa)`"></el-table-column>
+                    <el-table-column prop="oilPress" :label="`油压\n(MPa)`"></el-table-column>
                     <el-table-column prop="pumpFreq" :label="`泵频率\n(Hz)`"></el-table-column>
                     <el-table-column prop="whTemp" :label="`井口温度\n(℃)`"></el-table-column>
                     <el-table-column prop="prodDuration" :label="`生产时间\n(h)`"></el-table-column>

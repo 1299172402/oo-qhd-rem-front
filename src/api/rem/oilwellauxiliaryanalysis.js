@@ -19,9 +19,15 @@ export function queryInjectionWellNetworkConditionsList({ blockId, firstMonth, o
     method: "get",
   });
 }
-export function queryWellGroupInjDynamicData({ wellGroupId,month,ogfId } = {}) {
+export function queryWellGroupInjDynamicData({ wellGroupName,month } = {}) {
     return request({
-        url: `ipm/api/analyzeWellGroup/queryWellGroupInjDynamicData?wellGroupId=${ wellGroupId || "" }&ogfId=${ ogfId || "" }&month=${ month || "" }`,
+        url: `ipm/api/analyzeWellGroup/queryWellGroupInjDynamicData?wellGroupName=${ wellGroupName || "" }&month=${ month || "" }`,
+        method: "get",
+    });
+}
+export function getWellGroupsByBlock({ blockId,month } = {}) {
+    return request({
+        url: `ipm/api/analyzeWellGroup/getWellGroupsByBlock?blockId=${ blockId || "" }&month=${ month || "" }`,
         method: "get",
     });
 }
