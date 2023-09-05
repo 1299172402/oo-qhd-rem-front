@@ -1173,8 +1173,9 @@
                         this[numKey].allnum+=Number(this[dataKey][i].value);
                         if(el.name=='正常'||el.name=='合格区'){
                             this[numKey].zcnum=Number(this[dataKey][i].value);
+                            this[numKey].ycnum+=Number(this[dataKey][i].exeValue);
                         }else{
-                            this[numKey].ycnum+=Number(this[dataKey][i].value);
+                            // this[numKey].ycnum+=Number(this[dataKey][i].value);
                         }
                     })
                     this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
@@ -1250,11 +1251,13 @@
                             this.trendOfIndicatorsNum.allnum+=Number(el.value);
                             if(el.name=='正常'){
                                 this.trendOfIndicatorsNum.zcnum=Number(el.value);
+                                this.trendOfIndicatorsNum.ycnum=Number(el.exeValue);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
-                                this.trendOfIndicatorsNum.ycnum+=Number(el.value);
+                                // this.trendOfIndicatorsNum.ycnum+=Number(el.value);
                             }
                         })
+                        console.log('井组异常数', this.trendOfIndicatorsNum.ycnum);
                         this.trendOfIndicatorsNum.zczb=this.trendOfIndicatorsNum.zcnum/this.trendOfIndicatorsNum.allnum * 100;
                         this.trendOfIndicatorsNum.yczb=this.trendOfIndicatorsNum.yczb/this.trendOfIndicatorsNum.allnum * 100;
                         this.trendOfIndicators = myData;

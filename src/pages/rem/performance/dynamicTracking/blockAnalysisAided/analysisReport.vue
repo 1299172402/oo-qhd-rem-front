@@ -619,9 +619,10 @@
                             this.indexChangeTrendNum.allnum+=Number(el.value);
                             if(el.name.includes('正常')){
                                 this.indexChangeTrendNum.zcnum=Number(el.value);
+                                this.indexChangeTrendNum.ycnum=Number(el.exeValue);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
-                                this.indexChangeTrendNum.ycnum+=Number(el.value);
+                                // this.indexChangeTrendNum.ycnum+=Number(el.value);
                             }
                         })
                         this.indexChangeTrendNum.zczb=this.indexChangeTrendNum.zcnum/this.indexChangeTrendNum.allnum * 100;
@@ -643,9 +644,10 @@
                             this.stabilityFoundationAnalysisNum.allnum+=Number(el.value);
                             if(el.name.includes('正常')){
                                 this.stabilityFoundationAnalysisNum.zcnum=Number(el.value);
+                                this.stabilityFoundationAnalysisNum.ycnum=Number(el.exeValue);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
-                                this.stabilityFoundationAnalysisNum.ycnum+=Number(el.value);
+                                // this.stabilityFoundationAnalysisNum.ycnum+=Number(el.value);
                             }
                         })
                         this.stabilityFoundationAnalysisNum.zczb=this.stabilityFoundationAnalysisNum.zcnum/this.stabilityFoundationAnalysisNum.allnum * 100;
@@ -667,9 +669,10 @@
                             this.injectionProductionBalanceAnalysisNum.allnum+=Number(el.value);
                             if(el.name.includes('正常')){
                                 this.injectionProductionBalanceAnalysisNum.zcnum=Number(el.value);
+                                this.injectionProductionBalanceAnalysisNum.ycnum=Number(el.exeValue);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
-                                this.injectionProductionBalanceAnalysisNum.ycnum+=Number(el.value);
+                                // this.injectionProductionBalanceAnalysisNum.ycnum+=Number(el.value);
                             }
                         })
                         if(this.injectionProductionBalanceAnalysisNum.zcnum!==0 && this.injectionProductionBalanceAnalysisNum.allnum!==0){
