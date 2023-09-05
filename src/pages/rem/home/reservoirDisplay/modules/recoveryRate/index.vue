@@ -84,7 +84,7 @@ export default {
             color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#FF5844', '#DA835E', '#9A72FF', '#FF30AD', '#2ACAFF'],
             yAxis: [
                 {
-                    name: '地质储量采油速度%',
+                    name: '地质储量采油速度(%)',
                     nameLocation: 'center',
                     nameTextStyle: {
                         color: '#8FA4CC'
@@ -114,7 +114,7 @@ export default {
                     }
                 },
                 {
-                    name: '可采、剩余可采采油速度%',
+                    name: '可采、剩余可采采油速度(%)',
                     nameLocation: 'center',
                     nameTextStyle: {
                         color: '#8FA4CC'
