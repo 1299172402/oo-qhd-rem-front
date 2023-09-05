@@ -66,7 +66,7 @@ export default {
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 正式环境接口地址
-    API: 'https://rem.tjioms-test.tjltd.cnooc/prod-api/',
+    API: 'https://ipm.tjioms-dev.tjltd.cnooc/prod-api/',
     appId: 'f198c1a239254b0e86529a0668cf4adb',
     // 正式环境 cdn 路径
     CDN: "",
