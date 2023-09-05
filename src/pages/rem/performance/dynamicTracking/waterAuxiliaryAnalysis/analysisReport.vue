@@ -1583,9 +1583,10 @@ export default {
                         this.trendOfIndicatorsNum.allnum+=Number(el.value);
                         if(el.name=='正常'){
                             this.trendOfIndicatorsNum.zcnum=Number(el.value);
+                            this.trendOfIndicatorsNum.ycnum=Number(el.exeValue);
                         }else{
                             myData[i].isShow=Number(el.value)?true:false;
-                            this.trendOfIndicatorsNum.ycnum+=Number(el.value);
+                            // this.trendOfIndicatorsNum.ycnum+=Number(el.value);
                         }
                     })
                     this.trendOfIndicatorsNum.zczb=this.trendOfIndicatorsNum.zcnum/this.trendOfIndicatorsNum.allnum * 100;

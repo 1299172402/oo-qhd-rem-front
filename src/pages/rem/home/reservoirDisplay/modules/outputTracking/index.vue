@@ -3,12 +3,12 @@
         <button class="detailLinkBtn"   @click="downEcharts">下载</button>
         <Echart ref="echartChart" :chart-data="productLineChart" width="100%" height="80%"></Echart>
         <el-row :gutter="20">
-            <el-col :span="7">
+            <el-col :span="8">
                 <div style="display: flex;position: relative;bottom: 45px">
                     <div style="width: 50%">
                         <Echart :chart-data="option"></Echart>
                         <div style="position:absolute;bottom:20%;left:2%;font-size: 10px;text-align: center">
-                            <h5 style="color: #0d84ff">开井数(口)/油田总井数</h5>
+                            <h5 style="color: #0d84ff">开井数(口)/油田总井数(口)</h5>
                             <div style="font-size: 20px;">{{dataList.oilWellOpenTotal}}/{{dataList.oilWellTotal}}</div>
                         </div>
                         
@@ -16,21 +16,21 @@
                     <div style="width: 50%">
                         <Echart :chart-data="option2"></Echart>
                         <div style="position:absolute;bottom:20%;right:5%;font-size: 10px;text-align: center">
-                            <h5 style="color: #0d84ff">开井数(口)/水井总井数</h5>
+                            <h5 style="color: #0d84ff">开井数(口)/水井总井数(口)</h5>
                             <div style="font-size: 20px;">{{dataList.injWellOpenTotal}}/{{dataList.injWellTotal}}</div>
                         </div>
                         
                     </div>
                 </div>
             </el-col>
-            <el-col :span="17" style="margin-top: 0px">
+            <el-col :span="16" style="margin-top: 0px">
                 <el-row :gutter="20">
                     <el-col :span="8" v-for="(item, index) in data" :key="index">
-                        <div style="float: left; width: 60px; height: 60px">
+                        <div style="float: left; width: 40px; height: 70px">
 <!--                            <svg-icon :icon-class="item.icon" style="width: 100%; height: 100%"/>-->
-                            <el-image style="padding: 15%" :src="item.src"></el-image>
+                            <el-image  :src="item.src"></el-image>
                         </div>
-                        <div style="margin-top: 10px">
+                        <div>
                             <div>{{ item.name }}</div>
                             <div>{{ item.value }}</div>
                         </div>

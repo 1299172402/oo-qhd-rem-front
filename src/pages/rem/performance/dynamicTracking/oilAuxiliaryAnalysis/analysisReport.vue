@@ -375,7 +375,7 @@
                                                     <span class="z_proess_sp1" :style="{width:productionNum.zczb+'%'}">
                                                         <b style="cursor: pointer;" @click="productionSwitch=true">{{productionNum.zcnum}}</b>
                                                     </span>
-                                                    <span class="z_proess_sp2"></span>
+                                                    <span class="z_proess_sp2"></span> 
                                                 </div>
                                                 <span class="sp2">异常：<b style="cursor: pointer;" @click="productionSwitch=false">{{productionNum.ycnum}}</b></span>
                                             </div>
@@ -1404,10 +1404,11 @@
                                 if(el.name=='正常'){
                                     console.log('正常',el)
                                     this.productionNum.zcnum=Number(el.value);
+                                    this.productionNum.ycnum=Number(el.exeValue);
                                     this.productionCode=el.code;
                                 }else{
                                     myData[i].isShow=Number(el.value)?true:false;
-                                    this.productionNum.ycnum+=Number(el.value);
+                                    // this.productionNum.ycnum+=Number(el.value);
                                 }
                             })
                             this.productionNum.zczb=this.productionNum.zcnum/this.productionNum.allnum * 100;
