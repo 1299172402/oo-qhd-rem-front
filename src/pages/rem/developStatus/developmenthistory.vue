@@ -562,7 +562,7 @@
                     // Y轴
                     yAxis: [
                         {
-                            name: '油井总井数/(口)\n\n油井开井数/(口)',
+                            name: '油井总井数(口)\n\n油井开井数(口)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -597,7 +597,7 @@
                             },
                         },
                         {
-                            name: '水井总井数/(口)\n\n水井开井数/(口)',
+                            name: '水井总井数(口)\n\n水井开井数(口)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -629,7 +629,7 @@
                             },
                         },
                         {
-                            name: '油田日产液/(m³/d)\n\n油田日产油/(m³/d)',
+                            name: '油田日产液(m³/d)\n\n油田日产油(m³/d)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -661,7 +661,7 @@
                             },
                         },
                         {
-                            name: '平均单井日产液/(m³/d)\n\n平均单井日产油/(m³/d)',
+                            name: '平均单井日产液(m³/d)\n\n平均单井日产油(m³/d)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -755,7 +755,7 @@
                             },
                         },
                         {
-                            name: '油田平均日注水/(m³/d)',
+                            name: '油田平均日注水(m³/d)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -787,7 +787,7 @@
                             },
                         },
                         {
-                            name: '地层压降/(MPa)',
+                            name: '地层压降(MPa)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -850,7 +850,7 @@
                             },
                         },
                         {
-                            name: '年产油/(10⁴m³)',
+                            name: '年产油(10⁴m³)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
