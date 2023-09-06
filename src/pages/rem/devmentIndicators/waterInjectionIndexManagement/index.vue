@@ -451,7 +451,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月份",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -568,7 +568,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月份",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },

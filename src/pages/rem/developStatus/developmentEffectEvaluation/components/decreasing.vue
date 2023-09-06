@@ -100,6 +100,9 @@
                         },
                     },
                     xAxis: {
+                        name: "月",
+                        nameGap: 30,
+                        nameTextStyle: { color: '#8FA4CC' },
                         type: "category",
                         axisLabel: {
                             color: "#8FA4CC",
@@ -177,6 +180,9 @@
                         },
                     },
                     xAxis: {    
+                        name: "月",
+                        nameGap: 30,
+                        nameTextStyle: { color: '#8FA4CC' },
                         type: "category",
                         axisLabel: {
                             margin: 20,
@@ -273,6 +279,9 @@
                         },
                     },
                     xAxis: {
+                        name: "年",
+                        nameGap: 30,
+                        nameTextStyle: { color: '#8FA4CC' },
                         type: "category",
                         axisLabel: {
                             margin: 20,
@@ -370,6 +379,9 @@
                         },
                     },
                     xAxis: {
+                        name: "年",
+                        nameGap: 30,
+                        nameTextStyle: { color: '#8FA4CC' },
                         type: "category",
                         axisLabel: {
                             margin: 20,

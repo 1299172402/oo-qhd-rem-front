@@ -222,6 +222,8 @@
                             },
                         },
                         {
+                            name: "日",
+                            nameGap: 30,
                             gridIndex: 2,
                             type: "category",
                             data: [
@@ -285,7 +287,7 @@
                         },
                         {
                             gridIndex: 0,
-                            name: "折\n算\n基\n准\n面\n流\n压\n(MPa)",
+                            name: "折\n算\n基\n准\n面\n流\n压\n︵\nMPa\n︶",
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
@@ -381,7 +383,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: '#0206f7',
+                                color: '#274f97',
                                 fontSize: 14,
                             },
                             // scale: true,
@@ -528,7 +530,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color:'rgb(165,42,42)',
+                                color:'#8f2c2b',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -553,12 +555,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: "日\n产\n气\n(10⁴m³)",
+                            name: "产\n气\n︵\n10⁴m³\n︶",
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color:'#f90d03',
+                                color:'#d92c28',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -677,7 +679,7 @@
                             } else if (lineName == '含水') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 4;
-                                series.itemStyle={color:'#0206f7'}
+                                series.itemStyle={color:'#274f97'}
                             } else if (lineName == '井口温度') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 7;
@@ -685,7 +687,7 @@
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
-                                series.itemStyle={color:'#9dce2f'}
+                                series.itemStyle={color:'#da2d28'}
                             } else if (lineName == '生产时间') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;
@@ -693,23 +695,23 @@
                             } else  if (lineName == '日产液量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'rgb(165,42,42)'}
+                                series.itemStyle={color:'#8f2c2b'}
                             } else if (lineName == '日产油量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'rgb(0,255,0)'}
+                                series.itemStyle={color:'#69b147'}
                             } else if (lineName == '日产气量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 10;
-                                series.itemStyle={color:'#f90d03'}
+                                series.itemStyle={color:'#d92c28'}
                             } else if (lineName == '日产油') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'rgb(0,255,0)'}
+                                series.itemStyle={color:'#69b147'}
                             } else if (lineName == '日产液') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'rgb(165,42,42)'}
+                                series.itemStyle={color:'#8f2c2b'}
                             } else  {
                                 continue;
                             }

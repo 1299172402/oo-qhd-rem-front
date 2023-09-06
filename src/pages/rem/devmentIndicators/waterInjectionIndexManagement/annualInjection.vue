@@ -156,7 +156,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "日期",
+                        name: "日",
                         nameGap: 35,
                         nameTextStyle: {
                             color: "#8FA4CC"

@@ -108,6 +108,8 @@
                         itemGap: 14,
                     },
                     xAxis: {
+                        name: '日',
+                        nameGap: 55,
                         type: 'category',
                         boundaryGap: false,
                         axisLabel: {

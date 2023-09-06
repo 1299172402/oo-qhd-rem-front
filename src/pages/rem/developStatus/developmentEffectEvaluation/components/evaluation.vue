@@ -163,6 +163,9 @@
                         }
                     },
                     xAxis: {
+                        name: "月",
+                        nameGap: 30,
+                        nameTextStyle: { color: '#8FA4CC' },
                         type: 'category',
                         axisLabel: {
                             color: '#8FA4CC',
@@ -217,7 +220,7 @@
                             }
                         },
                         {
-                            name: '可采、剩余可采采油速度%',
+                            name: '可采、剩余可采采油速度(%)',
                             nameLocation: 'center',
                             nameTextStyle: {
                                 color: '#8FA4CC'
@@ -485,6 +488,9 @@
                         }
                     },
                     xAxis: {
+                        name: "月",
+                        nameGap: 30,
+                        nameTextStyle: { color: '#8FA4CC' },
                         type: 'category',
                         axisLabel: {
                             color: '#8fa4cc',

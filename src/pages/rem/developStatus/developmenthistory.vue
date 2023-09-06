@@ -891,7 +891,7 @@
                             xAxisIndex: 0,
                             yAxisIndex: 0,
                             itemStyle: {
-                                color: '#E9D456',
+                                color: '#030303',
                             },
                             data: [],
                         },
@@ -903,7 +903,7 @@
                             xAxisIndex: 0,
                             yAxisIndex: 0,
                             itemStyle: {
-                                color: '#B0B0B0',
+                                color: '#c0282c',
                             },
                             data: [],
                         },
@@ -914,7 +914,7 @@
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             itemStyle: {
-                                color: '#FF7135',
+                                color: '#264f97',
                             },
                             data: [],
                         },
@@ -925,7 +925,7 @@
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             itemStyle: {
-                                color: '#B0B0B0',
+                                color: '#9b5497',
                             },
                             data: [],
                         },
@@ -936,7 +936,7 @@
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                color: 'rgb(165,42,42)',
+                                color: '#8f2f2d',
                             },
                             data: [],
                         },
@@ -948,7 +948,7 @@
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                color: 'rgb(0,255,0)',
+                                color: '#69b146',
                             },
                             data: [],
                         },
@@ -960,7 +960,7 @@
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                color: 'rgb(165,42,42)',
+                                color: '#8f2f2d',
                             },
                             data: [],
                         },
@@ -972,7 +972,7 @@
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                color: 'rgb(0,255,0)',
+                                color: '#69b146',
                             },
                             data: [],
                         },
@@ -984,7 +984,7 @@
                             xAxisIndex: 4,
                             yAxisIndex: 4,
                             itemStyle: {
-                                color: '#2ACAFF',
+                                color: '#284f97',
                             },
                             data: [],
                         },
@@ -996,7 +996,7 @@
                             xAxisIndex: 5,
                             yAxisIndex: 5,
                             itemStyle: {
-                                color: 'rgb(255,0,0)',
+                                color: '#d92c28',
                             },
                             data: [],
                         },
@@ -1008,7 +1008,7 @@
                             xAxisIndex: 6,
                             yAxisIndex: 6,
                             itemStyle: {
-                                color: 'rgb(0,255,255)',
+                                color: '#61bbc4',
                             },
                             data: [],
                         },

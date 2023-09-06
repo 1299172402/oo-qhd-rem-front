@@ -207,7 +207,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "年月",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },

@@ -200,6 +200,8 @@
                             },
                         },
                         {
+                            name: "日",
+                            nameGap: 40,
                             gridIndex: 2,
                             type: "category",
                             data: [
@@ -360,7 +362,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: "#8FA4CC",
+                                color: "#274f97",
                                 fontSize: 14,
                             },
                             scale: true,
@@ -383,7 +385,7 @@
                         },
                         {
                             gridIndex: 1,
-                            name: "气\n油\n比\n︵\n方\n/\n方\n︶", //5
+                            name: "气\n油\n比\n︵\nm³\n/\nm³\n︶", //5
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
@@ -474,12 +476,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: "日\n产\n油\n︵\n方\n︶", //8
+                            name: "日\n产\n油\n︵\nm³\n︶", //8
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "rgb(0,255,0)",
+                                color: "#69b146",
                                 fontSize: 14,
                             },
                             scale: true,
@@ -502,12 +504,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: "日\n产\n液\n︵\n方\n︶", //9
+                            name: "日\n产\n液\n︵\nm³\n︶", //9
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "rgb(165,42,42)",
+                                color: "#8e2c2a",
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -532,12 +534,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: "日\n产\n气\n︵\n万\n方\n︶", //10
+                            name: "日\n产\n气\n︵\n10⁴m³\n︶", //10
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#8FA4CC",
+                                color: "#d92c28",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -650,6 +652,8 @@
                             },
                         },
                         {
+                            name: "日期",
+                            nameGap: 30,
                             gridIndex: 1,
                             type: "category",
                             data: [
@@ -861,7 +865,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "rgb(0,255,255)",
+                                color: "#61bcc4",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1001,17 +1005,19 @@
                             } else if (lineSet.label == '含水') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 4;
+                                series.itemStyle={color:'#274f97'}
                             } else if (lineSet.label == '日产液') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'rgb(165,42,42)'}
+                                series.itemStyle={color:'#8e2c2a'}
                             } else if (lineSet.label == '日产油') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'rgb(0,255,255)'}
+                                series.itemStyle={color:'#69b146'}
                             } else if (lineSet.label == '日产气') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 10;
+                                series.itemStyle={color:'#d92c28'}
                             } else if (lineSet.label == '井口温度') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 7;
@@ -1100,7 +1106,7 @@
                             if (lineSet.label == '日注水量') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;
-                                series.itemStyle={color:'rgb(0,255,255)'}
+                                series.itemStyle={color:'#61bcc4'}
                             } else if (lineSet.label == '套压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 2;
@@ -1169,7 +1175,7 @@
                     exportExcel('#tableData2', '油井对应曲线表');
                 }
             },
-            // 表格格式化方法 - 数值只保留两位小数
+            // 表格格式化m³法 - 数值只保留两位小数
             toPrecise2(row, column) {
                 if (
                     (row[column.property] || parseFloat(row[column.property]) === 0) &&
@@ -1182,7 +1188,7 @@
                     return row[column.property] ? row[column.property] : "-";
                 }
             },
-            // 表格格式化方法 - 数值只保留四位小数
+            // 表格格式化m³法 - 数值只保留四位小数
             toPrecise4(row, column) {
                 if (
                     (row[column.property] || parseFloat(row[column.property]) === 0) &&

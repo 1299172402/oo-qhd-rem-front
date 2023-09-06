@@ -144,13 +144,13 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          // name: '时间/日',
+          name: '日',
           // nameTextStyle: {
           //     color: '#8FA4CC',
           //     fontSize: 14,
           // },
           // nameLocation: 'center',
-          // nameGap: 30,
+          nameGap: 30,
           type: "category",
           axisLabel: {
             color: "#8FA4CC",

@@ -281,6 +281,9 @@
                             },
                         },
                         {
+                            name: "日",
+                            nameGap: 5,
+                            nameTextStyle: { color: '#8FA4CC' },
                             gridIndex: 4,
                             data: [],
                             type: 'category',
