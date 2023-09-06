@@ -177,7 +177,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            name: "措施井次/口",
+            name: "措施井次(口)",
             nameTextStyle: {
               color: "#8FA4CC",
               fontSize: 14,
@@ -206,7 +206,7 @@ export default {
           },
           {
             type: "value",
-            name: "注入量/10⁴m³",
+            name: "注入量(10⁴m³)",
             nameTextStyle: {
               color: "#8FA4CC",
               fontSize: 14,
@@ -278,9 +278,9 @@ export default {
             seriesData.push(this.getLinearSeriesDoubleIndex(chartDataS[i]));
           }
           if (this.searchForm.selectUnitOfProduction == "t") {
-            this.devWellLineChart.yAxis[1].name = "注入量/10⁴t";
+            this.devWellLineChart.yAxis[1].name = "注入量(10⁴t)";
           } else if (this.searchForm.selectUnitOfProduction == "m") {
-            this.devWellLineChart.yAxis[1].name = "注入量/10⁴m³";
+            this.devWellLineChart.yAxis[1].name = "注入量(10⁴m³)";
           }
           //图例数据
           this.devWellLineChart.legend.data = legendData;

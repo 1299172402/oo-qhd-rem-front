@@ -198,6 +198,7 @@ export default {
             this.getdata()
         },
         async getdata() {
+            this.wellGroupname = (this.wellGrouplist?.find(obj => obj.wellGroupId == this.wellGroupId))?.wellGroupName;
             this.tableData = []
             this.secondMonth = this.queryData.secondMonth;
             this.firstMonth = this.queryData.firstMonth;

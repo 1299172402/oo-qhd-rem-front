@@ -370,14 +370,14 @@
                                                 <span>生产动态</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:productionNum.zczb+'%'}">
                                                         <b style="cursor: pointer;" @click="productionSwitch=true">{{productionNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span> 
                                                 </div>
-                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="productionSwitch=false">{{productionNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井：<b style="cursor: pointer;" @click="productionSwitch=false">{{productionNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
@@ -425,14 +425,14 @@
                                                     <span>油井工况</span>
                                                 </div>
                                                 <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
+                                                    <span class="sp1">正常井：</span>
                                                     <div class="z_proess">
                                                         <span class="z_proess_sp1" :style="{width:oilWellConditionNum.zczb+'%'}">
                                                             <b style="cursor: pointer;" @click="oilWellConditionSwitch=true">{{oilWellConditionNum.zcnum}}</b>
                                                         </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="oilWellConditionSwitch=false">{{oilWellConditionNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常井：<b style="cursor: pointer;" @click="oilWellConditionSwitch=false">{{oilWellConditionNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
@@ -459,14 +459,14 @@
                                                     <span>供排关系</span>
                                                 </div>
                                                 <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
+                                                    <span class="sp1">正常井：</span>
                                                     <div class="z_proess">
                                                         <span class="z_proess_sp1" :style="{width:relationshipNum.zczb+'%'}">
                                                             <b style="cursor: pointer;" @click="relationshipSwitch=true">{{relationshipNum.zcnum}}</b>
                                                         </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="relationshipSwitch=false">{{relationshipNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常井：<b style="cursor: pointer;" @click="relationshipSwitch=false">{{relationshipNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
@@ -520,14 +520,14 @@
                                                                 <span>递减率</span>
                                                             </div>
                                                             <div class="z_schedule">
-                                                                <span class="sp1">正常：</span>
+                                                                <span class="sp1">正常井：</span>
                                                                 <div class="z_proess">
                                                                     <span class="z_proess_sp1" :style="{width:diminishingNum.zczb+'%'}">
                                                                         <b style="cursor: pointer;" @click="diminishingSwitch=true">{{diminishingNum.zcnum}}</b>
                                                                     </span>
                                                                     <span class="z_proess_sp2"></span>
                                                                 </div>
-                                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="diminishingSwitch=false">{{diminishingNum.ycnum}}</b></span>
+                                                                <span class="sp2">异常井：<b style="cursor: pointer;" @click="diminishingSwitch=false">{{diminishingNum.ycnum}}</b></span>
                                                             </div>
                                                         </div>  
                                                         <div class="z-row-center">
@@ -554,14 +554,14 @@
                                                                 <span>采液强度</span>
                                                             </div>
                                                             <div class="z_schedule">
-                                                                <span class="sp1">正常：</span>
+                                                                <span class="sp1">正常井：</span>
                                                                 <div class="z_proess">
                                                                     <span class="z_proess_sp1" :style="{width:fluidStrengthNum.zczb+'%'}">
                                                                         <b style="cursor: pointer;" @click="fluidStrengthSwitch=true">{{fluidStrengthNum.zcnum}}</b>
                                                                     </span>
                                                                     <span class="z_proess_sp2"></span>
                                                                 </div>
-                                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="fluidStrengthSwitch=false">{{fluidStrengthNum.ycnum}}</b></span>
+                                                                <span class="sp2">异常井：<b style="cursor: pointer;" @click="fluidStrengthSwitch=false">{{fluidStrengthNum.ycnum}}</b></span>
                                                             </div>
                                                         </div>  
                                                         <div class="z-row-center">
@@ -590,14 +590,14 @@
                                                                 <span>采液指数</span>
                                                             </div>
                                                             <div class="z_schedule">
-                                                                <span class="sp1">正常：</span>
+                                                                <span class="sp1">正常井：</span>
                                                                 <div class="z_proess">
                                                                     <span class="z_proess_sp1" :style="{width:fluidProductionNum.zczb+'%'}">
                                                                         <b style="cursor: pointer;" @click="fluidProductionSwitch=true">{{fluidProductionNum.zcnum}}</b>
                                                                     </span>
                                                                     <span class="z_proess_sp2"></span>
                                                                 </div>
-                                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="fluidProductionSwitch=false">{{fluidProductionNum.ycnum}}</b></span>
+                                                                <span class="sp2">异常井：<b style="cursor: pointer;" @click="fluidProductionSwitch=false">{{fluidProductionNum.ycnum}}</b></span>
                                                             </div>
                                                         </div>  
                                                         <div class="z-row-center">
@@ -624,14 +624,14 @@
                                                                 <span>米采液指数</span>
                                                             </div>
                                                             <div class="z_schedule">
-                                                                <span class="sp1">正常：</span>
+                                                                <span class="sp1">正常井：</span>
                                                                 <div class="z_proess">
                                                                     <span class="z_proess_sp1" :style="{width:mfluidProductionNum.zczb+'%'}">
                                                                         <b style="cursor: pointer;" @click="mfluidProductionSwitch=true">{{mfluidProductionNum.zcnum}}</b>
                                                                     </span>
                                                                     <span class="z_proess_sp2"></span>
                                                                 </div>
-                                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="mfluidProductionSwitch=false">{{mfluidProductionNum.ycnum}}</b></span>
+                                                                <span class="sp2">异常井：<b style="cursor: pointer;" @click="mfluidProductionSwitch=false">{{mfluidProductionNum.ycnum}}</b></span>
                                                             </div>
                                                         </div>  
                                                         <div class="z-row-center">

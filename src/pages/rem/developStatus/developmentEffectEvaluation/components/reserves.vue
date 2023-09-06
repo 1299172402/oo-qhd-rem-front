@@ -93,7 +93,7 @@
                         },
                     },
                     yAxis: {
-                        name: "动用程度/%",
+                        name: "动用程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -186,7 +186,7 @@
                         },
                     },
                     yAxis: {
-                        name: "控制程度/%",
+                        name: "控制程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -274,7 +274,7 @@
                     },
                     xAxis: {
                         type: "value",
-                        name: "可采储量采出程度/%",
+                        name: "可采储量采出程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -300,7 +300,7 @@
                         },
                     },
                     yAxis: {
-                        name: "剩余可采储量储采比/%",
+                        name: "剩余可采储量储采比(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -388,7 +388,7 @@
                         },
                     },
                     yAxis: {
-                        name: "动用程度/%",
+                        name: "动用程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -490,7 +490,7 @@
                         },
                     },
                     yAxis: {
-                        name: "控制程度/%",
+                        name: "控制程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"

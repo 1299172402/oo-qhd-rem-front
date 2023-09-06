@@ -133,7 +133,7 @@
                     },
                     yAxis: [
                         {
-                            name: '日注水量m³/d',
+                            name: '日注水量(m³/d)',
                             nameLocation:'middle',
                             nameGap:80,
                             nameTextStyle: {
@@ -163,7 +163,7 @@
                             },
                         },
                         {
-                            name: '年注水量10⁴m³',
+                            name: '年注水量(10⁴m³)',
                             nameLocation:'middle',
                             nameGap:70,
                             nameTextStyle: {

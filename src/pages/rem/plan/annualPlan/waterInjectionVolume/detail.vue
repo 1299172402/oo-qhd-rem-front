@@ -117,7 +117,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: '措施井次/口',
+                            name: '措施井次(口)',
                             nameLocation:'middle',
                             nameGap:80,
                             nameTextStyle: {
@@ -146,7 +146,7 @@
                         },
                         {
                             type: 'value',
-                            name: '注入量/m³',
+                            name: '注入量(m³)',
                             nameLocation:'middle',
                             nameGap:80,
                             nameTextStyle: {
@@ -259,7 +259,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: '措施井次/口',
+                            name: '措施井次(口)',
                             nameLocation:'middle',
                             nameGap:80,
                             nameTextStyle: {
@@ -288,7 +288,7 @@
                         },
                         {
                             type: 'value',
-                            name: '注入量/m³',
+                            name: '注入量(m³)',
                             nameLocation:'middle',
                             nameGap:80,
                             nameTextStyle: {
