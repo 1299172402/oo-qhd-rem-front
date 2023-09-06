@@ -30,7 +30,7 @@ export default Vue.extend({
     },
     title: {
       type: String,
-      default: "选择用户"
+      default: undefined
     },
     modalWidth: {
       type: Number,
@@ -180,7 +180,8 @@ export default Vue.extend({
           }
           let deptId = "";
           if (val.applyScope) {
-            deptId = val.applyScope;
+            // applyScope 等于 ALL 则说明为全部可适用
+            deptId = val.applyScope !== "ALL" ? val.applyScope : "";
           } else if (val.relativePerson === "Login") {
             // 默认选中当前登录人的部门
             deptId = this.userInfo.deptId;
@@ -247,7 +248,7 @@ export default Vue.extend({
      */
     setStartSearchUser() {
       (this as any).startSearchUser = {
-        roleCode: (this as any).myRoleCode
+        roleKey: (this as any).myRoleCode
       };
     },
     /**

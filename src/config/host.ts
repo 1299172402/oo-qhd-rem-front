@@ -21,10 +21,9 @@ export default {
     // TODO: Maybe change back
     // 通用模块-报警中心
     // GEM_API: "/gem001b",
-    // 流程平台
-    BIZ_FLOW_API: "/biz/flow",
     // 文件预览服务
     PREVIEW_FILE_API: "/b/upload",
+    // 流程平台
     processAPI: "/dev-api/workflow",
     // 开发环境接口请求
     API: "/dev-api",
@@ -34,11 +33,10 @@ export default {
   },
   test: {
     ...config,
-    // TODO: Maybe change back
     // 通用模块-报警中心
+    // TODO: Maybe change back
     // GEM_API: "/gem001b",
     // 流程平台
-    BIZ_FLOW_API: "/biz/flow",
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 测试环境接口地址
@@ -60,7 +58,6 @@ export default {
     // TODO: Maybe change back
     // GEM_API: "/gem001b",
     // 流程平台
-    BIZ_FLOW_API: "/b/sw",
     processAPI: "/prod-api/workflow",
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",

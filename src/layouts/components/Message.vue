@@ -325,7 +325,7 @@ export default Vue.extend({
       //     }
       //   ];
       // 获取列表
-      if (process.env.NODE_ENV !== "development" && window.location.host !== "114.115.233.247:38085") {
+      if (process.env.NODE_ENV === "release") {
         const param = {
           pageNum: 1,
           pageSize: 10
