@@ -149,14 +149,14 @@
                                         <span>开采现状（地层压力）分析</span>
                                     </div>
                                     <div class="z_schedule">
-                                        <span class="sp1">正常：</span>
+                                        <span class="sp1">正常井：</span>
                                         <div class="z_proess">
                                             <span class="z_proess_sp1" :style="{width:indexChangeTrendNum.zczb+'%'}">
                                                 <b style="cursor: pointer;" @click="indexChangeTrendSwitch=true">{{indexChangeTrendNum.zcnum}}</b>
                                             </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="indexChangeTrendSwitch=false">{{indexChangeTrendNum.ycnum}}</b></span>
+                                        <span class="sp2">异常井：<b style="cursor: pointer;" @click="indexChangeTrendSwitch=false">{{indexChangeTrendNum.ycnum}}</b></span>
                                     </div>
                                     <el-row :gutter="10">
                                         <el-col v-for="(item,index) in indexChangeTrendList" :key="index" :span="24">
@@ -178,14 +178,14 @@
                                         <span>开采现状（注水受效）分析</span>
                                     </div>
                                     <div class="z_schedule">
-                                        <span class="sp1">正常：</span>
+                                        <span class="sp1">正常井组：</span>
                                         <div class="z_proess">
                                             <span class="z_proess_sp1" :style="{width:stabilityFoundationAnalysisNum.zczb+'%'}">
                                                 <b style="cursor: pointer;" @click="stabilityFoundationAnalysisSwitch=true">{{stabilityFoundationAnalysisNum.zcnum}}</b>
                                             </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="stabilityFoundationAnalysisSwitch=false">{{stabilityFoundationAnalysisNum.ycnum}}</b></span>
+                                        <span class="sp2">异常井组：<b style="cursor: pointer;" @click="stabilityFoundationAnalysisSwitch=false">{{stabilityFoundationAnalysisNum.ycnum}}</b></span>
                                     </div>
                                     <el-row :gutter="10">
                                         <el-col v-for="(item,index) in stabilityFoundationAnalysisList" :key="index" :span="24">
@@ -204,14 +204,14 @@
                                         <span>注采平衡分析</span>
                                     </div>
                                     <div class="z_schedule">
-                                        <span class="sp1">正常：</span>
+                                        <span class="sp1">正常井组：</span>
                                         <div class="z_proess">
                                             <span class="z_proess_sp1" :style="{width:injectionProductionBalanceAnalysisNum.zczb+'%'}">
                                                 <b style="cursor: pointer;" @click="injectionProductionBalanceAnalysisSwitch=true">{{injectionProductionBalanceAnalysisNum.zcnum}}</b>
                                             </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionProductionBalanceAnalysisSwitch=false">{{injectionProductionBalanceAnalysisNum.ycnum}}</b></span>
+                                        <span class="sp2">异常井组：<b style="cursor: pointer;" @click="injectionProductionBalanceAnalysisSwitch=false">{{injectionProductionBalanceAnalysisNum.ycnum}}</b></span>
                                     </div>
                                     <el-row :gutter="10">
                                         <el-col v-for="(item,index) in injectionProductionBalanceAnalysisList" :key="index" :span="24">
@@ -230,14 +230,14 @@
                                         <span>采出状况分析</span>
                                     </div>
                                     <div class="z_schedule">
-                                        <span class="sp1">正常：</span>
+                                        <span class="sp1">正常井区：</span>
                                         <div class="z_proess">
                                             <span class="z_proess_sp1" :style="{width:recoveryAnalysisNum.zczb+'%'}">
                                                 <b style="cursor: pointer;" @click="recoveryAnalysisSwitch=true">{{recoveryAnalysisNum.zcnum}}</b>
                                             </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="recoveryAnalysisSwitch=false">{{recoveryAnalysisNum.ycnum}}</b></span>
+                                        <span class="sp2">异常井区：<b style="cursor: pointer;" @click="recoveryAnalysisSwitch=false">{{recoveryAnalysisNum.ycnum}}</b></span>
                                     </div>
                                     <el-row :gutter="10">
                                         <el-col v-for="(item,index) in recoveryAnalysisList" :key="index" :span="24">
@@ -1562,7 +1562,7 @@
                     display: flex;
                     align-items: center;
                     .sp1{
-                        width:61px;
+                        // width:61px;
                         font-size: 14px;
                     }
                     .z_proess{

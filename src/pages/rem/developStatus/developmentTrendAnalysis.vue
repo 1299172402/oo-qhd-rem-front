@@ -137,7 +137,7 @@
                         {
                             type: "inside",
                             xAxisIndex: [0, 1, 2, 3, 4],
-                            start: 0, //滚动条开始位置（共100等份）
+                            start: 0, //滚动条开始位置(共100等份)
                             end: 100, //滚动条结束位置
                         },
                     ],
@@ -307,10 +307,10 @@
                     yAxis: [
                         {
                             gridIndex: 0,
-                            name: '产液量\n（10⁴m³）',
+                            name: '产液量\n(10⁴m³)',
                             nameGap:60,
                             nameLocation: 'center',
-                            nameRotate: 0,
+                            nameRotate: 90,
                             scale: true,
                             nameTextStyle: {
                                 color: '#8FA4CC',
@@ -340,10 +340,10 @@
                         {
                             gridIndex: 1,
                             scale: true,
-                            name: '产油量\n（10⁴m³）',
+                            name: '产油量\n(10⁴m³)',
                             nameGap:60,
                             nameLocation: 'center',
-                            nameRotate: 0,
+                            nameRotate: 90,
                             nameTextStyle: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -372,10 +372,10 @@
                         {
                             gridIndex: 2,
                             scale: true,
-                            name: '含水率\n（%）',
+                            name: '含水率\n(%)',
                             nameGap:60,
                             nameLocation: 'center',
-                            nameRotate: 0,
+                            nameRotate: 90,
                             nameTextStyle: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -404,10 +404,10 @@
                         {
                             gridIndex: 3,
                             scale: true,
-                            name: '含水上升率\n（%）',
+                            name: '含水上升率\n(%)',
                             nameGap:60,
                             nameLocation: 'center',
-                            nameRotate: 0,
+                            nameRotate: 90,
                             nameTextStyle: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -436,10 +436,10 @@
                         {
                             gridIndex: 4,
                             scale: true,
-                            name: '综合递减率\n（%）',
+                            name: '综合递减率\n(%)',
                             nameGap:60,
                             nameLocation: 'center',
-                            nameRotate: 0,
+                            nameRotate: 90,
                             nameTextStyle: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -759,9 +759,9 @@
                 this.lineTable.series[0].data = y;
                 this.lineTable.xAxis[0].data = x;
                 if (this.selectUnitOfProduction == 'm') {
-                    this.lineTable.yAxis[0].name = '产液量\n（10⁴m³）';
+                    this.lineTable.yAxis[0].name = '产液量\n(10⁴m³)';
                 } else if (this.selectUnitOfProduction == 't') {
-                    this.lineTable.yAxis[0].name = '产液量\n（10⁴t）';
+                    this.lineTable.yAxis[0].name = '产液量\n(10⁴t)';
                 }
             },
             //折线图-产油
@@ -782,9 +782,9 @@
                 this.lineTable.series[1].data = y;
                 this.lineTable.xAxis[1].data = x;
                 if (this.selectUnitOfProduction == 'm') {
-                    this.lineTable.yAxis[1].name = '产油量\n（10⁴m³）';
+                    this.lineTable.yAxis[1].name = '产油量\n(10⁴m³)';
                 } else if (this.selectUnitOfProduction == 't') {
-                    this.lineTable.yAxis[1].name = '产油量\n（10⁴t）';
+                    this.lineTable.yAxis[1].name = '产油量\n(10⁴t)';
                 }
             },
             //折线图-含水上升率
@@ -874,7 +874,7 @@
                 }
                 //单位
                 let unitType = this.selectUnitOfProduction;
-                // 查询图形数据（区块，油田，当前日s期，单位）
+                // 查询图形数据(区块，油田，当前日s期，单位)
                 this.charts(fieldId, oilFieldId, beginDate, endDate, unitType);
             },
             //油田内容改变

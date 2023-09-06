@@ -20,7 +20,7 @@
            <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#TaskOutputTrackingTable', '作业公司产量总览')">下载</el-button>
         </div>
         <el-table id="TaskOutputTrackingTable" :data="tableData" highlight height="calc(100% - 75px)" show-summary :summary-method="getSummaries">
-            <el-table-column prop="wellType" label="累产/10⁴m³" align="center" min-width="130"></el-table-column>
+            <el-table-column prop="wellType" label="累产(10⁴m³)" align="center" min-width="130"></el-table-column>
             <el-table-column prop="branchStruggle" label="分公司奋斗" align="center" min-width="130"></el-table-column>
             <el-table-column prop="branchAssessment" label="分公司考核" align="center" min-width="130"></el-table-column>
             <el-table-column prop="rollingForecast" label="滚动预测" align="center" min-width="130"></el-table-column>

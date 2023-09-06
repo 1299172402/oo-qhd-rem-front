@@ -43,7 +43,7 @@
                     <el-table-column prop="waterRatio" :label="`含水\n(%)`" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="oilProdDaily" :label="`日产油\n(m³)`" :formatter="toPrecise2"></el-table-column>
-                    <el-table-column prop="gasProdDaily" :label="`日产气\n(万方)`" :formatter="toPrecise4"></el-table-column>
+                    <el-table-column prop="gasProdDaily" :label="`日产气\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
                     <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`" :formatter="toPrecise2"></el-table-column>
                 </el-table>
             </page-panel>

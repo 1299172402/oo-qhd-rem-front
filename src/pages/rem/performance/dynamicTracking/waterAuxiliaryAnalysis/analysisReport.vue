@@ -314,14 +314,14 @@
                                                 <span>注入动态</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}">
                                                         <b @click="trendOfIndicatorsSwitch=true">{{trendOfIndicatorsNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井：<b @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
                                             </div>
                                         </div>
                                         <div class="z-row-center">
@@ -368,14 +368,14 @@
                                                 <span>井筒原因</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:wellboreReasonNum.zczb+'%'}">
                                                         <b @click="wellboreReasonSwitch=true">{{wellboreReasonNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b @click="wellboreReasonSwitch=true">{{wellboreReasonNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井：<b @click="wellboreReasonSwitch=true">{{wellboreReasonNum.ycnum}}</b></span>
                                             </div>
                                         </div>
                                         <div class="z-row-center">
@@ -422,14 +422,14 @@
                                                 <span>井层注水工况</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:workingCondNum.zczb+'%'}">
                                                         <b @click="workingCondSwitch=true">{{workingCondNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b @click="workingCondSwitch=false">{{workingCondNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井：<b @click="workingCondSwitch=false">{{workingCondNum.ycnum}}</b></span>
                                             </div>
                                         </div>
                                         <div class="z-row-center">
@@ -475,14 +475,14 @@
                                                 <span>注水强度</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:zsqdNum.zczb+'%'}">
                                                         <b @click="zsqdSwitch=true">{{zsqdNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b @click="zsqdSwitch=false">{{zsqdNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井：<b @click="zsqdSwitch=false">{{zsqdNum.ycnum}}</b></span>
                                             </div>
                                         </div>
                                         <div class="z-row-center">

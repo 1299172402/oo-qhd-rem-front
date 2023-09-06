@@ -141,7 +141,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: '产油量/m³',
+                            name: '产油量(m³)',
                             nameTextStyle: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -170,7 +170,7 @@
                         },
                         {
                             type: 'value',
-                            name: '措施井次/口',
+                            name: '措施井次(口)',
                             nameTextStyle: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -278,9 +278,9 @@
                         let xData = Array.from(xSet).sort();
                         this.resetProLineChart.xAxis.data = xData;
                         if (this.searchForm.selectUnitOfProduction == 't') {
-                            this.resetProLineChart.yAxis[0].name = '产油量/t';
+                            this.resetProLineChart.yAxis[0].name = '产油量(t)';
                         } else if (this.searchForm.selectUnitOfProduction == 'm') {
-                            this.resetProLineChart.yAxis[0].name = '产油量/m³';
+                            this.resetProLineChart.yAxis[0].name = '产油量(m³)';
                         }
                         //图例数据
                         this.resetProLineChart.legend.data = legendData;

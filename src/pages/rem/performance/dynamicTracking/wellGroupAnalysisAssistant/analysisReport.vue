@@ -266,14 +266,14 @@
                                                 <span>动态变化趋势</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井组：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}">
                                                         <b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=true">{{trendOfIndicatorsNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井组：<b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
@@ -314,14 +314,14 @@
                                                     <span>注采平衡</span>
                                                 </div>
                                                 <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
+                                                    <span class="sp1">正常井组：</span>
                                                     <div class="z_proess">
                                                         <span class="z_proess_sp1" :style="{width:injectionProductionBalanceNum.zczb+'%'}">
                                                             <b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=true">{{injectionProductionBalanceNum.zcnum}}</b>
                                                         </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=false">{{injectionProductionBalanceNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常井组：<b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=false">{{injectionProductionBalanceNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
@@ -348,14 +348,14 @@
                                                     <span>注水受效分析</span>
                                                 </div>
                                                 <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
+                                                    <span class="sp1">正常井组：</span>
                                                     <div class="z_proess">
                                                         <span class="z_proess_sp1" :style="{width:injectionResponseAnalysisNum.zczb+'%'}">
                                                             <b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=true">{{injectionResponseAnalysisNum.zcnum}}</b>
                                                         </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=false">{{injectionResponseAnalysisNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常井组：<b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=false">{{injectionResponseAnalysisNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
@@ -384,14 +384,14 @@
                                                     <span>压力保持</span>
                                                 </div>
                                                 <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
+                                                    <span class="sp1">正常井组：</span>
                                                     <div class="z_proess">
                                                         <span class="z_proess_sp1" :style="{width:thePressureToKeepNum.zczb+'%'}">
                                                             <b style="cursor: pointer;" @click="thePressureToKeepSwitch=true">{{thePressureToKeepNum.zcnum}}</b>
                                                         </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="thePressureToKeepSwitch=false">{{thePressureToKeepNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常井组：<b style="cursor: pointer;" @click="thePressureToKeepSwitch=false">{{thePressureToKeepNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
@@ -1678,7 +1678,7 @@
                                     display: flex;
                                     align-items: center;
                                     .sp1{
-                                        width:61px;
+                                        // width:61px;
                                         font-size: 14px;
                                     }
                                     .z_proess{
@@ -1866,7 +1866,7 @@
                                     display: flex;
                                     align-items: center;
                                     .sp1{
-                                        width:61px;
+                                        // width:61px;
                                         font-size: 14px;
                                     }
                                     .z_proess{

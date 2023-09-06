@@ -138,7 +138,7 @@
                     },
                     yAxis: [
                         {
-                            name: '产气量/10⁴m³',
+                            name: '产气量(10⁴m³)',
                             nameLocation:'middle',
                             nameGap:70,
                             nameTextStyle: {
@@ -168,7 +168,7 @@
                             },
                         },
                         {
-                            name: '油当量(折算)/m³',
+                            name: '油当量(折算)(m³)',
                             nameLocation:'middle',
                             nameGap:70,
                             nameTextStyle: {

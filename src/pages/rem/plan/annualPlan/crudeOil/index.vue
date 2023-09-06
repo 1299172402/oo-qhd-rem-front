@@ -134,7 +134,7 @@
                     }, ],
                     yAxis: [
                         {
-                            name: '日产m³/d',
+                            name: '日产(m³/d)',
                             nameLocation:'middle',
                             nameGap:70,
                             nameTextStyle: {
@@ -164,7 +164,7 @@
                             },
                         },
                         {
-                            name: '年产10⁴m³',
+                            name: '年产(10⁴m³)',
                             nameLocation:'middle',
                             nameGap:70,
                             nameTextStyle: {
@@ -296,11 +296,11 @@
                         //各线的数据
                         this.productLineChart.series = seriesData;
                         if (this.searchForm.selectUnitOfProduction == 'm') {
-                            this.productLineChart.yAxis[0].name = '日产m³/d';
-                            this.productLineChart.yAxis[1].name = '年产10⁴m³';
+                            this.productLineChart.yAxis[0].name = '日产(m³/d)';
+                            this.productLineChart.yAxis[1].name = '年产(10⁴m³)';
                         } else if (this.searchForm.selectUnitOfProduction == 't') {
-                            this.productLineChart.yAxis[0].name = '日产t/d';
-                            this.productLineChart.yAxis[1].name = '年产10⁴t';
+                            this.productLineChart.yAxis[0].name = '日产(t/d)';
+                            this.productLineChart.yAxis[1].name = '年产(10⁴t)';
                         }
                     } else {
                         //图例数据
@@ -308,11 +308,11 @@
                         //各线的数据
                         this.productLineChart.series = seriesData;
                         if (this.searchForm.selectUnitOfProduction == 'm') {
-                            this.productLineChart.yAxis[0].name = '日产m³/d';
-                            this.productLineChart.yAxis[1].name = '年产10⁴m³';
+                            this.productLineChart.yAxis[0].name = '日产(m³/d)';
+                            this.productLineChart.yAxis[1].name = '年产(10⁴m³)';
                         } else if (this.searchForm.selectUnitOfProduction == 't') {
-                            this.productLineChart.yAxis[0].name = '日产t/d';
-                            this.productLineChart.yAxis[1].name = '年产10⁴t';
+                            this.productLineChart.yAxis[0].name = '日产(t/d)';
+                            this.productLineChart.yAxis[1].name = '年产(10⁴t)';
                         }
                     }
                 });

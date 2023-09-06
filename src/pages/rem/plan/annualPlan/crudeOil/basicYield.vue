@@ -135,7 +135,7 @@
                         },
                     }, ],
                     yAxis: [{
-                        name: '产油量/t',
+                        name: '产油量(t)',
                         nameLocation:'middle',
                         nameGap:70,
                         nameTextStyle: {
@@ -208,9 +208,9 @@
                             seriesData.push(this.getLinearSeries(chartDataS[i], '1'));
                         }
                         if (this.searchForm.selectUnitOfProduction == 't') {
-                            this.OldLineChart.yAxis[0].name = '产油量/t';
+                            this.OldLineChart.yAxis[0].name = '产油量(t)';
                         } else if (this.searchForm.selectUnitOfProduction == 'm') {
-                            this.OldLineChart.yAxis[0].name = '产油量/m³';
+                            this.OldLineChart.yAxis[0].name = '产油量(m³)';
                         }
                         //图例数据
                         this.OldLineChart.legend.data = legendData;

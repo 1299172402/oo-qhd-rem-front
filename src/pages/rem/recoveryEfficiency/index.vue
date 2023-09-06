@@ -902,7 +902,7 @@
                     },
                     yAxis: {
                         // data:[],
-                        name: "日产油量/10*4m³",
+                        name: "日产油量(10⁴m³)",
                         // nameLocation: "center",
                         nameLocation:'middle',
                         nameTextStyle: {

@@ -212,7 +212,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: '时间/日',
+                        name: '时间(d)',
                         nameTextStyle: {
                             color: '#fff',
                             fontSize: 14,
@@ -244,7 +244,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: '产油量/m³',
+                            name: '产油量(m³)',
                             nameTextStyle: {
                                 color: '#fff',
                                 fontSize: 14,
@@ -274,7 +274,7 @@
                         },
                         {
                             type: 'value',
-                            name: '措施井次/口',
+                            name: '措施井次(口)',
                             nameTextStyle: {
                                 color: '#fff',
                                 fontSize: 14,
@@ -370,7 +370,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: '产油量/m³',
+                            name: '产油量(m³)',
                             nameTextStyle: {
                                 color: '#fff',
                                 fontSize: 14,
@@ -400,7 +400,7 @@
                         },
                         {
                             type: 'value',
-                            name: '措施井次/口',
+                            name: '措施井次(口)',
                             nameTextStyle: {
                                 color: '#fff',
                                 fontSize: 14,
@@ -684,7 +684,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: '措施井次/口',
+                            name: '措施井次(口)',
                             nameTextStyle: {
                                 color: '#fff',
                                 fontSize: 14,
@@ -714,7 +714,7 @@
                         },
                         {
                             type: 'value',
-                            name: '注入量/10⁴m³',
+                            name: '注入量(10⁴m³)',
                             nameTextStyle: {
                                 color: '#fff',
                                 fontSize: 14,
@@ -840,9 +840,9 @@
                         let xData = Array.from(xSet).sort();
                         this.resetProLineChart.xAxis.data = xData;
                         if (unitType == 't') {
-                            this.resetProLineChart.yAxis[0].name = '产油量/t';
+                            this.resetProLineChart.yAxis[0].name = '产油量(t)';
                         } else if (unitType == 'm') {
-                            this.resetProLineChart.yAxis[0].name = '产油量/m³';
+                            this.resetProLineChart.yAxis[0].name = '产油量(m³)';
                         }
                         //图例数据
                         this.resetProLineChart.legend.data = legendData;
@@ -898,9 +898,9 @@
                             seriesData.push(this.getLinearSeries(chartDataS[i], '1'));
                         }
                         if (unitType == 't') {
-                            this.OldLineChart.yAxis[0].name = '产油量/t';
+                            this.OldLineChart.yAxis[0].name = '产油量(t)';
                         } else if (unitType == 'm') {
-                            this.OldLineChart.yAxis[0].name = '产油量/m³';
+                            this.OldLineChart.yAxis[0].name = '产油量(m³)';
                         }
                         //图例数据
                         this.OldLineChart.legend.data = legendData;
@@ -930,9 +930,9 @@
                             seriesData.push(this.getLinearSeries(chartDataS[i], '1'));
                         }
                         if (unitType == 't') {
-                            this.lastYearProLineChart.yAxis[0].name = '产油量/t';
+                            this.lastYearProLineChart.yAxis[0].name = '产油量(t)';
                         } else if (unitType == 'm') {
-                            this.lastYearProLineChart.yAxis[0].name = '产油量/m³';
+                            this.lastYearProLineChart.yAxis[0].name = '产油量(m³)';
                         }
                         //图例数据
                         this.lastYearProLineChart.legend.data = legendData;
@@ -962,9 +962,9 @@
                             seriesData.push(this.getLinearSeries(chartDataS[i], '1'));
                         }
                         if (unitType == 't') {
-                            this.lastYearUseLineChart.yAxis[0].name = '产油量/t';
+                            this.lastYearUseLineChart.yAxis[0].name = '产油量(t)';
                         } else if (unitType == 'm') {
-                            this.lastYearUseLineChart.yAxis[0].name = '产油量/m³';
+                            this.lastYearUseLineChart.yAxis[0].name = '产油量(m³)';
                         }
                         //图例数据
                         this.lastYearUseLineChart.legend.data = legendData;
@@ -1029,9 +1029,9 @@
                         this.productLineChart.xAxis.data = xData;
                         //console.log(xData);
                         if (unitType == 't') {
-                            this.productLineChart.yAxis[0].name = '产油量/t';
+                            this.productLineChart.yAxis[0].name = '产油量(t)';
                         } else if (unitType == 'm') {
-                            this.productLineChart.yAxis[0].name = '产油量/m³';
+                            this.productLineChart.yAxis[0].name = '产油量(m³)';
                         }
                         //图例数据
                         this.productLineChart.legend.data = legendData;
@@ -1065,9 +1065,9 @@
                             seriesData.push(this.getLinearSeriesDoubleIndex(chartDataS[i]));
                         }
                         if (unitType == 't') {
-                            this.devWellLineChart.yAxis[1].name = '注入量/10⁴t';
+                            this.devWellLineChart.yAxis[1].name = '注入量(10⁴t)';
                         } else if (unitType == 'm') {
-                            this.devWellLineChart.yAxis[1].name = '注入量/10⁴m³';
+                            this.devWellLineChart.yAxis[1].name = '注入量(10⁴m³)';
                         }
                         //图例数据
                         this.devWellLineChart.legend.data = legendData;

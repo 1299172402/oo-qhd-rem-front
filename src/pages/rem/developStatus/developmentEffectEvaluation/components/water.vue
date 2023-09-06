@@ -209,7 +209,7 @@ import { number } from 'echarts';
                             },
                         },
                     },
-                    color: ["#24DEFF", "#00FFD4", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
+                    color: ["#24DEFF", "#6dad8a", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
                     series: [],
                 },
                 //水驱指数
@@ -345,7 +345,7 @@ import { number } from 'echarts';
                             },
                         }
                     ],
-                    color: ["#24DEFF", "#00FFD4", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
+                    color: ["#24DEFF", "#6dad8a", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
                     series: [],
                 },
                 //存水率
@@ -454,7 +454,7 @@ import { number } from 'echarts';
                             },
                         },
                     },
-                    color: ["#24DEFF", "#00FFD4", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
+                    color: ["#24DEFF", "#6dad8a", "#387DFF", "#E9D456", "#CD3D00", "#8635FF"],
                     series: [],
                 },
                 //指标评价结果表
