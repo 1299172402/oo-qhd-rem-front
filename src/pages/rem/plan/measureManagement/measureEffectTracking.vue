@@ -116,13 +116,13 @@
                 <el-table-column prop="beginDate" align="center" label="措施开始日期" min-width="110px"></el-table-column>
                 <el-table-column prop="endDate" align="center" label="措施结束日期" min-width="110px"></el-table-column>
                 <el-table-column align="center" label="措施前注入情况" min-width="100">
-                    <el-table-column align="center" label="日注水量 m³/d" min-width="100" prop="bmInjWater"></el-table-column>
+                    <el-table-column align="center" label="日注水量 (m³/d)" min-width="100" prop="bmInjWater"></el-table-column>
                 </el-table-column>
                 <el-table-column align="center" label="措施效果">
-                    <el-table-column prop="injDaily" align="center" label="当日日增注 m³/d" min-width="100"></el-table-column>
-                    <el-table-column align="center" label="累增注 m³" min-width="100" prop="sumInjDaily"></el-table-column>
-                    <el-table-column align="center" label="增注有效期 d" min-width="100" prop="days"></el-table-column>
-                    <el-table-column align="center" label="地质设计日配注 m³/d" min-width="120" prop="geoDesignInjDaily"></el-table-column>
+                    <el-table-column prop="injDaily" align="center" label="当日日增注( m³/d)" min-width="100"></el-table-column>
+                    <el-table-column align="center" label="累增注 (m³)" min-width="100" prop="sumInjDaily"></el-table-column>
+                    <el-table-column align="center" label="增注有效期 (d)" min-width="100" prop="days"></el-table-column>
+                    <el-table-column align="center" label="地质设计日配注 (m³/d)" min-width="120" prop="geoDesignInjDaily"></el-table-column>
                 </el-table-column>
                 <el-table-column label="地质设计" align="center">
                     <template slot-scope="scope">
@@ -758,6 +758,8 @@
                             },
                         },
                         {
+                            name: "日",
+                            nameGap: 50,
                             gridIndex: 2,
                             type: 'category',
                             data: [
@@ -821,7 +823,7 @@
                         },
                         {
                             gridIndex: 0,
-                            name: '折\n算\n基\n准\n面\n流\n压\n(MPa)',
+                            name: '折\n算\n基\n准\n面\n流\n压\n︵\nMPa\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
@@ -917,7 +919,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: '#0206f7',
+                                color: '#274f97',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -945,7 +947,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: 'rgb(255,0,0)',
+                                color: '#da2d28',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -1031,12 +1033,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: '日\n产\n油\n︵\nm³\n︶',
+                            name: '产\n油\n︵\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#018000',
+                                color: '#69b146',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -1059,12 +1061,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: '日\n产\n液\n︵\nm³\n︶',
+                            name: '产\n液\n︵\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: 'rgb(165,42,42)',
+                                color: '#933332',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -1089,12 +1091,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: '日\n产\n气\n(10⁴m³)',
+                            name: '产\n气\n︵\n10⁴m³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#f90d03',
+                                color: '#da2c28',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1339,6 +1341,8 @@
                             },
                         },
                         {
+                            name: "日",
+                            nameGap: 30,
                             gridIndex: 1,
                             type: 'category',
                             data: [
@@ -1490,7 +1494,7 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '日\n配\n注\n量\n︵\nm³\n︶',
+                            name: '配\n注\n量\n︵\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
@@ -1520,7 +1524,7 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '日\n注\n聚\n量\n︵\nm³\n︶',
+                            name: '注\n聚\n量\n︵\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
@@ -1549,7 +1553,7 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '日\n注\n水\n量\n︵\nm³\n︶',
+                            name: '注\n水\n量\n︵\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
@@ -1599,13 +1603,13 @@
                     grid: [{
                             x: '80',
                             y: '4%',
-                            width: '92%',
+                            width: '90%',
                             height: '40%',
                         },
                         {
                             x: '80',
                             y: '50%',
-                            width: '92%',
+                            width: '90%',
                             height: '40%',
                         },
                     ],
@@ -1628,6 +1632,8 @@
                             },
                         },
                         {
+                            name: "时间",
+                            nameGap: 40,
                             gridIndex: 1,
                             data: [],
                             type: 'category',
@@ -1722,6 +1728,15 @@
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             data: [],
+                            symbol: "circle",
+                            lineStyle: {
+                                color: "#61bcc4",
+                            },
+                            // 节点样式
+                            itemStyle: {
+                                borderColor: "#61bcc4",
+                                color: "#61bcc4",
+                            },
                         },
                     ],
                 },
@@ -2091,15 +2106,15 @@
                             if (lineName == '含水') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 4;
-                                series.itemStyle={color:'#0206f7'}
+                                series.itemStyle={color:'#274f97'}
                             } else if (lineName == '日产油') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'#018000'}
+                                series.itemStyle={color:'#69b146'}
                             } else if (lineName == '日产液') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#f300f1'}
+                                series.itemStyle={color:'#933332'}
                             } else if (lineName == '流压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 0;
@@ -2123,19 +2138,19 @@
                             } else if (lineName == '日产液量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#f300f1'}
+                                series.itemStyle={color:'#933332'}
                             } else if (lineName == '日产油量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'#018000'}
+                                series.itemStyle={color:'#69b146'}
                             } else if (lineName == '日产气量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 10;
-                                series.itemStyle={color:'#f90d03'}
+                                series.itemStyle={color:'#da2c28'}
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
-                                series.itemStyle={color:'rgb(255,0,0)'}
+                                series.itemStyle={color:'#da2d28'}
                             } else if (lineName == '生产时间') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;
@@ -2462,6 +2477,8 @@
                         ...this.defaultType
                         .map((arr, index) => arr.filter((item) => this.queryParams.paramCodes.includes(item)))
                         .map((item, index) => ({
+                            // name: "日",
+                            // nameGap: 30,
                             gridIndex: index,
                             type: 'category',
                             /* data: (this.realTimeData[0] && this.realTimeData[0].paramValues)

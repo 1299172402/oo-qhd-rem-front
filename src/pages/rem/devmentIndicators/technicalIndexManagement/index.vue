@@ -510,6 +510,9 @@
                         itemGap: 14,
                     },
                     xAxis: [{
+                        name: "日",
+                        nameGap: 30,
+                        nameTextStyle: { color: '#8FA4CC' },
                         type: 'category',
                         boundaryGap: false,
                         axisLabel: {
@@ -646,7 +649,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "年月",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -762,7 +765,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月份",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -882,7 +885,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月份",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -994,7 +997,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "年月",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -1098,7 +1101,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "年月",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -1246,7 +1249,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月份",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },

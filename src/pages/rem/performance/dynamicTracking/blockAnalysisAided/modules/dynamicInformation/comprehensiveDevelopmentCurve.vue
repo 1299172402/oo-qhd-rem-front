@@ -552,9 +552,7 @@
                             xAxisIndex: 0,
                             yAxisIndex: 0,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(241, 86, 47, 1)'
-                                }
+                                color: '#030303',
                             },
                             data: []
                         },
@@ -567,9 +565,7 @@
                             xAxisIndex: 0,
                             yAxisIndex: 0,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(58, 74, 194, 1)'
-                                }
+                                color: '#c2272c'
                             },
                             data: []
                         },
@@ -582,9 +578,7 @@
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(47, 241, 176, 1)'
-                                }
+                                color: '#274f97'
                             },
                             data: []
                         },
@@ -597,9 +591,7 @@
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(209, 241, 47, 1)'
-                                }
+                                color: '#9b5497'
                             },
                             data: []
                         },
@@ -612,9 +604,7 @@
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(241, 186, 47, 1)'
-                                }
+                                color: '#902f2f'
                             },
                             data: []
                         },
@@ -627,9 +617,7 @@
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(47, 235, 241, 1)'
-                                }
+                                color: '#69b146'
                             },
                             data: []
                         },
@@ -642,9 +630,7 @@
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(47, 89, 241, 1)'
-                                }
+                                color: '#902f2f'
                             },
                             data: []
                         },
@@ -657,9 +643,7 @@
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(241, 47, 238, 1)'
-                                }
+                                color: '#69b146'
                             },
                             data: []
                         },
@@ -672,9 +656,7 @@
                             xAxisIndex: 4,
                             yAxisIndex: 4,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(241, 47, 105, 1)'
-                                }
+                                color: '#244f97'
                             },
                             data: []
                         },
@@ -687,9 +669,7 @@
                             xAxisIndex: 5,
                             yAxisIndex: 5,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(47, 241, 115, 1)'
-                                }
+                                color: '#d92c28'
                             },
                             data: []
                         },
@@ -702,9 +682,7 @@
                             xAxisIndex: 6,
                             yAxisIndex: 6,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(35, 108, 39, 1)'
-                                }
+                                color: '#61bcc4'
                             },
                             data: []
                         },
@@ -717,9 +695,7 @@
                             xAxisIndex: 7,
                             yAxisIndex: 7,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(138, 238, 50, 1)'
-                                }
+                                color: 'rgba(138, 238, 50, 1)'
                             },
                             data: []
                         },
@@ -732,9 +708,7 @@
                             xAxisIndex: 8,
                             yAxisIndex: 8,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(53, 120, 2, 1)'
-                                }
+                                color: 'rgba(53, 120, 2, 1)'
                             },
                             data: []
                         },

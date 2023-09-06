@@ -110,6 +110,8 @@
                             }
                         },
                         {
+                            name: "日",
+                            nameGap: 30,
                             gridIndex: 1,
                             type: 'category',
                             data: ['2018-01', '2018-04', '2018-06', '2018-10', '2019-01', '2019-04', '2019-06', '2019-10', '2020-01', '2020-04', '2020-06', '2020-10'],
@@ -315,7 +317,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: 'rgb(0,255,255)',
+                                color: '#61bcc4',
                                 fontSize: 14
                             },
                             position: 'right',
@@ -399,7 +401,7 @@
                                 } else if (chartDatalabel == '日注水量') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 5;
-                                    series.color = 'rgb(0,255,255)';
+                                    series.color = '#61bcc4';
                                 } else if (chartDatalabel == '井口压力') {
                                     series.xAxisIndex = 0;
                                     series.yAxisIndex = 1;

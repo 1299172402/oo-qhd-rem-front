@@ -197,7 +197,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "年份",
+                        name: "年",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },

@@ -871,10 +871,10 @@
                         itemGap: 14,
                     },
                     xAxis: {
+                        name: "日",
+                        nameGap: 30,
                         // name: "时间",
                         type: 'category',
-                        // nameLocation: "center",
-                        nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },

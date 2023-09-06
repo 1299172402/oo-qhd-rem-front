@@ -363,7 +363,7 @@
                         bottom:30,
                     },
                     xAxis: {
-                        // name: "时间/天",
+                        name: "日",
                         // nameTextStyle: {
                         //     color: "#8FA4CC",
                         //     fontSize: 14,
@@ -540,6 +540,8 @@
                         }
                     },
                     xAxis: {
+                        name: "井",
+                        nameGap: 20,
                         type: "category",
                         data: [],
                         axisLabel: {
