@@ -816,7 +816,6 @@ export default {
                 let msg = res.data.msg;
                 if (msg == "success") {
                     let myData = res.data.data.platform;
-                    console.log("====queryPlatFormList", myData);
                     this.ptData = myData;
                     //初始选中油田
                     if (!this.platform) {
@@ -828,6 +827,22 @@ export default {
                     this.queryWellListByPid();
                 }
             });
+        },
+        updateValue(data, myWellCount) {
+            for (let j = 0; j < data.length; j++) {
+                let t_data = data[j];
+                //获得相关井数
+                let t_count = !isNaN(myWellCount[t_data.code]) ? myWellCount[t_data.code] : 0;
+                t_data.value = t_count; //登记条数
+                if (t_count > 0) {
+                    let unit = t_data.unit ? t_data.unit.replace('m3', 'm³') : '';
+                    this.trendOfIndicatorsTab.push({
+                        code: t_data.code,
+                        name: t_data.name,
+                        unit: unit
+                    });
+                }
+            }
         },
         //获取井号
         queryWellListByPid() {
@@ -875,7 +890,6 @@ export default {
         },
         // 井号切换事件
         changeWell(val) {
-            console.log('是否执行我了')
             this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
         },
         // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
@@ -990,10 +1004,8 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示层位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1=t_data.code + 'Message';
-                        console.log('key1',key1)
                         let key2=t_data.code;
                         let evalBasisLayers=messData.evalBasisLayers;//层位数据
                         let children=myData[i].children;
@@ -1061,10 +1073,8 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示层位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1=t_data.code + 'Message';
-                        console.log('key1',key1)
                         let key2=t_data.code;
                         let evalBasisLayers=messData.evalBasisLayers;//层位数据
                         let children=myData[i].children;
@@ -1193,7 +1203,6 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示井位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1='theGroundBecauseMessage';
                         let evalBasisLayers=messData.evalBasisLayers;//层位数据
@@ -1453,115 +1462,22 @@ export default {
             //3、根据每个项目的井数遍历检查表头
             //井层指标变化趋势  trendOfIndicators
             this.trendOfIndicatorsTab = [];
-            for (let j = 0; j < this.trendOfIndicators.length; j++) {
-                let t_data = this.trendOfIndicators[j];
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.trendOfIndicators[j].value = t_count; //登记条数
-                if (t_count > 0) {
-                    let titleName = t_data.name;
-                    let unit='';
-                    if(t_data.unit){
-                        unit=t_data.unit.replace('m3', 'm³');
-                    }
-                    this.trendOfIndicatorsTab.push({
-                        code: t_data.code,
-                        name: titleName,
-                        unit
-                    });
-                }
-            }
+            this.updateValue(this.trendOfIndicators, myWellCount);
+            this.updateValue(this.zsqdForm, myWellCount);
+            this.updateValue(this.workingCondition, myWellCount);
+            this.updateValue(this.theGroundBecause, myWellCount);
+            this.updateValue(this.wellboreReason, myWellCount);
+            this.updateValue(this.formationReason, myWellCount);
+            this.updateValue(this.stopInjectionRecovery, myWellCount);
+            this.updateValue(this.recommendedMeasuresOptions, myWellCount);
             //注水强度zsqdForm
-            for (let j = 0; j < this.zsqdForm.length; j++) {
-                let t_data = this.zsqdForm[j];
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.zsqdForm[j].value = t_count; //登记条数
-                if (t_count > 0) {
-                    this.trendOfIndicatorsTab.push({
-                        code: t_data.code,
-                        name: t_data.name,
-                        unit:'m³/d·m'
-                    });
-                }
-            }
             //井层注水工况  workingCondition
-            for (let j = 0; j < this.workingCondition.length; j++) {
-                let t_data = this.workingCondition[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.workingCondition[j].value = t_count; //登记条数
-            }
             //地面原因 theGroundBecause
-            for (let j = 0; j < this.theGroundBecause.length; j++) {
-                let t_data = this.theGroundBecause[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.theGroundBecause[j].value = t_count; //登记条数
-            }
             //井筒原因 wellboreReason
-            for (let j = 0; j < this.wellboreReason.length; j++) {
-                let t_data = this.wellboreReason[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.wellboreReason[j].value = t_count; //登记条数
-            }
             //地层原因 formationReason
-            for (let j = 0; j < this.formationReason.length; j++) {
-                let t_data = this.formationReason[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.formationReason[j].value = t_count; //登记条数
-            }
             //停注恢复 stopInjectionRecovery
-            for (let j = 0; j < this.stopInjectionRecovery.length; j++) {
-                let t_data = this.stopInjectionRecovery[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.stopInjectionRecovery[j].value = t_count; //登记条数
-            }
             //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
-            for (let j = 0; j < this.recommendedMeasuresOptions.length; j++) {
-                let t_data = this.recommendedMeasuresOptions[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.recommendedMeasuresOptions[j].value = t_count; //登记条数
-            }
             this.tableData = myData; //加载数据
-            console.log('myData',myData);
-            console.log('trendOfIndicatorsTab',this.trendOfIndicatorsTab)
             this.$nextTick(() => {
                 this.$refs.tableList.doLayout();
             })
@@ -1630,7 +1546,6 @@ export default {
                 let msg = res.data.msg;
                 if (msg == "success") {
                     let myData = res.data.data.indicatorAnalysisDetailInfos;
-                    console.log("myData3", myData);
                     this.theGroundBecause = myData;
                 }
             });
@@ -1670,7 +1585,6 @@ export default {
                 let msg = res.data.msg;
                 if (msg == "success") {
                     let myData = res.data.data.indicatorAnalysisDetailInfos;
-                    console.log("myData5", myData);
                     this.formationReason = myData;
                 }
             });
@@ -1682,7 +1596,6 @@ export default {
                 let msg = res.data.msg;
                 if (msg == "success") {
                     let myData = res.data.data.indicatorAnalysisDetailInfos;
-                    console.log("myData6", myData);
                     this.stopInjectionRecovery = myData;
                 }
             });
@@ -1704,11 +1617,9 @@ export default {
         //措施推荐可用项目,获取措施效果数据
         async queryProWellDynamicAnalysisDetail() {
             await injectionWellDynamicAnalysisDetail(this.paramMap).then((res) => {
-                console.log("myData11_tag", res);
                 let msg = res.data.msg;
                 if (msg == "success") {
                     let myData = res.data.data.evaluationResults;
-                    console.log("myData11", myData);
                     this.recommendedMeasuresData = myData;
                     this.recommendedMeasuresWells = [];
                     this.initRecommendedMeasuresWells(); //生成井清单
@@ -1753,7 +1664,6 @@ export default {
                     this.zsqdNum.zczb=this.zsqdNum.zcnum/this.zsqdNum.allnum * 100;
                     this.zsqdNum.yczb=this.zsqdNum.yczb/this.zsqdNum.allnum * 100;
                     this.zsqdForm = data;
-                    console.log('this.zsqdForm',this.zsqdForm)
                 }
             })
         },
@@ -1768,7 +1678,6 @@ export default {
         },
         //选中项目
         selRadioIterm(val, tag) {
-            console.log(val,888,this.selCode,999)
             let myData = []; //我的数据
             let myWellCount = {}; //计算各项目的井数
             let t_count = 0; //计数器
@@ -1793,7 +1702,6 @@ export default {
             if (this[tag].length) {
                 for (let i = 0; i < this[tag].length; i++) {
                     let tData = this[tag][i];
-                    console.log(tData);
                     if (val == tData.code) {
                         if (tData.wells == undefined || tData.wells == "" || tData.wells == "null") { //无数据
                             myData = []; //没有数据
@@ -1814,7 +1722,6 @@ export default {
                     }
                 }
             }
-            console.log('myData',myData)
             //2、按照顺序初始化计数器、生成数据体
             for (let i = 0; i < myData.length; i++) {
                 let myWellId = myData[i].wellId; //井号
@@ -1850,7 +1757,6 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示层位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1=t_data.code + 'Message';
                         let key2=t_data.code;
@@ -1920,10 +1826,8 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示层位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1=t_data.code + 'Message';
-                        console.log('key1',key1)
                         let key2=t_data.code;
                         let evalBasisLayers=messData.evalBasisLayers;//层位数据
                         let children=myData[i].children;
@@ -2051,7 +1955,6 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示井位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1='theGroundBecauseMessage';
                         let evalBasisLayers=messData.evalBasisLayers;//层位数据
@@ -2419,8 +2322,6 @@ export default {
                 this.recommendedMeasuresOptions[j].value = t_count; //登记条数
             }
             this.tableData = myData; //加载数据
-            console.log('myData',myData);
-            console.log('trendOfIndicatorsTab',this.trendOfIndicatorsTab)
             this.$nextTick(() => {
                 this.$refs.tableList.doLayout();
             })
@@ -2464,10 +2365,8 @@ export default {
         //获得对应日期串
         getMyDate(days) {
             let date = new Date();
-            console.log("date0=" + date);
             date = date.setDate(date.getDate() + days);
             date = new Date(date);
-            console.log("date1=" + date);
             let today = date.getDate();
             if (parseInt(today) < 10) {
                 today = '0' + today;

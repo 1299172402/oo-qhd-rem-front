@@ -242,8 +242,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/12.png', import.meta.url).href,
                     showFlag: false,
-                    alarmPageCode: ['BJ-SBSS-001', 'BJ-SBSS-002', 'BJ-SBSS-003', 'BJ-SBSS-090'],
-                    typeIdList: ['BJ-SBSS-001', 'BJ-SBSS-002', 'BJ-SBSS-003', 'BJ-SBSS-004', 'BJ-SBSS-005', 'BJ-SBSS-009', 'BJ-SBSS-010', 'BJ-SBSS-011', 'BJ-SBSS-012', 'BJ-SBSS-013'],
+                    alarmPageCode: ['BJ-SBSS-001', 'BJ-SBSS-002', 'BJ-SBSS-003', 'BJ-SBSS-004', 'BJ-SBSS-005', 'BJ-SBSS-009', 'BJ-SBSS-010', 'BJ-SBSS-011', 'BJ-SBSS-012', 'BJ-SBSS-013'],
                     warningShowFlag: false,
                 },
                 {
@@ -299,8 +298,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/10.png', import.meta.url).href,
                     showFlag: false,
-                    alarmPageCode:[],
-                    typeIdList: ['BJ-SC-002'],
+                    alarmPageCode: ['BJ-SC-002'],
                     warningShowFlag: false,
                 },
                 {
@@ -333,8 +331,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/28.png', import.meta.url).href,
                     showFlag: false,
-                    alarmPageCode:[],
-                    typeIdList: ['BJ-SC-003'],
+                    alarmPageCode: ['BJ-SC-003'],
                     warningShowFlag: false,
                 },
             ]

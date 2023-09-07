@@ -151,8 +151,8 @@ export default {
                     alarmPageCode.push(m.alarmPageCode)
                 }
             })
-            if(currentList.alarmPageCode){
-                alarmPageCode.push(currentList.alarmPageCode)
+            if(currentList.alarmPageCode.length > 0){
+                alarmPageCode.push(...currentList.alarmPageCode)
             }
             const data = {
                 authorizedPersonnel:this.$store.getters["user/name"],
