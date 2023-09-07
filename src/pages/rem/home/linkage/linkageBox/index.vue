@@ -152,7 +152,7 @@ export default {
                 }
             })
             if(currentList.alarmPageCode.length > 0){
-                alarmPageCode.push(currentList.alarmPageCode)
+                alarmPageCode.push(...currentList.alarmPageCode)
             }
             const data = {
                 authorizedPersonnel:this.$store.getters["user/name"],
