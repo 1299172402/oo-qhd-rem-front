@@ -75,12 +75,10 @@
                             </template>              
                         </el-table-column>
                         <el-table-column label="低产低效类别" prop="lowProdEffTypeCode"  align="center">
-                            <el-table-column label="井号" prop="lowProdEffTypeCode" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.lowProdEffTypeCode !== null && scope.row.lowProdEffTypeCode !== ''">{{scope.row.lowProdEffTypeCode}}</span>
                                     <span v-else>-</span>
                                 </template>
-                            </el-table-column>
                         </el-table-column>
                         <el-table-column label="生产情况"   align="center">
                             <el-table-column :label="`日产油\n(m³/d)`" prop="dailyOil"   align="center">
