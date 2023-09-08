@@ -350,7 +350,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: "#922f2c",
+                                color: "rgb(250,0,251)",
                                 fontSize: 14,
                             },
                             scale: true,
@@ -596,7 +596,7 @@
                                 if (chartDatalabel == '日产液') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 4;
-                                    series.itemStyle={color:'#922f2c'}
+                                    series.itemStyle={color:'rgb(250,0,251)'}
                                 } else if (chartDatalabel == '日产油') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 5;

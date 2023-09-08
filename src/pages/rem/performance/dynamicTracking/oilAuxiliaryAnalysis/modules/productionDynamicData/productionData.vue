@@ -530,7 +530,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color:'#8f2c2b',
+                                color:'rgb(250,0,251)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -695,7 +695,7 @@
                             } else  if (lineName == '日产液量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#8f2c2b'}
+                                series.itemStyle={color:'rgb(250,0,251)'}
                             } else if (lineName == '日产油量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
@@ -711,7 +711,7 @@
                             } else if (lineName == '日产液') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#8f2c2b'}
+                                series.itemStyle={color:'rgb(250,0,251)'}
                             } else  {
                                 continue;
                             }

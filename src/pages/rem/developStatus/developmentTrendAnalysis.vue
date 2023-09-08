@@ -491,7 +491,7 @@
                             symbol: 'circle',
                             symbolSize: 5,
                             itemStyle: {
-                                color: '#8c2a2b',
+                                color: 'rgb(250,0,251)',
                                 borderColor: 'rgba(255,255,255,0.32)',
                                 borderWidth: 2,
                                 borderType: 'solid',
