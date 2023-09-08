@@ -481,9 +481,6 @@
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
-                            lineStyle: {
-                                color: '#9A72FF',
-                            },
                             markArea: {
                                 silent: true,
                                 data: [[{xAxis: '2020-04'}, {xAxis: '2020-10'}]],
@@ -494,7 +491,7 @@
                             symbol: 'circle',
                             symbolSize: 5,
                             itemStyle: {
-                                color: '#9A72FF',
+                                color: '#8c2a2b',
                                 borderColor: 'rgba(255,255,255,0.32)',
                                 borderWidth: 2,
                                 borderType: 'solid',
@@ -511,9 +508,6 @@
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
-                            lineStyle: {
-                                color: '#3BEC7A',
-                            },
                             markArea: {
                                 silent: true,
                                 data: [[{xAxis: '2020-04'}, {xAxis: '2020-10'}]],
@@ -524,7 +518,7 @@
                             symbol: 'circle',
                             symbolSize: 5,
                             itemStyle: {
-                                color: '#3BEC7A',
+                                color: '#69b146',
                                 borderColor: 'rgba(255,255,255,0.32)',
                                 borderWidth: 2,
                                 borderType: 'solid',
@@ -541,9 +535,6 @@
                                 color: '#8FA4CC',
                                 fontSize: 14,
                             },
-                            lineStyle: {
-                                color: '#24DEFF',
-                            },
                             markArea: {
                                 silent: true,
                                 label: {
@@ -559,7 +550,7 @@
                             symbol: 'circle',
                             symbolSize: 5,
                             itemStyle: {
-                                color: '#24DEFF',
+                                color: 'rgb(0,0,255)',
                                 borderColor: 'rgba(255,255,255,0.32)',
                                 borderWidth: 2,
                                 borderType: 'solid',
@@ -575,9 +566,6 @@
                                 show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
-                            },
-                            lineStyle: {
-                                color: '#E9D456',
                             },
                             markArea: {
                                 silent: true,
@@ -605,9 +593,6 @@
                                 show: false,
                                 color: '#8FA4CC',
                                 fontSize: 14,
-                            },
-                            lineStyle: {
-                                color: '#24DEFF',
                             },
                             markArea: {
                                 silent: true,

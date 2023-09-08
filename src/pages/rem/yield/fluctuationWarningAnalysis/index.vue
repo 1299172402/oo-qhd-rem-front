@@ -349,7 +349,7 @@
                         }
                     },
                     backgroundColor: "transparent",
-                    color: ["#2ACAFF", "#72818B", "#9A72FF", "#00BC9C"],
+                    color: ["#69b146", "#72818B", "#9A72FF", "#00BC9C"],
                     legend:{
                         textStyle: {
                             color: "#8FA4CC",

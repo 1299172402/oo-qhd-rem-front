@@ -656,7 +656,7 @@
                             xAxisIndex: 4,
                             yAxisIndex: 4,
                             itemStyle: {
-                                color: '#244f97'
+                                color: 'rgb(0,0,255)'
                             },
                             data: []
                         },
