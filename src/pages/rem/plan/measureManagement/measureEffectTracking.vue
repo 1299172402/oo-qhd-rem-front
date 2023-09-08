@@ -887,7 +887,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#0d66fd',
+                                color: 'rgb(0,102,255)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1008,7 +1008,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#5a9df2',
+                                color: 'rgb(100,149,237)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1096,7 +1096,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#da2c28',
+                                color: 'rgb(255,0,0)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -2146,7 +2146,7 @@
                             } else if (lineName == '日产气量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 10;
-                                series.itemStyle={color:'#rgb(255,0,0)'}
+                                series.itemStyle={color:'rgb(255,0,0)'}
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;

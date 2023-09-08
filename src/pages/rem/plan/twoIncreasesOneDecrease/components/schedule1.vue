@@ -1,10 +1,10 @@
 <template>
-    <info-window infoWidth="100%" infoHeight="100%" headerTitle="附表1 秦皇岛32-6/渤中作业公司开发现状汇总表" :isShowMaxBtn="true">
+    <pagePanel infoWidth="100%" infoHeight="100%" headerTitle="附表1 秦皇岛32-6作业公司开发现状汇总表" style="height: 100%;" showBtn>
         <el-table class="doubleHeader" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" header-cell-class-name="table_header"
             :cell-style="{ padding: '6px', 'text-align': 'center' }" height="calc(100% - 40px)">
-            <el-table-column type="index" label="序号" width="140px" fixed></el-table-column>
-            <el-table-column prop="operationarea" label="作业公司" min-width="140" fixed></el-table-column>
-            <el-table-column prop="oilField" label="油田" min-width="120" fixed></el-table-column>
+            <el-table-column type="index" label="序号" width="80" fixed></el-table-column>
+            <el-table-column prop="operationarea" label="作业公司" min-width="180" fixed></el-table-column>
+            <el-table-column prop="oilField" label="油田" min-width="180" fixed></el-table-column>
             <el-table-column prop="reservoirsType" min-width="160" label-class-name="twoRowHeader">
                 <template #header>
                     <div><span>油藏类型</span><br><span style="font-size: 12px">（分公司标准）</span></div>
@@ -22,12 +22,12 @@
             </el-table-column>
             <el-table-column prop="wellUtilization" min-width="100" label-class-name="twoRowHeader">
                 <template #header>
-                    <div><span>油井利用率</span><br><span style="font-size: 12px">（口）</span></div>
+                    <div><span>油井利用率</span><br><span style="font-size: 12px">（%）</span></div>
                 </template>
             </el-table-column>
             <el-table-column prop="productionrate" min-width="100" label-class-name="twoRowHeader">
                 <template #header>
-                    <div><span>生产井时率</span><br><span style="font-size: 12px">（口）</span></div>
+                    <div><span>生产井时率</span><br><span style="font-size: 12px">（%）</span></div>
                 </template>
             </el-table-column>
             <el-table-column prop="combinedtimerate" min-width="100" label-class-name="twoRowHeader">
@@ -91,7 +91,7 @@
                 </template>
             </el-table-column>
         </el-table>
-    </info-window>
+    </pagePanel>
 </template>
 
 <script>
@@ -99,25 +99,25 @@
         data() {
             return {
                 tableData: [{
-                    operationarea: "秦皇岛32-6/渤中",
-                    oilField: "QHD32-6",
+                    operationarea: "秦皇岛32-6作业公司",
+                    oilField: "秦皇岛32-6油田",
                     reservoirsType: "中高渗河流相稠油",
                     proWellCount: "266",
                     proWellOpen: "249",
-                    wellUtilization: "93.6",
-                    productionrate: "96.6",
-                    combinedtimerate: "92.6",
+                    wellUtilization: "93.60",
+                    productionrate: "96.60",
+                    combinedtimerate: "92.60",
                     waterWellCount: "85",
                     waterWellOpen: "85",
-                    oilproduction: "21.94",
-                    dailyoillevel: "7079",
-                    dailyfuelcapacity: "7330",
-                    Comprehensivegasoilratio: "30",
-                    compressiveWaterCut: "93.6",
-                    workingreserve: "15879",
+                    oilproduction: "21.9400",
+                    dailyoillevel: "7079.4121",
+                    dailyfuelcapacity: "7330.12",
+                    Comprehensivegasoilratio: "30.13",
+                    compressiveWaterCut: "93.60",
+                    workingreserve: "15879.0900",
                     outputSpeed: "1.47",
-                    outputDegree: "21.8",
-                    Designatedrecoveryfactor: "36.8",
+                    outputDegree: "21.80",
+                    Designatedrecoveryfactor: "36.80",
                 }, ],
             }
         },
