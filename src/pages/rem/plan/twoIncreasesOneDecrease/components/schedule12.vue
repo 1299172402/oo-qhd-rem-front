@@ -4,8 +4,9 @@
         <el-table id="tableData" class="doubleHeader" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }" height="calc(100% - 40px)">
             <el-table-column prop="xh" label="序号" align="center" width="80" fixed></el-table-column>
-            <el-table-column prop="kftx" label="开发体系" align="center" min-width="120" fixed></el-table-column>
-            <el-table-column prop="ytq" label="油田群" align="center" min-width="120" fixed></el-table-column>
+            <!-- <el-table-column prop="kftx" label="开发体系" align="center" min-width="120" fixed></el-table-column> -->
+            <!-- <el-table-column prop="ytq" label="油田群" align="center" min-width="120" fixed></el-table-column> -->
+            <el-table-column prop="operationarea" label="作业公司" align="center" min-width="180" fixed></el-table-column>
             <el-table-column prop="yt" label="油田" align="center" min-width="180" fixed></el-table-column>
             <el-table-column prop="pt" label="平台" align="center" min-width="160"></el-table-column>
             <el-table-column prop="cljzly" label="处理的介质来源" align="center" min-width="240"></el-table-column>
@@ -58,6 +59,7 @@
                 tableData: [
                     {
                         xh: "1",
+                        operationarea: "秦皇岛32-6作业公司",
                         kftx: "石臼坨开发体系",
                         ytq: "石臼坨油气田群",
                         yt: "秦皇岛32-6油田",
@@ -78,6 +80,7 @@
                     },
                     {
                         xh: "2",
+                        operationarea: "秦皇岛32-6作业公司",
                         kftx: "石臼坨开发体系",
                         ytq: "石臼坨油气田群",
                         yt: "秦皇岛32-6油田",
@@ -98,6 +101,7 @@
                     },
                     {
                         xh: "3",
+                        operationarea: "秦皇岛32-6作业公司",
                         kftx: "石臼坨开发体系",
                         ytq: "石臼坨油气田群",
                         yt: "秦皇岛32-6油田",
@@ -118,6 +122,7 @@
                     },
                     {
                         xh: "4",
+                        operationarea: "秦皇岛32-6作业公司",
                         kftx: "石臼坨开发体系",
                         ytq: "石臼坨油气田群",
                         yt: "秦皇岛32-6油田",
@@ -138,6 +143,7 @@
                     },
                     {
                         xh: "5",
+                        operationarea: "秦皇岛32-6作业公司",
                         kftx: "石臼坨开发体系",
                         ytq: "石臼坨油气田群",
                         yt: "秦皇岛32-6油田",
@@ -158,6 +164,7 @@
                     },
                     {
                         xh: "6",
+                        operationarea: "秦皇岛32-6作业公司",
                         kftx: "石臼坨开发体系",
                         ytq: "石臼坨油气田群",
                         yt: "秦皇岛32-6油田",
@@ -178,6 +185,7 @@
                     },
                     {
                         xh: "7",
+                        operationarea: "秦皇岛32-6作业公司",
                         kftx: "石臼坨开发体系",
                         ytq: "石臼坨油气田群",
                         yt: "秦皇岛32-6油田",
@@ -198,6 +206,7 @@
                     },
                     {
                         xh: "8",
+                        operationarea: "秦皇岛32-6作业公司",
                         kftx: "石臼坨开发体系",
                         ytq: "石臼坨油气田群",
                         yt: "秦皇岛32-6油田",
@@ -218,6 +227,7 @@
                     },
                     {
                         xh: "9",
+                        operationarea: "秦皇岛32-6作业公司",
                         kftx: "石臼坨开发体系",
                         ytq: "石臼坨油气田群",
                         yt: "秦皇岛32-6油田",
@@ -238,6 +248,7 @@
                     },
                     {
                         xh: "10",
+                        operationarea: "秦皇岛32-6作业公司",
                         kftx: "石臼坨开发体系",
                         ytq: "石臼坨油气田群",
                         yt: "秦皇岛32-6油田",
