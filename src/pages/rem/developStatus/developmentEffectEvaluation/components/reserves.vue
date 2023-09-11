@@ -328,7 +328,7 @@
                     },
                     series: [{
                         data: [],
-                        type: "scatter",
+                        type: "line",
                         label: {
                             show: false,
                             position: "top",
@@ -588,7 +588,8 @@
             //储采比折线解析
             outputDegreeLine(lineChart) {
                 let series = {};
-                series.type = 'scatter';
+                // series.type = 'scatter';
+                series.type = 'line';
                 series.symbolSize = 4;
                 series.name = lineChart.label;
                 series.label = {

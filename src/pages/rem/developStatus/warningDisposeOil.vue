@@ -756,7 +756,7 @@ export default {
 
     //保存功能
     save() {
-      let request = { id: this.$route.query.id, opinion: this.textarea };
+      let request = { id: this.$route.query.id, opinion: this.textarea, handler: this.$store.getters["user/userInfo"].nickName };
       proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
         Message({
           showClose: true,
@@ -768,7 +768,7 @@ export default {
     },
     //加入观察室
     addWarning() {
-      let request = { id: this.$route.query.id, opinion: this.textarea };
+      let request = { id: this.$route.query.id, opinion: this.textarea, handler: this.$store.getters["user/userInfo"].nickName };
       proWellIndicatorWarningAssosiationAnalysisToObserve(request).then((res) => {
         Message({
           showClose: true,
@@ -780,7 +780,7 @@ export default {
     },
     //关闭预警
     delWarning() {
-      let request = { id: this.$route.query.id, opinion: this.textarea };
+      let request = { id: this.$route.query.id, opinion: this.textarea, handler: this.$store.getters["user/userInfo"].nickName };
       proWellIndicatorWarningAssosiationAnalysisClose(request).then((res) => {
         Message({
           showClose: true,
