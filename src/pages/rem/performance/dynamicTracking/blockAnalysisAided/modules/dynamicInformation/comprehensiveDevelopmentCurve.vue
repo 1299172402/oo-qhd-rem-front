@@ -604,7 +604,7 @@
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                color: '#902f2f'
+                                color: 'rgb(250,0,251)'
                             },
                             data: []
                         },
@@ -630,7 +630,7 @@
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                color: '#902f2f'
+                                color: 'rgb(250,0,251)'
                             },
                             data: []
                         },
@@ -656,7 +656,7 @@
                             xAxisIndex: 4,
                             yAxisIndex: 4,
                             itemStyle: {
-                                color: '#244f97'
+                                color: 'rgb(0,0,255)'
                             },
                             data: []
                         },

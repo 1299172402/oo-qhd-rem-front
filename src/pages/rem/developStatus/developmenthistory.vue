@@ -903,7 +903,7 @@
                             xAxisIndex: 0,
                             yAxisIndex: 0,
                             itemStyle: {
-                                color: '#c0282c',
+                                color: '#bf282c',
                             },
                             data: [],
                         },
@@ -914,7 +914,7 @@
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             itemStyle: {
-                                color: '#264f97',
+                                color: '#294f96',
                             },
                             data: [],
                         },
@@ -936,7 +936,7 @@
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                color: '#8f2f2d',
+                                color: 'rgb(250,0,251)',
                             },
                             data: [],
                         },
@@ -960,7 +960,7 @@
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                color: '#8f2f2d',
+                                color: 'rgb(250,0,251)',
                             },
                             data: [],
                         },
@@ -984,7 +984,7 @@
                             xAxisIndex: 4,
                             yAxisIndex: 4,
                             itemStyle: {
-                                color: '#284f97',
+                                color: 'rgb(0,0,255)',
                             },
                             data: [],
                         },
@@ -996,7 +996,7 @@
                             xAxisIndex: 5,
                             yAxisIndex: 5,
                             itemStyle: {
-                                color: '#d92c28',
+                                color: '#da2c28',
                             },
                             data: [],
                         },
@@ -1008,7 +1008,7 @@
                             xAxisIndex: 6,
                             yAxisIndex: 6,
                             itemStyle: {
-                                color: '#61bbc4',
+                                color: '#61bcc3',
                             },
                             data: [],
                         },

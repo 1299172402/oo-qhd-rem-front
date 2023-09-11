@@ -7,7 +7,7 @@ export function authorize({ complete, model, name, parameters } = {}) {
     method: "get",
   });
 }
-export function authorize(data) {
+export function approveOrDeny(data) {
   return request({
     url: `${baseUrl}/oauth/authorize`,
     method: "post",

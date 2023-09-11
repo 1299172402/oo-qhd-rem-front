@@ -800,7 +800,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#ff8e08',
+                                color: 'rgb(255,140,0)',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -828,7 +828,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#fe10f6',
+                                color: 'rgb(250,0,251)',
                                 fontSize: 14,
                             },
                             offset: 80,
@@ -858,7 +858,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#ccb71f',
+                                color: 'rgb(200,183,26)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -887,7 +887,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#0d66fd',
+                                color: 'rgb(0,102,255)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -919,7 +919,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: '#274f97',
+                                color: 'rgb(0,0,255)',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -947,7 +947,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#da2d28',
+                                color: 'rgb(154,205,50)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -977,7 +977,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#fb6112',
+                                color: 'rgb(255,99,31)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1008,7 +1008,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#5a9df2',
+                                color: 'rgb(100,149,237)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1038,7 +1038,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#69b146',
+                                color: 'rgb(0,128,0)',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -1066,7 +1066,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#933332',
+                                color: 'rgb(250,0,251)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -1096,7 +1096,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#da2c28',
+                                color: 'rgb(255,0,0)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1382,7 +1382,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#ff631f',
                                 fontSize: 14,
                             },
                             max: 24,
@@ -1412,7 +1412,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#c8b71a',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1441,7 +1441,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: 'rgb(186,85,211)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1471,7 +1471,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#00ffff',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -1499,7 +1499,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#be5028',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -1529,7 +1529,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#ff69b4',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1558,7 +1558,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#61bcc3',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -2106,55 +2106,55 @@
                             if (lineName == '含水') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 4;
-                                series.itemStyle={color:'#274f97'}
+                                series.itemStyle={color:'rgb(0,0,255)'}
                             } else if (lineName == '日产油') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'#69b146'}
+                                series.itemStyle={color:'rgb(0,128,0)'}
                             } else if (lineName == '日产液') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#933332'}
+                                series.itemStyle={color:'rgb(250,0,251)'}
                             } else if (lineName == '流压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 0;
-                                series.itemStyle={color:'#ff8e08'}
+                                series.itemStyle={color:'rgb(255,140,0)'}
                             } else if (lineName == '油压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 2;
-                                series.itemStyle={color:'#ccb71f'}
+                                series.itemStyle={color:'rgb(200,183,26)'}
                             } else if (lineName == '泵频率') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 3;
-                                series.itemStyle={color:'#0d66fd'}
+                                series.itemStyle={color:'rgb(0,102,255)'}
                             } else if (lineName == '井口温度') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 7;
-                                series.itemStyle={color:'#5a9df2'}
+                                series.itemStyle={color:'rgb(100,149,237)'}
                             } else if (lineName == '折算基准面流压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 1;
-                                series.itemStyle={color:'rgb(165,42,42)'}
+                                series.itemStyle={color:'rgb(250,0,251)'}
                             } else if (lineName == '日产液量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#933332'}
+                                series.itemStyle={color:'rgb(250,0,251)'}
                             } else if (lineName == '日产油量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'#69b146'}
+                                series.itemStyle={color:'rgb(0,128,0)'}
                             } else if (lineName == '日产气量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 10;
-                                series.itemStyle={color:'#da2c28'}
+                                series.itemStyle={color:'rgb(255,0,0)'}
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
-                                series.itemStyle={color:'#da2d28'}
+                                series.itemStyle={color:'rgb(154,205,50)'}
                             } else if (lineName == '生产时间') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;
-                                series.itemStyle={color:'#fb6112'}
+                                series.itemStyle={color:'rgb(255,99,31)'}
                             } else {
                                 continue;
                             }
@@ -2218,24 +2218,31 @@
                             if (chartDatalabel == '套压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 2;
+                                series.itemStyle={color:'rgb(186,85,211)'}
                             } else if (chartDatalabel == '日注水量') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;
+                                series.itemStyle={color:'#61bcc3'}
                             } else if (chartDatalabel == '井口压力') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 1;
+                                series.itemStyle={color:'#c8b71a'}
                             } else if (chartDatalabel == '注入时间') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 0;
+                                series.itemStyle={color:'#ff631f'}
                             } else if (chartDatalabel == '日配注量') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 4;
+                                series.itemStyle={color:'#be5028'}
                             } else if (chartDatalabel == '水聚总量') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 3;
+                                series.itemStyle={color:'#00ffff'}
                             } else if (chartDatalabel == '日注聚量') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
+                                series.itemStyle={color:'#ff69b4'}
                             } else {
                                 continue;
                             }

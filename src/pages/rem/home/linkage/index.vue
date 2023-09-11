@@ -80,7 +80,7 @@ export default {
                     showFlag: false,
                     //预警信息接口返回的编号是否属于该项
                     typeIdList: [],
-                    alarmPageCode:[],
+                    alarmPageCode: [],
                     //是否展示预警信息（轮询预警信息接口）
                     warningShowFlag: false,
                 },
@@ -99,7 +99,7 @@ export default {
                     imgUrl: new URL('./topBox/22.png', import.meta.url).href,
                     showFlag: false,
                     typeIdList: [],
-                    alarmPageCode:[],
+                    alarmPageCode: [],
                     warningShowFlag: false,
                 },
                 {
@@ -123,7 +123,7 @@ export default {
                     showFlag: false,
                     typeIdList: [],
                     warningShowFlag: false,
-                    alarmPageCode:[],
+                    alarmPageCode: [],
                     analysisUrl: `https://rem.${this.baseUrl}/#/injection/optimization?page=reservoirDisplay/linkage`
                 },
                 {
@@ -133,7 +133,8 @@ export default {
                         {
                             name: '注采连通分析',
                             warningShowFlag: false,
-                            alarmPageCode: 'LOWGPC', alarmTime: "",
+                            alarmPageCode: 'LOWGPC', 
+                            alarmTime: "",
                             url: `https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance?link=linkage&page=reservoirDisplay/linkage`
                         },
                         {
@@ -157,7 +158,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw'
                     },
-                    alarmPageCode:[],
+                    alarmPageCode: [],
                     imgUrl: new URL('./topBox/13.png', import.meta.url).href,//暂无图片
                     showFlag: false,
                     typeIdList: [],
@@ -177,7 +178,7 @@ export default {
                     imgUrl: new URL('./topBox/11.png', import.meta.url).href,
                     showFlag: false,
                     typeIdList: [],
-                    alarmPageCode:[],
+                    alarmPageCode: [],
                     warningShowFlag: false,
                 },
                 {
@@ -195,7 +196,7 @@ export default {
                     imgUrl: new URL('./topBox/25.png', import.meta.url).href,
                     showFlag: false,
                     typeIdList: [],
-                    alarmPageCode:[],
+                    alarmPageCode: [],
                     warningShowFlag: false,
                 },
                 {
@@ -264,7 +265,7 @@ export default {
                     imgUrl: new URL('./topBox/26.png', import.meta.url).href,
                     showFlag: false,
                     typeIdList: [],
-                    alarmPageCode:[],
+                    alarmPageCode: [],
                     warningShowFlag: false,
                 },
                 {
@@ -343,7 +344,7 @@ export default {
             const set = new Set(array1.map(item => item.alarmPageCode));
             const result = array2.filter(item => item.alarmPageCode.some(code => set.has(code)));
             const filteredChild = this.filterchild(this.currentLists, set);
-            return { result, filteredChild };
+            return {result, filteredChild};
         },
         async matchAndOutputchild(array1, array2) {
             const set = new Set(array1.map(item => item.alarmPageCode));
@@ -371,58 +372,54 @@ export default {
             const data = {
                 authorizedPersonnel: this.$store.getters['user/name'],
                 alarmTime: new Date().format('YYYY-MM-dd'),
+                alarmPageCode:['MIPFSW','LOWGPC','BTOBAR','TTOBAR','QOIWTT','OSTOPF','BJ-SBSS-001', 'BJ-SBSS-002', 'BJ-SBSS-003', 
+                    'BJ-SBSS-004', 'BJ-SBSS-005', 'BJ-SBSS-009', 'BJ-SBSS-010', 'BJ-SBSS-011', 'BJ-SBSS-012', 'BJ-SBSS-013'
+                ,'OISAAE','BJ-SC-002','BJ-SC-003'],
             };
 
             try {
                 const [res1] = await Promise.all([
                     queryLinkageAlarmInfo(data),
                 ]);
-
                 let isConditionMet = false;
-                // 获取含有标识的对象
-                const {result, filteredChild} = await this.matchAndOutput(res1.data.data, this.currentLists);
-                // 获取在数组的下标
-                const index = result.map((item) => this.findIndex(this.currentLists, item));
-                const childindex = filteredChild.map((item) => this.findIndex(this.currentLists, item));
-                // 匹配数组中的标识设置为true
-                for (let i = 0; i < childindex.length; i++) {
-                    let a = this.currentLists[childindex[i]].boxBottomText;
-                    const {result: childResult} = await this.matchAndOutputchild(res1.data.data, a);
-                    const number = childResult.map((item) => this.findIndex(a, item));
-                    if (number.length > 1) {
-                        number.map((n, index) => {
-                            this.currentLists[childindex[i]].boxBottomText[n].warningShowFlag = true;
+                if(res1.data.data.length < 1){
+                    return
+                }else{
+                    // 获取含有标识的对象
+                    const {result, filteredChild} = await this.matchAndOutput(res1.data.data, this.currentLists);
+                    // 获取在数组的下标
+                    const index = result.map((item) => this.findIndex(this.currentLists, item));
+                    const childindex = filteredChild.map((item) => this.findIndex(this.currentLists, item));
+                    // 匹配数组中的标识设置为true
+                    for (let i = 0; i < childindex.length; i++) {
+                        let a = this.currentLists[childindex[i]].boxBottomText;
+                        const {result: childResult} = await this.matchAndOutputchild(res1.data.data, a);
+                        const number = childResult.map((item) => this.findIndex(a, item));
+                        if (number.length > 1) {
+                            number.map((n, index) => {
+                                this.currentLists[childindex[i]].boxBottomText[n].warningShowFlag = true;
+                                res1.data.data.map((j) => {
+                                    if (this.currentLists[childindex[i]].boxBottomText[n].alarmPageCode.includes(j.alarmPageCode)) {
+                                        this.currentLists[childindex[i]].boxBottomText[n].alarmTime = j.alarmTime;
+                                    }
+                                });
+                            });
+                        } else {
+                            this.currentLists[childindex[i]].boxBottomText[number[0]].warningShowFlag = true;
                             res1.data.data.map((j) => {
-                                if (this.currentLists[childindex[i]].boxBottomText[n].alarmPageCode.includes(j.alarmPageCode)) {
-                                    this.currentLists[childindex[i]].boxBottomText[n].alarmTime = j.alarmTime;
+                                if (this.currentLists[childindex[i]].boxBottomText[number[0]].alarmPageCode.includes(j.alarmPageCode)) {
+                                    this.currentLists[childindex[i]].boxBottomText[number[0]].alarmTime = j.alarmTime;
                                 }
                             });
-                        });
-                    } else {
-                        this.currentLists[childindex[i]].boxBottomText[number[0]].warningShowFlag = true;
-                        res1.data.data.map((j) => {
-                            if (this.currentLists[childindex[i]].boxBottomText[number[0]].alarmPageCode.includes(j.alarmPageCode)) {
-                                this.currentLists[childindex[i]].boxBottomText[number[0]].alarmTime = j.alarmTime;
-                            }
-                        });
+                        }
+                        this.currentLists[childindex[i]].warningShowFlag = true;
+                        isConditionMet = true;
                     }
-                    this.currentLists[childindex[i]].warningShowFlag = true;
-                    isConditionMet = true;
+                    for (let i = 0; i < index.length; i++) {
+                        this.currentLists[index[i]].warningShowFlag = true;
+                        isConditionMet = true;
+                    }  
                 }
-                for (let i = 0; i < index.length; i++) {
-                    this.currentLists[index[i]].warningShowFlag = true;
-                    isConditionMet = true;
-                }
-
-                // res2?.data.data.forEach(item => {
-                //     this.currentLists.forEach((i, index) => {
-                //         if (i.typeIdList.includes(item.typeId)) {
-                //             this.currentLists[index].warningShowFlag = true;
-                //             isConditionMet = true;
-                //         }
-                //     });
-                // });
-
                 // 如果无报警开启定时器，有报警关闭定时器和箭头图片
                 if (isConditionMet === false) {
                     this.timmer = setInterval(() => {
@@ -525,7 +522,6 @@ video {
         z-index: 7;
         font-weight: bolder;
     }
-
     .studySelf {
         width: 7vw;
         height: 7vw;

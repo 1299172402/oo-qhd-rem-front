@@ -76,7 +76,7 @@
                             end: 100, //滚动条结束位置
                         },
                     ],
-                    color: ['#1379F7', '#FF5844', '#DA835E', '#00BC9C', '#9A72FF', '#F5BE43'],
+                    color: ['#69b146', '#FF5844', '#DA835E', '#00BC9C', '#9A72FF', '#F5BE43'],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {

@@ -117,7 +117,7 @@ export default {
             end: 100, //滚动条结束位置
           },
         ],
-        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#9A72FF", "#DA835E"],
+        color: ["#1379F7", "#FF5844", "#69b146", "#00BC9C", "#9A72FF", "#DA835E"],
         tooltip: {
           trigger: "axis",
           axisPointer: {

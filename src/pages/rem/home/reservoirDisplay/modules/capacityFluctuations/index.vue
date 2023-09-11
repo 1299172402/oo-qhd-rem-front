@@ -180,7 +180,7 @@ export default {
                     if(item.indexOf('以上')!=-1){
                         this.histogram.xAxis.data.push(item.replace(/以上/,'方以上'))
                     }else{
-                        this.histogram.xAxis.data.push(item+'方')
+                        this.histogram.xAxis.data.push(item+'m³')
                     }
                 });
                 res.data.data.ydata.forEach((item) => {

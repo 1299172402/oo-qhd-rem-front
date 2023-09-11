@@ -1,23 +1,23 @@
 <template>
-    <info-window infoWidth="100%" infoHeight="100%" headerTitle="附表16 秦皇岛32-6/渤中作业公司提高单井产量实施路径" :isShowMaxBtn="true">
+    <pagePanel infoWidth="100%" infoHeight="100%" headerTitle="附表16 秦皇岛32-6作业公司提高单井产量实施路径" style="height: 100%;" showBtn>
         <el-table id="tableData" class="doubleHeader" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" header-cell-class-name="table_header"
                :cell-style="{ padding: '6px', 'text-align': 'center' }" height="calc(100% - 40px)">
-            <el-table-column prop="xh" label="序号" align="center" fixed></el-table-column>
-            <el-table-column prop="operationarea" label="作业公司" align="center" width="140" fixed></el-table-column>
-            <el-table-column prop="oilField" label="油田" align="center" width="120" fixed></el-table-column>
-            <el-table-column prop="kfjd" :label="`开发阶段\n（在生产、\n在建设、\n开发评价）`" align="center" width="120"></el-table-column>
-            <el-table-column prop="clsd" :label="`提高单井产量手段\n（包括但不限于\n稠油热采、低渗\n压裂、注气开发等）`" align="center" width="150"></el-table-column>
+            <el-table-column prop="xh" label="序号" align="center" width="80" fixed></el-table-column>
+            <el-table-column prop="operationarea" label="作业公司" align="center" min-width="180" fixed></el-table-column>
+            <el-table-column prop="oilField" label="油田" align="center" min-width="180" fixed></el-table-column>
+            <el-table-column prop="kfjd" :label="`开发阶段\n（在生产、\n在建设、\n开发评价）`" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="clsd" :label="`提高单井产量手段\n（包括但不限于\n稠油热采、低渗\n压裂、注气开发等）`" align="center" min-width="150"></el-table-column>
             <el-table-column :label="`实施井数\n(口)`" align="center">
                 <el-table-column prop="dxj" label="定向井" align="center"></el-table-column>
                 <el-table-column prop="spj" label="水平井" align="center"></el-table-column>
                 <el-table-column prop="ssjsxj" label="小计" align="center"></el-table-column>
             </el-table-column>
             <el-table-column label="提高单井产量情况" align="center">
-                <el-table-column prop="pjcl" :label="`措施前单井\n平均产量\n(t/d)`" align="center" width="120"></el-table-column>
-                <el-table-column prop="clyc" :label="`措施后单井\n平均产量预测\n（三个月）\n(t/d)`" align="center" width="120"></el-table-column>
-                <el-table-column prop="zcps" label="增产倍数" align="center" width="120"></el-table-column>
+                <el-table-column prop="pjcl" :label="`措施前单井\n平均产量\n(t/d)`" align="center" min-width="120"></el-table-column>
+                <el-table-column prop="clyc" :label="`措施后单井\n平均产量预测\n（三个月）\n(t/d)`" align="center" min-width="120"></el-table-column>
+                <el-table-column prop="zcps" label="增产倍数" align="center" min-width="120"></el-table-column>
             </el-table-column>
-            <el-table-column prop="csjk" label="配套措施简况" align="center" width="120"></el-table-column>
+            <el-table-column prop="csjk" label="配套措施简况" align="center" min-width="120"></el-table-column>
             <el-table-column :label="`不做措施产油量预测\n(10⁴t)`" align="center">
                 <el-table-column prop="b2020" label="2020" align="center"></el-table-column>
                 <el-table-column prop="b2021" label="2021" align="center"></el-table-column>
@@ -45,7 +45,7 @@
                 <el-table-column prop="z2030" label="2030" align="center"></el-table-column>
             </el-table-column>
         </el-table>
-    </info-window>
+    </pagePanel>
     
 </template>
 
@@ -55,9 +55,9 @@
             return {
                 tableData: [
                     {
-                        operationarea: "秦皇岛32-6/渤中",
+                        operationarea: "秦皇岛32-6作业公司",
                         xh: "1",
-                        oilField: "秦皇岛32-6",
+                        oilField: "秦皇岛32-6油田",
                         kfjd: "在生产",
                         clsd: "热采",
                         dxj: "1",
@@ -90,9 +90,9 @@
                         z2030: "550",
                     },
                     {
-                        operationarea: "秦皇岛32-6/渤中",
+                        operationarea: "秦皇岛32-6作业公司",
                         xh: "2",
-                        oilField: "秦皇岛32-6",
+                        oilField: "秦皇岛32-6油田",
                         kfjd: "在生产",
                         clsd: "聚合物",
                         dxj: "3",
@@ -125,9 +125,9 @@
                         z2030: "551",
                     },
                     {
-                        operationarea: "秦皇岛32-6/渤中",
+                        operationarea: "秦皇岛32-6作业公司",
                         xh: "3",
-                        oilField: "秦皇岛32-6",
+                        oilField: "秦皇岛32-6油田",
                         kfjd: "在生产",
                         clsd: "分支井",
                         dxj: "0",

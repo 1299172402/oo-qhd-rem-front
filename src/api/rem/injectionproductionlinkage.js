@@ -7,9 +7,9 @@ export function InjectionProdInfo() {
     method: "get",
   });
 }
-export function queryLinkageAlarmInfo({ authorizedPersonnel,alarmTime } = {}) {
+export function queryLinkageAlarmInfo({ authorizedPersonnel,alarmTime,alarmPageCode } = {}) {
     return request({
-        url: `${baseUrl}/linkageAlarmInfo/queryLinkageAlarmInfo?authorizedPersonnel=${ authorizedPersonnel || "" }&alarmTime=${ alarmTime || "" }`,
+        url: `${baseUrl}/linkageAlarmInfo/queryLinkageAlarmInfo?authorizedPersonnel=${ authorizedPersonnel || "" }&alarmTime=${ alarmTime || "" }&alarmPageCode=${ alarmPageCode || "" }`,
         method: "get",
         headers: {
             showLoading: false
