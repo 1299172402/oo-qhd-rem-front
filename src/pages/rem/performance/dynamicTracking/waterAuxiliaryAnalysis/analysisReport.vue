@@ -175,6 +175,7 @@
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '水井动态分析详情列表')">下载</el-button>
                                 </div>
                                 <el-table
+                                    :key="Math.random()"
                                     id="table1"
                                     class="doubleHeader"
                                     :row-style="{ height: '0px' }"
@@ -515,6 +516,7 @@
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '水井动态分析详情列表')">下载</el-button>
                                 </div>
                                 <el-table
+                                    :key="Math.random()"
                                     id="table2"
                                     class="doubleHeader"
                                     :row-style="{ height: '0px' }"
