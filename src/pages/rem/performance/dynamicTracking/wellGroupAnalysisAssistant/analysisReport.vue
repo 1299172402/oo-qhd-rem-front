@@ -128,6 +128,7 @@
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '井组动态分析详情列表')">下载</el-button>
                                 </div>
                                 <el-table
+                                    :key="Math.random()"
                                     id="table1"
                                     highlight 
                                     :data="tableData" 
@@ -434,6 +435,7 @@
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '井组动态分析详情列表')">下载</el-button>
                                 </div>
                                 <el-table
+                                    :key="Math.random()"
                                     id="table2"
                                     highlight 
                                     :data="tableData" 

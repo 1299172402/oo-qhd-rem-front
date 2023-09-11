@@ -193,7 +193,7 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '油井动态分析详情列表')">下载</el-button>
                                 </div>
-                                <el-table id="table1" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <el-table :key="Math.random()" id="table1" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
@@ -684,7 +684,7 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '油井动态分析详情列表')">下载</el-button>
                                 </div>
-                                <el-table id="table2" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <el-table :key="Math.random()" id="table2" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!--生产动态项目-->

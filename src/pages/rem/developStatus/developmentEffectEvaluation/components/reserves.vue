@@ -300,7 +300,7 @@
                         },
                     },
                     yAxis: {
-                        name: "剩余可采储量储采比(%)",
+                        name: "剩余可采储量储采比",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
