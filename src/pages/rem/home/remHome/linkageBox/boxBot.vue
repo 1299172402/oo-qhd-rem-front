@@ -5,6 +5,10 @@
                 <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})`}">
                 </div>
             </div>
+            <div v-if="warningShowFlag" style="position: relative;top:-55px;left: 130px">
+                <button class="detailLinkBtn" @click="confirm(currentList)">确认</button>
+                <button class="detailLinkBtn" @click="linkTopage(currentList.analysisUrl,currentList)">分析</button>
+            </div>
             <p  class="textBox" :style="currentList.boxStyle.pWidth">
                 {{currentList.boxText}}
                 <span class="btnGo"></span>
@@ -14,7 +18,7 @@
                 <div class="pad">
                     <div>
                         <p v-show="!content" :key="index" v-for="(item,index) in currentList.boxBottomText">
-                            <span v-if="item.url" style="cursor: pointer" @click="skippage(item.url)">{{item.name}}</span>
+                            <span v-if="item.url" :class= "item.warningShowFlag == true?'blink':'' " style="cursor: pointer" @click="skippage(item.url)">{{item.name}}</span>
                             <span v-if="!item.url" style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
                             <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{currentList.boxBottomContent[index].length>0?'>>':''}}</span>
                             <span v-else class="btnBack" @click="btnBack"></span>
@@ -48,12 +52,26 @@ export default {
                 this.show(Nval.showFlag)
             },
             deep:true
+        },
+        getWarningShowFlag:{
+            handler(Nval){
+                this.warningShowFlag = Nval
+                this.show()
+            },
+            immediate: true,
+            deep:true
+        }
+    },
+    computed:{
+        getWarningShowFlag(){
+            return this.currentList.warningShowFlag
         }
     },
     data() {
         return {
             content:false,
             selectIndex:0,
+            warningShowFlag:false,
             showStyle:{
                 top:'18vw'
             },
@@ -62,13 +80,17 @@ export default {
     },
     methods:{
         show:function(flag,mouse){
-            if (flag){
+            if(this.warningShowFlag == true){
                 this.showStyle.top = -this.currentList.boxBottomText.length * 2 +11 + 'vw';
-            } else{
-                this.showStyle.top = '18vw';
-            }     
-            if(mouse){
-                this.$emit('stopTimer',flag)
+            }else{
+                if (flag){
+                    this.showStyle.top = -this.currentList.boxBottomText.length * 2 +11 + 'vw';
+                } else{
+                    this.showStyle.top = '18vw';
+                }
+                if(mouse){
+                    this.$emit('stopTimer',flag)
+                }
             }
         },
         skippage(page){
@@ -87,6 +109,9 @@ export default {
             this.selectIndex = index
             this.content = !this.content
         }
+    },
+    mounted() {
+       
     }
 }
 </script>
@@ -94,6 +119,49 @@ export default {
 <style lang="less" scoped>
 .warp{
     position: relative;
+}
+@keyframes blink{
+    0%{opacity: 1;}
+
+    100%{opacity: 0;}
+}
+/* 添加兼容性前缀 */
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-moz-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+@-ms-keyframes blink {
+    0% {opacity: 1; }
+    100% { opacity: 0;}
+}
+@-o-keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+/* 定义blink类*/
+.blink{
+    color: rgb(212, 12, 92);
+    font-size:16px;
+    animation: blink 1s linear infinite;
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink 1s linear infinite;
+    -moz-animation: blink 1s linear infinite;
+    -ms-animation: blink 1s linear infinite;
+    -o-animation: blink 1s linear infinite;
+}
+.detailLinkBtn {
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
 }
 .box{
     color: #e6d6d6;

@@ -1,5 +1,5 @@
 <template>
-<!--    <div class="box" @mouseenter="show = true" @mouseleave="show = false">-->
+    <!--    <div class="box" @mouseenter="show = true" @mouseleave="show = false">-->
     <div class="box" @mouseenter="mouseenter" @mouseleave="mouseleave">
         <el-collapse-transition>
             <div v-show="show || showFlag ||  warningShowFlag ">
@@ -108,7 +108,7 @@ export default {
             }else{
                 window.open(url, '_parent');
             }
-           
+
         },
         linkTopage: function (url,currentList) {
             if(currentList.alarmPageCode =='OSTOPF'){
@@ -141,7 +141,7 @@ export default {
                     window.open(linkurl.url, '_parent');
                 })
             }
-           
+
         },
         confirm(currentList){
             let alarmPageCode = []
@@ -163,7 +163,7 @@ export default {
             this.true = false
             this.$emit('startTimer',currentList)
             addLinkageAlarmInfo(data).then(()=>{
-            }).then(()=>{    
+            }).then(()=>{
             })
         },
         mouseenter(){
