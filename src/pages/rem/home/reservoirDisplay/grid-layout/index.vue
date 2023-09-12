@@ -254,7 +254,7 @@ export default {
                         content:this.content,
                         ccAddr:[],
                         senderKey:'ipmEmail',
-                        attachments: [{filename:"油藏看板",filedata:[...byteArray] }],
+                        attachments: [{filename:"油藏看板.png",filedata:[...byteArray] }],
                     }
                     send(data).then((res)=>{
                         if(res==true){
