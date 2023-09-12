@@ -5,7 +5,7 @@
                 <div class="transition-box-content" :style="{'background-image':`url(${currentList.imgUrl})`}">
                 </div>
             </div>
-            <div v-if="warningShowFlag" style="position: relative;top:-55px;left: 130px">
+            <div v-if="warningShowFlag" style="position: absolute;z-index: 9999;top:80%;left: 45%">
                 <button class="detailLinkBtn" @click="confirm(currentList)">确认</button>
                 <button class="detailLinkBtn" @click="linkTopage(currentList.analysisUrl,currentList)">分析</button>
             </div>
@@ -38,6 +38,8 @@
 
 <script>
 
+
+import {addLinkageAlarmInfo} from "@/api/rem/injectionproductionlinkage";
 
 export default {
     props:{
@@ -104,6 +106,25 @@ export default {
                 this.showStyle.top = '18vw';
                 // this.showStyle2.height = '0';
             }
+        },
+        confirm(currentList){
+            let alarmPageCode = []
+            currentList.boxBottomText.map((m)=>{
+                if(m.warningShowFlag == true){
+                    m.warningShowFlag = false
+                    alarmPageCode.push(m.alarmPageCode)
+                }
+            })
+            const data = {
+                authorizedPersonnel:this.$store.getters["user/name"],
+                alarmTime:new Date().format('YYYY-MM-dd'),
+                alarmPageCode:alarmPageCode
+            }
+            this.$emit('startTimer',currentList)
+            addLinkageAlarmInfo(data).then(()=>{
+            }).then(()=>{
+            })
+            this.warningShowFlag = false
         },
         btnContent:function(index){
             this.selectIndex = index

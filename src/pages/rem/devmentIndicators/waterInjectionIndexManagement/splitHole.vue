@@ -4,12 +4,12 @@
         
         <header-search style="width:100%;height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
-                <div style="margin: 10px 20px 10px 0px;">
+                <!-- <div style="margin: 10px 20px 10px 0px;">
                     作业公司：
                     <el-select v-model="queryParams.companyId" placeholder="请选择" disabled @change="changeCompany">
                         <el-option v-for="item in companyList" :key="item.orgId" :label="item.orgName" :value="item.orgId"></el-option>
                     </el-select>
-                </div>
+                </div> -->
                 <div style="margin: 10px 20px 10px 0px;">
                     油田：
                     <el-select v-model="queryParams.oilFieldId" disabled>
@@ -294,12 +294,12 @@
             //初始化页面
             async initData() {
                 // 获取作业公司
-                await getOrgInfo().then((data) => {
-                    let code = data.data.code;
-                    if (code == 200) {
-                        this.companyList = data.data.data;
-                    }
-                });
+                // await getOrgInfo().then((data) => {
+                //     let code = data.data.code;
+                //     if (code == 200) {
+                //         this.companyList = data.data.data;
+                //     }
+                // });
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {
                         this.oilFieldList = res.data.data.oilFields;

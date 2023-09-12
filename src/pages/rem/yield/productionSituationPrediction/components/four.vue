@@ -2,10 +2,10 @@
 <template>
     <div class="z-main" style="height:100%;">
         <div style="display: flex;align-items: center;margin-bottom:15px;">   
-            <span>作业公司：</span>
+            <!-- <span>作业公司：</span>
             <el-select v-model="conditions.companyId" @change="changeOGFList" disabled style="width:320px;margin-right:15px;">
-                <el-option v-for="item in companyList" :key="item.orgId" :label="item.orgName" :value="item.orgId"></el-option>
-            </el-select>
+                <el-option v-for="item in companyList" :key="item.orgId" :label="item.orgName" :value="item.orgId"></el-option> -->
+            <!-- </el-select> -->
             <span>油田：</span>
             <el-select v-model="conditions.ogfId" @change="searchPlatFormList" style="margin-right:15px;">
                 <el-option v-for="item in ogfList" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
@@ -95,7 +95,7 @@
                 AddDialogFlag: false,
                 elTableHeight: 0,
                 conditions: {
-                    companyId: '', // 作业公司编号
+                    companyId: '715AD1CD60484BB59E737CD18A9DE44A', // 作业公司编号
                     ogfId: '', // 油田编号
                     platformId: '', // 平台编号
                     yearMonth: ''
@@ -121,20 +121,20 @@
             	})
             },
             async init() {
-                await this.searchCompanyList();
+                // await this.searchCompanyList();
                 await this.changeOGFList(); 
                 await this.searchPlatFormList();
                 this.getForecastDate(); 
             },
-            //查询作业公司列表--页面初始化时加载
-            async searchCompanyList() {
-                getOrgInfo().then(res=> {
-                    if (res.data.code == 200) {
-                        this.companyList = res.data.data;
-                        this.conditions.companyId = '715AD1CD60484BB59E737CD18A9DE44A' //秦皇岛-勃中作业公司
-                    }
-                });
-            },
+            // //查询作业公司列表--页面初始化时加载
+            // async searchCompanyList() {
+            //     getOrgInfo().then(res=> {
+            //         if (res.data.code == 200) {
+            //             this.companyList = res.data.data;
+            //             this.conditions.companyId = '715AD1CD60484BB59E737CD18A9DE44A' //秦皇岛-勃中作业公司
+            //         }
+            //     });
+            // },
             //查询油田数据--切换作业公司时触发
             async changeOGFList() {
                 this.ogfList = [];

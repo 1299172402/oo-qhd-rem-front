@@ -70,6 +70,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
                     },
+                    boxBottomContent:[[],[],[],[],],
                     imgUrl: new URL('./remHome/01.png', import.meta.url).href,
                     down: true,
                     warningShowFlag: false,
@@ -78,12 +79,13 @@ export default {
                 {
                     style: 'position:absolute;left: 40%;top: 8%;width:20%;height:40%;',
                     boxText: '单井/井组/区块分析',
-                    boxBottomText: [{
+                    boxBottomText: [
+                        {
                         name: '水质分析',
                         url: `https://ipm.${this.baseUrl}/#/waterflood/waterQuality?page=/dynamicManagement/remHome`,
                         alarmPageCode: 'WATANA',
                         warningShowFlag: false,
-                    },
+                       },
                         {
                             name: '注采比分析',
                             alarmPageCode: 'IRRANA',
@@ -100,10 +102,12 @@ export default {
                             name: '储量动用情况',
                             url: `https://rem.${this.baseUrl}/#/developStatus/developmentEffectEvaluation?link=reserves&page=/dynamicManagement/remHome`
                         }],
-                    boxBottomContent: [[], [{
-                        name: '开发效果评价',
-                        url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport?page=/dynamicManagement/remHome`
-                    }], [], []],
+                    boxBottomContent: [[], [
+                        // {
+                        // name: '开发效果评价',
+                        // url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport?page=/dynamicManagement/remHome`
+                        // }
+                    ], [], []],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
                     },
@@ -182,6 +186,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw;margin-left: 6vw;'
                     },
+                    boxBottomContent:[[]],
                     imgUrl: new URL('./remHome/04.png', import.meta.url).href,//暂无图片
                     down: true,
                     showFlag: false,
@@ -190,17 +195,17 @@ export default {
             ]
         },
         arrowFun() {
-                if (this.loopNum == -1) this.currentLists[5].showFlag = false
-                if (this.loopNum < 7 && this.loopNum > 0) this.currentLists[this.loopNum - 1].showFlag = false
-                if (this.loopNum < 6 && this.loopNum != -1) this.currentLists[this.loopNum].showFlag = true
-                this.loopNum++
-                for (let i = 0; i < 7; i++) {
-                    this.$el.querySelectorAll('img')[i].style.display = 'none'
-                }
-                this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
-                if (this.loopNum == 6) {
-                    this.loopNum = -1
-                }
+            if (this.loopNum == -1) this.currentLists[5].showFlag = false
+            if (this.loopNum < 7 && this.loopNum > 0) this.currentLists[this.loopNum - 1].showFlag = false
+            if (this.loopNum < 6 && this.loopNum != -1) this.currentLists[this.loopNum].showFlag = true
+            this.loopNum++
+            for (let i = 0; i < 7; i++) {
+                this.$el.querySelectorAll('img')[i].style.display = 'none'
+            }
+            this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
+            if (this.loopNum == 6) {
+                this.loopNum = -1
+            }
         },
         filterchild(array1, array2) {
             return array1.filter(item => item.boxBottomText.some(val => array2.has(val.alarmPageCode)));
@@ -300,6 +305,28 @@ export default {
                 item.showFlag = false
             })
             clearInterval(this.timmer)
+        },
+        startTimer(url) {
+            const hasTrueValue = this.currentLists.some(item => {
+                if (Array.isArray(item.boxBottomText)) {
+                    return item.boxBottomText.some(subItem => subItem.warningShowFlag === true);
+                } else {
+                    return item.warningShowFlag === true;
+                }
+            });
+            if (url) {
+                let index = this.findIndex(this.currentLists, url)
+                this.currentLists[index].warningShowFlag = false
+            }
+            console.log(hasTrueValue)
+            if (hasTrueValue == true) {
+                clearInterval(this.timmer)
+            } else {
+                clearInterval(this.timmer)
+                this.timmer = setInterval(() => {
+                    this.arrowFun()
+                }, 5000)
+            }
         }
     },
     beforeDestroy() {

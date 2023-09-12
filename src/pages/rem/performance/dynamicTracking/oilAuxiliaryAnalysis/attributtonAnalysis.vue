@@ -195,7 +195,7 @@
                 <el-table-column prop="itemValue" min-width="150" :label="`注水强度\n(m³/d·m)`"></el-table-column>
                 <el-table-column prop="evalResult" min-width="200" show-overflow-tooltip
                                  label="评价结论"></el-table-column>
-                <el-table-column prop="injDuration" min-width="150" :label="`生产时长\n(h)`"></el-table-column>
+                <el-table-column prop="injDuration" min-width="150" :label="`注入时长\n(h)`"></el-table-column>
                 <el-table-column prop="injDaily" min-width="150" :label="`注入量\n(m³)`"></el-table-column>
                 <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(MPa)`"></el-table-column>
                 <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`">
@@ -592,7 +592,7 @@ export default {
                             "children": [
                                 {
                                     "level": 2,
-                                    "name": "判断生产时长",
+                                    "name": "判断注入时长",
                                     "children": [
                                         {
                                             "level": 3,
