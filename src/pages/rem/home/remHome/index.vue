@@ -1,7 +1,8 @@
 <template>
     <div class="container" style="position: relative">
         <div class="topBanner">油藏动态分析</div>
-        <linkageBoxBot @stopTimer="stopTimer" refs="boxBots" :style="item.style" :currentList="item" :key="index"
+        <linkageBoxBot @startTimer="startTimer" @stopTimer="stopTimer" refs="boxBots" :style="item.style"
+                       :currentList="item" :key="index"
                        v-for="(item,index) in currentLists"></linkageBoxBot>
         <div class="studySelf">
             <div class="studySelfInside"></div>
@@ -34,10 +35,13 @@ export default {
         this.getinfo()
         this.arrowFun()
         this.getWarningInfo()
+        this.timmerWarning = setInterval(() => {
+            this.getWarningInfo()
+        }, 1000 * 30)
         //转动弹出图片循环
         this.timmer = setInterval(() => {
             this.arrowFun()
-        }, 100 * 50)
+        }, 100 * 20)
     },
     methods: {
         getinfo() {
@@ -70,7 +74,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
                     },
-                    boxBottomContent:[[],[],[],[],],
+                    boxBottomContent: [[], [], [], [],],
                     imgUrl: new URL('./remHome/01.png', import.meta.url).href,
                     down: true,
                     warningShowFlag: false,
@@ -81,11 +85,11 @@ export default {
                     boxText: '单井/井组/区块分析',
                     boxBottomText: [
                         {
-                        name: '水质分析',
-                        url: `https://ipm.${this.baseUrl}/#/waterflood/waterQuality?page=/dynamicManagement/remHome`,
-                        alarmPageCode: 'WATANA',
-                        warningShowFlag: false,
-                       },
+                            name: '水质分析',
+                            url: `https://ipm.${this.baseUrl}/#/waterflood/waterQuality?page=/dynamicManagement/remHome`,
+                            alarmPageCode: 'WATANA',
+                            warningShowFlag: false,
+                        },
                         {
                             name: '注采比分析',
                             alarmPageCode: 'IRRANA',
@@ -138,9 +142,11 @@ export default {
                     boxText: '开发指标评价',
                     boxBottomText: [{
                         name: '开发指标分析',
+                        alarmPageCode: 'DEMEAN',
                         url: `https://rem.${this.baseUrl}/#/devmentIndicators/waterInjectionIndexManagement?page=/dynamicManagement/remHome`
                     }, {
                         name: '管理指标分析',
+                        alarmPageCode: 'MAMEAN',
                         url: `https://rem.${this.baseUrl}/#/devmentIndicators/waterInjectionIndexManagement?page=/dynamicManagement/remHome`
                     }],
                     boxBottomContent: [['开发技术指标管理', '开发效果评价'], ['注水指标管理', '措施效果评价']],
@@ -162,13 +168,16 @@ export default {
                         url: `https://rem.${this.baseUrl}/#/developStatus/developmentEffectEvaluation?link=decreasing`
                     }, {
                         name: '产量变化趋势分析',
+                        alarmPageCode: 'YITRAN',
                         url: `https://rem.${this.baseUrl}/#/developStatus/developmentTrendAnalysis?page=/dynamicManagement/remHome`
                     }, {
                         name: '采收率分析',
+                        alarmPageCode: 'RECANA',
                         url: `https://rem.${this.baseUrl}/#/recoveryEfficiency/index?page=/dynamicManagement/remHome`
                     }],
                     boxBottomContent: [[{
                         name: '递减预测',
+                        alarmPageCode: 'DECFOR',
                         url: `https://rem.${this.baseUrl}/#/developStatus/developmentTrendAnalysis?page=/dynamicManagement/remHome`
                     }, '开发趋势分析'], ['数据驱动的油藏开发规律动态预测', '产量构成曲线'], ['采收率预测']],
                     boxStyle: {
@@ -186,7 +195,7 @@ export default {
                     boxStyle: {
                         pWidth: 'width:8.5vw;margin-left: 6vw;'
                     },
-                    boxBottomContent:[[]],
+                    boxBottomContent: [[]],
                     imgUrl: new URL('./remHome/04.png', import.meta.url).href,//暂无图片
                     down: true,
                     showFlag: false,
@@ -235,7 +244,18 @@ export default {
             const data = {
                 authorizedPersonnel: this.$store.getters['user/name'],
                 alarmTime: new Date().format('YYYY-MM-dd'),
-                alarmPageCode: ['MCCDRL', 'MOAYRL', 'BWFPMA', 'WATANA', 'IRRANA', 'AOWDIR', 'DERAAN',],
+                alarmPageCode: ['MCCDRL',
+                    'MOAYRL',
+                    'BWFPMA',
+                    'WATANA',
+                    'IRRANA',
+                    'AOWDIR',
+                    'DERAAN',
+                    'DECFOR',
+                    'YITRAN',
+                    'RECANA',
+                    'DEMEAN',
+                    'MAMEAN'],
             };
             try {
                 const [res1] = await Promise.all([
@@ -284,7 +304,7 @@ export default {
                 if (isConditionMet === false) {
                     this.timmer = setInterval(() => {
                         this.arrowFun();
-                    }, 100 * 50);
+                    }, 100 * 20);
                 } else {
                     clearInterval(this.timmer);
                     this.currentLists.forEach((item) => {
@@ -304,7 +324,6 @@ export default {
             this.currentLists.forEach(item => {
                 item.showFlag = false
             })
-            clearInterval(this.timmer)
         },
         startTimer(url) {
             const hasTrueValue = this.currentLists.some(item => {
@@ -325,12 +344,13 @@ export default {
                 clearInterval(this.timmer)
                 this.timmer = setInterval(() => {
                     this.arrowFun()
-                }, 5000)
+                }, 2000)
             }
         }
     },
     beforeDestroy() {
         clearInterval(this.timer)
+        clearInterval(this.timmerWarning)
     },
     data() {
         return {
@@ -338,6 +358,7 @@ export default {
             loopNum: 0,
             baseUrl: '',
             show: true,
+            timmerWarning: '',
             currentLists: []
         }
     }
