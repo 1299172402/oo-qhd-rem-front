@@ -4,12 +4,12 @@
         
         <header-search style="width:100%;height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
-                <div style="margin: 10px 20px 10px 0px">
+                <!-- <div style="margin: 10px 20px 10px 0px">
                     作业公司：
                     <el-select v-model="queryParams.companyId" placeholder="请选择" disabled @change="changeCompany">
                         <el-option v-for="item in companyList" :key="item.orgId" :label="item.orgName" :value="item.orgId"></el-option>
                     </el-select>
-                </div>
+                </div> -->
                 <div style="margin: 10px 20px 10px 0px">
                     油田：
                     <el-select v-model="queryParams.oilFieldId" disabled>
@@ -716,12 +716,12 @@
             //初始化页面
             async initData() {
                 // 获取作业公司
-                await getOrgInfo().then((data) => {
-                    let code = data.data.code;
-                    if (code == 200) {
-                        this.companyList = data.data.data;
-                    }
-                });
+                // await getOrgInfo().then((data) => {
+                //     let code = data.data.code;
+                //     if (code == 200) {
+                //         this.companyList = data.data.data;
+                //     }
+                // });
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {
                         this.oilFieldList = res.data.data.oilFields;
@@ -840,9 +840,10 @@
                         // TODO lv 临时
                         this.tableData.forEach((item) => {
                             if (item.name == "地层压力保持水平（%）") item.real = 90.30;
+                            if (item.name == "地层压力保持水平（%）") item.chain = 0.03;
                             // if (item.name == "注水水质达标率（%）") item.real = 100;
-                            if (item.name == "动态监测完成率（%）") item.real = 65.52;
-                            if (item.name == "动态监测完成率（%）") item.chain = 34.48;
+                            if (item.name == "动态监测完成率（%）") item.real = 43.59;
+                            if (item.name == "动态监测完成率（%）") item.chain = 56.41;
                             // if (item.name == "含水上升率（%）") item.real = -0.33;
                             // if (item.name == "注水井分注率（%）") item.real = 94.26;
                             // if (item.name == "分注井层段合格率（%）") item.real = 78.97;
@@ -895,7 +896,7 @@
                         //指标详情 // TODO lv 临时
                         zb.sz = detail.detail ||  90.30;
                         //环比
-                        zb.hb = detail.mom;
+                        zb.hb = detail.mom || 0.03;
                         zb.hbTag = detail.chainTag;
                         //同比
                         /* zb.tb=detail.moy;
@@ -1119,7 +1120,7 @@
                             return item.title == "动态监测完成率";
                         });
                         //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail || 65.52;
+                        zb.sz = detail.detail || 43.59;
                         //环比
                         // zb.hb = detail.mom;// TODO lv 临时
                         zb.hb = detail.mom || 34.48;
