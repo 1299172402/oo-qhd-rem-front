@@ -915,8 +915,8 @@
                         let zb = this.zbData.find((item) => {
                             return item.title == "注水水质达标率";
                         });
-                        //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail || 100;
+                        //指标详情
+                        zb.sz = detail.detail;
                         //环比
                         zb.hb = detail.mom;
                         zb.hbTag = detail.chainTag;
