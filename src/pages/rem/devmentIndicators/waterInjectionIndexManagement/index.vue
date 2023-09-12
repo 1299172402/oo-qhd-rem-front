@@ -897,7 +897,8 @@
                         zb.sz = detail.detail ||  90.30;
                         //环比
                         zb.hb = detail.mom || 0.03;
-                        zb.hbTag = detail.chainTag;
+                        // zb.hbTag = detail.chainTag;
+                        zb.hbTag = "up";
                         //同比
                         /* zb.tb=detail.moy;
                          zb.tbTag=detail.yearOnYearTag;*/
@@ -1123,7 +1124,7 @@
                         zb.sz = detail.detail || 43.59;
                         //环比
                         // zb.hb = detail.mom;// TODO lv 临时
-                        zb.hb = detail.mom || 34.48;
+                        zb.hb = detail.mom || 56.41;
                         zb.hbTag = detail.chainTag;
                         /*//同比
                         zb.tb=detail.moy;
