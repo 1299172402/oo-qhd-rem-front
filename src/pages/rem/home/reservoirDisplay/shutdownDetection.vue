@@ -104,15 +104,15 @@
                 <el-table-column prop="appendixValueName" label="*关停分类"></el-table-column>
                 <el-table-column prop="reasonAppendixValueName" label="*关停原因"></el-table-column>
                 <el-table-column prop="planAppendixValueName" label="*计划属性"></el-table-column>
-                <el-table-column prop="beginDate" sortable :label="`*关停开始时间\n(yyyy/mm/dd)`">
+                <el-table-column prop="beginDate" sortable min-width="110px" :label="`*关停开始时间\n(yyyy/mm/dd hh:mm:ss)`">
                     <template slot-scope="scope">
                         <span v-if="scope.row.beginDate">{{scope.row.beginDate.substring(0,19)}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="endDate" sortable :label="`*关停结束时间\n(yyyy/mm/dd)`">
+                <el-table-column prop="endDate" sortable min-width="110px" :label="`*关停结束时间\n(yyyy/mm/dd hh:mm:ss)`">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.endDate">{{scope.row.endDateubstring(0,19)}}</span>
+                        <span v-if="scope.row.endDate">{{scope.row.endDate.substring(0,19)}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
