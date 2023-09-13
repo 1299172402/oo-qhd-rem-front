@@ -69,17 +69,17 @@ export default ({ mode }) => {
       port: 8080,
       open: true,
       proxy: {
-        "/dev-api/rem/api": {
-          // 用于开发环境下的转发请求
-          // 更多请参考：https://vitejs.dev/config/#server-proxy
-          // target: 'http://10.247.187.28:8080/dev-api/',
-          // target: 'http://10.178.118.181:9220',
-          target: 'http://10.178.121.121:8081',
-          // target: 'http://localhost:8081',
-          // target: "http://10.77.78.250:9213",
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, "/rem/api"),
-        },
+        // "/dev-api/rem/api": {
+        //   // 用于开发环境下的转发请求
+        //   // 更多请参考：https://vitejs.dev/config/#server-proxy
+        //   // target: 'http://10.247.187.28:8080/dev-api/',
+        //   // target: 'http://10.178.118.181:9220',
+        //   // target: 'http://10.137.206.7:8081',
+        //   // target: 'http://localhost:8081',
+        //   target: "http://10.77.78.250:9213",
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, "/rem/api"),
+        // },
         "/dev-api/ipm/api": {
           // 用于开发环境下的转发请求
           // 更多请参考：https://vitejs.dev/config/#server-proxy

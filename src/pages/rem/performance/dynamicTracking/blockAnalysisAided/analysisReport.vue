@@ -1726,7 +1726,7 @@
         font-size:14px;
         text-align: center;
         border-color: var(--light-blue-color);
-        color: var(--white-color);
+        color: var(--form-text);
         transition: all 0s;
         line-height: 8px;
         border-radius: 0 !important;
@@ -1737,6 +1737,7 @@
             border-image: var(--primary-btn);
             border-color: var(--light-blue-color);
             background: var(--primary-btn) !important;
+            color: var(--white-color);
         }
     }
     
@@ -1772,6 +1773,7 @@
     //相关
     ::v-deep .about1 {
         background: rgb(2, 43, 117);
+        color:#fff;
         .el-radio-button__inner{
             color:#fff;
             background: transparent!important;
@@ -1847,10 +1849,11 @@
         background: rgb(2, 43, 117);
         color:#fff;
     }
-    .selectButton{
+    .el-col .selectButton{
         border-image: var(--primary-btn);
         border-color: var(--light-blue-color);
         background: var(--primary-btn) !important;
+        color: var(--white-color);
     }
     
     .noCheckBtn {
