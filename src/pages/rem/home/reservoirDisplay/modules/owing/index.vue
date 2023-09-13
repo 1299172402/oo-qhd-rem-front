@@ -16,9 +16,9 @@
             <el-table-column prop="date" label="序号" align="center" width="50">
                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
             </el-table-column>
-            <el-table-column prop="wellName" label="井号" width="130"
+            <el-table-column prop="wellName" label="井号"
                              align="center"></el-table-column>
-            <el-table-column prop="productionIntervalNo" label="层位" align="center" width="200">
+            <el-table-column prop="productionIntervalNo" label="层位" align="center" >
                 <template slot-scope="scope">
                     <span>{{ scope.row.productionIntervalNo }}</span>
                 </template>
@@ -28,18 +28,15 @@
                     <span>{{ scope.row.injPump }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="overflowInj" align="center" width="90">
-                <template slot="header">
-                    超/欠注量
-                </template>
+            <el-table-column prop="overflowInj" :label="`超/欠注量\n(m³)`"  align="center">
                 <template slot-scope="scope">
                     <span>{{ scope.row.overflowInj }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="dayNum" label="天数?(d)" :render-header="renderheader"
-                             width="70" align="center"></el-table-column>
-            <el-table-column prop="injAllocRatio" label="比例?(%)" :render-header="renderheader"
-                             width="70" align="center"></el-table-column>
+            <el-table-column prop="dayNum" :label="`天数\n(d)`" 
+                              align="center"></el-table-column>
+            <el-table-column prop="injAllocRatio" :label="`比例(%)`"
+                             align="center"></el-table-column>
         </el-table>
 
     </info-window>

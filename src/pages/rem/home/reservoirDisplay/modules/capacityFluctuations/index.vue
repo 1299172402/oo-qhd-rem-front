@@ -178,9 +178,9 @@ export default {
                 this.prodDateCompare = previousDay.format("yyyy-MM-dd")
                 res.data.data.xdata.forEach((item) => {
                     if(item.indexOf('以上')!=-1){
-                        this.histogram.xAxis.data.push(item.replace(/以上/,'方以上'))
+                        this.histogram.xAxis.data.push(item.replace(/以上/,'(m³)以上'))
                     }else{
-                        this.histogram.xAxis.data.push(item+'m³')
+                        this.histogram.xAxis.data.push(item+'(m³)')
                     }
                 });
                 res.data.data.ydata.forEach((item) => {
