@@ -22,17 +22,6 @@
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
-                        <div class="yield oil">
-                            <div class="box">
-                                <div>{{ dataList.cumeOilProd }}</div>
-                                <div>(10⁴m³)</div>
-                            </div>
-                        </div>
-                        <div class="text">累产油量</div>
-                    </div>
-                </el-col>
-                <el-col :span="8">
-                    <div class="grid-content bg-purple">
                         <div class="yield gas">
                             <div class="box">
                                 <div>{{oil1two}}</div>
@@ -42,6 +31,18 @@
                         <div class="text">年产油量</div>
                     </div>
                 </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <div class="yield oil">
+                            <div class="box">
+                                <div>{{ dataList.cumeOilProd }}</div>
+                                <div>(10⁴m³)</div>
+                            </div>
+                        </div>
+                        <div class="text">累产油量</div>
+                    </div>
+                </el-col>
+              
             </el-row>
             <el-row :gutter="20" style="padding: 0 20px">
                 <el-col :span="8">
