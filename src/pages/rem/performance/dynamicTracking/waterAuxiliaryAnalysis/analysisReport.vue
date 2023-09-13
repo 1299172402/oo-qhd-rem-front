@@ -571,7 +571,7 @@
                                         </el-table-column>
                                     </el-table-column>
                                     <el-table-column prop="overUnderInjectionAnalysis" label="超欠注原因分析" align="center">
-                                        <el-table-column v-for="(item, index) in overUnderInjectionAnalysisTab" :key="`index26-${index}`" :prop="item.code" :label="item.name" align="center">
+                                        <el-table-column v-for="(item, index) in overUnderInjectionAnalysisTab" :key="`index26-${index}`" :prop="item.code" :label="item.name" align="center" width="120px">
                                             <template slot-scope="{row}">
                                                 <span v-if="row[item.code+'Message']==''">{{row[item.code]?row[item.code]:'-'}}</span>
                                                 <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
