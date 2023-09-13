@@ -648,8 +648,8 @@
                 this.$refs.treeSelection.setCheckedKeys([this.selectPlatform, this.selectWellId]);
                 this.getBlockWellApi();
             },
-             // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
-             getSelectItems(selectList, selectData) {
+            //主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
+            getSelectItems(selectList, selectData) {
                 //作业公司选中数据
                 // this.queryParams.companyId = selectList.orgId;
                 // 油田选中数据

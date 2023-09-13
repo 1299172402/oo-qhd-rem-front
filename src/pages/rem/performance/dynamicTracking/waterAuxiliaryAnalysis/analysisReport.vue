@@ -510,7 +510,7 @@
                                 </div>
                             </pagePanel>
                         </div>
-                        <div style="height:540px;">
+                        <div style="height:680px;">
                             <pagePanel header-title="水井动态分析详情列表" style="height: 100%;">
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '水井动态分析详情列表')">下载</el-button>
@@ -526,7 +526,8 @@
                                     :cell-style="{ padding: '6px', 'text-align': 'center' }"
                                     :default-sort="{ prop: 'date', order: 'descending' }"
                                     height="calc(100% - 55px)"
-                                    @sort-change="changeTableSort" ref="tableList"
+                                    @sort-change="changeTableSort" 
+                                    ref="tableList"
                                     row-key="id"
                                     default-expand-all
                                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
@@ -937,6 +938,7 @@ export default {
             //加上重新搜索清空选择 和 表格数据
             this.selCode = '';
             this.tableData = [];
+            this.collectWells=[];
             //重新初始化相关数据项目
             this.paramMap.evaluationDate = this.currentDate;
             this.paramMap.oilFieldId = this.selYtdm;
@@ -969,6 +971,7 @@ export default {
             }
         },
         queryTableData(myData,val='123'){
+            console.log('myData',myData)
             let myWellCount = {}; //计算各项目的井数
             let t_count = 0; //计数器
             //2、按照顺序初始化计数器、生成数据体
@@ -1480,6 +1483,8 @@ export default {
             //停注恢复 stopInjectionRecovery
             //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
             this.tableData = myData; //加载数据
+            console.log('this.tableData',this.tableData)
+            
             this.$nextTick(() => {
                 this.$refs.tableList.doLayout();
             })
@@ -2795,8 +2800,9 @@ export default {
     }
 }
 //相关
-::v-deep .about1 {
+::v-deep .el-col .about1 {
     background: rgb(2, 43, 117);
+    color:#fff;
     .el-radio-button__inner{
         color:#fff;
         background: transparent!important;
@@ -2805,13 +2811,14 @@ export default {
 
 .z-button{
     width: 100%;
-    height: 28px;
+    height: 46px!important;
+    line-height: 16px!important;
+    white-space: pre-line;
     font-size:14px;
     text-align: center;
     border-color: var(--light-blue-color);
-    color: var(--white-color);
+    color: var(--form-text);
     transition: all 0s;
-    height: 34px;
     line-height: 8px;
     border-radius: 0 !important;
     background: rgba(143, 164, 204, 0.3);
@@ -2820,12 +2827,14 @@ export default {
         border-image: var(--primary-btn);
         border-color: var(--light-blue-color);
         background: var(--primary-btn) !important;
+        color: var(--white-color);
     }
 }
-.selectButton{
+.el-col .selectButton{
     border-image: var(--primary-btn);
     border-color: var(--light-blue-color);
     background: var(--primary-btn) !important;
+    color: var(--white-color);
 }
 .checkBtn {
     width: 110px;
@@ -2864,11 +2873,11 @@ export default {
   height: 100%!important;
 }
 ::v-deep .el-table__body-wrapper{
-    height:388px!important;
+    // height:388px!important;
 }
 ::v-deep .el-table__fixed-body-wrapper{
-    top:104px!important;
-    height:388px!important;
+    // top:104px!important;
+    // height:388px!important;
 }
 ::v-deep .el-table__fixed .el-table__body-wrapper{  
     top:104px!important;
