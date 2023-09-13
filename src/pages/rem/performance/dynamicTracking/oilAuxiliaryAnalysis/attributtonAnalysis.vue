@@ -227,7 +227,7 @@
                                  label="评价结论"></el-table-column>
                 <el-table-column prop="injDuration" min-width="150" :label="`注入时长\n(h)`"></el-table-column>
                 <el-table-column prop="injDaily" min-width="150" :label="`注入量\n(m³)`"></el-table-column>
-                <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(MPa)`"></el-table-column>
+                <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(MPa)`" :formatter="formatAmount"></el-table-column>
                 <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`">
                     <template slot-scope="scope">
                         {{Number(scope.row.injAllocationRate).toFixed(2)}}
@@ -1366,6 +1366,9 @@ export default {
         this.link = this.$route.query.link
     },
     methods: {
+        formatAmount(row, column, cellValue) {
+            return Number(cellValue).toFixed(2);
+        },
         toFixed,
         //获取查询条件中下拉列表的值
         async getData() {
