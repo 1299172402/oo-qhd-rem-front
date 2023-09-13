@@ -419,7 +419,8 @@ export default Vue.extend({
         ]
       },
       // 表单参数
-      form: {}
+      form: {},
+      resizeObserver: null
     };
   },
   computed: {
@@ -462,13 +463,6 @@ export default Vue.extend({
     }
   },
   watch: {
-    iconvisible: {
-      handler() {
-        // TODO: Maybe change back
-        // this.containerWidth();
-      },
-      immediate: true
-    },
     "$store.state.user.isGroupLogin": {
       handler() {
         this.getInitDeptds();
@@ -476,7 +470,31 @@ export default Vue.extend({
       },
       deep: true,
       immediate: true
+    },
+    layout: {
+      handler(newVal) {
+        // 顶部菜单建立监听，左侧菜单清除监听
+        if (newVal === "top") {
+          this.$nextTick(() => {
+            const node = document.getElementsByClassName("header-menu")[0];
+            if (this.resizeObserver && node) {
+              this.resizeObserver.observe(node);
+            }
+          });
+        } else {
+          this.resizeObserver.disconnect();
+        }
+      },
+      immediate: true
     }
+  },
+  created() {
+    this.resizeObserver = new ResizeObserver(() => {
+      this.containerWidth();
+    });
+  },
+  beforeDestroy() {
+    this.resizeObserver.disconnect();
   },
   methods: {
     playAudio(audio) {
