@@ -527,6 +527,7 @@ export default {
             productionMetricsOverview( { ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",date:'2022-12' + '-01'}).then(res=>{
                 this.dataList = res.data.data
+                this.dataList.cumeOilProd = '4493.00'
                 // if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
                 this.mainList[0]= res.data.data.naturalDecline
                 this.mainList[1]= res.data.data.overallDecline
