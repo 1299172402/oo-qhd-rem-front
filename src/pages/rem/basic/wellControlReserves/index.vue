@@ -101,14 +101,14 @@
                                         <el-col :span="10" style="padding-top:30px">
                                             <el-form-item label="控制面积" prop="kzmj">
                                                 <el-input v-model="djclForm.controlArea" :disabled="edit">
-                                                    <i slot="suffix">m²</i>
+                                                    <i slot="suffix">Km²</i>
                                                 </el-input>
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="10" style="padding-top:30px">
                                             <el-form-item label="可采储量" prop="kzmj">
                                                 <el-input v-model="djclForm.recoverableReserves" :disabled="edit">
-                                                    <i slot="suffix">m²</i>
+                                                    <i slot="suffix">m³</i>
                                                 </el-input>
                                             </el-form-item>
                                         </el-col>
