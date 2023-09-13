@@ -94,7 +94,7 @@
                                         <el-col :span="10" style="padding-top:30px">
                                             <el-form-item label="控制储量" prop="kzcl">
                                                 <el-input v-model="djclForm.probReservesWell" :disabled="edit"><i
-                                                    slot="suffix">m³</i></el-input>
+                                                    slot="suffix">10⁴m³</i></el-input>
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="2">&nbsp;</el-col>
