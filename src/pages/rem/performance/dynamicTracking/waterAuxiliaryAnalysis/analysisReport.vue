@@ -192,7 +192,8 @@
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left" width="160"></el-table-column>
                                     <el-table-column prop="productionProblems" label="生产问题" align="center">
-                                        <el-table-column label-class-name="twoRowHeader" width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index10-${index}`" :prop="item.code" :label="item.name" align="center" sortable="custom">
+                                        <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
+                                        <el-table-column label-class-name="twoRowHeader" width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index10-${index}`" :prop="item.code" :label="item.name" align="center" >
                                             <template #header>
                                                 <div v-if="item.unit">
                                                     <span>{{item.name}}</span>
@@ -534,7 +535,8 @@
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left" width="160"></el-table-column>
                                     <el-table-column prop="productionProblems" label="生产问题" align="center">
-                                        <el-table-column label-class-name="twoRowHeader" width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index24-${index}`" :prop="item.code" :label="item.name" align="center" sortable="custom">
+                                        <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
+                                        <el-table-column label-class-name="twoRowHeader" width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index24-${index}`" :prop="item.code" :label="item.name" align="center">
                                             <template #header>
                                                 <div v-if="item.unit">
                                                     <span>{{item.name}}</span>
