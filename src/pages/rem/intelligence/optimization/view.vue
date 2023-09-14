@@ -134,7 +134,11 @@
                             >
                                 <!-- :span-method="arrheader" -->
                                 <el-table-column prop="injWellNo" label="水井井号" width="150"
-                                                 align="center"></el-table-column>
+                                                 align="center">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.injWellNo.includes("秦皇岛32-6")? scope.row.injWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.injWellNo}}</span>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column prop="layerNo" label="层位名称" align="center"
                                                  width="220"></el-table-column>
                                 <el-table-column
@@ -618,7 +622,7 @@ export default {
                 },
                 grid: {
                     top: "15%",
-                    left: "12%",
+                    left: "13%",
                     right: "10%",
                     bottom: "20%",
                 },
@@ -646,7 +650,12 @@ export default {
                 yAxis: [
                     {
                         type: 'value',
-                        name: '',
+                        name: '配注量(m³)',
+                        nameLocation: "center",
+                        nameTextStyle: {
+                            color: "#989898",
+                        },
+                        nameGap: 45,
                         axisLabel: {
                             formatter: '{value}'
                         }
@@ -727,6 +736,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+#indexscv {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
+}
 .el-table__header,
 .el-table__body,
 .el-table__footer {

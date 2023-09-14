@@ -118,7 +118,7 @@
             >
                 <el-table-column prop="name" align="center" label="井号/层段"  width="250">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.name }}</span>
+                        <span>{{ scope.row.name.includes("秦皇岛32-6")? scope.row.name.replace("秦皇岛32-6", "QHD32-6") : scope.row.name}}</span>
                     </template>
                 </el-table-column>
 

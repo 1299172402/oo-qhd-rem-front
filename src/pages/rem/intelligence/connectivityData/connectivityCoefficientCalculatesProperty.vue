@@ -83,9 +83,9 @@
                     ></el-table-column>
                     <el-table-column prop="injWellNo" show-overflow-tooltip label="水井井号"
                                      align="center"></el-table-column>
-                    <el-table-column prop="layerName" show-overflow-tooltip label="层位名称"
+                    <el-table-column prop="layerName" show-overflow-tooltip min-width="40" label="层位名称"
                                      align="center"></el-table-column>
-                    <el-table-column prop="proWellNo" label="油井井号" show-overflow-tooltip
+                    <el-table-column prop="proWellNo" label="油井井号" min-width="50" show-overflow-tooltip
                                      align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.proWellNo !== null && scope.row.proWellNo !== ''">{{scope.row.proWellNo}}</span>
@@ -114,10 +114,9 @@
                     </el-table-column>
                     <el-table-column
                         prop="aroundWellNum"
-                        label="周围注采井数(口)"
-                        style="color: aquamarine;height: 200px;"
-                        :render-header="renderHeader"
                         min-width="40px"
+                        label="周围注采井数?(口)"
+                        :render-header="renderheader"
                         show-overflow-tooltip
                         align="center"
                     >
@@ -133,7 +132,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                        label="井控面积?(m²/口)"
+                        label="井控面积?(km²/口)"
                         prop="wellControlArea"
                         :render-header="renderheader"
                         min-width="40px"
@@ -473,4 +472,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#indexscv {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
+}
 </style>

@@ -76,6 +76,7 @@ export default {
             show: false,
             content: false,
             selectIndex: 0,
+            baseUrl:'',
             selectObj: this.currentList.boxBottomContent ? this.currentList.boxBottomContent : []
         }
     },
@@ -104,7 +105,7 @@ export default {
                 }
                 addLinkageAlarmInfo(data).then(()=>{
                 })
-                window.open(url+ '?alarmTime=' + item.alarmTime, '_parent');
+                window.open( url + (url.includes("?") ? '&alarmTime=' : '?alarmTime=') + item.alarmTime, '_parent');
             }else{
                 window.open(url, '_parent');
             }
@@ -121,7 +122,13 @@ export default {
                     this.warningShowFlag = false
                 }).then(()=>{
                     if (!url) return
-                    window.open('https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage', '_parent');
+                    const env = import.meta.env.MODE;
+                    if (window.location.origin.includes('test')) {
+                        this.baseUrl = 'tjioms-test.tjltd.cnooc'
+                    } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
+                        this.baseUrl = 'tjioms-dev.tjltd.cnooc'
+                    }
+                    window.open(`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage`, '_parent');
                 })
             }else{
                 let linkurl = currentList.boxBottomText.find((n)=>{
