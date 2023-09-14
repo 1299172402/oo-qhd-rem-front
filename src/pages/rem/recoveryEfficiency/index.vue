@@ -872,7 +872,6 @@
                     },
                     xAxis: {
                         name: "日",
-                        nameGap: 30,
                         // name: "时间",
                         type: 'category',
                         nameTextStyle: {

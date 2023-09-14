@@ -775,12 +775,17 @@ export default {
         },
         //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
         getDateApi(){
-            getDate({wellMenu:'WELL_INJ'}).then(res=>{
-                if(res.data.code==200){
-                    this.currentDate=res.data.data;
-                }
-                this.queryOilFeildList();
-            })
+            if(this.$route.query?.alarmTime) {
+                    this.currentDate = this.$route.query.alarmTime;
+                    this.queryOilFeildList();
+            } else {
+                getDate({wellMenu:'WELL_INJ'}).then(res=>{
+                    if(res.data.code==200){
+                        this.currentDate=res.data.data;
+                    }
+                    this.queryOilFeildList();
+                })
+            }
         },
         //获取油田数据
         queryOilFeildList() {

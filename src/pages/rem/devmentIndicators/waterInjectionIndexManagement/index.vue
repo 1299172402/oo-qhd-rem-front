@@ -730,6 +730,9 @@
             },
             //初始化页面
             async initData() {
+                if(this.$route.query?.alarmTime) {
+                    this.queryParams.year = this.$route.query.alarmTime;
+                } 
                 // 获取作业公司
                 // await getOrgInfo().then((data) => {
                 //     let code = data.data.code;
