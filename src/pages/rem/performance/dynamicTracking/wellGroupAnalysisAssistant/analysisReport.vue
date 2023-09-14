@@ -141,7 +141,8 @@
                                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" sortable="custom" label-class-name="twoRowHeader">
+                                    <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
+                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div class="headerSortRow1">
                                                 <span>{{ item.name}}</span>
@@ -448,7 +449,8 @@
                                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
-                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" sortable="custom" label-class-name="twoRowHeader">
+                                    <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
+                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div class="headerSortRow1">
                                                 <span>{{ item.name}}</span>
@@ -1102,6 +1104,8 @@
                     } else {
                         t_count = 0; //初始化
                     }
+                    // TODO lv 测试环境问题排查 trendOfIndicators   this.trendOfIndicators[j].value = t_count;赋值值可能存在问题，
+                    // 可能存在wellId重复
                     this.trendOfIndicators[j].value = t_count; //登记条数
                     if (t_count > 0) {
                         let titleName = t_data.name;
@@ -1411,7 +1415,7 @@
             changeTableSort(e) {
                 //获取当前列的字段
                 const prop = e.prop;
-                if (prop != 'wellName') {
+                if (prop != 'wellId') {
                     // 如果按降序
                     if (e.order === 'descending') {
                         //根据需要对字段进行写排序
