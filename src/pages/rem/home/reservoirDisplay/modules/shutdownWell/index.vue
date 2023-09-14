@@ -227,9 +227,14 @@ export default {
           // this.histogram.yAxis[0].max = null
           // this.histogram.yAxis[1].min = null
           // this.histogram.yAxis[1].max = Number(res.data.data.data.wellNum.sort((a, b) => b.lastedSort - a.lastedSort)[0]) * 1.2
-          res.data.data.data.yearMoth.forEach((n)=>{
-              this.histogram.xAxis.data.push(n)
-          })
+          const now = new Date(); // 获取当前时间
+          const currentMonth = now.getMonth() + 1; // 获取当前月份
+          const months = []; // 定义存放月份的数组
+          for (let i = 1; i <= currentMonth; i++) {
+              let monthString = `${i}月`;
+              months.push(monthString);
+          }
+          this.histogram.xAxis.data = months
           res.data.data.data.clyx.forEach((n)=>{
               this.histogram.series[0].data.push(n)
           })

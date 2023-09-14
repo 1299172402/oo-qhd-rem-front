@@ -30,7 +30,7 @@
                         </el-table-column>
                         <el-table-column label="大事内容" prop="remark" align="center">
                             <template slot-scope="scope">
-                                <div style="text-align: left" class="table-name">{{ scope.row.remark }}</div>
+                                <div style="text-align: left" class="table-name">{{ remark(scope.row) }}</div>
                             </template>
                         </el-table-column>
                         <el-table-column label="时间" min-width="40px" prop="startTime" align="center">
@@ -68,6 +68,17 @@ export default {
                     this.infinitScroll()
                 })
             })
+        },
+        remark(row){
+            console.log(row)
+            const text = row.remark;
+            const firstChar = text.charAt(0);
+            const isLetter = /^[A-Za-z]$/.test(firstChar);
+            if (isLetter) {
+               return text
+            } else {
+               return row.wellNo.substring(row.wellNo.lastIndexOf("-") + 1) + '井' + text
+            }
         },
         infinitScroll() {
             const table = this.$refs.table;
