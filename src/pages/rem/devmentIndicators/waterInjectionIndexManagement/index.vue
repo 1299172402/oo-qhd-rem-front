@@ -51,29 +51,41 @@
             						<el-row v-if="item.title == '分注井层段合格率' || item.title == '含水上升率' || item.title == '自然递减率'" :gutter="6" style="line-height: 20px; text-align: center">
             							<el-col :span="13" style="color: #8fa4cc">环比上月</el-col>
             							<el-col :span="11">
-            								<span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb | numberFormat }}% ↑</span>
-            								<span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb | numberFormat }}% ↓</span>
+                                            <template v-if="item.hb">
+                                                <span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb | numberFormat }}% ↑</span>
+            								    <span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb | numberFormat }}% ↓</span>
+                                            </template>
+                                            <span v-else> - </span>
             							</el-col>
             						</el-row>
             						<el-row v-if="item.title == '年注入量' || item.title == '地层压力保持水平' || item.title == '注水井分注率' || item.title == '动态监测完成率' || item.title == '分注井测试率'" :gutter="6" style="line-height: 20px; text-align: center">
             							<el-col :span="13" style="color: #8fa4cc">环比上年</el-col>
             							<el-col :span="11">
-            								<span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb | numberFormat }}% ↑</span>
-            								<span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb | numberFormat }}% ↓</span>
+                                            <template v-if="item.hb">
+                                                <span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb | numberFormat }}% ↑</span>
+            								    <span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb | numberFormat }}% ↓</span>
+                                            </template>
+                                            <span v-else> - </span>
             							</el-col>
             						</el-row>
             						<el-row v-if="item.title == '注水水质达标率' ||item.title == '分注井层段合格率' ||item.title == '含水上升率' ||item.title == '自然递减率'" :gutter="6" style="line-height: 20px; text-align: center">
             							<el-col :span="13" style="color: #8fa4cc">同比去年</el-col>
             							<el-col :span="11">
-            								<span v-if="item.tbTag == 'up'" style="color: #00c39f">{{ item.tb | numberFormat }}% ↑</span>
-            								<span v-if="item.tbTag == 'down'" style="color: #cd3d00">{{ item.tb | numberFormat }}% ↓</span>
+                                            <template v-if="item.tb">
+                                                <span v-if="item.tbTag == 'up'" style="color: #00c39f">{{ item.tb | numberFormat }}% ↑</span>
+            								    <span v-if="item.tbTag == 'down'" style="color: #cd3d00">{{ item.tb | numberFormat }}% ↓</span>
+                                            </template>
+                                            <span v-else> - </span>
             							</el-col>
             						</el-row>
             						<el-row :gutter="6" style="line-height: 20px; text-align: center">
-            							<el-col :span="14" style="color: #8fa4cc">与考核相比</el-col>
-            							<el-col :span="10">
-            								<span v-if="item.khTag == 'up'" style="color: #00c39f">{{ item.kh | numberFormat }}% ↑</span>
-            								<span v-if="item.khTag == 'down'" style="color: #cd3d00">{{ item.kh | numberFormat }}% ↓</span>
+            							<el-col :span="13" style="color: #8fa4cc">与考核相比</el-col>
+            							<el-col :span="11">
+                                            <template v-if="item.kh">
+                                                <span v-if="item.khTag == 'up'" style="color: #00c39f">{{ item.kh | numberFormat }}% ↑</span>
+            								    <span v-if="item.khTag == 'down'" style="color: #cd3d00">{{ item.kh | numberFormat }}% ↓</span>
+                                            </template>
+                                            <span v-else> - </span>
             							</el-col>
             						</el-row>
             					</div>
