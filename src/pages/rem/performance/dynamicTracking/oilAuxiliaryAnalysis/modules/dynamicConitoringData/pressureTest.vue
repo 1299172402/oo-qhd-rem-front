@@ -10,22 +10,22 @@
             <el-table-column type="index" label="序号" fixed></el-table-column>
             <el-table-column prop="borepipeName" label="井号" width="140px" fixed></el-table-column>
             <el-table-column prop="wellInterceptType" label="试井项目解析类型" width="140"></el-table-column>
-            <el-table-column prop="interpDate" label="解释时间" width="140">
+            <el-table-column prop="interpDate" :label="`解释时间\n(yyyy/mm/dd)`" width="140">
                 <template slot-scope="scope">
                     <span>{{scope.row.interpDate | dateTimeFormat}}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="midMD" label="油层中部斜深 (m)" width="120" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="midTVD" label="油层中部垂深 (m)" width="120" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="midTemperature" label="油层中部温度 (℃)" width="120" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="midFlowPressure" label="油层中部流压 (MPa)" width="120" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="midStaticPressure" label="油层中部静压 (MPa)" width="120" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="baseLevelAltitude" label="基准面海拔 (m)" width="110" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="baseLevelTemperature" label="基准面温度 (℃)" width="110" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="baseStaticPressure" label="基准面静压 (MPa)" width="110" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="baseFlowPressure" label="基准面流压 (MPa)" width="110" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="reduceTemperature" label="折算温度梯度 (℃/m)" width="120" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="reducePressure" label="折算压力梯度 (MPa/m)" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midMD" :label="`油层中部斜深\n(m)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midTVD" :label="`油层中部垂深\n(m)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midTemperature" :label="`油层中部温度\n(℃)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midFlowPressure" :label="`油层中部流压\n(MPa)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midStaticPressure" :label="`油层中部静压\n(MPa)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseLevelAltitude" :label="`基准面海拔\n(m)`" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseLevelTemperature" :label="`基准面温度\n(℃)`" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseStaticPressure" :label="`基准面静压\n(MPa)`" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseFlowPressure" :label="`基准面流压\n(MPa)`" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="reduceTemperature" :label="`折算温度梯度\n(℃/m)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="reducePressure" :label="`折算压力梯度\n(MPa/m)`" width="120" :formatter="toPrecise2"></el-table-column>
             <el-table-column prop="remark" label="备注"></el-table-column>
         </el-table>
     </page-panel>
@@ -105,6 +105,7 @@
         ::v-deep .el-table__header-wrapper .cell{
             height: auto;
             line-height: 18px;
+            white-space: pre;
         }
         ::v-deep .cell:empty{
             &::before {
