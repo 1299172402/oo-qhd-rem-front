@@ -183,7 +183,7 @@
                         <el-table-column prop="natureDeclineRate" label="自然递减率" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="compressveDeclineRate" label="综合递减率" align="center"  show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
-                    <el-table-column prop="waterContainRaiseRate" label="含水上升率" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="waterContainRaiseRate" :label="`含水上升率\n(%)`" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="waterOilRateSum" label="累计水油比" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                 </el-table>
             </el-dialog>

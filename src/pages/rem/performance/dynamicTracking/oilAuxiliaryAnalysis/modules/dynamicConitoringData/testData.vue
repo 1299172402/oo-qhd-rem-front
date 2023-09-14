@@ -16,7 +16,7 @@
       >
         <el-table-column type="index" label="序号" width="80"></el-table-column>
         <el-table-column prop="borepipeNo" label="井号"></el-table-column>
-        <el-table-column prop="oilAnalyResultId" label="样品深度" :formatter="toPrecise2"></el-table-column>
+        <el-table-column prop="oilAnalyResultId" :label="`样品深度\n (m)`" :formatter="toPrecise2"></el-table-column>
         <el-table-column prop="testItemId" :label="`蜡含量\n (%)`" :formatter="toPrecise2"></el-table-column>
         <el-table-column prop="datasetClass" :label="`原油密度\n (g/cm³)`" :formatter="toPrecise2"></el-table-column>
         <el-table-column prop="sampleId" :label="`粘度\n (mPa.s)`" :formatter="toPrecise2"></el-table-column>

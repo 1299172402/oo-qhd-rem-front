@@ -37,7 +37,7 @@
             				</span>
             			</div>
             		</pagePanel>
-            		<pagePanel v-else class="fl" :headerTitle="item.title" style="height: 180px; margin-top: 20px;">
+            		<pagePanel v-else class="fl" :headerTitle="`${item.title}${item.chainType? item.chainType : ''}`" style="height: 180px; margin-top: 20px;">
             			<el-button style="position: absolute; z-index: 9; right: 10px; top: 0px; height: 26px; margin-top: 3px; padding: 0 16px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
             			<el-row>
             				<el-col :span="15">
@@ -285,7 +285,8 @@
                         hb: "",
                         tb: "",
                         kh: "",
-                        dw: "%"
+                        dw: "%",
+                        chainType: "(月)"
                     },
                     {
                         title: "含水上升率",
@@ -293,7 +294,8 @@
                         hb: "",
                         tb: "",
                         kh: "",
-                        dw: "%"
+                        dw: "%",
+                        chainType: "(月)"
                     },
                     {
                         title: "注水井分注率",
@@ -325,7 +327,8 @@
                         hb: "",
                         tb: "",
                         kh: "",
-                        dw: "%"
+                        dw: "%",
+                        chainType: "(月)"
                     },
                 ],
                 //作业公司列表

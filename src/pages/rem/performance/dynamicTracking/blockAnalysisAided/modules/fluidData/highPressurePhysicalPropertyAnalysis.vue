@@ -19,7 +19,7 @@
             <el-table-column :label="`原始地层温度\n (℃)`" width="140" align="center" prop="initialFormaTemp"></el-table-column>
             <el-table-column :label="`原始地层温度梯度\n (℃/100m)`" width="140" align="center" prop="originGeothermalGradient"></el-table-column>
             <el-table-column label="地层体积系数" width="140" align="center" prop="bulkCoefficent"></el-table-column>
-            <el-table-column label="溶解气油比" width="140" align="center" prop="solutionGOR"></el-table-column>
+            <el-table-column :label="`溶解气油比\n(m³/m³)`" width="140" align="center" prop="solutionGOR"></el-table-column>
             <el-table-column label="地层油平均溶解气体系数" width="180" align="center" prop="oilAvgSolutionGasCoefficent"></el-table-column>
             <!--<el-table-column label="地层油体积收缩率"  width="120px"  align="center" prop=""></el-table-column>-->
             <el-table-column :label="`地层油密度\n (g/cm³)`" width="140" align="center" prop="oilDensity"></el-table-column>
