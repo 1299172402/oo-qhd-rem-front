@@ -143,7 +143,7 @@ export default {
                     boxBottomText: [{
                         name: '开发指标分析',
                         alarmPageCode: 'DEMEAN',
-                        url: `https://rem.${this.baseUrl}/#/devmentIndicators/waterInjectionIndexManagement?page=/dynamicManagement/remHome`
+                        url: `https://rem.${this.baseUrl}/#/devmentIndicators/technicalIndexManagement?page=/dynamicManagement/remHome`
                     }, {
                         name: '管理指标分析',
                         alarmPageCode: 'MAMEAN',

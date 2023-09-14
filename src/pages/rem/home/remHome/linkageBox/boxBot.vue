@@ -111,7 +111,7 @@ export default {
                 }
                 addLinkageAlarmInfo(data).then(()=>{
                 })
-                window.open(page+ '?alarmTime=' + item.alarmTime, '_parent');
+                window.open( page + (page.includes("?") ? '&alarmTime=' : '?alarmTime=') + item.alarmTime, '_parent');
             }else{
                 window.open(page, '_parent');
             }
