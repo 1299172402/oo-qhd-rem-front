@@ -142,7 +142,7 @@
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" sortable="custom" align="center" min-width="170" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div class="headerSortRow1">
                                                 <span>{{ item.name}}</span>
@@ -450,7 +450,7 @@
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code"  align="center" min-width="170" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" sortable="custom" align="center" min-width="170" label-class-name="twoRowHeader">
                                         <template #header>
                                             <div class="headerSortRow1">
                                                 <span>{{ item.name}}</span>

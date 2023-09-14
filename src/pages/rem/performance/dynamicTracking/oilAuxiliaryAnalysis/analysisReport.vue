@@ -198,7 +198,7 @@
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
                                         
                                         <template #header>
                                             <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
@@ -690,7 +690,7 @@
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="150" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="150" sortable="custom" label-class-name="twoRowHeader">
                                         
                                         <template #header>
                                             <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
@@ -1908,46 +1908,31 @@
             },
             // 排序列改变返回当前需要排序的列
             changeTableSort(e) {
-                //获取当前列的字段
-                console.log(e, this.tableData,this.oldTableData, '排序列改变返回当前需要排序的列')
-                const prop = e.prop;
+                 //获取当前列的字段
+                 const prop = e.prop;
                 if (prop != 'wellName') {
-                    let currentArr = cloneDeep(this.tableData);
+                    // 如果按降序
                     if (e.order === 'descending') {
                         //根据需要对字段进行写排序
-                        this.tableData.sort((a, b) => {
+                        this.tableData = this.tableData.sort((a, b) => {
                             if (!a.scdt[prop] || !a.scdt[prop].showLabel) {
                                 return -1;
                             } else if (!b.scdt[prop] || !a.scdt[prop].showLabel) {
                                 return 1;
                             } else {
-                                return Number(a.scdt[prop].showLabel) - Number(b.scdt[prop].showLabel);
+                                return parseFloat(Number(a.scdt[prop].showLabel)) - parseFloat(Number(b.scdt[prop].showLabel));
                             }
                         })
-                    } else if (e.order=='ascending') { //发果是降序
-                        this.tableData.sort((a, b) => {
-                            // console.log(a, a.scdt[prop])
+                    } else { //发果是降序
+                        this.tableData = this.tableData.sort((a, b) => {
                             if (!a.scdt[prop] || !a.scdt[prop].showLabel) {
                                 return 1;
                             } else if (!b.scdt[prop] || !a.scdt[prop].showLabel) {
                                 return -1;
                             } else {
-                                return Number(b.scdt[prop].showLabel) - Number(a.scdt[prop].showLabel);
+                                return parseFloat(Number(b.scdt[prop].showLabel)) - parseFloat(Number(a.scdt[prop].showLabel));
                             }
                         })
-                    // }
-                    // let arr = cloneDeep(this.tableData);
-                    // if(e.order=='descending'){
-                    //     this.tableData = arr.sort((a, b) => {
-                    //         return Number(b.scdt[prop].showLabel) - Number(a.scdt[prop].showLabel)
-                    //     })
-                    // }else if(e.order=='ascending'){
-                    //     this.tableData = arr.sort((a, b) => {
-                    //         console.log(a,b)
-                    //         return Number(a.scdt[prop].showLabel) - Number(b.scdt[prop].showLabel)
-                    //     })
-                    }else{
-                        this.tableData = cloneDeep(this.oldTableData);
                     }
                 }
             },
