@@ -59,6 +59,7 @@ export default {
                         color: "#a9a8a8",
                         fontWeight: 400,
                         fontSize: 16,
+                        interval:0
                     },
                     axisTick: {
                         lineStyle: {
