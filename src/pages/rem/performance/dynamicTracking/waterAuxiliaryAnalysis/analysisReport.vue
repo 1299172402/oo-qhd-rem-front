@@ -491,7 +491,7 @@
                                                 class="numBtn" 
                                                 :class="[item.code==selCode?'numBtnBgActive':'']" 
                                                 v-for="(item,index) in zsqdForm" :key="`index22-${index}`" 
-                                                v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!zsqdSwitch"  
+                                                v-if="item.name!='正常'&&item.name!='异常井'&&(item.value!=0||item.isShow)&&!zsqdSwitch"  
                                                 @click.stop="selRadioIterm(item.code,'zsqdForm')">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
@@ -500,7 +500,7 @@
                                                 class="numBtn" 
                                                 :class="[item.code==selCode?'numBtnBgActive':'']" 
                                                 v-for="(item,index) in zsqdForm" :key="`index23-${index}`" 
-                                                v-if="item.name=='正常'&&zsqdSwitch" 
+                                                v-if="item.name=='正常'&&item.name!='异常井'&&zsqdSwitch" 
                                                 @click.stop="selRadioIterm(item.code,'zsqdForm')">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
@@ -1663,9 +1663,12 @@ export default {
                         this.zsqdNum.allnum+=Number(el.value);
                         if(el.name=='正常'){
                             this.zsqdNum.zcnum=Number(el.value);
-                        }else{
+                        }else if(el.name=='异常井'){
+                            this.zsqdNum.ycnum=Number(el.value);   
+                        }
+                        else{
                             data[i].isShow=Number(el.value)?true:false;
-                            this.zsqdNum.ycnum+=Number(el.value);
+                            
                         }
                     })
                     this.zsqdNum.zczb=this.zsqdNum.zcnum/this.zsqdNum.allnum * 100;

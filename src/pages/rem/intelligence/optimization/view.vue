@@ -134,7 +134,11 @@
                             >
                                 <!-- :span-method="arrheader" -->
                                 <el-table-column prop="injWellNo" label="水井井号" width="150"
-                                                 align="center"></el-table-column>
+                                                 align="center">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.injWellNo.includes("秦皇岛32-6")? scope.row.injWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.injWellNo}}</span>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column prop="layerNo" label="层位名称" align="center"
                                                  width="220"></el-table-column>
                                 <el-table-column
