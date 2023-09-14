@@ -132,7 +132,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                        label="井控面积?(m²/口)"
+                        label="井控面积?(km²/口)"
                         prop="wellControlArea"
                         :render-header="renderheader"
                         min-width="40px"
