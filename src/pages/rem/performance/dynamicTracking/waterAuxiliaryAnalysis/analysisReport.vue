@@ -491,7 +491,7 @@
                                                 class="numBtn" 
                                                 :class="[item.code==selCode?'numBtnBgActive':'']" 
                                                 v-for="(item,index) in zsqdForm" :key="`index22-${index}`" 
-                                                v-if="item.name!='正常'&&(item.value!=0||item.isShow)&&!zsqdSwitch"  
+                                                v-if="item.name!='正常'&&item.name!='异常井'&&(item.value!=0||item.isShow)&&!zsqdSwitch"  
                                                 @click.stop="selRadioIterm(item.code,'zsqdForm')">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
@@ -500,7 +500,7 @@
                                                 class="numBtn" 
                                                 :class="[item.code==selCode?'numBtnBgActive':'']" 
                                                 v-for="(item,index) in zsqdForm" :key="`index23-${index}`" 
-                                                v-if="item.name=='正常'&&zsqdSwitch" 
+                                                v-if="item.name=='正常'&&item.name!='异常井'&&zsqdSwitch" 
                                                 @click.stop="selRadioIterm(item.code,'zsqdForm')">
                                                 <span class="sp1">{{item.value}}</span>
                                                 <span class="sp2">{{item.name}}</span>
@@ -629,9 +629,11 @@ import {
 import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
 import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
 import {exportExcel} from '@/lib/exportExcel.js';
+import compareSort from "@/lib/compareSort.js";
 
 export default {
     name:'waterAnalysisReport',
+    mixins: [compareSort],
     components: {
         treeSelectionCustom
     },
@@ -1663,9 +1665,12 @@ export default {
                         this.zsqdNum.allnum+=Number(el.value);
                         if(el.name=='正常'){
                             this.zsqdNum.zcnum=Number(el.value);
-                        }else{
+                        }else if(el.name=='异常井'){
+                            this.zsqdNum.ycnum=Number(el.value);   
+                        }
+                        else{
                             data[i].isShow=Number(el.value)?true:false;
-                            this.zsqdNum.ycnum+=Number(el.value);
+                            
                         }
                     })
                     this.zsqdNum.zczb=this.zsqdNum.zcnum/this.zsqdNum.allnum * 100;
@@ -2389,28 +2394,30 @@ export default {
         changeTableSort(e) {
             //获取当前列的字段
             const prop = e.prop;
-            // 如果按降序
-            if (e.order === 'descending') {
-                //根据需要对字段进行写排序
-                this.tableData = this.tableData.sort((a, b) => {
-                    if (!a[prop]) {
-                        return -1;
-                    } else if (!b[prop]) {
-                        return 1;
-                    } else {
-                        return parseFloat(Number(a[prop])) - parseFloat(Number(b[prop]));
-                    }
-                })
-            } else { //发果是降序
-                this.tableData = this.tableData.sort((a, b) => {
-                    if (!a[prop]) {
-                        return 1;
-                    } else if (!b[prop]) {
-                        return -1;
-                    } else {
-                        return parseFloat(Number(b[prop])) - parseFloat(Number(a[prop]));
-                    }
-                })
+            if (prop != 'wellId') {
+                // 如果按降序
+                if (e.order === 'descending') {
+                    //根据需要对字段进行写排序
+                    this.tableData = this.tableData.sort((a, b) => {
+                        if (!a[prop]) {
+                            return -1;
+                        } else if (!b[prop]) {
+                            return 1;
+                        } else {
+                            return parseFloat(Number(a[prop])) - parseFloat(Number(b[prop]));
+                        }
+                    })
+                } else { //发果是降序
+                    this.tableData = this.tableData.sort((a, b) => {
+                        if (!a[prop]) {
+                            return 1;
+                        } else if (!b[prop]) {
+                            return -1;
+                        } else {
+                            return parseFloat(Number(b[prop])) - parseFloat(Number(a[prop]));
+                        }
+                    })
+                }
             }
         },
         //自定义井号排序
@@ -2655,7 +2662,7 @@ export default {
                                     font-size: 14px;
                                 }
                                 .z_proess{
-                                    width:182px;
+                                    width:155px;
                                     height:16px;
                                     border: 1px solid rgba(41,171,226,1);
                                     margin-right:16px;

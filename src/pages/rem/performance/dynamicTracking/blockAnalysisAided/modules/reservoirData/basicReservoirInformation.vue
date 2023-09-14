@@ -38,7 +38,7 @@
                     <!--{{resultData.waterEnergy}}-->
                 </el-col>
                 <el-col :span="5">
-                    地质储量：22090.62万方
+                    地质储量：22090.62 (10⁴m³)
                     <!--{{resultData.reserves}}-->
                 </el-col>
                 <el-col :span="4">
@@ -68,7 +68,7 @@
                 <td>水体能量：</td>
                 <td>5倍水体</td>
                 <td>地质储量：</td>
-                <td>22090.62万方</td>
+                <td>22090.62 (10⁴m³)</td>
                 <td>开发方式：</td>
                 <td>天然能量+人工注水</td>
             </tr>

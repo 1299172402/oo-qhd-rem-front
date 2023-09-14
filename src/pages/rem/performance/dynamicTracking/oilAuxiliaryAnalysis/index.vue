@@ -576,9 +576,9 @@
             
             //初始化数据
             async initData() {
-                let oilFeildId = this.$route.params.oilField;
-                console.log(this.$route.params);
-                let wellId = this.$route.params.wellId;
+                let oilFeildId = this.$route.query.oilField;
+                console.log(this.$route.query);
+                let wellId = this.$route.query.wellId;
                 //获得油田信息给下拉列表
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {
@@ -617,6 +617,7 @@
                         this.wellData = wellData.filter((el) => el.wellName);
                     }
                 });
+                console.log(!wellId,wellId,this.$route,'井号ID')
                 if (!wellId) {
                     if (this.wellData && this.wellData.length > 0) {
                         this.selectWellId = this.wellData[0].wellId;

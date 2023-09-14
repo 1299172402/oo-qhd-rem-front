@@ -18,7 +18,7 @@
             </el-table-column>
             <el-table-column prop="wellName" label="井号"
                              align="center"></el-table-column>
-            <el-table-column prop="productionIntervalNo" label="层位" align="center" >
+            <el-table-column prop="productionIntervalNo" min-width="150" label="层位" align="center" >
                 <template slot-scope="scope">
                     <span>{{ scope.row.productionIntervalNo }}</span>
                 </template>
@@ -28,7 +28,7 @@
                     <span>{{ scope.row.injPump }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="overflowInj" :label="`超/欠注量\n(m³)`"  align="center">
+            <el-table-column prop="overflowInj" label="超/欠注量(m³)" min-width="100" align="center">
                 <template slot-scope="scope">
                     <span>{{ scope.row.overflowInj }}</span>
                 </template>

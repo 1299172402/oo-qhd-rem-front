@@ -207,7 +207,7 @@
                                 header-cell-class-name="table_header"
                                 :cell-style="{ padding: '2px', 'text-align': 'center' }">
                                 <el-table-column label="序号" type="index"></el-table-column>
-                                <el-table-column label="日期" prop="startTime"></el-table-column>
+                                <el-table-column :label="`日期\n(yyyy/mm/dd)`" prop="startTime"></el-table-column>
                                 <el-table-column label="含水" prop="waterCut" :formatter="toPrecise2"></el-table-column>
                                 <el-table-column label="含砂" prop="sand" :formatter="toPrecise2"></el-table-column>
                                 <el-table-column label="备注" prop="remark"></el-table-column>
@@ -224,9 +224,10 @@
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                                     header-cell-class-name="table_header"
                                     :cell-style="{ padding: '2px', 'text-align': 'center' }">
+                                    <el-table-column :label="`日期\n(yyyy/mm/dd)`" prop="dateTime" width="180"></el-table-column>
                                     <el-table-column label="井号" prop="wellNo" width="180"></el-table-column>
-                                    <el-table-column label="开始时间" prop="beginTime" width="250"></el-table-column>
-                                    <el-table-column label="预计结束时间" prop="endTime" width="250"></el-table-column>
+                                    <el-table-column :label="`开始时间\n(yyyy/mm/dd)`" prop="beginTime" width="250"></el-table-column>
+                                    <el-table-column :label="`预计结束时间\n(yyyy/mm/dd)`" prop="endTime" width="250"></el-table-column>
                                     <el-table-column label="当前作业内容" prop="workContent"></el-table-column>
                                 </el-table>
                                 <pagination v-show="pageTotal2 > 0" :pageSizes="[15, 20, 40]" :total="pageTotal2" :page.sync="queryParams2.page" :limit.sync="queryParams2.pageSize" @pagination="pagination" />
@@ -1993,8 +1994,8 @@
                     prodPlatformId:this.selectPlatform==this.selectOilField?'':this.selectPlatform,
                     wellId:this.selectWellId,
                     year:this.dateTime,
-                    pageNum:this.queryParams.page,
-                    pageSize:this.queryParams.pageSize,
+                    pageNum:this.queryParams2.page,
+                    pageSize:this.queryParams2.pageSize,
                 };
                 getWorkProgress(request).then(res=>{
                     console.log(res,777)
@@ -2875,6 +2876,7 @@
         line-height: 20px!important;
         height:auto!important;
         padding:5px 10px!important;
+        white-space: pre;
     }
     
     ::v-deep .el-table .cell:empty::before {

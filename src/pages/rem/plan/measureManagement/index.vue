@@ -107,14 +107,14 @@
                             >
                             <el-table-column prop="wellNo" label="井号" width="140" sortable></el-table-column>
                             <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
-                            <el-table-column prop="measureName3" label="措施作业天数(计划/实际)" width="110">
+                            <el-table-column prop="measureName3" :label="`措施作业天数\n(计划/实际)\n(d)`" width="110">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.planMeasuresDayNum||scope.row.realityMeasuresDayNum">
                                         {{scope.row.planMeasuresDayNum?scope.row.planMeasuresDayNum:0}}/{{scope.row.realityMeasuresDayNum}}
                                     </span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="status" label="措施是否达标" width="80"></el-table-column>
+                            <el-table-column prop="status" :label="`措施是否\n达标`" width="80"></el-table-column>
                             <el-table-column label="类别" width="100">
                                 <template slot-scope="scope">
                                     <div style="line-height: 18px;" v-if="measureVersion=='002003'">分公司考核 <br />实际</div>
@@ -818,6 +818,14 @@
 </script>
 
 <style lang="scss" scoped>
+    ::v-deep .el-table__fixed-header-wrapper,
+    ::v-deep .el-table__header-wrapper {
+        .cell {
+            height: auto !important;
+            line-height: 1.5 !important;
+            white-space: pre;
+        }
+    }
     ::v-deep #csgl .has-gutter {
         height: 66px;
 
