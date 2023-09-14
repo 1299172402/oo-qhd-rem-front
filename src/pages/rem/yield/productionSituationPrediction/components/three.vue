@@ -116,15 +116,7 @@
                 };
                 getWorkCompanyTrack(params).then(res=> {
                     if (res.data.code==200) {
-                        let data=[];
-                        data[0] = res.data.data[6];
-                        data[1] = res.data.data[0];
-                        data[2] = res.data.data[1];
-                        data[3] = res.data.data[2];
-                        data[4] = res.data.data[3];
-                        data[5] = res.data.data[4];
-                        data[6] = res.data.data[5];
-                        this.tableData =data;
+                        this.tableData = res.data.data;
                     }
                 })
             },

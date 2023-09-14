@@ -629,9 +629,11 @@ import {
 import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js"
 import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
 import {exportExcel} from '@/lib/exportExcel.js';
+import compareSort from "@/lib/compareSort.js";
 
 export default {
     name:'waterAnalysisReport',
+    mixins: [compareSort],
     components: {
         treeSelectionCustom
     },
@@ -2389,28 +2391,30 @@ export default {
         changeTableSort(e) {
             //获取当前列的字段
             const prop = e.prop;
-            // 如果按降序
-            if (e.order === 'descending') {
-                //根据需要对字段进行写排序
-                this.tableData = this.tableData.sort((a, b) => {
-                    if (!a[prop]) {
-                        return -1;
-                    } else if (!b[prop]) {
-                        return 1;
-                    } else {
-                        return parseFloat(Number(a[prop])) - parseFloat(Number(b[prop]));
-                    }
-                })
-            } else { //发果是降序
-                this.tableData = this.tableData.sort((a, b) => {
-                    if (!a[prop]) {
-                        return 1;
-                    } else if (!b[prop]) {
-                        return -1;
-                    } else {
-                        return parseFloat(Number(b[prop])) - parseFloat(Number(a[prop]));
-                    }
-                })
+            if (prop != 'wellId') {
+                // 如果按降序
+                if (e.order === 'descending') {
+                    //根据需要对字段进行写排序
+                    this.tableData = this.tableData.sort((a, b) => {
+                        if (!a[prop]) {
+                            return -1;
+                        } else if (!b[prop]) {
+                            return 1;
+                        } else {
+                            return parseFloat(Number(a[prop])) - parseFloat(Number(b[prop]));
+                        }
+                    })
+                } else { //发果是降序
+                    this.tableData = this.tableData.sort((a, b) => {
+                        if (!a[prop]) {
+                            return 1;
+                        } else if (!b[prop]) {
+                            return -1;
+                        } else {
+                            return parseFloat(Number(b[prop])) - parseFloat(Number(a[prop]));
+                        }
+                    })
+                }
             }
         },
         //自定义井号排序
@@ -2655,7 +2659,7 @@ export default {
                                     font-size: 14px;
                                 }
                                 .z_proess{
-                                    width:182px;
+                                    width:155px;
                                     height:16px;
                                     border: 1px solid rgba(41,171,226,1);
                                     margin-right:16px;

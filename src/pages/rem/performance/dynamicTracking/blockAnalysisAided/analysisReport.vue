@@ -1566,7 +1566,7 @@
                         font-size: 14px;
                     }
                     .z_proess{
-                        width:182px;
+                        width:155px;
                         height:16px;
                         padding: 1px;
                         border: 1px solid rgba(41,171,226,1);

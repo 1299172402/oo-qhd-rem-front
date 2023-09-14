@@ -25,7 +25,7 @@
                 <el-table-column prop="injectionDailyReal" align="center" :label="`实际日注入量\n(m³/d)`" :formatter="toPrecise2"></el-table-column>
                 <el-table-column prop="injectionDailyPlan" align="center" :label="`计划日注入量\n(m³/d)`" :formatter="toPrecise2"></el-table-column>
                 <el-table-column property="injectionSumReal" align="center" :label="`实际年累注\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
-                <el-table-column prop="injectionSumPlan" align="center" :label="`计划年累注\n(10⁴m³)`" :formatter="toPrecise2"></el-table-column>
+                <el-table-column prop="injectionSumPlan" align="center" :label="`计划年累注\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/>
         </pagePanel>

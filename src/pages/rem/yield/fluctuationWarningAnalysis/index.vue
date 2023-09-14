@@ -1219,25 +1219,25 @@
 
                     if (unitType == "m") {
                         _this.realOutput =
-                            _this.realOutput.length != 0 ? _this.realOutput + "m³" : "";
+                            _this.realOutput.length != 0 ? _this.realOutput + "(m³/d)" : "";
                         _this.planOutput =
-                            _this.planOutput.length != 0 ? _this.planOutput + "m³" : "";
+                            _this.planOutput.length != 0 ? _this.planOutput + "(m³/d)" : "";
                         _this.remainingLevel =
-                            _this.remainingLevel.length != 0 ? _this.remainingLevel + "m³" : "";
+                            _this.remainingLevel.length != 0 ? _this.remainingLevel + "(m³/d)" : "";
                         _this.rollingPrediction =
                             _this.rollingPrediction.length != 0 ?
-                            _this.rollingPrediction + "m³" :
+                            _this.rollingPrediction + "(m³/d)" :
                             "";
                     } else if (unitType == "t") {
                         _this.realOutput =
-                            _this.realOutput.length != 0 ? _this.realOutput + "t" : "";
+                            _this.realOutput.length != 0 ? _this.realOutput + "(t/d)" : "";
                         _this.planOutput =
-                            _this.planOutput.length != 0 ? _this.planOutput + "t" : "";
+                            _this.planOutput.length != 0 ? _this.planOutput + "(t/d)" : "";
                         _this.remainingLevel =
-                            _this.remainingLevel.length != 0 ? _this.remainingLevel + "t" : "";
+                            _this.remainingLevel.length != 0 ? _this.remainingLevel + "(t/d)" : "";
                         _this.rollingPrediction =
                             _this.rollingPrediction.length != 0 ?
-                            _this.rollingPrediction + "t" :
+                            _this.rollingPrediction + "(t/d)" :
                             "";
                     }
                 });

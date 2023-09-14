@@ -529,7 +529,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="2">井控面积(m²)</td>
+                                                    <td colspan="2">井控面积(km²)</td>
                                                     <td>
                                                         <el-input v-model="paramater.ssmall" type="text" width="50px"></el-input>
                                                     </td>

@@ -1904,22 +1904,22 @@
                     if (e.order === 'descending') {
                         //根据需要对字段进行写排序
                         this.tableData = this.tableData.sort((a, b) => {
-                            if (!a.scdt[prop] || !a.scdt[prop].showLabel) {
+                            if (!a.scdt[prop]) {
                                 return -1;
-                            } else if (!b.scdt[prop] || !a.scdt[prop].showLabel) {
+                            } else if (!b.scdt[prop]) {
                                 return 1;
                             } else {
-                                return parseFloat(Number(a.scdt[prop].showLabel)) - parseFloat(Number(b.scdt[prop].showLabel));
+                                return parseFloat(Number(a.scdt[prop])) - parseFloat(Number(b.scdt[prop]));
                             }
                         })
                     } else { //发果是降序
                         this.tableData = this.tableData.sort((a, b) => {
-                            if (!a.scdt[prop] || !a.scdt[prop].showLabel) {
+                            if (!a.scdt[prop]) {
                                 return 1;
-                            } else if (!b.scdt[prop] || !a.scdt[prop].showLabel) {
+                            } else if (!b.scdt[prop]) {
                                 return -1;
                             } else {
-                                return parseFloat(Number(b.scdt[prop].showLabel)) - parseFloat(Number(a.scdt[prop].showLabel));
+                                return parseFloat(Number(b.scdt[prop])) - parseFloat(Number(a.scdt[prop]));
                             }
                         })
                     }
@@ -2216,7 +2216,7 @@
                                         font-size: 14px;
                                     }
                                     .z_proess{
-                                        width:182px;
+                                        width:155px;
                                         height:16px;
                                         padding: 1px;
                                         border: 1px solid rgba(41,171,226,1);
@@ -2458,7 +2458,7 @@
                                         font-size: 14px;
                                     }
                                     .z_proess{
-                                        width:182px;
+                                        width:155px;
                                         height:16px;
                                         padding: 1px;
                                         border: 1px solid rgba(41,171,226,1);
