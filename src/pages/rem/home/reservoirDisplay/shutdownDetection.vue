@@ -85,6 +85,7 @@
         </header-search>
         <pagePanel headerTitle="秦皇岛32-6油田关停井跟踪" style="height: calc(100% - 40px )" class="g-w100"
                    :show-btn="true">
+            <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;float: right" @click="doDownExcel()">下载</el-button>
             <el-table
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
@@ -92,7 +93,7 @@
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
-                height="calc(100% - 50px)"
+                height="calc(100% - 100px)"
                 width="100%"
                 ref="reset"
                 style="width: 100%; height: calc(100% - 40px )"
@@ -103,21 +104,21 @@
                 <el-table-column prop="appendixValueName" label="*关停分类"></el-table-column>
                 <el-table-column prop="reasonAppendixValueName" label="*关停原因"></el-table-column>
                 <el-table-column prop="planAppendixValueName" label="*计划属性"></el-table-column>
-                <el-table-column prop="beginDate" sortable :label="`*关停开始时间\n(yyyy/mm/dd)`">
+                <el-table-column prop="beginDate" sortable min-width="90px" :label="`*关停开始时间\n(yyyy/mm/dd)`">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.beginDate">{{scope.row.beginDate.substring(0,19)}}</span>
+                        <span v-if="scope.row.beginDate">{{scope.row.beginDate.substring(0,10)}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="endDate" sortable :label="`*关停结束时间\n(yyyy/mm/dd)`">
+                <el-table-column prop="endDate" sortable min-width="90px" :label="`*关停结束时间\n(yyyy/mm/dd)`">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.endDate">{{scope.row.endDate.substring(0,19)}}</span>
-                        <span v-else>N/A</span>
+                        <span v-if="scope.row.endDate">{{scope.row.endDate.substring(0,10)}}</span>
+                        <span v-else>-</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`">
                     <template slot-scope="scope">
-                      <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution * 10000).toFixed(2)}}</span>  
+                      <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution).toFixed(2)}}</span>  
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
@@ -141,8 +142,8 @@ import {
     queryOperatingCompanyDetail,
     queryPlatformQueryWellListDetail,
 } from "@/api/rem/marster.js";
-import {queryShutDownWellStatisDetails, queryShutDownValueDict, queryPlanValueDict} from '@/api/rem/reservoirbillboards'
-
+import {queryShutDownWellStatisDetails,queryShutDownWellStatisDetailsDownloadFile, queryShutDownValueDict, queryPlanValueDict} from '@/api/rem/reservoirbillboards'
+import FileSaver from 'file-saver'
 export default {
     name:'shutdownDetection',
     components: {},
@@ -202,6 +203,15 @@ export default {
         this.queryinfo()
     },
     methods: {
+        // 下载
+        doDownExcel(){
+            this.queryData.startTime = this.month[0]
+            this.queryData.endTime = this.month[1]
+            queryShutDownWellStatisDetailsDownloadFile(this.queryData).then((res)=>{
+                const aBlob = new Blob([res]);
+                FileSaver.saveAs(aBlob, `秦皇岛32-6油田关停井跟踪.xls` );
+            })
+        },
         getData() {
             queryOperatingCompanyDetail({}).then((res) => {
                 this.zygsSelect = res.data.data;

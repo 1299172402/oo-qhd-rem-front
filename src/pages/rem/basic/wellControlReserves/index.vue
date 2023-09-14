@@ -4,17 +4,18 @@
         <div style="display: flex;flex-direction: row; height: 100%;">
 
             <div style=" height: 100%">
-                <tree-multiple-selection :level = "'5'" @childinfo = 'childinfo' />
+                <tree-multiple-selection :level="'5'" @childinfo='childinfo'/>
             </div>
             <div
                 style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
                 <header-search class="g-w100 g-h100" style="height: auto">
                     <div class="g-row-flex-V g-w100 g-h100">
-                        <div >
+                        <div>
                             <el-form :inline="true">
                                 <el-form-item label="作业公司：">
                                     <el-select v-model="queryData.orgId" disabled>
-                                        <el-option v-for="(item, index) in deptSelect" :key="index" :label="item.orgName" :value="item.orgId">
+                                        <el-option v-for="(item, index) in deptSelect" :key="index"
+                                                   :label="item.orgName" :value="item.orgId">
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
@@ -30,26 +31,31 @@
                                 </el-form-item>
                                 <el-form-item label="平台：" prop="pt">
                                     <el-select v-model="queryData.pt" @change="onPlatfromChange">
-                                        <el-option v-for="item in platforms" :key="item.id" :label="item.platformName" :value="item.platformId">
+                                        <el-option v-for="item in platforms" :key="item.id" :label="item.platformName"
+                                                   :value="item.platformId">
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="井号：">
-                                    <el-select v-model="queryData.wellId" >
-                                        <el-option v-for="item in wells" :key="item.wellId" :label="item.wellName" :value="item.wellId">
+                                    <el-select v-model="queryData.wellId" @change="changewell">
+                                        <el-option v-for="(item,index) in wells" :key="index" :label="item.wellNo"
+                                                   :value="item.wellId">
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item>
-                                    <el-button type="primary" @click="queryserch()" icon="el-icon-search">搜索</el-button>
-                                    <el-button class="commonBtn" @click="refresh()" icon="el-icon-refresh">重置</el-button>
+                                    <el-button type="primary" @click="queryserch()" icon="el-icon-search">搜索
+                                    </el-button>
+                                    <el-button class="commonBtn" @click="refresh()" icon="el-icon-refresh">重置
+                                    </el-button>
                                 </el-form-item>
                             </el-form>
                         </div>
                     </div>
                 </header-search>
 
-                <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 80px)" class="g-w100" :show-btn="true">
+                <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 80px)" class="g-w100"
+                           :show-btn="true">
                     <div style="margin-top: 5%">
                         <div class="alltitle">{{ wellName }}</div>
                         <div class="boxall" style="height: 500px; width: 900px; margin: auto">
@@ -64,7 +70,8 @@
                                     <el-row>
                                         <el-col :span="10">
                                             <el-form-item label="层位选择" prop="cw">
-                                                <el-select v-model="djclForm.layerId" @change="selectcw" placeholder="" style="width: 100.5%">
+                                                <el-select v-model="djclForm.layerId" @change="selectcw"
+                                                           style="width: 100.5%">
                                                     <el-option
                                                         v-for="item in cwOptions"
                                                         :key="item.layerId"
@@ -78,21 +85,30 @@
                                         <el-col :span="2">&nbsp;</el-col>
                                         <el-col :span="10">
                                             <el-form-item label="有效厚度" prop="cw">
-                                                <el-input v-model="djclForm.thicknessEffe" :disabled="edit"> <i slot="suffix">m</i></el-input>
+                                                <el-input v-model="djclForm.thicknessEffe" :disabled="edit"><i
+                                                    slot="suffix">m</i></el-input>
                                             </el-form-item>
                                         </el-col>
                                     </el-row>
                                     <el-row>
                                         <el-col :span="10" style="padding-top:30px">
                                             <el-form-item label="控制储量" prop="kzcl">
-                                                <el-input v-model="djclForm.probReservesWell" :disabled="edit"> <i slot="suffix">m³</i></el-input>
+                                                <el-input v-model="djclForm.probReservesWell" :disabled="edit"><i
+                                                    slot="suffix">10⁴m³</i></el-input>
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="2">&nbsp;</el-col>
-                                        <el-col :span="10"  style="padding-top:30px">
+                                        <el-col :span="10" style="padding-top:30px">
                                             <el-form-item label="控制面积" prop="kzmj">
                                                 <el-input v-model="djclForm.controlArea" :disabled="edit">
-                                                    <i slot="suffix">m²</i>
+                                                    <i slot="suffix">km²</i>
+                                                </el-input>
+                                            </el-form-item>
+                                        </el-col>
+                                        <el-col :span="10" style="padding-top:30px">
+                                            <el-form-item label="可采储量" prop="kzmj">
+                                                <el-input v-model="djclForm.recoverableReserves" :disabled="edit">
+                                                    <i slot="suffix">10⁴m³</i>
                                                 </el-input>
                                             </el-form-item>
                                         </el-col>
@@ -100,9 +116,10 @@
                                     </el-row>
                                     <el-row>
                                         <el-col :span="24" align="right" style="padding-top: 85px;padding-right: 68px">
-                                            <el-button type="primary" @click="redact" icon="el-icon-edit">编辑</el-button>
+                                            <el-button type="primary" @click="redact" icon="el-icon-edit">编辑
+                                            </el-button>
                                             <el-button type="primary" @click="save">保存</el-button>
-                                            <el-button type="primary" icon="el-icon-search">运行计算</el-button>
+<!--                                            <el-button type="primary" icon="el-icon-search">运行计算</el-button>-->
                                         </el-col>
                                     </el-row>
                                 </el-form>
@@ -125,8 +142,13 @@ import {
     fetchProductionWells,
     fetchProductionWellsByPlatform,
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { queryLayerList, getOilFieldList } from "@/api/rem/workcompanydesignate";
-import { saveControlledReserves, getControlledReserves } from "@/api/rem/welldetailedevaluationresult";
+import {queryLayerList, getOilFieldList} from "@/api/rem/workcompanydesignate";
+import {
+    addWellControlReserves,
+    queryWellControlReservesWell,
+    queryWellControlReservesLayer,
+    queryWellControlReserves
+} from "@/api/rem/welldetailedevaluationresult";
 import {
     queryOperatingCompanyDetail,
     queryOperatorsCheckFieldListsDetail,
@@ -137,7 +159,7 @@ import {
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
 export default {
-    name:'reserves',
+    name: 'reserves',
     components: {treeMultipleSelection},
     data() {
         return {
@@ -156,14 +178,20 @@ export default {
             wells: [],
             platforms: [],
             oilFields: [],
-            djclForm: {},
+            djclForm: {
+                layerId: '',
+                controlArea: '',
+                evalDetailId: "",
+                probReservesWell: "",
+                recoverableReserves: "",
+                thicknessEffe: "",
+            },
             wellName: "",
         };
     },
     mounted() {
         this.getList();
         this.getData();
-        this.queryserch();
     },
     watch: {
         queryData: {
@@ -180,49 +208,30 @@ export default {
     methods: {
         getList() {
             //获取作业公司
-            queryOperatingCompanyDetail({}).then(res=>{
+            queryOperatingCompanyDetail({}).then(res => {
                 this.deptSelect = res.data.data
             })
             //根据作业公司查询油田
-            queryOperatorsCheckFieldListsDetail({orgId:this.queryData.orgId}).then(res=>{
+            queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
                 this.oilFields = res.data.data
             })
             //根据油田查询平台列表
-            queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryData.ogfId}).then(res=>{
+            queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
                 this.platforms = res.data.data
             })
-            // getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
-            //   if (res.data.code == 200) {
-            //     this.oilFields = res.data.data;
-            //   }
-            // });
-            // fetchOilFields().then((res) => {
-            //   if (res.data.code == 200) {
-            //     const requestPlat = {
-            //       oilFieldId: this.queryData.ogfId,
-            //     };
-            //     fetchPlatforms(requestPlat).then((res) => {
-            //       if (res.data.code == 200) {
-            //         this.platforms = res.data.data.platform;
-            //         this.platforms.map((n) => {
-            //           if (n.platName == "全部") {
-            //             n.platFormId = "";
-            //           }
-            //           this.queryData.pt = "";
-            //         });
-            //       }
-            //     });
-            //   }
-            // });
         },
         selectcw() {
             let adta = {
                 wellId: this.queryData.wellId,
                 layerId: this.djclForm.layerId,
             };
-            getControlledReserves(adta).then((res) => {
+            queryWellControlReserves(adta).then((res) => {
                 if (res.data.data) {
-                    this.djclForm = res.data.data;
+                    this.djclForm.evalDetailId = res.data.data[0].evalDetailId
+                    this.djclForm.thicknessEffe = res.data.data[0].thicknessEffe
+                    this.djclForm.probReservesWell = res.data.data[0].probReservesWell
+                    this.djclForm.controlArea = res.data.data[0].controlArea
+                    this.djclForm.recoverableReserves = res.data.data[0].recoverableReserves
                 } else {
                     this.djclForm = [];
                 }
@@ -233,23 +242,16 @@ export default {
         },
         queryserch() {
             //获取层位
-            queryOilAndGasFieldQueryPositionDetail({ogfId:this.queryData.ogfId}).then((res) => {
+            queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
                 this.cwOptions = res.data.data;
             });
-            // queryLayerList(this.queryData).then((res) => {
-            //   if (res.data.code == 200) {
-            //     this.cwOptions = res.data.data;
-            //   } else {
-            //     this.$message.error("系统错误请重新尝试或联系运维人员！");
-            //   }
-            //   console.log(this.tableData);
-            // });
         },
         save() {
             this.djclForm.controlArea = Number(this.djclForm.controlArea);
             this.djclForm.probReservesWell = Number(this.djclForm.probReservesWell);
             this.djclForm.thicknessEffe = Number(this.djclForm.thicknessEffe);
-            saveControlledReserves({ ...this.djclForm, wellId: this.queryData.wellId }).then((res) => {
+            this.djclForm.recoverableReserves = Number(this.djclForm.recoverableReserves);
+            addWellControlReserves({...this.djclForm, wellId: this.queryData.wellId}).then((res) => {
                 if (res.data.code == 200) {
                     this.edit = true;
                     this.$message.success("保存成功！");
@@ -260,117 +262,37 @@ export default {
         },
         getData() {
             //根据平台获得井
-            queryPlatformQueryWellListDetail({ogfId:this.queryData.ogfId}).then((res) => {
+            queryWellControlReservesWell({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
+                this.queryData.wellId = this.wells[0].wellId
+                queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
+                    this.cwOptions = res.data.data;
+                });
             })
-            // let oilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
-            // const request = {
-            //   oilFieldId,
-            // };
-            // fetchProductionWells(request).then((res) => {
-            //   if (res.data.code == 200) {
-            //     let wellList = res.data.data.productionWells;
-            //     let arr = [];
-            //     wellList.map((n) => {
-            //       if (n.wellName != null) {
-            //         arr.push(n);
-            //       }
-            //     });
-            //     this.wells = [...arr];
-            //   }
-            // });
-            // fetchInjectionWells(request).then((res) => {
-            //   if (res.data.code == 200) {
-            //     const wellList = res.data.data.injectionWell;
-            //     this.wells = [...this.wells, ...wellList];
-            //   }
-            // });
         },
         //平台下拉-change
         onPlatfromChange(val) {
-            // this.getFetchWells(this.queryData.ogfId, val);
-
-            //根据平台获得井
-            queryPlatformQueryWellListDetail({platformId:val}).then((res) => {
+            queryWellControlReservesWell({assetCode: val, ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
-                this.queryData.wellId =  this.wells[0].wellId
+                this.queryData.wellId = this.wells[0]?.wellId
             })
         },
         // 重置仅重置搜索条件与下方查询内容无关
         refresh() {
             this.queryData.pt = "";
-            let oilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
-            const request = {
-                oilFieldId,
-            };
-            fetchProductionWells(request).then((res) => {
+            queryWellControlReservesWell({ogfId: this.queryData.ogfId}).then((res) => {
                 if (res.data.code == 200) {
-                    let wellList = res.data.data.productionWells;
-                    let arr = [];
-                    wellList.map((n) => {
-                        if (n.wellName != null) {
-                            arr.push(n);
-                        }
-                    });
-
-                    this.wells = [...arr];
-                    this.wells.unshift({
-                        wellId: "",
-                        wellName: "全部",
-                    });
-                    this.queryData.wellId = "";
+                    this.wells = res.data.data
+                    this.queryData.wellId = this.wells[0].wellId
                 }
             });
         },
-        //通过油田 或 平台 获得井
-        getFetchWells(oilFieldId, platformId) {
-            this.wells = [];
-            if (platformId == "") {
-                const request = { oilFieldId };
-                fetchProductionWells(request).then((res) => {
-                    if (res.data.code == 200) {
-                        let wellData = res.data.data.productionWells || [];
-                        if (wellData.length) {
-                            const wellList = wellData.filter((el) => el.wellName);
-                            this.wells = this.wells.concat(wellList);
-                        }
-                    }
-                    fetchInjectionWells(request).then((res) => {
-                        if (res.data.code == 200) {
-                            const waterWellList = res.data.data.injectionWell || [];
-                            this.wells = this.wells.concat(waterWellList);
-                            this.wells.unshift({
-                                wellId: "",
-                                wellName: "全部",
-                            });
-                        }
-                    });
-                });
-            } else {
-                const request = { platformId };
-                fetchProductionWellsByPlatform(request).then((res) => {
-                    if (res.data.code == 200) {
-                        let wellData = res.data.data.productionWells || [];
-                        if (wellData.length) {
-                            const wellList = wellData.filter((el) => el.wellName);
-                            this.wells = this.wells.concat(wellList);
-                        }
-                    }
-                    fetchInjectionWellsByPlatform(request).then((res) => {
-                        if (res.data.code == 200) {
-                            const waterWellList = res.data.data.injectionWell || [];
-                            this.wells = this.wells.concat(waterWellList);
-                            this.wells.unshift({
-                                wellId: "",
-                                wellName: "全部",
-                            });
-                            this.queryData.wellId = "";
-                        }
-                    });
-                });
-            }
+        changewell() {
+            this.djclForm = []
+            
+            this.queryserch()
         },
-        childinfo(data){
+        childinfo(data) {
             this.queryData.pt = data[3].value
             this.queryData.wellId = data[4].value
         },
@@ -384,6 +306,7 @@ export default {
     position: relative;
     font-family: PingFangSC-Regular, PingFang SC;
 }
+
 /* .smart-energy-item {
   display: flex;
   justify-content: center;
@@ -411,13 +334,13 @@ export default {
 
 .boxall:before,
 .boxfoot:before {
-    border-left: 10px solid rgb(0,183,255);
+    border-left: 10px solid rgb(0, 183, 255);
     left: 0;
 }
 
 .boxall:after,
 .boxfoot:after {
-    border-right: 10px solid rgb(0,183,255);
+    border-right: 10px solid rgb(0, 183, 255);
     right: 0;
 }
 
@@ -440,19 +363,19 @@ export default {
     width: 50px;
     height: 50px;
     content: "";
-    border-top: 4px solid rgb(0,183,255);
+    border-top: 4px solid rgb(0, 183, 255);
     top: 0;
 }
 
 .boxall:before,
 .boxfoot:before {
-    border-left: 4px solid rgb(0,183,255);
+    border-left: 4px solid rgb(0, 183, 255);
     left: 0;
 }
 
 .boxall:after,
 .boxfoot:after {
-    border-right: 4px solid rgb(0,183,255);
+    border-right: 4px solid rgb(0, 183, 255);
     right: 0;
 }
 
@@ -462,7 +385,7 @@ export default {
     width: 50px;
     height: 50px;
     content: "";
-    border-bottom: 4px solid rgb(0,183,255);
+    border-bottom: 4px solid rgb(0, 183, 255);
     bottom: 0;
 }
 </style>
@@ -489,6 +412,7 @@ export default {
         border-top: 2px solid #0e393b;
         z-index: -1;
     }
+
     &::before {
         content: "";
         width: 100%;

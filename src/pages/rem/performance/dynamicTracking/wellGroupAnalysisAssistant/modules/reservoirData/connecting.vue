@@ -3,9 +3,10 @@
     <div style="height:calc(100% - 95px);">
         <div class="z-main">
             <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div v-if="uploadTime" style="position: absolute; left: 20px; top: 5px;">上传时间：{{ uploadTime }}</div>
                 <div class="z-container">
-                    <el-button style="position: absolute; height: 22px; padding: 0 16px; top: 5px;right:36px;" size="mini" class="commonBtn" @click="doDownLoad()">下载</el-button>
-                    <el-carousel :interval="4000" :autoplay="false" indicator-position="outside" arrow="hover">
+                    <!-- <el-button style="position: absolute; height: 22px; padding: 0 16px; top: 5px;right:36px;" size="mini" class="commonBtn" @click="doDownLoad()">下载</el-button> -->
+                    <el-carousel :interval="4000" :autoplay="false" indicator-position="outside" arrow="hover" @change="carouselChange">
                         <el-carousel-item v-for="(item, index) in imageList" ref="imageCaeousel" :key="index" style="height: 100%; overflow-y: auto;">
                             <el-image :src="item" :fit="fitInfo" style="width: 100%" :preview-src-list="imageList">
                                 <div slot="error"></div>
@@ -40,6 +41,7 @@ export default {
             imageList: [],
             downid:'',
             fitInfo:'cover',
+            uploadTime: "", // 文件上传时间
         };
     },
     mounted() {
@@ -47,14 +49,9 @@ export default {
     },
     methods: {
         async doSearch() {
-            let wellid = '',blockid = ''
-            if(this.blockId = '3FC9A818F5BC43B88270DB80BBB3018F'){
-                blockid = ''
-            }else{
-                blockid = this.blockId;
-            }
+            let wellid = ''
             let data = {
-                blockId: blockid,
+                blockId: this.blockId = '3FC9A818F5BC43B88270DB80BBB3018F' ? '':this.blockId,
                 ogfId: this.oilFieldId,
                 wellGroupId: this.wellGroupId
             }
@@ -70,6 +67,7 @@ export default {
                     if (res.data.code == 200) {
                         if(res.data.data.length){
                             this.mniIoFiles=res.data.data;
+                            this.uploadTime=res.data.data[0].uploadTime || "";
                             // this.downid = res.data?.data[0].fileId
                             for(let i=0;i<this.mniIoFiles.length;i++){
                                 let fileId = this.mniIoFiles[i].fileId;
@@ -79,6 +77,8 @@ export default {
                                 })
                             }
                         }else{
+                            this.mniIoFiles=[];
+                            this.uploadTime="";
                             this.imageList=[];
                         }
                     }else {
@@ -86,10 +86,18 @@ export default {
                     }
                 });
             })
-           
+        },
+        //  轮播图片切换事件 
+        carouselChange(newIndex) {
+            let uploadTime = this.uploadTime;
+            this.uploadTime = this.mniIoFiles[newIndex]?.uploadTime ? this.mniIoFiles[newIndex].uploadTime :  uploadTime;
         },
         // 下载功能
         doDownLoad() {
+            if(this.mniIoFiles.length <= 0) {
+                this.$message.error('无可下载内容')
+                return
+            }
             let fileName = '连井剖面图';
             for(let i=0;i<this.mniIoFiles.length;i++){
                 let fileId=this.mniIoFiles[i].fileId;

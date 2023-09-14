@@ -93,7 +93,7 @@
                         },
                     },
                     yAxis: {
-                        name: "动用程度/%",
+                        name: "动用程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -186,7 +186,7 @@
                         },
                     },
                     yAxis: {
-                        name: "控制程度/%",
+                        name: "控制程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -238,6 +238,12 @@
                 },
                 //剩余储采比
                 reserveProductionRatio: {
+                    grid:{
+                        // top:50,
+                        // right:120,
+                        // bottom: 90,
+                        left:100,
+                    },
                     dataZoom: [
                         {
                             type: "inside",
@@ -268,7 +274,7 @@
                     },
                     xAxis: {
                         type: "value",
-                        name: "可采储量采出程度/%",
+                        name: "可采储量采出程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -294,12 +300,12 @@
                         },
                     },
                     yAxis: {
-                        name: "剩余可采储量储采比/%",
+                        name: "剩余可采储量储采比",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
-                        nameGap: 45,
+                        nameGap: 65,
                         type: "value",
                         axisLabel: {
                             color: "#8FA4CC",
@@ -322,7 +328,7 @@
                     },
                     series: [{
                         data: [],
-                        type: "scatter",
+                        type: "line",
                         label: {
                             show: false,
                             position: "top",
@@ -361,8 +367,8 @@
                         },
                     },
                     xAxis: {
-                        name: "时间",
-                        nameLocation: "center",
+                        name: "年",
+                        // nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -382,7 +388,7 @@
                         },
                     },
                     yAxis: {
-                        name: "动用程度/%",
+                        name: "动用程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -463,8 +469,8 @@
                         },
                     },
                     xAxis: {
-                        name: "时间",
-                        nameLocation: "center",
+                        name: "年",
+                        // nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -484,7 +490,7 @@
                         },
                     },
                     yAxis: {
-                        name: "控制程度/%",
+                        name: "控制程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -582,7 +588,8 @@
             //储采比折线解析
             outputDegreeLine(lineChart) {
                 let series = {};
-                series.type = 'scatter';
+                // series.type = 'scatter';
+                series.type = 'line';
                 series.symbolSize = 4;
                 series.name = lineChart.label;
                 series.label = {

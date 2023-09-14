@@ -65,12 +65,24 @@
                         <div v-if="scope.row.geoDesg" class="chicked">
                             <el-button type="text" @click="switchToPlan(scope.row.geoDesg, scope.row.geoDesgSl)" :disabled="!canDownload">方案查看</el-button>
                         </div>
+                        <!-- TODO 临时 -->
+                        <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
+                            <el-button type="text" @click="switchToPlan(scope.row.geoDesg, scope.row.geoDesgSl)" :disabled="!canDownload">方案查看</el-button>
+                        </div>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="工艺设计" align="center">
                     <template slot-scope="scope">
+                        <!-- TODO 临时 -->
                         <div v-if="scope.row.oprgProcDesg" class="chicked">
+                            <el-button type="text"
+                                @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)"
+                                :disabled="!canDownload">方案查看
+                            </el-button>
+                        </div>
+                        <!-- TODO 临时 -->
+                        <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
                             <el-button type="text"
                                 @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)"
                                 :disabled="!canDownload">方案查看
@@ -87,6 +99,13 @@
                                 :disabled="!canDownload">方案查看
                             </el-button>
                         </div>
+                        <!-- TODO 临时 -->
+                        <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
+                            <el-button type="text"
+                                @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)"
+                                :disabled="!canDownload">方案查看
+                            </el-button>
+                        </div>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
@@ -97,13 +116,13 @@
                 <el-table-column prop="beginDate" align="center" label="措施开始日期" min-width="110px"></el-table-column>
                 <el-table-column prop="endDate" align="center" label="措施结束日期" min-width="110px"></el-table-column>
                 <el-table-column align="center" label="措施前注入情况" min-width="100">
-                    <el-table-column align="center" label="日注水量 m³/d" min-width="100" prop="bmInjWater"></el-table-column>
+                    <el-table-column align="center" label="日注水量 (m³/d)" min-width="100" prop="bmInjWater"></el-table-column>
                 </el-table-column>
                 <el-table-column align="center" label="措施效果">
-                    <el-table-column prop="injDaily" align="center" label="当日日增注 m³/d" min-width="100"></el-table-column>
-                    <el-table-column align="center" label="累增注 m³" min-width="100" prop="sumInjDaily"></el-table-column>
-                    <el-table-column align="center" label="增注有效期 d" min-width="100" prop="days"></el-table-column>
-                    <el-table-column align="center" label="地质设计日配注 m³/d" min-width="120" prop="geoDesignInjDaily"></el-table-column>
+                    <el-table-column prop="injDaily" align="center" label="当日日增注( m³/d)" min-width="100"></el-table-column>
+                    <el-table-column align="center" label="累增注 (m³)" min-width="100" prop="sumInjDaily"></el-table-column>
+                    <el-table-column align="center" label="增注有效期 (d)" min-width="100" prop="days"></el-table-column>
+                    <el-table-column align="center" label="地质设计日配注 (m³/d)" min-width="120" prop="geoDesignInjDaily"></el-table-column>
                 </el-table-column>
                 <el-table-column label="地质设计" align="center">
                     <template slot-scope="scope">
@@ -739,6 +758,8 @@
                             },
                         },
                         {
+                            name: "日",
+                            nameGap: 50,
                             gridIndex: 2,
                             type: 'category',
                             data: [
@@ -779,7 +800,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#ff8e08',
+                                color: 'rgb(255,140,0)',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -802,12 +823,12 @@
                         },
                         {
                             gridIndex: 0,
-                            name: '折\n算\n基\n准\n面\n流\n压\nMPa',
+                            name: '折\n算\n基\n准\n面\n流\n压\n︵\nMPa\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#fe10f6',
+                                color: 'rgb(250,0,251)',
                                 fontSize: 14,
                             },
                             offset: 80,
@@ -837,7 +858,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#ccb71f',
+                                color: 'rgb(200,183,26)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -866,7 +887,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#0d66fd',
+                                color: 'rgb(0,102,255)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -898,7 +919,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: '#0206f7',
+                                color: 'rgb(0,0,255)',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -921,12 +942,12 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '气\n油\n比\n\m³/t',
+                            name: '气\n油\n比\n\(m³\n/\nt)',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: 'rgb(255,0,0)',
+                                color: 'rgb(154,205,50)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -951,12 +972,12 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '生\n产\n时\n间\n︵\nH\n︶',
+                            name: '生\n产\n时\n间\n︵\nh\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#fb6112',
+                                color: 'rgb(255,99,31)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -987,7 +1008,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#5a9df2',
+                                color: 'rgb(100,149,237)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1012,12 +1033,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: '日\n产\n油\n︵\n方\n︶',
+                            name: '产\n油\n︵\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#018000',
+                                color: 'rgb(0,128,0)',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -1040,12 +1061,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: '日\n产\n液\n︵\n方\n︶',
+                            name: '产\n液\n︵\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: 'rgb(165,42,42)',
+                                color: 'rgb(250,0,251)',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -1070,12 +1091,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: '日\n产\n气\n︵\n万\n方\n︶',
+                            name: '产\n气\n︵\n10⁴m³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#f90d03',
+                                color: 'rgb(255,0,0)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1200,7 +1221,7 @@
                         },
                     },
                     yAxis: {
-                        name: '流量Sm³/d',
+                        name: '流量(Sm³/d)',
                         nameLocation:'middle',
                         nameGap:70,
                         nameTextStyle: {
@@ -1320,6 +1341,8 @@
                             },
                         },
                         {
+                            name: "日",
+                            nameGap: 30,
                             gridIndex: 1,
                             type: 'category',
                             data: [
@@ -1359,7 +1382,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#ff631f',
                                 fontSize: 14,
                             },
                             max: 24,
@@ -1389,7 +1412,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#c8b71a',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1418,7 +1441,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: 'rgb(186,85,211)',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1448,7 +1471,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#00ffff',
                                 fontSize: 14,
                             },
                             scale: true,
@@ -1471,12 +1494,12 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '日\n配\n注\n量\n︵\nm³\n︶',
+                            name: '配\n注\n量\n︵\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#be5028',
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -1501,12 +1524,12 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '日\n注\n聚\n量\n︵\nm³\n︶',
+                            name: '注\n聚\n量\n︵\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#ff69b4',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1530,12 +1553,12 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '日\n注\n水\n量\n︵\nm³\n︶',
+                            name: '注\n水\n量\n︵\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#61bcc3',
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -1580,13 +1603,13 @@
                     grid: [{
                             x: '80',
                             y: '4%',
-                            width: '92%',
+                            width: '90%',
                             height: '40%',
                         },
                         {
                             x: '80',
                             y: '50%',
-                            width: '92%',
+                            width: '90%',
                             height: '40%',
                         },
                     ],
@@ -1609,6 +1632,8 @@
                             },
                         },
                         {
+                            name: "时间",
+                            nameGap: 40,
                             gridIndex: 1,
                             data: [],
                             type: 'category',
@@ -1703,6 +1728,15 @@
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             data: [],
+                            symbol: "circle",
+                            lineStyle: {
+                                color: "#61bcc4",
+                            },
+                            // 节点样式
+                            itemStyle: {
+                                borderColor: "#61bcc4",
+                                color: "#61bcc4",
+                            },
                         },
                     ],
                 },
@@ -2072,55 +2106,55 @@
                             if (lineName == '含水') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 4;
-                                series.itemStyle={color:'#0206f7'}
+                                series.itemStyle={color:'rgb(0,0,255)'}
                             } else if (lineName == '日产油') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'#018000'}
+                                series.itemStyle={color:'rgb(0,128,0)'}
                             } else if (lineName == '日产液') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#f300f1'}
+                                series.itemStyle={color:'rgb(250,0,251)'}
                             } else if (lineName == '流压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 0;
-                                series.itemStyle={color:'#ff8e08'}
+                                series.itemStyle={color:'rgb(255,140,0)'}
                             } else if (lineName == '油压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 2;
-                                series.itemStyle={color:'#ccb71f'}
+                                series.itemStyle={color:'rgb(200,183,26)'}
                             } else if (lineName == '泵频率') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 3;
-                                series.itemStyle={color:'#0d66fd'}
+                                series.itemStyle={color:'rgb(0,102,255)'}
                             } else if (lineName == '井口温度') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 7;
-                                series.itemStyle={color:'#5a9df2'}
+                                series.itemStyle={color:'rgb(100,149,237)'}
                             } else if (lineName == '折算基准面流压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 1;
-                                series.itemStyle={color:'rgb(165,42,42)'}
+                                series.itemStyle={color:'rgb(250,0,251)'}
                             } else if (lineName == '日产液量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 9;
-                                series.itemStyle={color:'#f300f1'}
+                                series.itemStyle={color:'rgb(250,0,251)'}
                             } else if (lineName == '日产油量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 8;
-                                series.itemStyle={color:'#018000'}
+                                series.itemStyle={color:'rgb(0,128,0)'}
                             } else if (lineName == '日产气量') {
                                 series.xAxisIndex = 2;
                                 series.yAxisIndex = 10;
-                                series.itemStyle={color:'#f90d03'}
+                                series.itemStyle={color:'rgb(255,0,0)'}
                             } else if (lineName == '气油比') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
-                                series.itemStyle={color:'rgb(255,0,0)'}
+                                series.itemStyle={color:'rgb(154,205,50)'}
                             } else if (lineName == '生产时间') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;
-                                series.itemStyle={color:'#fb6112'}
+                                series.itemStyle={color:'rgb(255,99,31)'}
                             } else {
                                 continue;
                             }
@@ -2184,24 +2218,31 @@
                             if (chartDatalabel == '套压') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 2;
+                                series.itemStyle={color:'rgb(186,85,211)'}
                             } else if (chartDatalabel == '日注水量') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 6;
+                                series.itemStyle={color:'#61bcc3'}
                             } else if (chartDatalabel == '井口压力') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 1;
+                                series.itemStyle={color:'#c8b71a'}
                             } else if (chartDatalabel == '注入时间') {
                                 series.xAxisIndex = 0;
                                 series.yAxisIndex = 0;
+                                series.itemStyle={color:'#ff631f'}
                             } else if (chartDatalabel == '日配注量') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 4;
+                                series.itemStyle={color:'#be5028'}
                             } else if (chartDatalabel == '水聚总量') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 3;
+                                series.itemStyle={color:'#00ffff'}
                             } else if (chartDatalabel == '日注聚量') {
                                 series.xAxisIndex = 1;
                                 series.yAxisIndex = 5;
+                                series.itemStyle={color:'#ff69b4'}
                             } else {
                                 continue;
                             }
@@ -2301,6 +2342,16 @@
             },
             //下载文档 跳转至方案查看
             switchToPlan(filePath, fileType) {
+                this.$modal
+                .confirm("是否确认下载？")
+                .then(() => {
+                    // this.$message.success("下载成功！");
+                    // return this.loadData();
+                })
+                .catch(() => {
+                // this.$message.warning("已取消下载");
+                });
+                return
                 const fp = encodeURI(filePath);
                 const ft = fileType;
                 const request = {
@@ -2433,6 +2484,8 @@
                         ...this.defaultType
                         .map((arr, index) => arr.filter((item) => this.queryParams.paramCodes.includes(item)))
                         .map((item, index) => ({
+                            // name: "日",
+                            // nameGap: 30,
                             gridIndex: index,
                             type: 'category',
                             /* data: (this.realTimeData[0] && this.realTimeData[0].paramValues)

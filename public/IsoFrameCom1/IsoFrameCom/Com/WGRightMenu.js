@@ -25,6 +25,40 @@ function ViewZoomIn(view)
         fCommon.ZoomIn();
     }
 }
+function ObjTop(view)
+{
+    if(fCommon)
+    {
+        fCommon.ObjTop();
+    }
+}
+function ObjBottom(view)
+{
+    if(fCommon)
+    {
+        fCommon.ObjBottom();
+    }
+}
+function ObjUp(view)
+{
+    if(fCommon)
+    {
+        fCommon.ObjUp();
+    }
+}
+function ObjDown(view)
+{
+    if(fCommon)
+    {
+        fCommon.ObjDown();
+    }
+}
+//右键菜单回调方法
+function RightEvent(arg) {
+    if (fCommon) {
+        fCommon.RightEvent(arg);
+    }
+}
 function ViewMapMove(view)
 {
     if(fCommon)

@@ -22,7 +22,6 @@ export default {
   },
   data() {
     return {
-      currentModel: this.$store.state.setting.mode,
         //采油速度
         productionSpeed: {
             tooltip: {
@@ -50,7 +49,7 @@ export default {
                 data: [],
                 bottom: 0,
                 textStyle: {
-                    color: '#24DEFF'
+                    color: ''
                 }
             },
             grid:{
@@ -85,7 +84,7 @@ export default {
             color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#FF5844', '#DA835E', '#9A72FF', '#FF30AD', '#2ACAFF'],
             yAxis: [
                 {
-                    name: '地质储量采油速度%',
+                    name: '地质储量采油速度(%)',
                     nameLocation: 'center',
                     nameTextStyle: {
                         color: '#8FA4CC'
@@ -115,7 +114,7 @@ export default {
                     }
                 },
                 {
-                    name: '可采、剩余可采采油速度%',
+                    name: '可采、剩余可采采油速度(%)',
                     nameLocation: 'center',
                     nameTextStyle: {
                         color: '#8FA4CC'
@@ -156,7 +155,7 @@ export default {
       linkroute(name) {
           this.$router.push({
               path: name,
-              query:{ link:'evaluation' }
+              query:{ link:'evaluation',page:'/reservoirDisplay/oilexhibition' }
           });
       },
       //产能类 采油速度
@@ -215,7 +214,26 @@ export default {
           series.symbol = 'none';
           return series;
       },
+     
   },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.productionSpeed.legend.textStyle.color = "#fff";
+                } else {
+                    this.productionSpeed.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate:true
+        },
+    },
 };
 </script>
 <style lang="scss" scoped>

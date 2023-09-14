@@ -64,19 +64,36 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="井号" min-width="130px" prop="wellNo" align="center"></el-table-column>
-                <el-table-column label="大事类型"  min-width="130px" prop="appendixValueName" align="center"></el-table-column>
+                <el-table-column label="大事类型"  min-width="130px" prop="appendixValueName" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.appendixValueName !== null && scope.row.appendixValueName !== ''">{{scope.row.appendixValueName}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
                 <el-table-column label="开始时间"  min-width="130px" prop="startTime" align="center">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.startTime?scope.row.startTime.split(' ')[0]:'' }}</span>
+                        <span v-if="scope.row.startTime !== null && scope.row.startTime !== ''">{{ scope.row.startTime?scope.row.startTime.split(' ')[0]:'' }}</span>
+                        <span v-else>-</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="结束时间"  min-width="130px" prop="endTime" align="center">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.endTime?scope.row.endTime.split(' ')[0]:'' }}</span>
+                        <span v-if="scope.row.endTime !== null && scope.row.endTime !== ''">{{ scope.row.endTime?scope.row.endTime.split(' ')[0]:'' }}</span>
+                        <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="大事简要"  min-width="130px" prop="chronicle" align="center"></el-table-column>
-                <el-table-column label="备注"  min-width="500px" show-overflow-tooltip prop="remark" align="center"></el-table-column>
+                <el-table-column label="大事简要"  min-width="130px" prop="chronicle" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.chronicle !== null && scope.row.chronicle !== ''">{{scope.row.chronicle}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="备注"  min-width="500px" show-overflow-tooltip prop="remark" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.remark !== null && scope.row.remark !== ''">{{scope.row.remark}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
             </el-table>
             <pagination v-if="pageTotal" :pageSizes="[16, 50, 100]" :total="pageTotal" :page.sync="queryData.page" :limit.sync="queryData.pageSize" @pagination="pagination" />
         </page-panel>

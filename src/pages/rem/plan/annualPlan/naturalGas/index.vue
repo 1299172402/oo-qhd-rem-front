@@ -81,7 +81,7 @@
                             end: 100, //滚动条结束位置
                         },
                     ],
-                    color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C'],
+                    color: ['#1379F7', '#DA835E', 'rgb(255,0,0)', '#69b146'],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -108,12 +108,12 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        // name: '时间/日',
+                        name: '日',
                         // nameTextStyle: {
                         //     color: '#8FA4CC',
                         //     fontSize: 14,
                         // },
-                        // nameGap: 55,
+                        nameGap: 55,
                         type: 'category',
                         axisLabel: {
                             color: '#8FA4CC',
@@ -138,7 +138,7 @@
                     },
                     yAxis: [
                         {
-                            name: '产气量/10⁴m³',
+                            name: '产气量(10⁴m³)',
                             nameLocation:'middle',
                             nameGap:70,
                             nameTextStyle: {
@@ -168,7 +168,7 @@
                             },
                         },
                         {
-                            name: '油当量(折算)/m³',
+                            name: '油当量(折算)(m³)',
                             nameLocation:'middle',
                             nameGap:70,
                             nameTextStyle: {

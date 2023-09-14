@@ -90,6 +90,8 @@
                         itemGap: 14,
                     },
                     xAxis: {
+                        name: "日",
+                        nameGap: 50,
                         type: 'category',
                         axisLabel: {
                             color: '#8FA4CC',
@@ -117,7 +119,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: '措施井次/口',
+                            name: '措施井次(口)',
                             nameLocation:'middle',
                             nameGap:80,
                             nameTextStyle: {
@@ -146,7 +148,7 @@
                         },
                         {
                             type: 'value',
-                            name: '注入量/m³',
+                            name: '注入量(m³)',
                             nameLocation:'middle',
                             nameGap:80,
                             nameTextStyle: {
@@ -226,13 +228,13 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        // name: '时间/日期',
+                        name: '日',
                         // nameTextStyle: {
                         //     color: '#8FA4CC',
                         //     fontSize: 14,
                         // },
-                        // nameGap: 30,
-                        nameLocation: 'center',
+                        nameGap: 30,
+                        // nameLocation: 'center',
                         type: 'category',
                         axisLabel: {
                             color: '#8FA4CC',
@@ -259,7 +261,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: '措施井次/口',
+                            name: '措施井次(口)',
                             nameLocation:'middle',
                             nameGap:80,
                             nameTextStyle: {
@@ -288,7 +290,7 @@
                         },
                         {
                             type: 'value',
-                            name: '注入量/m³',
+                            name: '注入量(m³)',
                             nameLocation:'middle',
                             nameGap:80,
                             nameTextStyle: {

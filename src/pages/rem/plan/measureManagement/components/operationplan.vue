@@ -65,20 +65,90 @@
                 height="calc(100% - 90px)"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column label="*日期" prop="theDate" align="center"></el-table-column>
-                <el-table-column label="*生产单元" prop="prodectionUnit" align="center"></el-table-column>
-                <el-table-column label="修井机状态" prop="workvoerRigStatus" align="center"></el-table-column>
-                <el-table-column label="当前作业内容" min-width="90px" prop="currentJobContent" align="center"></el-table-column>
-                <el-table-column label="作业井号" min-width="100px" prop="jobWellNo" align="center"></el-table-column>
-                <el-table-column label="是否动管柱" prop="isMovingPipePresent" align="center"></el-table-column>
-                <el-table-column label="开始时间" min-width="100px" prop="startDate" align="center"></el-table-column>
-                <el-table-column label="预计结束时间" min-width="100px" prop="endDate" align="center"></el-table-column>
-                <el-table-column label="当日作业内容简述"  min-width="110px" show-overflow-tooltip prop="operationInfo" align="center"></el-table-column>
-                <el-table-column label="下步作业内容" min-width="100px" prop="nextJobContent" align="center"></el-table-column>
-                <el-table-column label="作业井号" min-width="100px" prop="nextJobWellNo" align="center"></el-table-column>
-                <el-table-column label="是否动管柱" prop="isMovingPipePresent" align="center"></el-table-column>
-                <el-table-column label="预计作业时间" prop="planStartDate" align="center"></el-table-column>
-                <el-table-column label="备注" prop="remark" show-overflow-tooltip align="center"></el-table-column>
+                <el-table-column label="日期" prop="theDate" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.theDate !== null && scope.row.theDate !== ''">{{scope.row.theDate}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="*生产单元" min-width="130px" prop="prodectionUnit" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.prodectionUnit !== null && scope.row.prodectionUnit !== ''">{{scope.row.prodectionUnit}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="修井机状态" prop="workvoerRigStatus" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.workvoerRigStatus !== null && scope.row.workvoerRigStatus !== ''">{{scope.row.workvoerRigStatus}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="当前作业内容" min-width="90px" prop="currentJobContent" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.currentJobContent !== null && scope.row.currentJobContent !== ''">{{scope.row.currentJobContent}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="作业井号" min-width="100px" prop="jobWellNo" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.jobWellNo !== null && scope.row.jobWellNo !== ''">{{scope.row.jobWellNo}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="是否动管柱" prop="isMovingPipePresent" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.isMovingPipePresent !== null && scope.row.isMovingPipePresent !== ''">{{scope.row.isMovingPipePresent}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="开始时间" min-width="100px" prop="startDate" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.startDate !== null && scope.row.startDate !== ''">{{scope.row.startDate}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="预计结束时间" min-width="100px" prop="endDate" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.endDate !== null && scope.row.endDate !== ''">{{scope.row.endDate}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="当日作业内容简述"  min-width="110px" show-overflow-tooltip prop="operationInfo" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.operationInfo !== null && scope.row.operationInfo !== ''">{{scope.row.operationInfo}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="下步作业内容" min-width="100px" prop="nextJobContent" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.nextJobContent !== null && scope.row.nextJobContent !== ''">{{scope.row.nextJobContent}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="作业井号" min-width="100px" prop="nextJobWellNo" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.nextJobWellNo !== null && scope.row.nextJobWellNo !== ''">{{scope.row.nextJobWellNo}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="是否动管柱" prop="isMovingPipePresent" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.isMovingPipePresent !== null && scope.row.isMovingPipePresent !== ''">{{scope.row.isMovingPipePresent}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="预计作业时间" prop="planStartDate" align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.planStartDate !== null && scope.row.planStartDate !== ''">{{scope.row.planStartDate}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="备注" prop="remark" show-overflow-tooltip align="center">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.remark !== null && scope.row.remark !== ''">{{scope.row.remark}}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
             </el-table>
             <pagination 
                 :total="total"
@@ -157,7 +227,7 @@ export default {
         },
         retrieval(){
             let data = {
-                ogfId:this.queryParams.ogfId,
+                ogfId:this.queryParams.selectOilField,
                 asseCode:this.queryParams.asseCode,
                 wellId:this.queryParams.wellId,
                 measureTypeCode:this.queryParams.measureTypeCode,
@@ -176,7 +246,7 @@ export default {
         },
         doDownExcel(){
             let data = {
-                ogfId:this.queryParams.ogfId,
+                ogfId:this.queryParams.selectOilField,
                 asseCode:this.queryParams.asseCode,
                 wellId:this.queryParams.wellId,
                 measureTypeCode:this.queryParams.measureTypeCode,

@@ -181,7 +181,7 @@
             <el-table highlight :data="productAnaysisTable" height="500px">
                 <el-table-column type="index" label="序号" width="60" header-align="center" align="center"></el-table-column>
                 <el-table-column prop="borepipeNo" label="井号" width="150" header-align="center" align="center"></el-table-column>
-                <el-table-column prop="oilProdDaily" :label="this.unitValue=='t'?'产油变化量/t':'产油变化量/m³'" header-align="center" align="center">
+                <el-table-column prop="oilProdDaily" :label="this.unitValue=='t'?'产油变化量(t)':'产油变化量(m³)'" header-align="center" align="center">
                     <template slot-scope="scope">
                         <span>{{scope.row.oilProdDaily | numberToTwo}}</span>
                     </template>
@@ -349,7 +349,7 @@
                         }
                     },
                     backgroundColor: "transparent",
-                    color: ["#2ACAFF", "#72818B", "#9A72FF", "#00BC9C"],
+                    color: ["#69b146", "#72818B", "#9A72FF", "#00BC9C"],
                     legend:{
                         textStyle: {
                             color: "#8FA4CC",
@@ -363,7 +363,7 @@
                         bottom:30,
                     },
                     xAxis: {
-                        // name: "时间/天",
+                        name: "日",
                         // nameTextStyle: {
                         //     color: "#8FA4CC",
                         //     fontSize: 14,
@@ -388,7 +388,7 @@
                     },
                     yAxis: {
                         type: "value",
-                        name: "产油量/(m³/d)",
+                        name: "产油量(m³/d)",
                         nameLocation:'middle',
                         nameGap:100,
                         nameTextStyle: {
@@ -540,6 +540,8 @@
                         }
                     },
                     xAxis: {
+                        name: "井",
+                        nameGap: 20,
                         type: "category",
                         data: [],
                         axisLabel: {
@@ -1060,9 +1062,9 @@
                     //_this.echartOption.yAxis.min=this.lineMin;
                     //判断单位修改单位名称
                     if (outputUnit == "t") {
-                        _this.echartOption.yAxis.name = "产油量/(t/d)";
+                        _this.echartOption.yAxis.name = "产油量(t/d)";
                     } else if (outputUnit == "m") {
-                        _this.echartOption.yAxis.name = "产油量/(m³/d)";
+                        _this.echartOption.yAxis.name = "产油量(m³/d)";
                     }
                 });
             },
@@ -1325,10 +1327,10 @@
                     _this.barChart.series.data = seriesData;
                     //单位切换
                     if (unitType == "t") {
-                        _this.barChart.yAxis.name = "产油量变化/t";
+                        _this.barChart.yAxis.name = "产油量变化(t)";
                         _this.unitValue = "t";
                     } else if (unitType == "m") {
-                        _this.barChart.yAxis.name = "产油量变化/m³";
+                        _this.barChart.yAxis.name = "产油量变化(m³)";
                         _this.unitValue = "m³";
                     }
                    

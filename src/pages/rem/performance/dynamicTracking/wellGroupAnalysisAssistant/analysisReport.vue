@@ -128,6 +128,7 @@
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '井组动态分析详情列表')">下载</el-button>
                                 </div>
                                 <el-table
+                                    :key="Math.random()"
                                     id="table1"
                                     highlight 
                                     :data="tableData" 
@@ -266,14 +267,14 @@
                                                 <span>动态变化趋势</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井组：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}">
                                                         <b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=true">{{trendOfIndicatorsNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井组：<b style="cursor: pointer;" @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
@@ -314,14 +315,14 @@
                                                     <span>注采平衡</span>
                                                 </div>
                                                 <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
+                                                    <span class="sp1">正常井组：</span>
                                                     <div class="z_proess">
                                                         <span class="z_proess_sp1" :style="{width:injectionProductionBalanceNum.zczb+'%'}">
                                                             <b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=true">{{injectionProductionBalanceNum.zcnum}}</b>
                                                         </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=false">{{injectionProductionBalanceNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常井组：<b style="cursor: pointer;" @click="injectionProductionBalanceSwitch=false">{{injectionProductionBalanceNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
@@ -348,14 +349,14 @@
                                                     <span>注水受效分析</span>
                                                 </div>
                                                 <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
+                                                    <span class="sp1">正常井组：</span>
                                                     <div class="z_proess">
                                                         <span class="z_proess_sp1" :style="{width:injectionResponseAnalysisNum.zczb+'%'}">
                                                             <b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=true">{{injectionResponseAnalysisNum.zcnum}}</b>
                                                         </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=false">{{injectionResponseAnalysisNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常井组：<b style="cursor: pointer;" @click="injectionResponseAnalysisSwitch=false">{{injectionResponseAnalysisNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
@@ -384,14 +385,14 @@
                                                     <span>压力保持</span>
                                                 </div>
                                                 <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
+                                                    <span class="sp1">正常井组：</span>
                                                     <div class="z_proess">
                                                         <span class="z_proess_sp1" :style="{width:thePressureToKeepNum.zczb+'%'}">
                                                             <b style="cursor: pointer;" @click="thePressureToKeepSwitch=true">{{thePressureToKeepNum.zcnum}}</b>
                                                         </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="thePressureToKeepSwitch=false">{{thePressureToKeepNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常井组：<b style="cursor: pointer;" @click="thePressureToKeepSwitch=false">{{thePressureToKeepNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
@@ -434,6 +435,7 @@
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '井组动态分析详情列表')">下载</el-button>
                                 </div>
                                 <el-table
+                                    :key="Math.random()"
                                     id="table2"
                                     highlight 
                                     :data="tableData" 
@@ -636,8 +638,10 @@
         methods: {
             //重置
             resetting(){
+                let isNewformat = this.isNewformat;
                 Object.assign(this.$data, this.$options.data());
-                this.getDateApi();
+                this.isNewformat = isNewformat;
+                this.getDateApi(); //初始化油田
             },
             //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
             async getDateApi(){
@@ -706,6 +710,7 @@
             },
             // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
             getSelectItems(selectList, selectData) {
+                // console.log('测试', selectData)
                 // 油田选中数据
                 // this.selYtdm = selectList.ogfId;
                 // 区块选中数据
@@ -1170,8 +1175,9 @@
                         this[numKey].allnum+=Number(this[dataKey][i].value);
                         if(el.name=='正常'||el.name=='合格区'){
                             this[numKey].zcnum=Number(this[dataKey][i].value);
+                            this[numKey].ycnum+=Number(this[dataKey][i].exeValue);
                         }else{
-                            this[numKey].ycnum+=Number(this[dataKey][i].value);
+                            // this[numKey].ycnum+=Number(this[dataKey][i].value);
                         }
                     })
                     this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
@@ -1247,11 +1253,13 @@
                             this.trendOfIndicatorsNum.allnum+=Number(el.value);
                             if(el.name=='正常'){
                                 this.trendOfIndicatorsNum.zcnum=Number(el.value);
+                                this.trendOfIndicatorsNum.ycnum=Number(el.exeValue);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
-                                this.trendOfIndicatorsNum.ycnum+=Number(el.value);
+                                // this.trendOfIndicatorsNum.ycnum+=Number(el.value);
                             }
                         })
+                        console.log('井组异常数', this.trendOfIndicatorsNum.ycnum);
                         this.trendOfIndicatorsNum.zczb=this.trendOfIndicatorsNum.zcnum/this.trendOfIndicatorsNum.allnum * 100;
                         this.trendOfIndicatorsNum.yczb=this.trendOfIndicatorsNum.yczb/this.trendOfIndicatorsNum.allnum * 100;
                         this.trendOfIndicators = myData;
@@ -1606,7 +1614,7 @@
                     .z-content{
                         padding-left:36px;
                         .z-content-n{
-                            margin-top:16px;
+                            // margin-top:16px;
                             display: flex;
                             .z-row-left{
                                 width:380px;
@@ -1672,7 +1680,7 @@
                                     display: flex;
                                     align-items: center;
                                     .sp1{
-                                        width:61px;
+                                        // width:61px;
                                         font-size: 14px;
                                     }
                                     .z_proess{
@@ -1860,7 +1868,7 @@
                                     display: flex;
                                     align-items: center;
                                     .sp1{
-                                        width:61px;
+                                        // width:61px;
                                         font-size: 14px;
                                     }
                                     .z_proess{
@@ -1976,8 +1984,9 @@
         }
     }
     //相关
-    ::v-deep .about1 {
-        background: rgb(2, 43, 117)!important;
+    ::v-deep .el-col .about1 {
+        background: rgb(2, 43, 117);
+        color:#fff;
         .el-radio-button__inner{
             color:#fff;
             background: transparent!important;
@@ -1990,7 +1999,7 @@
         font-size:14px;
         text-align: center;
         border-color: var(--light-blue-color);
-        color: var(--white-color);
+        color: var(--form-text);
         transition: all 0s;
         height: 34px;
         line-height: 8px;
@@ -2001,12 +2010,14 @@
             border-image: var(--primary-btn);
             border-color: var(--light-blue-color);
             background: var(--primary-btn) !important;
+            color: var(--white-color);
         }
     }
-    .selectButton{
+    .el-col .selectButton{
         border-image: var(--primary-btn);
         border-color: var(--light-blue-color);
         background: var(--primary-btn) !important;
+        color: var(--white-color);
     }
     
     .checkBtn {

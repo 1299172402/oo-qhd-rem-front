@@ -11,6 +11,7 @@ define([], function () {
     conf.cursorPath = conf.static_root + "Cursor/";
     conf.dataPath = "data/";
     conf.imagesPath = conf.static_root + "images/";
+    conf.basePicturePath = '../';   //底图图片相对路径
     conf.symbolDataPath = "../data/SymbolData/";
     conf.scriptsPath = "Scripts/";
     conf.targetPic = "log.jpg";
@@ -22,7 +23,7 @@ define([], function () {
     conf.propertyDataPath=conf.static_root + 'Scripts/WGADPlatConfig/PropertyData.json';
     conf.rockColorPath = conf.static_root +"data/SymbolData/RockColor.json";
     conf.rockTextUrlPath = conf.static_root +"data/SymbolData/ObjSelectConfig.json";
-
+    conf.propertyFormStyle = "0"; //0为默认，公用统一的图元属性界面；1为新增每个图元单独图元属性窗口
     conf.module_ref = {
         "WGADPlatGraph2D": "WGAD/Scripts/WGADPlatGraph2D",
         "WGADPlatGraph2DFlowChart": "WGAD/Scripts/WGADPlatGraph2DFlowChart",

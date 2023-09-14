@@ -53,7 +53,7 @@ export default {
           let option = {
               legend: {
                   textStyle: {
-                      color: "#66ffff",
+                      color: this.$store.state.setting.mode == 'dark'? '#ffffff' : "#000000",
                   },
                   bottom: "10",
               },
@@ -265,6 +265,7 @@ export default {
       // option && myChart.setOption(option);
     },
   },
+   
 };
 </script>
 <style lang="scss" scoped>

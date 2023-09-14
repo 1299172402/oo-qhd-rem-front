@@ -12,6 +12,9 @@
                     <el-select v-model="selectBlock"><el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option></el-select>
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+                    <el-button  class="commonBtn"  v-if="$route.query.page" style="position: absolute;right:2%" @click="$router.push({
+                            path:$route.query.page
+                        })">返回</el-button>
                 </div>
             </div>
         </header-search>
@@ -52,7 +55,6 @@ import reserves from "./components/reserves.vue";
 import water from "./components/water.vue";
 import decreasing from "./components/decreasing.vue";
 export default {
-  name:'developmentEffectEvaluation',
   components: {
     Echart,
     evaluation,
@@ -117,10 +119,14 @@ export default {
     };
   },
   mounted() {
-    if(this.$route.query.link){
-        this.tabsValue=this.$route.query.link;
-    }
-    this.initData();
+     this.initData();
+      if(this.$route.query.link){
+          this.tabsValue = this.$route.query.link;
+          console.log(this.tabsValue)
+          setTimeout(()=>{
+              this.$refs.childComponents.doSearch();
+          },1000)
+      }
   },
   methods: {
     //重置

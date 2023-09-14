@@ -1,5 +1,5 @@
 <template>
-<!--    <div class="box" @mouseenter="show = true" @mouseleave="show = false">-->
+    <!--    <div class="box" @mouseenter="show = true" @mouseleave="show = false">-->
     <div class="box" @mouseenter="mouseenter" @mouseleave="mouseleave">
         <el-collapse-transition>
             <div v-show="show || showFlag ||  warningShowFlag ">
@@ -28,13 +28,13 @@
                                 <span v-if="item.url" :class= "item.warningShowFlag == true?'blink':'' " style="cursor: pointer" @click="linkTo(item.url,item)">{{ item.name ? item.name : item }}</span>
                                 <span v-if="!item.url"  style="pointer-events: none;color:#5a5959;font-weight:bolder">{{ item.name ? item.name : item }}</span>
                                 <span v-if="currentList.boxBottomContent" class="btnContent" @click="btnContent(index)">{{ currentList.boxBottomContent[index].length > 0 ? '>>' : '' }}</span>
-                                <span v-else class="btnBack" @click="btnBack"></span>
+                                <span  v-else-if="currentList.boxBottomContent" class="btnBack" @click="btnBack"></span>
                             </p>
                         </div>
                         <div>
                             <p v-show="content" :key="index" v-for="(item,index) in selectObj[selectIndex]">
                                 <span style="cursor: pointer" @click="linkTo(item.url)">{{ item.name ? item.name : item }}</span>
-                                <span class="btnBack" @click="btnBack"></span>
+                                <span v-if="currentList.boxBottomContent" class="btnBack" @click="btnBack"></span>
                             </p>
                         </div>
                     </div>
@@ -76,9 +76,13 @@ export default {
             show: false,
             content: false,
             selectIndex: 0,
+            baseUrl:'',
             selectObj: this.currentList.boxBottomContent ? this.currentList.boxBottomContent : []
         }
     },
+    // mounted() {
+    //     console.log(this.currentList.boxBottomContent)
+    // },
     methods: {
         btnBack: function () {
             if (this.currentList.boxBottomContent) {
@@ -93,45 +97,58 @@ export default {
         },
         linkTo: function (url,item) {
             if (!url) return
-            const data = {
-                authorizedPersonnel:this.$store.getters["user/name"],
-                alarmTime:new Date().format('YYYY-MM-dd'),
-                alarmPageCode:[item?.alarmPageCode]
+            if(item.alarmPageCode){
+                const data = {
+                    authorizedPersonnel:this.$store.getters["user/name"],
+                    alarmTime:new Date().format('YYYY-MM-dd'),
+                    alarmPageCode:[item.alarmPageCode]
+                }
+                addLinkageAlarmInfo(data).then(()=>{
+                })
+                window.open( url + (url.includes("?") ? '&alarmTime=' : '?alarmTime=') + item.alarmTime, '_parent');
+            }else{
+                window.open(url, '_parent');
             }
-            window.open(url, '_parent');
-            addLinkageAlarmInfo(data).then(()=>{
-            })
+
         },
         linkTopage: function (url,currentList) {
             if(currentList.alarmPageCode =='OSTOPF'){
                 const data = {
                     authorizedPersonnel:this.$store.getters["user/name"],
                     alarmTime:new Date().format('YYYY-MM-dd'),
-                    alarmPageCode:[OSTOPF]
+                    alarmPageCode:['OSTOPF']
                 }
                 addLinkageAlarmInfo(data).then(()=>{
                     this.warningShowFlag = false
                 }).then(()=>{
                     if (!url) return
-                    window.open('https://rem.tjioms-dev.tjltd.cnooc/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage', '_parent');
+                    const env = import.meta.env.MODE;
+                    if (window.location.origin.includes('test')) {
+                        this.baseUrl = 'tjioms-test.tjltd.cnooc'
+                    } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
+                        this.baseUrl = 'tjioms-dev.tjltd.cnooc'
+                    }
+                    window.open(`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage`, '_parent');
+                })
+            }else{
+                let linkurl = currentList.boxBottomText.find((n)=>{
+                    if(n.warningShowFlag == true){
+                        return n
+                    }
+                })
+                const data = {
+                    authorizedPersonnel:this.$store.getters["user/name"],
+                    alarmTime:new Date().format('YYYY-MM-dd'),
+                    alarmPageCode:[linkurl?.alarmPageCode]
+                }
+                addLinkageAlarmInfo(data).then(()=>{
+                    this.warningShowFlag = false
+                }).then(()=>{
+                    if (!url) return
+                    window.open(linkurl.url, '_parent');
                 })
             }
-            let linkurl = currentList.boxBottomText.find((n)=>{
-                if(n.warningShowFlag == true){
-                    return n
-                }
-            })
-            const data = {
-                authorizedPersonnel:this.$store.getters["user/name"],
-                alarmTime:new Date().format('YYYY-MM-dd'),
-                alarmPageCode:[linkurl?.alarmPageCode]
-            }
-            addLinkageAlarmInfo(data).then(()=>{
-                this.warningShowFlag = false
-            }).then(()=>{
-                if (!url) return
-                window.open(linkurl.url, '_parent');
-            })
+
         },
         confirm(currentList){
             let alarmPageCode = []
@@ -141,8 +158,8 @@ export default {
                     alarmPageCode.push(m.alarmPageCode)
                 }
             })
-            if(currentList.alarmPageCode){
-                alarmPageCode.push(currentList.alarmPageCode)
+            if(currentList.alarmPageCode.length > 0){
+                alarmPageCode.push(...currentList.alarmPageCode)
             }
             const data = {
                 authorizedPersonnel:this.$store.getters["user/name"],
@@ -153,7 +170,7 @@ export default {
             this.true = false
             this.$emit('startTimer',currentList)
             addLinkageAlarmInfo(data).then(()=>{
-            }).then(()=>{    
+            }).then(()=>{
             })
         },
         mouseenter(){

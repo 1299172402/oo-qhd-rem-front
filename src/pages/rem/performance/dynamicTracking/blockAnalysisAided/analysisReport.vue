@@ -149,14 +149,14 @@
                                         <span>开采现状（地层压力）分析</span>
                                     </div>
                                     <div class="z_schedule">
-                                        <span class="sp1">正常：</span>
+                                        <span class="sp1">正常井：</span>
                                         <div class="z_proess">
                                             <span class="z_proess_sp1" :style="{width:indexChangeTrendNum.zczb+'%'}">
                                                 <b style="cursor: pointer;" @click="indexChangeTrendSwitch=true">{{indexChangeTrendNum.zcnum}}</b>
                                             </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="indexChangeTrendSwitch=false">{{indexChangeTrendNum.ycnum}}</b></span>
+                                        <span class="sp2">异常井：<b style="cursor: pointer;" @click="indexChangeTrendSwitch=false">{{indexChangeTrendNum.ycnum}}</b></span>
                                     </div>
                                     <el-row :gutter="10">
                                         <el-col v-for="(item,index) in indexChangeTrendList" :key="index" :span="24">
@@ -178,14 +178,14 @@
                                         <span>开采现状（注水受效）分析</span>
                                     </div>
                                     <div class="z_schedule">
-                                        <span class="sp1">正常：</span>
+                                        <span class="sp1">正常井组：</span>
                                         <div class="z_proess">
                                             <span class="z_proess_sp1" :style="{width:stabilityFoundationAnalysisNum.zczb+'%'}">
                                                 <b style="cursor: pointer;" @click="stabilityFoundationAnalysisSwitch=true">{{stabilityFoundationAnalysisNum.zcnum}}</b>
                                             </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="stabilityFoundationAnalysisSwitch=false">{{stabilityFoundationAnalysisNum.ycnum}}</b></span>
+                                        <span class="sp2">异常井组：<b style="cursor: pointer;" @click="stabilityFoundationAnalysisSwitch=false">{{stabilityFoundationAnalysisNum.ycnum}}</b></span>
                                     </div>
                                     <el-row :gutter="10">
                                         <el-col v-for="(item,index) in stabilityFoundationAnalysisList" :key="index" :span="24">
@@ -204,14 +204,14 @@
                                         <span>注采平衡分析</span>
                                     </div>
                                     <div class="z_schedule">
-                                        <span class="sp1">正常：</span>
+                                        <span class="sp1">正常井组：</span>
                                         <div class="z_proess">
                                             <span class="z_proess_sp1" :style="{width:injectionProductionBalanceAnalysisNum.zczb+'%'}">
                                                 <b style="cursor: pointer;" @click="injectionProductionBalanceAnalysisSwitch=true">{{injectionProductionBalanceAnalysisNum.zcnum}}</b>
                                             </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="injectionProductionBalanceAnalysisSwitch=false">{{injectionProductionBalanceAnalysisNum.ycnum}}</b></span>
+                                        <span class="sp2">异常井组：<b style="cursor: pointer;" @click="injectionProductionBalanceAnalysisSwitch=false">{{injectionProductionBalanceAnalysisNum.ycnum}}</b></span>
                                     </div>
                                     <el-row :gutter="10">
                                         <el-col v-for="(item,index) in injectionProductionBalanceAnalysisList" :key="index" :span="24">
@@ -230,14 +230,14 @@
                                         <span>采出状况分析</span>
                                     </div>
                                     <div class="z_schedule">
-                                        <span class="sp1">正常：</span>
+                                        <span class="sp1">正常井区：</span>
                                         <div class="z_proess">
                                             <span class="z_proess_sp1" :style="{width:recoveryAnalysisNum.zczb+'%'}">
                                                 <b style="cursor: pointer;" @click="recoveryAnalysisSwitch=true">{{recoveryAnalysisNum.zcnum}}</b>
                                             </span>
                                             <span class="z_proess_sp2"></span>
                                         </div>
-                                        <span class="sp2">异常：<b style="cursor: pointer;" @click="recoveryAnalysisSwitch=false">{{recoveryAnalysisNum.ycnum}}</b></span>
+                                        <span class="sp2">异常井区：<b style="cursor: pointer;" @click="recoveryAnalysisSwitch=false">{{recoveryAnalysisNum.ycnum}}</b></span>
                                     </div>
                                     <el-row :gutter="10">
                                         <el-col v-for="(item,index) in recoveryAnalysisList" :key="index" :span="24">
@@ -415,10 +415,12 @@
         methods: {
             //重置
             resetting(){
-                this.$nextTick(()=>{
-                	Object.assign(this.$data, this.$options.data());
-                	this.getDateApi();
-                })
+                // this.$nextTick(()=>{
+                let isNewformat = this.isNewformat;
+                Object.assign(this.$data, this.$options.data());
+                this.isNewformat = isNewformat;
+                this.getDateApi(); //初始化油田
+                // })
             },
             //minIo-获取底图
             queryRemUploadFileMinioApi(isBoolean){
@@ -517,12 +519,17 @@
             },
             //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
             getDateApi(){
-                getDate({wellMenu:'WELL_BLOCK'}).then(res=>{
-                    if(res.data.code==200){
-                        this.rq=res.data.data;   
-                    }
+                if(this.$route.query?.alarmTime) {
+                    this.rq = this.$route.query.alarmTime;
                     this.initData();
-                })
+                } else {
+                    getDate({wellMenu:'WELL_BLOCK'}).then(res=>{
+                        if(res.data.code==200){
+                            this.rq=res.data.data;   
+                        }
+                        this.initData();
+                    })
+                }
             },
             //初始数据
             async initData() {
@@ -612,9 +619,10 @@
                             this.indexChangeTrendNum.allnum+=Number(el.value);
                             if(el.name.includes('正常')){
                                 this.indexChangeTrendNum.zcnum=Number(el.value);
+                                this.indexChangeTrendNum.ycnum=Number(el.exeValue);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
-                                this.indexChangeTrendNum.ycnum+=Number(el.value);
+                                // this.indexChangeTrendNum.ycnum+=Number(el.value);
                             }
                         })
                         this.indexChangeTrendNum.zczb=this.indexChangeTrendNum.zcnum/this.indexChangeTrendNum.allnum * 100;
@@ -636,9 +644,10 @@
                             this.stabilityFoundationAnalysisNum.allnum+=Number(el.value);
                             if(el.name.includes('正常')){
                                 this.stabilityFoundationAnalysisNum.zcnum=Number(el.value);
+                                this.stabilityFoundationAnalysisNum.ycnum=Number(el.exeValue);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
-                                this.stabilityFoundationAnalysisNum.ycnum+=Number(el.value);
+                                // this.stabilityFoundationAnalysisNum.ycnum+=Number(el.value);
                             }
                         })
                         this.stabilityFoundationAnalysisNum.zczb=this.stabilityFoundationAnalysisNum.zcnum/this.stabilityFoundationAnalysisNum.allnum * 100;
@@ -660,9 +669,10 @@
                             this.injectionProductionBalanceAnalysisNum.allnum+=Number(el.value);
                             if(el.name.includes('正常')){
                                 this.injectionProductionBalanceAnalysisNum.zcnum=Number(el.value);
+                                this.injectionProductionBalanceAnalysisNum.ycnum=Number(el.exeValue);
                             }else{
                                 myData[i].isShow=Number(el.value)?true:false;
-                                this.injectionProductionBalanceAnalysisNum.ycnum+=Number(el.value);
+                                // this.injectionProductionBalanceAnalysisNum.ycnum+=Number(el.value);
                             }
                         })
                         if(this.injectionProductionBalanceAnalysisNum.zcnum!==0 && this.injectionProductionBalanceAnalysisNum.allnum!==0){
@@ -1462,7 +1472,7 @@
             // 新版左下角图放大缩小时重置状态
             zoomOutCom() {
                 setTimeout(() => {
-                    this.$refs.H5Chart2.handlerZoomHeight();
+                    this.$refs.H5Chart2.handlerZoomHeight1();
                 }, 10);
             }
         },
@@ -1552,7 +1562,7 @@
                     display: flex;
                     align-items: center;
                     .sp1{
-                        width:61px;
+                        // width:61px;
                         font-size: 14px;
                     }
                     .z_proess{
@@ -1716,7 +1726,7 @@
         font-size:14px;
         text-align: center;
         border-color: var(--light-blue-color);
-        color: var(--white-color);
+        color: var(--form-text);
         transition: all 0s;
         line-height: 8px;
         border-radius: 0 !important;
@@ -1727,6 +1737,7 @@
             border-image: var(--primary-btn);
             border-color: var(--light-blue-color);
             background: var(--primary-btn) !important;
+            color: var(--white-color);
         }
     }
     
@@ -1762,6 +1773,7 @@
     //相关
     ::v-deep .about1 {
         background: rgb(2, 43, 117);
+        color:#fff;
         .el-radio-button__inner{
             color:#fff;
             background: transparent!important;
@@ -1837,10 +1849,11 @@
         background: rgb(2, 43, 117);
         color:#fff;
     }
-    .selectButton{
+    .el-col .selectButton{
         border-image: var(--primary-btn);
         border-color: var(--light-blue-color);
         background: var(--primary-btn) !important;
+        color: var(--white-color);
     }
     
     .noCheckBtn {

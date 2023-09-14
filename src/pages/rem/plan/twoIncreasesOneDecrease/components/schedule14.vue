@@ -1,45 +1,45 @@
 <template>
-    <info-window infoWidth="100%" infoHeight="100%" headerTitle="附表14 秦皇岛32-6/渤中作业公司优化后全寿命周期规划实施方案" :isShowMaxBtn="true">
+    <pagePanel infoWidth="100%" infoHeight="100%" headerTitle="附表14 秦皇岛32-6作业公司优化后全寿命周期规划实施方案" style="height: 100%;" showBtn>
         <el-table id="tableData" class="doubleHeader" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }" height="calc(100% - 40px)">
-            <el-table-column type="index" label="序号" align="center" width="50px" fixed></el-table-column>
-            <el-table-column prop="operationarea" label="作业公司" align="center" width="120" fixed></el-table-column>
-            <el-table-column prop="oilField" label="油田" align="center" width="120" fixed></el-table-column>
-            <el-table-column prop="annualnaturaldecline" label="主要指标" align="center" width="220"></el-table-column>
-            <el-table-column prop="2020" label="2020年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2021" label="2021年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2022" label="2022年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2023" label="2023年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2024" label="2024年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2025" label="2025年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2026" label="2026年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2027" label="2027年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2028" label="2028年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2029" label="2029年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2030" label="2030年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2031" label="2031年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2032" label="2032年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2033" label="2033年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2034" label="2034年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2035" label="2035年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2036" label="2036年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2037" label="2037年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2038" label="2038年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2039" label="2039年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2040" label="2040年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2041" label="2041年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2042" label="2042年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2043" label="2043年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2044" label="2044年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2045" label="2045年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2046" label="2046年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2047" label="2047年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2048" label="2048年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2049" label="2049年" align="center" width="120"></el-table-column>
-            <el-table-column prop="2050" label="2050年" align="center" width="120"></el-table-column>
-            <el-table-column prop="note" label="备注" align="center" width="240"></el-table-column>
+            <el-table-column type="index" label="序号" align="center" width="80" fixed></el-table-column>
+            <el-table-column prop="operationarea" label="作业公司" align="center" min-width="180" fixed></el-table-column>
+            <el-table-column prop="oilField" label="油田" align="center" min-width="180" fixed></el-table-column>
+            <el-table-column prop="annualnaturaldecline" label="主要指标" align="center" min-width="220"></el-table-column>
+            <el-table-column prop="2020" label="2020年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2021" label="2021年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2022" label="2022年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2023" label="2023年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2024" label="2024年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2025" label="2025年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2026" label="2026年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2027" label="2027年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2028" label="2028年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2029" label="2029年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2030" label="2030年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2031" label="2031年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2032" label="2032年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2033" label="2033年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2034" label="2034年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2035" label="2035年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2036" label="2036年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2037" label="2037年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2038" label="2038年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2039" label="2039年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2040" label="2040年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2041" label="2041年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2042" label="2042年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2043" label="2043年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2044" label="2044年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2045" label="2045年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2046" label="2046年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2047" label="2047年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2048" label="2048年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2049" label="2049年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="2050" label="2050年" align="center" min-width="120"></el-table-column>
+            <el-table-column prop="note" label="备注" align="center" min-width="240"></el-table-column>
         </el-table>
-    </info-window>
+    </pagePanel>
 </template>
 
 <script>
@@ -48,9 +48,9 @@
             return {
                 tableData: [
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
-                        annualnaturaldecline: '基础产量，万吨',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
+                        annualnaturaldecline: '基础产量，10⁴m³',
                         2020: '211.0053',
                         2021: '184.5506',
                         2022: '165.4394',
@@ -84,9 +84,9 @@
                         2050: '13.1194',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
-                        annualnaturaldecline: '化学驱增油量，万吨',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
+                        annualnaturaldecline: '化学驱增油量，10⁴m³',
                         2020: '',
                         2021: '',
                         2022: '',
@@ -120,9 +120,9 @@
                         2050: '',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
-                        annualnaturaldecline: '常规油井增产措施产量，万吨',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
+                        annualnaturaldecline: '常规油井增产措施产量，10⁴m³',
                         2020: '13.09',
                         2021: '12.51',
                         2022: '10.72',
@@ -156,9 +156,9 @@
                         2050: '',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
-                        annualnaturaldecline: '调整井产量，万吨',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
+                        annualnaturaldecline: '调整井产量，10⁴m³',
                         2020: '13.32',
                         2021: '31.18',
                         2022: '35.32',
@@ -192,14 +192,14 @@
                         2050: '',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
-                        annualnaturaldecline: '综合调整产量，万吨'
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
+                        annualnaturaldecline: '综合调整产量，10⁴m³'
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
-                        annualnaturaldecline: '天然气产量，万吨',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
+                        annualnaturaldecline: '天然气产量，10⁴m³',
                         2020: '3.44',
                         2021: '4.72',
                         2022: '4.72',
@@ -230,9 +230,9 @@
                         2047: '0.33',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
-                        annualnaturaldecline: '产量小计，万吨',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
+                        annualnaturaldecline: '产量小计，10⁴m³',
                         2020: '240.8553',
                         2021: '232.9606',
                         2022: '215.8994',
@@ -266,8 +266,8 @@
                         2050: '13.1194',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '优化注水措施工作量，井次',
                         2020: '135',
                         2021: '175',
@@ -282,8 +282,8 @@
                         2030: '106',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '化学驱工作量，井次',
                         2026: '6',
                         2027: '29',
@@ -296,8 +296,8 @@
                         2034: '50',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '常规油井增产措施工作量，井次',
                         2020: '28',
                         2021: '38',
@@ -312,13 +312,13 @@
                         2030: '23',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '剩余ODP井工作量，口'
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '调整井工作量，口',
                         2020: '18',
                         2021: '16',
@@ -333,13 +333,13 @@
                         2030: '2',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '综合调整井工作量，口'
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '钻完井工作量小计，口',
                         2020: '18',
                         2021: '16',
@@ -374,13 +374,13 @@
                         2050: '0',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '非调整井资本化投资，亿元'
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '调整井资本化投资，亿元',
                         2020: '6.06',
                         2021: '5.39',
@@ -395,13 +395,13 @@
                         2030: '0.67',
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '开发投资，亿元'
                     },
                     {
-                        operationarea: '秦皇岛',
-                        oilField: 'QHD32-6',
+                        operationarea: '秦皇岛32-6作业公司',
+                        oilField: '秦皇岛32-6油田',
                         annualnaturaldecline: '投资小计，亿元',
                         2020: '6.06',
                         2021: '17.31',

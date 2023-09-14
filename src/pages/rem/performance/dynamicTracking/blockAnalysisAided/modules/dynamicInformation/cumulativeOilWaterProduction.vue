@@ -248,6 +248,7 @@
                                 dd.Value = point.value;
                                 dd.Color = point.argbColor;
                                 dd.ShowText = false; //point.showText;
+                                dd.HintText = `${point.showTime || '-'}：${point.value || '-'} 10⁴m³`;
                                 return dd;
                             })
                         }
@@ -367,12 +368,11 @@
         flex-direction: column;
         padding-bottom:15px;
         .z-search{
-            height:60px;
             display: flex;
             align-items: center;
+            margin-bottom: 15px;
         }
         .z-echarts{
-            padding-top:15px;
             width: 100%;
             flex:1;
         }

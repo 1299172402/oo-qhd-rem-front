@@ -94,7 +94,7 @@ export default {
       linkroute(name) {
           this.$router.push({
               path: name,
-              query:{ link:'water' }
+              query:{ link:'decreasing',page:'/reservoirDisplay/oilexhibition' }
           });
       },
       //自然递减率

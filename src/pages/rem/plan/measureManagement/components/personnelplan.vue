@@ -34,15 +34,17 @@
             </el-form>
         </headerSearch>
         <pagePanel headerTitle="人员计划" style="height: calc(100% - 20px)">
-            <pagePanel headerTitle="平台人数对比" style="height: calc(50% - 20px)">
+            <pagePanel headerTitle="平台人数对比" style="margin-top:0px;height: calc(40% - 20px)">
                 <Echart :chart-data="histogram" height="100%"></Echart>
             </pagePanel>
-            <pagePanel headerTitle="人员类型概况" style="height: calc(50% - 20px);overflow-y: hidden">
+            <pagePanel headerTitle="人员类型概况" style="height: 61%;overflow-y: hidden">
+                <el-button icon="el-icon-download"  type="primary" style="float:right" @click="downtable">下载</el-button>
                 <el-table
                     highlight
                     :data="tableData2"
                     style="width: 100%"
                     height="100%"
+                    id="peisontable"
                     :summary-method="getSummaries"
                     show-summary
                 >
@@ -135,6 +137,7 @@ import {queryCapacityComposition} from "@/api/rem/reservoirbillboards";
 import {queryListOfOilfieldQueryPlatformsDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
+import {exportExcel} from "@/lib/exportExcel";
 export default {
     components: {
         Echart,
@@ -175,7 +178,7 @@ export default {
                     show: true
                 },
                 legend: {
-                    left: 'left',
+                    bottom: '-4%',
                     padding: [5, 100],
                     icon: 'rect',
                     itemWidth: 12,
@@ -188,10 +191,10 @@ export default {
                     }
                 },
                 grid: {
-                    top: 30,
+                    top: 10,
                     left: 40,
                     right: 10,
-                    bottom: 30
+                    bottom: 35
                 },
                 xAxis: [
                     {
@@ -200,10 +203,12 @@ export default {
                         axisLabel: {
                             color: '#8FA4CC',
                             fontSize: 14,
+                            interval: 0, 
                         },
                         axisTick: {
                             show: false
                         },
+                        
                         axisLine: {
                             lineStyle: {
                                 //color: '#979797'
@@ -281,7 +286,19 @@ export default {
         };
     },
     created() {
-        this.queryParams.endTime = this.$route.query.endTime?this.$route.query.endTime:new Date().format("yyyy-MM-dd")
+        let currentDate = new Date();
+
+// 使用 setDate() 方法设置日期为当前日期减去一天
+        currentDate.setDate(currentDate.getDate() - 1);
+
+// 获取前一天的年、月、日
+        let year = currentDate.getFullYear();
+        let month = currentDate.getMonth() + 1; // 月份从 0 开始，需要加 1
+        let day = currentDate.getDate();
+
+// 格式化为字符串，如果月份和日期小于 10，前面补零
+        let formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        this.queryParams.endTime = formattedDate
         let data = {
             endTime: this.queryParams.endTime,
             platformId:this.queryParams.asseCode
@@ -296,6 +313,9 @@ export default {
         // this.choiceDepts(); // 获取组织机构
     },
     methods: {
+        downtable(){
+            exportExcel("#peisontable", "人员类型概况");
+        },
         retrieval(){
             let queryParams = {
                 platformId: this.queryParams.selectPlatform,
@@ -307,7 +327,19 @@ export default {
             this.$router.go(-1);
         },
         reset(){
-            this.queryParams.endTime = this.$route.query.endTime?this.$route.query.endTime:new Date().format("yyyy-MM-dd")
+            let currentDate = new Date();
+
+// 使用 setDate() 方法设置日期为当前日期减去一天
+            currentDate.setDate(currentDate.getDate() - 1);
+
+// 获取前一天的年、月、日
+            let year = currentDate.getFullYear();
+            let month = currentDate.getMonth() + 1; // 月份从 0 开始，需要加 1
+            let day = currentDate.getDate();
+
+// 格式化为字符串，如果月份和日期小于 10，前面补零
+            let formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            this.queryParams.endTime = formattedDate
             this.queryParams.selectPlatform = ''
             this.selectPlatformPob(this.queryParams)
         },
@@ -330,7 +362,6 @@ export default {
                         }
                     }, 0);
                     sums[index] = Number(sums[index]);
-                    sums[index];
                 } else {
                     sums[index] = '';
                 }
@@ -349,9 +380,9 @@ export default {
                 let y1 = [];
                 for (let i in list) {
                     if (list.hasOwnProperty(i)) {
-                        if (list[i].prodPlatFormName === '渤海世纪') {
+                        if (list[i].prodPlatFormName === '海洋石油109(渤海世纪)') {
                             //折线图
-                            x.push('FPSO');
+                            x.push('海洋石油109(渤海世纪)');
                             y.push(list[i].mineStaff);//waterTimeRate
                             y1.push(list[i].littleSum);
                         } else {
@@ -375,6 +406,10 @@ export default {
 </script>
 <style lang="less" scoped>
 
+::v-deep.el-table .el-table__footer-wrapper .cell {
+    color: rgb(174, 178, 179);
+    font-weight: bolder;
+}
 
 .pertable thead .el-table-column--selection .cell {
     display: none;

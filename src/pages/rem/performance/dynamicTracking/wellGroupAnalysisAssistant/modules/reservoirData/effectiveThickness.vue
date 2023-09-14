@@ -5,6 +5,7 @@
             <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
                 <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
+            <div v-if="uploadTime" style="margin-left: 20px;">上传时间：{{ uploadTime }}</div>
         </div>
         <div class="z-main">
             <page-panel-new style="height:100%;margin-top:0;" show-btn>
@@ -43,6 +44,7 @@
                 selectPosition: '',
                 src:'',
                 fitInfo:'cover',   
+                uploadTime: "", // 文件上传时间
             };
         },
         async mounted() {
@@ -64,10 +66,14 @@
                         if(res.data.data.length){
                             this.fileId=res.data.data[0].fileId;
                             this.filestrId=res.data.data[0].filestrId;
+                            this.uploadTime=res.data.data[0].uploadTime || "";
                             downFile(this.fileId).then((res)=>{
                                 this.src=window.URL.createObjectURL(res);
                             })
                         }else{
+                            this.fileId="";
+                            this.filestrId="";
+                            this.uploadTime="";
                             this.src="";
                         }
                     }else {
@@ -113,6 +119,10 @@
             },
             //下载功能
             doDownLoad(){
+                if(!this.fileId) {
+                    this.$message.error('无可下载内容')
+                    return
+                }
                 let fileName = '有效厚度图';
                 let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
                 if (layerMess) {
@@ -129,7 +139,9 @@
 
 <style scoped lang="scss">
     .z-search{
-        height:50px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
     }
     .z-main{
         width: 100%;

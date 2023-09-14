@@ -92,7 +92,7 @@ export default {
             name: "关停影响产量(10⁴m³)",
             nameTextStyle: {
               color: "#a9a8a8",
-              padding: [0, 0, 10, 0], // 上、右、下、左
+              padding: [0, 0, 35, 0], // 上、右、下、左
             },
             nameLocation: "center",
             splitLine: {
@@ -227,9 +227,14 @@ export default {
           // this.histogram.yAxis[0].max = null
           // this.histogram.yAxis[1].min = null
           // this.histogram.yAxis[1].max = Number(res.data.data.data.wellNum.sort((a, b) => b.lastedSort - a.lastedSort)[0]) * 1.2
-          res.data.data.data.yearMoth.forEach((n)=>{
-              this.histogram.xAxis.data.push(n)
-          })
+          const now = new Date(); // 获取当前时间
+          const currentMonth = now.getMonth() + 1; // 获取当前月份
+          const months = []; // 定义存放月份的数组
+          for (let i = 1; i <= currentMonth; i++) {
+              let monthString = `${i}月`;
+              months.push(monthString);
+          }
+          this.histogram.xAxis.data = months
           res.data.data.data.clyx.forEach((n)=>{
               this.histogram.series[0].data.push(n)
           })
@@ -262,6 +267,7 @@ export default {
         }
       },
       deep: true,
+        
     },
   },
 };

@@ -4,12 +4,12 @@
         
         <header-search style="width:100%;height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
-                <div style="margin: 10px 20px 10px 0px">
+                <!-- <div style="margin: 10px 20px 10px 0px">
                     作业公司：
                     <el-select v-model="queryParams.companyId" placeholder="请选择" disabled @change="changeCompany">
                         <el-option v-for="item in companyList" :key="item.orgId" :label="item.orgName" :value="item.orgId"></el-option>
                     </el-select>
-                </div>
+                </div> -->
                 <div style="margin: 10px 20px 10px 0px">
                     油田：
                     <el-select v-model="queryParams.oilFieldId" disabled>
@@ -28,7 +28,7 @@
         </header-search>
         
         <page-panel-new class="app-content">
-            <el-row style="height: 400px;" :gutter="20">
+            <el-row style="height: auto; display: flex; flex-wrap: wrap;" :gutter="20">
             	<el-col v-for="(item, index) in zbData" :key="index" :span="4">
             		<pagePanel v-if="item.title == '注水指标总览'" class="fl" :headerTitle="item.title"  style="height: 180px; margin-top: 20px;" @click.native="cardClick(item, index)">
             			<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
@@ -39,8 +39,8 @@
             		</pagePanel>
             		<pagePanel v-else class="fl" :headerTitle="item.title" style="height: 180px; margin-top: 20px;">
             			<el-button style="position: absolute; z-index: 9; right: 10px; top: 0px; height: 26px; margin-top: 3px; padding: 0 16px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
-            			<el-row style="padding-top: 20px;">
-            				<el-col :span="14">
+            			<el-row>
+            				<el-col :span="15">
             					<div style="vertical-align: middle; text-align: center">
             						<span style="font-size: 26px">{{ item.sz }}</span>
             						<sub style="color: #8fa4cc; font-size: 15px">
@@ -48,28 +48,28 @@
             						</sub>
             					</div>
             					<div style="margin-top: 10px">
-            						<el-row v-if="item.title == '分注井层段合格率' || item.title == '含水上升率' || item.title == '自然递减率'" :gutter="12" style="line-height: 20px; text-align: center">
-            							<el-col :span="14" style="color: #8fa4cc">环比上月</el-col>
-            							<el-col :span="10">
+            						<el-row v-if="item.title == '分注井层段合格率' || item.title == '含水上升率' || item.title == '自然递减率'" :gutter="6" style="line-height: 20px; text-align: center">
+            							<el-col :span="13" style="color: #8fa4cc">环比上月</el-col>
+            							<el-col :span="11">
             								<span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb | numberFormat }}% ↑</span>
             								<span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb | numberFormat }}% ↓</span>
             							</el-col>
             						</el-row>
-            						<el-row v-if="item.title == '年注入量' || item.title == '地层压力保持水平' || item.title == '注水井分注率' || item.title == '动态监测完成率' || item.title == '分注井测试率'" :gutter="12" style="line-height: 20px; text-align: center">
-            							<el-col :span="14" style="color: #8fa4cc">环比上年</el-col>
-            							<el-col :span="10">
+            						<el-row v-if="item.title == '年注入量' || item.title == '地层压力保持水平' || item.title == '注水井分注率' || item.title == '动态监测完成率' || item.title == '分注井测试率'" :gutter="6" style="line-height: 20px; text-align: center">
+            							<el-col :span="13" style="color: #8fa4cc">环比上年</el-col>
+            							<el-col :span="11">
             								<span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb | numberFormat }}% ↑</span>
             								<span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb | numberFormat }}% ↓</span>
             							</el-col>
             						</el-row>
-            						<el-row v-if="item.title == '注水水质达标率' ||item.title == '分注井层段合格率' ||item.title == '含水上升率' ||item.title == '自然递减率'" :gutter="12" style="line-height: 20px; text-align: center">
-            							<el-col :span="14" style="color: #8fa4cc">同比去年</el-col>
-            							<el-col :span="10">
+            						<el-row v-if="item.title == '注水水质达标率' ||item.title == '分注井层段合格率' ||item.title == '含水上升率' ||item.title == '自然递减率'" :gutter="6" style="line-height: 20px; text-align: center">
+            							<el-col :span="13" style="color: #8fa4cc">同比去年</el-col>
+            							<el-col :span="11">
             								<span v-if="item.tbTag == 'up'" style="color: #00c39f">{{ item.tb | numberFormat }}% ↑</span>
             								<span v-if="item.tbTag == 'down'" style="color: #cd3d00">{{ item.tb | numberFormat }}% ↓</span>
             							</el-col>
             						</el-row>
-            						<el-row :gutter="12" style="line-height: 20px; text-align: center">
+            						<el-row :gutter="6" style="line-height: 20px; text-align: center">
             							<el-col :span="14" style="color: #8fa4cc">与考核相比</el-col>
             							<el-col :span="10">
             								<span v-if="item.khTag == 'up'" style="color: #00c39f">{{ item.kh | numberFormat }}% ↑</span>
@@ -78,7 +78,7 @@
             						</el-row>
             					</div>
             				</el-col>
-            				<el-col :span="10">
+            				<el-col :span="9">
             					<Echart :chart-data="option" height="100%" width="100%"></Echart>
             				</el-col>
             			</el-row>
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-                <el-table id="indexscv" :data="tableData" highlight height="calc(100% - 55px)">
+                <el-table id="indexscv" :data="tableData" :key="Math.random()" highlight height="calc(100% - 55px)">
                     <el-table-column prop="name" label="指标" align="center"></el-table-column>
                     <el-table-column prop="real" label="实际值" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="chain" label="环比 (上年/上月)" align="center">
@@ -122,10 +122,41 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="diffRealMom" label="实际值与环比差值" align="center" :formatter="formatterNumber"></el-table-column>
-                    <el-table-column prop="checkValue" label="考核" align="center" :formatter="formatterNumber"></el-table-column>
+                    <el-table-column prop="checkValue" label="考核" align="center">
+                        <template slot-scope="scope">
+                        <div>
+                            <el-input-number
+                            v-if="scope.row.state == 2"
+                            placeholder="输入考核值"
+                            v-model="scope.row.checkValue"
+                            :precision="scope.row.name == '年注入量（10⁴m³）' ? 4 : 2"
+                            style="width: 100%"
+                            ></el-input-number>
+                            <span v-else>
+                            <span v-if="scope.row.name == '年注入量（10⁴m³）'">{{
+                                scope.row.checkValue ? parseFloat(scope.row.checkValue).toFixed(4) : "-"
+                            }}</span>
+                            <span v-else>{{ scope.row.checkValue ? parseFloat(scope.row.checkValue).toFixed(2) : "-" }}</span>
+                            </span>
+                        </div>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="diffRealCheck" label="实际值与考核差值" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="compareOilField" label="对标 (羊三木)" align="center" :formatter="formatterNumber"></el-table-column>
                     <el-table-column prop="realCompareOilField" label="实际值与对标差值" align="center" :formatter="formatterNumber"></el-table-column>
+                    <el-table-column label="操作" width="120" align="center">
+                        <template slot-scope="scope" v-if="scope.row.name !== '年注入量（10⁴m³）'">
+                            <el-button type="text" key="button1" @click="editTbaleRow(scope.row, scope.$index)" v-if="scope.row.state == 1"
+                                >编辑</el-button
+                            >
+                            <el-button type="text" key="button2" @click="saveTableRow(scope.row, scope.$index)" v-else-if="scope.row.state == 2"
+                                >保存</el-button
+                            >
+                            <el-button type="text" key="button3" @click="calceTableRow(scope.row, scope.$index)" v-if="scope.row.state == 2"
+                                >取消</el-button
+                            >
+                        </template>
+                    </el-table-column>
                 </el-table>
             </pagePanel>
             <pagePanel headerTitle="含水上升率" v-if="currentIndex == 5" style="height: 500px;" show-btn>
@@ -167,7 +198,7 @@
     import Echart from "@/components/tools/Echarts/index.vue";
     import {exportExcel} from "@/lib/exportExcel.js";
     import {fetchOilFields,fetchFields,fetchPlatforms,fieldLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-    import {injectionYear,layerPressureLevelRate,waterQualityRate,dividingLayerQualityRate,rateOfmoistureRate,injectionWellDividingRate,dynamicMoniterFinshRate,dividingTestRate,natureDeclineRate,injectionIndicatorStat} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+    import {injectionYear,layerPressureLevelRate,waterQualityRate,dividingLayerQualityRate,rateOfmoistureRate,injectionWellDividingRate,dynamicMoniterFinshRate,dividingTestRate,natureDeclineRate,injectionIndicatorStat,injectionAuditUpdate} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
     import {getOrgInfo,getOgfInfo} from "@/api/oilDeposit/ipm-03/basedata.js";
     import dayjs from "dayjs";
     export default {
@@ -218,7 +249,7 @@
                         hb: "",
                         tb: "",
                         kh: "",
-                        dw: "万方"
+                        dw: "10⁴m³"
                     },
                     {
                         title: "地层压力保持水平",
@@ -381,12 +412,12 @@
                         textStyle: {
                             color: "#8FA4CC",
                         },
-                        top: 10,
+                        top: 0,
                         left: "center",
                     },
                     grid: {
                         x: 120,
-                        y: 30,
+                        y: 80,
                         x2: 120,
                         y2: 60,
                     },
@@ -420,7 +451,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月份",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -498,12 +529,12 @@
                         textStyle: {
                             color: "#8FA4CC",
                         },
-                        top: 10,
+                        top: 0,
                         left: "center",
                     },
                     grid: {
                         x: 120,
-                        y: 30,
+                        y: 80,
                         x2: 120,
                         y2: 60,
                     },
@@ -537,7 +568,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月份",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -598,6 +629,8 @@
                     }],
                     series: [],
                 },
+                // 注水指标管理 考核值编辑按钮点击后记录
+                oldCheckValue: "",
                 //注水指标管理
                 tableData: [],
                 //平台信息
@@ -683,12 +716,12 @@
             //初始化页面
             async initData() {
                 // 获取作业公司
-                await getOrgInfo().then((data) => {
-                    let code = data.data.code;
-                    if (code == 200) {
-                        this.companyList = data.data.data;
-                    }
-                });
+                // await getOrgInfo().then((data) => {
+                //     let code = data.data.code;
+                //     if (code == 200) {
+                //         this.companyList = data.data.data;
+                //     }
+                // });
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {
                         this.oilFieldList = res.data.data.oilFields;
@@ -773,23 +806,58 @@
                     this.doNatureDeclineRate();
                 }
             },
+            editTbaleRow(row, index) {
+                this.oldCheckValue = row.checkValue;
+                this.$set(this.tableData[index], "state", 2);
+                this.$forceUpdate();
+            },
+            // 注水指标管理-保存按钮，保存考核值修改项
+            saveTableRow(row, index) {
+                injectionAuditUpdate({
+                    name: row.name,
+                    yearMonth: this.queryParams.year,
+                    auditNumber: row.checkValue,
+                }).then((res) => {
+                    if (res.data.code == 200) {
+                    this.$message.success("保存成功");
+                    this.doInjectionIndicatorStat();
+                    } else {
+                    this.$message.success("保存失败");
+                    }
+                });
+            },
+            // 注水指标管理-取消按钮，隐藏考核值修改项
+            calceTableRow(row, index) {
+                this.$set(this.tableData[index], "checkValue", this.oldCheckValue);
+                this.$set(this.tableData[index], "state", 1);
+                this.$forceUpdate();
+            },
             //注水指标管理-注水指标统计
             doInjectionIndicatorStat() {
                 injectionIndicatorStat(this.queryParams).then((res) => {
                     if (res.data.code == 200) {
-                        this.tableData = res.data.data.injectionIndicatorManagements;
+                        this.tableData = res.data.data.injectionIndicatorManagements || [];
                         // TODO lv 临时
-                        // this.tableData.forEach((item) => {
-                        //     if (item.name == "含水上升率（%）") item.real = -0.33;
-                        //     if (item.name == "注水井分注率（%）") item.real = 94.26;
-                        //     if (item.name == "分注井层段合格率（%）") item.real = 78.97;
-                        //     if (item.name == "年注入量（10⁴m³）") item.real = 1552;
-                        //     if (item.name == "自然递减率（%）") item.real = 21.13;
-                        //     if (item.name == "地层压力保持水平（%）") item.real = 90.47;
-                        //     if (item.name == "分注井测试率（%）") item.real = 95.48;
-                        //     if (item.name == "注水水质达标率（%）") item.real = 100;
-                        //     if (item.name == "动态监测完成率（%）") item.real = 99;
-                        // });
+                        this.tableData.forEach((item) => {
+                            if (item.name == "地层压力保持水平（%）") item.real = 90.30;
+                            if (item.name == "地层压力保持水平（%）") item.chain = 0.03;
+                            // if (item.name == "注水水质达标率（%）") item.real = 100;
+                            if (item.name == "动态监测完成率（%）") item.real = 43.59;
+                            if (item.name == "动态监测完成率（%）") item.chain = 56.41;
+                            // if (item.name == "含水上升率（%）") item.real = -0.33;
+                            // if (item.name == "注水井分注率（%）") item.real = 94.26;
+                            // if (item.name == "分注井层段合格率（%）") item.real = 78.97;
+                            // if (item.name == "年注入量（10⁴m³）") item.real = 1552;
+                            // if (item.name == "自然递减率（%）") item.real = 21.13;
+                            // if (item.name == "分注井测试率（%）") item.real = 95.48;
+                        });
+                        if (this.tableData?.length) {
+                            this.tableData.forEach((item) => (item.state = 1));
+                        } else {
+                            this.tableData = [];
+                        }
+                    } else {
+                        this.tableData = [];
                     }
                 });
             },
@@ -804,8 +872,6 @@
                         });
                         //指标详情
                         zb.sz = detail.detail;
-                        // TODO lv 临时
-                        // zb.sz = "*" + 1552;
                         //环比
                         zb.hb = detail.mom;
                         zb.hbTag = detail.chainTag;
@@ -828,10 +894,11 @@
                             return item.title == "地层压力保持水平";
                         });
                         //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail ||  90.47;
+                        zb.sz = detail.detail ||  90.30;
                         //环比
-                        zb.hb = detail.mom;
-                        zb.hbTag = detail.chainTag;
+                        zb.hb = detail.mom || 0.03;
+                        // zb.hbTag = detail.chainTag;
+                        zb.hbTag = "up";
                         //同比
                         /* zb.tb=detail.moy;
                          zb.tbTag=detail.yearOnYearTag;*/
@@ -850,8 +917,8 @@
                         let zb = this.zbData.find((item) => {
                             return item.title == "注水水质达标率";
                         });
-                        //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail || 100;
+                        //指标详情
+                        zb.sz = detail.detail;
                         //环比
                         zb.hb = detail.mom;
                         zb.hbTag = detail.chainTag;
@@ -890,12 +957,6 @@
                         //考核
                         zb.kh = detail.compareCheck;
                         zb.khTag = detail.auditTag;
-                    } else {
-                        // TODO lv 临时
-                        let zb = this.zbData.find((item) => {
-                            return item.title == "分注井层段合格率";
-                        });
-                        zb.sz = 78.97;
                     }
                 });
             },
@@ -910,8 +971,8 @@
                         let zb = this.zbData.find((item) => {
                             return item.title == "含水上升率";
                         });
-                        //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail || "-0.33";
+                         //指标详情 // TODO lv 临时
+                         zb.sz = detail.detail || "-0.33";
                         //环比
                         zb.hb = detail.mom;
                         zb.hbTag = detail.chainTag;
@@ -1022,12 +1083,6 @@
                         this.rateOfWaterCutRise.legend.data = legendData;
                         this.rateOfWaterCutRise.series = seriesData;
                         this.rateOfWaterCutRise.title.text = `${this.oilFieldName || ""}含水上升率`;
-                    } else {
-                        // TODO lv 临时
-                        let zb = this.zbData.find((item) => {
-                            return item.title == "含水上升率";
-                        });
-                        zb.sz = "-0.33";
                     }
                 });
             },
@@ -1041,8 +1096,8 @@
                             return item.title == "注水井分注率";
                         });
                         if (detail) {
-                            //指标详情 // TODO lv 临时
-                            zb.sz = detail.detail || 94.26;
+                            //指标详情
+                            zb.sz = detail.detail;
                             //环比
                             zb.hb = detail.mom;
                             zb.hbTag = detail.chainTag;
@@ -1066,9 +1121,10 @@
                             return item.title == "动态监测完成率";
                         });
                         //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail || 99;
+                        zb.sz = detail.detail || 43.59;
                         //环比
-                        zb.hb = detail.mom;
+                        // zb.hb = detail.mom;// TODO lv 临时
+                        zb.hb = detail.mom || 56.41;
                         zb.hbTag = detail.chainTag;
                         /*//同比
                         zb.tb=detail.moy;
@@ -1076,12 +1132,6 @@
                         //考核
                         zb.kh = detail.compareCheck;
                         zb.khTag = detail.auditTag;
-                    } else {
-                        // TODO lv 临时
-                        let zb = this.zbData.find((item) => {
-                            return item.title == "动态监测完成率";
-                        });
-                        zb.sz = 99;
                     }
                 });
             },
@@ -1095,7 +1145,7 @@
                             return item.title == "分注井测试率";
                         });
                         //指标详情 // TODO lv 临时
-                        zb.sz = detail.detail ||  95.48;
+                        zb.sz = detail.detail || 95.48;
                         //环比
                         zb.hb = detail.mom;
                         zb.hbTag = detail.chainTag;
@@ -1233,10 +1283,10 @@
             },
             //表格格式化方法 - 数值只保留四位小数
             formatterNumber(row, column) {
-                if (row.name == '年注入量（10⁴m³）') {
-                    return Number(row[column.property]) ? parseFloat(row[column.property]).toFixed(4) : "";
+                if (row.name == "年注入量（10⁴m³）") {
+                    return !isNaN(parseFloat(row[column.property])) ? parseFloat(row[column.property]).toFixed(4) : "";
                 } else {
-                    return Number(row[column.property]) ? parseFloat(row[column.property]).toFixed(2) : "";
+                    return !isNaN(parseFloat(row[column.property])) ? parseFloat(row[column.property]).toFixed(2) : "";
                 }
             },
         },

@@ -24,8 +24,8 @@
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column prop="injDuration" label="注入时间"></el-table-column>
                 <el-table-column prop="injDaily" :label="`日注水量\n (m³)`"></el-table-column>
-                <el-table-column prop="csgPress" :label="`套压\n (Mpa)`"></el-table-column>
-                <el-table-column prop="whInjPress" :label="`井口压力\n (Mpa)`"></el-table-column>
+                <el-table-column prop="csgPress" :label="`套压\n (MPa)`"></el-table-column>
+                <el-table-column prop="whInjPress" :label="`井口压力\n (MPa)`"></el-table-column>
                 <el-table-column prop="injDailySum" :label="`水聚总量\n (m³)`"></el-table-column>
                 <el-table-column prop="injMonthly" :label="`日配注量\n (m³)`"></el-table-column>
             </el-table>
@@ -110,6 +110,8 @@
                             }
                         },
                         {
+                            name: "日",
+                            nameGap: 30,
                             gridIndex: 1,
                             type: 'category',
                             data: ['2018-01', '2018-04', '2018-06', '2018-10', '2019-01', '2019-04', '2019-06', '2019-10', '2020-01', '2020-04', '2020-06', '2020-10'],
@@ -139,7 +141,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#ff631f',
                                 fontSize: 14
                             },
                             max: 24,
@@ -169,7 +171,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#c8b71a',
                                 fontSize: 14
                             },
                             position: 'right',
@@ -198,7 +200,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: 'rgb(186,85,211)',
                                 fontSize: 14
                             },
                             position: 'right',
@@ -228,7 +230,7 @@
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#00ffff',
                                 fontSize: 14
                             },
                             // scale: true,
@@ -256,7 +258,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#be5028',
                                 fontSize: 14
                             },
                             position: 'left',
@@ -286,7 +288,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: '#8FA4CC',
+                                color: '#ff69b4',
                                 fontSize: 14
                             },
                             position: 'right',
@@ -315,7 +317,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: 'rgb(0,255,255)',
+                                color: '#61bcc3',
                                 fontSize: 14
                             },
                             position: 'right',
@@ -395,31 +397,31 @@
                                 if (chartDatalabel == '套压') {
                                     series.xAxisIndex = 0;
                                     series.yAxisIndex = 2;
-                                    series.color = '#ba55d3';
+                                    series.itemStyle={color:'rgb(186,85,211)'};
                                 } else if (chartDatalabel == '日注水量') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 5;
-                                    series.color = 'rgb(0,255,255)';
+                                    series.itemStyle={color:'#61bcc3'};
                                 } else if (chartDatalabel == '井口压力') {
                                     series.xAxisIndex = 0;
                                     series.yAxisIndex = 1;
-                                    series.color = '#c8b71a';
+                                    series.itemStyle={color:'#c8b71a'};
                                 } else if (chartDatalabel == '注入时间') {
                                     series.xAxisIndex = 0;
                                     series.yAxisIndex = 0;
-                                    series.color = '#ff631f';
+                                    series.itemStyle={color:'#ff631f'};
                                 } else if (chartDatalabel == '日配注量') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 3;
-                                    series.color = '#be5028';
+                                    series.itemStyle={color:'#be5028'};
                                 } else if (chartDatalabel == '水聚总量') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 3;
-                                    series.color = '#00ffff';
+                                    series.itemStyle={color:'#00ffff'};
                                 } else if (chartDatalabel == '日注聚量') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 5;
-                                    series.color = '#8b4513';
+                                    series.itemStyle={color:'#ff69b4'};
                                 } else {
                                     continue;
                                 }

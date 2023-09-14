@@ -1,6 +1,6 @@
 <!-- layout栅格布局：20行12列 -->
 <template>
-    <div>
+    <div id="scape">
         <div v-show="isOperation" class="g-w100 g-h100 boxOpacity" />
         <div v-show="isOperation" class="topHeaderBtn">
             <el-button type="primary" :disabled="isDisableReset" @click="resetItem">
@@ -11,6 +11,10 @@
             </el-button>
             <el-button class="commonBtn" @click="cancelItem">
                 取消
+            </el-button>
+        </div>
+        <div style="position: relative;top:-40px">
+            <el-button type="primary" style="position:absolute;top:10%;right:2%" @click="movement()">一键推送
             </el-button>
         </div>
         <grid-layout
@@ -69,6 +73,31 @@
                 <component :is="getContent(item.name)" :current-resize-list="currentResizeList" class="no-drag" />
             </grid-item>
         </grid-layout>
+        <el-dialog
+            title="推送邮箱"
+            :visible.sync="dialog"
+            width="30%"
+            v-if="dialog"
+            :close-on-click-modal="true"
+        >
+            <el-form inline >
+                <el-form-item label="发送邮箱:">
+                    <el-input  v-model="mailBox" style="width: 300px"> <i slot="suffix" >@cnooc.com.cn</i></el-input>
+                </el-form-item>
+                <el-form-item label="邮件标题:">
+                    <el-input style="width: 300px"  v-model="mailtitle"></el-input>
+                </el-form-item>
+                <el-form-item label="邮件内容:">
+                    <el-input style="width: 400px" v-model="content" :rows="3" type="textarea"> </el-input>
+                </el-form-item>
+                <el-form-item style="margin-left:150px;">
+                    <el-button class="cancelBtn" style="text-align: center" @click="dialog = false">取 消</el-button>
+                    <el-button type="primary" class="buttonActive_primary" @click="comfirm">确 定</el-button>
+                </el-form-item>
+
+            </el-form>
+
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -91,7 +120,8 @@ import recoverLevel from "../modules/recoverLevel/index.vue"
 import recoveryRate from "../modules/recoveryRate/index.vue"
 import waterUp from "../modules/waterUp/index.vue"
 import overviewIndicators from "../modules/overviewIndicators/index.vue"
-
+import html2canvas from "html2canvas";
+import {send} from "@/api/rem/electricpumpfailureprediction";
 export default {
     components: {
         GridLayout: VueGridLayout.GridLayout,
@@ -124,6 +154,11 @@ export default {
             interfaceDataStore: [], // 用于取消，上一次存储，
             initLayOut: [], // 模板面板存储
             isOperation: false, // 是否可拖拽和移动
+            dialogVisible: false,
+            dialog:false,
+            mailBox:'sh_326yykf',
+            mailtitle:'油藏看板',
+            content:`尊敬的用户：\n您好!\n附件为油藏看板请您查看。`,
             singleHeight: (document.body.clientHeight - this.heightFromBottom) / this.rowNum, // 单个行高
             screenWidth: document.body.clientWidth, // 屏幕宽度
             screenHeight: document.body.clientHeight, // 屏幕高度
@@ -188,6 +223,47 @@ export default {
             })();
     },
     methods: {
+        movement(){
+            this.dialog = true
+        },
+        comfirm(){
+            this.dialog = false
+            this.infolist()
+        },
+        infolist(){
+            this.$nextTick(()=>{
+                const screenEl = document.getElementById('scape');
+                html2canvas(document.body, {
+                    useCORS: true,
+                    dpi:150,
+                    scale:2,
+                    height: screenEl.scrollHeight + 200,
+                    windowHeight: screenEl.scrollHeight + 200,
+                }).then((canvas) => {
+                    this.saveUrl = canvas.toDataURL()
+                    var base64String = this.saveUrl.split(",")[1];
+                    var byteCharacters = atob(base64String);
+                    var byteArray = new Uint8Array(byteCharacters.length);
+                    for (var i = 0; i < byteCharacters.length; i++) {
+                        byteArray[i] = byteCharacters.charCodeAt(i);
+                    }
+                    let data = {
+                        requestId: "f198c1a239254b0e86529a0668cf4adb",
+                        toAddr:[this.mailBox + '@cnooc.com.cn'],
+                        subject:this.mailtitle,
+                        content:this.content,
+                        ccAddr:[],
+                        senderKey:'ipmEmail',
+                        attachments: [{filename:"油藏看板.png",filedata:[...byteArray] }],
+                    }
+                    send(data).then((res)=>{
+                        if(res==true){
+                            this.$message.success('发送成功！');
+                        }
+                    })
+                })
+            })
+        },
         // 保存元素
         saveItem() {
             const queryParamsNew = {

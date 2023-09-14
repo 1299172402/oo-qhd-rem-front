@@ -215,8 +215,8 @@ export default {
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
             }
             queryCapacityComposition(info).then((res)=>{
-                    let arr = res.data.data
-                    arr.map((n)=>{
+                let arr = res.data.data
+                arr.map((n)=>{
                     this.histogram.series[0].data.push(Number((n.yearLc/10000).toFixed(2)))
                     this.histogram.series[1].data.push(Number((n.gdyc/10000).toFixed(2)))
                     this.histogram.series[2].data.push(Number((n.fgsfd/10000).toFixed(2)))
@@ -229,7 +229,7 @@ export default {
         },
         linkroute() {
             this.$router.push({
-                path: "/plan/annualPlan",
+                path: "/plan/annualPlan",query: {page: '/reservoirDisplay/oilexhibition'}
             });
         },
     },
@@ -248,6 +248,7 @@ export default {
                 }
             },
             deep: true,
+            immediate:true
         },
     },
 

@@ -116,12 +116,42 @@
                         <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g, '') : '' }} </span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="declineRate" min-width="150" :label="`递减率\n(%)`"></el-table-column>
-                <el-table-column prop="yield" min-width="150" :label="`月度产液量\n(m³)`"></el-table-column>
-                <el-table-column prop="monthlyProdEff" min-width="150" :label="`生产时率\n(%)`"></el-table-column>
-                <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`"></el-table-column>
-                <el-table-column prop="pumpEfficiency" min-width="150" :label="`排量效率\n(%)`"></el-table-column>
-                <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
+                <el-table-column prop="declineRate" min-width="150" :label="`递减率\n(%)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.declineRate !== null && scope.row.declineRate !== ''">{{ Number(scope.row.declineRate).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="yield" min-width="150" :label="`月度产液量\n(m³)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.yield !== null && scope.row.yield !== ''">{{ Number(scope.row.yield).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="monthlyProdEff" min-width="150" :label="`生产时率\n(%)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.monthlyProdEff !== null && scope.row.monthlyProdEff !== ''">{{ Number(scope.row.monthlyProdEff).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.watCnt !== null && scope.row.watCnt !== ''">{{ Number(scope.row.watCnt).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="pumpEfficiency" min-width="150" :label="`排量效率\n(%)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.pumpEfficiency !== null && scope.row.pumpEfficiency !== ''">{{ Number(scope.row.pumpEfficiency).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.flwPrs !== null && scope.row.flwPrs !== ''">{{ Number(scope.row.flwPrs).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="attribution" min-width="250" label="归因"
                                  show-overflow-tooltip></el-table-column>
                 <el-table-column prop="measure" min-width="250" label="措施" show-overflow-tooltip></el-table-column>
@@ -195,9 +225,9 @@
                 <el-table-column prop="itemValue" min-width="150" :label="`注水强度\n(m³/d·m)`"></el-table-column>
                 <el-table-column prop="evalResult" min-width="200" show-overflow-tooltip
                                  label="评价结论"></el-table-column>
-                <el-table-column prop="injDuration" min-width="150" :label="`生产时长\n(h)`"></el-table-column>
+                <el-table-column prop="injDuration" min-width="150" :label="`注入时长\n(h)`"></el-table-column>
                 <el-table-column prop="injDaily" min-width="150" :label="`注入量\n(m³)`"></el-table-column>
-                <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(mPa)`"></el-table-column>
+                <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(MPa)`" :formatter="formatAmount"></el-table-column>
                 <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`">
                     <template slot-scope="scope">
                         {{Number(scope.row.injAllocationRate).toFixed(2)}}
@@ -239,16 +269,56 @@
                     </template>
                 </el-table-column>
                 <el-table-column v-if="link == 1" prop="intensity" min-width="150"
-                                 :label="`采液强度\n(m³/d·m)`"></el-table-column>
+                                 :label="`采液强度\n(m³/d·m)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.intensity !== null && scope.row.intensity !== ''">{{ Number(scope.row.intensity).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
                 <el-table-column v-if="link == 2" prop="fluidProductionIndex" min-width="150"
-                                 :label="`采液指数\n(m³/mPa·d)`"></el-table-column>
+                                 :label="`采液指数\n(m³/mPa·d)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.fluidProductionIndex !== null && scope.row.fluidProductionIndex !== ''">{{ Number(scope.row.fluidProductionIndex).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
                 <el-table-column v-if="link == 3" prop="metreFluidProductionIndex" min-width="150"
-                                 :label="`米采液指数\n(m³/mPa·d·m)`"></el-table-column>
-                <el-table-column prop="yield" min-width="150" :label="`产液量\n(m³)`"></el-table-column>
-                <el-table-column prop="monthlyProdEff" min-width="150" :label="`生产时率\n(%)`"></el-table-column>
-                <el-table-column prop="pumpEfficiency" min-width="150" :label="`排量效率\n(%)`"></el-table-column>
-                <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`"></el-table-column>
-                <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`"></el-table-column>
+                                 :label="`米采液指数\n(m³/mPa·d·m)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.metreFluidProductionIndex !== null && scope.row.metreFluidProductionIndex !== ''">{{ Number(scope.row.metreFluidProductionIndex).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="yield" min-width="150" :label="`产液量\n(m³)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.yield !== null && scope.row.yield !== ''">{{ Number(scope.row.yield).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="monthlyProdEff" min-width="150" :label="`生产时率\n(%)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.monthlyProdEff !== null && scope.row.monthlyProdEff !== ''">{{ Number(scope.row.monthlyProdEff).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="pumpEfficiency" min-width="150" :label="`排量效率\n(%)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.pumpEfficiency !== null && scope.row.pumpEfficiency !== ''">{{ Number(scope.row.pumpEfficiency).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="watCnt" min-width="150" :label="`含水率\n(%)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.watCnt !== null && scope.row.watCnt !== ''">{{ Number(scope.row.watCnt).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="flwPrs" min-width="150" :label="`流压\n(MPa)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.flwPrs !== null && scope.row.flwPrs !== ''">{{ Number(scope.row.flwPrs).toFixed(2) }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="attribution" min-width="250" show-overflow-tooltip
                                  label="归因"></el-table-column>
                 <el-table-column prop="measure" min-width="250" show-overflow-tooltip label="措施"></el-table-column>
@@ -592,7 +662,7 @@ export default {
                             "children": [
                                 {
                                     "level": 2,
-                                    "name": "判断生产时长",
+                                    "name": "判断注入时长",
                                     "children": [
                                         {
                                             "level": 3,
@@ -1296,6 +1366,9 @@ export default {
         this.link = this.$route.query.link
     },
     methods: {
+        formatAmount(row, column, cellValue) {
+            return Number(cellValue).toFixed(2);
+        },
         toFixed,
         //获取查询条件中下拉列表的值
         async getData() {

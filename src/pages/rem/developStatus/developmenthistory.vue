@@ -40,7 +40,7 @@
                         <el-table-column prop="phase" label="开发阶段" align="center" width="180px" show-overflow-tooltip fixed></el-table-column>
                         <el-table-column prop="beginDate" label="阶段开始时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="endDate" label="阶段结束时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="interval" :label="`阶段历程时间\n (天)`" align="center" width="160px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="interval" :label="`阶段历程时间\n (d)`" align="center" width="160px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="pwellsTotal" :label="`阶段末油井总井数\n (口)`" align="center" width="180px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="pwellsOpen" :label="`阶段末油井开井数\n (口)`" align="center" width="190px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="liquidDaily" :label="`阶段末日产液\n (m³/d)`" align="center" width="180px" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
@@ -64,15 +64,15 @@
                 <el-checkbox-group v-model="checkList" style="margin-bottom: 10px">
                     <el-row>
                         <el-col :span="12">
-                            <el-checkbox label="油井总井数/（口）" color="#fff"></el-checkbox>
+                            <el-checkbox label="油井总井数（口)" color="#fff"></el-checkbox>
                         </el-col>
                         <el-col :span="12">
-                            <el-checkbox label="含水率/（%）"></el-checkbox>
+                            <el-checkbox label="含水率（%)"></el-checkbox>
                         </el-col>
                     </el-row>
                     <el-row style="margin-top: 10px">
                         <el-col :span="12">
-                            <el-checkbox label="油井开井数/（口）"></el-checkbox>
+                            <el-checkbox label="油井开井数（口)"></el-checkbox>
                         </el-col>
                         <el-col :span="12">
                             <el-checkbox label="气油比"></el-checkbox>
@@ -80,23 +80,23 @@
                     </el-row>
                     <el-row style="margin-top: 10px">
                         <el-col :span="12">
-                            <el-checkbox label="水井总井数/（口）"></el-checkbox>
+                            <el-checkbox label="水井总井数（口)"></el-checkbox>
                         </el-col>
                         <el-col :span="12">
-                            <el-checkbox label="日注水/（m³/d）"></el-checkbox>
-                        </el-col>
-                    </el-row>
-                    <el-row style="margin-top: 10px">
-                        <el-col :span="12">
-                            <el-checkbox label="水井开井数/（口）"></el-checkbox>
-                        </el-col>
-                        <el-col :span="12">
-                            <el-checkbox label="地层压降/MPa"></el-checkbox>
+                            <el-checkbox label="日注水（m³/d)"></el-checkbox>
                         </el-col>
                     </el-row>
                     <el-row style="margin-top: 10px">
                         <el-col :span="12">
-                            <el-checkbox label="单元日产液/（m³/d）"></el-checkbox>
+                            <el-checkbox label="水井开井数（口)"></el-checkbox>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-checkbox label="地层压降(MPa)"></el-checkbox>
+                        </el-col>
+                    </el-row>
+                    <el-row style="margin-top: 10px">
+                        <el-col :span="12">
+                            <el-checkbox label="单元日产液（m³/d)"></el-checkbox>
                         </el-col>
                         <el-col :span="12">
                             <el-checkbox label="月注采比"></el-checkbox>
@@ -104,10 +104,10 @@
                     </el-row>
                     <el-row style="margin-top: 10px">
                         <el-col :span="12">
-                            <el-checkbox label="单元日产油/（m³/d）"></el-checkbox>
+                            <el-checkbox label="单元日产油（m³/d)"></el-checkbox>
                         </el-col>
                         <el-col :span="12">
-                            <el-checkbox label="年产油/（m³）"></el-checkbox>
+                            <el-checkbox label="年产油（m³)"></el-checkbox>
                         </el-col>
                     </el-row>
                 </el-checkbox-group>
@@ -141,45 +141,45 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="ogfName" label="区块" align="center" show-overflow-tooltip min-width="180" fixed="left"></el-table-column>
-                    <el-table-column label="油井（口）" align="center">
+                    <el-table-column label="油井（口)" align="center">
                         <el-table-column prop="proWellCount" label="总井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
                         <el-table-column prop="proWellOpen" label="开井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
                     </el-table-column>
-                    <el-table-column :label="'月均日产水平' + (currentUnit == 'm' ? '（m³/d）' : '（t/d）')" align="center">
+                    <el-table-column :label="'月均日产水平' + (currentUnit == 'm' ? '（m³/d)' : '（t/d)')" align="center">
                         <el-table-column prop="liquidDailySum" label="液量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="oilDailySum" label="油量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
-                    <el-table-column :label="'平均单井日产' + (currentUnit == 'm' ? '（m³/d）' : '（t/d）')" align="center">
+                    <el-table-column :label="'平均单井日产' + (currentUnit == 'm' ? '（m³/d)' : '（t/d)')" align="center">
                         <el-table-column prop="liquidDailyAvg" label="液量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="oilDailyAvg" label="油量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
-                    <el-table-column label="注水井（口）" align="center">
+                    <el-table-column label="注水井（口)" align="center">
                         <el-table-column prop="injectionWellCount" label="总井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
                         <el-table-column prop="injectionWellOpen" label="开井" align="center" show-overflow-tooltip min-width="120"></el-table-column>
                     </el-table-column>
-                    <el-table-column label="日注水（m³/d）" align="center">
+                    <el-table-column label="日注水（m³/d)" align="center">
                         <el-table-column prop="injectionDailySum" label="合计" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="injectionDailyAvg" label="平均单井" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
                     <el-table-column prop="compressiveWaterCut" label="综合含水(%)" align="center" show-overflow-tooltip></el-table-column>
-                    <el-table-column prop="cumOilProdYearly" :label="'截止当月年产油' + (currentUnit == 'm' ? '（m³）' : '（t）')" align="center" min-width="140" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="cumOilProdYearly" :label="'截止当月年产油' + (currentUnit == 'm' ? '（m³)' : '（t)')" align="center" min-width="140" show-overflow-tooltip :formatter="toPrecise2"></el-table-column>
                     <el-table-column label="注采比" align="center">
                         <el-table-column prop="injectionProduceRateMonth" label="月" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="injectionProduceRateSum" label="累计" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
-                    <el-table-column label="采油速度（%）" align="center">
+                    <el-table-column label="采油速度（%)" align="center">
                         <el-table-column prop="reservoirsProduceSpeed" label="地质储量" align="center"  show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="reservoirsProduceSpeedAvaliable" label="可采储量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
-                    <el-table-column :label="'累计产量' + (currentUnit == 'm' ? '（×10⁴m³）' : '（×10⁴t）')" align="center">
+                    <el-table-column :label="'累计产量' + (currentUnit == 'm' ? '（×10⁴m³)' : '（×10⁴t)')" align="center">
                         <el-table-column prop="oilSum" label="油量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise4"></el-table-column>
                         <el-table-column prop="waterSum" label="水量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise4"></el-table-column>
                     </el-table-column>
-                    <el-table-column label="采出程度（%）" align="center">
+                    <el-table-column label="采出程度（%)" align="center">
                         <el-table-column prop="reservoirsProduceDegree" label="地质储量" align="center"  show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="reservoirsProduceDegreeAvaliable" label="可采储量" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
-                    <el-table-column label="递减率（%）" align="center">
+                    <el-table-column label="递减率（%)" align="center">
                         <el-table-column prop="natureDeclineRate" label="自然递减率" align="center" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                         <el-table-column prop="compressveDeclineRate" label="综合递减率" align="center"  show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                     </el-table-column>
@@ -325,7 +325,7 @@
                         {
                             type: "inside",
                             xAxisIndex: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-                            start: 0, //滚动条开始位置（共100等份）
+                            start: 0, //滚动条开始位置（共100等份)
                             end: 100, //滚动条结束位置
                         },
                     ],
@@ -333,61 +333,61 @@
                         {
                             x: '160',
                             y: '1%',
-                            width: '90%',
+                            width: '88%',
                             height: '7%'
                         },
                         {
                             x: '160',
                             y: '10%',
-                            width: '90%',
+                            width: '88%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '20%',
-                            width: '90%',
+                            width: '88%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '30%',
-                            width: '90%',
+                            width: '88%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '40%',
-                            width: '90%',
+                            width: '88%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '50%',
-                            width: '90%',
+                            width: '88%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '60%',
-                            width: '90%',
+                            width: '88%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '70%',
-                            width: '90%',
+                            width: '88%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '80%',
-                            width: '90%',
+                            width: '88%',
                             height: '8%'
                         },
                         {
                             x: '160',
                             y: '90%',
-                            width: '90%',
+                            width: '88%',
                             height: '7%'
                         },
                     ],
@@ -543,6 +543,7 @@
                             },
                         },
                         {
+                            name: "年",
                             gridIndex: 9,
                             data: [],
                             axisLabel: {
@@ -561,7 +562,7 @@
                     // Y轴
                     yAxis: [
                         {
-                            name: '油井总井数/(口)\n\n油井开井数/(口)',
+                            name: '油井总井数(口)\n\n油井开井数(口)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -596,7 +597,7 @@
                             },
                         },
                         {
-                            name: '水井总井数/(口)\n\n水井开井数/(口)',
+                            name: '水井总井数(口)\n\n水井开井数(口)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -628,7 +629,7 @@
                             },
                         },
                         {
-                            name: '油田日产液/(m³/d)\n\n油田日产油/(m³/d)',
+                            name: '油田日产液(m³/d)\n\n油田日产油(m³/d)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -660,7 +661,7 @@
                             },
                         },
                         {
-                            name: '平均单井日产液/(m³/d)\n\n平均单井日产油/(m³/d)',
+                            name: '平均单井日产液(m³/d)\n\n平均单井日产油(m³/d)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -691,7 +692,7 @@
                             },
                         },
                         {
-                            name: '含水率/（%）',
+                            name: '含水率(%)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -754,7 +755,7 @@
                             },
                         },
                         {
-                            name: '油田平均日注水/(m³/d)',
+                            name: '油田平均日注水(m³/d)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -786,7 +787,7 @@
                             },
                         },
                         {
-                            name: '地层压降/(MPa)',
+                            name: '地层压降(MPa)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -849,7 +850,7 @@
                             },
                         },
                         {
-                            name: '年产油/(10⁴m³)',
+                            name: '年产油(10⁴m³)',
                             nameLocation: 'center',
                             nameGap: 35,
                             nameRotate: 0,
@@ -884,106 +885,106 @@
                     series: [
                         {
                             type: 'line',
-                            name: '油井总井数/（口）',
+                            name: '油井总井数(口)',
 
                             symbol: 'none',
                             xAxisIndex: 0,
                             yAxisIndex: 0,
                             itemStyle: {
-                                color: '#E9D456',
+                                color: '#030303',
                             },
                             data: [],
                         },
                         {
                             type: 'line',
-                            name: '油井开井数/（口）',
+                            name: '油井开井数(口)',
 
                             symbol: 'none',
                             xAxisIndex: 0,
                             yAxisIndex: 0,
                             itemStyle: {
-                                color: '#B0B0B0',
+                                color: '#bf282c',
                             },
                             data: [],
                         },
                         {
                             type: 'line',
-                            name: '水井总井数/（口）',
+                            name: '水井总井数(口)',
                             symbol: 'none',
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             itemStyle: {
-                                color: '#FF7135',
+                                color: '#294f96',
                             },
                             data: [],
                         },
                         {
                             type: 'line',
-                            name: '水井开井数/（口）',
+                            name: '水井开井数(口)',
                             symbol: 'none',
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             itemStyle: {
-                                color: '#B0B0B0',
+                                color: '#9b5497',
                             },
                             data: [],
                         },
                         {
                             type: 'line',
-                            name: '油田日产液/（m³/d）',
+                            name: '油田日产液(m³/d)',
                             symbol: 'none',
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                color: 'rgb(165,42,42)',
+                                color: 'rgb(250,0,251)',
                             },
                             data: [],
                         },
                         {
                             type: 'line',
-                            name: '油田日产油/（m³/d）',
+                            name: '油田日产油(m³/d)',
 
                             symbol: 'none',
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                color: 'rgb(0,255,0)',
+                                color: '#69b146',
                             },
                             data: [],
                         },
                         {
                             type: 'line',
-                            name: '平均单井日产液/（m³/d）',
+                            name: '平均单井日产液(m³/d)',
 
                             symbol: 'none',
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                color: 'rgb(165,42,42)',
+                                color: 'rgb(250,0,251)',
                             },
                             data: [],
                         },
                         {
                             type: 'line',
-                            name: '平均单井日产油/（m³/d）',
+                            name: '平均单井日产油(m³/d)',
 
                             symbol: 'none',
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                color: 'rgb(0,255,0)',
+                                color: '#69b146',
                             },
                             data: [],
                         },
                         {
                             type: 'line',
-                            name: '含水率/（%）',
+                            name: '含水率(%)',
 
                             symbol: 'none',
                             xAxisIndex: 4,
                             yAxisIndex: 4,
                             itemStyle: {
-                                color: '#2ACAFF',
+                                color: 'rgb(0,0,255)',
                             },
                             data: [],
                         },
@@ -995,25 +996,25 @@
                             xAxisIndex: 5,
                             yAxisIndex: 5,
                             itemStyle: {
-                                color: 'rgb(255,0,0)',
+                                color: '#da2c28',
                             },
                             data: [],
                         },
                         {
                             type: 'line',
-                            name: '油田平均日注水/（m³/d）',
+                            name: '油田平均日注水(m³/d)',
 
                             symbol: 'none',
                             xAxisIndex: 6,
                             yAxisIndex: 6,
                             itemStyle: {
-                                color: 'rgb(0,255,255)',
+                                color: '#61bcc3',
                             },
                             data: [],
                         },
                         {
                             type: 'line',
-                            name: '地层压降/MPa',
+                            name: '地层压降(MPa)',
 
                             symbol: 'none',
                             xAxisIndex: 7,
@@ -1036,7 +1037,7 @@
                         },
                         {
                             type: 'bar',
-                            name: '年产油/（10⁴m³）',
+                            name: '年产油(10⁴m³)',
                             barWidth: 22,
 
                             xAxisIndex: 9,

@@ -78,7 +78,7 @@ export default {
                 },
                 tooltip: {
                     trigger: "item",
-                    formatter: " 问题井统计 <br/>{b} : {c}口 <br/> 占比 : {d}% ",
+                    formatter: " 问题井统计 <br/>{b} : {c}(口) <br/> 占比 : {d}% ",
                 },
                 series: [
                     {
@@ -90,7 +90,7 @@ export default {
                                 let {
                                     data: {value, name, percent},
                                 } = e;
-                                return `{x|}{a|${name}}\n{b|${value}口}`;
+                                return `{x|}{a|${name}}\n{b|${value}(口)}`;
                             },
                             minMargin: 5,
                             lineHeight: 15,

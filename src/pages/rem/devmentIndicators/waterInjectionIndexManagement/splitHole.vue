@@ -4,12 +4,12 @@
         
         <header-search style="width:100%;height:80px;">
             <div class="g-row-flex-V g-w100 g-h100">
-                <div style="margin: 10px 20px 10px 0px;">
+                <!-- <div style="margin: 10px 20px 10px 0px;">
                     作业公司：
                     <el-select v-model="queryParams.companyId" placeholder="请选择" disabled @change="changeCompany">
                         <el-option v-for="item in companyList" :key="item.orgId" :label="item.orgName" :value="item.orgId"></el-option>
                     </el-select>
-                </div>
+                </div> -->
                 <div style="margin: 10px 20px 10px 0px;">
                     油田：
                     <el-select v-model="queryParams.oilFieldId" disabled>
@@ -108,7 +108,7 @@
     import dayjs from "dayjs";
 
     export default {
-        name: "splitHole",
+        // name: "splitHole",
         components: {
             Echart,
         },
@@ -118,13 +118,12 @@
                     companyId: "715AD1CD60484BB59E737CD18A9DE44A", // 作业公司
                     oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 油田
                     platFormId: "", // 平台
-                    dates: [dayjs().format("YYYY-01-01"), dayjs().format("YYYY-MM-DD")], // 时间范围集合
+                    dates: [dayjs().format("YYYY-01-01"), dayjs().subtract(1, "day").format("YYYY-MM-DD")], // 时间范围集合
                     beginDate: dayjs().format("YYYY-01-01"), // 开始时间
-                    endDate: dayjs().format("YYYY-MM-DD"), // 结束时间
-                    layerYear: dayjs().format("YYYY-MM"), // 分注井层段合格率明细 日期选择
-                    wellYear: dayjs().format("YYYY-MM-DD"), // 单井层段合格明细 日期选择
-                    // pageNum: 1,
-                    // pageSize: 9999,
+                    endDate: dayjs().subtract(1, "day").format("YYYY-MM-DD"), // 结束时间
+                    month: dayjs().subtract(1, "day").format("YYYY-MM"), // 分注井层段合格率明细 日期选择
+                    date: dayjs().subtract(1, "day").format("YYYY-MM-DD"), // 单井层段合格明细 日期选择
+                    isDesc: 1,
                 },
                 // 油田名称
                 oilFieldName: "",
@@ -171,7 +170,7 @@
                     },
                     grid: {
                         x: 120,
-                        y: 30,
+                        y: 80,
                         x2: 120,
                         y2: 60,
                     },
@@ -208,7 +207,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "年月",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -295,12 +294,12 @@
             //初始化页面
             async initData() {
                 // 获取作业公司
-                await getOrgInfo().then((data) => {
-                    let code = data.data.code;
-                    if (code == 200) {
-                        this.companyList = data.data.data;
-                    }
-                });
+                // await getOrgInfo().then((data) => {
+                //     let code = data.data.code;
+                //     if (code == 200) {
+                //         this.companyList = data.data.data;
+                //     }
+                // });
                 await fetchOilFields().then((res) => {
                     if (res.data.code == 200) {
                         this.oilFieldList = res.data.data.oilFields;
@@ -351,6 +350,13 @@
                 if (dates && dates.length == 2) {
                     this.queryParams.beginDate = dates[0];
                     this.queryParams.endDate = dates[1];
+                    if (dayjs(dates[1]).format("YYYY-MM") === dayjs().format("YYYY-MM")){
+                        this.queryParams.month = dayjs().format("YYYY-MM");
+                        this.queryParams.date = dayjs().format("YYYY-MM-DD");
+                    } else {
+                        this.queryParams.month = dayjs(dates[1]).endOf("month").format("YYYY-MM");
+                        this.queryParams.date = dayjs(dates[1]).endOf("month").format("YYYY-MM-DD");
+                    }
                 } else {
                     this.queryParams.beginDate = "";
                     this.queryParams.endDate = "";

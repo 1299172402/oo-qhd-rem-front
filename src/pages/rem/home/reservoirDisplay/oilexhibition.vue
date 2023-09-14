@@ -1,10 +1,6 @@
 <template>
     <div class="app-container">
         <div class="topBanner">油藏看板
-<!--            <el-button type="primary" style="float: right;margin-top: 20px" class="buttonActive_primary"-->
-<!--                       @click="dialogVisible = true">-->
-<!--                配置-->
-<!--            </el-button>-->
         </div>
         <el-dialog
             title=""

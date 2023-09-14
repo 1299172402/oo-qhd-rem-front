@@ -175,6 +175,7 @@
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '水井动态分析详情列表')">下载</el-button>
                                 </div>
                                 <el-table
+                                    :key="Math.random()"
                                     id="table1"
                                     class="doubleHeader"
                                     :row-style="{ height: '0px' }"
@@ -223,7 +224,7 @@
                                         </el-table-column>
                                     </el-table-column>
                                     <el-table-column prop="overUnderInjectionAnalysis" label="超欠注原因分析" align="center">
-                                        <el-table-column v-for="(item, index) in overUnderInjectionAnalysisTab" :key="`index12-${index}`" :prop="item.code" :label="item.name" align="center">
+                                        <el-table-column v-for="(item, index) in overUnderInjectionAnalysisTab" :key="`index12-${index}`" :prop="item.code" :label="item.name" align="center" width="120px">
                                             <template slot-scope="{row}">
                                                 <span v-if="row[item.code+'Message']==''">{{row[item.code]?row[item.code]:'-'}}</span>
                                                 <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
@@ -314,14 +315,14 @@
                                                 <span>注入动态</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:trendOfIndicatorsNum.zczb+'%'}">
                                                         <b @click="trendOfIndicatorsSwitch=true">{{trendOfIndicatorsNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井：<b @click="trendOfIndicatorsSwitch=false">{{trendOfIndicatorsNum.ycnum}}</b></span>
                                             </div>
                                         </div>
                                         <div class="z-row-center">
@@ -368,14 +369,14 @@
                                                 <span>井筒原因</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:wellboreReasonNum.zczb+'%'}">
                                                         <b @click="wellboreReasonSwitch=true">{{wellboreReasonNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b @click="wellboreReasonSwitch=true">{{wellboreReasonNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井：<b @click="wellboreReasonSwitch=true">{{wellboreReasonNum.ycnum}}</b></span>
                                             </div>
                                         </div>
                                         <div class="z-row-center">
@@ -422,14 +423,14 @@
                                                 <span>井层注水工况</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:workingCondNum.zczb+'%'}">
                                                         <b @click="workingCondSwitch=true">{{workingCondNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b @click="workingCondSwitch=false">{{workingCondNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井：<b @click="workingCondSwitch=false">{{workingCondNum.ycnum}}</b></span>
                                             </div>
                                         </div>
                                         <div class="z-row-center">
@@ -475,14 +476,14 @@
                                                 <span>注水强度</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:zsqdNum.zczb+'%'}">
                                                         <b @click="zsqdSwitch=true">{{zsqdNum.zcnum}}</b>
                                                     </span>
                                                     <span class="z_proess_sp2"></span>
                                                 </div>
-                                                <span class="sp2">异常：<b @click="zsqdSwitch=false">{{zsqdNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井：<b @click="zsqdSwitch=false">{{zsqdNum.ycnum}}</b></span>
                                             </div>
                                         </div>
                                         <div class="z-row-center">
@@ -509,12 +510,13 @@
                                 </div>
                             </pagePanel>
                         </div>
-                        <div style="height:540px;">
+                        <div style="height:680px;">
                             <pagePanel header-title="水井动态分析详情列表" style="height: 100%;">
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '水井动态分析详情列表')">下载</el-button>
                                 </div>
                                 <el-table
+                                    :key="Math.random()"
                                     id="table2"
                                     class="doubleHeader"
                                     :row-style="{ height: '0px' }"
@@ -524,7 +526,8 @@
                                     :cell-style="{ padding: '6px', 'text-align': 'center' }"
                                     :default-sort="{ prop: 'date', order: 'descending' }"
                                     height="calc(100% - 55px)"
-                                    @sort-change="changeTableSort" ref="tableList"
+                                    @sort-change="changeTableSort" 
+                                    ref="tableList"
                                     row-key="id"
                                     default-expand-all
                                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
@@ -568,7 +571,7 @@
                                         </el-table-column>
                                     </el-table-column>
                                     <el-table-column prop="overUnderInjectionAnalysis" label="超欠注原因分析" align="center">
-                                        <el-table-column v-for="(item, index) in overUnderInjectionAnalysisTab" :key="`index26-${index}`" :prop="item.code" :label="item.name" align="center">
+                                        <el-table-column v-for="(item, index) in overUnderInjectionAnalysisTab" :key="`index26-${index}`" :prop="item.code" :label="item.name" align="center" width="120px">
                                             <template slot-scope="{row}">
                                                 <span v-if="row[item.code+'Message']==''">{{row[item.code]?row[item.code]:'-'}}</span>
                                                 <el-tooltip v-else class="item" effect="dark" :content="row[item.code+'Message']" placement="top">
@@ -761,10 +764,12 @@ export default {
     methods: {
         //重置
         resetting(){
-            this.$nextTick(()=>{
+            // this.$nextTick(()=>{
+                let isNewformat = this.isNewformat;
                 Object.assign(this.$data, this.$options.data());
-                this.queryOilFeildList(); //初始化油田
-            })
+                this.isNewformat = isNewformat;
+                this.getDateApi(); //初始化油田
+            // })
         },
         //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
         getDateApi(){
@@ -814,7 +819,6 @@ export default {
                 let msg = res.data.msg;
                 if (msg == "success") {
                     let myData = res.data.data.platform;
-                    console.log("====queryPlatFormList", myData);
                     this.ptData = myData;
                     //初始选中油田
                     if (!this.platform) {
@@ -826,6 +830,22 @@ export default {
                     this.queryWellListByPid();
                 }
             });
+        },
+        updateValue(data, myWellCount) {
+            for (let j = 0; j < data.length; j++) {
+                let t_data = data[j];
+                //获得相关井数
+                let t_count = !isNaN(myWellCount[t_data.code]) ? myWellCount[t_data.code] : 0;
+                t_data.value = t_count; //登记条数
+                if (t_count > 0) {
+                    let unit = t_data.unit ? t_data.unit.replace('m3', 'm³') : '';
+                    this.trendOfIndicatorsTab.push({
+                        code: t_data.code,
+                        name: t_data.name,
+                        unit: unit
+                    });
+                }
+            }
         },
         //获取井号
         queryWellListByPid() {
@@ -863,17 +883,16 @@ export default {
         },
         // 区块切换事件
         changeBlock() {
-            this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
+            this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock]);
             this.queryPlatFormList();
         },
         // 平台切换事件
         changePlatform() {
-            this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
+            this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform]);
             this.queryWellListByPid();
         },
         // 井号切换事件
         changeWell(val) {
-            console.log('是否执行我了')
             this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
         },
         // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
@@ -883,20 +902,43 @@ export default {
             // 区块选中数据
             this.selectBlock = selectList.blockId;
             // 平台选中数据
-            this.platform = selectList.platformIds;
+            this.platform = selectList.platformId;
             // 井号选中数据
             this.wellId = selectList.wellId;
-            if (selectData.level === 1) {
-                this.queryPlatFormList()
-            } else if (selectData.level === 2) {
-                this.queryWellListByPid()
-            }
+            this.paramMap.oilFieldId = this.selYtdm; //油田
+            this.paramMap.selectBlock=this.selectBlock;//区块
+            this.ptData=[];
+            this.wellData=[];
+            fetchPlatforms(this.paramMap).then((res) => {
+                let msg = res.data.msg;
+                if (msg == "success") {
+                    this.ptData = res.data?.data?.platform || [];
+                    if (this.platform == this.selYtdm) {
+                        this.paramMap.oilFieldId = this.selYtdm; //登记油田代码
+                        fetchInjectionWells(this.paramMap).then((res) => {
+                            let msg = res.data.msg;
+                            if (msg == "success") {
+                                this.wellData = res.data?.data?.injectionWell || [];
+                            }
+                        });
+                    } else {
+                        this.paramMap.platformId = this.platform?this.platform:this.ptData[0].oilFieldId; //登记平台代码
+                        fetchInjectionWellsByPlatform(this.paramMap).then((res) => {
+                            let msg = res.data.msg;
+                            if (msg == "success") {
+                                this.wellData = res.data?.data?.injectionWell || [];
+                            }
+                        });
+                    }
+                }
+            });
         },
         //进行数据查询处理
         async doSearch() {
             //加上重新搜索清空选择 和 表格数据
             this.selCode = '';
             this.tableData = [];
+            this.collectWells=[];
             //重新初始化相关数据项目
             this.paramMap.evaluationDate = this.currentDate;
             this.paramMap.oilFieldId = this.selYtdm;
@@ -929,6 +971,7 @@ export default {
             }
         },
         queryTableData(myData,val='123'){
+            console.log('myData',myData)
             let myWellCount = {}; //计算各项目的井数
             let t_count = 0; //计数器
             //2、按照顺序初始化计数器、生成数据体
@@ -966,10 +1009,8 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示层位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1=t_data.code + 'Message';
-                        console.log('key1',key1)
                         let key2=t_data.code;
                         let evalBasisLayers=messData.evalBasisLayers;//层位数据
                         let children=myData[i].children;
@@ -1037,10 +1078,8 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示层位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1=t_data.code + 'Message';
-                        console.log('key1',key1)
                         let key2=t_data.code;
                         let evalBasisLayers=messData.evalBasisLayers;//层位数据
                         let children=myData[i].children;
@@ -1169,7 +1208,6 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示井位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1='theGroundBecauseMessage';
                         let evalBasisLayers=messData.evalBasisLayers;//层位数据
@@ -1429,115 +1467,24 @@ export default {
             //3、根据每个项目的井数遍历检查表头
             //井层指标变化趋势  trendOfIndicators
             this.trendOfIndicatorsTab = [];
-            for (let j = 0; j < this.trendOfIndicators.length; j++) {
-                let t_data = this.trendOfIndicators[j];
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.trendOfIndicators[j].value = t_count; //登记条数
-                if (t_count > 0) {
-                    let titleName = t_data.name;
-                    let unit='';
-                    if(t_data.unit){
-                        unit=t_data.unit.replace('m3', 'm³');
-                    }
-                    this.trendOfIndicatorsTab.push({
-                        code: t_data.code,
-                        name: titleName,
-                        unit
-                    });
-                }
-            }
+            this.updateValue(this.trendOfIndicators, myWellCount);
+            this.updateValue(this.zsqdForm, myWellCount);
+            this.updateValue(this.workingCondition, myWellCount);
+            this.updateValue(this.theGroundBecause, myWellCount);
+            this.updateValue(this.wellboreReason, myWellCount);
+            this.updateValue(this.formationReason, myWellCount);
+            this.updateValue(this.stopInjectionRecovery, myWellCount);
+            this.updateValue(this.recommendedMeasuresOptions, myWellCount);
             //注水强度zsqdForm
-            for (let j = 0; j < this.zsqdForm.length; j++) {
-                let t_data = this.zsqdForm[j];
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.zsqdForm[j].value = t_count; //登记条数
-                if (t_count > 0) {
-                    this.trendOfIndicatorsTab.push({
-                        code: t_data.code,
-                        name: t_data.name,
-                        unit:'m³/d·m'
-                    });
-                }
-            }
             //井层注水工况  workingCondition
-            for (let j = 0; j < this.workingCondition.length; j++) {
-                let t_data = this.workingCondition[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.workingCondition[j].value = t_count; //登记条数
-            }
             //地面原因 theGroundBecause
-            for (let j = 0; j < this.theGroundBecause.length; j++) {
-                let t_data = this.theGroundBecause[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.theGroundBecause[j].value = t_count; //登记条数
-            }
             //井筒原因 wellboreReason
-            for (let j = 0; j < this.wellboreReason.length; j++) {
-                let t_data = this.wellboreReason[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.wellboreReason[j].value = t_count; //登记条数
-            }
             //地层原因 formationReason
-            for (let j = 0; j < this.formationReason.length; j++) {
-                let t_data = this.formationReason[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.formationReason[j].value = t_count; //登记条数
-            }
             //停注恢复 stopInjectionRecovery
-            for (let j = 0; j < this.stopInjectionRecovery.length; j++) {
-                let t_data = this.stopInjectionRecovery[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.stopInjectionRecovery[j].value = t_count; //登记条数
-            }
             //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
-            for (let j = 0; j < this.recommendedMeasuresOptions.length; j++) {
-                let t_data = this.recommendedMeasuresOptions[j]; //每个数据项
-                //获得相关井数
-                if (!isNaN(myWellCount[t_data.code])) {
-                    t_count = myWellCount[t_data.code];
-                } else {
-                    t_count = 0; //初始化
-                }
-                this.recommendedMeasuresOptions[j].value = t_count; //登记条数
-            }
             this.tableData = myData; //加载数据
-            console.log('myData',myData);
-            console.log('trendOfIndicatorsTab',this.trendOfIndicatorsTab)
+            console.log('this.tableData',this.tableData)
+            
             this.$nextTick(() => {
                 this.$refs.tableList.doLayout();
             })
@@ -1559,9 +1506,10 @@ export default {
                         this.trendOfIndicatorsNum.allnum+=Number(el.value);
                         if(el.name=='正常'){
                             this.trendOfIndicatorsNum.zcnum=Number(el.value);
+                            this.trendOfIndicatorsNum.ycnum=Number(el.exeValue);
                         }else{
                             myData[i].isShow=Number(el.value)?true:false;
-                            this.trendOfIndicatorsNum.ycnum+=Number(el.value);
+                            // this.trendOfIndicatorsNum.ycnum+=Number(el.value);
                         }
                     })
                     this.trendOfIndicatorsNum.zczb=this.trendOfIndicatorsNum.zcnum/this.trendOfIndicatorsNum.allnum * 100;
@@ -1605,7 +1553,6 @@ export default {
                 let msg = res.data.msg;
                 if (msg == "success") {
                     let myData = res.data.data.indicatorAnalysisDetailInfos;
-                    console.log("myData3", myData);
                     this.theGroundBecause = myData;
                 }
             });
@@ -1645,7 +1592,6 @@ export default {
                 let msg = res.data.msg;
                 if (msg == "success") {
                     let myData = res.data.data.indicatorAnalysisDetailInfos;
-                    console.log("myData5", myData);
                     this.formationReason = myData;
                 }
             });
@@ -1657,7 +1603,6 @@ export default {
                 let msg = res.data.msg;
                 if (msg == "success") {
                     let myData = res.data.data.indicatorAnalysisDetailInfos;
-                    console.log("myData6", myData);
                     this.stopInjectionRecovery = myData;
                 }
             });
@@ -1679,11 +1624,9 @@ export default {
         //措施推荐可用项目,获取措施效果数据
         async queryProWellDynamicAnalysisDetail() {
             await injectionWellDynamicAnalysisDetail(this.paramMap).then((res) => {
-                console.log("myData11_tag", res);
                 let msg = res.data.msg;
                 if (msg == "success") {
                     let myData = res.data.data.evaluationResults;
-                    console.log("myData11", myData);
                     this.recommendedMeasuresData = myData;
                     this.recommendedMeasuresWells = [];
                     this.initRecommendedMeasuresWells(); //生成井清单
@@ -1728,7 +1671,6 @@ export default {
                     this.zsqdNum.zczb=this.zsqdNum.zcnum/this.zsqdNum.allnum * 100;
                     this.zsqdNum.yczb=this.zsqdNum.yczb/this.zsqdNum.allnum * 100;
                     this.zsqdForm = data;
-                    console.log('this.zsqdForm',this.zsqdForm)
                 }
             })
         },
@@ -1743,7 +1685,6 @@ export default {
         },
         //选中项目
         selRadioIterm(val, tag) {
-            console.log(val,888,this.selCode,999)
             let myData = []; //我的数据
             let myWellCount = {}; //计算各项目的井数
             let t_count = 0; //计数器
@@ -1768,7 +1709,6 @@ export default {
             if (this[tag].length) {
                 for (let i = 0; i < this[tag].length; i++) {
                     let tData = this[tag][i];
-                    console.log(tData);
                     if (val == tData.code) {
                         if (tData.wells == undefined || tData.wells == "" || tData.wells == "null") { //无数据
                             myData = []; //没有数据
@@ -1789,7 +1729,6 @@ export default {
                     }
                 }
             }
-            console.log('myData',myData)
             //2、按照顺序初始化计数器、生成数据体
             for (let i = 0; i < myData.length; i++) {
                 let myWellId = myData[i].wellId; //井号
@@ -1825,7 +1764,6 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示层位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1=t_data.code + 'Message';
                         let key2=t_data.code;
@@ -1895,10 +1833,8 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示层位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1=t_data.code + 'Message';
-                        console.log('key1',key1)
                         let key2=t_data.code;
                         let evalBasisLayers=messData.evalBasisLayers;//层位数据
                         let children=myData[i].children;
@@ -2026,7 +1962,6 @@ export default {
                         myWellCount[t_data.code] = t_count; //回写
                     }
                     //深化点-点击井号展示井位
-                    console.log('messData----------aaaaaaaaaaaa',messData)
                     if(messData&&messData.evalBasisLayers){
                         let key1='theGroundBecauseMessage';
                         let evalBasisLayers=messData.evalBasisLayers;//层位数据
@@ -2394,8 +2329,6 @@ export default {
                 this.recommendedMeasuresOptions[j].value = t_count; //登记条数
             }
             this.tableData = myData; //加载数据
-            console.log('myData',myData);
-            console.log('trendOfIndicatorsTab',this.trendOfIndicatorsTab)
             this.$nextTick(() => {
                 this.$refs.tableList.doLayout();
             })
@@ -2439,10 +2372,8 @@ export default {
         //获得对应日期串
         getMyDate(days) {
             let date = new Date();
-            console.log("date0=" + date);
             date = date.setDate(date.getDate() + days);
             date = new Date(date);
-            console.log("date1=" + date);
             let today = date.getDate();
             if (parseInt(today) < 10) {
                 today = '0' + today;
@@ -2654,7 +2585,7 @@ export default {
                 .z-content{
                     padding-left:36px;
                     .z-content-n{
-                        margin-top:16px;
+                        // margin-top:16px;
                         display: flex;
                         .z-row-left{
                             margin-right:60px;
@@ -2869,8 +2800,9 @@ export default {
     }
 }
 //相关
-::v-deep .about1 {
+::v-deep .el-col .about1 {
     background: rgb(2, 43, 117);
+    color:#fff;
     .el-radio-button__inner{
         color:#fff;
         background: transparent!important;
@@ -2879,13 +2811,14 @@ export default {
 
 .z-button{
     width: 100%;
-    height: 28px;
+    height: 46px!important;
+    line-height: 16px!important;
+    white-space: pre-line;
     font-size:14px;
     text-align: center;
     border-color: var(--light-blue-color);
-    color: var(--white-color);
+    color: var(--form-text);
     transition: all 0s;
-    height: 34px;
     line-height: 8px;
     border-radius: 0 !important;
     background: rgba(143, 164, 204, 0.3);
@@ -2894,12 +2827,14 @@ export default {
         border-image: var(--primary-btn);
         border-color: var(--light-blue-color);
         background: var(--primary-btn) !important;
+        color: var(--white-color);
     }
 }
-.selectButton{
+.el-col .selectButton{
     border-image: var(--primary-btn);
     border-color: var(--light-blue-color);
     background: var(--primary-btn) !important;
+    color: var(--white-color);
 }
 .checkBtn {
     width: 110px;
@@ -2938,11 +2873,11 @@ export default {
   height: 100%!important;
 }
 ::v-deep .el-table__body-wrapper{
-    height:388px!important;
+    // height:388px!important;
 }
 ::v-deep .el-table__fixed-body-wrapper{
-    top:104px!important;
-    height:388px!important;
+    // top:104px!important;
+    // height:388px!important;
 }
 ::v-deep .el-table__fixed .el-table__body-wrapper{  
     top:104px!important;

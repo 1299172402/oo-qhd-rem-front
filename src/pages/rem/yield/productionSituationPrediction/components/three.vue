@@ -8,7 +8,8 @@
                     <el-option v-for="item in rollingForecastDateList" :key="item.source_ID" :label="item.source_NAME" :value="item.source_ID"></el-option>
                 </el-select>
                 <span>日期：</span>
-                <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" :picker-options="pickerOptions" style="margin-right:15px;"></el-date-picker>
+                <!-- :picker-options="pickerOptions"  -->
+                <el-date-picker v-model="searchForm.date" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd" style="margin-right:15px;"></el-date-picker>
                 <span>产量单位选择：</span>
                 <el-select v-model="searchForm.unitType" placeholder="请选择" style="width:100px;margin-right:15px;">
                     <el-option v-for="item in unitTypeList" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -19,7 +20,7 @@
            <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#TaskOutputTrackingTable', '作业公司产量总览')">下载</el-button>
         </div>
         <el-table id="TaskOutputTrackingTable" :data="tableData" highlight height="calc(100% - 75px)" show-summary :summary-method="getSummaries">
-            <el-table-column prop="wellType" label="累产/10⁴m³" align="center" min-width="130"></el-table-column>
+            <el-table-column prop="wellType" label="累产(10⁴m³)" align="center" min-width="130"></el-table-column>
             <el-table-column prop="branchStruggle" label="分公司奋斗" align="center" min-width="130"></el-table-column>
             <el-table-column prop="branchAssessment" label="分公司考核" align="center" min-width="130"></el-table-column>
             <el-table-column prop="rollingForecast" label="滚动预测" align="center" min-width="130"></el-table-column>

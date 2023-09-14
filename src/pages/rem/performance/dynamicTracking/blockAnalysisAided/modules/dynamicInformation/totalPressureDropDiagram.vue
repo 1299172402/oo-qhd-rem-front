@@ -77,6 +77,10 @@
                 await this.queryRemUploadFileMinioApi();
                 this.OnChangeImage();
             },
+            //层位change
+            positionChange(val){
+                this.$emit('childPara', this.selectPosition, this.picType);
+            },
             //初始化获取层段关系
             async fieldOilLayersApi(){
                 await fieldOilLayers({oilFieldId: this.oilFieldId,fieldId: this.blockId,wellId: ''}).then((res) => {
@@ -335,12 +339,11 @@
         flex-direction: column;
         padding-bottom:15px;
         .z-search{
-            height:60px;
             display: flex;
             align-items: center;
+            margin-bottom: 15px;
         }
         .z-echarts{
-            padding-top:15px;
             width: 100%;
             flex:1;
         }

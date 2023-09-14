@@ -9,7 +9,7 @@
             </el-tabs>
             <el-button v-if ="activeName =='second' && this.$route.query.link "  style="position: absolute;z-index:50;right: 20px;top:110px" type="primary"  @click="gogo">返回</el-button>
         </div>
-        <header-search  style="height: auto;display: grid">
+        <header-search v-if="activeName=='first'" style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
                 <el-select v-model="queryData.ogfId" filterable clearable disabled style="width:180px;">
@@ -238,7 +238,6 @@ import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} fr
 import {exportExcel} from '@/lib/exportExcel';
 
 export default {
-    name:'optimization',
     components: {
         // Iframe
     },
@@ -259,8 +258,7 @@ export default {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
                 // blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
                 blockId: 'YCFXDY8B643EDC9007F96F570600457D',
-                // dateTime: this.eeee(),
-                dateTime:'2023-05'
+                dateTime: this.eeee(),
                 // '2022-10'
                 // new Date().format("yyyy-MM")
             },
@@ -462,11 +460,14 @@ export default {
                 blockId: this.queryData.blockId,
                 dateTime: this.queryData.dateTime,
             }
+            
             getWellMonthAllocation(params).then((res) => {
                 res.forEach(item => {
                     item.fluidProdDaily = Math.floor(item.fluidProdDaily)
                 })
                 this.tableData1 = res
+            }).catch(()=>{
+                this.tableData1 = []
             })
         },
         //单井月度配注计划表
@@ -475,6 +476,7 @@ export default {
                 blockId: this.queryData.blockId,
                 dateTime: this.queryData.dateTime,
             }
+            
             getWellMonthInj(params).then((res) => {
                 let arr1 = []
                 res.forEach(item => {
@@ -500,6 +502,8 @@ export default {
                 })
                 this.form.tableData2 = arr1
                 this.getSpanArr(arr1)
+            }).catch(()=>{
+                this.form.tableData2 = []
             })
         },
         doDownExcel() {

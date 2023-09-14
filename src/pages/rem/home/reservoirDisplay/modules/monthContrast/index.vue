@@ -158,7 +158,7 @@ export default {
     },
     methods: {
         linkroute(rname) {
-            this.$router.push({name: rname});
+            this.$router.push({name: rname,query: {page:'/reservoirDisplay/oilexhibition'}});
         },
         downEcharts(){
             this.$refs.echartChart.chartDownLoad( '油田月度产量对比');
@@ -175,6 +175,24 @@ export default {
                 })
             })
         }
+    },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            immediate: true,
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.histogram.legend.textStyle.color = "#ffffff";
+                } else {
+                    this.histogram.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+        },
     },
 };
 </script>

@@ -137,7 +137,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            name: "措施井次/口",
+            name: "措施井次(口)",
             nameTextStyle: {
               color: "#fff",
               fontSize: 14,
@@ -164,7 +164,7 @@ export default {
           },
           {
             type: "value",
-            name: "注入量/m³",
+            name: "注入量(m³)",
             nameTextStyle: {
               color: "#fff",
               fontSize: 14,
@@ -255,7 +255,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            name: "措施井次/口",
+            name: "措施井次(口)",
             nameTextStyle: {
               color: "#fff",
               fontSize: 14,
@@ -282,7 +282,7 @@ export default {
           },
           {
             type: "value",
-            name: "注入量/m³",
+            name: "注入量(m³)",
             nameTextStyle: {
               color: "#fff",
               fontSize: 14,

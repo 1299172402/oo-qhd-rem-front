@@ -31,42 +31,42 @@
                     <pagePanel v-else class="fl" style="height: 160px;" :headerTitle="item.title">
                         <el-button style="position: absolute; z-index: 9; right: 10px; top: 0; height: 26px; margin-top: 3px; padding: 0 16px;" type="primary" @click.native="cardClick(item, index)">详情</el-button>
                         <div style="display:flex;margin-left: 10px;height:82px;">
-                            <div style="width: 42%">
+                            <div style="width: 50%">
                                 <span style="vertical-align: middle">
                                     <span style="font-size: 26px;margin-right:6px;">{{ item.sz }}</span>
                                     <sub style="color: #8fa4cc; font-size: 15px">{{item.dw}}</sub>
                                 </span>
                                 <div style="margin-top: 10px">
-                                    <el-row v-if="item.title=='年产油量'" :gutter="12" style="line-height: 20px; text-align: center">
-                                        <el-col :span="14" style="color: #8fa4cc">
+                                    <el-row v-if="item.title=='年产油量'" :gutter="6" style="line-height: 20px; text-align: center">
+                                        <el-col :span="13" style="color: #8fa4cc">
                                             环比上年
                                         </el-col>
-                                        <el-col :span="10">
+                                        <el-col :span="11">
                                             <span v-if="item.tbTag=='up'" style="color: #00c39f">{{ item.tb | numberFormat }}% ↑ </span>
                                             <span v-if="item.tbTag=='down'" style="color: #cd3d00">{{ item.tb | numberFormat }}% ↓ </span>
                                         </el-col>
                                     </el-row>
-                                    <el-row v-if="item.title=='采油速度'||item.title=='综合递减率'||item.title=='含水上升率'||item.title=='生产时率'||item.title=='油井利用率'||item.title=='自然递减率'" :gutter="12" style="line-height: 20px; text-align: center">
-                                        <el-col :span="14" style="color: #8fa4cc">
+                                    <el-row v-if="item.title=='采油速度'||item.title=='综合递减率'||item.title=='含水上升率'||item.title=='生产时率'||item.title=='油井利用率'||item.title=='自然递减率'" :gutter="6" style="line-height: 20px; text-align: center">
+                                        <el-col :span="13" style="color: #8fa4cc">
                                             环比上月
                                         </el-col>
-                                        <el-col :span="10">
+                                        <el-col :span="11">
                                             <span v-if="item.hbTag=='up'" style="color: #00c39f"> {{ item.hb | numberFormat}}% ↑ </span>
                                             <span v-if="item.hbTag=='down'" style="color: #cd3d00"> {{ item.hb | numberFormat}}% ↓ </span>
                                         </el-col>
                                     </el-row>
-                                    <el-row v-if="item.title=='采油速度'||item.title=='综合递减率'||item.title=='含水上升率'||item.title=='生产时率'||item.title=='油井利用率'||item.title=='自然递减率'" :gutter="12" style="line-height: 20px; text-align: center">
-                                        <el-col :span="14" style="color: #8fa4cc">
+                                    <el-row v-if="item.title=='采油速度'||item.title=='综合递减率'||item.title=='含水上升率'||item.title=='生产时率'||item.title=='油井利用率'||item.title=='自然递减率'" :gutter="6" style="line-height: 20px; text-align: center">
+                                        <el-col :span="13" style="color: #8fa4cc">
                                             同比去年
                                         </el-col>
-                                        <el-col :span="10">
+                                        <el-col :span="11">
                                             <span v-if="item.tbTag=='up'" style="color: #00c39f"> {{ item.tb | numberFormat}}%↑ </span>
                                             <span v-if="item.tbTag=='down'" style="color: #cd3d00"> {{ item.tb | numberFormat}}% ↓ </span>
                                         </el-col>
                                     </el-row>
                                 </div>
                             </div>
-                            <div style="width: 58%; line-height: 100%">
+                            <div style="width: 50%; line-height: 100%">
                                 <Echart :chart-data="option" height="100%"></Echart>
                             </div>
                         </div>
@@ -203,7 +203,7 @@
                         sz: "",
                         hb: "",
                         tb: "",
-                        dw: "万吨"
+                        dw: "10⁴t"
                     },
                     {
                         title: "采油速度",
@@ -470,7 +470,7 @@
                             end: 100, //滚动条结束位置
                         },
                     ],
-                    color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
+                    color: ['#1379F7', '#FF5844', '#69b146', '#00BC9C', '#9A72FF', '#DA835E'],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -510,6 +510,9 @@
                         itemGap: 14,
                     },
                     xAxis: [{
+                        name: "日",
+                        nameGap: 30,
+                        nameTextStyle: { color: '#8FA4CC' },
                         type: 'category',
                         boundaryGap: false,
                         axisLabel: {
@@ -646,7 +649,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "年月",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -762,7 +765,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月份",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -882,7 +885,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月份",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -994,7 +997,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "年月",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -1098,7 +1101,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "年月",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -1246,7 +1249,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月份",
+                        name: "月",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -1428,8 +1431,8 @@
                     let devPhaseCode = this.developmentPhase;
                     this.getTechIndicatorStat(oilFieldId, targetOilFieldId, outputDegreeCode, reservoirsTypeCode, devPhaseCode);
                 } else if (this.currentIndex == 1) { //年产油量
-                    this.doOilYear2(oilFieldId);
-                     this.doOilYear(oilFieldId);
+                    // this.doOilYear2(oilFieldId);
+                    this.doOilYear(oilFieldId);
                 } else if (this.currentIndex == 2) { //采油速度
                     this.doProSpeed(oilFieldId);
                 } else if (this.currentIndex == 3) { //综合递减率

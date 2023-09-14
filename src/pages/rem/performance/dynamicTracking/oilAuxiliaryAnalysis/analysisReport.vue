@@ -193,7 +193,7 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '油井动态分析详情列表')">下载</el-button>
                                 </div>
-                                <el-table id="table1" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <el-table :key="Math.random()" id="table1" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
@@ -236,6 +236,7 @@
                                                 <span class="1" v-if="scope.row[item.code] == null"></span>
                                                 <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
                                                 <span class="3" v-else style="display: flex;align-items: center;justify-content: center;">
+                                                {{scope.row[item.code].average ? `平均 ${!isNaN(parseFloat(scope.row[item.code].average)) && typeof parseFloat(scope.row[item.code].average) === "number" ? parseFloat(scope.row[item.code].average).toFixed(2) : ''} /` : '' }}
                                                 {{replaceStr(scope.row[item.code].showLabel)}}
                                                 {{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2): !replaceStr(scope.row[item.code].showLabel)?'-':''}}
                                                     <img src="@/assets/rem/yieId/upTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏高'" style="width:20px;height:20px;">
@@ -369,14 +370,14 @@
                                                 <span>生产动态</span>
                                             </div>
                                             <div class="z_schedule">
-                                                <span class="sp1">正常：</span>
+                                                <span class="sp1">正常井：</span>
                                                 <div class="z_proess">
                                                     <span class="z_proess_sp1" :style="{width:productionNum.zczb+'%'}">
                                                         <b style="cursor: pointer;" @click="productionSwitch=true">{{productionNum.zcnum}}</b>
                                                     </span>
-                                                    <span class="z_proess_sp2"></span>
+                                                    <span class="z_proess_sp2"></span> 
                                                 </div>
-                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="productionSwitch=false">{{productionNum.ycnum}}</b></span>
+                                                <span class="sp2">异常井：<b style="cursor: pointer;" @click="productionSwitch=false">{{productionNum.ycnum}}</b></span>
                                             </div>
                                         </div>  
                                         <div class="z-row-center">
@@ -424,14 +425,14 @@
                                                     <span>油井工况</span>
                                                 </div>
                                                 <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
+                                                    <span class="sp1">正常井：</span>
                                                     <div class="z_proess">
                                                         <span class="z_proess_sp1" :style="{width:oilWellConditionNum.zczb+'%'}">
                                                             <b style="cursor: pointer;" @click="oilWellConditionSwitch=true">{{oilWellConditionNum.zcnum}}</b>
                                                         </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="oilWellConditionSwitch=false">{{oilWellConditionNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常井：<b style="cursor: pointer;" @click="oilWellConditionSwitch=false">{{oilWellConditionNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
@@ -458,14 +459,14 @@
                                                     <span>供排关系</span>
                                                 </div>
                                                 <div class="z_schedule">
-                                                    <span class="sp1">正常：</span>
+                                                    <span class="sp1">正常井：</span>
                                                     <div class="z_proess">
                                                         <span class="z_proess_sp1" :style="{width:relationshipNum.zczb+'%'}">
                                                             <b style="cursor: pointer;" @click="relationshipSwitch=true">{{relationshipNum.zcnum}}</b>
                                                         </span>
                                                         <span class="z_proess_sp2"></span>
                                                     </div>
-                                                    <span class="sp2">异常：<b style="cursor: pointer;" @click="relationshipSwitch=false">{{relationshipNum.ycnum}}</b></span>
+                                                    <span class="sp2">异常井：<b style="cursor: pointer;" @click="relationshipSwitch=false">{{relationshipNum.ycnum}}</b></span>
                                                 </div>
                                             </div>  
                                             <div class="z-row-center">
@@ -519,14 +520,14 @@
                                                                 <span>递减率</span>
                                                             </div>
                                                             <div class="z_schedule">
-                                                                <span class="sp1">正常：</span>
+                                                                <span class="sp1">正常井：</span>
                                                                 <div class="z_proess">
                                                                     <span class="z_proess_sp1" :style="{width:diminishingNum.zczb+'%'}">
                                                                         <b style="cursor: pointer;" @click="diminishingSwitch=true">{{diminishingNum.zcnum}}</b>
                                                                     </span>
                                                                     <span class="z_proess_sp2"></span>
                                                                 </div>
-                                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="diminishingSwitch=false">{{diminishingNum.ycnum}}</b></span>
+                                                                <span class="sp2">异常井：<b style="cursor: pointer;" @click="diminishingSwitch=false">{{diminishingNum.ycnum}}</b></span>
                                                             </div>
                                                         </div>  
                                                         <div class="z-row-center">
@@ -553,14 +554,14 @@
                                                                 <span>采液强度</span>
                                                             </div>
                                                             <div class="z_schedule">
-                                                                <span class="sp1">正常：</span>
+                                                                <span class="sp1">正常井：</span>
                                                                 <div class="z_proess">
                                                                     <span class="z_proess_sp1" :style="{width:fluidStrengthNum.zczb+'%'}">
                                                                         <b style="cursor: pointer;" @click="fluidStrengthSwitch=true">{{fluidStrengthNum.zcnum}}</b>
                                                                     </span>
                                                                     <span class="z_proess_sp2"></span>
                                                                 </div>
-                                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="fluidStrengthSwitch=false">{{fluidStrengthNum.ycnum}}</b></span>
+                                                                <span class="sp2">异常井：<b style="cursor: pointer;" @click="fluidStrengthSwitch=false">{{fluidStrengthNum.ycnum}}</b></span>
                                                             </div>
                                                         </div>  
                                                         <div class="z-row-center">
@@ -589,14 +590,14 @@
                                                                 <span>采液指数</span>
                                                             </div>
                                                             <div class="z_schedule">
-                                                                <span class="sp1">正常：</span>
+                                                                <span class="sp1">正常井：</span>
                                                                 <div class="z_proess">
                                                                     <span class="z_proess_sp1" :style="{width:fluidProductionNum.zczb+'%'}">
                                                                         <b style="cursor: pointer;" @click="fluidProductionSwitch=true">{{fluidProductionNum.zcnum}}</b>
                                                                     </span>
                                                                     <span class="z_proess_sp2"></span>
                                                                 </div>
-                                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="fluidProductionSwitch=false">{{fluidProductionNum.ycnum}}</b></span>
+                                                                <span class="sp2">异常井：<b style="cursor: pointer;" @click="fluidProductionSwitch=false">{{fluidProductionNum.ycnum}}</b></span>
                                                             </div>
                                                         </div>  
                                                         <div class="z-row-center">
@@ -623,14 +624,14 @@
                                                                 <span>米采液指数</span>
                                                             </div>
                                                             <div class="z_schedule">
-                                                                <span class="sp1">正常：</span>
+                                                                <span class="sp1">正常井：</span>
                                                                 <div class="z_proess">
                                                                     <span class="z_proess_sp1" :style="{width:mfluidProductionNum.zczb+'%'}">
                                                                         <b style="cursor: pointer;" @click="mfluidProductionSwitch=true">{{mfluidProductionNum.zcnum}}</b>
                                                                     </span>
                                                                     <span class="z_proess_sp2"></span>
                                                                 </div>
-                                                                <span class="sp2">异常：<b style="cursor: pointer;" @click="mfluidProductionSwitch=false">{{mfluidProductionNum.ycnum}}</b></span>
+                                                                <span class="sp2">异常井：<b style="cursor: pointer;" @click="mfluidProductionSwitch=false">{{mfluidProductionNum.ycnum}}</b></span>
                                                             </div>
                                                         </div>  
                                                         <div class="z-row-center">
@@ -683,7 +684,7 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '油井动态分析详情列表')">下载</el-button>
                                 </div>
-                                <el-table id="table2" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <el-table :key="Math.random()" id="table2" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
@@ -718,7 +719,7 @@
                                     </el-table-column>
                                     <!--生产问题监测项目-->
                                     <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                        <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
+                                        <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="260px" label-class-name="twoRowHeader">
                                             <template #header>
                                                 <div v-if="item.isTwoHeader">
                                                     <span>{{item.name}}</span>
@@ -733,6 +734,7 @@
                                                 <span class="1" v-if="scope.row[item.code] == null"></span>
                                                 <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{ scope.row[item.code].showLabel?scope.row[item.code].showLabel:'-' }}</span>
                                                 <span class="3" v-else style="display: flex;align-items: center;justify-content: center;">
+                                                {{scope.row[item.code].average ? `平均 ${!isNaN(parseFloat(scope.row[item.code].average)) && typeof parseFloat(scope.row[item.code].average) === "number" ? parseFloat(scope.row[item.code].average).toFixed(2) : ''} /` : '' }}
                                                 {{replaceStr(scope.row[item.code].showLabel)}}
                                                 {{scope.row[item.code].value?parseFloat(scope.row[item.code].value).toFixed(2): !replaceStr(scope.row[item.code].showLabel)?'-':''}}
                                                     <img src="@/assets/rem/yieId/upTriangle.png" v-if="replaceStr(scope.row[item.code].showLabel)=='偏高'" style="width:20px;height:20px;">
@@ -1022,7 +1024,9 @@
         methods: {
             //重置
             resetting(){
+                let isNewformat = this.isNewformat;
                 Object.assign(this.$data, this.$options.data());
+                this.isNewformat = isNewformat;
                 this.getDateApi(); //初始化油田
             },
             //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
@@ -1120,12 +1124,12 @@
             },
             // 区块切换事件
             changeBlock() {
-                this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
+                this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock]);
                 this.queryPlatFormList();
             },
             // 平台切换事件
             changePlatform() {
-                this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
+                this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform]);
                 this.queryOilWellListByPid();
             },
             // 井号切换事件
@@ -1135,19 +1139,61 @@
             },
             // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
             getSelectItems(selectList, selectData) {
+                // console.log(selectList, '测试')
                 // 油田选中数据
                 // this.selYtdm = selectList.ogfId;
                 // 区块选中数据
                 this.selectBlock = selectList.blockId;
                 // 平台选中数据
-                this.platform = selectList.platformIds;
+                this.platform = selectList.platformId;
                 // 井号选中数据
                 this.wellId = selectList.wellId;
-                if (selectData.level === 1) {
-                    this.queryPlatFormList()
-                } else if (selectData.level === 2) {
-                    this.queryOilWellListByPid()
-                }
+                // if (selectData.level === 1) {
+                this.paramMap.oilFieldId = this.selYtdm; //油田
+                this.paramMap.selectBlock=this.selectBlock;//区块
+                fetchPlatforms(this.paramMap).then((res) => {
+                    let msg = res.data.msg;
+                    if (msg == "success") {
+                        let myData = res.data.data.platform;
+                        this.ptData = myData;
+                        if (this.platform == this.selYtdm) {
+                            this.paramMap.oilFieldId = this.selYtdm; //登记油田代码
+                            fetchProductionWells(this.paramMap).then((res) => {
+                                let msg = res.data.msg;
+                                if (msg == "success") {
+                                    this.wellData = res.data?.data?.productionWells || [];
+                                }
+                            });
+                        } else {
+                            this.paramMap.platformId = this.platform?this.platform:this.ptData[0].oilFieldId; //登记平台代码
+                            fetchProductionWellsByPlatform(this.paramMap).then((res) => {
+                                let msg = res.data.msg;
+                                if (msg == "success") {
+                                    this.wellData = res.data?.data?.productionWells || [];
+                                }
+                            });
+                        }
+                    }
+                });
+                // } else if (selectData.level === 2) {
+                //     if (this.platform == this.selYtdm) {
+                //         this.paramMap.oilFieldId = this.selYtdm; //登记油田代码
+                //         fetchProductionWells(this.paramMap).then((res) => {
+                //             let msg = res.data.msg;
+                //             if (msg == "success") {
+                //                 this.wellData = res.data?.data?.productionWells || [];
+                //             }
+                //         });
+                //     } else {
+                //         this.paramMap.platformId = this.platform?this.platform:this.ptData[0].oilFieldId; //登记平台代码
+                //         fetchProductionWellsByPlatform(this.paramMap).then((res) => {
+                //             let msg = res.data.msg;
+                //             if (msg == "success") {
+                //                 this.wellData = res.data?.data?.productionWells || [];
+                //             }
+                //         });
+                //     }
+                // }
             },
             //进行数据查询处理
             doSearch() {
@@ -1358,10 +1404,11 @@
                                 if(el.name=='正常'){
                                     console.log('正常',el)
                                     this.productionNum.zcnum=Number(el.value);
+                                    this.productionNum.ycnum=Number(el.exeValue);
                                     this.productionCode=el.code;
                                 }else{
                                     myData[i].isShow=Number(el.value)?true:false;
-                                    this.productionNum.ycnum+=Number(el.value);
+                                    // this.productionNum.ycnum+=Number(el.value);
                                 }
                             })
                             this.productionNum.zczb=this.productionNum.zcnum/this.productionNum.allnum * 100;
@@ -2100,7 +2147,7 @@
                     .z-content{
                         padding-left:36px;
                         .z-content-n{
-                            margin-top:16px;
+                            // margin-top:16px;
                             display: flex;
                             .z-row-left{
                                 margin-right:60px;
@@ -2524,8 +2571,9 @@
         }
     }
     //相关
-    ::v-deep .about1 {
+    ::v-deep .el-col .about1 {
         background: rgb(2, 43, 117);
+        color:#fff;
         .el-radio-button__inner{
             color:#fff;
             background: transparent!important;
@@ -2541,7 +2589,7 @@
         font-size:14px;
         text-align: center;
         border-color: var(--light-blue-color);
-        color: var(--white-color);
+        color: var(--form-text);
         transition: all 0s;
         line-height: 8px;
         border-radius: 0 !important;
@@ -2551,6 +2599,7 @@
             border-image: var(--primary-btn);
             border-color: var(--light-blue-color);
             background: var(--primary-btn) !important;
+            color: var(--white-color);
         }
     }
     
@@ -2573,10 +2622,11 @@
         background: rgb(2, 43, 117);
         color:#fff;
     }
-    .selectButton{
+    .el-col .selectButton{
         border-image: var(--primary-btn);
         border-color: var(--light-blue-color);
         background: var(--primary-btn) !important;
+        color: var(--white-color);
     }
     
     .noCheckBtn {

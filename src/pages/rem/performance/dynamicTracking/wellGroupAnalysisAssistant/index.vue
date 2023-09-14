@@ -67,7 +67,7 @@
                 </el-tabs>
                 
                 <keep-alive :include="[]" :max="10" v-if="selectBlock">
-                    <component :is="component" ref="componentCustom" :oilFieldId="selectOilField" :blockId="selectBlock" :wellCentre="wellCentre" :wellGroupId="selectWellGroup" @childPara="changeChildParam"></component>
+                    <component :is="component" ref="componentCustom" :oilFieldId="selectOilField" :blockId="selectBlock" :wellCentre="wellCentre" :wellGrouplist="newWellGroup" :wellGroupId="selectWellGroup" @childPara="changeChildParam"></component>
                 </keep-alive>
                 
             </pagePanelNew>
@@ -239,7 +239,8 @@
                         .then(() => {
                             this.component = () => this.loader();
                         })
-                        .catch(() => {
+                        .catch((error) => {
+                            console.error(error);
                             console.log("走catch");
                         });
                 },
@@ -405,7 +406,6 @@
             //搜索功能
             doSearch() {
                 this.$nextTick(() => {
-                    console.log( this.$refs.componentCustom)  
                     this.$refs.componentCustom.oilFieldId = this.selectOilField; 
                     this.$refs.componentCustom.blockId = this.selectBlock
                     this.$refs.componentCustom.wellGroupId = this.selectWellGroup;
@@ -438,14 +438,13 @@
             getWellGroups() {
                 // TODO lv 页面没有使用，代码检查错误先注释
                 // let oilFieldId = [];
-                if (this.selectOilField == this.selectBlock) {
-                    this.block.forEach((item, index) => {
-                        oilFieldId.push(item.fieldId);
-                    });
-                } else {
-                    // TODO lv 页面没有使用，代码检查错误先注释
+                // if (this.selectOilField == this.selectBlock) {
+                //     this.block.forEach((item, index) => {
+                        // oilFieldId.push(item.fieldId);
+                    // });
+                // } else {
                     // oilFieldId.push(this.selectBlock);
-                }
+                // }
                 let blockId = this.selectBlock
                 if (blockId == '3FC9A818F5BC43B88270DB80BBB3018F') {
                     blockId = 'YCFXDY8B643EDC9007F96F570600457D'

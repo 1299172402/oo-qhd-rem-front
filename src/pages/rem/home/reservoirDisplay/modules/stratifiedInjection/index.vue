@@ -45,7 +45,7 @@ export default {
             },
             legend: {
                 textStyle: {
-                    color: "#66ffff"
+                    color: "#989898"
                 },
                 bottom: "bottom",
             },
@@ -130,6 +130,24 @@ export default {
           })
       },
   },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            immediate: true,
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.option.legend.textStyle.color = "#ffffff";
+                } else {
+                    this.option.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+        },
+    },
 };
 </script>
 <style lang="scss" scoped>

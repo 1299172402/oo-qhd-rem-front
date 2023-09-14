@@ -162,9 +162,9 @@
         width: 100%;
         height:calc(100% - 101px);
         .z-search{
-            height:60px;
             display: flex;
             align-items: center;
+            margin-bottom: 15px;
         }
         .z-container{
             width:100%;

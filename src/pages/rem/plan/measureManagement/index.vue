@@ -117,7 +117,11 @@
                             <el-table-column prop="status" label="措施是否达标" width="80"></el-table-column>
                             <el-table-column label="类别" width="100">
                                 <template slot-scope="scope">
-                                    <div style="line-height: 18px;">{{(measureVersion=='002003'||measureVersion=='001003'||measureVersion=='002002'||measureVersion=='001002')?'计划':'滚动预测'}}<br />实际</div>
+                                    <div style="line-height: 18px;" v-if="measureVersion=='002003'">分公司考核 <br />实际</div>
+                                    <div style="line-height: 18px;" v-else-if="measureVersion=='001'">分公司奋斗 <br />实际</div>
+                                    <div style="line-height: 18px;" v-else-if="measureVersion=='002'">有限考核 <br />实际</div>
+                                    <div style="line-height: 18px;" v-else-if="measureVersion=='004002'">有限奋斗 <br />实际</div>
+                                    <div style="line-height: 18px;" v-else>滚动预测<br />实际</div>
                                 </template>
                             </el-table-column>
                             <el-table-column :width="width +'px'">
@@ -129,7 +133,7 @@
                                         </div>
                                         <div class="icon0">
                                             <b class="b1"></b>
-                                            <span>{{(measureVersion=='002003'||measureVersion=='001003'||measureVersion=='002002'||measureVersion=='001002')?'计划':'滚动预测'}}</span>   
+                                            <span>{{(measureVersion=='002003'||measureVersion=='001'||measureVersion=='002'||measureVersion=='004002')?'计划':'滚动预测'}}</span>   
                                         </div>
                                         <div class="icon0">
                                             <b class="b2"></b>
@@ -157,7 +161,7 @@
                                         <div class="vv-left">
                                             <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i3.png') : require('@/assets/rem/plan/i0.png')" alt="" v-if="scope.row.stimClassCode=='003'"
                                                 :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${scope.row.realityMeasuresEndTime || '-'} 增产性措施`">
-                                            <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i4.png') : require('@/assets/rem/plan/i1.png')" alt="" v-if="scope.row.stimClassCode=='004'"
+                                            <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i4.png') : require('@/assets/rem/plan/i1.png')" alt="" v-else-if="scope.row.stimClassCode=='004'"
                                                 :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${scope.row.realityMeasuresEndTime || '-'} 增注性措施`">
                                             <img :src="(!scope.row.realityMeasuresEndTime && scope.row.planMeasuresStartTime && moment().isBefore(moment(scope.row.planMeasuresStartTime))) ? require('@/assets/rem/plan/i5.png') : require('@/assets/rem/plan/i2.png')" alt="" v-else
                                                 :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${scope.row.realityMeasuresEndTime || '-'} 维护性措施`">
@@ -296,9 +300,9 @@
                 measureVersionSelect: [
                     // {label: '全部',value: ''},
                     {label:'分公司考核',value:'002003'},
-                    {label:'分公司奋斗',value:'001003'},
-                    {label:'有限考核',value:'002002'},
-                    {label:'有限奋斗',value:'001002'},
+                    {label:'分公司奋斗',value:'001'},
+                    {label:'有限考核',value:'002'},
+                    {label:'有限奋斗',value:'004002'},
                     {label:'1+11', value:'003003001'},
                     {label:'2+10',value:'003003002'},
                     {label:'3+9', value:'003003003'},
@@ -647,13 +651,61 @@
                 // this.queryParams.ogfId = selectList.ogfId;
                 //平台选中数据
                 this.selectPlatform = selectList.platformIds;
+                // 判断如果没有wellList没有当前井号，调取井号接口根据平台获取井号数据
+                let isUpdate = false;
                 // 井号选中数据
                 if(selectData.level == 4) {
                     this.wellId = "";
                 } else {
                     this.wellId = selectList.wellIds;
-
-                }               
+                    isUpdate = this.wells.map((item) => item.wellId).includes(selectList.wellIds);
+                }
+                if (!isUpdate) {
+                    this.wells = [];
+                    if (this.selectOilField ==  this.selectPlatform) {
+                        const request = {
+                            oilFieldId: this.selectOilField,
+                        };
+                        fetchProductionWells(request).then((res) => {
+                            if (res.data.code == 200) {
+                                let wellData = res.data.data.productionWells || [];
+                                if (wellData.length) {
+                                    const wellList = wellData.filter(el => el.wellName);
+                                    this.wells = this.wells.concat(wellList);
+                                }
+                            }
+                        });
+                        fetchInjectionWells(request).then((res) => {
+                            if (res.data.code == 200) {
+                                const waterWellList = res.data.data.injectionWell || [];
+                                this.wells = this.wells.concat(waterWellList);
+                            }
+                        });
+                    } else {
+                        const request = {
+                            platformId: this.selectPlatform,
+                        };
+                        fetchProductionWellsByPlatform(request).then((res) => {
+                            if (res.data.code == 200) {
+                                let wellData = res.data.data.productionWells || [];
+                                if (wellData.length) {
+                                    const wellList = wellData.filter(el => el.wellName);
+                                    this.wells = this.wells.concat(wellList);
+                                }
+                            }
+                        });
+                        fetchInjectionWellsByPlatform(request).then((res) => {
+                            if (res.data.code == 200) {
+                                const waterWellList = res.data.data.injectionWell || [];
+                                this.wells = this.wells.concat(waterWellList);
+                            }
+                        });
+                    }
+                    this.wells.unshift({
+                        wellId: '',
+                        wellName: '全部'
+                    });
+                }
             },
             //通过油田 或 平台 获得井
             getFetchWells(oilFieldId, platformId) {
@@ -879,10 +931,12 @@
                 width: 40px;
                 height: 40px;
                 margin-right: 4px;
-
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 img {
                     width: 40px;
-                    height: 40px;
+                    height: auto;
                 }
             }
 

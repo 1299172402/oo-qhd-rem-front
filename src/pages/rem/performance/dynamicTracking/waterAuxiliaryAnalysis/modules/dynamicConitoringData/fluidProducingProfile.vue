@@ -43,7 +43,7 @@
                                             <span class="z_proess_sp2"></span>
                                         </div>
                                     </div>
-                                    <div class="sp3">{{item.injWhPressure}}Mpa</div>
+                                    <div class="sp3">{{item.injWhPressure}}MPa</div>
                                 </div>
                             </div>
                         </div>

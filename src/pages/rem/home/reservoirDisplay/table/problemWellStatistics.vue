@@ -50,11 +50,12 @@
                     </el-form>
                 </headerSearch>
                 <page-panel header-title="油田低产低效井原因及潜力方向" style="flex:1;overflow: hidden" :show-btn="true">
+                    <el-button icon="el-icon-download" type="primary" style="margin-top:-10px;float:right" @click="downTable">下载</el-button>
                     <el-table
                         :data="noticeList"
                         ref="table"
                         highlight-current-row
-                        height="calc(100% - 65px)"
+                        height="calc(100% - 100px)"
                         style="margin-top: 10px"
                         :row-style="{ height: '0px' }"
                         id="gzjtj"
@@ -74,12 +75,10 @@
                             </template>              
                         </el-table-column>
                         <el-table-column label="低产低效类别" prop="lowProdEffTypeCode"  align="center">
-                            <el-table-column label="井号" prop="lowProdEffTypeCode" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.lowProdEffTypeCode !== null && scope.row.lowProdEffTypeCode !== ''">{{scope.row.lowProdEffTypeCode}}</span>
                                     <span v-else>-</span>
                                 </template>
-                            </el-table-column>
                         </el-table-column>
                         <el-table-column label="生产情况"   align="center">
                             <el-table-column :label="`日产油\n(m³/d)`" prop="dailyOil"   align="center">
@@ -133,7 +132,7 @@
                                 <span v-else>-</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="备注" prop="remark"  align="center">
+                        <el-table-column label="备注" prop="remark" show-overflow-tooltip align="center">
                             <template slot-scope="scope">
                                 <span v-if="scope.row.remark !== null && scope.row.remark !== ''">{{scope.row.remark}}</span>
                                 <span v-else>-</span>
@@ -163,8 +162,8 @@ import {
     queryOperatorsCheckFieldListsDetail
 } from "@/api/basic/master";
 import {queryPlatformQueryWellListDetail} from "@/api/rem/marster";
-
-import {queryProblemWellStatisDetails} from '@/api/rem/reservoirbillboards'
+import FileSaver from 'file-saver'
+import {queryProblemWellStatisDetails,queryProblemWellStatisDetailsDownloadFile} from '@/api/rem/reservoirbillboards'
 export default {
     name: "problemWellStatistics",
     dicts: ["sys_normal_disable"],
@@ -185,7 +184,8 @@ export default {
                 pageSize:10,
                 pageNum:1,
                 wellId:'',
-                yearDate:new Date().format('YYYY'),
+                // yearDate:new Date().format('YYYY'),
+                yearDate:'2022',
                 assetCode:'',
             },
         };
@@ -211,6 +211,12 @@ export default {
                 this.wellList = res.data.data;
             });
         },
+        downTable(){
+            queryProblemWellStatisDetailsDownloadFile(this.queryParams).then((res)=>{
+                const aBlob = new Blob([res]);
+                FileSaver.saveAs(aBlob, `油田低产低效井原因及潜力分析.xls` );
+            })
+        },
         choicewell() {
             queryPlatformQueryWellListDetail({platformId: this.queryParams.assetCode}).then((res) => {
                 this.wellList = res.data.data;
@@ -234,6 +240,7 @@ export default {
         reset() {
             this.queryParams.assetCode = ''
             this.queryParams.wellId = ''
+            this.queryParams.yearDate = '2022'
             this.getlist()
             // this.getInfo()
         },

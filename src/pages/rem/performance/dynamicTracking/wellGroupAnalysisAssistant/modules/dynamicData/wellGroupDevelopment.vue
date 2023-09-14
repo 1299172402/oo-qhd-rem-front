@@ -185,6 +185,8 @@
                             },
                         },
                         {
+                            name: "日",
+                            nameGap: 28,
                             gridIndex: 2,
                             type: "category",
                             data: [
@@ -227,7 +229,7 @@
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#8FA4CC",
+                                color: "#030303",
                                 fontSize: 14,
                             },
                             minInterval: 1,
@@ -256,7 +258,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#8FA4CC",
+                                color: "#bf282c",
                                 fontSize: 14,
                             },
                             minInterval: 1,
@@ -287,7 +289,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#8FA4CC",
+                                color: "#294f97",
                                 fontSize: 14,
                             },
                             minInterval: 1,
@@ -317,7 +319,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#8FA4CC",
+                                color: "#9b5497",
                                 fontSize: 14,
                             },
                             minInterval: 1,
@@ -343,12 +345,12 @@
                         },
                         {
                             gridIndex: 1,
-                            name: "日\n产\n液\n︵\n方\n︶",
+                            name: "日\n产\n液\n︵\nm³\n︶",
                             nameLocation: "center",
                             nameGap: 50,
                             nameRotate: 0,
                             nameTextStyle: {
-                                color: "rgb(165,42,42)",
+                                color: "rgb(250,0,251)",
                                 fontSize: 14,
                             },
                             scale: true,
@@ -371,12 +373,12 @@
                         },
                         {
                             gridIndex: 1,
-                            name: "日\n产\n油\n︵\n方\n︶",
+                            name: "日\n产\n油\n︵\nm³\n︶",
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "rgb(0,255,0)",
+                                color: "#69b146",
                                 fontSize: 14,
                             },
                             position: 'left',
@@ -406,7 +408,7 @@
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "#8FA4CC",
+                                color: "#284f96",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -488,12 +490,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: "气\n油\n比\n︵\n方\n/\n方\n︶",
+                            name: "气\n油\n比\n︵\nm³\n/\nm³\n︶",
                             nameLocation: "center",
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "rgb(255,0,0)",
+                                color: "#d92d28",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -517,12 +519,12 @@
                         },
                         {
                             gridIndex: 2,
-                            name: "日\n注\n水\n︵\n方\n︶",
+                            name: "日\n注\n水\n︵\nm³\n︶",
                             nameLocation: "center",
                             nameRotate: 360,
                             nameGap: 50,
                             nameTextStyle: {
-                                color: "rgb(0,255,255)",
+                                color: "#61bcc4",
                                 fontSize: 14,
                             },
                             position: 'right',
@@ -594,40 +596,47 @@
                                 if (chartDatalabel == '日产液') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 4;
-                                    series.itemStyle={color:'rgb(165,42,42)'}
+                                    series.itemStyle={color:'rgb(250,0,251)'}
                                 } else if (chartDatalabel == '日产油') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 5;
-                                    series.itemStyle={color:'rgb(0,255,255)'}
+                                    series.itemStyle={color:'#69b146'}
                                 } else if (chartDatalabel == '含水率') {
                                     series.xAxisIndex = 1;
                                     series.yAxisIndex = 6;
+                                    series.itemStyle={color:'rgb(0,255,255)'}
                                 } else if (chartDatalabel == '注入量') {
                                     series.xAxisIndex = 2;
                                     series.yAxisIndex = 10;
+                                    series.itemStyle={color:'rgb(0,255,255)'}
                                 } else if (chartDatalabel == '注采比') {
                                     series.xAxisIndex = 2;
                                     series.yAxisIndex = 7;
+                                    // series.itemStyle={color:'rgb(0,255,255)'}
                                 } else if (chartDatalabel == '气油比') {
                                     series.xAxisIndex = 2;
                                     series.yAxisIndex = 9;
-                                    series.itemStyle={color:'rgb(255,0,0)'}
+                                    series.itemStyle={color:'#d92d28'}
                                 } else if (chartDatalabel == '油井总井数') {
                                     series.xAxisIndex = 0;
                                     series.yAxisIndex = 0;
+                                    series.itemStyle={color:'rgb(0,255,255)'}
                                 } else if (chartDatalabel == '油井开井数') {
                                     series.xAxisIndex = 0;
                                     series.yAxisIndex = 1;
+                                    series.itemStyle={color:'#bf282c'}
                                 } else if (chartDatalabel == '水井总井数') {
                                     series.xAxisIndex = 0;
                                     series.yAxisIndex = 2;
+                                    series.itemStyle={color:'#294f97'}
                                 } else if (chartDatalabel == '水井开井数') {
                                     series.xAxisIndex = 0;
                                     series.yAxisIndex = 3;
+                                    series.itemStyle={color:'#9b5497'}
                                 } else if (chartDatalabel == '日注水') {
                                     series.xAxisIndex = 2;
                                     series.yAxisIndex = 10;
-                                    series.itemStyle={color:'rgb(0,255,255)'}
+                                    series.itemStyle={color:'#61bcc4'}
                                 } else {
                                     return true;
                                 }
@@ -682,7 +691,7 @@
             doDownTable() {
                 exportExcel('#tableData', '井组开发曲线');
             },
-            // 表格格式化方法 - 数值只保留两位小数
+            // 表格格式化m³法 - 数值只保留两位小数
             toPrecise2(row, column) {
                 if (
                     (row[column.property] || parseFloat(row[column.property]) === 0) &&
@@ -704,7 +713,9 @@
         width: 100%;
         height:calc(100% - 101px);
         .z-search{
-            height:60px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
         }
         .z-echarts{
             width:100%;

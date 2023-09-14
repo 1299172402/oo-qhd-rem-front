@@ -55,9 +55,15 @@
                 </el-button>
             </div>
         </header-search>
-        <div style="display: flex;justify-content: space-around; height: 100%;">
-            <div style="flex:4; height: 118%; margin-right: 15px;">
+        <div style="display: flex;justify-content: space-around; height: 100%;"  >
+            <div id="scope" style="flex:4; height: 118%; margin-right: 15px;">
                 <page-panel :header-title="title" style=" height: 100% " :show-btn="true">
+                    <el-button
+                        type="primary"
+                        class="buttonActive_primary detailLinkBtn"
+                        @click="downdata()">下载
+                    </el-button
+                    >
                     <el-row :gutter="20" style="margin-bottom: 10px;">
                         <el-col :span="12">
                             <div class="grid-content bg-purple">
@@ -186,7 +192,14 @@
                         @click="getDetail">详细
                     </el-button
                     >
-                    <div id="main" style="width: 100%; height: 100%"></div>
+                    <el-button
+                        type="primary"
+                        style="right:100px"
+                        class="buttonActive_primary detailLinkBtn"
+                        @click="downEcharts('chartDom','分层注采量')">下载
+                    </el-button
+                    >
+                    <Echart ref="echartfc" :chart-data="optionfczc" width="100%" height="100%"></Echart>
                 </page-panel>
             </div>
 
@@ -199,9 +212,17 @@
                             @click="detailed = true">详细
                         </el-button
                         >
+                        <el-button
+                            type="primary"
+                            style="right:100px"
+                            class="buttonActive_primary detailLinkBtn"
+                            @click="downEchartssec()">下载
+                        </el-button
+                        >
                         <Echart
                             :chart-data="getResidueOilChart()"
                             height="100%"
+                            ref="echartChart"
                             style="height: 100%!important;"
                         >
                         </Echart>
@@ -278,8 +299,10 @@ import {
     getStratifiedInjectionDetails,
     getResidueOilCondotion
 } from "@/api/rem/r-intelligentIPA.js";
+import FileSaver from 'file-saver'
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import { exportExcel } from '@/lib/exportExcel.js';
+import html2canvas from "html2canvas";
 export default {
     name:'indexHome',
     components: {
@@ -298,6 +321,7 @@ export default {
                 //油田
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
             },
+            chartDom:'',
             title: '',
             //左侧数据
             groupBlock: {},
@@ -317,19 +341,105 @@ export default {
             },
             residueOil: [],
             ResidueOilRank: [],
+            optionfczc:{
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                dataZoom: {
+                    start: 0,
+                    type: "inside",
+                },
+                legend: {
+                    textStyle: {
+                        color: "#989898"
+                    },
+                    bottom: "bottom",
+                },
+                grid: {
+                    left: '10%',
+                    right: '10%',
+                    top: '5%',
+                    bottom: '5%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'value',
+                    boundaryGap: [0, 1],
+                    axisLabel: {
+                        color: '#a9a8a8'
+                    },
+                },
+                yAxis: {
+                    type: 'category',
+                    data: '',
+                    axisLabel: {
+                        color: '#a9a8a8'
+                    }
+                },
+                series: [
+                    {
+                        name: '月注水量(10⁴m³)',
+                        type: 'bar',
+                        color: 'rgb(9,141,234)',
+                        data: '',
+                    },
+                    {
+                        name: '月配注量(10⁴m³)',
+                        type: 'bar',
+                        color: 'rgb(4,182,131)',
+                        data: ''
+                    },
+                    {
+                        name: '月产液量(10⁴m³)',
+                        type: 'bar',
+                        color: 'rgb(255,156,70)',
+                        data: ''
+                    }
+                ]
+            }
+
         }
     },
     mounted() {
         this.searchList()
-        // const myChart = echarts.init(document.getElementById('chart'));
-        // myChart.off('mousemove');
-        // myChart.off('mouseover');
-        // myChart.off('mouseenter');
-        
     },
     methods: {
         returnBack(){
             this.$router.go(-1)
+        },
+        downdata(){
+            const screenEl = document.getElementById('scope');
+            if(this.$store.state.setting.mode === 'dark'){
+                screenEl.classList.add('dark-mode');
+            }
+            this.$nextTick(()=>{
+                html2canvas(screenEl, {
+                    useCORS: true,
+                    dpi:150,
+                    scale:2,
+                    height: screenEl.scrollHeight,
+                    windowHeight: screenEl.scrollHeight,
+                }).then((canvas) => {
+                    canvas.toBlob(blob => {
+                        const href = window.URL.createObjectURL(new Blob([blob]))
+                        const link = document.createElement('a')
+                        link.href = href
+                        link.download = this.title + '.png'
+                        document.body.appendChild(link)
+                        link.click()
+                        document.body.removeChild(link)
+                    }, 'image/png')
+                    if(this.$store.state.setting.mode === 'dark'){
+                        screenEl.classList.remove('dark-mode');
+                    }
+                })
+            })
         },
         doDownExcel(){
             exportExcel('#tabledow', '超欠注情况统计');
@@ -393,14 +503,14 @@ export default {
         //左侧区块
         queryWellGroupBlock() {
             getWellGroupBlock(this.queryData).then((res) => {
-                res.injRatio = Number(res.injRatio).toFixed(1)
-                res.haveWater = Number(res.haveWater).toFixed(1)
-                res.waterProd =  Number(res.waterProd).toFixed(4)
-                res.oilProd = Number(res.oilProd).toFixed(4)
-                res.gasProd = Number(res.gasProd).toFixed(4)
-                res.fluidProd = Number(res.fluidProd).toFixed(4)
-                res.injAlloc = Number(res.injAlloc).toFixed(4)
-                res.inj = Number(res.inj).toFixed(4)
+                res.injRatio = res.injRatio == null ? '':Number(res.injRatio).toFixed(1)
+                res.haveWater = res.haveWater == null? '': Number(res.haveWater).toFixed(1)
+                res.waterProd = res.waterProd == null ? '' : Number(res.waterProd).toFixed(4)
+                res.oilProd = res.oilProd == null ? '':Number(res.oilProd).toFixed(4)
+                res.gasProd = res.gasProd == null? '' :Number(res.gasProd).toFixed(4)
+                res.fluidProd = res.fluidProd == null? '':Number(res.fluidProd).toFixed(4)
+                res.injAlloc = res.injAlloc == null? '':Number(res.injAlloc).toFixed(4)
+                res.inj = res.inj == null? '':Number(res.inj).toFixed(4)
                 this.groupBlock = res
                 this.getEchartData()
                 this.getEchart()
@@ -408,7 +518,6 @@ export default {
         },
         //分层注采量
         queryStratifiedInjectionDetails() {
-
             let params = {
                 blockId: this.queryData.blockId,
                 startTime: this.queryData.dateTime,
@@ -416,19 +525,19 @@ export default {
                 type: 1
             }
             getStratifiedInjectionDetails(params).then((res) => {
-                this.dataList = []
-                this.injList = []
-                this.injAllocList = []
-                this.fluidProdList = []
+                let productionIntervalNo=[],inj=[],injAlloc=[],fluidProd=[]
                 res.forEach((item) => {
                     if(item.productionIntervalNo){
-                        this.dataList.push(String(item.productionIntervalNo))
-                        this.injList.push(Number(item.inj).toFixed(2))
-                        this.injAllocList.push(Number(item.injAlloc).toFixed(2))
-                        this.fluidProdList.push(Number(item.fluidProd).toFixed(2))
+                        productionIntervalNo.push(String(item.productionIntervalNo))
+                        inj.push(Number(item.inj).toFixed(2))
+                        injAlloc.push(Number(item.injAlloc).toFixed(2))
+                        fluidProd.push(Number(item.fluidProd).toFixed(2))
                     }
                 })
-                this.getMainEchart()
+                this.optionfczc.yAxis.data = productionIntervalNo
+                this.optionfczc.series[0].data = inj
+                this.optionfczc.series[1].data = injAlloc
+                this.optionfczc.series[2].data = fluidProd
             })
         },
 
@@ -442,7 +551,7 @@ export default {
             let option = {
                 legend: {
                     textStyle: {
-                        color: "#42f2f2"
+                        color: this.$store.state.setting.mode == 'dark'? '#ffffff' : "#000000"
                     },
                     bottom: "bottom",
                 },
@@ -625,82 +734,36 @@ export default {
             };
             return option;
         },
-
-        //图表
-        getMainEchart() {
-            let chartDom = document.getElementById('main');
-            let myChart = echarts.init(chartDom);
-            let option;
-
-            option = {
-                title: {
-                    text: ''
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                legend: {
-                    textStyle: {
-                        color: "#66ffff"
-                    },
-                    bottom: "bottom",
-                },
-                grid: {
-                    left: '10%',
-                    right: '10%',
-                    top: '5%',
-                    bottom: '5%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'value',
-                    boundaryGap: [0, 1],
-                    axisLabel: {
-                        color: '#a9a8a8'
-                    }
-                },
-                yAxis: {
-                    type: 'category',
-                    data: this.dataList,
-                    axisLabel: {
-                        color: '#a9a8a8'
-                    }
-                },
-                series: [
-                    {
-                        name: '月注水量(10⁴m³)',
-                        type: 'bar',
-                        color: 'rgb(9,141,234)',
-                        data: this.injList,
-                    },
-                    {
-                        name: '月配注量(10⁴m³)',
-                        type: 'bar',
-                        color: 'rgb(4,182,131)',
-                        data: this.injAllocList
-                    },
-                    {
-                        name: '月产液量(10⁴m³)',
-                        type: 'bar',
-                        color: 'rgb(255,156,70)',
-                        data: this.fluidProdList
-                    }
-                ]
-            };
-
-            option && myChart.setOption(option);
-
+        downEcharts(dom,fileName){
+            this.$refs.echartfc.chartDownLoad( '分层注采量');
         },
-
+        downEchartssec(){
+            this.$refs.echartChart.chartDownLoad( '单井井底流压');  
+        },
         //分层注采量详情
         getDetail() {
             localStorage.setItem('INTELLIGENCE', JSON.stringify(this.queryData))
             this.$router.push({name: 'intelligenceDetail', params: this.queryData})
         }
-    }
+    },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.optionfczc.legend.textStyle.color = "#fff";
+                } else {
+                    this.optionfczc.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate:true
+        },
+    },
 }
 </script>
 <style lang="scss" scoped>
@@ -880,6 +943,22 @@ export default {
     height: 20px !important;
     font-size: smaller !important;
     text-align: center !important;
+}
+.downBtn {
+    position: absolute;
+    right: 50px;
+    top: 10px;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #0751b0, #50a6ec);
+    text-align: center;
+    font-size: smaller;
+    border: 0;
+    cursor: pointer;
+    color: #ffffff;
+}
+.dark-mode {
+    background-color: #02213a;
 }
 </style>
 

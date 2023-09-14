@@ -17,13 +17,13 @@
                         </el-option>
                     </el-select>
                 </div>
-                <div>
+                <!-- <div>
                     <span>层系：</span>
                     <el-select v-model="cx" class="f2" style="width:180px">
                         <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId" :disabled="item.disabled">
                         </el-option>
                     </el-select>
-                </div>
+                </div> -->
                 <div style="margin-right:15px;">
                     <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="Retrieval">搜索</el-button>
                     <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
@@ -871,10 +871,10 @@
                         itemGap: 14,
                     },
                     xAxis: {
+                        name: "日",
+                        nameGap: 30,
                         // name: "时间",
                         type: 'category',
-                        // nameLocation: "center",
-                        nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
@@ -902,7 +902,7 @@
                     },
                     yAxis: {
                         // data:[],
-                        name: "日产油量/10*4m³",
+                        name: "日产油量(10⁴m³)",
                         // nameLocation: "center",
                         nameLocation:'middle',
                         nameTextStyle: {

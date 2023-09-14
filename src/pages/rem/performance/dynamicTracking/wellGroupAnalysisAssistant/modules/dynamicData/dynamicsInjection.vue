@@ -1,8 +1,8 @@
 <!--井组配注变化动态-->
 <template>
     <el-form label-width="90px" style="height: calc(100% - 55px)">
-        <div style="display: flex;height: auto;">
-            <el-form-item label="开始时间" style="height: 30px">
+        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+            <el-form-item label="开始时间" style="margin-bottom: 0;">
                 <el-date-picker
                     value-format="yyyy-MM"
                     :clearable="false"
@@ -15,7 +15,7 @@
                 </el-date-picker>
             </el-form-item>
 
-            <el-form-item label="对比时间">
+            <el-form-item label="对比时间" style="margin-bottom: 0;">
                 <el-date-picker
                     value-format="yyyy-MM"
                     :clearable="false"
@@ -24,6 +24,7 @@
                     v-model="queryData.secondMonth"
                     type="month"
                     placeholder="选择月"
+
                 >
                 </el-date-picker>
             </el-form-item>
@@ -38,22 +39,32 @@
                 :key="itemKey"
             >
                 <el-table-column type="index" label="序号" fixed width="100" header-align="center"></el-table-column>
-                <el-table-column prop="wellNo" label="井号" fixed min-width="130" header-align="center"></el-table-column>
+                <el-table-column prop="wellNo" label="井号" fixed min-width="130"
+                                 header-align="center"></el-table-column>
                 <el-table-column prop="layerName" label="层位" min-width="200" header-align="center"></el-table-column>
                 <el-table-column header-align="center">
                     <template slot="header">
                         <div>{{ firstMonth }}注水情况</div>
                     </template>
                     <el-table-column prop="dosage01" :label="`配注量\n(m³/d)`" min-width="160"
-                                    header-align="center"></el-table-column>
+                                     header-align="center"></el-table-column>
                     <el-table-column prop="injectionRatio01" label="注采比" min-width="100" header-align="center">
-                        <template slot-scope="scoped">
-                            <div v-if="scoped.row.injectionRatio01">{{ scoped.row.injectionRatio01 }}</div>
-                            <div v-else>-</div>
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.injectionRatio01 !== null && scope.row.injectionRatio01 !== ''">{{
+                                    scope.row.injectionRatio01
+                                }}</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionStrength01" min-width="160" :label="`注水强度\n(m³*d.m)`"
-                                    header-align="center">
+                                     header-align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.injectionStrength01 !== null && scope.row.injectionStrength01 !== ''">{{
+                                    scope.row.injectionStrength01
+                                }}</span>
+                            <span v-else>-</span>
+                        </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column header-align="center">
@@ -61,15 +72,18 @@
                         <div>{{ secondMonth }}注水情况</div>
                     </template>
                     <el-table-column prop="dosage02" :label="`配注量\n(m³/d)`" min-width="160"
-                                    header-align="center"></el-table-column>
+                                     header-align="center"></el-table-column>
                     <el-table-column prop="injectionRatio02" label="注采比" min-width="100" header-align="center">
-                        <template slot-scope="scoped">
-                            <div v-if="scoped.row.injectionRatio02 != '.00'">{{ scoped.row.injectionRatio01 }}</div>
-                            <div v-else>-</div>
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{
+                                    scope.row.injectionRatio02
+                                }}</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionStrength02" min-width="160" :label="`注水强度\n(m³*d.m)`"
-                                    header-align="center">
+                                     header-align="center">
                     </el-table-column>
                 </el-table-column>
                 <el-table-column header-align="center">
@@ -77,42 +91,57 @@
                         <div>调整幅度</div>
                     </template>
                     <el-table-column :label="`配注量\n(m³/d)`" min-width="120" header-align="center">
-                        <template slot-scope="scoped">
-                            {{ scoped.row.dosage02 - scoped.row.dosage01 }}
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.dosage02 !== null && scope.row.dosage02 !== ''">{{
+                                    Number(scope.row.dosage02 - scope.row.dosage01).toFixed(2)
+                                }}</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column prop="injectionRatio02" min-width="140" label="注采比" header-align="center">
-                        <template slot-scope="scoped">
-                           <span v-if="scoped.row.injectionRatio02">{{ (scoped.row.injectionRatio02 - scoped.row.injectionRatio01).toFixed(2) }}</span>
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{
+                                    (scope.row.injectionRatio02 - scope.row.injectionRatio01).toFixed(2)
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column :label="`注水强度\n(m³*d.m)`" min-width="160" header-align="center">
-                        <template slot-scope="scoped">
-                            {{ scoped.row.injectionStrength02 - scoped.row.injectionStrength01 }}
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.injectionStrength02 !== null && scope.row.injectionStrength02 !== ''">{{
+                                    (scope.row.injectionStrength02 - scope.row.injectionStrength01).toFixed(2)
+                                }}</span>
+                            <span v-else>-</span>
                         </template>
                     </el-table-column>
                 </el-table-column>
-                <el-table-column prop="fieldName" min-width="130" label="备注" header-align="center"></el-table-column>
+                <!--                <el-table-column prop="fieldName" min-width="130" label="备注" header-align="center"></el-table-column>-->
             </el-table>
         </page-panel-new>
     </el-form>
 </template>
 
 <script>
-import {getWellGroupInjectionDynamic} from "@/api/rem/oilwellauxiliaryanalysis.js";
+import {
+    getWellGroupInjectionDynamic,
+    queryWellGroupInjDynamicData,
+    getWellGroupsByBlock
+} from "@/api/rem/oilwellauxiliaryanalysis.js";
 import {exportExcel} from "@/lib/exportExcel.js";
+import {queryLinkageAlarmInfo} from "@/api/rem/injectionproductionlinkage";
+import request from "@/utils/request";
 
 export default {
     props: {
         //油田id
         oilFieldId: {},
-        //区块id
-        blockId: {},
         //层系id
         layerId: {},
         //井组id
         wellGroupId: {},
+        wellGrouplist: [],
     },
     data() {
         return {
@@ -120,6 +149,7 @@ export default {
             tableData: [],
             secondMonth: "",
             firstMonth: "",
+            wellGroupname: "",
             itemKey: 0,
             queryData: {
                 month: "",
@@ -143,6 +173,7 @@ export default {
         };
     },
     mounted() {
+        this.wellGroupname = (this.wellGrouplist?.find(obj => obj.wellGroupId == this.wellGroupId))?.wellGroupName;
         var date = new Date();
         var months = date.getMonth() + 1;
         var m = "0" + (months - 1);
@@ -164,27 +195,54 @@ export default {
     },
     methods: {
         doSearch() {
+            this.getdata()
+        },
+        async getdata() {
+            this.wellGroupname = (this.wellGrouplist?.find(obj => obj.wellGroupId == this.wellGroupId))?.wellGroupName;
+            this.tableData = []
             this.secondMonth = this.queryData.secondMonth;
             this.firstMonth = this.queryData.firstMonth;
             this.itemKey++;
-            if(this.blockId == '3FC9A818F5BC43B88270DB80BBB3018F'){
-                this.blockId = ''
-            }
-            let request = {
-                ogfId: this.oilFieldId,
-                fieldLayerId: this.layerId,
-                blockId: this.blockId,
-                wellGroupId: this.wellGroupId,
-                secondMonth: this.queryData.secondMonth,
-                firstMonth: this.queryData.firstMonth,
+            let firstMonth = {
+                wellGroupName: this.wellGroupname,
+                month: this.queryData.firstMonth,
             };
-            getWellGroupInjectionDynamic(request).then((res) => {
-                if (res.data.code == 200) {
-                    this.tableData = res.data.data.data;
-                } else {
-                    this.$message.error("系统错误请重新尝试或联系运维人员！");
-                }
-            });
+
+            let secondMonth = {
+                wellGroupName: this.wellGroupname,
+                month: this.queryData.secondMonth,
+            };
+            try {
+                const [res1, res2] = await Promise.all([
+                    queryWellGroupInjDynamicData(firstMonth),
+                    queryWellGroupInjDynamicData(secondMonth)
+                ]);
+                res1.data.data.map((n) => {
+                    let data = {
+                        wellNo: n.wellNo,
+                        layerName: n.layerName,
+                        dosage01: n.injectionAmount,
+                        injectionRatio01: n.iocRatio,
+                        injectionStrength01: n.waterInjectionIntensity,
+                    }
+                    this.tableData.push(data)
+                })
+                res2.data.data.map((j) => {
+                    this.tableData.map((item, index) => {
+                        if (item.wellNo == j.wellNo && item.layerName == j.layerName) {
+                            let data = {
+                                dosage02: j.injectionAmount,
+                                injectionRatio02: j.iocRatio,
+                                injectionStrength02: j.waterInjectionIntensity,
+                            }
+                            this.tableData[index] = {...item, ...data}
+                        }
+                    })
+                })
+            } catch (error) {
+                // 处理错误
+                console.error(error);
+            }
         },
         choiceendtime() {
             if (new Date(this.queryData.secondMonth) <= new Date(this.queryData.firstMonth)) {
@@ -217,6 +275,7 @@ export default {
         line-height: 22px;
         white-space: pre;
     }
+
     ::v-deep .cell:empty {
         &::before {
             content: "-";

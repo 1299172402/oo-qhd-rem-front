@@ -163,6 +163,9 @@
                         }
                     },
                     xAxis: {
+                        name: "月",
+                        nameGap: 30,
+                        nameTextStyle: { color: '#8FA4CC' },
                         type: 'category',
                         axisLabel: {
                             color: '#8FA4CC',
@@ -189,7 +192,7 @@
                     color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#FF5844', '#DA835E', '#9A72FF', '#FF30AD', '#2ACAFF'],
                     yAxis: [
                         {
-                            name: '地质储量采油速度%',
+                            name: '地质储量采油速度(%)',
                             nameLocation: 'center',
                             nameTextStyle: {
                                 color: '#8FA4CC'
@@ -217,7 +220,7 @@
                             }
                         },
                         {
-                            name: '可采、剩余可采采油速度%',
+                            name: '可采、剩余可采采油速度(%)',
                             nameLocation: 'center',
                             nameTextStyle: {
                                 color: '#8FA4CC'
@@ -269,13 +272,13 @@
                             type: 'shadow'
                         }
                     },
-                    legend: {
-                        x:'center',
-                        bottom:10,
-                        textStyle: {
-                            color: '#8FA4CC'
-                        }
-                    },
+                    // legend: {
+                    //     x:'center',
+                    //     bottom:10,
+                    //     textStyle: {
+                    //         color: '#8FA4CC'
+                    //     }
+                    // },
                     toolbox: {
                         show: true,
                         feature: {
@@ -485,6 +488,9 @@
                         }
                     },
                     xAxis: {
+                        name: "月",
+                        nameGap: 30,
+                        nameTextStyle: { color: '#8FA4CC' },
                         type: 'category',
                         axisLabel: {
                             color: '#8fa4cc',

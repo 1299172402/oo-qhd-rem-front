@@ -5,6 +5,7 @@
             <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
                 <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
+            <div v-if="uploadTime" style="margin-left: 20px;">上传时间：{{ uploadTime }}</div>
         </div>
         <div class="z-main">
             <div class="z-left-view">
@@ -26,8 +27,8 @@
                         :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
                         <el-table-column label="序号" type="index" align="center"></el-table-column>
                         <el-table-column :label="`含水饱和度\n (%)`" prop="" align="center"></el-table-column>
-                        <el-table-column label="相对渗透率Kro" prop="" align="center"></el-table-column>
-                        <el-table-column label="相对渗透率Krw" prop="" align="center"></el-table-column>
+                        <el-table-column :label="`相对渗透率\n (Kro)`" prop="" align="center"></el-table-column>
+                        <el-table-column :label="`相对渗透率\n (Krw)`" prop="" align="center"></el-table-column>
                     </el-table>
                 </page-panel-new>
             </div>
@@ -38,7 +39,7 @@
 <script>
     import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
     import {reservoirDataPhasePermeabilityCurve} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-    
+    import {exportExcel} from "@/lib/exportExcel.js";
     // miniIo
     import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
     import {filePreview,downFile} from "@/components/upload/utils/file";
@@ -57,6 +58,7 @@
                 //层位数据源
                 position: [],//选中层位
                 selectPosition: '',
+                uploadTime: "", // 文件上传时间
             };
         },
         async mounted() {
@@ -121,9 +123,15 @@
                         if(res.data.data.length){
                             this.fileId=res.data.data[0].fileId;
                             this.filestrId=res.data.data[0].filestrId;
+                            // this.uploadTime=res.data.data[0].uploadTime || "";
                             downFile(this.fileId).then((res)=>{
                                 this.src=window.URL.createObjectURL(res);
                             })
+                        } else {
+                            this.fileId="";
+                            this.filestrId="";
+                            this.uploadTime="";
+                            this.src="";
                         }
                     }else {
                         this.$message.error("文件查询接口异常!");
@@ -142,6 +150,12 @@
                 if (layerMess) {
                     fileName= layerMess.layerName +'-'+fileName;
                 }
+                //下载表格
+                exportExcel('#tableData',fileName);
+                if(!this.fileId) {
+                    this.$message.error('无可下载内容')
+                    return
+                }
                 let file_suffix=this.filestrId.split('.')[1];
                 downFile(this.id).then(res=>{
                     FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
@@ -153,7 +167,9 @@
 
 <style lang="scss" scoped>
     .z-search{
-        height:50px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
     }
     .z-main{
         width: 100%;

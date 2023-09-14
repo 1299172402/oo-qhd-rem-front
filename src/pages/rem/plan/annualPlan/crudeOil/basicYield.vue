@@ -76,7 +76,7 @@
                             end: 100, //滚动条结束位置
                         },
                     ],
-                    color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
+                    color: ['#69b146', '#FF5844', '#DA835E', '#00BC9C', '#9A72FF', '#F5BE43'],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -103,9 +103,9 @@
                         itemGap: 14,
                     },
                     xAxis: [{
-                        // name: '时间/日',
+                        name: '日',
                         // nameLocation: 'center',
-                        // nameGap: 30,
+                        nameGap: 30,
                         // nameTextStyle: {
                         //     color: '#8FA4CC',
                         //     fontSize: 14,
@@ -135,7 +135,7 @@
                         },
                     }, ],
                     yAxis: [{
-                        name: '产油量/t',
+                        name: '产油量(t)',
                         nameLocation:'middle',
                         nameGap:70,
                         nameTextStyle: {
@@ -208,9 +208,9 @@
                             seriesData.push(this.getLinearSeries(chartDataS[i], '1'));
                         }
                         if (this.searchForm.selectUnitOfProduction == 't') {
-                            this.OldLineChart.yAxis[0].name = '产油量/t';
+                            this.OldLineChart.yAxis[0].name = '产油量(t)';
                         } else if (this.searchForm.selectUnitOfProduction == 'm') {
-                            this.OldLineChart.yAxis[0].name = '产油量/m³';
+                            this.OldLineChart.yAxis[0].name = '产油量(m³)';
                         }
                         //图例数据
                         this.OldLineChart.legend.data = legendData;

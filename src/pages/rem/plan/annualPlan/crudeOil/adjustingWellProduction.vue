@@ -79,7 +79,7 @@
                             end: 100, //滚动条结束位置
                         },
                     ],
-                    color: ['#1379F7', '#FF5844', '#F5BE43', '#00BC9C', '#9A72FF', '#DA835E'],
+                    color: ['#1379F7', '#69b146', '#DA835E', '#00BC9C', '#9A72FF', '#F5BE43'],
                     tooltip: {
                         trigger: 'axis',
                         axisPointer: {
@@ -106,14 +106,14 @@
                         itemGap: 14,
                     },
                     xAxis: [{
-                        // name: '时间/日',
+                        name: '日',
                         // nameTextStyle: {
                         //     color: '#8FA4CC',
                         //     fontSize: 14,
                         //     align: 'center',
                         // },
                         // nameLocation: 'center',
-                        // nameGap: 30,
+                        nameGap: 30,
                         type: 'category',
                         boundaryGap: false,
                         axisLabel: {
@@ -141,7 +141,7 @@
                     yAxis: [
                         {
                             type: 'value',
-                            name: '产油量/m³',
+                            name: '产油量(m³)',
                             nameTextStyle: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -170,7 +170,7 @@
                         },
                         {
                             type: 'value',
-                            name: '措施井次/口',
+                            name: '措施井次(口)',
                             nameTextStyle: {
                                 color: '#8FA4CC',
                                 fontSize: 14,
@@ -278,9 +278,9 @@
                         let xData = Array.from(xSet).sort();
                         this.resetProLineChart.xAxis.data = xData;
                         if (this.searchForm.selectUnitOfProduction == 't') {
-                            this.resetProLineChart.yAxis[0].name = '产油量/t';
+                            this.resetProLineChart.yAxis[0].name = '产油量(t)';
                         } else if (this.searchForm.selectUnitOfProduction == 'm') {
-                            this.resetProLineChart.yAxis[0].name = '产油量/m³';
+                            this.resetProLineChart.yAxis[0].name = '产油量(m³)';
                         }
                         //图例数据
                         this.resetProLineChart.legend.data = legendData;

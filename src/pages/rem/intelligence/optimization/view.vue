@@ -278,7 +278,6 @@ import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {arrayFindAll} from "@/lib/arrayFind";
 
 export default {
-    name:'optimizationDetail',
     components: {
         Echart
     },
@@ -618,14 +617,14 @@ export default {
                     }
                 },
                 grid: {
-                    top: "25%",
-                    left: "12%",
-                    right: "5%",
-                    bottom: "10%",
+                    top: "15%",
+                    left: "13%",
+                    right: "10%",
+                    bottom: "20%",
                 },
                 legend: {
                     data: ['层配注量', '层配产量', '注采比'],
-                    bottom: 'bottom',
+                    bottom: '-2%',
                     textStyle: {
                         color: "#a9a8a8",
                         fontSize: 14,
@@ -639,14 +638,20 @@ export default {
                             type: 'shadow'
                         },
                         axisLabel: {
-                            rotate: 50
+                            rotate: 15,
+                            color:'#a9a8a8'
                         }
                     }
                 ],
                 yAxis: [
                     {
                         type: 'value',
-                        name: '',
+                        name: '配注量(m³)',
+                        nameLocation: "center",
+                        nameTextStyle: {
+                            color: "#989898",
+                        },
+                        nameGap: 45,
                         axisLabel: {
                             formatter: '{value}'
                         }
@@ -655,7 +660,10 @@ export default {
                         type: 'value',
                         name: '注采比',
                         nameLocation: "center",
-                        nameGap: 5,
+                        nameGap: 32,
+                        nameTextStyle: {
+                            color: "#989898",
+                        },
                         axisLabel: {
                             formatter: '{value}'
                         }
@@ -671,6 +679,7 @@ export default {
                                 return value;
                             }
                         },
+                        
                         data: this.tableData3.map((item) => item.layerConfigurationInj)
                     },
                     {
@@ -688,6 +697,7 @@ export default {
                         name: '注采比',
                         type: 'line',
                         yAxisIndex: 1,
+                        
                         tooltip: {
                             valueFormatter: function (value) {
                                 return value;
@@ -722,6 +732,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+#indexscv {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
+}
 .el-table__header,
 .el-table__body,
 .el-table__footer {

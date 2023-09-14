@@ -1,7 +1,7 @@
 <!--综合开发曲线-->
 <template>
     <div class="z-main">  
-        <pagePanel style="height:100%;" headerTitle="综合开发曲线" show-btn>
+        <pagePanel style="height:100%; margin-top: 0;" headerTitle="综合开发曲线" show-btn>
             <div class="positionBtn">
                 <el-button type="primary" style="height:30px;" size="mini" @click="dialogVisible = true">选择指标信息</el-button>
             </div>
@@ -39,21 +39,21 @@
                         {
                             type: "inside",
                             xAxisIndex: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-                            start: 0, //滚动条开始位置（共100等份）
+                            start: 0, //滚动条开始位置（共100等份)
                             end: 100, //滚动条结束位置
                         },
                     ],
                     grid: [
-                        { x: '180', y: '2%', width: '88%', height: '6%' },
-                        { x: '180', y: '10%', width: '88%', height: '7%' },
-                        { x: '180', y: '20%', width: '88%', height: '7%' },
-                        { x: '180', y: '30%', width: '88%', height: '7%' },
-                        { x: '180', y: '40%', width: '88%', height: '7%' },
-                        { x: '180', y: '50%', width: '88%', height: '6%' },
-                        { x: '180', y: '60%', width: '88%', height: '6%' },
-                        { x: '180', y: '70%', width: '88%', height: '6%' },
-                        { x: '180', y: '80%', width: '88%', height: '6%' },
-                        { x: '180', y: '90%', width: '88%', height: '6%' }
+                        { x: '180', y: '2%', width: '85%', height: '6%' },
+                        { x: '180', y: '10%', width: '85%', height: '7%' },
+                        { x: '180', y: '20%', width: '85%', height: '7%' },
+                        { x: '180', y: '30%', width: '85%', height: '7%' },
+                        { x: '180', y: '40%', width: '85%', height: '7%' },
+                        { x: '180', y: '50%', width: '85%', height: '6%' },
+                        { x: '180', y: '60%', width: '85%', height: '6%' },
+                        { x: '180', y: '70%', width: '85%', height: '6%' },
+                        { x: '180', y: '80%', width: '85%', height: '6%' },
+                        { x: '180', y: '90%', width: '85%', height: '6%' }
                     ],
                     tooltip: {
                         show: true,
@@ -211,6 +211,7 @@
                             }
                         },
                         {
+                            name: '年',
                             gridIndex: 9,
                             data: [],
                             axisLabel: {
@@ -228,7 +229,7 @@
                     ],
                     yAxis: [
                         {
-                            name: '油井总井数/(口)\n\n油井开井数/(口)',
+                            name: '油井总井数(口)\n\n油井开井数(口)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -262,7 +263,7 @@
                             }
                         },
                         {
-                            name: '水井总井数/(口)\n\n水井开井数/(口)',
+                            name: '水井总井数(口)\n\n水井开井数(口)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -293,7 +294,7 @@
                             }
                         },
                         {
-                            name: '油田日产液/(m³/d)\n\n油田日产油/(m³/d)',
+                            name: '油田日产液(m³/d)\n\n油田日产油(m³/d)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -324,7 +325,7 @@
                             }
                         },
                         {
-                            name: '平均单井日产液/(m³/d)\n\n平均单井日产油/(m³/d)',
+                            name: '平均单井日产液(m³/d)\n\n平均单井日产油(m³/d)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -355,7 +356,7 @@
                             }
                         },
                         {
-                            name: '含水率/（%）',
+                            name: '含水率(%)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -417,7 +418,7 @@
                             }
                         },
                         {
-                            name: '油田平均日注水/(m³/d)',
+                            name: '油田平均日注水(m³/d)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -448,7 +449,7 @@
                             }
                         },
                         {
-                            name: '地层压降/(MPa)',
+                            name: '地层压降(MPa)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -510,7 +511,7 @@
                             }
                         },
                         {
-                            name: '年产油/(10⁴m³)',
+                            name: '年产油(10⁴m³)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -544,136 +545,118 @@
                     series: [
                         {
                             type: 'line',
-                            name: '油井总井数/（口）',
+                            name: '油井总井数(口)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 0,
                             yAxisIndex: 0,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(241, 86, 47, 1)'
-                                }
+                                color: '#030303',
                             },
                             data: []
                         },
                         {
                             type: 'line',
-                            name: '油井开井数/（口）',
+                            name: '油井开井数(口)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 0,
                             yAxisIndex: 0,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(58, 74, 194, 1)'
-                                }
+                                color: '#c2272c'
                             },
                             data: []
                         },
                         {
                             type: 'line',
-                            name: '水井总井数/（口）',
+                            name: '水井总井数(口)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(47, 241, 176, 1)'
-                                }
+                                color: '#274f97'
                             },
                             data: []
                         },
                         {
                             type: 'line',
-                            name: '水井开井数/（口）',
+                            name: '水井开井数(口)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 1,
                             yAxisIndex: 1,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(209, 241, 47, 1)'
-                                }
+                                color: '#9b5497'
                             },
                             data: []
                         },
                         {
                             type: 'line',
-                            name: '油田日产液/（m³/d）',
+                            name: '油田日产液(m³/d)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(241, 186, 47, 1)'
-                                }
+                                color: 'rgb(250,0,251)'
                             },
                             data: []
                         },
                         {
                             type: 'line',
-                            name: '油田日产油/（m³/d）',
+                            name: '油田日产油(m³/d)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 2,
                             yAxisIndex: 2,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(47, 235, 241, 1)'
-                                }
+                                color: '#69b146'
                             },
                             data: []
                         },
                         {
                             type: 'line',
-                            name: '平均单井日产液/（m³/d）',
+                            name: '平均单井日产液(m³/d)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(47, 89, 241, 1)'
-                                }
+                                color: 'rgb(250,0,251)'
                             },
                             data: []
                         },
                         {
                             type: 'line',
-                            name: '平均单井日产油/（m³/d）',
+                            name: '平均单井日产油(m³/d)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 3,
                             yAxisIndex: 3,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(241, 47, 238, 1)'
-                                }
+                                color: '#69b146'
                             },
                             data: []
                         },
                         {
                             type: 'line',
-                            name: '含水率/（%）',
+                            name: '含水率(%)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 4,
                             yAxisIndex: 4,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(241, 47, 105, 1)'
-                                }
+                                color: 'rgb(0,0,255)'
                             },
                             data: []
                         },
@@ -686,39 +669,33 @@
                             xAxisIndex: 5,
                             yAxisIndex: 5,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(47, 241, 115, 1)'
-                                }
+                                color: '#d92c28'
                             },
                             data: []
                         },
                         {
                             type: 'line',
-                            name: '油田平均日注水/（m³/d）',
+                            name: '油田平均日注水(m³/d)',
                             /*symbol: "circle",
                 symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 6,
                             yAxisIndex: 6,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(35, 108, 39, 1)'
-                                }
+                                color: '#61bcc4'
                             },
                             data: []
                         },
                         {
                             type: 'line',
-                            name: '地层压降/MPa',
+                            name: '地层压降(MPa)',
                             /*symbol: "circle",
                 symbolSize: 4,*/
                             symbol: 'none',
                             xAxisIndex: 7,
                             yAxisIndex: 7,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(138, 238, 50, 1)'
-                                }
+                                color: 'rgba(138, 238, 50, 1)'
                             },
                             data: []
                         },
@@ -731,15 +708,13 @@
                             xAxisIndex: 8,
                             yAxisIndex: 8,
                             itemStyle: {
-                                normal: {
-                                    borderColor: 'rgba(53, 120, 2, 1)'
-                                }
+                                color: 'rgba(53, 120, 2, 1)'
                             },
                             data: []
                         },
                         {
                             type: 'bar',
-                            name: '年产油/（10⁴m³）',
+                            name: '年产油(10⁴m³)',
                             barWidth: 22,
                             /*symbol: "circle",
                 symbolSize: 4,*/
@@ -1141,7 +1116,7 @@
                     let max = 0;
                     //做了一个布局隐藏效果
                     this.indexList.forEach((item, index) => {
-                        let gridDetail = { x: '160', y: '-10%', width: '88%', height: '2%' };
+                        let gridDetail = { x: '160', y: '-10%', width: '85%', height: '2%' };
 
                         if (iList.includes(item.label)) {
                             gridDetail.y = xhY + '%';
