@@ -29,7 +29,7 @@
             </div>
             <el-button icon="el-icon-download" type="primary" @click="doDownExcel('#table1', '单井产量预测')">下载</el-button>
         </div>
-        <el-table id="table1" :data="tableData" height="calc(100% - 58px - 55px)">
+        <el-table :key="Math.random()" id="table1" :data="tableData" height="calc(100% - 58px - 55px)">
             <el-table-column type="index" width="50"></el-table-column>
             <el-table-column align="left" label="当前作业井名" prop="wellNo" width="150"></el-table-column>
             <el-table-column align="center" label="当前作业措施" prop="measureTypeName" width="150"></el-table-column>
