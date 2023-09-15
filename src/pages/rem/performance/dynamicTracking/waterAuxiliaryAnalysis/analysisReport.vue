@@ -848,11 +848,13 @@ export default {
                 t_data.value = t_count; //登记条数
                 if (t_count > 0) {
                     let unit = t_data.unit ? t_data.unit.replace('m3', 'm³') : '';
-                    this.trendOfIndicatorsTab.push({
-                        code: t_data.code,
-                        name: t_data.name,
-                        unit: unit
-                    });
+                    if (t_data.name != '正常') {
+                        this.trendOfIndicatorsTab.push({
+                            code: t_data.code,
+                            name: t_data.name,
+                            unit: unit
+                        });
+                    }
                 }
             }
         },
