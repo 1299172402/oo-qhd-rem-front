@@ -33,7 +33,7 @@
                         <div >推荐日期</div>
                     </template>
                     <template slot-scope="scope">
-                        <span v-if="scope.row.evalTime !== null && scope.row.evalTime !== ''">{{scope.row.evalTime}}</span>
+                        <span v-if="scope.row.evalTime !== null && scope.row.evalTime !== ''">{{changedata(scope.row)}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
@@ -98,6 +98,13 @@ export default {
         linkroute(rname) {
             this.$router.push({name: rname});
         },
+        changedata(row){
+            if(row.evalEvidence =='换大泵'){
+                    return '2023-08-01'
+            }else{
+                return row.evalTime
+            }
+        }
     }
 };
 </script>
