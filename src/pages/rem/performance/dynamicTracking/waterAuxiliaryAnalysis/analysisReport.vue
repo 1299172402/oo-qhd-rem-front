@@ -2346,26 +2346,27 @@ export default {
             this.$nextTick(() => {
                 this.$refs.tableList.doLayout();
             })
-            //zxb-重新计算数量
-            let numKeys=['trendOfIndicatorsNum','wellboreReasonNum','workingCondNum'];
-            let datakeys=['trendOfIndicators','wellboreReason','workingCondition'];
-            for(let i=0;i<numKeys.length;i++){
-                let numKey=numKeys[i];
-                let dataKey=datakeys[i];
-                this[numKey].allnum=0;
-                this[numKey].zcnum=0;
-                this[numKey].ycnum=0;
-                this[dataKey].forEach((el,i)=>{
-                    this[numKey].allnum+=Number(this[dataKey][i].value);
-                    if(el.name=='正常'||el.name=='合格区'){
-                        this[numKey].zcnum=Number(this[dataKey][i].value);
-                    }else{
-                        this[numKey].ycnum+=Number(this[dataKey][i].value);
-                    }
-                })
-                this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
-                this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
-            }
+            // TODO lv 点击后不更改正常异常井数
+            // //zxb-重新计算数量
+            // let numKeys=['trendOfIndicatorsNum','wellboreReasonNum','workingCondNum'];
+            // let datakeys=['trendOfIndicators','wellboreReason','workingCondition'];
+            // for(let i=0;i<numKeys.length;i++){
+            //     let numKey=numKeys[i];
+            //     let dataKey=datakeys[i];
+            //     this[numKey].allnum=0;
+            //     this[numKey].zcnum=0;
+            //     this[numKey].ycnum=0;
+            //     this[dataKey].forEach((el,i)=>{
+            //         this[numKey].allnum+=Number(this[dataKey][i].value);
+            //         if(el.name=='正常'||el.name=='合格区'){
+            //             this[numKey].zcnum=Number(this[dataKey][i].value);
+            //         }else{
+            //             this[numKey].ycnum+=Number(this[dataKey][i].value);
+            //         }
+            //     })
+            //     this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
+            //     this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
+            // }
             //zxb-重新计算推荐井组
             this.potentialWellNum=0;
             for(let i=0;i<this.recommendedMeasuresOptions.length;i++){
