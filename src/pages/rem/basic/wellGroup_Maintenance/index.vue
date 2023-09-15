@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div style="display: flex;margin-top: 15px;height:100%;width: 100%">
-                    <div style="width: 30%">
+                    <div style="width: 20%">
                         <el-table
                             :data="tableData"
                             highlight
@@ -107,7 +107,7 @@
                             </el-table-column>
                         </el-table>
                     </div>
-                    <div style="width: 50%;height: 100%;margin-left: 20px">
+                    <div style="width: 60%;height: 100%;margin-left: 20px">
                         <el-table
                             :data="tableData"
                             id="indexscv"

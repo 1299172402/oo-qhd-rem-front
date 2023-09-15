@@ -2,105 +2,33 @@
 <template>
   <div class="app-container">
     <pagePanel headerTitle="压力数据" style="height: 500px" show-btn>
-      <el-table
-        :data="tableData"
-        :border="false"
-        :row-style="{ height: '0px' }"
-        header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width: 100%;"
-        height="100%"
-        :default-sort="{ prop: 'date', order: 'descending' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-      >
-        <el-table-column type="index" label="序号" fixed align="center"> </el-table-column>
-        <el-table-column prop="borepipeName" fixed label="井管" align="center" width="140px"> </el-table-column>
-        <el-table-column prop="wellInterceptType" label="试井项目解析类型" min-width="140" align="center">
-        </el-table-column>
-        <el-table-column prop="interpDate" label="解释时间" align="center" width="140">
-          <template slot-scope="scope">
-            <span>{{ scope.row.interpDate | dateTimeFormat }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="midMD"
-          :render-header="renderHeader"
-          label="油层中部斜深 (m)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="midTVD"
-          :render-header="renderHeader"
-          label="油层中部垂深 (m)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="midTemperature"
-          :render-header="renderHeader"
-          label="油层中部温度 (℃)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="midFlowPressure"
-          :render-header="renderHeader"
-          label="油层中部流压 (MPa)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="midStaticPressure"
-          :render-header="renderHeader"
-          label="油层中部静压 (MPa)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="baseLevelAltitude"
-          :render-header="renderHeader"
-          label="基准面海拔 (m)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="baseLevelTemperature"
-          :render-header="renderHeader"
-          label="基准面温度 (℃)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="baseStaticPressure"
-          :render-header="renderHeader"
-          label="基准面静压 (MPa)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="baseFlowPressure"
-          :render-header="renderHeader"
-          label="基准面流压 (MPa)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="reduceTemperature"
-          :render-header="renderHeader"
-          label="折算温度梯度 (℃/m)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="reducePressure"
-          :render-header="renderHeader"
-          label="折算压力梯度 (MPa/m)"
-          min-width="110"
-          align="center"
-        ></el-table-column>
-        <el-table-column prop="remark" min-width="200" label="备注" align="center"></el-table-column>
-      </el-table>
+        <el-table
+            id="tableData"
+            :data="tableData" :border="false" :row-style="{ height: '0px' }"
+            header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
+            style="width:100%;padding:0 10px;" height="calc(100% - 10px)" :default-sort="{ prop: 'date', order: 'descending' }"
+            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+            <el-table-column type="index" label="序号" fixed></el-table-column>
+            <el-table-column prop="borepipeName" label="井号" width="140px" fixed></el-table-column>
+            <el-table-column prop="wellInterceptType" label="试井项目解析类型" width="140"></el-table-column>
+            <el-table-column prop="interpDate" :label="`解释时间\n(yyyy/mm/dd)`" width="140">
+                <template slot-scope="scope">
+                    <span>{{scope.row.interpDate | dateTimeFormat}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="midMD" :label="`油层中部斜深\n(m)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midTVD" :label="`油层中部垂深\n(m)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midTemperature" :label="`油层中部温度\n(℃)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midFlowPressure" :label="`油层中部流压\n(MPa)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="midStaticPressure" :label="`油层中部静压\n(MPa)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseLevelAltitude" :label="`基准面海拔\n(m)`" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseLevelTemperature" :label="`基准面温度\n(℃)`" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseStaticPressure" :label="`基准面静压\n(MPa)`" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="baseFlowPressure" :label="`基准面流压\n(MPa)`" width="110" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="reduceTemperature" :label="`折算温度梯度\n(℃/m)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="reducePressure" :label="`折算压力梯度\n(MPa/m)`" width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="remark" label="备注"></el-table-column>
+        </el-table>
     </pagePanel>
   </div>
 </template>

@@ -12,13 +12,13 @@
                     <div class="g-row-flex-V g-w100 g-h100">
                         <div>
                             <el-form :inline="true">
-                                <el-form-item label="作业公司：">
-                                    <el-select v-model="queryData.orgId" disabled>
-                                        <el-option v-for="(item, index) in deptSelect" :key="index"
-                                                   :label="item.orgName" :value="item.orgId">
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
+<!--                                <el-form-item label="作业公司：">-->
+<!--                                    <el-select v-model="queryData.orgId" disabled>-->
+<!--                                        <el-option v-for="(item, index) in deptSelect" :key="index"-->
+<!--                                                   :label="item.orgName" :value="item.orgId">-->
+<!--                                        </el-option>-->
+<!--                                    </el-select>-->
+<!--                                </el-form-item>-->
                                 <el-form-item label="油田：">
                                     <el-select v-model="queryData.ogfId" disabled>
                                         <el-option
@@ -31,14 +31,14 @@
                                 </el-form-item>
                                 <el-form-item label="平台：" prop="pt">
                                     <el-select v-model="queryData.pt" @change="onPlatfromChange">
-                                        <el-option v-for="item in platforms" :key="item.id" :label="item.platformName"
+                                        <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformCode"
                                                    :value="item.platformId">
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="井号：">
                                     <el-select v-model="queryData.wellId" @change="changewell">
-                                        <el-option v-for="(item,index) in wells" :key="index" :label="item.wellNo"
+                                        <el-option v-for="(item,index) in wells" :key="index" :label="item.wellName"
                                                    :value="item.wellId">
                                         </el-option>
                                     </el-select>
@@ -262,7 +262,10 @@ export default {
         },
         getData() {
             //根据平台获得井
-            queryWellControlReservesWell({ogfId: this.queryData.ogfId}).then((res) => {
+            // queryPlatformQueryWellListDetail(requestPlat).then((res) => {
+            //     this.wellList = res.data.data;
+            // });
+            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = this.wells[0].wellId
                 queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
@@ -280,7 +283,7 @@ export default {
         // 重置仅重置搜索条件与下方查询内容无关
         refresh() {
             this.queryData.pt = "";
-            queryWellControlReservesWell({ogfId: this.queryData.ogfId}).then((res) => {
+            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 if (res.data.code == 200) {
                     this.wells = res.data.data
                     this.queryData.wellId = this.wells[0].wellId

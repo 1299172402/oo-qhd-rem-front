@@ -1,6 +1,6 @@
 <!-- 油井分析报告 -->
 <template>
-  <div class="app-container">
+  <div class="app-container" style="height: calc(100% - 30px);overflow-y: scroll">
     <el-row :gutter="20">
       <staticData ref="toolchild0"></staticData>
     </el-row>

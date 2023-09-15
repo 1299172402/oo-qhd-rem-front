@@ -624,7 +624,7 @@ export default {
                       } else if (lineName == '井口温度') {
                           series.xAxisIndex = 1;
                           series.yAxisIndex = 7;
-                          series.itemStyle={color:'#5a9df2'}
+                          series.itemStyle={color:'rgb(154,205,50)'}
                       } else if (lineName == '气油比') {
                           series.xAxisIndex = 1;
                           series.yAxisIndex = 5;
