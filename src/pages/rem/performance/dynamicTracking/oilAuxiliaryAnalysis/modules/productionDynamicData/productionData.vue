@@ -436,7 +436,7 @@
                         },
                         {
                             gridIndex: 1,
-                            name: "生\n产\n时\n间\n︵\nH\n︶",
+                            name: "生\n产\n时\n间\n︵\nh\n︶",
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,

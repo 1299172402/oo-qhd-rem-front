@@ -24,7 +24,7 @@
                 style="width:100%;" height="calc(100% - 130px)" :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号"></el-table-column>
-                <el-table-column prop="theDate" align="center" label="时间"> </el-table-column>
+                <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
                 <el-table-column prop="oilAudit" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '考核日产\n(m³/d)' : '考核日产\n(t/d)'" :formatter="toPrecise2"></el-table-column>
                 <el-table-column prop="oilReal" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '实际日产\n(m³/d)' : '实际日产\n(t/d)'" :formatter="toPrecise2"></el-table-column>
                 <el-table-column property="sumPlan" prop="sumPlan" align="center" :label="searchForm.selectUnitOfProduction == 'm' ? '计划年累产\n(10⁴m³)' : '计划年累产\n(10⁴t)'" :formatter="toPrecise4"></el-table-column>

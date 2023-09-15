@@ -21,7 +21,7 @@
                 style="width:100%;" height="calc(100% - 130px)" :default-sort="{ prop: 'date', order: 'descending' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                 <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
-                <el-table-column prop="prodDate" align="center" label="时间"> </el-table-column>
+                <el-table-column prop="prodDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
                 <el-table-column property="gasProdPlan" align="center" :label="`计划产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
                 <el-table-column property="gasProdDaily" align="center" :label="`产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
                 <el-table-column prop="oilEquivalent" align="center" :label="`油当量\n(m³/d)`" :formatter="toPrecise2"></el-table-column>

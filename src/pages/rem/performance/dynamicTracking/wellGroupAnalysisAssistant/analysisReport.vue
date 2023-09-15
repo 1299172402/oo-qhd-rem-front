@@ -1113,11 +1113,13 @@
                         if(t_data.unit){
                             unit=t_data.unit.replace('m3', 'm³');
                         }
-                        this.trendOfIndicatorsTab.push({
-                            code: t_data.code,
-                            name: titleName,
-                            unit
-                        }); //添加动态表头
+                        if (t_data.name != '正常') {
+                            this.trendOfIndicatorsTab.push({
+                                code: t_data.code,
+                                name: titleName,
+                                unit
+                            }); //添加动态表头
+                        }
                     }
                 }
                 //注水受效分析 injectionResponseAnalysis

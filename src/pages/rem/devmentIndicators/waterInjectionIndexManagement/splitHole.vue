@@ -65,7 +65,7 @@
                             <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>
                             <el-table-column prop="wellNo" label="注水井号" align="center"></el-table-column>
                             <el-table-column prop="layerName" label="层段号" align="center"></el-table-column>
-                            <el-table-column prop="statisticsDate" label="年月" align="center"></el-table-column>
+                            <el-table-column prop="statisticsDate" :label="`年月\n(yyy/mm/dd)`" align="center"></el-table-column>
                             <el-table-column prop="isUnqualified" label="是否合格" :formatter="formatterBoolean1" align="center"></el-table-column>
                         </el-table>
                     </pagePanel>

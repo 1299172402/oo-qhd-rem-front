@@ -105,7 +105,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="生产现状" prop="name" align="center">
-          <el-table-column sortable label="投产日期" min-width="130px" prop="startDate" align="center">
+          <el-table-column sortable :label="`投产日期\n    （yyyy/mm/dd）`" min-width="200" prop="startDate" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.startDate !== null && scope.row.startDate !== ''">{{scope.row.startDate}}</span>
                   <span v-else>-</span>
@@ -137,11 +137,11 @@
           </el-table-column>
           <el-table-column sortable :label="`累产油\n（10⁴m³）`"  min-width="130px" prop="cumOilProdYearly" align="center">
               <template slot-scope="scope">
-                  <span v-if="scope.row.cumOilProdYearly !== null && scope.row.cumOilProdYearly !== ''">{{Number(scope.row.cumOilProdYearly/10000).toFixed(2)}}</span>
+                  <span v-if="scope.row.cumOilProdYearly !== null && scope.row.cumOilProdYearly !== ''">{{Number(scope.row.cumOilProdYearly/10000).toFixed(4)}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable label="地层压力测试时间"  prop="testDate" min-width="160px" align="center">
+          <el-table-column sortable :label="`地层压力测试时间\n （yyyy/mm/dd）`"  prop="testDate" min-width="200" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.testDate !== null && scope.row.testDate !== ''">{{(scope.row.testDate)}}</span>
                   <span v-else>-</span>
@@ -167,13 +167,13 @@
           </el-table-column>
           <el-table-column sortable min-width="120px" :label="`井控储量\n(10⁴m³)`"  prop="probReservesWell" align="center">
               <template slot-scope="scope">
-                  <span v-if="scope.row.probReservesWell !== null && scope.row.probReservesWell !== ''">{{scope.row.probReservesWell}}</span>
+                  <span v-if="scope.row.probReservesWell !== null && scope.row.probReservesWell !== ''">{{Number(scope.row.probReservesWell).toFixed(4)}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
           <el-table-column sortable   :label="`剩余可采储量\n(10⁴m³)`" prop="remainingRecoverableReserves" min-width="130px" align="center">
               <template slot-scope="scope">
-                  <span v-if="scope.row.remainingRecoverableReserves !== null && scope.row.remainingRecoverableReserves !== ''">{{scope.row.remainingRecoverableReserves}}</span>
+                  <span v-if="scope.row.remainingRecoverableReserves !== null && scope.row.remainingRecoverableReserves !== ''">{{!isNaN(Number(scope.row.remainingRecoverableReserves)) ? Number(scope.row.remainingRecoverableReserves).toFixed(4) : "-"}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
@@ -271,7 +271,7 @@
                     <span v-else>-</span>
                 </template>
             </el-table-column>
-            <el-table-column sortable min-width="130px"   label="海管情况" prop="quantity" align="center">
+            <el-table-column sortable min-width="130px"   :label="`海管情况\n     (m³)`" prop="quantity" align="center">
                 <template slot-scope="scope">
                     <span v-if="scope.row.quantity !== null && scope.row.quantity !== ''"> {{Number(scope.row.quantity).toFixed(2)}}</span>
                     <span v-else>-</span>

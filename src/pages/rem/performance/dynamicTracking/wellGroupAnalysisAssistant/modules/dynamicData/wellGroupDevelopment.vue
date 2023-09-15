@@ -16,7 +16,7 @@
                 <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
                     height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column type="index" label="序号"></el-table-column>
-                    <el-table-column prop="time" label="时间"> </el-table-column>
+                    <el-table-column prop="time" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
                     <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="oilProdDail" :label="`日产油\n(m³)`" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="waterRatio" :label="`含水率\n(%)`" :formatter="toPrecise2"></el-table-column>

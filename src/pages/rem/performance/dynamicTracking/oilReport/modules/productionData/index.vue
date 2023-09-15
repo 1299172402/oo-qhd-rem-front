@@ -342,7 +342,7 @@ export default {
                   },
                   {
                       gridIndex: 1,
-                      name: "气\n油\n比\n︵\n方\n/\n方\n︶",
+                      name: "气\n油\n比\n︵\nm³\n/\nm³\n︶",
                       nameLocation: "center",
                       nameRotate: 0,
                       nameGap: 50,
@@ -372,7 +372,7 @@ export default {
                   },
                   {
                       gridIndex: 1,
-                      name: "生\n产\n时\n间\n︵\nH\n︶",
+                      name: "生\n产\n时\n间\n︵\nh\n︶",
                       nameLocation: "center",
                       nameRotate: 0,
                       nameGap: 50,
