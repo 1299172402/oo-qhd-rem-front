@@ -51,6 +51,8 @@ export default {
             },
             yAxis: {
                 name: "自然递减率(%)",
+                nameLocation:'middle',
+                nameGap:40,
                 nameTextStyle: {
                     color: "#8FA4CC"
                 },
