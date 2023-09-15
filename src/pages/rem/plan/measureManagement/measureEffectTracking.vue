@@ -48,17 +48,17 @@
                 <el-table-column prop="beginDate" align="center" label="措施开始日期" width="110px"></el-table-column>
                 <el-table-column prop="endDate" align="center" label="措施结束日期" width="110px"></el-table-column>
                 <el-table-column align="center" label="措施前生产情况">
-                    <el-table-column align="center" label="日产液 (m³)" width="80" prop="bmLiquidDaily" :formatter="toPrecise2"></el-table-column>
-                    <el-table-column align="center" label="日产油 (m³)" width="80" prop="bmOilDaily" :formatter="toPrecise2"> </el-table-column>
-                    <el-table-column align="center" label="含水率 (%)" width="80" prop="bmWaterCut" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column align="center" :label="`日产液\n(m³)`" width="80" prop="bmLiquidDaily" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column align="center" :label="`日产油\n(m³)`" width="80" prop="bmOilDaily" :formatter="toPrecise2"> </el-table-column>
+                    <el-table-column align="center" :label="`含水率\n(%)`" width="80" prop="bmWaterCut" :formatter="toPrecise2"></el-table-column>
                 </el-table-column>
                 <el-table-column align="center" label="措施效果">
-                    <el-table-column align="center" label="当日日增油 (m³)" width="110" prop="incOilDaily" :formatter="toPrecise2"></el-table-column>
-                    <el-table-column align="center" label="累增油 (m³)" width="85" prop="sumOilDaily" :formatter="toPrecise2"></el-table-column>
-                    <el-table-column prop="days" align="center" label="增产有效期 (d)" width="100"></el-table-column>
-                    <el-table-column prop="geoDesignOilDaily" align="center" label="地质设计日增油 (m³)" width="130" :formatter="toPrecise2"></el-table-column>
-                    <el-table-column prop="avgOilDaily" align="center" label="平均日增油 (m³/d)" width="100" :formatter="toPrecise2"></el-table-column>
-                    <el-table-column prop="" align="center" label="滚动预测日增油 (m³/d)" width="140" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column align="center" :label="`当日日增油\n(m³)`" width="110" prop="incOilDaily" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column align="center" :label="`累增油\n(m³)`" width="85" prop="sumOilDaily" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="days" align="center" :label="`增产有效期\n(d)`" width="100"></el-table-column>
+                    <el-table-column prop="geoDesignOilDaily" align="center" :label="`地质设计日增油\n(m³)`" width="130" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="avgOilDaily" align="center" :label="`平均日增油\n(m³/d)`" width="100" :formatter="toPrecise2"></el-table-column>
+                    <el-table-column prop="" align="center" :label="`滚动预测日增油\n(m³/d)`" width="140" :formatter="toPrecise2"></el-table-column>
                 </el-table-column>
                 <el-table-column label="地质设计" align="center">
                     <template slot-scope="scope">
