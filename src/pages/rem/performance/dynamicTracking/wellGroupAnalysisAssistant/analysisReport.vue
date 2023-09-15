@@ -739,6 +739,7 @@
             doSearch() {
                 this.selCode = '';
                 this.tableData = [];
+                this.collectWells = [];
                 //重新初始化相关数据项目
                 let paramMap = {
                     "oilFieldId": this.selYtdm,
@@ -769,6 +770,7 @@
                         data.forEach((el,i)=>{
                             myData.push({wellId:el,children:[]})
                         });
+                        console.log(myData,this.collectWells,'搜索数据')
                         this.queryTableData(myData);
                     }
                 }).catch(err=>{
@@ -1171,30 +1173,31 @@
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
-                //zxb-重新计算数量
-                let numKeys=['trendOfIndicatorsNum','injectionProductionBalanceNum','injectionResponseAnalysisNum','thePressureToKeepNum'];
-                let datakeys=['trendOfIndicators','injectionProductionBalance','injectionResponseAnalysis','thePressureToKeep'];
-                for(let i=0;i<numKeys.length;i++){
-                    let numKey=numKeys[i];
-                    let dataKey=datakeys[i];
-                    this[numKey].allnum=0;
-                    this[numKey].zcnum=0;
-                    this[numKey].ycnum=0;
-                    this[dataKey].forEach((el,i)=>{
-                        console.log(this[dataKey][i].value,7777)
-                        console.log(Number(this[dataKey][i].value),999)
-                        this[numKey].allnum+=Number(this[dataKey][i].value);
-                        if(el.name=='正常'||el.name=='合格区'){
-                            this[numKey].zcnum=Number(this[dataKey][i].value);
-                            this[numKey].ycnum+=Number(this[dataKey][i].exeValue);
-                        }else{
-                            // this[numKey].ycnum+=Number(this[dataKey][i].value);
-                        }
-                    })
-                    this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
-                    this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
-                    console.log('this[numKey]',this[numKey])
-                }
+                // TODO lv 点击后不更改正常异常井数
+                // //zxb-重新计算数量
+                // let numKeys=['trendOfIndicatorsNum','injectionProductionBalanceNum','injectionResponseAnalysisNum','thePressureToKeepNum'];
+                // let datakeys=['trendOfIndicators','injectionProductionBalance','injectionResponseAnalysis','thePressureToKeep'];
+                // for(let i=0;i<numKeys.length;i++){
+                //     let numKey=numKeys[i];
+                //     let dataKey=datakeys[i];
+                //     this[numKey].allnum=0;
+                //     this[numKey].zcnum=0;
+                //     this[numKey].ycnum=0;
+                //     this[dataKey].forEach((el,i)=>{
+                //         console.log(this[dataKey][i].value,7777)
+                //         console.log(Number(this[dataKey][i].value),999)
+                //         this[numKey].allnum+=Number(this[dataKey][i].value);
+                //         if(el.name=='正常'||el.name=='合格区'){
+                //             this[numKey].zcnum=Number(this[dataKey][i].value);
+                //             this[numKey].ycnum+=Number(this[dataKey][i].exeValue);
+                //         }else{
+                //             // this[numKey].ycnum+=Number(this[dataKey][i].value);
+                //         }
+                //     })
+                //     this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
+                //     this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
+                //     console.log('this[numKey]',this[numKey])
+                // }
                 //zxb-重新计算推荐井组
                 this.potentialWellNum=0;
                 for(let i=0;i<this.recommendedMeasuresOptions.length;i++){

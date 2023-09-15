@@ -1286,10 +1286,12 @@
                             titleName = titleName.replace('m3', 'm³');
                         }
                         console.log('titleName',titleName)
-                        this.productionTrendsTab.push({
-                            code: this.changeToVueCode(t_data.code, t_data.name),
-                            name: titleName
-                        });
+                        if (t_data.name != '正常') {
+                            this.productionTrendsTab.push({
+                                code: this.changeToVueCode(t_data.code, t_data.name),
+                                name: titleName
+                            });
+                        }
                     }
                 }
                 console.log('this.productionTrendsTab',this.productionTrendsTab);
@@ -1452,15 +1454,16 @@
                             let myData = res.data.data.indicatorAnalysisDetailInfos;
                             
                             this.oilWellConditionNum.allnum=0;
-                            this.oilWellConditionNum.zcnum=0;
-                            this.oilWellConditionNum.ycnum=0;
+                            // this.oilWellConditionNum.zcnum=0;
+                            // this.oilWellConditionNum.ycnum=0;
                             myData.forEach((el,i)=>{
                                 this.oilWellConditionNum.allnum+=Number(el.value);
                                 if(el.name=='正常'){
                                     this.oilWellConditionNum.zcnum=Number(el.value);
+                                    this.oilWellConditionNum.ycnum=Number(el.exeValue);
                                 }else{
                                     myData[i].isShow=Number(el.value)?true:false;
-                                    this.oilWellConditionNum.ycnum+=Number(el.value);
+                                    // this.oilWellConditionNum.ycnum+=Number(el.value);
                                 }
                             })
                             this.oilWellConditionNum.zczb=this.oilWellConditionNum.zcnum/this.oilWellConditionNum.allnum * 100;
@@ -1484,10 +1487,11 @@
                             myData.forEach((el,i)=>{
                                 this.relationshipNum.allnum+=Number(el.value);
                                 if(el.name=='正常'||el.name=='合理区'){
-                                    this.relationshipNum.zcnum+=Number(el.value);
+                                    this.relationshipNum.zcnum=Number(el.value);
+                                    this.relationshipNum.ycnum=Number(el.exeValue);
                                 }else{
                                     myData[i].isShow=Number(el.value)?true:false;
-                                    this.relationshipNum.ycnum+=Number(el.value);
+                                    // this.relationshipNum.ycnum+=Number(el.value);
                                 }
                             })
                             this.relationshipNum.zczb=this.relationshipNum.zcnum/this.relationshipNum.allnum * 100;
@@ -1515,9 +1519,10 @@
                                 this.diminishingNum.allnum+=Number(el.value);
                                 if(el.name=='正常'){
                                     this.diminishingNum.zcnum=Number(el.value);
+                                    this.diminishingNum.ycnum=Number(el.exeValue);
                                 }else{
                                     myData[i].isShow=Number(el.value)?true:false;
-                                    this.diminishingNum.ycnum+=Number(el.value);
+                                    // this.diminishingNum.ycnum+=Number(el.value);
                                 }
                             })
                             this.diminishingNum.zczb=this.diminishingNum.zcnum/this.diminishingNum.allnum * 100;
@@ -1543,9 +1548,10 @@
                                 this.fluidStrengthNum.allnum+=Number(el.value);
                                 if(el.name=='正常'){
                                     this.fluidStrengthNum.zcnum=Number(el.value);
+                                    this.fluidStrengthNum.ycnum=Number(el.exeValue);
                                 }else{
                                     myData[i].isShow=Number(el.value)?true:false;
-                                    this.fluidStrengthNum.ycnum+=Number(el.value);
+                                    // this.fluidStrengthNum.ycnum+=Number(el.value);
                                     if(el.name=='采液强度偏高'){
                                         this.cyqdpgSelCode=el.code;
                                     }else if(el.name=='采液强度偏低'){
@@ -1576,9 +1582,10 @@
                                 this.fluidProductionNum.allnum+=Number(el.value);
                                 if(el.name=='正常'){
                                     this.fluidProductionNum.zcnum=Number(el.value);
+                                    this.fluidProductionNum.ycnum=Number(el.exeValue);
                                 }else{
                                     myData[i].isShow=Number(el.value)?true:false;
-                                    this.fluidProductionNum.ycnum+=Number(el.value);
+                                    // this.fluidProductionNum.ycnum+=Number(el.value);
                                 }
                             })
                             this.fluidProductionNum.zczb=this.fluidProductionNum.zcnum/this.fluidProductionNum.allnum * 100;
@@ -1605,9 +1612,10 @@
                                 this.mfluidProductionNum.allnum+=Number(el.value);
                                 if(el.name=='正常'){
                                     this.mfluidProductionNum.zcnum=Number(el.value);
+                                    this.mfluidProductionNum.ycnum=Number(el.exeValue);
                                 }else{
                                     myData[i].isShow=Number(el.value)?true:false;
-                                    this.mfluidProductionNum.ycnum+=Number(el.value);
+                                    // this.mfluidProductionNum.ycnum+=Number(el.value);
                                 }
                             })
                             this.mfluidProductionNum.zczb=this.mfluidProductionNum.zcnum/this.mfluidProductionNum.allnum * 100;
@@ -1856,26 +1864,27 @@
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
-                //zxb-重新计算数量    
-                let numKeys=['productionNum','oilWellConditionNum','relationshipNum','diminishingNum','fluidStrengthNum','fluidProductionNum','mfluidProductionNum'];
-                let datakeys=['productionTrendsOptions','oilWellConditionOptions','relationshipOptions','diminishingOptions','fluidStrengthOptions','fluidProductionOptions','mfluidProductionOptions'];
-                for(let i=0;i<numKeys.length;i++){
-                    let numKey=numKeys[i];
-                    let dataKey=datakeys[i];
-                    this[numKey].allnum=0;
-                    this[numKey].zcnum=0;
-                    this[numKey].ycnum=0;
-                    this[dataKey].forEach((el,i)=>{
-                        this[numKey].allnum+=Number(this[dataKey][i].value);
-                        if(el.name=='正常'||el.name=='合格区'){
-                            this[numKey].zcnum=Number(this[dataKey][i].value);
-                        }else{
-                            this[numKey].ycnum+=Number(this[dataKey][i].value);
-                        }
-                    })
-                    this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
-                    this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
-                }
+                // TODO lv 点击后不更改正常异常井数
+                // //zxb-重新计算数量    
+                // let numKeys=['productionNum','oilWellConditionNum','relationshipNum','diminishingNum','fluidStrengthNum','fluidProductionNum','mfluidProductionNum'];
+                // let datakeys=['productionTrendsOptions','oilWellConditionOptions','relationshipOptions','diminishingOptions','fluidStrengthOptions','fluidProductionOptions','mfluidProductionOptions'];
+                // for(let i=0;i<numKeys.length;i++){
+                //     let numKey=numKeys[i];
+                //     let dataKey=datakeys[i];
+                //     this[numKey].allnum=0;
+                //     this[numKey].zcnum=0;
+                //     this[numKey].ycnum=0;
+                //     this[dataKey].forEach((el,i)=>{
+                //         this[numKey].allnum+=Number(this[dataKey][i].value);
+                //         if(el.name=='正常'||el.name=='合格区'){
+                //             this[numKey].zcnum=Number(this[dataKey][i].value);
+                //         }else{
+                //             this[numKey].ycnum+=Number(this[dataKey][i].value);
+                //         }
+                //     })
+                //     this[numKey].zczb=this[numKey].zcnum/this[numKey].allnum * 100;
+                //     this[numKey].yczb=this[numKey].yczb/this[numKey].allnum * 100;
+                // }
                 //zxb-重新计算推荐井组
                 this.potentialWellNum=0;
                 for(let i=0;i<this.recommendedMeasuresOptions.length;i++){
