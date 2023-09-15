@@ -1,12 +1,12 @@
 <template>
     <div style="height:100%;">
         <div class="titleBox">
-            <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="setWidth">
-                <el-tab-pane label="定产配注" name="first"></el-tab-pane>
-                <el-tab-pane label="智能配注" name="second">
-                    <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
-                </el-tab-pane>
-            </el-tabs>
+<!--            <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="setWidth">-->
+<!--                <el-tab-pane label="定产配注" name="first"></el-tab-pane>-->
+<!--                <el-tab-pane label="智能配注" name="second">-->
+<!--                    &lt;!&ndash; <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> &ndash;&gt;-->
+<!--                </el-tab-pane>-->
+<!--            </el-tabs>-->
             <el-button v-if ="activeName =='second' && this.$route.query.link "  style="position: absolute;z-index:50;right: 20px;top:110px" type="primary"  @click="gogo">返回</el-button>
         </div>
         <header-search v-if="activeName=='first'" style="height: auto;display: grid">
@@ -346,12 +346,7 @@ export default {
         },
         // 时间处理
         eeee() {
-            let data = new Date()
-            if (data.getMonth() < 10) {
-                return data.getFullYear() + '-0' + data.getMonth()
-            } else {
-                return data.getFullYear() + '-' + data.getMonth()
-            }
+            return new Date().format('YYYY-MM')
         },
         refresh() {
             this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C';
