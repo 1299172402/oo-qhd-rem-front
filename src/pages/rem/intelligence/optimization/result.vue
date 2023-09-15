@@ -1,12 +1,12 @@
 <template>
     <div style="height:100%;">
         <div class="titleBox">
-            <el-tabs v-model="activeName" class="g-pageHeader">
-                <el-tab-pane label="定产配注" name="first"></el-tab-pane>
-                <el-tab-pane label="智能配注" name="second">
-                    <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
-                </el-tab-pane>
-            </el-tabs>
+<!--            <el-tabs v-model="activeName" class="g-pageHeader">-->
+<!--                <el-tab-pane label="定产配注" name="first"></el-tab-pane>-->
+<!--                <el-tab-pane label="智能配注" name="second">-->
+<!--                    &lt;!&ndash; <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> &ndash;&gt;-->
+<!--                </el-tab-pane>-->
+<!--            </el-tabs>-->
         </div>
         <header-search height="auto">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
@@ -58,7 +58,7 @@
                 </span> -->
             </div>
         </header-search>
-        <pagePanelNew style="height: calc(100% - 140px)">
+        <pagePanelNew style="height: calc(100% - 100px)">
             <el-row v-if="activeName == 'first'" :gutter="20" style="margin: 0px 20px;height: 100%">
                 <el-col :span="6" style="height:100%">
                     <pagePanel :headerTitle="title1"
@@ -114,7 +114,11 @@
                                 :span-method="mergeTable"
                             >
                                 <el-table-column prop="injWellNo" label="注水井" align="center"
-                                                 min-width="120"></el-table-column>
+                                                 min-width="120">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.injWellNo.includes("秦皇岛32-6")? scope.row.injWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.injWellNo}}</span>
+                                    </template>    
+                                </el-table-column>
                                 <el-table-column
                                     prop="injWellDaily"
                                     :render-header="renderheader"
@@ -490,6 +494,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+#indexscv {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
+}
 .buttonBox {
     float: right;
     margin-bottom: 10px;
