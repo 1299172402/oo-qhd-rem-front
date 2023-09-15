@@ -69,6 +69,7 @@
                             element-loading-text="数据加载中"
                             element-loading-spinner="el-icon-loading"
                             :data="sigleWellTable"
+                            id="indexscv"
                             highlight
                             style="margin-top: 10px"
                             height="100%"
