@@ -123,6 +123,7 @@
                                     prop="wellGroupName"
                                     show-overflow-tooltip
                                     label="井组名称"
+                                    min-width="115"
                                     align="center"
                                 ></el-table-column>
                                 <el-table-column prop="injWellNo" label="水井" show-overflow-tooltip

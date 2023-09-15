@@ -257,13 +257,15 @@
                                     </el-table-column>
                                     <!--措施初选-->
                                     <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
-                                        <el-table-column prop="measuresName" label="推荐措施" align="center">
+                                        <el-table-column prop="measuresName" label="推荐措施" align="center" min-width="150">
                                             <template slot-scope="scope">
                                                 <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span> -->
-                                                <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span>
+                                                <el-tooltip v-if="scope.row.cscx != null" class="item" effect="dark" :content="preliminarySelectioMeasures(scope.row.wellId,1)" placement="top">
+                                                    <span >{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
+                                        <el-table-column prop="theDate" align="center"  min-width="150" label-class-name="twoRowHeader">
                                             <template #header>
                                                 <div>
                                                     <span>推荐日期</span>
@@ -273,7 +275,10 @@
                                             </template>
                                             <template slot-scope="scope">
                                                 <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span> -->
-                                                <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,2) }}</span>
+                                                <!-- <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,2) }}</span> -->
+                                                <el-tooltip v-if="scope.row.cscx != null" class="item" effect="dark" :content="preliminarySelectioMeasures(scope.row.wellId,2)" placement="top">
+                                                    <span >{{ preliminarySelectioMeasures(scope.row.wellId,2) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
                                         <el-table-column label="操作" align="center">
@@ -756,13 +761,16 @@
                                     </el-table-column>
                                     <!--措施初选-->
                                     <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
-                                        <el-table-column prop="measuresName" label="推荐措施" align="center">
+                                        <el-table-column prop="measuresName" label="推荐措施" align="center" min-width="150">
                                             <template slot-scope="scope">
+                                                <el-tooltip v-if="scope.row.cscx != null" class="item" effect="dark" :content="preliminarySelectioMeasures(scope.row.wellId,1)" placement="top">
+                                                    <span >{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span>
+                                                </el-tooltip>
                                                 <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span> -->
-                                                <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span>
+                                                <!-- <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span> -->
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="theDate" align="center"  min-width="130" label-class-name="twoRowHeader">
+                                        <el-table-column prop="theDate" align="center"  min-width="150" label-class-name="twoRowHeader">
                                             <template #header>
                                                 <div>
                                                     <span>推荐日期</span>
@@ -772,7 +780,10 @@
                                             </template>
                                             <template slot-scope="scope">
                                                 <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.tjrq ? scope.row.cscx.tjrq :'-'}}</span> -->
-                                                <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,2) }}</span>
+                                                <!-- <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,2) }}</span> -->
+                                                <el-tooltip v-if="scope.row.cscx != null" class="item" effect="dark" :content="preliminarySelectioMeasures(scope.row.wellId,2)" placement="top">
+                                                    <span >{{ preliminarySelectioMeasures(scope.row.wellId,2) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
                                         <el-table-column label="操作" align="center">
@@ -1672,12 +1683,22 @@
                 });
             },
             preliminarySelectioMeasures(str,type){
-                for(let i=0;i< this.recommendedMeasuresData.length;i++){
-                    if( this.recommendedMeasuresData[i].wellId==str){
-                        return type==1?this.recommendedMeasuresData[i].measuresName:this.recommendedMeasuresData[i].theDate
-                    }
+                let currentArr = this.recommendedMeasuresData.filter(item=>item.wellId == str);
+                if(type == 1){
+                    let currentName = currentArr.length> 0 ? currentArr.map(item=>item.measuresName).join(', ') : '-'
+                    return currentName
+                } else {
+                    let currentDate = currentArr.length> 0 ? currentArr.map(item=>item.theDate).join(', ') : '-'
+                    return currentDate
                 }
-                return '-'
+               
+
+                // for(let i=0;i< this.recommendedMeasuresData.length;i++){
+                //     if( this.recommendedMeasuresData[i].wellId==str){
+                //         return type==1?this.recommendedMeasuresData[i].measuresName:this.recommendedMeasuresData[i].theDate
+                //     }
+                // }
+                // return '-'
             },
             //初始化有措施的井清单
             initRecommendedMeasuresWells() {

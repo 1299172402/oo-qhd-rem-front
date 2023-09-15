@@ -27,8 +27,8 @@
                         :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
                         <el-table-column label="序号" type="index" align="center"></el-table-column>
                         <el-table-column :label="`含水饱和度\n (%)`" prop="" align="center"></el-table-column>
-                        <el-table-column :label="`相对渗透率\n (Kro)`" prop="" align="center"></el-table-column>
-                        <el-table-column :label="`相对渗透率\n (Krw)`" prop="" align="center"></el-table-column>
+                        <el-table-column :label="`油相相对渗透率\n (mD)`" prop="" align="center"></el-table-column>
+                        <el-table-column :label="`水相相对渗透率\n (mD)`" prop="" align="center"></el-table-column>
                     </el-table>
                 </page-panel-new>
             </div>
