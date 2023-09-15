@@ -38,8 +38,8 @@
                 <div style="padding-bottom:5px;height:calc(100% - 55px);">
                     <el-table id="tableData" :data="tableData" highlight height="100%">
                         <el-table-column prop="phase" label="开发阶段" align="center" width="180px" show-overflow-tooltip fixed></el-table-column>
-                        <el-table-column prop="beginDate" label="阶段开始时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
-                        <el-table-column prop="endDate" label="阶段结束时间" align="center" width="120px" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="beginDate" :label="`阶段开始时间\n (yyyy/mm)`" align="center" width="140" show-overflow-tooltip></el-table-column>
+                        <el-table-column prop="endDate" :label="`阶段结束时间\n (yyyy/mm)`" align="center" width="140" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="interval" :label="`阶段历程时间\n (d)`" align="center" width="160px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="pwellsTotal" :label="`阶段末油井总井数\n (口)`" align="center" width="180px" show-overflow-tooltip></el-table-column>
                         <el-table-column prop="pwellsOpen" :label="`阶段末油井开井数\n (口)`" align="center" width="190px" show-overflow-tooltip></el-table-column>
@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <el-table id="kfxz" :data="tableData2" highlight height="400px">
-                    <el-table-column prop="date" label="时间" align="center" show-overflow-tooltip min-width="200" fixed="left">
+                    <el-table-column prop="date" :label="`时间\n(yyyy/mm/dd)`" align="center" show-overflow-tooltip min-width="200" fixed="left">
                         <template slot-scope="scope">
                             {{ scope.row.date | dateFormat }}
                         </template>

@@ -45,8 +45,8 @@
             <el-table v-show="type == 0" highlight :data="oilWellTableData" style="width: 100%">
                 <el-table-column type="index" align="center" width="50" label="序号"></el-table-column>
                 <el-table-column prop="wellName" align="center" label="井号" width="160"></el-table-column>
-                <el-table-column prop="beginDate" align="center" label="措施开始日期" width="110px"></el-table-column>
-                <el-table-column prop="endDate" align="center" label="措施结束日期" width="110px"></el-table-column>
+                <el-table-column prop="beginDate" align="center" :label="`措施开始日期\n(yyyy/mm/dd)`" width="140"></el-table-column>
+                <el-table-column prop="endDate" align="center" :label="`措施结束日期\n(yyyy/mm/dd)`" width="140"></el-table-column>
                 <el-table-column align="center" label="措施前生产情况">
                     <el-table-column align="center" :label="`日产液\n(m³)`" width="80" prop="bmLiquidDaily" :formatter="toPrecise2"></el-table-column>
                     <el-table-column align="center" :label="`日产油\n(m³)`" width="80" prop="bmOilDaily" :formatter="toPrecise2"> </el-table-column>
@@ -113,16 +113,16 @@
             <el-table v-show="type == 1" highlight :data="waterWellTableData" style="width: 100%">
                 <el-table-column type="index" align="center" width="60" label="序号"></el-table-column>
                 <el-table-column prop="wellNo" align="center" label="井号" width="160"></el-table-column>
-                <el-table-column prop="beginDate" align="center" label="措施开始日期" min-width="110px"></el-table-column>
-                <el-table-column prop="endDate" align="center" label="措施结束日期" min-width="110px"></el-table-column>
+                <el-table-column prop="beginDate" align="center" :label="`措施开始日期\n(yyyy/mm/dd)`" min-width="110px"></el-table-column>
+                <el-table-column prop="endDate" align="center" :label="`措施结束日期\n(yyyy/mm/dd)`" min-width="110px"></el-table-column>
                 <el-table-column align="center" label="措施前注入情况" min-width="100">
-                    <el-table-column align="center" label="日注水量 (m³/d)" min-width="100" prop="bmInjWater"></el-table-column>
+                    <el-table-column align="center" :label="`日注水量\n(m³/d)`" min-width="100" prop="bmInjWater"></el-table-column>
                 </el-table-column>
                 <el-table-column align="center" label="措施效果">
-                    <el-table-column prop="injDaily" align="center" label="当日日增注( m³/d)" min-width="100"></el-table-column>
-                    <el-table-column align="center" label="累增注 (m³)" min-width="100" prop="sumInjDaily"></el-table-column>
-                    <el-table-column align="center" label="增注有效期 (d)" min-width="100" prop="days"></el-table-column>
-                    <el-table-column align="center" label="地质设计日配注 (m³/d)" min-width="120" prop="geoDesignInjDaily"></el-table-column>
+                    <el-table-column prop="injDaily" align="center" :label="`当日日增注\n( m³/d)`" min-width="100"></el-table-column>
+                    <el-table-column align="center" :label="`累增注\n(m³)`" min-width="100" prop="sumInjDaily"></el-table-column>
+                    <el-table-column align="center" :label="`增注有效期\n(d)`" min-width="100" prop="days"></el-table-column>
+                    <el-table-column align="center" :label="`地质设计日配注\n(m³/d)`" min-width="120" prop="geoDesignInjDaily"></el-table-column>
                 </el-table-column>
                 <el-table-column label="地质设计" align="center">
                     <template slot-scope="scope">
@@ -207,7 +207,7 @@
                                 header-cell-class-name="table_header"
                                 :cell-style="{ padding: '2px', 'text-align': 'center' }">
                                 <el-table-column label="序号" type="index"></el-table-column>
-                                <el-table-column :label="`日期\n(yyyy/mm/dd)`" prop="startTime"></el-table-column>
+                                <el-table-column :label="`日期\n(yyyy/mm/dd hh:mm:ss)`" prop="startTime"></el-table-column>
                                 <el-table-column label="含水" prop="waterCut" :formatter="toPrecise2"></el-table-column>
                                 <el-table-column label="含砂" prop="sand" :formatter="toPrecise2"></el-table-column>
                                 <el-table-column label="备注" prop="remark"></el-table-column>
@@ -943,7 +943,7 @@
                         },
                         {
                             gridIndex: 1,
-                            name: '气\n油\n比\n\(m³\n/\nt)',
+                            name: '气\n油\n比\n\︵\nm³\n/\nm³\n︶',
                             nameLocation: 'center',
                             nameRotate: 0,
                             nameGap: 50,

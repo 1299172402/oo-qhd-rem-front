@@ -374,7 +374,7 @@ export default {
                     },
                     {
                         gridIndex: 1,
-                        name: "生\n产\n时\n间\n︵\nH\n︶", //6
+                        name: "生\n产\n时\n间\n︵\nh\n︶", //6
                         nameLocation: "center",
                         nameRotate: 0,
                         nameGap: 50,

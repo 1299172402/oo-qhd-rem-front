@@ -34,28 +34,28 @@
             <el-table-column align="left" label="当前作业井名" prop="wellNo" width="150"></el-table-column>
             <el-table-column align="center" label="当前作业措施" prop="measureTypeName" width="150"></el-table-column>
             <el-table-column align="center" label="产品类型" prop="productTypeName" width="100"></el-table-column>
-            <el-table-column align="center" label="措施见效日期" prop="measureSeffectDate" width="160">
+            <el-table-column align="center" :label="`措施见效日期\n(yyyy/mm/dd)`" prop="measureSeffectDate" width="160">
                 <template slot-scope="scope">
                     <el-date-picker v-model="scope.row.measureSeffectDate" type="date" format="yyyy-MM-dd" value-format="yyyy-MM-dd"></el-date-picker>
                 </template>
             </el-table-column>
-            <el-table-column align="center" label="日增油/日产油" prop="" width="160">
+            <el-table-column align="center" :label="`日增油/日产油\n(m³/d)`" prop="" width="160">
                 <template slot-scope="scope">
                     <el-input-number v-model="scope.row.dailyAllocatingBase" :precision=4 size="medium" style="width:150px;" controls-position="right"></el-input-number>
                 </template>
             </el-table-column>
-            <el-table-column align="center" label="月递减率" prop="" width="160">
+            <el-table-column align="center" :label="`月递减率\n(%)`" prop="" width="160">
                 <template slot-scope="scope">
                     <el-input-number v-model="scope.row.decreaseRate" :precision=4 size="medium" style="width:150px;" controls-position="right"></el-input-number>
                 </template>
             </el-table-column>
-            <el-table-column align="center" label="月时率" prop="" width="160">
+            <el-table-column align="center" :label="`月时率\n(%)`" prop="" width="160">
                 <template slot-scope="scope">
                     <el-input-number v-model="scope.row.timeEfficieincy" :precision=4 size="medium" style="width:150px;" controls-position="right"></el-input-number>
                 </template>
             </el-table-column>
-            <el-table-column align="center" label="见效天数" prop="effectDays" width="100"></el-table-column>
-            <el-table-column align="center" label="单井年配产量(m³)" prop="dailyAllocating" width="160">
+            <el-table-column align="center" :label="`见效天数\n(m³/d)`" prop="effectDays" width="100"></el-table-column>
+            <el-table-column align="center" :label="`单井年配产量\n(m³)`" prop="dailyAllocating" width="160">
                 <template slot-scope="scope">
                     <el-input-number v-model="scope.row.yearAllocating" :precision=4 size="medium" style="width:150px;" controls-position="right"></el-input-number>
                 </template>
@@ -272,5 +272,9 @@
 </script>
 
 <style lang="scss" scoped>
-
+    ::v-deep .el-table__header-wrapper .cell{
+        height: auto !important;
+        line-height: 18px !important;
+        white-space: pre;
+    }
 </style>
