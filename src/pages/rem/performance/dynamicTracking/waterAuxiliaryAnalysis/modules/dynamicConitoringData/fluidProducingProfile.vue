@@ -7,10 +7,10 @@
                     <div class="z-chartHead">
                         <div class="sp1">层位</div>
                         <div class="sp2">解释井段</div>
-                        <div class="sp3">绝对吸入量</div>
-                        <div class="sp3">相对吸入量</div>
-                        <div class="sp3">日总注入量</div>
-                        <div class="sp3">注入压力</div>
+                        <div class="sp3">绝对吸入量<br/>(m³)</div>
+                        <div class="sp3">相对吸入量<br/>(m³)</div>
+                        <div class="sp3">日总注入量<br/>(m³)</div>
+                        <div class="sp3">注入压力<br/>(MPa)</div>
                     </div>
                     <div class="z-chartBody">
                         <div class="z-chartBody-row" v-for="(item,index) in tableData" :key="index">
@@ -43,7 +43,7 @@
                                             <span class="z_proess_sp2"></span>
                                         </div>
                                     </div>
-                                    <div class="sp3">{{item.injWhPressure}}MPa</div>
+                                    <div class="sp3">{{item.injWhPressure}}</div>
                                 </div>
                             </div>
                         </div>
@@ -212,7 +212,7 @@
                 display: flex;
                 flex-direction: column;
                 .z-chartHead{
-                    height:60px;
+                    height:auto;
                     display: flex;
                     align-items: center;
                     font-size:14px;
