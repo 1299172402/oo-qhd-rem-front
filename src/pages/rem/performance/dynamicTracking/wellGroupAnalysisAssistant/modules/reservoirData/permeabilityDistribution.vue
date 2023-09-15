@@ -23,7 +23,7 @@
                         <el-table-column type="index" label="序号"></el-table-column>
                         <el-table-column prop="wellName" label="井号"> </el-table-column>
                         <el-table-column prop="fieldLayer" label="层位"> </el-table-column>
-                        <el-table-column prop="permeability" label="渗透率 (%)"></el-table-column>
+                        <el-table-column prop="permeability" :label="`渗透率\n (mD)`"></el-table-column>
                     </el-table>
                 </page-panel-new>
             </el-col>
@@ -169,6 +169,13 @@
 </script>
 
 <style lang="scss" scoped>
+    ::v-deep .el-table__fixed-header-wrapper .cell,
+    ::v-deep .el-table__header-wrapper .cell{
+        height: auto !important;
+        line-height: 18px !important;
+        white-space: pre;
+    }
+        
     .z-main {
         width: 100%;
         height: calc(100% - 101px);

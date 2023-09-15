@@ -41,7 +41,7 @@
                 <el-table-column prop="reservoirsProduceSpeed" label="地质储量" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                 <el-table-column prop="reservoirsProduceSpeedAvaliable" label="可采储量" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
             </el-table-column>
-            <el-table-column :label="`累计产量\n (×10⁴m³)`">
+            <el-table-column :label="`累计产量\n (10⁴m³)`">
                 <el-table-column prop="oilSum" label="油量" show-overflow-tooltip min-width="120" :formatter="toPrecise4"></el-table-column>
                 <el-table-column prop="waterSum" label="水量" show-overflow-tooltip min-width="120" :formatter="toPrecise4"></el-table-column>
             </el-table-column>
@@ -53,8 +53,8 @@
                 <el-table-column prop="natureDeclineRate" label="自然递减率" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                 <el-table-column prop="compressveDeclineRate" label="综合递减率" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
             </el-table-column>
-            <el-table-column prop="waterContainRaiseRate" label="含水上升率" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="waterOilRateSum" label="累计水油比" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="waterContainRaiseRate" :label="`含水上升率\n (%)`" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="waterOilRateSum" :label="`累计水油比\n (m³/m³)`" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
         </el-table>
     </page-panel-new>
 </template>

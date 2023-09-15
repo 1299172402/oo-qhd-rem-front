@@ -9,7 +9,7 @@
             <el-table-column prop="wellNo" label="井号"></el-table-column>
             <el-table-column prop="productionIntervalNo" label="生产段"></el-table-column>
             <el-table-column prop="openOrClose" label="变更状态"></el-table-column>
-            <el-table-column prop="startDate" label="变更时间"></el-table-column>
+            <el-table-column prop="startDate" :label="`变更时间\n(yyyy/mm/dd)`"></el-table-column>
         </el-table>
     </page-panel-new>
 </template>
@@ -62,10 +62,11 @@
 
 <style scoped lang="scss">
     #tableData{
-        // ::v-deep .el-table__header-wrapper .cell{
-        //     height: auto;
-        //     line-height: 18px;
-        // }
+        ::v-deep .el-table__header-wrapper .cell{
+            height: auto;
+            line-height: 20px;
+            white-space: pre;
+        }
         ::v-deep .cell:empty{
             &::before {
                 content: '-';

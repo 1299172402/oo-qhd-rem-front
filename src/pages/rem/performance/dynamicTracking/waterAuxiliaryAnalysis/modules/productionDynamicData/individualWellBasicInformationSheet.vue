@@ -10,7 +10,7 @@
             <el-table-column prop="boreType" label="管柱类型"></el-table-column>
             <el-table-column prop="kb" :label="`补心海拔\n (m)`"></el-table-column>
             <el-table-column prop="baseLevelDepth" :label="`基准面深度\n (m)`"></el-table-column>
-            <el-table-column label="投注时间">
+            <el-table-column :label="`投注时间\n (yyyy/mm/dd)`">
                 <template slot-scope="scope">
                     <span>{{ scope.row.productionDate | formatTime }}</span>
                 </template>

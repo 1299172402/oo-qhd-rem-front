@@ -192,6 +192,7 @@
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left" width="160"></el-table-column>
                                     <el-table-column prop="productionProblems" label="生产问题" align="center">
+                                        <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
                                         <el-table-column label-class-name="twoRowHeader" width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index10-${index}`" :prop="item.code" :label="item.name" align="center" sortable="custom">
                                             <template #header>
                                                 <div v-if="item.unit">
@@ -534,6 +535,7 @@
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left" width="160"></el-table-column>
                                     <el-table-column prop="productionProblems" label="生产问题" align="center">
+                                        <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
                                         <el-table-column label-class-name="twoRowHeader" width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index24-${index}`" :prop="item.code" :label="item.name" align="center" sortable="custom">
                                             <template #header>
                                                 <div v-if="item.unit">
@@ -775,12 +777,17 @@ export default {
         },
         //本接口获取最后一次模型计算出来的结果，返回最后一次跑模型的日期。
         getDateApi(){
-            getDate({wellMenu:'WELL_INJ'}).then(res=>{
-                if(res.data.code==200){
-                    this.currentDate=res.data.data;
-                }
-                this.queryOilFeildList();
-            })
+            if(this.$route.query?.alarmTime) {
+                    this.currentDate = this.$route.query.alarmTime;
+                    this.queryOilFeildList();
+            } else {
+                getDate({wellMenu:'WELL_INJ'}).then(res=>{
+                    if(res.data.code==200){
+                        this.currentDate=res.data.data;
+                    }
+                    this.queryOilFeildList();
+                })
+            }
         },
         //获取油田数据
         queryOilFeildList() {

@@ -16,12 +16,12 @@
       >
         <el-table-column type="index" label="序号" width="80"></el-table-column>
         <el-table-column prop="well_name" label="井号" align="center"></el-table-column>
-        <el-table-column prop="sample_depth" :label="`样品深度`" align="center" min-width="130"></el-table-column>
-        <el-table-column prop="ca" :label="`钙离子`" align="center" min-width="130"></el-table-column>
-        <el-table-column prop="hco3" :label="`镁离子`" align="center" min-width="130"></el-table-column>
+        <el-table-column prop="sample_depth" :label="`样品深度\n (m)`" align="center" min-width="130"></el-table-column>
+        <el-table-column prop="ca" :label="`钙离子\n(Ca²⁺)`" align="center" min-width="130"></el-table-column>
+        <el-table-column prop="hco3" :label="`镁离子\n(Mg²⁺)`" align="center" min-width="130"></el-table-column>
         <el-table-column
           prop="total_mineralization"
-          :label="`样品总矿化度`"
+          :label="`样品总矿化度\n(mg/l)`"
           align="center"
           min-width="130"
         ></el-table-column>
@@ -127,7 +127,7 @@ export default {
 #tableData1 {
   ::v-deep .el-table__header-wrapper .cell {
     height: auto !important;
-    line-height: 36px !important;
+    line-height: 18px !important;
     white-space: pre;
   }
   ::v-deep .cell:empty {
