@@ -15,7 +15,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
         <el-table-column type="index" label="序号" width="150px" align="center"> </el-table-column>
-        <el-table-column prop="startTime" label="开始时间" align="center" width="250"> </el-table-column>
+        <el-table-column prop="startTime" :label="`开始时间\n(yyyy-mm-dd)`" align="center" width="250"> </el-table-column>
         <el-table-column prop="chronicle" label="大事简要" align="center" width="300"> </el-table-column>
         <el-table-column prop="remark" label="备注" align="center"> </el-table-column>
       </el-table>
@@ -83,6 +83,13 @@ export default {
 <style scoped lang="scss">
 ::v-deep .el-table .cell:empty::before {
   content: "-";
+}
+#tableData {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
 }
 // ::v-deep .el-table__body-wrapper {
 //   height: calc(100% - 34px);

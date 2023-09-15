@@ -67,6 +67,9 @@
                         <el-table-column label="序号"  width="50px" type="index" align="center">
                         </el-table-column>
                         <el-table-column label="油田" prop="ogfNo" min-width="100px" align="center">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.ogfNo.includes("QHD32-6")? scope.row.ogfNo.replace("QHD32-6", "秦皇岛32-6油田") : scope.row.ogfNo}}</span>
+                            </template>  
                         </el-table-column>
                         <el-table-column label="井号" prop="wellNo" align="center">
                             <template slot-scope="scope">

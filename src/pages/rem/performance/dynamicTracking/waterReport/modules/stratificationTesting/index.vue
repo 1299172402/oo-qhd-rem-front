@@ -11,9 +11,9 @@
             <el-table id="tableData" :data="tableData" height="calc(100% - 100px)" highlight style="margin-top: 10px; height: calc(100% - 100px);">
                 <el-table-column label="序号" fixed type="index" width="80" align="center"></el-table-column>
                 <el-table-column label="井号" fixed prop="wellName" show-overflow-tooltip align="center"
-                                 min-width="180"></el-table-column>
+                                 min-width="80"></el-table-column>
                 <el-table-column label="层段" prop="layerName" show-overflow-tooltip align="center"
-                                 min-width="120">
+                                 min-width="100">
                     <template slot-scope="scope">
                         <p v-if="scope.row.layerName">{{scope.row.layerName}}</p>
                         <p v-else>-</p>
@@ -23,7 +23,7 @@
                     label="分注类型"
                     prop="injSeparateTypeCode"
                     show-overflow-tooltip
-                    width="150"
+                    min-width="80"
                     align="center"
                 > <template slot-scope="scope">
                     <p v-if="scope.row.injSeparateTypeCode">{{scope.row.injSeparateTypeCode}}</p>

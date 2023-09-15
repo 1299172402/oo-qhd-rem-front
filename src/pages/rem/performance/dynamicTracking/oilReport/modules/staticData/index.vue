@@ -16,7 +16,7 @@
         >
             <el-table-column type="index" label="序号"></el-table-column>
             <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
-            <el-table-column prop="fieldName" label="区块"></el-table-column>
+            <el-table-column prop="fieldName" label="区块" min-width="90"></el-table-column>
             <el-table-column prop="coordX" label="井坐标位置" min-width="250px">
                 <template slot-scope="scope">
                     <span>{{ 'X：' + scope.row.coordX + ' , Y：' + scope.row.coordY }}</span>
@@ -27,7 +27,7 @@
             <el-table-column prop="boreType" label="管柱类型"></el-table-column>
             <el-table-column prop="kb" :label="`补心海拔\n (m)`"></el-table-column>
             <el-table-column prop="baseLevelDepth" :label="`基准面深度\n (m)`"></el-table-column>
-            <el-table-column :label="`投产时间\n (yyyy/mm/dd)`">
+            <el-table-column :label="`投产时间\n(yyyy/mm/dd)`" >
                 <template slot-scope="scope">
                     <span>{{ scope.row.productionDate | formatTime }}</span>
                 </template>
