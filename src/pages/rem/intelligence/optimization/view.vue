@@ -193,7 +193,11 @@
                             >
                                 <!-- :span-method="arrheader1" -->
                                 <el-table-column prop="injWellNo" label="水井井号" align="center"
-                                                 min-width="160"></el-table-column>
+                                                 min-width="160">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.injWellNo.includes("秦皇岛32-6")? scope.row.injWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.injWellNo}}</span>
+                                    </template>   
+                                </el-table-column>
                                 <el-table-column prop="oilSplitData" align="center">
                                     <template slot="header">
                                         <p>
