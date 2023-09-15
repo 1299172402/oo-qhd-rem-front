@@ -39,9 +39,9 @@
                     <el-button style="margin-bottom: 20px" type="primary" @click="doDownExcel('#zsszkzzb', `${oilFieldName || ''}注水水质达标率`)">下载</el-button>
                 </div>
                 <el-table id="ysdcylbcsp" :data="tableData1" highlight height="calc(100% - 55px)">
-                    <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
-                    <el-table-column prop="ofgName" label="油田" align="center"></el-table-column>
-                    <el-table-column prop="plantformName" label="平台" align="center"></el-table-column>
+                    <el-table-column label="序号" header-align="center" align="center" type="index" width="60" fixed></el-table-column>
+                    <el-table-column prop="ofgName" label="油田" align="center" width="140" fixed></el-table-column>
+                    <el-table-column prop="plantformName" label="平台" align="center" width="140" fixed></el-table-column>
                     <el-table-column label="检测次数" align="center">
                         <el-table-column prop="oilContent" :label="`含油量`" align="center" min-width="70"></el-table-column>
                         <el-table-column prop="totalSs" :label="`悬浮物`" align="center" min-width="70"></el-table-column>
