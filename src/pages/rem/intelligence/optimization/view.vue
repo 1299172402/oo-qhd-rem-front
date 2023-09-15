@@ -147,7 +147,11 @@
                                     label="油井井号"
                                     width="150"
                                     align="center"
-                                ></el-table-column>
+                                >
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.oilWellNo.includes("秦皇岛32-6")? scope.row.oilWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.oilWellNo}}</span>
+                                    </template>  
+                                </el-table-column>
                                 <el-table-column
                                     :render-header="renderheader"
                                     width="90"
