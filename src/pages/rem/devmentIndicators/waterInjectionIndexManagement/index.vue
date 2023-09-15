@@ -48,7 +48,8 @@
             						</sub>
             					</div>
             					<div style="margin-top: 10px">
-            						<el-row v-if="item.title == '分注井层段合格率' || item.title == '含水上升率' || item.title == '自然递减率'" :gutter="6" style="line-height: 20px; text-align: center">
+                                    <!-- item.title == '分注井层段合格率' ||  -->
+            						<el-row v-if="item.title == '含水上升率' || item.title == '自然递减率'" :gutter="6" style="line-height: 20px; text-align: center">
             							<el-col :span="13" style="color: #8fa4cc">环比上月</el-col>
             							<el-col :span="11">
                                             <template v-if="item.hb">
@@ -285,8 +286,7 @@
                         hb: "",
                         tb: "",
                         kh: "",
-                        dw: "%",
-                        chainType: "(月)"
+                        dw: "%"
                     },
                     {
                         title: "含水上升率",
