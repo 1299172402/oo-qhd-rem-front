@@ -63,7 +63,7 @@
         <page-panel
             header-title="单井劈产剖面"
             v-if="params.wellCategory == '01'"
-            style="position: relative; margin-top: 20px;height: calc(100% - 100px);"
+            style="position: relative; margin-top: 20px;height: calc(100% - 100px);" show-btn
         >
             <el-container class="layout">
                 <el-header height="auto" align="left">
@@ -123,7 +123,7 @@
         <page-panel
             header-title="单井劈产剖面"
             v-if="params.wellCategory == '02'"
-            style="position: relative; margin-top: 20px;height: calc(100% - 100px);"
+            style="position: relative; margin-top: 20px;height: calc(100% - 100px);" show-btn
         >
             <el-container class="layout">
                 <el-header height="auto" align="left">

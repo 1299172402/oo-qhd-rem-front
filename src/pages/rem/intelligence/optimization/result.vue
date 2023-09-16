@@ -61,7 +61,7 @@
         <pagePanelNew style="height: calc(100% - 100px)">
             <el-row v-if="activeName == 'first'" :gutter="20" style="margin: 0px 20px;height: 100%">
                 <el-col :span="6" style="height:100%">
-                    <pagePanel :headerTitle="title1"
+                    <pagePanel :headerTitle="title1" show-btn
                                style="height:calc(100% - 25px)">
                         <el-table
                             v-loading="sigleWellTable.length>0?false:true"
@@ -90,7 +90,7 @@
                     </pagePanel>
                 </el-col>
                 <el-col :span="18" style="height:100%">
-                    <pagePanel :headerTitle="title2" style="height:calc(100% - 25px)">
+                    <pagePanel :headerTitle="title2" style="height:calc(100% - 25px)" show-btn>
                         <div class="buttonBox">
                             <el-button class="button" icon="el-icon-search" @click="assessBut">可行性评估</el-button>
                             <!-- @click="modify = true" -->

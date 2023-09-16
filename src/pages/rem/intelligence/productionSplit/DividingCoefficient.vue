@@ -59,7 +59,7 @@
                 <el-button type="primary" class="confirmBut" icon="el-icon-back" style="float: right" @click="returned">返回</el-button>
             </el-form>
         </header-search>
-        <page-panel header-title="单井劈分系数结果" style="height:calc(100% - 100px)">
+        <page-panel header-title="单井劈分系数结果" style="height:calc(100% - 100px)" show-btn>
             <el-form :inline="true">
                 <el-form-item label="井号：">
                     <el-select v-model="wellId" @change="OilfieldBut">

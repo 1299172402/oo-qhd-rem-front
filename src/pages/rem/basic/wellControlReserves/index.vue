@@ -20,7 +20,7 @@
 <!--                                    </el-select>-->
 <!--                                </el-form-item>-->
                                 <el-form-item label="油田：">
-                                    <el-select v-model="queryData.ogfId" disabled>
+                                    <el-select v-model="queryData.ogfId" @change="choicepla">
                                         <el-option
                                             v-for="(item, index) in oilFields"
                                             :key="index"
@@ -38,7 +38,7 @@
                                 </el-form-item>
                                 <el-form-item label="井号：">
                                     <el-select v-model="queryData.wellId" @change="changewell">
-                                        <el-option v-for="(item,index) in wells" :key="index" :label="item.wellName"
+                                        <el-option v-for="(item,index) in wells" :key="item.wellId" :label="item.wellName"
                                                    :value="item.wellId">
                                         </el-option>
                                     </el-select>
@@ -237,6 +237,14 @@ export default {
                 }
             });
         },
+        choicepla(val){
+            queryListOfOilfieldQueryPlatformsDetail({ogfId: val}).then(res => {
+                this.platforms = res.data.data
+                this.queryData.pt = ''
+                this.wells = []
+                this.queryData.wellId =''
+            }) 
+        },
         redact() {
             this.edit = false;
         },
@@ -280,8 +288,8 @@ export default {
                 this.queryData.wellId = this.wells[0]?.wellId
             })
         },
-        // 重置仅重置搜索条件与下方查询内容无关
         refresh() {
+            this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
             this.queryData.pt = "";
             queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 if (res.data.code == 200) {
