@@ -79,7 +79,7 @@
                         <el-table-column sortable prop="pumpFrequencyCompare" :label="`泵频率\n(Hz)`" width="90" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'pumpFrequencyCompare')}"/>
                       </el-table-column>
                       <el-table-column label="变化量">
-                        <el-table-column sortable prop="fluidProdDaily" :label="`产液对比\n(m³/d)`" width="120" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'fluidProdDaily')}">
+                        <el-table-column sortable prop="fluidProdDaily" :label="`产液对比\n(m³/d)`" width="120" :sort-method="(a, b) => {return borepipeNoSort1(numReduce(a.fluidProdDaily, a.fluidProdDailyCompare), numReduce(b.fluidProdDaily, b.fluidProdDailyCompare))}">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     {{ row.fluidProdDaily!==null?numReduce(row.fluidProdDaily,row.fluidProdDailyCompare).toFixed(2):'-' }}
@@ -106,7 +106,7 @@
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column sortable prop="waterRatio" :label="`含水对比\n(%)`" width="120" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'waterRatio')}">
+                        <el-table-column sortable prop="waterRatio" :label="`含水对比\n(%)`" width="120" :sort-method="(a, b) => {return borepipeNoSort1(numReduce(a.waterRatio, a.waterRatioCompare), numReduce(b.waterRatio, b.waterRatioCompare))}">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     {{ row.waterRatio!==null?numReduce(row.waterRatio,row.waterRatioCompare).toFixed(2):'-' }}
@@ -116,12 +116,12 @@
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压对比\n(MPa)`" width="130" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'dhFlowingPress')}">
+                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压对比\n(MPa)`" width="130" :sort-method="(a, b) => {return borepipeNoSort1(numReduce(a.dhFlowingPress, a.dhFlowingPressCompare),  numReduce(b.dhFlowingPress, b.dhFlowingPressCompare))}">
                             <template slot-scope="scope">
                                 {{scope.row.dhFlowingPress!==null?numReduce(scope.row.dhFlowingPress,scope.row.dhFlowingPressCompare).toFixed(2):'-'}}
                             </template>
                         </el-table-column>
-                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率对比\n(Hz)`" width="120" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'pumpFrequency')}">
+                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率对比\n(Hz)`" width="120" :sort-method="(a, b) => {return borepipeNoSort1(numReduce(a.pumpFrequency, a.pumpFrequencyCompare), numReduce(b.pumpFrequency, b.pumpFrequencyCompare))}">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     {{ row.pumpFrequency!==null?numReduce(row.pumpFrequency,row.pumpFrequencyCompare).toFixed(2):'-' }}
@@ -419,6 +419,9 @@
                 let wellA = oa[code];
                 let wellB = ob[code];
                 return Number(oa[code]) - Number(ob[code]);
+            },
+            borepipeNoSort1(oa, ob) {
+                return Number(oa) - Number(ob);
             },
         },
     };
