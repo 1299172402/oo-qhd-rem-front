@@ -1,12 +1,12 @@
 <template>
     <div style="height:100%;">
         <div class="titleBox">
-<!--            <el-tabs v-model="activeName" class="g-pageHeader">-->
-<!--                <el-tab-pane label="定产配注" name="first"></el-tab-pane>-->
-<!--                <el-tab-pane label="智能配注" name="second">-->
-<!--                    &lt;!&ndash; <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> &ndash;&gt;-->
-<!--                </el-tab-pane>-->
-<!--            </el-tabs>-->
+            <el-tabs v-model="activeName" class="g-pageHeader">
+                <el-tab-pane label="定产配注" name="first"></el-tab-pane>
+                <el-tab-pane label="智能配注" name="second">
+                    <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
+                </el-tab-pane>
+            </el-tabs>
         </div>
         <header-search height="auto">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">

@@ -11,7 +11,6 @@
                     class="f2"
                     filterable
                     clearable
-                    disabled
                     style="width:180px"
                     @change="changeOil"
                 >
