@@ -1,6 +1,6 @@
 <!-- 后台——消息中心备份3，海上无背景图,线条有注释 -->
 <template>
-  <div class="g-w100 g-h100" style="font-size: 16px; color: #fff">
+  <div class="g-w100 g-h100" style="font-size: 16px; color: #fff;">
     <el-dialog
       :title="dialogTitle"
       :visible.sync="openDialog"
@@ -9,18 +9,18 @@
       :close-on-click-modal="false"
       @close="clearSearchList"
     >
-      <div style="height: 93%">
-        <div class="g-w100 g-h100" style="height: 400px">
-          <div class="g-w100 g-h100" style="position: relative">
+      <div style="height: 93%;">
+        <div class="g-w100 g-h100" style="height: 400px;">
+          <div class="g-w100 g-h100" style="position: relative;">
             <div
               class="g-row-flex-HV"
-              style="margin: 0 auto"
+              style="margin: 0 auto;"
               :class="findDataByPoint('Clouds_IOT', 'class')"
               @click="clickClouds"
             >
               云端物联网平台
             </div>
-            <div class="g-row-flex-HV" style="margin-top: 280px">
+            <div class="g-row-flex-HV" style="margin-top: 280px;">
               <div
                 class="mainSize"
                 :class="[getDataStatus('CEPJ', 'class'), findDataByCode('CEPJ')?.terraceShowUrl?'pointerCursor':'autoCursor']"
@@ -30,7 +30,7 @@
               </div>
               <div
                 class="mainSize"
-                style="margin: 0 80px"
+                style="margin: 0 80px;"
                 :class="[getDataStatus('FPSO', 'class'), findDataByCode('FPSO')?.terraceShowUrl?'pointerCursor':'autoCursor']"
                 @click="openNewLink(findDataByCode('FPSO')?.terraceShowUrl)"
               >
@@ -51,7 +51,7 @@
               :end-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
               class="svgClass"
               :class="[findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl?'pointerCursor':'autoCursor']"
-              style="left: 270px; top: 45px"
+              style="left: 270px; top: 45px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="50px"
@@ -67,7 +67,7 @@
               :end-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
               class="svgClass"
               :class="[findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.pointShowUrl?'pointerCursor':'autoCursor']"
-              style="left: 120px; top: 44px"
+              style="left: 120px; top: 44px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="130px"
@@ -82,7 +82,7 @@
               :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
               class="svgClass"
               :class="[findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl?'pointerCursor':'autoCursor']"
-              style="left: 340px; top: 44px"
+              style="left: 340px; top: 44px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="130px"
@@ -99,8 +99,8 @@
         </div>
       </div>
     </el-dialog>
-    <page-panel-new ref="elRef" class="g-w100 g-column-flex" style="height: calc(100% - 0px)">
-      <div class="g-row-flex" style="justify-content: flex-end">
+    <page-panel-new ref="elRef" class="g-w100 g-column-flex" style="height: calc(100% - 0px);">
+      <div class="g-row-flex" style="justify-content: flex-end;">
         <el-select v-model="zuhuModel" placeholder="请选择" clearable>
           <el-option
             v-for="item in zuhuOptions"
@@ -110,16 +110,16 @@
           />
         </el-select>
       </div>
-      <div v-show="zuhuModel === '秦皇岛作业公司'" style="height: 100%; position: relative" class="g-column-flex-H">
-        <el-button style="position: absolute; top: -33px; left: 0" type="primary" @click="handleToPage()">
+      <div v-show="zuhuModel === '秦皇岛作业公司'" style="height: 100%; position: relative;" class="g-column-flex-H">
+        <el-button style="position: absolute; top: -33px; left: 0;" type="primary" @click="handleToPage()">
           信息维护
         </el-button>
-        <div style="position: absolute; right: 0; color: var(--old-blue-color)">
+        <div style="position: absolute; right: 0; color: var(--old-blue-color);">
           <!-- TODO: Maybe change back -->
           <!-- {{ $store.getters["user/tenantName"] }} -->
           <!-- 秦皇岛作业公司 -->
         </div>
-        <div class="topImage g-row-flex-HV" style="position: relative; margin-top: 80px">
+        <div class="topImage g-row-flex-HV" style="position: relative; margin-top: 80px;">
           <div
             class="g-row-flex-HV greenBg"
             :class="[findDataByStartAndEnd('Msg', 'Msg')?.pointShowUrl?'pointerCursor':'autoCursor']"
@@ -127,10 +127,10 @@
           >
             消息中心
           </div>
-          <div class="absoultePos" style="left: -62px; top: 61px">
+          <div class="absoultePos" style="left: -62px; top: 61px;">
             大数据服务 (restful)
           </div>
-          <div class="absoultePos" style="left: 112px; top: 61px">
+          <div class="absoultePos" style="left: 112px; top: 61px;">
             监控数据
           </div>
 
@@ -141,7 +141,7 @@
             :end-color="findDataByLink('BigData', 'Msg')"
             :class="[findDataByStartAndEnd('BigData', 'Msg')?.pointShowUrl?'pointerCursor':'autoCursor']"
             class="svgClass"
-            style="left: 80px;z-index: 1 !important"
+            style="left: 80px;z-index: 1 !important;"
             div-stroke-width="6"
             ball-stroke-width="5"
             svg-width="125px"
@@ -157,10 +157,10 @@
           >
             报警中心
           </div>
-          <div class="absoultePos" style="left: 369px; top: 61px">
+          <div class="absoultePos" style="left: 369px; top: 61px;">
             大数据服务 (socket)
           </div>
-          <div class="absoultePos" style="left: 538px; top: 61px">
+          <div class="absoultePos" style="left: 538px; top: 61px;">
             报警数据
           </div>
           <!-- BigData - Alarm-->
@@ -170,7 +170,7 @@
             :end-color="findDataByLink('BigData', 'Alarm')"
             class="svgClass"
             :class="[findDataByStartAndEnd('BigData', 'Alarm')?.pointShowUrl?'pointerCursor':'autoCursor']"
-            style="left: 415px;z-index: 1 !important"
+            style="left: 415px;z-index: 1 !important;"
             div-stroke-width="6"
             ball-stroke-width="5"
             svg-width="125px"
@@ -179,7 +179,7 @@
             @click-line="openPointsLink(findDataByStartAndEnd('BigData', 'Alarm')?.pointShowUrl)"
           />
         </div>
-        <div class="topImage1 g-row-flex-HV" style="position: relative">
+        <div class="topImage1 g-row-flex-HV" style="position: relative;">
           <div
             class="g-row-flex-HV"
             :class="[findDataByPoint('BigData', 'class'),findDataByStartAndEnd('BigData', 'Alarm')?.pointShowUrl?'pointerCursor':'autoCursor']"
@@ -187,10 +187,10 @@
           >
             大数据分析环境
           </div>
-          <div class="absoultePos" style="left: 245px; top: 65px">
+          <div class="absoultePos" style="left: 245px; top: 65px;">
             大数据服务(Flink)
           </div>
-          <div class="absoultePos" style="left: 400px; top: 65px">
+          <div class="absoultePos" style="left: 400px; top: 65px;">
             实时数据，报警数据
           </div>
           <!-- Queue -  BigData-->
@@ -200,7 +200,7 @@
             :end-color="findDataByLink('Queue', 'BigData')"
             :class="[findDataByStartAndEnd('Queue', 'BigData')?.pointShowUrl?'pointerCursor':'autoCursor']"
             class="svgClass"
-            style="left: 335px; top: 48px"
+            style="left: 335px; top: 48px;"
             div-stroke-width="6"
             ball-stroke-width="5"
             svg-width="100px"
@@ -209,7 +209,7 @@
             @click-line="openPointsLink(findDataByStartAndEnd('Queue', 'BigData')?.pointShowUrl)"
           />
         </div>
-        <div class="centerImage g-row-flex-HV" style="position: relative">
+        <div class="centerImage g-row-flex-HV" style="position: relative;">
           <div
             class="g-row-flex-HV"
             :class="[findDataByPoint('Queue', 'class'),findDataByStartAndEnd('Queue', 'Queue')?.pointShowUrl?'pointerCursor':'autoCursor']"
@@ -217,10 +217,10 @@
           >
             消息队列
           </div>
-          <div class="absoultePos" style="left: 405px; top: 86px">
+          <div class="absoultePos" style="left: 405px; top: 86px;">
             大数掘服务
           </div>
-          <div class="absoultePos" style="left: 514px; top: 86px">
+          <div class="absoultePos" style="left: 514px; top: 86px;">
             实时数据，报警数据
           </div>
           <!-- Clouds_IOT -  Queue-->
@@ -230,7 +230,7 @@
             :end-color="findDataByLink('Clouds_IOT', 'Queue')"
             class="svgClass"
             :class="[findDataByStartAndEnd('Clouds_IOT', 'Queue')?.pointShowUrl?'pointerCursor':'autoCursor']"
-            style="left: 450px; top: 58px"
+            style="left: 450px; top: 58px;"
             div-stroke-width="6"
             ball-stroke-width="5"
             svg-width="100px"
@@ -245,10 +245,10 @@
           >
             Kudu
           </div>
-          <div class="absoultePos" style="left: 234px; top: 2px">
+          <div class="absoultePos" style="left: 234px; top: 2px;">
             大数据服务(Flink)
           </div>
-          <div class="absoultePos" style="left: 225px; top: 47px">
+          <div class="absoultePos" style="left: 225px; top: 47px;">
             实时数据，报警数据
           </div>
           <!-- Queue -  Kudu-->
@@ -258,7 +258,7 @@
             :end-color="findDataByLink('Queue', 'Kudu')"
             class="svgClass"
             :class="[findDataByStartAndEnd('Queue', 'Kudu')?.pointShowUrl?'pointerCursor':'autoCursor']"
-            style="left: 212px; top: 21px"
+            style="left: 212px; top: 21px;"
             div-stroke-width="6"
             ball-stroke-width="5"
             svg-width="175"
@@ -267,28 +267,28 @@
             @click-line="openPointsLink(findDataByStartAndEnd('Queue', 'Kudu')?.pointShowUrl)"
           />
         </div>
-        <div class="bottomImage g-row-flex-HV" style="position: relative">
+        <div class="bottomImage g-row-flex-HV" style="position: relative;">
           <div
             class="g-row-flex-HV"
-            style="cursor: pointer"
+            style="cursor: pointer;"
             :class="findDataByPoint('Clouds_IOT', 'class')"
             @click="clickClouds"
           >
             云端物联网平台
           </div>
-          <div class="absoultePos" style="left: 310px; top: 17px">
+          <div class="absoultePos" style="left: 310px; top: 17px;">
             物联网ETL
           </div>
-          <div class="absoultePos" style="left: 279px; top: 59px">
+          <div class="absoultePos" style="left: 279px; top: 59px;">
             实时数据，报警数据
           </div>
-          <div class="absoultePos" style="left: 664px; top: 149px">
+          <div class="absoultePos" style="left: 664px; top: 149px;">
             物联网ETL
           </div>
-          <div class="absoultePos" style="left: 915px; top: 19px">
+          <div class="absoultePos" style="left: 915px; top: 19px;">
             物联网ETL
           </div>
-          <div class="absoultePos" style="left: 887px; top: 63px">
+          <div class="absoultePos" style="left: 887px; top: 63px;">
             实时数据，报警数据
           </div>
 
@@ -299,7 +299,7 @@
             :end-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
             class="svgClass"
             :class="[findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl?'pointerCursor':'autoCursor']"
-            style="left: 600px; top: 72px;z-index: 1 !important"
+            style="left: 600px; top: 72px;z-index: 1 !important;"
             div-stroke-width="6"
             ball-stroke-width="5"
             svg-width="100px"
@@ -308,7 +308,7 @@
             @click-line="openPointsLink(findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl)"
           />
           <div class="leftSystem g-h100">
-            <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px">
+            <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px;">
               <!-- CEPJ -->
               <div
                 class="mainSize"
@@ -318,7 +318,7 @@
                 {{ findDataByCode("CEPJ")?.terraceName }}
               </div>
               <!-- WHPA -->
-              <div :class="[getDataStatus('WHPA', 'class'),findDataByCode('WHPA')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: -158px; top: -51px">
+              <div :class="[getDataStatus('WHPA', 'class'),findDataByCode('WHPA')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: -158px; top: -51px;">
                 <span @click="openNewLink(findDataByCode('WHPA')?.terraceShowUrl)">
                   {{ findDataByCode("WHPA")?.terraceName }}
                 </span>
@@ -328,7 +328,7 @@
                   :end-color="getDataStatus('WHPA', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('WHPA')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="top: 0; left: 59px"
+                  style="top: 0; left: 59px;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="125px"
@@ -338,7 +338,7 @@
                 />
               </div>
               <!-- WHPE -->
-              <div :class="[getDataStatus('WHPE', 'class'),findDataByCode('WHPE')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: -186px; top: 3px">
+              <div :class="[getDataStatus('WHPE', 'class'),findDataByCode('WHPE')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: -186px; top: 3px;">
                 <span @click="openNewLink(findDataByCode('WHPE')?.terraceShowUrl)">
                   {{ findDataByCode("WHPE")?.terraceName }}
                 </span>
@@ -348,7 +348,7 @@
                   :end-color="getDataStatus('WHPE', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('WHPE')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="top: 2px; left: 59px"
+                  style="top: 2px; left: 59px;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="126px"
@@ -358,7 +358,7 @@
                 />
               </div>
               <!-- WHPF -->
-              <div :class="[getDataStatus('WHPF', 'class'),findDataByCode('WHPF')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 214px; top: 5px">
+              <div :class="[getDataStatus('WHPF', 'class'),findDataByCode('WHPF')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 214px; top: 5px;">
                 <span @click="openNewLink(findDataByCode('WHPF')?.terraceShowUrl)">
                   {{ findDataByCode("WHPF")?.terraceName }}
                 </span>
@@ -368,7 +368,7 @@
                   :end-color="getDataStatus('WHPF', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('WHPF')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="left: -127px; top: 2px"
+                  style="left: -127px; top: 2px;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="126px"
@@ -378,7 +378,7 @@
                 />
               </div>
               <!-- CEPL -->
-              <div :class="[getDataStatus('CEPL', 'class'),findDataByCode('CEPL')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: -151px; top: 63px">
+              <div :class="[getDataStatus('CEPL', 'class'),findDataByCode('CEPL')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: -151px; top: 63px;">
                 <span @click="openNewLink(findDataByCode('CEPL')?.terraceShowUrl)">
                   {{ findDataByCode("CEPL")?.terraceName }}
                 </span>
@@ -388,7 +388,7 @@
                   :end-color="getDataStatus('CEPL', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('CEPL')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="top: -27px; left: 59px"
+                  style="top: -27px; left: 59px;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="125px"
@@ -398,7 +398,7 @@
                 />
               </div>
               <!-- EPP -->
-              <div :class="[getDataStatus('EPP', 'class'),findDataByCode('EPP')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 178px; top: 57px">
+              <div :class="[getDataStatus('EPP', 'class'),findDataByCode('EPP')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 178px; top: 57px;">
                 <span @click="openNewLink(findDataByCode('EPP')?.terraceShowUrl)">
                   {{ findDataByCode("EPP")?.terraceName }}
                 </span>
@@ -408,7 +408,7 @@
                   :end-color="getDataStatus('EPP', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('EPP')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="left: -127px; top: -21px"
+                  style="left: -127px; top: -21px;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="125px"
@@ -442,7 +442,7 @@
             :end-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
             class="svgClass"
             :class="[findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.pointShowUrl?'pointerCursor':'autoCursor']"
-            style="left: 100px; top: 34px"
+            style="left: 100px; top: 34px;"
             div-stroke-width="6"
             ball-stroke-width="5"
             svg-width="435px"
@@ -457,7 +457,7 @@
             :end-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
             class="svgClass"
             :class="[findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.pointShowUrl?'pointerCursor':'autoCursor']"
-            style="left: 100px; top: 34px"
+            style="left: 100px; top: 34px;"
             div-stroke-width="6"
             ball-stroke-width="5"
             svg-width="20px"
@@ -466,7 +466,7 @@
             @click-line="openPointsLink(findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.pointShowUrl)"
           />
           <div class="centerSystem g-w100 g-h100">
-            <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px">
+            <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px;">
               <div
                 class="mainSize"
                 :class="[getDataStatus('FPSO', 'class'),findDataByCode('FPSO')?.terraceShowUrl?'pointerCursor':'autoCursor']"
@@ -499,7 +499,7 @@
             :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
             class="svgClass"
             :class="[findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl?'pointerCursor':'autoCursor']"
-            style="left: 745px; top: 34px"
+            style="left: 745px; top: 34px;"
             div-stroke-width="6"
             ball-stroke-width="5"
             svg-width="435px"
@@ -514,7 +514,7 @@
             :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
             class="svgClass"
             :class="[findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl?'pointerCursor':'autoCursor']"
-            style="left: 1167px; top: 34px;z-index: 1 !important"
+            style="left: 1167px; top: 34px;z-index: 1 !important;"
             div-stroke-width="6"
             ball-stroke-width="5"
             svg-width="20px"
@@ -525,7 +525,7 @@
           <!-- CEPI -->
           <!-- :style="{ height: isFullScreen ? '990px' : '530px' }" -->
           <div class="rightSystem g-w100 g-h100">
-            <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px">
+            <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px;">
               <div
                 class="mainSize"
                 :class="getDataStatus('CEPI', 'class')"
@@ -534,7 +534,7 @@
                 {{ findDataByCode("CEPI")?.terraceName }}
               </div>
               <!-- WHPH -->
-              <div :class="[getDataStatus('WHPH', 'class'),findDataByCode('WHPH')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 189px; top: -51px">
+              <div :class="[getDataStatus('WHPH', 'class'),findDataByCode('WHPH')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 189px; top: -51px;">
                 <span @click="openNewLink(findDataByCode('WHPH')?.terraceShowUrl)">
                   {{ findDataByCode("WHPH")?.terraceName }}
                 </span>
@@ -544,7 +544,7 @@
                   :end-color="getDataStatus('WHPH', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('WHPH')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="left: -126px; top: 0"
+                  style="left: -126px; top: 0;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="125px"
@@ -554,7 +554,7 @@
                 />
               </div>
               <!-- WHPB -->
-              <div :class="[getDataStatus('WHPH', 'class'),findDataByCode('WHPB')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: -165px; top: 63px">
+              <div :class="[getDataStatus('WHPH', 'class'),findDataByCode('WHPB')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: -165px; top: 63px;">
                 <span @click="openNewLink(findDataByCode('WHPB')?.terraceShowUrl)">
                   {{ findDataByCode("WHPB")?.terraceName }}
                 </span>
@@ -564,7 +564,7 @@
                   :end-color="getDataStatus('WHPB', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('WHPB')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="top: -28px; left: 59px"
+                  style="top: -28px; left: 59px;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="125px"
@@ -574,7 +574,7 @@
                 />
               </div>
               <!-- WHPC -->
-              <div :class="[getDataStatus('WHPC', 'class'),findDataByCode('WHPC')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 215px; top: 3px">
+              <div :class="[getDataStatus('WHPC', 'class'),findDataByCode('WHPC')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 215px; top: 3px;">
                 <span @click="openNewLink(findDataByCode('WHPC')?.terraceShowUrl)">{{
                   findDataByCode("WHPC")?.terraceName
                 }}</span>
@@ -584,7 +584,7 @@
                   :end-color="getDataStatus('WHPC', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('WHPC')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="left: -127px; top: 3px"
+                  style="left: -127px; top: 3px;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="126px"
@@ -594,7 +594,7 @@
                 />
               </div>
               <!-- CEPK -->
-              <div :class="[getDataStatus('CEPK', 'class'),findDataByCode('CEPK')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: -186px; top: 3px">
+              <div :class="[getDataStatus('CEPK', 'class'),findDataByCode('CEPK')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: -186px; top: 3px;">
                 <span @click="openNewLink(findDataByCode('CEPK')?.terraceShowUrl)">{{
                   findDataByCode("CEPK")?.terraceName
                 }}</span>
@@ -604,7 +604,7 @@
                   :end-color="getDataStatus('CEPK', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('CEPK')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="top: 3px; left: 59px"
+                  style="top: 3px; left: 59px;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="126px"
@@ -614,7 +614,7 @@
                 />
               </div>
               <!-- WHPD -->
-              <div :class="[getDataStatus('WHPD', 'class'),findDataByCode('CEPK')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 190px; top: 63px">
+              <div :class="[getDataStatus('WHPD', 'class'),findDataByCode('CEPK')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 190px; top: 63px;">
                 <span @click="openNewLink(findDataByCode('WHPD')?.terraceShowUrl)">{{
                   findDataByCode("WHPD")?.terraceName
                 }}</span>
@@ -624,7 +624,7 @@
                   :end-color="getDataStatus('WHPD', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('WHPD')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="left: -126px; top: -27px"
+                  style="left: -126px; top: -27px;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="125px"
@@ -634,7 +634,7 @@
                 />
               </div>
               <!-- WHPG -->
-              <div :class="[getDataStatus('WHPG', 'class'),findDataByCode('CEPK')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 18px; top: 93px">
+              <div :class="[getDataStatus('WHPG', 'class'),findDataByCode('CEPK')?.terraceShowUrl?'pointerCursor':'autoCursor']" style="position: absolute; left: 18px; top: 93px;">
                 <span @click="openNewLink(findDataByCode('WHPG')?.terraceShowUrl)">
                   {{ findDataByCode("WHPG")?.terraceName }}
                 </span>
@@ -644,7 +644,7 @@
                   :end-color="getDataStatus('WHPG', 'color')"
                   class="svgClass"
                   :class="[findDataByCode('WHPG')?.terraceShowUrl?'pointerCursor':'autoCursor']"
-                  style="left: 13px; top: -57px"
+                  style="left: 13px; top: -57px;"
                   div-stroke-width="6"
                   ball-stroke-width="5"
                   svg-width="20px"

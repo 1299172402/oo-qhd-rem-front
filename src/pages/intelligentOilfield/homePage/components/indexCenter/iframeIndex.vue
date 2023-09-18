@@ -1,6 +1,6 @@
 <!-- 指标中心-iframe指标嵌入代码片段 -->
 <template>
-  <div style="font-size: 14px;padding: 10px;color: rgba(144,144,144,1)" class="g-w100 g-h100">
+  <div style="font-size: 14px;padding: 10px;color: rgba(144, 144, 144, 1);" class="g-w100 g-h100">
     <!-- eslint-disable vue/no-v-html -->
     <div ref="htmlDiv" class="g-w100 g-h100" v-html="templateHtml" />
   </div>

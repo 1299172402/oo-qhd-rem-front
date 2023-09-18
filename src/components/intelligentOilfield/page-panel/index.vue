@@ -10,7 +10,7 @@
       <div style="width: 70%;">
         {{ headerTitle }}
       </div>
-      <div v-if="showBtn" style="width: 30%;text-align: right">
+      <div v-if="showBtn" style="width: 30%;text-align: right;">
         <el-tooltip
           class="item"
           effect="dark"
@@ -25,7 +25,7 @@
         </el-tooltip>
       </div>
     </div>
-    <div style="padding: 20px;height: calc(100% - 32px)" class="g-w100" :class="isMax ? $store.state.setting.mode === 'dark' ? 'maxDetail' : '' : ''">
+    <div style="padding: 20px;height: calc(100% - 32px);" class="g-w100" :class="isMax ? $store.state.setting.mode === 'dark' ? 'maxDetail' : '' : ''">
       <slot />
     </div>
   </div>
@@ -74,8 +74,8 @@ export default {
   margin: 0;
 }
 
-.maxDetail{
-  background-image: linear-gradient(360deg, rgba(0, 68, 115, 0.64) 0%, rgba(0, 72, 122, 0.16) 100%), url('/src/assets/backgroundImg.png');
+.maxDetail {
+  background-image: linear-gradient(360deg, rgba(0, 68, 115, 0.64) 0%, rgba(0, 72, 122, 0.16) 100%), url("/src/assets/backgroundImg.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -92,7 +92,6 @@ export default {
   cursor: pointer;
   color: #fff;
   margin-right: 20px;
-  fill: currentcolor
-
+  fill: currentcolor;
 }
 </style>

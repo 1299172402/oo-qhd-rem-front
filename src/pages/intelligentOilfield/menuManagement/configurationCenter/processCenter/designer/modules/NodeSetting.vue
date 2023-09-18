@@ -39,7 +39,7 @@
       </el-button>
     </el-form>
     <el-button
-      style="margin: 10px 0;width: 140px"
+      style="margin: 10px 0;width: 140px;"
       type="info"
       icon="el-icon-back"
       @click="$emit('cancel')"
@@ -256,7 +256,8 @@ export default {
 </script>
 <style scoped lang="less">
 .gap--left {
-  ::v-deep .el-upload,.el-upload--text {
+  ::v-deep .el-upload,
+  .el-upload--text {
     margin-right: 20px;
     border: none;
   }
@@ -302,7 +303,6 @@ export default {
 
 ::v-deep .el-collapse-item__wrap {
   background-color: transparent;
-
 }
 
 .gap-container {

@@ -1,6 +1,6 @@
 <!-- 应用中心组件 -->
 <template>
-  <div style="font-size: 20px" class="g-w100 g-h100">
+  <div style="font-size: 20px;" class="g-w100 g-h100">
     <el-dialog
       title="内容设置-应用中心"
       :visible.sync="openDialog"
@@ -36,13 +36,13 @@
           ></el-input>
         </div>
                             </template> -->
-      <div style="padding: 20px">
+      <div style="padding: 20px;">
         <div class="g-row-flex g-h100 divBox" style="flex-wrap: no-wrap;">
           <div
             v-for="(item, index) in list"
             :key="index"
             class="g-column-flex-H"
-            style="position: relative;padding: 20px; justify-content: space-around; flex-wrap: wrap;cursor: pointer"
+            style="position: relative;padding: 20px; justify-content: space-around; flex-wrap: wrap;cursor: pointer;"
             @click="toClick(item)"
           >
             <img
@@ -50,11 +50,11 @@
               :src="item.appImg ? item.appImg : ''"
               alt=""
               class="imgSetting"
-              style="width: 40px;height: 40px"
+              style="width: 40px;height: 40px;"
               @error="imgError(item)"
             >
             <!-- 增加未上传图标显示默认图标+首字母 -->
-            <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
+            <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px;">
               {{ item.appName[0] }}
             </div>
             <span class="textSpan">{{ item.appName }}</span>
@@ -290,7 +290,7 @@ export default {
 </style>
 
 <style scoped>
-.myHeader>>>.el-tabs__item {
+.myHeader >>> .el-tabs__item {
   padding: 0 10px;
 }
 

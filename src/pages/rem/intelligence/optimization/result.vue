@@ -1,12 +1,12 @@
 <template>
     <div style="height:100%;">
         <div class="titleBox">
-<!--            <el-tabs v-model="activeName" class="g-pageHeader">-->
-<!--                <el-tab-pane label="定产配注" name="first"></el-tab-pane>-->
-<!--                <el-tab-pane label="智能配注" name="second">-->
-<!--                    &lt;!&ndash; <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> &ndash;&gt;-->
-<!--                </el-tab-pane>-->
-<!--            </el-tabs>-->
+            <el-tabs v-model="activeName" class="g-pageHeader">
+                <el-tab-pane label="定产配注" name="first"></el-tab-pane>
+                <el-tab-pane label="智能配注" name="second">
+                    <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
+                </el-tab-pane>
+            </el-tabs>
         </div>
         <header-search height="auto">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
@@ -61,7 +61,7 @@
         <pagePanelNew style="height: calc(100% - 100px)">
             <el-row v-if="activeName == 'first'" :gutter="20" style="margin: 0px 20px;height: 100%">
                 <el-col :span="6" style="height:100%">
-                    <pagePanel :headerTitle="title1"
+                    <pagePanel :headerTitle="title1" show-btn
                                style="height:calc(100% - 25px)">
                         <el-table
                             v-loading="sigleWellTable.length>0?false:true"
@@ -90,7 +90,7 @@
                     </pagePanel>
                 </el-col>
                 <el-col :span="18" style="height:100%">
-                    <pagePanel :headerTitle="title2" style="height:calc(100% - 25px)">
+                    <pagePanel :headerTitle="title2" style="height:calc(100% - 25px)" show-btn>
                         <div class="buttonBox">
                             <el-button class="button" icon="el-icon-search" @click="assessBut">可行性评估</el-button>
                             <!-- @click="modify = true" -->

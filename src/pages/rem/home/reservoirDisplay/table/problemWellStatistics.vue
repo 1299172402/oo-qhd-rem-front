@@ -6,7 +6,7 @@
                 <headerSearch class="g-w100 g-h100" style="height: auto">
                     <el-form :model="queryParams" :inline="true" style="margin-top: 18px">
                         <el-form-item label="油田:" style="margin-left:20px">
-                            <el-select v-model="queryParams.ogfId" disabled style="width: 160px;">
+                            <el-select v-model="queryParams.ogfId" @change="choicepla" style="width: 160px;">
                                 <el-option v-for="(item, index) in oilFields" :key="index" :label="item.ogfName"
                                            :value="item.ogfId">
                                 </el-option>
@@ -214,6 +214,17 @@ export default {
                 this.wellList = res.data.data;
             });
         },
+        choicepla(val){
+            queryListOfOilfieldQueryPlatformsDetail({ogfId:val}).then(res=>{
+                this.platforms = res.data.data
+            })
+            const requestPlat = {
+                ogfId: this.queryParams.ogfId,
+            };
+            queryPlatformQueryWellListDetail(requestPlat).then((res) => {
+                this.wellList = res.data.data;
+            });
+        },
         downTable(){
             queryProblemWellStatisDetailsDownloadFile(this.queryParams).then((res)=>{
                 const aBlob = new Blob([res]);
@@ -241,8 +252,11 @@ export default {
         },
         // 重置
         reset() {
+            this.queryParams.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
+            this.choicepla(this.queryParams.ogfId)
             this.queryParams.assetCode = ''
             this.queryParams.wellId = ''
+           
             this.queryParams.yearDate = '2022'
             this.getlist()
             // this.getInfo()

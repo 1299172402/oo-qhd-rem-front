@@ -47,7 +47,7 @@
                   @change="onLineChange"
                 />
               </template>
-              <div id="lineContainer" style="width: 100%; height: 330px" />
+              <div id="lineContainer" style="width: 100%; height: 330px;" />
             </t-card>
           </t-tab-panel>
           <t-tab-panel value="third" label="内容列表">

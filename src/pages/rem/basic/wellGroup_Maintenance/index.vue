@@ -10,7 +10,7 @@
                 <el-form :inline="true" label-width="40px">
                     <el-form-item label="油田:">
                         <el-select v-model="query.selectField" style="margin-left: 20px" class="f2"
-                                   @change="changeOilfield" disabled>
+                                   @change="changeOilfield">
                             <el-option
                                 v-for="item in options"
                                 :key="item.ogfId"
@@ -534,7 +534,7 @@ export default {
         },
         // 获取油田下拉数据
         selectData() {
-            getoilfield().then(({ogfId}) => {
+            getoilfield({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(({ogfId}) => {
                 this.options = ogfId;
             });
         },

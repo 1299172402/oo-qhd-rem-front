@@ -220,7 +220,8 @@ export default {
   padding-bottom: 0;
   padding-top: 0;
 
-  .form-model__content,.form-model__content-half {
+  .form-model__content,
+  .form-model__content-half {
     height: 100%;
     padding-bottom: 52px;
   }

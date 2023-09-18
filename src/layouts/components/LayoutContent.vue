@@ -27,7 +27,7 @@
           >
             <template v-if="!route.isHome">
               <el-tooltip :content="route.title+(route.query?.pathName?'-'+route.query?.pathName:'')">
-                <div style="max-width: 400px;text-overflow: ellipsis;overflow: hidden;white-space: pre">
+                <div style="max-width: 400px;text-overflow: ellipsis;overflow: hidden;white-space: pre;">
                   {{ route.title+(route.query?.pathName?'-'+route.query?.pathName:'') }}
                 </div>
               </el-tooltip>

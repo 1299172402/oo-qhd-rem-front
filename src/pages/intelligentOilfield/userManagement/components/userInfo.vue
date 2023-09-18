@@ -40,7 +40,7 @@
       label-width="80px"
       class="userInfo"
     >
-      <div class="headerinfo" style="margin-bottom: 30px">
+      <div class="headerinfo" style="margin-bottom: 30px;">
         账号
       </div>
       <el-row>
@@ -145,7 +145,7 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <div class="headerinfo" style="margin-bottom: 30px">
+      <div class="headerinfo" style="margin-bottom: 30px;">
         角色与岗位信息
       </div>
       <el-row>
@@ -513,7 +513,7 @@ export default {
 }
 
 /deep/ .el-tag {
-  color: #6f858f
+  color: #6f858f;
 }
 
 /deep/ .customSelect .el-input--suffix {

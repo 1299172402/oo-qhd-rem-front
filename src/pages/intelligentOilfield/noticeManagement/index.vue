@@ -13,7 +13,7 @@
             v-model="queryParams.tenantId"
             placeholder="请选择通知租户"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="(item, index) in tenantSelect"
@@ -28,7 +28,7 @@
             v-model="queryParams.noticeContent"
             placeholder="请输入通知内容"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -37,7 +37,7 @@
             v-model="queryParams.createBy"
             placeholder="请输入操作人员"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -46,7 +46,7 @@
             v-model="queryParams.noticeType"
             placeholder="请选择类型"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="(item, index) in types"
@@ -207,7 +207,7 @@
                 type="textarea"
                 resize="none"
                 :autosize="{ minRows: 2, maxRows: 6}"
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请输入内容"
               />
             </el-form-item>
@@ -218,7 +218,7 @@
             <el-form-item label="通知类型" prop="noticeType">
               <el-select
                 v-model="addform.noticeType"
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请选择应用"
                 clearable
               >
@@ -240,7 +240,7 @@
                   即刻发送
                 </el-radio>
               </div>
-              <div style="display: flex; align-items: center">
+              <div style="display: flex; align-items: center;">
                 <el-radio v-model="addform.radio" :label="2">
                   定时发送
                 </el-radio>
@@ -266,7 +266,7 @@
                 :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
                 :default-expand-all="isExpandAll"
                 height="auto"
-                style="max-height: 500px; overflow: scroll;width: 310px;max-width: 310px"
+                style="max-height: 500px; overflow: scroll;width: 310px;max-width: 310px;"
                 @selection-change="handleSelectionChange1"
               >
                 <el-table-column type="selection" width="50" align="center" />

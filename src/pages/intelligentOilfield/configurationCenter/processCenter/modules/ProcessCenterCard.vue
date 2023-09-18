@@ -241,7 +241,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   height: 50px;
-  background-color: rgba(0, 117, 233, 0.10);
+  background-color: rgba(0, 117, 233, 0.1);
 
   .card-button-item {
     border: none;

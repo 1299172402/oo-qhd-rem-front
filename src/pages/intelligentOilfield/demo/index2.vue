@@ -13,12 +13,12 @@
       ref="dataOptionLine"
       :chart-data-options="dataOptionLine"
       echarts-type="line1"
-      style="width: 600px; height: 400px"
+      style="width: 600px; height: 400px;"
     />
     <div class="spaceMargin">
       1.2、多Y轴折线图
     </div>
-    <charts-components ref="char8" :chart-data-options="char8" style="width: 600px; height: 400px" />
+    <charts-components ref="char8" :chart-data-options="char8" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.3、柱状折线混合图（设置了x轴文字过长显示）
     </div>
@@ -26,28 +26,28 @@
       ref="dataZhuzhuang"
       :chart-data-options="dataZhuzhuang"
       echarts-type="bar1"
-      style="width: 600px; height: 400px"
+      style="width: 600px; height: 400px;"
     />
     <div class="spaceMargin">
       1.4、散点图
     </div>
-    <charts-components ref="char4" :chart-data-options="char4" style="width: 600px; height: 400px" />
+    <charts-components ref="char4" :chart-data-options="char4" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.5、横线柱状单一堆叠图
     </div>
-    <charts-components ref="char5" :chart-data-options="char5" style="width: 600px; height: 100px" />
+    <charts-components ref="char5" :chart-data-options="char5" style="width: 600px; height: 100px;" />
     <div class="spaceMargin">
       1.6、横向柱状图
     </div>
-    <charts-components ref="char6" :chart-data-options="char6" style="width: 600px; height: 400px" />
+    <charts-components ref="char6" :chart-data-options="char6" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.7、多柱柱状图
     </div>
-    <charts-components ref="char7" :chart-data-options="char7" style="width: 1000px; height: 400px" />
+    <charts-components ref="char7" :chart-data-options="char7" style="width: 1000px; height: 400px;" />
     <div class="spaceMargin">
       1.8、横向堆叠柱状图
     </div>
-    <charts-components ref="char10" :chart-data-options="char10" style="width: 600px; height: 400px" />
+    <charts-components ref="char10" :chart-data-options="char10" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.9、环形图
     </div>
@@ -55,44 +55,44 @@
       ref="dataOption"
       :chart-data-options="dataOption"
       echarts-type="pie1"
-      style="width: 400px; height: 400px"
+      style="width: 400px; height: 400px;"
     />
     <div class="spaceMargin">
       1.10、半环形图
     </div>
-    <charts-components :chart-data-options="char3" style="width: 600px; height: 400px" />
+    <charts-components :chart-data-options="char3" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.11、雷达图A（单维度）
     </div>
-    <charts-components :chart-data-options="char1" style="width: 600px; height: 400px" />
+    <charts-components :chart-data-options="char1" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.12、雷达图B（多维度）
     </div>
-    <charts-components :chart-data-options="char2" style="width: 600px; height: 400px" />
+    <charts-components :chart-data-options="char2" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.13、仪表盘A
     </div>
-    <charts-components :chart-data-options="char9" style="width: 600px; height: 400px" />
+    <charts-components :chart-data-options="char9" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.14、仪表盘B
     </div>
-    <charts-components :chart-data-options="char11" style="width: 600px; height: 400px" />
+    <charts-components :chart-data-options="char11" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.15、仪表盘C
     </div>
-    <charts-components :chart-data-options="char12" style="width: 600px; height: 400px" />
+    <charts-components :chart-data-options="char12" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.16、水球图A
     </div>
-    <charts-components :chart-data-options="char13" style="width: 600px; height: 400px" />
+    <charts-components :chart-data-options="char13" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.17、水球图B
     </div>
-    <charts-components :chart-data-options="char14" style="width: 600px; height: 400px" />
+    <charts-components :chart-data-options="char14" style="width: 600px; height: 400px;" />
     <div class="spaceMargin">
       1.18、多Y轴状折线图
     </div>
-    <charts-components :chart-data-options="char15" style="width: 600px; height: 400px" />
+    <charts-components :chart-data-options="char15" style="width: 600px; height: 400px;" />
     <!-- TODO: Maybe change back -->
     <!-- <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px" /> -->
     <div class="headerTitle spaceMargin">
@@ -110,7 +110,7 @@
       2.1、d3柱状图
     </div>
     <d-bar :label-list="labelList" :data-list="dataListD3" />
-    <div style="margin: 40px 0">
+    <div style="margin: 40px 0;">
       =================================end========================
     </div>
   </div>

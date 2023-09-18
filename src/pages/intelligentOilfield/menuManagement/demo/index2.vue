@@ -5,11 +5,11 @@
     </div>
     <!-- Progress进度条 -->
     <div>=================================大号进度条=================================</div>
-    <el-progress :percentage="50" style="width: 400px" />
-    <el-progress :percentage="70" style="width: 400px" />
-    <el-progress :percentage="100" status="success" style="width: 400px" />
-    <el-progress :percentage="80" status="warning" style="width: 400px" />
-    <el-progress :percentage="50" status="exception" style="width: 400px" />
+    <el-progress :percentage="50" style="width: 400px;" />
+    <el-progress :percentage="70" style="width: 400px;" />
+    <el-progress :percentage="100" status="success" style="width: 400px;" />
+    <el-progress :percentage="80" status="warning" style="width: 400px;" />
+    <el-progress :percentage="50" status="exception" style="width: 400px;" />
     <el-progress
       type="circle"
       :stroke-width="4"
@@ -46,34 +46,34 @@
     <div>=================================小号进度条=================================</div>
     <el-progress
       :percentage="50"
-      style="width: 200px"
+      style="width: 200px;"
       class="smallProgress"
       :stroke-width="5"
     />
     <el-progress
       :percentage="70"
-      style="width: 200px"
+      style="width: 200px;"
       class="smallProgress"
       :stroke-width="5"
     />
     <el-progress
       :percentage="100"
       status="success"
-      style="width: 200px"
+      style="width: 200px;"
       class="smallProgress"
       :stroke-width="5"
     />
     <el-progress
       :percentage="80"
       status="warning"
-      style="width: 200px"
+      style="width: 200px;"
       class="smallProgress"
       :stroke-width="5"
     />
     <el-progress
       :percentage="50"
       status="exception"
-      style="width: 200px"
+      style="width: 200px;"
       class="smallProgress"
       :stroke-width="5"
     />
@@ -111,10 +111,10 @@
       status="exception"
     />
     <!-- Result结果 -->
-    <div style="margin: 10px 0">
+    <div style="margin: 10px 0;">
       =================================Result结果=================================
     </div>
-    <div style="display: flex">
+    <div style="display: flex;">
       <el-result icon="success" title="应用创建成功" sub-title="这是一句创建成功的描述这是一句创建成功的描述">
         <template slot="extra">
           <el-button type="primary" size="medium">
@@ -137,13 +137,13 @@
       </el-result>
     </div>
     <!-- 表单 -->
-    <div style="margin: 10px 0">
+    <div style="margin: 10px 0;">
       =================================表单=================================
     </div>
     <el-form
       ref="ruleForm"
       :model="ruleForm"
-      style="width: 600px"
+      style="width: 600px;"
       :rules="rules"
       label-width="100px"
       class="demo-ruleForm"
@@ -155,7 +155,7 @@
         <el-select
           v-model="ruleForm.region"
           placeholder="请选择活动区域"
-          style="width: 300px"
+          style="width: 300px;"
           clearable
         >
           <el-option label="区域一" value="shanghai" />
@@ -169,7 +169,7 @@
               v-model="ruleForm.date1"
               type="date"
               placeholder="选择日期"
-              style="width: 100%"
+              style="width: 100%;"
             />
           </el-form-item>
         </el-col>
@@ -178,7 +178,7 @@
         </el-col>
         <el-col :span="11">
           <el-form-item prop="date2">
-            <el-time-picker v-model="ruleForm.date2" placeholder="选择时间" style="width: 100%" />
+            <el-time-picker v-model="ruleForm.date2" placeholder="选择时间" style="width: 100%;" />
           </el-form-item>
         </el-col>
       </el-form-item>
@@ -212,7 +212,7 @@
       </el-form-item>
     </el-form>
     <!-- Transfer穿梭窗 -->
-    <div style="margin: 10px 0">
+    <div style="margin: 10px 0;">
       =================================Transfer穿梭窗=================================
     </div>
     <el-transfer
@@ -227,10 +227,10 @@
       <el-button class="transfer-footer" slot="right-footer" size="small">操作</el-button> -->
     </el-transfer>
 
-    <div style="margin: 10px 0">
+    <div style="margin: 10px 0;">
       =================================页面通用面板【具体使用可参照列表示例页】【老版】=================================
     </div>
-    <page-panel header-title="我是标题" style="height: 600px">
+    <page-panel header-title="我是标题" style="height: 600px;">
       <!-- <div>这里显示主内容，padding为20px</div> -->
       <el-table
         :row-style="{ height: '0px' }"
@@ -268,12 +268,12 @@
         <el-table-column prop="address" label="地址" />
       </el-table>
     </page-panel>
-    <div style="margin: 10px 0">
+    <div style="margin: 10px 0;">
       =================================页面通用面板【具体使用可参照列表示例页】【新增】=================================
     </div>
-    <page-panel-new style="height: 600px" />
+    <page-panel-new style="height: 600px;" />
     <!-- 自定义info信息窗 -->
-    <div style="margin: 10px 0">
+    <div style="margin: 10px 0;">
       =================================自定义info信息窗=================================
     </div>
     <info-window
@@ -282,11 +282,11 @@
       header-title="开采现状分析"
       :is-show-max-btn="true"
     >
-      <div style="padding: 20px">
+      <div style="padding: 20px;">
         放主内容
       </div>
     </info-window>
-    <div style="margin: 40px 0">
+    <div style="margin: 40px 0;">
       =================================end========================
     </div>
     <!-- tab切换按钮：横向，可传值，可传背景色和border色系，可控制深浅色系颜色 -->
@@ -294,11 +294,11 @@
     <horizontalSwitchBtn style="margin-bottom: 10px"></horizontalSwitchBtn>
     <horizontalSwitchBtn :colorList="colorList" :borderList="borderList" :dataList="dataList"></horizontalSwitchBtn> -->
     <!-- Header搜索框部分 -->
-    <div style="margin: 10px 0">
+    <div style="margin: 10px 0;">
       =================================Header搜索框部分=================================
     </div>
     <header-search />
-    <div style="margin: 40px 0">
+    <div style="margin: 40px 0;">
       =================================end========================
     </div>
   </div>

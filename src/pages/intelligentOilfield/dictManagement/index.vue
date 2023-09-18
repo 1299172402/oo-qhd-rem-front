@@ -12,7 +12,7 @@
             v-model="queryParams.dictName"
             placeholder="请输入字典名称"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -21,7 +21,7 @@
             v-model="queryParams.dictType"
             placeholder="请输入字典类型"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -30,7 +30,7 @@
             v-model="queryParams.status"
             placeholder="请选择字典状态"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -43,7 +43,7 @@
         <el-form-item label="创建时间">
           <el-date-picker
             v-model="dateRange"
-            style="width: 240px"
+            style="width: 240px;"
             value-format="yyyy-MM-dd"
             type="daterange"
             range-separator="-"
@@ -81,7 +81,7 @@
             新增
           </el-button>
         </el-col>
-        <el-col :span="4" style="text-align: right;padding-right: 2px">
+        <el-col :span="4" style="text-align: right;padding-right: 2px;">
           <el-button
             v-hasPermi="['system:dict:export']"
             type="primary"

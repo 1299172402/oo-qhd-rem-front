@@ -1,6 +1,6 @@
 <template>
   <result title="" tip="当前用户无该模块访问权限" type="404">
-    <t-button style="background: #409eff" @click="reBack">
+    <t-button style="background: #409eff;" @click="reBack">
       返回门户
     </t-button>
   </result>

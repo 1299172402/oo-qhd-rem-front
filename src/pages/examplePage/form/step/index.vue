@@ -173,7 +173,7 @@
 
       <!-- 分步表单4 -->
       <div v-show="activeForm === 6" class="step-form-4">
-        <check-circle-filled-icon style="color: green" size="52px" />
+        <check-circle-filled-icon style="color: green;" size="52px" />
         <p class="text">
           完成开票申请
         </p>

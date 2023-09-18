@@ -10,7 +10,7 @@
                     <el-row style="margin: 20px 0">
                         <div style="display: inline-block">
                             <span>油田：</span>
-                            <el-select v-model="ogfId" disabled>
+                            <el-select v-model="ogfId" >
                                 <el-option
                                     v-for="(item, index) in oilFields"
                                     :key="index"
@@ -614,7 +614,7 @@ export default {
         },
         initData() {
             //查询条件
-            queryOperatorsCheckFieldListsDetail({}).then(res => {
+            queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res => {
                 if (res.data.code == 200) {
                     this.oilFields = res.data.data
                 }

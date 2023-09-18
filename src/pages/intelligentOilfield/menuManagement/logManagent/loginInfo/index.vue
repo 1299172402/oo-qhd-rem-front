@@ -7,7 +7,7 @@
         :model="queryParams"
         :inline="true"
         label-width="68px"
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
       >
         <el-form-item label="登录地址" prop="ipaddr">
           <el-input
@@ -15,7 +15,7 @@
             placeholder="请输入登录地址"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -25,7 +25,7 @@
             placeholder="请输入用户名称"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -35,7 +35,7 @@
             placeholder="登录状态"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_common_status"
@@ -49,7 +49,7 @@
           <el-date-picker
             v-model="dateRange"
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             value-format="yyyy-MM-dd"
             type="daterange"
             range-separator="-"
@@ -78,8 +78,8 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="登录日志" style="height: calc(100% - 100px)">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+    <page-panel-new header-title="登录日志" style="height: calc(100% - 100px);">
+      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px;">
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:logininfor:export']"
@@ -125,7 +125,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="defaultSort"
         @selection-change="handleSelectionChange"
         @sort-change="handleSortChange"

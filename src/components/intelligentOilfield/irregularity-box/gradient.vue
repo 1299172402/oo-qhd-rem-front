@@ -15,7 +15,7 @@ export default {
 <style scoped>
 .qiejiao {
   /* background: red; */
-  background-image: linear-gradient(-45deg,transparent 10px,lightskyblue 0);
+  background-image: linear-gradient(-45deg, transparent 10px, lightskyblue 0);
   background-size: 100% 100%;
   background-position: right bottom;
   background-repeat: no-repeat;

@@ -4,15 +4,15 @@
     <!-- 2023/05/26注释,为设置自定义快捷入口不同高度 -->
     <!-- TODO: Maybe change back -->
     <!-- :style="[{ height: isQuickEntry ? '28%' : '44%' }]" -->
-    <div style="height: 44%">
-      <div v-if="transferType === '快捷入口'" class="g-row-flex-V" style="margin-bottom: 10px">
-        <div style="margin-right: 10px">
+    <div style="height: 44%;">
+      <div v-if="transferType === '快捷入口'" class="g-row-flex-V" style="margin-bottom: 10px;">
+        <div style="margin-right: 10px;">
           快捷入口名称：
         </div>
         <div>
           <el-input
             v-model="enterInfo"
-            style="width: 220px"
+            style="width: 220px;"
             size="medium"
             clearable
             placeholder="请输入快捷入口名称"
@@ -20,14 +20,14 @@
           />
         </div>
       </div>
-      <div v-if="transferType !== '快捷入口'" class="g-row-flex-V" style="margin-bottom: 10px">
-        <div style="margin-right: 10px">
+      <div v-if="transferType !== '快捷入口'" class="g-row-flex-V" style="margin-bottom: 10px;">
+        <div style="margin-right: 10px;">
           {{ searchName }}：
         </div>
         <div>
           <el-select
             v-model="indicatorSource"
-            style="width: 220px"
+            style="width: 220px;"
             placeholder="请选择"
             clearable
             @change="changeSource(indicatorSource, enterInfo)"
@@ -43,7 +43,7 @@
       </div>
       <div>{{ headerNameList[0].name }}</div>
       <div class="g-row-flex itemStyle" style="height: calc(100% - 82px);">
-        <div v-for="(item, index1) in currentSelectedList" :key="index1" style="margin: 0 10px 5px 0">
+        <div v-for="(item, index1) in currentSelectedList" :key="index1" style="margin: 0 10px 5px 0;">
           <el-tooltip v-if="item.name && item.name.length>12" :content="item.name">
             <el-button
               type="primary"
@@ -64,10 +64,10 @@
     <!-- 2023/05/26注释,为设置自定义快捷入口不同高度 -->
     <!-- TODO: Maybe change back -->
     <!-- :style="[{ height: isQuickEntry ? '28%' : '44%' }]" -->
-    <div style="height: 44%">
+    <div style="height: 44%;">
       <div>{{ headerNameList[1].name }}</div>
       <div class="g-row-flex itemStyle">
-        <div v-for="(item, index) in currentAllList" :key="index" style="margin: 0 10px 5px 0">
+        <div v-for="(item, index) in currentAllList" :key="index" style="margin: 0 10px 5px 0;">
           <el-tooltip v-if="item.name && item.name.length>12" :content="item.name">
             <el-button class="cancelBtn" @click="selectData(item)">
               {{ item.name |btnName }}

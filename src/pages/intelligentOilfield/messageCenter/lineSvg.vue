@@ -28,7 +28,7 @@
             fill: transparent;
             stroke-dasharray: 0, 20;
             stroke-linecap: round;
-          "
+"
           />
         </template>
         <!-- 线路不流动 -->
@@ -46,7 +46,7 @@
             stroke-dasharray: 0, 20;
             stroke-linecap: round;
             animation: dash 0s linear infinite;
-          "
+"
           />
         </template>
       </svg>

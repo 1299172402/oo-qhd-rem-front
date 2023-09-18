@@ -185,24 +185,25 @@
                                     :cell-style="{ padding: '6px', 'text-align': 'center' }"
                                     :default-sort="{ prop: 'date', order: 'descending' }"
                                     height="calc(100% - 55px)"
-                                    @sort-change="changeTableSort" ref="tableList"
+                                     ref="tableList"
                                     row-key="id"
                                     default-expand-all
                                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
-                                    <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left" width="160"></el-table-column>
+                                    <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellId')}" fixed="left" width="160"></el-table-column>
                                     <el-table-column prop="productionProblems" label="生产问题" align="center">
-                                        <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                        <el-table-column label-class-name="twoRowHeader" width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index10-${index}`" :prop="item.code" :label="item.name" align="center" sortable="custom">
+                                        <el-table-column width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index10-${index}`" :prop="item.code" :label="item.name" align="center" :sort-method="(a, b) => {return borepipeNoSort(a, b, item.code)}">
                                             <template #header>
-                                                <div v-if="item.unit">
+                                               <div>
+                                                <div v-if="borepipeNoSort">
                                                     <span>{{item.name}}</span>
                                                     <br />
-                                                    <span>{{item.unit}}</span>
+                                                    <span>({{item.unit}})</span>
                                                 </div>
                                                 <div v-else>
                                                     <span>{{item.name}}</span>
                                                 </div>
+                                               </div>
                                             </template>
                                             <template slot-scope="{row}">
                                                 <span style="display: flex;align-items: center;justify-content: center;">
@@ -527,21 +528,19 @@
                                     :cell-style="{ padding: '6px', 'text-align': 'center' }"
                                     :default-sort="{ prop: 'date', order: 'descending' }"
                                     height="calc(100% - 55px)"
-                                    @sort-change="changeTableSort" 
                                     ref="tableList"
                                     row-key="id"
                                     default-expand-all
                                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
-                                    <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="borepipeNoSort" fixed="left" width="160"></el-table-column>
+                                    <el-table-column prop="wellId" label="井号" align="center" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellId')}" fixed="left" width="160"></el-table-column>
                                     <el-table-column prop="productionProblems" label="生产问题" align="center">
-                                        <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                        <el-table-column label-class-name="twoRowHeader" width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index24-${index}`" :prop="item.code" :label="item.name" align="center" sortable="custom">
+                                        <el-table-column width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index24-${index}`" :prop="item.code" :label="item.name" align="center" sortable :sort-method="(a, b) => {return borepipeNoSort(a, b, item.code)}">
                                             <template #header>
-                                                <div v-if="item.unit">
+                                                <div v-if="borepipeNoSort">
                                                     <span>{{item.name}}</span>
                                                     <br />
-                                                    <span>{{item.unit}}</span>
+                                                    <span>({{item.unit}})</span>
                                                 </div>
                                                 <div v-else>
                                                     <span>{{item.name}}</span>
@@ -2431,9 +2430,9 @@ export default {
             }
         },
         //自定义井号排序
-        borepipeNoSort(oa, ob) {
-            let wellA = oa.wellId;
-            let wellB = ob.wellId;
+        borepipeNoSort(oa, ob, code) {
+            let wellA = oa[code];
+            let wellB = ob[code];
             return this.wellNoSort(wellA, wellB);
         },
         //下载导出文件 tableId tableName
@@ -2902,5 +2901,16 @@ export default {
 }
 .spActive{
     color:var(--light-blue-color);
+}
+::v-deep .el-table__fixed-body-wrapper {
+    top: 92px;
+}
+::v-deep .el-table__fixed-header-wrapper .cell,
+::v-deep .el-table__header-wrapper .cell {
+    height: auto !important;
+    line-height: 30px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 </style>

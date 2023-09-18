@@ -25,7 +25,7 @@
             <headerSearch style="height: 80px">
                 <div class="g-row-flex-V g-w100 g-h100">
                     <span class="title">油田：</span>
-                    <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled @change="doChangeYt" style="margin-right: 15px">
+                    <el-select v-model="selectOilField" placeholder="请选择" filterable clearable  @change="doChangeYt" style="margin-right: 15px">
                         <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
                     </el-select>
                     <span class="title">平台：</span>

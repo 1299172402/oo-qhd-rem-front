@@ -1,6 +1,6 @@
 <!-- 统计数据组件 -->
 <template>
-  <div style="font-size: 20px" class="g-w100 g-h100">
+  <div style="font-size: 20px;" class="g-w100 g-h100">
     <el-dialog
       title="内容设置-统计数据"
       :visible.sync="openDialog"
@@ -66,7 +66,7 @@
             <div ref="targetElements" :data-index="index" /> <!-- 目标元素，当滚动到该位置时加载子组件 -->
             <div
               v-if="showComponents[index]"
-              style="width: 100%; display: flex"
+              style="width: 100%; display: flex;"
             >
               <div
                 v-for="(items, index1) in item"

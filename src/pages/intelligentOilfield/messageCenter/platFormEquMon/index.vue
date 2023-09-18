@@ -1,6 +1,6 @@
 <!-- 后台——二级页面（平台设备监控和链路状态） -->
 <template>
-  <div class="g-w100 g-h100" style="font-size: 16px; color: #fff">
+  <div class="g-w100 g-h100" style="font-size: 16px; color: #fff;">
     <el-dialog
       :title="dialogTitle"
       :visible.sync="openDialog"
@@ -10,8 +10,8 @@
       custom-class="land-dialog"
       @close="clearSearchList"
     >
-      <div style="height: 93%;padding-left: 13px">
-        <div style="margin-top: 20px">
+      <div style="height: 93%;padding-left: 13px;">
+        <div style="margin-top: 20px;">
           <div class="g-row-flex-V">
             <div class="g-row-flex-V">
               <div>
@@ -21,25 +21,25 @@
                 <el-input
                   v-model="nameInput"
                   clearable
-                  style="width: 220px"
+                  style="width: 220px;"
                   placeholder="请输入设备名称"
                 />
               </div>
             </div>
-            <div class="g-row-flex-V" style="margin: 0 20px">
+            <div class="g-row-flex-V" style="margin: 0 20px;">
               <div>
                 设备编号：
               </div>
               <div>
                 <el-input
                   v-model="codeInput"
-                  style="width: 220px"
+                  style="width: 220px;"
                   placeholder="请输入设备编号"
                   clearable
                 />
               </div>
             </div>
-            <div style="margin-left: 10px">
+            <div style="margin-left: 10px;">
               <el-button type="primary" class="buttonActive_primary" @click="handleQuery">
                 搜索
               </el-button>
@@ -54,11 +54,11 @@
             v-for="(item, index) in searchList"
             :key="index"
             class="typeClass"
-            style="margin-top: 20px"
+            style="margin-top: 20px;"
           >
             <div
               class="bgClass g-row-flex-V g-w100 g-h100"
-              style="width: 170px;margin: 0 12px 0 0;padding-right: 18px"
+              style="width: 170px;margin: 0 12px 0 0;padding-right: 18px;"
               :style="{
                 background: $store.state.setting.mode === 'dark' ? 'rgba(0,169,159,0.3)' : 'rgba(44, 88, 118, 1)',
               }"
@@ -67,7 +67,7 @@
                 v-if="item.passStatus === '1'"
                 class="circleStyle"
                 :style="{ background: item.status == '1' ? '#32cd32' : 'red' }"
-                style="flex-shrink: 0"
+                style="flex-shrink: 0;"
               />
               <el-tooltip
                 class="item"
@@ -107,12 +107,12 @@
         >
           <div
             class="g-column-flex-HV"
-            style="height: 44px; margin-right: 20px; position: relative"
+            style="height: 44px; margin-right: 20px; position: relative;"
           >
             物联网平台
           </div>
         </div>
-        <div style="height: calc(100% - 60px); position: relative; z-index: 0;padding: 75px 0 0 70px;overflow-y: scroll;overflow-x: hidden" class="g-w100 g-row-flex">
+        <div style="height: calc(100% - 60px); position: relative; z-index: 0;padding: 75px 0 0 70px;overflow-y: scroll;overflow-x: hidden;" class="g-w100 g-row-flex">
           <div
             class="g-row-flex g-w100"
             style="align-content: flex-start;flex-wrap: wrap;height: 100%;"
@@ -136,7 +136,7 @@
               />
               <div
                 class="bgClass g-row-flex-V g-w100 g-h100 typeClass"
-                style="cursor: pointer;margin-top: 0;z-index: 0;width: 180px;margin-left: 62px;padding-right: 18px"
+                style="cursor: pointer;margin-top: 0;z-index: 0;width: 180px;margin-left: 62px;padding-right: 18px;"
                 :style="{
                   background: $store.state.setting.mode === 'dark' ? 'rgba(0,169,159,0.3)' : 'rgba(44, 88, 118, 1)',
                 }"
@@ -145,7 +145,7 @@
                 <div
                   v-show="item.runningState"
                   class="circleStyle"
-                  style="flex-shrink: 0"
+                  style="flex-shrink: 0;"
                   :style="{ background: item.runningState === '1' ? '#32cd32' : 'red' }"
                 />
                 <!-- TODO: Maybe change back -->
@@ -180,12 +180,12 @@
         <div class="g-w100 g-h100 g-column-flex-V" style="margin-left: 200px;">
           <div
             class="pageGreen g-column-flex-HV"
-            style="margin-right: 26px; height: 500px"
+            style="margin-right: 26px; height: 500px;"
             :style="{
               background: $store.state.setting.mode === 'dark' ? 'rgba(45,141,92,0.3)' : 'rgba(45,141,92,0.6)',
             }"
           >
-            <div style="margin-bottom: 10px">
+            <div style="margin-bottom: 10px;">
               {{ parentSignList[0]?.[1] }}
             </div>
 
@@ -197,7 +197,7 @@
                   :start-color="parentSignList[0]?.[3] === '0' ? 'red' : '#32cd32'"
                   :end-color="parentSignList[0]?.[3] === '0' ? 'red' : '#32cd32'"
                   class="svgClass"
-                  style="top: 0;left: 220px;margin-top: 0;background: green"
+                  style="top: 0;left: 220px;margin-top: 0;background: green;"
                   svg-height="340px"
                   svg-width="736px"
                   set-points="0,25 700,25 700,325 736,325"
@@ -272,7 +272,7 @@
           </div>
           <div
             class="pageGreen g-column-flex-HV"
-            style="margin: 20px 26px 20px 0;height: 120px"
+            style="margin: 20px 26px 20px 0;height: 120px;"
             :style="{
               background: $store.state.setting.mode === 'dark' ? 'rgba(45,141,92,0.3)' : 'rgba(45,141,92,0.6)',
             }"
@@ -281,7 +281,7 @@
               {{ parentSignList[1]?.[1] }}
             </div>
             <div class="g-column-flex-HV">
-              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px">
+              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;">
                 {{ parentSignList[1]?.[1] }}
                 <line-svg
                   :linear-id="parentSignList[1]?.[2]"
@@ -338,12 +338,12 @@
           </div>
           <div
             class="pageGreen g-column-flex-HV"
-            style="margin: 0 26px 0 0; height: 550px"
+            style="margin: 0 26px 0 0; height: 550px;"
             :style="{
               background: $store.state.setting.mode === 'dark' ? 'rgba(45,141,92,0.3)' : 'rgba(45,141,92,0.6)',
             }"
           >
-            <div style="margin-bottom: 10px">
+            <div style="margin-bottom: 10px;">
               {{ parentSignList[2]?.[1] }}
             </div>
             <div class="g-column-flex-HV">
@@ -360,7 +360,7 @@
                   set-points="0,25 700,25 700,26"
                 />
               </div>
-              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px">
+              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;">
                 {{ initList[keys[2]]?.[0].terraceName }}
                 <line-svg
                   :linear-id="initList[keys[2]]?.[0]?.terraceCode"
@@ -373,7 +373,7 @@
                   set-points="0,25 700,25 700,26"
                 />
               </div>
-              <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px">
+              <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px;">
                 {{ initList[keys[2]]?.[1].terraceName }}
                 <line-svg
                   :linear-id="initList[keys[2]]?.[1]?.terraceCode"
@@ -386,7 +386,7 @@
                   set-points="0,25 700,25 700,26"
                 />
               </div>
-              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;position: relative">
+              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;position: relative;">
                 {{ initList[keys[2]]?.[2].terraceName }}
                 <line-svg
                   :linear-id="initList[keys[2]]?.[2]?.terraceCode"
@@ -399,7 +399,7 @@
                   set-points="0,25 700,25 700,26"
                 />
               </div>
-              <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px;position: relative">
+              <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px;position: relative;">
                 {{ initList[keys[2]]?.[3].terraceName }}
                 <line-svg
                   :linear-id="initList[keys[2]]?.[3]?.terraceCode"
@@ -412,7 +412,7 @@
                   set-points="0,25 700,25 700,26"
                 />
               </div>
-              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;position: relative">
+              <div class="greenBtn g-column-flex-HV" style="margin: 0 10px;position: relative;">
                 {{ initList[keys[2]]?.[4].terraceName }}
                 <line-svg
                   :linear-id="initList[keys[2]]?.[4]?.terraceCode"
@@ -425,7 +425,7 @@
                   set-points="0,25 700,25 700,26"
                 />
               </div>
-              <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px;position: relative">
+              <div class="greenBtn g-column-flex-HV" style="margin: 5px 10px;position: relative;">
                 {{ initList[keys[2]]?.[5].terraceName }}
                 <line-svg
                   :linear-id="initList[keys[2]]?.[5]?.terraceCode"
@@ -443,7 +443,8 @@
         </div>
         <div
           class="bgClass g-column-flex-HV"
-          style="height: 244px; background: rgba(0, 100, 169, 0.3); margin-right: 240px; position: relative;width: 280px;margin-left: 62px"
+          style="height: 244px; background: rgba(0, 100, 169, 0.3);
+          margin-right: 240px; position: relative;width: 280px;margin-left: 62px;"
           :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(0,100,169,0.3)' : 'rgba(43, 143, 229, 1)' }"
         >
           物联网平台

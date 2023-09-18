@@ -12,7 +12,7 @@
     <transition name="mybox">
       <div class="box" v-show="boxshow"></div>
       </transition> -->
-    <div style="color: transparent;width: 100%;height: 10px;position: absolute;bottom: 0" @mouseenter="sliderBtn = false">
+    <div style="color: transparent;width: 100%;height: 10px;position: absolute;bottom: 0;" @mouseenter="sliderBtn = false">
       <!-- 未完 -->
     </div>
     <transition name="fade">
@@ -62,7 +62,7 @@ export default {
   color: var(--white-color);
   position: absolute;
   bottom: 50%;
-  transform: translate(0,50%);
+  transform: translate(0, 50%);
   cursor: pointer;
 }
 
@@ -89,4 +89,5 @@ export default {
 
 .slider-leave-to {
   transition: opacity 1s;
-}</style>
+}
+</style>
