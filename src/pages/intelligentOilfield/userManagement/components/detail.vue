@@ -9,10 +9,10 @@
           header-title="用户基础信息"
           :header-style="$store.state.setting.mode === 'dark' ? {} : {color:'#0075E9'}"
         >
-          <div style="padding: 10px 20px;overflow: scroll" class="g-w100 g-h100">
+          <div style="padding: 10px 20px;overflow: scroll;" class="g-w100 g-h100">
             <div class="text-center">
               <user-avatar :user="allDatas" />
-              <div style="margin-bottom: 20px">
+              <div style="margin-bottom: 20px;">
                 {{ user.nickName ? user.nickName : "无" }}
               </div>
             </div>
@@ -71,7 +71,7 @@
           header-title="用户账号信息"
           :header-style="$store.state.setting.mode === 'dark' ? {} : {color:'#0075E9'}"
         >
-          <div style="padding: 10px 20px;overflow: scroll" class="g-w100 g-h100">
+          <div style="padding: 10px 20px;overflow: scroll;" class="g-w100 g-h100">
             <user-info
               :user="allDatas"
               :role-options="roleOptions"
@@ -160,7 +160,7 @@ export default {
 
 .rightDiv {
   width: calc(100% - 106px);
-  text-align: right
+  text-align: right;
 }
 
 .app-container {
@@ -172,7 +172,7 @@ export default {
     .el-col {
       height: 100%;
 
-      .el-card{
+      .el-card {
         height: 100%;
         overflow: scroll;
       }

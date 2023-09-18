@@ -15,7 +15,7 @@
                 v-model="queryParam.processDefinitionName"
                 placeholder="请输入流程名称"
                 clearable
-                style="width: 240px"
+                style="width: 240px;"
                 @keyup.enter.native="searchQuery"
               />
             </el-form-item>
@@ -25,14 +25,14 @@
                 placeholder="请输入业务名称"
                 clearable
                 size="medium"
-                style="width: 240px"
+                style="width: 240px;"
                 @keyup.enter.native="searchQuery"
               />
             </el-form-item>
             <el-form-item label="状态" prop="postId">
               <el-select
                 v-model="queryParam.instanceStatus"
-                style="width: 240px"
+                style="width: 240px;"
                 placeholder="请选择状态"
                 collapse-tags
                 clearable

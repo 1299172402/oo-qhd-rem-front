@@ -5,7 +5,7 @@
     :element-loading-text="loadingText"
     class="form-section panelBox"
   >
-    <el-card class="box-margin" :class="{'form-view-hide-star': isView, 'form-section__main': true, 'no-border': !border}" style="height: 100%">
+    <el-card class="box-margin" :class="{'form-view-hide-star': isView, 'form-section__main': true, 'no-border': !border}" style="height: 100%;">
       <div class="form-section__content">
         <slot />
       </div>

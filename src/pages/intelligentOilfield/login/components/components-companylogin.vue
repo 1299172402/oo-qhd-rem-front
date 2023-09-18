@@ -8,7 +8,7 @@
     <!-- <div class="english-name">这个公司的Englishname</div> -->
     <!-- </div> -->
     <t-button
-      style="height: 49px; border-radius: 4px; width: 350px; font-size: 18px"
+      style="height: 49px; border-radius: 4px; width: 350px; font-size: 18px;"
       block
       size="large"
       class="login__submit-btn"

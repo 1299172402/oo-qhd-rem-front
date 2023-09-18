@@ -90,7 +90,7 @@
     <div v-for="(item, index) in panelTypeOptions" :key="index">
       <component :is="getContent(item.name)" :list="getList(item.name)" />
     </div>
-    <div style="color: transparent">
+    <div style="color: transparent;">
       占位
     </div>
   </div>

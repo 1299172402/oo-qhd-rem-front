@@ -5,7 +5,7 @@
         ref="queryForm"
         :model="queryParams"
         :inline="true"
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
       >
         <el-form-item label="模拟各租户库都有此员工表-使用master数据源查询" prop="noticeContent" />
         <el-form-item>
@@ -25,7 +25,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ 'text-align': 'center', padding: '2px' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column
@@ -59,7 +59,7 @@
         ref="queryForm"
         :model="queryParams"
         :inline="true"
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
       >
         <el-form-item label="只有共享库有此表-租户库没有该表" prop="noticeContent" />
         <el-form-item>
@@ -79,7 +79,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ 'text-align': 'center', padding: '2px' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column
@@ -101,7 +101,7 @@
         ref="queryForm"
         :model="queryParams"
         :inline="true"
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
       >
         <el-form-item label="只有租户库有此表-共享库库没有该表" prop="noticeContent" />
         <el-form-item>
@@ -121,7 +121,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ 'text-align': 'center', padding: '2px' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column
@@ -143,7 +143,7 @@
         ref="queryForm"
         :model="queryParams"
         :inline="true"
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
       >
         <el-form-item label="共享库-租户库级联查询" prop="noticeContent" />
         <el-form-item>
@@ -163,7 +163,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ 'text-align': 'center', padding: '2px' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column

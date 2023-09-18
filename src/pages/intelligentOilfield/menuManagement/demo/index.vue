@@ -142,7 +142,7 @@
     <el-input
       v-model="input"
       suffix-icon="el-icon-date"
-      style="width: 300px"
+      style="width: 300px;"
       placeholder="请输入角色名称"
     />
     <div class="spaceMargin">
@@ -152,14 +152,14 @@
       v-model="input"
       prefix-icon="el-icon-search"
       disabled
-      style="width: 300px"
+      style="width: 300px;"
       placeholder="请输入角色名称"
     />
 
     <div class="spaceMargin">
       3.3、文本域
     </div>
-    <el-input v-model="input" type="textarea" style="width: 300px" />
+    <el-input v-model="input" type="textarea" style="width: 300px;" />
 
     <div class="headerTitle spaceMargin">
       4、日期选择器=========================================================================================
@@ -173,7 +173,7 @@
     <el-date-picker
       v-model="value1"
       type="daterange"
-      style="width: 400px"
+      style="width: 400px;"
       range-separator="-"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
@@ -184,7 +184,7 @@
     <el-date-picker
       v-model="value1"
       type="datetimerange"
-      style="width: 400px"
+      style="width: 400px;"
       range-separator="-"
       start-placeholder="开始时间"
       end-placeholder="结束时间"
@@ -196,7 +196,7 @@
       v-model="date1"
       type="date"
       placeholder="选择日期"
-      style="width: 400px"
+      style="width: 400px;"
     />
     <div class="spaceMargin">
       4.3、年份选择器
@@ -205,12 +205,12 @@
       v-model="date3"
       type="year"
       placeholder="选择年份"
-      style="width: 400px"
+      style="width: 400px;"
     />
     <div class="spaceMargin">
       4.4、时间选择器
     </div>
-    <el-time-picker v-model="date2" placeholder="选择时间" style="width: 400px" />
+    <el-time-picker v-model="date2" placeholder="选择时间" style="width: 400px;" />
 
     <div class="headerTitle spaceMargin">
       5、table表格=========================================================================================
@@ -221,7 +221,7 @@
       :data="tableData"
       header-cell-class-name="table_header"
       :cell-style="{ padding: '6px', 'text-align': 'center' }"
-      style="width: 700px; margin: 20px 0"
+      style="width: 700px; margin: 20px 0;"
       :default-sort="{ prop: 'date', order: 'descending' }"
     >
       <el-table-column
@@ -285,7 +285,7 @@
       :row-style="{ height: '0px' }"
       header-cell-class-name="table_header"
       :cell-style="{ padding: '6px', 'text-align': 'center' }"
-      style="width: 800px; margin: 20px 0"
+      style="width: 800px; margin: 20px 0;"
       :default-sort="{ prop: 'date', order: 'descending' }"
       :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
     >
@@ -412,28 +412,28 @@
       type="success"
       description="文字说明文字说明文字说明文字说明文字说明文字说明"
       show-icon
-      style="width: 400px"
+      style="width: 400px;"
     />
     <el-alert
       title="消息提示的文案"
       type="info"
       description="文字说明文字说明文字说明文字说明文字说明文字说明"
       show-icon
-      style="width: 400px; margin: 10px 0"
+      style="width: 400px; margin: 10px 0;"
     />
     <el-alert
       title="警告提示的文案"
       type="warning"
       description="文字说明文字说明文字说明文字说明文字说明文字说明"
       show-icon
-      style="width: 400px"
+      style="width: 400px;"
     />
     <el-alert
       title="错误提示的文案"
       type="error"
       description="文字说明文字说明文字说明文字说明文字说明文字说明"
       show-icon
-      style="width: 400px; margin: 10px 0"
+      style="width: 400px; margin: 10px 0;"
     />
     <div class="headerTitle spaceMargin">
       12、Message弹窗【待修改：深色系弹窗背景色修改】=========================================================================================
@@ -444,20 +444,20 @@
     <div class="headerTitle spaceMargin">
       13、Steps步骤条=========================================================================================
     </div>
-    <div style="width: 40%" class="stepsrow">
+    <div style="width: 40%;" class="stepsrow">
       <el-steps :active="activerow" finish-status="success">
         <el-step title="步骤 1" description="这是一段很长很长很长的描述性文字" />
         <el-step title="步骤 2" description="这是一段很长很长很长的描述性文字" />
         <el-step title="步骤 3" description="这是一段很长很长很长的描述性文字" />
       </el-steps>
-      <el-button style="margin-top: 12px" class="commonBtn" @click="next">
+      <el-button style="margin-top: 12px;" class="commonBtn" @click="next">
         下一步（横）
       </el-button>
-      <el-button style="margin-top: 12px" class="commonBtn" @click="next1">
+      <el-button style="margin-top: 12px;" class="commonBtn" @click="next1">
         下一步(竖)
       </el-button>
     </div>
-    <div style="height: 300px" class="stepscolumn spaceMargin">
+    <div style="height: 300px;" class="stepscolumn spaceMargin">
       <el-steps :active="activecolumn" finish-status="success" direction="vertical">
         <el-step title="步骤 1" description="这是一段很长很长很长的描述性文字" />
         <el-step title="步骤 2" description="这是一段很长很长很长的描述性文字" />
@@ -467,7 +467,7 @@
     <div class="headerTitle spaceMargin">
       14、Silder滑块=========================================================================================
     </div>
-    <div style="width: 40%">
+    <div style="width: 40%;">
       <el-slider v-model="value2" />
     </div>
     <div class="headerTitle spaceMargin">
@@ -483,7 +483,7 @@
     <div class="spaceMargin">
       15.2、自定义的tabs切换按钮（横向，可传值，可传背景色和border色系，可控制深浅色系颜色）
     </div>
-    <horizontal-switch-btn style="margin-bottom: 10px" />
+    <horizontal-switch-btn style="margin-bottom: 10px;" />
     <horizontal-switch-btn :color-list="colorList" :border-list="borderList" :data-list="dataList" />
     <div class="spaceMargin">
       15.3、自定义的横向纵向tabs切换按钮（横向纵向都可以）
@@ -495,7 +495,7 @@
       :data-list="dataList1"
       button-width="120px"
       button-height="30px"
-      style="width: 9%"
+      style="width: 9%;"
       btn-direction="row"
       @selectBtn="selectBtn"
     />
@@ -506,17 +506,17 @@
       :data-list="dataList1"
       button-width="120px"
       button-height="30px"
-      style="width: 9%"
+      style="width: 9%;"
       btn-direction="column"
       @selectBtn="selectBtn"
     />
     <div class="headerTitle spaceMargin">
       16、自定义消息通知跑马灯组件=========================================================================================
     </div>
-    <div class="marquee-fa" style="margin: 20px 0">
+    <div class="marquee-fa" style="margin: 20px 0;">
       <div class="marquee_head">
-        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px">
-        <p style="margin-left: 10px; width: 70px">
+        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px;">
+        <p style="margin-left: 10px; width: 70px;">
           通知公告：
         </p>
       </div>
@@ -528,19 +528,19 @@
     <charts-components
       :chart-data-options="dataOption"
       echarts-type="pie1"
-      style="width: 400px; height: 400px"
+      style="width: 400px; height: 400px;"
     />
     <charts-components
       :chart-data-options="dataOptionLine"
       echarts-type="line1"
-      style="width: 600px; height: 400px"
+      style="width: 600px; height: 400px;"
     />
     <charts-components
       :chart-data-options="dataZhuzhuang"
       echarts-type="bar1"
-      style="width: 600px; height: 400px"
+      style="width: 600px; height: 400px;"
     />
-    <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px" />
+    <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px;" />
     <div class="headerTitle spaceMargin">
       18、上传图片/文件=========================================================================================
     </div>
@@ -580,7 +580,7 @@
     <div class="pageHeader">
       我是标题栏
     </div>
-    <div style="margin: 40px 0">
+    <div style="margin: 40px 0;">
       =================================end========================
     </div>
   </div>

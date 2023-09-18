@@ -8,7 +8,7 @@
       append-to-body
       @closed="closeDialog"
     >
-      <div style="height: 93%;padding-left: 13px">
+      <div style="height: 93%;padding-left: 13px;">
         <station-message ref="messageRef" />
       </div>
       <div

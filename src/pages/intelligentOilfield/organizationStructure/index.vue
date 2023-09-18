@@ -13,7 +13,7 @@
             v-model="queryParams.deptName"
             placeholder="请输入组织机构名称"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -22,7 +22,7 @@
             v-model="queryParams.status"
             placeholder="请选择状态"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -37,7 +37,7 @@
             v-model="queryParams.type"
             placeholder="请选择组织机构类型"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_department_type"

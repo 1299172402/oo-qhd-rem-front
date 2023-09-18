@@ -1,12 +1,12 @@
 <template>
   <div class="result-container" style="background: #fff;">
-    <div class="result-bg-img" style="color: #409eff">
+    <div class="result-bg-img" style="color: #409eff;">
       <component :is="dynamicComponent" />
     </div>
-    <div class="result-title" style="color: #000">
+    <div class="result-title" style="color: #000;">
       {{ title }}
     </div>
-    <div class="result-tip" style="color: #000; font-size: 18px">
+    <div class="result-tip" style="color: #000; font-size: 18px;">
       {{ tip }}
     </div>
     <slot />

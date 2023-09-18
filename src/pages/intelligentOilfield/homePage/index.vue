@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%">
+  <div style="height: 100%;">
     <!-- TODO: Maybe change back -->
     <!-- <div class="home-marquee-fa" style="margin-bottom: 20px">
       <div class="home-marquee_head">
@@ -12,7 +12,7 @@
         {{ $store.getters['user/notice'] }}
       </marquee>
     </div> -->
-    <div style="width: 100%; height: 100%; overflow: scroll; overflow-x: hidden;padding: 10px" class="el_row_wrap home-main">
+    <div style="width: 100%; height: 100%; overflow: scroll; overflow-x: hidden;padding: 10px;" class="el_row_wrap home-main">
       <el-row :gutter="0">
         <el-col v-for="(item, index) in listNumData" :key="index" :span="8">
           <!-- TODO: Maybe change back -->
@@ -64,13 +64,13 @@
                 <p>今日活跃用户统计</p>
               </div>
             </div>
-            <div style="text-align: center">
+            <div style="text-align: center;">
               <el-button
                 v-if="$store.state.setting.mode === 'dark'"
                 v-hasPermi="['system:homePage:detail']"
                 type="primary"
                 size="mini"
-                style="width: 80px; height: 32px"
+                style="width: 80px; height: 32px;"
                 @click="handleAuth(item.tenantId, item.tenantName)"
               >
                 查看
@@ -79,7 +79,7 @@
                 v-else
                 v-hasPermi="['system:homePage:detail']"
                 size="mini"
-                style="width: 80px;height: 32px;color: #fff;background: #0075e9"
+                style="width: 80px;height: 32px;color: #fff;background: #0075e9;"
                 @click="handleAuth(item.tenantId, item.tenantName)"
               >
                 查看

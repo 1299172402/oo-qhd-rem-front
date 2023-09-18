@@ -197,7 +197,7 @@ div.info-window {
   div.app-button {
     cursor: pointer;
     height: 50px;
-    background-color: rgba(52, 144, 211, 0.10);
+    background-color: rgba(52, 144, 211, 0.1);
     text-align: center;
     display: flex;
     justify-content: space-around;

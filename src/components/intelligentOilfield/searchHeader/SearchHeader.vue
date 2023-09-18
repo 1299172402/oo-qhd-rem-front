@@ -17,7 +17,7 @@
     <el-button
       type="primary"
       size="mini"
-      style="margin-top: 15px;float: right;height: 30px"
+      style="margin-top: 15px;float: right;height: 30px;"
       @click="confirm"
     >
       搜索
@@ -25,7 +25,7 @@
     <el-button
       size="mini"
       class="cancelBtn"
-      style="margin-top: 15px;float: right;margin-right: 10px;height: 30px"
+      style="margin-top: 15px;float: right;margin-right: 10px;height: 30px;"
       @click="resetData"
     >
       重置
@@ -33,7 +33,7 @@
     <div
       slot="reference"
       v-click-outside="closeOver"
-      style="margin-left: 5px"
+      style="margin-left: 5px;"
       @click.stop="popClick"
     >
       <svg

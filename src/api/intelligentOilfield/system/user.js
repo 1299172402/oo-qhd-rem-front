@@ -225,7 +225,8 @@ export function uploadFile(updateSupport, data) {
   return request({
     url: `/system/user/importData?updateSupport=${updateSupport}`,
     method: "post",
-    data
+    data,
+    timeout: 60000
   });
 }
 

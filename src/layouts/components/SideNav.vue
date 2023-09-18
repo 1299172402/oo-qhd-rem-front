@@ -17,7 +17,7 @@
         </span>
         <span
           v-if="!collapsed && showLogo"
-          style="font-size: 16px"
+          style="font-size: 16px;"
           :style="{ color: formData.mode == 'light' ? '#000' : '#fff' }"
         >智能油田管理系统</span>
       </template>
@@ -37,6 +37,7 @@ import myLogo from "@/assets/logo.svg";
 
 import MenuContent from "./MenuContent.vue";
 import pgk from "../../../package.json";
+import routeHighLight from "@/utils/routerMapping/routeHighLight.js";
 
 const MIN_POINT = 992 - 1;
 
@@ -113,7 +114,11 @@ export default Vue.extend({
       if (!this.$route.path) {
         return "";
       }
-      return this.$route.path
+      let path = this.$route.path;
+      if (routeHighLight[this.$route.name]) {
+        path = this.$router.resolve({ name: routeHighLight[this.$route.name] })?.route?.path || path;
+      }
+      return path
         .split("/")
         .filter((_item: string, index: number) => index <= this.maxLevel && index > 0)
         .map((item: string) => `/${item}`)

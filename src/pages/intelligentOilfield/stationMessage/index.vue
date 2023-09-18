@@ -25,7 +25,7 @@
       :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       header-cell-class-name="table_header"
       :cell-style="{ padding: '2px', 'text-align': 'center' }"
-      style="width: 100%; height: 100%"
+      style="width: 100%; height: 100%;"
       :default-sort="{ prop: 'date', order: 'descending' }"
     >
       <el-table-column label="序号" type="index" width="50" />
@@ -80,7 +80,7 @@
             v-else
             size="mini"
             type="text"
-            style="color: red"
+            style="color: red;"
           >
             未读
           </el-button>
@@ -89,7 +89,7 @@
     </el-table>
     <pagination
       v-show="total > 0"
-      style="bottom: 78px"
+      style="bottom: 78px;"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"

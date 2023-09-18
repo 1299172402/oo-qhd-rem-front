@@ -1,8 +1,7 @@
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import SelectSingleInput from "./SelectSingleInput";
+import SelectSingleInput from "./SelectSingleInput.vue";
 import ListMixin from "@/components/mixins/ListMixin";
-import { optionsFilter } from "../utils";
 import "./style/UserTableStyle.less";
 import {
   getUser
@@ -82,7 +81,7 @@ export default Vue.extend({
       },
       queryParam: {
         nickName: "",
-        roleId: "",
+        roleKey: "",
         orgCode: ""
       },
       dicts: {
@@ -92,7 +91,8 @@ export default Vue.extend({
       mySetDefault: this.setDefault,
       tableHeight: 0,
       currentSelectUser: "",
-      roleOptions: [] // 用户角色
+      roleOptions: [], // 用户角色
+      loadUser: false // 是否已经加载完成角色
     };
   },
   computed: {
@@ -166,9 +166,13 @@ export default Vue.extend({
   },
   created() {
     // 拉取用户角色
-    getUser().then(res => {
-      this.roleOptions = res.data.roles;
-    });
+    getUser()
+      .then(res => {
+        this.roleOptions = res.data.roles;
+      })
+      .finally(() => {
+        this.loadUser = true;
+      });
   },
   methods: {
     clearCurrentSelectUser() {
@@ -193,10 +197,6 @@ export default Vue.extend({
         }
       });
     },
-    /**
-     * 下拉角色过滤
-     */
-    optionsFilter,
     /**
      * 用户选择勾选改变
      */
@@ -236,14 +236,12 @@ export default Vue.extend({
   render() {
     const SelectSingleInputEl = (
       <SelectSingleInput
-        value={this.queryParam.roleId}
+        value={this.queryParam.roleKey}
         options={this.roleOptions}
-        value-field="roleId"
+        value-field="roleKey"
         text-field="roleName"
-        placeholder="角色"
-        filter-option={optionsFilter}
-        onInput={val => { this.queryParam.roleId = val; }}
-        onChangeValue={ val => { this.queryParam.roleId = val; }}
+        placeholder="请选择角色"
+        onChange={ val => { this.$set(this.queryParam, "roleKey", val); }}
       />
     );
     return (
@@ -256,7 +254,7 @@ export default Vue.extend({
             onPressEnter={this.handleSearch}
             onChange={val => { this.queryParam.nickName = val; }}
           />
-          {this.showRoleSelect ? SelectSingleInputEl : null}
+          {this.showRoleSelect && this.loadUser ? SelectSingleInputEl : null}
           <t-button onClick={this.handleSearch}>
             查询
           </t-button>

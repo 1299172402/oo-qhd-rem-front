@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <!-- 后台——消息中心首页 -->
 <template>
-  <div ref="elRef" class="g-w100 g-h100" style="font-size: 16px; color: #fff">
+  <div ref="elRef" class="g-w100 g-h100" style="font-size: 16px; color: #fff;">
     <el-dialog
       :title="iframeDialogTitle"
       :visible.sync="openIframeDialog"
@@ -9,8 +9,8 @@
       append-to-body
       :close-on-click-modal="false"
     >
-      <div style="height: 97%">
-        <div class="g-w100 g-h100" style="height: 700px">
+      <div style="height: 97%;">
+        <div class="g-w100 g-h100" style="height: 700px;">
           <iframe
             :id="'iframe_' + currentIframeObj.id"
             v-postTheme="$store.state.setting.mode"
@@ -19,7 +19,7 @@
             class="g-w100 g-h100"
           />
         </div>
-        <div slot="footer" class="dialog-footer g-row-flex" style="margin-top: 10px">
+        <div slot="footer" class="dialog-footer g-row-flex" style="margin-top: 10px;">
           <el-button type="primary" @click="openIframeDialog = false">
             关 闭
           </el-button>
@@ -33,18 +33,18 @@
       append-to-body
       :close-on-click-modal="false"
     >
-      <div style="height: 93%">
-        <div class="g-w100 g-h100" style="height: 450px">
-          <div class="g-w100 g-h100" style="position: relative">
+      <div style="height: 93%;">
+        <div class="g-w100 g-h100" style="height: 450px;">
+          <div class="g-w100 g-h100" style="position: relative;">
             <div
               class="g-row-flex-HV"
-              style="margin: 0 auto"
+              style="margin: 0 auto;"
               :class="findDataByPoint('Clouds_IOT', 'class')"
               @click="clickClouds"
             >
               云端物联网平台
             </div>
-            <div class="g-row-flex-HV" style="margin-top: 280px">
+            <div class="g-row-flex-HV" style="margin-top: 280px;">
               <div
                 class="mainSize g-column-flex-HV"
                 :class="[
@@ -58,7 +58,7 @@
               </div>
               <div
                 class="mainSize g-column-flex-HV"
-                style="margin: 0 80px"
+                style="margin: 0 80px;"
                 :class="[
                   getDataStatus('FPSO', 'class'),
                   findDataByCode('FPSO')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
@@ -90,7 +90,7 @@
               :class="[
                 findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
-              style="left: 270px; top: 45px"
+              style="left: 270px; top: 45px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="50px"
@@ -109,7 +109,7 @@
               :class="[
                 findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
-              style="left: 120px; top: 44px"
+              style="left: 120px; top: 44px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="130px"
@@ -127,7 +127,7 @@
               :class="[
                 findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
-              style="left: 340px; top: 44px"
+              style="left: 340px; top: 44px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="130px"
@@ -148,7 +148,7 @@
       class="g-w100 g-column-flex"
       style="height: calc(100% - 0px);"
     >
-      <div class="g-row-flex" style="justify-content: flex-end">
+      <div class="g-row-flex" style="justify-content: flex-end;">
         <el-select v-model="zuhuModel" placeholder="请选择租户">
           <el-option
             v-for="item in zuhuOptions"
@@ -158,19 +158,19 @@
           />
         </el-select>
       </div>
-      <div v-if="errorMessage" class="instructions" style="color: var(--td-text-color-primary)">
+      <div v-if="errorMessage" class="instructions" style="color: var(--td-text-color-primary);">
         <el-popover
           placement="bottom"
           title=""
           width="200"
           trigger="hover"
         >
-          <div style="font-size: 12px;margin-top: 12px;color: var(--old-red-color)" v-html="errorMessage.replace(/\n/g,'<br/>')" />
+          <div style="font-size: 12px;margin-top: 12px;color: var(--old-red-color);" v-html="errorMessage.replace(/\n/g,'<br/>')" />
           <div slot="reference" class="g-row-flex-HV" style="cursor: pointer;">
-            <div class="alarmPromptMessage" style="color: #fff;position: relative;left: 0;top: 0">
+            <div class="alarmPromptMessage" style="color: #fff;position: relative;left: 0;top: 0;">
               !
             </div>
-            <div style="margin-left: 10px;font-size: 14px;color: var(--old-red-color)">
+            <div style="margin-left: 10px;font-size: 14px;color: var(--old-red-color);">
               海上监控链路接口异常
             </div>
           </div>
@@ -178,18 +178,18 @@
       </div>
       <div
         v-show="zuhuModel === '秦皇岛作业公司'"
-        style="height: 100%; position: relative"
+        style="height: 100%; position: relative;"
         class="g-column-flex-H"
       >
         <el-button
-          style="position: absolute; top: -33px; left: 0"
+          style="position: absolute; top: -33px; left: 0;"
           type="primary"
           @click="openIframeDialogMethods(ifameList[0])"
         >
           {{ ifameList[0].name }}
         </el-button>
         <el-button
-          style="position: absolute; top: -33px; left: 110px"
+          style="position: absolute; top: -33px; left: 110px;"
           type="primary"
           @click="openIframeDialogMethods(ifameList[1])"
         >
@@ -201,7 +201,7 @@
           class="g-column-flex-H"
           :style="{marginTop: linkMarginTop + 'px'}"
         >
-          <div class="topImage g-row-flex-HV" style="position: relative; margin-top: 10px">
+          <div class="topImage g-row-flex-HV" style="position: relative; margin-top: 10px;">
             <div
               class="g-row-flex-HV greenBg"
               :class="[
@@ -212,7 +212,7 @@
             >
               消息中心
             </div>
-            <div class="absoultePos" style="left: 230px; top: 36px">
+            <div class="absoultePos" style="left: 230px; top: 36px;">
               监控数据
             </div>
 
@@ -224,7 +224,7 @@
               :end-color="findDataByLink('BigData_Apps', 'Msg')"
               :class="[findDataByStartAndEnd('BigData_Apps', 'Msg')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
               class="svgClass"
-              style="left: 199px; top: 11px; z-index: 1 !important"
+              style="left: 199px; top: 11px; z-index: 1 !important;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="125px"
@@ -235,12 +235,12 @@
             <div
               class="g-row-flex-HV yellowBg"
               :class="[findDataByStartAndEnd('Alarm', 'Alarm')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
-              style="margin-left: 455px"
+              style="margin-left: 455px;"
               @click="openPointsLink(findDataByStartAndEnd('Alarm', 'Alarm')?.pointShowUrl)"
             >
               报警中心
             </div>
-            <div class="absoultePos" style="left: 569px; top: 36px">
+            <div class="absoultePos" style="left: 569px; top: 36px;">
               报警数据
             </div>
             <!-- BigData_Apps - Alarm-->
@@ -251,7 +251,7 @@
               :end-color="findDataByLink('BigData_Apps', 'Alarm')"
               class="svgClass"
               :class="[findDataByStartAndEnd('BigData_Apps', 'Alarm')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
-              style="left: 531px; top: 11px; z-index: 1 !important"
+              style="left: 531px; top: 11px; z-index: 1 !important;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="125px"
@@ -260,7 +260,7 @@
               @click-line="openPointsLink(findDataByStartAndEnd('BigData_Apps', 'Alarm')?.pointShowUrl)"
             />
           </div>
-          <div class="topImage1 g-row-flex-HV" style="position: relative; margin-top: -50px">
+          <div class="topImage1 g-row-flex-HV" style="position: relative; margin-top: -50px;">
             <div
               class="g-row-flex-HV"
               :class="[
@@ -281,7 +281,7 @@
                 findDataByStartAndEnd('BigData_Aggs', 'BigData_Apps')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
               class="svgClass"
-              style="left: 58px; top: 48px"
+              style="left: 58px; top: 48px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="100px"
@@ -290,7 +290,7 @@
               @click-line="openPointsLink(findDataByStartAndEnd('BigData_Aggs', 'BigData_Apps')?.pointShowUrl)"
             />
           </div>
-          <div class="topImage1 g-row-flex-HV" style="position: relative">
+          <div class="topImage1 g-row-flex-HV" style="position: relative;">
             <div
               class="g-row-flex-HV"
               :class="[
@@ -309,7 +309,7 @@
               :end-color="findDataByLink('BigData', 'BigData_Aggs')"
               :class="[findDataByStartAndEnd('BigData', 'BigData_Aggs')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
               class="svgClass"
-              style="left: 58px; top: 48px"
+              style="left: 58px; top: 48px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="100px"
@@ -318,7 +318,7 @@
               @click-line="openPointsLink(findDataByStartAndEnd('BigData', 'BigData_Aggs')?.pointShowUrl)"
             />
           </div>
-          <div class="topImage1 g-row-flex-HV" style="position: relative">
+          <div class="topImage1 g-row-flex-HV" style="position: relative;">
             <div
               class="g-row-flex-HV"
               :class="[
@@ -329,7 +329,7 @@
             >
               大数据处理
             </div>
-            <div class="absoultePos" style="left: -20px; top: 65px">
+            <div class="absoultePos" style="left: -20px; top: 65px;">
               大数据服务(Flink)
             </div>
             <div class="absoultePos" style="left: 120px; top: 65px; width: 100%;">
@@ -343,7 +343,7 @@
               :end-color="findDataByLink('Queue', 'BigData')"
               :class="[findDataByStartAndEnd('Queue', 'BigData')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
               class="svgClass"
-              style="left: 58px; top: 48px"
+              style="left: 58px; top: 48px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="100px"
@@ -352,7 +352,7 @@
               @click-line="openPointsLink(findDataByStartAndEnd('Queue', 'BigData')?.pointShowUrl)"
             />
           </div>
-          <div class="centerImage g-row-flex-HV" style="position: relative">
+          <div class="centerImage g-row-flex-HV" style="position: relative;">
             <div
               class="g-row-flex-HV"
               :class="[
@@ -374,10 +374,10 @@
             >
               数据湖
             </div>
-            <div class="absoultePos" style="left: 600px; top: 2px">
+            <div class="absoultePos" style="left: 600px; top: 2px;">
               大数据服务(Flink)
             </div>
-            <div class="absoultePos" style="left: 593px; top: 47px">
+            <div class="absoultePos" style="left: 593px; top: 47px;">
               实时数据，报警数据
             </div>
             <!-- Queue -  Kudu-->
@@ -388,7 +388,7 @@
               :end-color="findDataByLink('Queue', 'Kudu')"
               class="svgClass"
               :class="[findDataByStartAndEnd('Queue', 'Kudu')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
-              style="left: 593px; top: 21px"
+              style="left: 593px; top: 21px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="133"
@@ -400,16 +400,16 @@
             <!-- 云端物联网平台 -->
             <div
               class="kuduClass g-row-flex-HV"
-              style="left: 42px; cursor: pointer; z-index: 1"
+              style="left: 42px; cursor: pointer; z-index: 1;"
               :class="findDataByPoint('Clouds_IOT', 'class')"
               @click="clickClouds"
             >
               云端物联网平台
             </div>
-            <div class="absoultePos" style="left: 281px; top: 2px">
+            <div class="absoultePos" style="left: 281px; top: 2px;">
               大数据服务
             </div>
-            <div class="absoultePos" style="left: 256px; top: 47px">
+            <div class="absoultePos" style="left: 256px; top: 47px;">
               实时数据，报警数据
             </div>
             <!-- Clouds_IOT -  Queue-->
@@ -420,7 +420,7 @@
               :end-color="findDataByLink('Clouds_IOT', 'Queue')"
               class="svgClass"
               :class="[findDataByStartAndEnd('Clouds_IOT', 'Queue')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
-              style="left: 254px; top: 21px"
+              style="left: 254px; top: 21px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="133"
@@ -429,20 +429,20 @@
               @click-line="openPointsLink(findDataByStartAndEnd('Clouds_IOT', 'Queue')?.pointShowUrl)"
             />
           </div>
-          <div class="bottomImage g-row-flex-HV" style="position: relative">
-            <div class="absoultePos" style="left: 169px; top: 182px">
+          <div class="bottomImage g-row-flex-HV" style="position: relative;">
+            <div class="absoultePos" style="left: 169px; top: 182px;">
               物联网ETL
             </div>
-            <div class="absoultePos" style="left: 265px; top: 182px">
+            <div class="absoultePos" style="left: 265px; top: 182px;">
               实时数据，报警数据
             </div>
-            <div class="absoultePos" style="left: 664px; top: 199px">
+            <div class="absoultePos" style="left: 664px; top: 199px;">
               物联网ETL
             </div>
-            <div class="absoultePos" style="left: 915px; top: 109px">
+            <div class="absoultePos" style="left: 915px; top: 109px;">
               物联网ETL
             </div>
-            <div class="absoultePos" style="left: 887px; top: 155px">
+            <div class="absoultePos" style="left: 887px; top: 155px;">
               实时数据，报警数据
             </div>
             <!-- 一整条线 -->
@@ -456,7 +456,7 @@
               :class="[
                 findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
-              style="left: 635px; top: 174px; z-index: 1 !important"
+              style="left: 635px; top: 174px; z-index: 1 !important;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="30px"
@@ -473,7 +473,7 @@
               :class="[
                 findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
-              style="left: 301px; top: 162px; z-index: 1 !important"
+              style="left: 301px; top: 162px; z-index: 1 !important;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="363px"
@@ -490,7 +490,7 @@
               :class="[
                 findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
-              style="left: 291px; top: 92px; z-index: 1 !important"
+              style="left: 291px; top: 92px; z-index: 1 !important;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="20px"
@@ -499,18 +499,18 @@
               @click-line="openPointsLink(findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl)"
             />
             <div class="leftSystem g-h100">
-              <div class="g-w100" style="position: relative; margin-left: 72%; margin-top: 70px">
+              <div class="g-w100" style="position: relative; margin-left: 72%; margin-top: 70px;">
                 <!-- CEPJ -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('CEPJ')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: 95px; top: -10px">
+                  <div class="alarmPromptMessage" style="left: 95px; top: -10px;">
                     !
                   </div>
                   <div v-if="findDataByCode('CEPJ').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 110px; top: -45px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 110px; top: -45px;"
                     >
-                      <polyline points="0,40 35,5 150,5" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="0,40 35,5 150,5" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: 122px; top: -65px; width: 125px;text-align: center;">
                       系统故障：{{ findDataByCode('CEPJ').damageCount }}/{{ findDataByCode('CEPJ').allCount }}
@@ -531,14 +531,14 @@
                 <!-- WHPA -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('WHPA')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: -180px; top: -80px">
+                  <div class="alarmPromptMessage" style="left: -180px; top: -80px;">
                     !
                   </div>
                   <div v-if="findDataByCode('WHPA').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -310px; top: -80px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -310px; top: -80px;"
                     >
-                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: -315px; top: -65px; width: 125px; text-align: center;">
                       系统故障：{{ findDataByCode('WHPA').damageCount }}/{{ findDataByCode('WHPA').allCount }}
@@ -551,7 +551,7 @@
                     getDataStatus('WHPA', 'class'),
                     findDataByCode('WHPA')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
                   ]"
-                  style="position: absolute; left: -175px; top: -73px"
+                  style="position: absolute; left: -175px; top: -73px;"
                   @click="openNewLink(findDataByCode('WHPA')?.terraceShowUrl)"
                 >
                   <div class="smallRedBg" :class="[getSmallSignStatus('WHPA')]" />
@@ -565,7 +565,7 @@
                     :end-color="getDataStatus('WHPA', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('WHPA')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="top: 22px; left: 79px"
+                    style="top: 22px; left: 79px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="125px"
@@ -577,14 +577,14 @@
                 <!-- WHPE -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('WHPE')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: -211px; top: 8px">
+                  <div class="alarmPromptMessage" style="left: -211px; top: 8px;">
                     !
                   </div>
                   <div v-if="findDataByCode('WHPE').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -349px; top: 16px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -349px; top: 16px;"
                     >
-                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: -359px; top: 32px; width: 125px;text-align: center;">
                       系统故障：{{ findDataByCode('WHPE').damageCount }}/{{ findDataByCode('WHPE').allCount }}
@@ -597,7 +597,7 @@
                     getDataStatus('WHPE', 'class'),
                     findDataByCode('WHPE')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
                   ]"
-                  style="position: absolute; left: -204px; top: 17px"
+                  style="position: absolute; left: -204px; top: 17px;"
                   @click="openNewLink(findDataByCode('WHPE')?.terraceShowUrl)"
                 >
                   <div class="smallRedBg" :class="[getSmallSignStatus('WHPE')]" />
@@ -611,7 +611,7 @@
                     :end-color="getDataStatus('WHPE', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('WHPE')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="top: 25px; left: 79px"
+                    style="top: 25px; left: 79px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="126px"
@@ -623,14 +623,14 @@
                 <!-- WHPF -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('WHPF')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: 300px; top: 88px">
+                  <div class="alarmPromptMessage" style="left: 300px; top: 88px;">
                     !
                   </div>
                   <div v-if="findDataByCode('WHPF').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 310px; top: 100px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 310px; top: 100px;"
                     >
-                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: 332px; top: 117px; width: 125px;text-align: center;">
                       系统故障：{{ findDataByCode('WHPF').damageCount }}/{{ findDataByCode('WHPF').allCount }}
@@ -643,7 +643,7 @@
                     getDataStatus('WHPF', 'class'),
                     findDataByCode('WHPF')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
                   ]"
-                  style="position: absolute; left: 230px; top: 17px"
+                  style="position: absolute; left: 230px; top: 17px;"
                   @click="openNewLink(findDataByCode('WHPF')?.terraceShowUrl)"
                 >
                   <div class="smallRedBg" :class="[getSmallSignStatus('WHPF')]" />
@@ -657,7 +657,7 @@
                     :end-color="getDataStatus('WHPF', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('WHPF')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="left: -125px; top: 25px"
+                    style="left: -125px; top: 25px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="126px"
@@ -669,14 +669,14 @@
                 <!-- CEPL -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('CEPL')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: -181px; top: 100px">
+                  <div class="alarmPromptMessage" style="left: -181px; top: 100px;">
                     !
                   </div>
                   <div v-if="findDataByCode('CEPL').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -314px; top: 106px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -314px; top: 106px;"
                     >
-                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: -329px; top: 124px; width: 125px;text-align: center;">
                       系统故障：{{ findDataByCode('CEPL').damageCount }}/{{ findDataByCode('CEPL').allCount }}
@@ -703,7 +703,7 @@
                     :end-color="getDataStatus('CEPL', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('CEPL')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="top: -3px; left: 79px"
+                    style="top: -3px; left: 79px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="125px"
@@ -715,14 +715,14 @@
                 <!-- EPP -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('EPP')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: 270px; top: 176px">
+                  <div class="alarmPromptMessage" style="left: 270px; top: 176px;">
                     !
                   </div>
                   <div v-if="findDataByCode('EPP').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: 183px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: 183px;"
                     >
-                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: 299px; top: 200px; width: 125px;text-align: center;">
                       系统故障：{{ findDataByCode('EPP').damageCount }}/{{ findDataByCode('EPP').allCount }}
@@ -735,7 +735,7 @@
                     getDataStatus('EPP', 'class'),
                     findDataByCode('EPP')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
                   ]"
-                  style="position: absolute; left: 203px; top: 107px"
+                  style="position: absolute; left: 203px; top: 107px;"
                   @click="openNewLink(findDataByCode('EPP')?.terraceShowUrl)"
                 >
                   <div class="smallRedBg" :class="[getSmallSignStatus('EPP')]" />
@@ -749,7 +749,7 @@
                     :end-color="getDataStatus('EPP', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('EPP')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="left: -126px; top: -3px"
+                    style="left: -126px; top: -3px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="125px"
@@ -770,7 +770,7 @@
               :class="[
                 findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
-              style="left: 240px; top: 90px"
+              style="left: 240px; top: 90px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="20px"
@@ -781,14 +781,14 @@
             <!-- FPSO -->
             <!-- 带!号小报警 -->
             <div v-if="findDataByCode('FPSO')?.runningStatus === '0'">
-              <div class="alarmPromptMessage" style="left: 588px; top: 262px">
+              <div class="alarmPromptMessage" style="left: 588px; top: 262px;">
                 !
               </div>
               <div v-if="findDataByCode('FPSO').allCount !== 0">
                 <svg
-                  style="background: transparent; width: 140px; height: 52px; position: absolute; left: 450px; top: 235px"
+                  style="background: transparent; width: 140px; height: 52px; position: absolute; left: 450px; top: 235px;"
                 >
-                  <polyline points="150,40 105,5 0,5" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                  <polyline points="150,40 105,5 0,5" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                 </svg>
                 <div class="warnText" style="left: 440px; top: 216px; width: 125px;text-align: center;">
                   系统故障：{{ findDataByCode('FPSO').damageCount }}/{{ findDataByCode('FPSO').allCount }}
@@ -796,7 +796,7 @@
               </div>
             </div>
             <div class="centerSystem g-w100 g-h100">
-              <div class="g-w100" style="position: relative; margin-left: 43%; margin-top: 70px">
+              <div class="g-w100" style="position: relative; margin-left: 43%; margin-top: 70px;">
                 <div
                   class="mainSize g-column-flex-HV"
                   :class="[
@@ -821,7 +821,7 @@
               :class="[
                 findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
-              style="left: 340px; top: 80px"
+              style="left: 340px; top: 80px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="20px"
@@ -839,7 +839,7 @@
               :class="[
                 findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
-              style="left: 346px; top: 128px"
+              style="left: 346px; top: 128px;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="822px"
@@ -857,7 +857,7 @@
               :class="[
                 findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
               ]"
-              style="left: 1157px; top: 128px; z-index: 1 !important"
+              style="left: 1157px; top: 128px; z-index: 1 !important;"
               div-stroke-width="6"
               ball-stroke-width="5"
               svg-width="20px"
@@ -867,19 +867,19 @@
             />
             <!-- 带!号小报警 -->
             <div v-if="findDataByCode('CEPI')?.runningStatus === '0'">
-              <div class="alarmPromptMessage" style="left: 1158px; top: 362px">
+              <div class="alarmPromptMessage" style="left: 1158px; top: 362px;">
                 !
               </div>
               <div v-if="findDataByCode('CEPI').allCount !== 0">
                 <svg
-                  style="width: 30px; height: 80px; position: absolute; left: 1153px; top: 372px"
+                  style="width: 30px; height: 80px; position: absolute; left: 1153px; top: 372px;"
                 >
-                  <polyline points="15,0 15,80" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                  <polyline points="15,0 15,80" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                 </svg>
                 <svg
-                  style="width: 120px; height: 15px; position: absolute; left: 1168px; top: 449px"
+                  style="width: 120px; height: 15px; position: absolute; left: 1168px; top: 449px;"
                 >
-                  <polyline points="0,3 120,3" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                  <polyline points="0,3 120,3" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                 </svg>
                 <div class="warnText" style="left: 1168px; top: 430px; width: 125px;text-align: center;">
                   系统故障：{{ findDataByCode('CEPI').damageCount }}/{{ findDataByCode('CEPI').allCount }}
@@ -887,7 +887,7 @@
               </div>
             </div>
             <div class="rightSystem g-w100 g-h100">
-              <div class="g-w100" style="position: relative; margin-left: 40%; margin-top: 70px">
+              <div class="g-w100" style="position: relative; margin-left: 40%; margin-top: 70px;">
                 <div
                   class="mainSize g-column-flex-HV"
                   :class="[
@@ -902,14 +902,14 @@
                 <!-- WHPH -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('WHPH')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: 270px; top: -85px">
+                  <div class="alarmPromptMessage" style="left: 270px; top: -85px;">
                     !
                   </div>
                   <div v-if="findDataByCode('WHPH').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: -80px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: -80px;"
                     >
-                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: 298px; top: -64px; width: 125px;text-align: center;">
                       系统故障：{{ findDataByCode('WHPH').damageCount }}/{{ findDataByCode('WHPH').allCount }}
@@ -922,7 +922,7 @@
                     getDataStatus('WHPH', 'class'),
                     findDataByCode('WHPH')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
                   ]"
-                  style="position: absolute; left: 203px; top: -73px"
+                  style="position: absolute; left: 203px; top: -73px;"
                   @click="openNewLink(findDataByCode('WHPH')?.terraceShowUrl)"
                 >
                   <div class="smallRedBg" :class="[getSmallSignStatus('WHPH')]" />
@@ -936,7 +936,7 @@
                     :end-color="getDataStatus('WHPH', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('WHPH')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="left: -126px; top: 22px"
+                    style="left: -126px; top: 22px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="125px"
@@ -948,14 +948,14 @@
                 <!-- WHPB -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('WHPB')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: -181px; top: 100px">
+                  <div class="alarmPromptMessage" style="left: -181px; top: 100px;">
                     !
                   </div>
                   <div v-if="findDataByCode('WHPB').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -314px; top: 106px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -314px; top: 106px;"
                     >
-                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: -329px; top: 124px; width: 125px;text-align: center;">
                       系统故障：{{ findDataByCode('WHPB').damageCount }}/{{ findDataByCode('WHPB').allCount }}
@@ -968,7 +968,7 @@
                     getDataStatus('WHPB', 'class'),
                     findDataByCode('WHPB')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
                   ]"
-                  style="position: absolute; left: -175px; top: 107px"
+                  style="position: absolute; left: -175px; top: 107px;"
                   @click="openNewLink(findDataByCode('WHPB')?.terraceShowUrl)"
                 >
                   <div class="smallRedBg" :class="[getSmallSignStatus('WHPB')]" />
@@ -982,7 +982,7 @@
                     :end-color="getDataStatus('WHPB', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('WHPB')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="top: -3px; left: 79px"
+                    style="top: -3px; left: 79px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="125px"
@@ -994,14 +994,14 @@
                 <!-- WHPC -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('WHPC')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: 300px; top: 8px">
+                  <div class="alarmPromptMessage" style="left: 300px; top: 8px;">
                     !
                   </div>
                   <div v-if="findDataByCode('WHPC').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 310px; top: 20px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 310px; top: 20px;"
                     >
-                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: 332px; top: 37px; width: 125px;text-align: center;">
                       系统故障：{{ findDataByCode('WHPC').damageCount }}/{{ findDataByCode('WHPC').allCount }}
@@ -1014,7 +1014,7 @@
                     getDataStatus('WHPC', 'class'),
                     findDataByCode('WHPC')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
                   ]"
-                  style="position: absolute; left: 230px; top: 17px"
+                  style="position: absolute; left: 230px; top: 17px;"
                   @click="openNewLink(findDataByCode('WHPC')?.terraceShowUrl)"
                 >
                   <div class="smallRedBg" :class="[getSmallSignStatus('WHPC')]" />
@@ -1028,7 +1028,7 @@
                     :end-color="getDataStatus('WHPC', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('WHPC')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="left: -125px; top: 25px"
+                    style="left: -125px; top: 25px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="126px"
@@ -1040,14 +1040,14 @@
                 <!-- CEPK -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('CEPK')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: -211px; top: 8px">
+                  <div class="alarmPromptMessage" style="left: -211px; top: 8px;">
                     !
                   </div>
                   <div v-if="findDataByCode('CEPK').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -349px; top: 16px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -349px; top: 16px;"
                     >
-                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: -359px; top: 32px; width: 125px;text-align: center;">
                       系统故障：{{ findDataByCode('CEPK').damageCount }}/{{ findDataByCode('CEPK').allCount }}
@@ -1060,7 +1060,7 @@
                     getDataStatus('CEPK', 'class'),
                     findDataByCode('CEPK')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
                   ]"
-                  style="position: absolute; left: -204px; top: 17px"
+                  style="position: absolute; left: -204px; top: 17px;"
                   @click="openNewLink(findDataByCode('CEPK')?.terraceShowUrl)"
                 >
                   <div class="smallRedBg" :class="[getSmallSignStatus('CEPK')]" />
@@ -1074,7 +1074,7 @@
                     :end-color="getDataStatus('CEPK', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('CEPK')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="top: 25px; left: 79px"
+                    style="top: 25px; left: 79px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="126px"
@@ -1086,14 +1086,14 @@
                 <!-- WHPD -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('WHPD')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: 270px; top: 100px">
+                  <div class="alarmPromptMessage" style="left: 270px; top: 100px;">
                     !
                   </div>
                   <div v-if="findDataByCode('WHPD').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: 103px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: 103px;"
                     >
-                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: 299px; top: 120px; width: 125px;text-align: center;">
                       系统故障：{{ findDataByCode('WHPD').damageCount }}/{{ findDataByCode('WHPD').allCount }}
@@ -1106,7 +1106,7 @@
                     getDataStatus('WHPD', 'class'),
                     findDataByCode('WHPD')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
                   ]"
-                  style="position: absolute; left: 203px; top: 107px"
+                  style="position: absolute; left: 203px; top: 107px;"
                   @click="openNewLink(findDataByCode('WHPD')?.terraceShowUrl)"
                 >
                   <div class="smallRedBg" :class="[getSmallSignStatus('WHPD')]" />
@@ -1120,7 +1120,7 @@
                     :end-color="getDataStatus('WHPD', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('WHPD')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="left: -126px; top: -3px"
+                    style="left: -126px; top: -3px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="125px"
@@ -1132,14 +1132,14 @@
                 <!-- WHPG -->
                 <!-- 带!号小报警 -->
                 <div v-if="findDataByCode('WHPG')?.runningStatus === '0'">
-                  <div class="alarmPromptMessage" style="left: -180px; top: -80px">
+                  <div class="alarmPromptMessage" style="left: -180px; top: -80px;">
                     !
                   </div>
                   <div v-if="findDataByCode('WHPG').allCount !== 0">
                     <svg
-                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -310px; top: -80px"
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -310px; top: -80px;"
                     >
-                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1" />
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
                     </svg>
                     <div class="warnText" style="left: -315px; top: -65px; width: 125px; text-align: center;">
                       系统故障：{{ findDataByCode('WHPG').damageCount }}/{{ findDataByCode('WHPG').allCount }}
@@ -1152,7 +1152,7 @@
                     getDataStatus('WHPG', 'class'),
                     findDataByCode('WHPG')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
                   ]"
-                  style="position: absolute; left: -175px; top: -73px"
+                  style="position: absolute; left: -175px; top: -73px;"
                   @click="openNewLink(findDataByCode('WHPG')?.terraceShowUrl)"
                 >
                   <div class="smallRedBg" :class="[getSmallSignStatus('WHPG')]" />
@@ -1166,7 +1166,7 @@
                     :end-color="getDataStatus('WHPG', 'color')"
                     class="svgClass"
                     :class="[findDataByCode('WHPG')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
-                    style="top: 22px; left: 79px"
+                    style="top: 22px; left: 79px;"
                     div-stroke-width="6"
                     ball-stroke-width="5"
                     svg-width="125px"

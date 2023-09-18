@@ -9,10 +9,10 @@
           header-title="用户基础信息"
           :header-style="$store.state.setting.mode === 'dark' ? {} : { color: '#0075E9' }"
         >
-          <div style="padding: 10px 20px; overflow: scroll" class="g-w100 g-h100">
+          <div style="padding: 10px 20px; overflow: scroll;" class="g-w100 g-h100">
             <div class="text-center">
               <user-avatar :user="user" />
-              <div style="margin-bottom: 20px">
+              <div style="margin-bottom: 20px;">
                 {{ user.nickName ? user.nickName : '无' }}
               </div>
             </div>
@@ -71,14 +71,14 @@
           header-title="用户账号信息"
           :header-style="$store.state.setting.mode === 'dark' ? {} : { color: '#0075E9' }"
         >
-          <div style="padding: 10px 20px; overflow: scroll" class="g-w100 g-h100">
+          <div style="padding: 10px 20px; overflow: scroll;" class="g-w100 g-h100">
             <el-form
               ref="formRef"
               :model="allDatas"
               label-width="80px"
               class="userInfo"
             >
-              <div class="headerinfo" style="margin-bottom: 30px">
+              <div class="headerinfo" style="margin-bottom: 30px;">
                 账号
               </div>
               <el-row>
@@ -183,7 +183,7 @@
                   </el-form-item>
                 </el-col>
               </el-row>
-              <div class="headerinfo" style="margin-bottom: 30px">
+              <div class="headerinfo" style="margin-bottom: 30px;">
                 角色与岗位信息
               </div>
               <el-row>

@@ -58,12 +58,12 @@
           <svg-icon
             v-show="isOperation"
             icon-class="dark-operate"
-            style="position: absolute;bottom: 0; right: 0; opacity: 1; fill: green; font-size: 22px"
+            style="position: absolute;bottom: 0; right: 0; opacity: 1; fill: green; font-size: 22px;"
           />
         </div>
         <div style="position: relative;z-index: 1;">
           <div class="operateBtn g-row-flex">
-            <i v-show="isOperation" class="el-icon-rank vue-draggable-handle" style="margin: 0 0 0 10px" />
+            <i v-show="isOperation" class="el-icon-rank vue-draggable-handle" style="margin: 0 0 0 10px;" />
           </div>
         </div>
         <component :is="getContent(item.name)" :current-resize-list="currentResizeList" class="no-drag" />
@@ -139,15 +139,18 @@ export default {
     const tenantId = this.$store.getters["user/tenantId"];
     queryByPageName(this.pageName, tenantId).then(res => {
       if (res ? res.data.code === 200 : false) {
-        if (res.data.data === null || res.data.data?.pageInfo === null) { // 首次获取面板赋值
-          this.interfaceDataStore = JSON.parse(JSON.stringify(this.currentLayout)); // 用户存储上次编辑的面板【取消用】
-          this.isDisableReset = true;
+        if (!res.data.data || !res.data.data.pageInfo) { // 首次获取面板赋值
+          this.initLayout();
         } else { // 非首次，面板从接口获取
-          this.currentLayout = [];
-          this.currentLayout = JSON.parse(res.data.data?.pageInfo); // 当前显示面板
-          this.initLayOut = JSON.parse(res.data.data?.initialPageInfo); // 默认面板【重置用】
-          this.isDisableReset = !this.initLayOut;
-          this.interfaceDataStore = JSON.parse(res.data.data?.pageInfo); // 用户存储上次编辑的面板【取消用】
+          const currentLayout = JSON.parse(res.data.data.pageInfo); // 当前显示面板
+          if (this.isSameSimpleArray(currentLayout.map(v => v.name), this.layout.map(v => v.name))) {
+            this.currentLayout = currentLayout;
+            this.initLayOut = JSON.parse(res.data.data?.initialPageInfo); // 默认面板【重置用】
+            this.isDisableReset = !this.initLayOut;
+            this.interfaceDataStore = JSON.parse(res.data.data?.pageInfo); // 用户存储上次编辑的面板【取消用】
+          } else {
+            this.initLayout();
+          }
         }
       }
     });
@@ -266,6 +269,29 @@ export default {
       this.currentResizeList = { i, newH, newW, newHPx, newWPx };
       this.currentLayout.find(item => item.i === i).height = newHPx;
       this.currentLayout.find(item => item.i === i).width = newWPx;
+    },
+    /**
+     * 初始化面板，使用传入的参数 layout
+     */
+    initLayout: function() {
+      this.currentLayout = this.layout;
+      this.interfaceDataStore = JSON.parse(JSON.stringify(this.currentLayout)); // 用户存储上次编辑的面板【取消用】
+      this.isDisableReset = true;
+    },
+    /**
+     * 判断两个简单数组的元素是否相同
+     * 需要个数相同并且值相同
+     */
+    isSameSimpleArray: function(arr1, arr2) {
+      if (arr1.length !== arr2.length) {
+        return false;
+      }
+      for (let i = 0; i < arr1.length; i++) {
+        if (!arr2.includes(arr1[i])) {
+          return false;
+        }
+      }
+      return true;
     }
   }
 };

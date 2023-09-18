@@ -8,7 +8,7 @@ const config = {
   LOGIN_TYPES: ["password", "corp_oauth"],
   // 右上角报警点击“查看跳转”路径
   MESSAGE_URL: "https://amm.tjioms-dev.tjltd.cnooc/#/appCallback?rediect=reportlnformation/source",
-  appId: "f198c1a239254b0e86529a0668cf4adb",
+  appId: "$system$",
   ALARM_URL: "https://amm.tjioms-dev.tjltd.cnooc/#/reportPolice/source?access_token=",
   WEB_TAG_NAME: "智能油田管理系统", // 网页标签名称
   SYSTEM_NAME: "天津分公司智能油田管理系统", // 系统名称
@@ -21,12 +21,10 @@ export default {
     // TODO: Maybe change back
     // 通用模块-报警中心
     // GEM_API: "/gem001b",
-    // 流程平台
-    BIZ_FLOW_API: "/biz/flow",
     // 文件预览服务
     PREVIEW_FILE_API: "/b/upload",
+    // 流程平台
     processAPI: "/dev-api/workflow",
-    appId: 'f198c1a239254b0e86529a0668cf4adb',
     // 开发环境接口请求
     API: "/dev-api",
     // API: '',
@@ -35,11 +33,10 @@ export default {
   },
   test: {
     ...config,
-    // TODO: Maybe change back
     // 通用模块-报警中心
+    // TODO: Maybe change back
     // GEM_API: "/gem001b",
     // 流程平台
-    BIZ_FLOW_API: "/biz/flow",
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 测试环境接口地址
@@ -61,13 +58,11 @@ export default {
     // TODO: Maybe change back
     // GEM_API: "/gem001b",
     // 流程平台
-    BIZ_FLOW_API: "/b/sw",
     processAPI: "/prod-api/workflow",
     // 文件预览服务
     PREVIEW_FILE_API: "文件服务地址",
     // 正式环境接口地址
-    API: 'https://rem.tjioms-dev.tjltd.cnooc/prod-api/',
-    appId: 'f198c1a239254b0e86529a0668cf4adb',
+    API: "http://10.77.78.250:80/prod-api/",
     // 正式环境 cdn 路径
     CDN: "",
     LOGIN_TYPES: ["corp_oauth", "password"]

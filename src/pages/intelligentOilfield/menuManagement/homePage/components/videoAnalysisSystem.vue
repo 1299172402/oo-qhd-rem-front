@@ -40,16 +40,16 @@
     <info-window info-width="100%" info-height="100%" header-title="已授权业务">
       <div
         class="g-w100 g-h100 g-row-flex-V divBox"
-        style="overflow: scroll; padding: 20px 10px; flex-wrap: wrap; justify-content: space-around"
+        style="overflow: scroll; padding: 20px 10px; flex-wrap: wrap; justify-content: space-around;"
       >
         <div
           v-for="(item, index) in list"
           :key="index"
-          style="font-size: 16px; width: 32%; cursor: pointer"
+          style="font-size: 16px; width: 32%; cursor: pointer;"
           @click="toClick(item.businessUrl)"
         >
           <img :src="item.businessImg" alt="" class="g-w100">
-          <div style="text-align: center">
+          <div style="text-align: center;">
             {{ item.businessName }}
           </div>
           <!-- <t-button theme="default" @click="fullExit">退出投影模式</t-button> -->

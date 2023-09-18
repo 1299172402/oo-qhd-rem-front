@@ -1,19 +1,19 @@
 <!-- 系统访问示例组件 -->
 <template>
-  <div style="font-size: 14px" class="g-w100 g-h100">
+  <div style="font-size: 14px;" class="g-w100 g-h100">
     <info-window
       info-width="100%"
       info-height="100%"
       header-title="系统访问情况"
       :is-show-max-btn="true"
     >
-      <div class="g-w100 g-h100" style="padding: 10px 20px">
+      <div class="g-w100 g-h100" style="padding: 10px 20px;">
         <div class="textDesc">
           截至本周，系统有效注册用户 {{ currentInfo?.usersValidRegistrations }} 人，近一个月活跃用户 {{ currentInfo?.userMonthlyActivityStatistics }} 人，用户月活跃度为
           {{ currentInfo?.userMonthlyActivityPercentage }}%，已上线各单位用户月活跃度如下图所示:
         </div>
         <!-- 搜索栏 -->
-        <div class="g-row-flex-V" style="justify-content: flex-end;margin: 10px 0 5px">
+        <div class="g-row-flex-V" style="justify-content: flex-end;margin: 10px 0 5px;">
           <el-select
             v-model="currentNum"
             placeholder="请选择条数"
@@ -37,7 +37,7 @@
             @change="changeNum"
           />
         </div>
-        <div class="g-w100 g-h100" style="height: calc(100% - 95px); overflow: hidden">
+        <div class="g-w100 g-h100" style="height: calc(100% - 95px); overflow: hidden;">
           <charts-components ref="char6Com" :chart-data-options="char6" />
         </div>
       </div>

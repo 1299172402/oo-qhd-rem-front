@@ -6,7 +6,7 @@
         v-show="showSearch"
         ref="queryForm"
         :model="queryParams"
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
         :inline="true"
       >
         <el-form-item label="看板名称" prop="boardName">
@@ -15,7 +15,7 @@
             placeholder="请输入看板配置名称"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -27,7 +27,7 @@
           <el-select
             v-model="queryParams.boardModule"
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             placeholder="请选择"
             clearable
           >
@@ -42,7 +42,7 @@
         <el-form-item label="看板类型" prop="boardType">
           <el-select
             v-model="queryParams.boardType"
-            style="width: 240px"
+            style="width: 240px;"
             placeholder="请选择看板类型"
             clearable
           >
@@ -77,14 +77,14 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="大屏列表" style="height: calc(100% - 100px)">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+    <page-panel-new header-title="大屏列表" style="height: calc(100% - 100px);">
+      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px;">
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:board:add']"
             type="primary"
             size="mini"
-            style="height: 40px"
+            style="height: 40px;"
             @click="handleAdd"
           >
             新增
@@ -98,7 +98,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column label="序号" type="index" width="120" />
@@ -139,7 +139,7 @@
             >
             <!-- TODO: Maybe change back -->
             <!-- <span v-else class="thumbnail" style="height:30px;margin:5px auto;width: 30px;font-size:14px">{{ scope.row.boardName[0] }}</span> -->
-            <div v-else class="bgImage g-row-flex-HV" style="height: 30px;margin: 5px auto;width: 30px;font-size: 14px">
+            <div v-else class="bgImage g-row-flex-HV" style="height: 30px;margin: 5px auto;width: 30px;font-size: 14px;">
               {{ scope.row.boardName[0] }}
             </div>
           </template>
@@ -256,7 +256,7 @@
             :disabled="addform.boardImg ? true : false"
           >
             <div
-              style="width: 100%; height: 100%; position: relative"
+              style="width: 100%; height: 100%; position: relative;"
               @mouseenter="onmouseoveradd"
               @mouseleave="onmouseout"
             >
@@ -306,7 +306,7 @@
           <el-select
             v-model="form.boardModule"
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             placeholder="请选择"
             clearable
           >
@@ -345,7 +345,7 @@
             :disabled="form.boardImg ? true : false"
           >
             <div
-              style="width: 100%; height: 100%; position: relative"
+              style="width: 100%; height: 100%; position: relative;"
               @mouseenter="onmouseover"
               @mouseleave="onmouseout"
             >

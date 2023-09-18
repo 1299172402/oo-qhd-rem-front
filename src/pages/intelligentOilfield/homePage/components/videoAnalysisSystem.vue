@@ -45,7 +45,7 @@
       header-title="已授权业务"
       :header-style="$store.state.setting.mode === 'dark'?{}:{color:'#0075E9'}"
     >
-      <div class="g-w100 g-h100" style="padding: 20px 20px 10px;overflow-y: scroll">
+      <div class="g-w100 g-h100" style="padding: 20px 20px 10px;overflow-y: scroll;">
         <el-row :gutter="20">
           <el-col
             v-for="(item, index) in list"
@@ -56,15 +56,15 @@
             :lg="6"
             :xl="4"
           >
-            <div class="g-w100" style="font-size: 16px; cursor: pointer;display: flex;flex-direction: column" @click="toClick(item.businessUrl)">
+            <div class="g-w100" style="font-size: 16px; cursor: pointer;display: flex;flex-direction: column;" @click="toClick(item.businessUrl)">
               <img
                 :src="item.businessImgUrl"
                 alt=""
                 class="g-w100"
-                style="width: 100%;height: 150px"
+                style="width: 100%;height: 150px;"
               >
               <el-tooltip
-                style="width: 100%;height: 100%"
+                style="width: 100%;height: 100%;"
                 effect="dark"
                 :content="item.businessName"
                 placement="bottom"

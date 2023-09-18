@@ -1,10 +1,10 @@
 <!-- 后台——首页详情 -->
 <template>
   <div style="height: 100%;">
-    <div class="marquee-fa" style="margin-bottom: 20px">
+    <div class="marquee-fa" style="margin-bottom: 20px;">
       <div class="marquee_head">
-        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px">
-        <p style="margin-left: 10px; width: 70px">
+        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px;">
+        <p style="margin-left: 10px; width: 70px;">
           通知公告：
         </p>
       </div>
@@ -87,9 +87,9 @@
       <div style="width: 100%; margin-top: 20px"></div>
                                                       </pagePanel> -->
     <div v-for="(item, index) in panelTypeOptions" :key="index">
-      <component :is="getContent(item.name)" :list="getList(item.name)" style="margin-top: 20px" />
+      <component :is="getContent(item.name)" :list="getList(item.name)" style="margin-top: 20px;" />
     </div>
-    <div style="margin-top: 20px;color: transparent">
+    <div style="margin-top: 20px;color: transparent;">
       占位
     </div>
   </div>

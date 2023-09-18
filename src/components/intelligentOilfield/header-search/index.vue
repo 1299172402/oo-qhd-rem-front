@@ -40,13 +40,13 @@ export default {
 }
 
 .colon /deep/ .el-form-item__label::after {
-  content: '：';
+  content: "：";
 }
 
 .searchHeader-light {
   border: 1px solid transparent;
   padding-top: 2px;
-  box-shadow: 0 0 10px 0 rgba(144,147,153,0.3);
+  box-shadow: 0 0 10px 0 rgba(144, 147, 153, 0.3);
 }
 
 .searchHeader-dark {
