@@ -238,12 +238,18 @@
                                     <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
                                         <el-table-column prop="measuresName" label="推荐措施" align="center">
                                             <template slot-scope="{row}">
-                                                <span>{{row.measuresName?row.measuresName:'-'}}</span>
+                                                <!-- <span>{{row.measuresName?row.measuresName:'-'}}</span> -->
+                                                <el-tooltip class="item" effect="dark" :content="preliminarySelectioMeasures(row.wellId,1)" placement="top">
+                                                    <span class="">{{ preliminarySelectioMeasures(row.wellId,1) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
                                         <el-table-column prop="theDate" label="推荐日期" align="center" width="120px">
                                             <template slot-scope="{row}">
-                                                <span>{{row.theDate?row.theDate:'-'}}</span>
+                                                <!-- <span>{{row.theDate?row.theDate:'-'}}</span> -->
+                                                <el-tooltip  class="item" effect="dark" :content="preliminarySelectioMeasures(row.wellId,2)" placement="top">
+                                                    <span class="">{{ preliminarySelectioMeasures(row.wellId,2) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
                                         <el-table-column label="操作" align="center">
@@ -584,12 +590,18 @@
                                     <el-table-column prop="recommendedMeasures" label="措施初选" align="center">
                                         <el-table-column prop="measuresName" label="推荐措施" align="center">
                                             <template slot-scope="{row}">
-                                                <span>{{row.measuresName?row.measuresName:'-'}}</span>
+                                                <!-- <span>{{row.measuresName?row.measuresName:'-'}}</span> -->
+                                                <el-tooltip class="item" effect="dark" :content="preliminarySelectioMeasures(row.wellId,1)" placement="top">
+                                                    <span class="">{{ preliminarySelectioMeasures(row.wellId,1) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
                                         <el-table-column prop="theDate" label="推荐日期" align="center" width="120px">
                                             <template slot-scope="{row}">
-                                                <span>{{row.theDate?row.theDate:'-'}}</span>
+                                                <!-- <span>{{row.theDate?row.theDate:'-'}}</span> -->
+                                                <el-tooltip  class="item" effect="dark" :content="preliminarySelectioMeasures(row.wellId,2)" placement="top">
+                                                    <span class="">{{ preliminarySelectioMeasures(row.wellId,2) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
                                         <el-table-column label="操作" align="center">
@@ -1686,6 +1698,16 @@ export default {
                     this.zsqdForm = data;
                 }
             })
+        },
+        preliminarySelectioMeasures(str,type){
+            let currentArr = this.recommendedMeasuresData.filter(item=>item.wellName == str);
+            if(type == 1){
+                let currentName = currentArr.length> 0 ? currentArr.map(item=>item.measuresName).join('\n') : '-'
+                return currentName
+            } else {
+                let currentDate = currentArr.length> 0 ? currentArr.map(item=>item.theDate).join('\n') : '-'
+                return currentDate
+            }
         },
         //初始化有措施的井清单
         initRecommendedMeasuresWells() {
@@ -2901,6 +2923,13 @@ export default {
 }
 .spActive{
     color:var(--light-blue-color);
+}
+::v-deep .el-table__body .cell {
+    height: auto !important;
+    line-height: 20px !important;
+    .el-tooltip.item {
+        white-space: pre;
+    }
 }
 ::v-deep .el-table__fixed-body-wrapper {
     top: 92px;
