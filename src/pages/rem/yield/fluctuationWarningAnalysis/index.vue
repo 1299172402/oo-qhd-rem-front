@@ -133,13 +133,13 @@
                         <div class="row" style="margin-right:20px;">
                             <pagePanel headerTitle="单井产量波动分析" style="height: 400px; margin-top: 0;" show-btn>
                                 <!-- <div class="row-container"> -->
-                                    <div style="position: absolute; top: 52px; right: 111px; z-index: 99;">
+                                    <div style="position: absolute; top: 52px; right: 100px; width: calc(100% - 120px); z-index: 99;">
                                         <span style="margin-right:10px;font-size:14px;">产量变化总井数：{{wellAllNum}}口</span>
-                                        <el-input placeholder="产油波动值设置" style="width:140px;margin-right:10px;" size="medium" :readonly="true"></el-input>
+                                        <el-input placeholder="产油波动值设置" style="width:135px;margin-right:10px;" size="medium" :readonly="true"></el-input>
                                         <el-input v-model="setParaValue" style="width:80px;margin-right:10px;" type="text" size="medium" oninput="value=value.replace(/[^0-9.]/g,'')"></el-input>
                                         <el-input v-model="unitValue" style="width:50px;margin-right:10px;" size="medium" :readonly="true"></el-input>
                                         <el-button type="primary" @click="searchWellOutputWave">搜索</el-button>
-                                        <el-button type="primary" @click="jumpMore">更多</el-button>
+                                        <el-button type="primary" style="margin-left: 10px !important;" @click="jumpMore">更多</el-button>
                                     </div>
                                     <!-- <div class="echartBox"> -->
                                         <Echart :chart-data="barChart" height="100%"></Echart>

@@ -715,7 +715,6 @@
             },
             // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
             getSelectItems(selectList, selectData) {
-                // console.log('测试', selectData)
                 // 油田选中数据
                 // this.selYtdm = selectList.ogfId;
                 // 区块选中数据
@@ -768,11 +767,9 @@
                         data.forEach((el,i)=>{
                             myData.push({wellId:el,children:[]})
                         });
-                        console.log(myData,this.collectWells,'搜索数据')
                         this.queryTableData(myData);
                     }
                 }).catch(err=>{
-                    console.log('初始化接口有报错的~')
                 })
             },
             queryTableData(myData,val=''){
@@ -805,17 +802,15 @@
                                 t_count = 0; //初始化
                             }
                             let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
+                            if (myWellId != 'null' && t_subWells.includes("," + myWellId + ",")) {
                                 // myData[i][t_data.code] = '是'; //默认
                                 t_count++; //计数
                             }
                             myWellCount[t_data.code] = t_count; //回写
                         }
                         //深化点-点击井组展示井号
-                        console.log('messData----------aaaaaaaaaaaa',messData)
                         if(messData&&messData.groupEvalBases){
                             let key1=t_data.code + 'Message';
-                            console.log('key1',key1)
                             let key2=t_data.code;
                             let groupEvalBases=messData.groupEvalBases;//层位数据
                             let children=myData[i].children;
@@ -875,17 +870,15 @@
                                 t_count = 0; //初始化
                             }
                             let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
+                            if (myWellId != 'null' && t_subWells.includes("," + myWellId + ",")) {
                                 myData[i].injectionResponseAnalysis = t_data.name; //默认
                                 t_count++; //计数
                             }
                             myWellCount[t_data.code] = t_count; //回写
                         }
                         //深化点-点击井组展示井号
-                        console.log('messData----------aaaaaaaaaaaa',messData)
                         if(messData&&messData.groupEvalBases){
                             let key1=t_data.code + 'Message';
-                            console.log('key1',key1)
                             let key2=t_data.code;
                             let groupEvalBases=messData.groupEvalBases;//层位数据
                             let children=myData[i].children;
@@ -945,17 +938,15 @@
                                 t_count = 0; //初始化
                             }
                             let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
+                            if (myWellId != 'null' && t_subWells.includes("," + myWellId + ",")) {
                                 myData[i].injectionProductionBalance = t_data.name; //默认
                                 t_count++; //计数
                             }
                             myWellCount[t_data.code] = t_count; //回写
                         }
                         //深化点-点击井组展示井号
-                        console.log('messData----------aaaaaaaaaaaa',messData)
                         if(messData&&messData.groupEvalBases){
                             let key1=t_data.code + 'Message';
-                            console.log('key1',key1)
                             let key2=t_data.code;
                             let groupEvalBases=messData.groupEvalBases;//层位数据
                             let children=myData[i].children;
@@ -1015,17 +1006,15 @@
                                 t_count = 0; //初始化
                             }
                             let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
+                            if (myWellId != 'null' && t_subWells.includes("," + myWellId + ",")) {
                                 myData[i].thePressureToKeep = t_data.name; //默认
                                 t_count++; //计数
                             }
                             myWellCount[t_data.code] = t_count; //回写
                         }
                         //深化点-点击井组展示井号
-                        console.log('messData----------aaaaaaaaaaaa',messData)
                         if(messData&&messData.groupEvalBases){
                             let key1=t_data.code + 'Message';
-                            console.log('key1',key1)
                             let key2=t_data.code;
                             let groupEvalBases=messData.groupEvalBases;//层位数据
                             let children=myData[i].children;
@@ -1073,7 +1062,7 @@
                                 t_count = 0; //初始化
                             }
                             let t_subWells = "," + t_data.wells + ",";
-                            if (t_subWells.includes("," + myWellId + ",")) {
+                            if (myWellId != 'null' && t_subWells.includes("," + myWellId + ",")) {
                                 //myData[i][t_data.code] = '是';//默认
                                 t_count++; //计数
                             }
@@ -1167,7 +1156,6 @@
                     this.recommendedMeasuresOptions[j].value = t_count; //登记条数
                 }
                 this.tableData = myData; 
-                console.log('this.tableData',this.tableData)
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
@@ -1224,7 +1212,6 @@
                 if (this[tag].length) {
                     for (let i = 0; i < this[tag].length; i++) {
                         let tData = this[tag][i];
-                        console.log(tData);
                         if (val == tData.code) {
                             if (tData.wells == undefined || tData.wells == "" || tData.wells == "null") { //无数据
                                 myData = []; //没有数据
@@ -1253,7 +1240,6 @@
                     let msg = res.data.msg;
                     if (msg == "success") {
                         let myData = res.data.data.indicatorAnalysisDetailInfos;
-                        console.log('asda',myData)
                         this.trendOfIndicatorsNum.allnum=0;
                         this.trendOfIndicatorsNum.zcnum=0;
                         this.trendOfIndicatorsNum.ycnum=0;
@@ -1267,11 +1253,11 @@
                                 this.trendOfIndicatorsNum.zcnum=Number(el.value);
                                 this.trendOfIndicatorsNum.ycnum=Number(el.exeValue);
                             }else{
+                                console.log(Number(el.value), !!Number(el.value))
                                 myData[i].isShow=Number(el.value)?true:false;
                                 // this.trendOfIndicatorsNum.ycnum+=Number(el.value);
                             }
                         })
-                        console.log('井组异常数', this.trendOfIndicatorsNum.ycnum);
                         this.trendOfIndicatorsNum.zczb=this.trendOfIndicatorsNum.zcnum/this.trendOfIndicatorsNum.allnum * 100;
                         this.trendOfIndicatorsNum.yczb=this.trendOfIndicatorsNum.yczb/this.trendOfIndicatorsNum.allnum * 100;
                         this.trendOfIndicators = myData;

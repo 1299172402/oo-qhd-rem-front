@@ -200,7 +200,8 @@
                                     <!--生产动态项目-->
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
                                     <!-- sortable :sort-method="(a, b) => {return borepipeNoSort1(a, b, item.code)}" -->
-                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" >
+                                    <!-- :sort-method="(a, b) => {return borepipeNoSort1(a, b, item.code)}" -->
+                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" sortable >
                                         
                                         <template #header>
                                             <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
@@ -1978,15 +1979,15 @@
             },
             borepipeNoSort1(oa, ob, code) {
                 console.log(oa, ob, code)
-                let wellA = "";
-                let wellB = "";
-                if(oa.scdt[code] == null){
-                    wellA = this.productionStatus(oa.scdt,code);
-                    wellB = this.productionStatus(ob.scdt,code);
-                } else {
-                    wellA = oa[code]?.showLabel;
-                    wellB = ob[code]?.showLabel;
-                }
+                let wellA = Number(oa.scdt[code].showLabel);
+                let wellB = Number(ob.scdt[code].showLabel)
+                // if(oa.scdt[code] == null){
+                //     wellA = this.productionStatus(oa.scdt,code);
+                //     wellB = this.productionStatus(ob.scdt,code);
+                // } else {
+                //     wellA = oa[code]?.showLabel;
+                //     wellB = ob[code]?.showLabel;
+                // }
                 return this.wellNoSort(wellA, wellB);
             },
             // 判断数据
