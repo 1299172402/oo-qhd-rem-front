@@ -65,21 +65,21 @@
                       <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                       <el-table-column prop="wellNo" label="井号" width="150" fixed/>
                       <el-table-column :label="searchForm.prodDate">
-                        <el-table-column sortable prop="fluidProdDaily" :label="`日产液\n(m³/d)`" width="90" :formatter="formatter"/>      
-                        <el-table-column sortable prop="oilProdDaily" :label="`日产油\n(m³/d)`" width="90"  :formatter="formatter"/>
-                        <el-table-column sortable prop="waterRatio" :label="`含水\n(%)`" width="90"  :formatter="formatter"/>
-                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压\n(MPa)`" width="100"  :formatter="formatter"/>
-                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="90"/>
+                        <el-table-column sortable prop="fluidProdDaily" :label="`日产液\n(m³/d)`" width="90" :formatter="formatter" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'fluidProdDaily')}"/>      
+                        <el-table-column sortable prop="oilProdDaily" :label="`日产油\n(m³/d)`" width="90"  :formatter="formatter" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'oilProdDaily')}"/>
+                        <el-table-column sortable prop="waterRatio" :label="`含水\n(%)`" width="90"  :formatter="formatter" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'waterRatio')}"/>
+                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压\n(MPa)`" width="100"  :formatter="formatter" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'dhFlowingPress')}"/>
+                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率\n(Hz)`" width="90" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'pumpFrequency')}"/>
                       </el-table-column>
                       <el-table-column :label="searchForm.prodDateCompare">
-                        <el-table-column sortable prop="fluidProdDailyCompare" :label="`日产液\n(m³/d)`" width="90"  :formatter="formatter"/>
-                        <el-table-column sortable prop="oilProdDailyCompare" :label="`日产油\n(m³/d)`" width="90"  :formatter="formatter"/>
-                        <el-table-column sortable prop="waterRatioCompare" :label="`含水\n(%)`" width="90" :formatter="formatter"/>
-                        <el-table-column sortable prop="dhFlowingPressCompare" :label="`井底流压\n(MPa)`" width="100"  :formatter="formatter"/>
-                        <el-table-column sortable prop="pumpFrequencyCompare" :label="`泵频率\n(Hz)`" width="90"/>
+                        <el-table-column sortable prop="fluidProdDailyCompare" :label="`日产液\n(m³/d)`" width="90"  :formatter="formatter" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'fluidProdDailyCompare')}"/>
+                        <el-table-column sortable prop="oilProdDailyCompare" :label="`日产油\n(m³/d)`" width="90"  :formatter="formatter" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'oilProdDailyCompare')}"/>
+                        <el-table-column sortable prop="waterRatioCompare" :label="`含水\n(%)`" width="90" :formatter="formatter" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'waterRatioCompare')}"/>
+                        <el-table-column sortable prop="dhFlowingPressCompare" :label="`井底流压\n(MPa)`" width="100"  :formatter="formatter" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'dhFlowingPressCompare')}"/>
+                        <el-table-column sortable prop="pumpFrequencyCompare" :label="`泵频率\n(Hz)`" width="90" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'pumpFrequencyCompare')}"/>
                       </el-table-column>
                       <el-table-column label="变化量">
-                        <el-table-column sortable prop="fluidProdDaily" :label="`产液对比\n(m³/d)`" width="120">
+                        <el-table-column sortable prop="fluidProdDaily" :label="`产液对比\n(m³/d)`" width="120" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'fluidProdDaily')}">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     {{ row.fluidProdDaily!==null?numReduce(row.fluidProdDaily,row.fluidProdDailyCompare).toFixed(2):'-' }}
@@ -89,7 +89,7 @@
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column sortable prop="comparisonOilProduction" :label="`产油对比\n(m³/d)`" width="160">
+                        <el-table-column sortable prop="comparisonOilProduction" :label="`产油对比\n(m³/d)`" width="160" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'comparisonOilProduction')}">
                             <template slot-scope="{row,$index}">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     <span style="width:60px;text-align: right;margin-right:10px;">{{row.oilProdDaily!==null?parseFloat(row.comparisonOilProduction).toFixed(2):'-'}}</span>
@@ -106,7 +106,7 @@
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column sortable prop="waterRatio" :label="`含水对比\n(%)`" width="120">
+                        <el-table-column sortable prop="waterRatio" :label="`含水对比\n(%)`" width="120" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'waterRatio')}">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     {{ row.waterRatio!==null?numReduce(row.waterRatio,row.waterRatioCompare).toFixed(2):'-' }}
@@ -116,12 +116,12 @@
                                 </span>
                             </template>
                         </el-table-column>
-                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压对比\n(MPa)`" width="130">
+                        <el-table-column sortable prop="dhFlowingPress" :label="`井底流压对比\n(MPa)`" width="130" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'dhFlowingPress')}">
                             <template slot-scope="scope">
                                 {{scope.row.dhFlowingPress!==null?numReduce(scope.row.dhFlowingPress,scope.row.dhFlowingPressCompare).toFixed(2):'-'}}
                             </template>
                         </el-table-column>
-                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率对比\n(Hz)`" width="120">
+                        <el-table-column sortable prop="pumpFrequency" :label="`泵频率对比\n(Hz)`" width="120" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'pumpFrequency')}">
                             <template slot-scope="{ row }">
                                 <span style="display: flex;align-items: center;justify-content: center;">
                                     {{ row.pumpFrequency!==null?numReduce(row.pumpFrequency,row.pumpFrequencyCompare).toFixed(2):'-' }}
@@ -412,6 +412,13 @@
             //下载导出csv文件
             doDownIndex() {
                 exportExcel("#tableData", "秦皇岛32-6油田单井产量变化");
+            },
+            //自定义井号排序
+            borepipeNoSort(oa, ob, code) {
+                console.log('数据输出',  oa, ob, code);
+                let wellA = oa[code];
+                let wellB = ob[code];
+                return Number(oa[code]) - Number(ob[code]);
             },
         },
     };

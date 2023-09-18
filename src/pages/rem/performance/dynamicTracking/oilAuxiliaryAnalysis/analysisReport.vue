@@ -193,12 +193,14 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '油井动态分析详情列表')">下载</el-button>
                                 </div>
-                                <el-table :key="Math.random()" id="table1" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <!--  @sort-change="changeTableSort"  -->
+                                <el-table :key="Math.random()" id="table1" highlight :data="tableData" height="calc(100% - 55px)" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
-                                    <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                    <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellName')}" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" sortable="custom" label-class-name="twoRowHeader">
+                                    <!-- sortable :sort-method="(a, b) => {return borepipeNoSort1(a, b, item.code)}" -->
+                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" >
                                         
                                         <template #header>
                                             <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
@@ -222,7 +224,7 @@
                                     </el-table-column>
                                     <!--生产问题监测项目-->
                                     <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                        <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="120" :key="index" :prop="item.code" :label="item.name" align="center" width="180px" label-class-name="twoRowHeader">
+                                        <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="120" :key="index" :prop="item.code" :label="item.name" align="center" width="180px">
                                             <template #header>
                                                 <div v-if="item.isTwoHeader">
                                                     <span>{{item.name}}</span>
@@ -261,11 +263,11 @@
                                             <template slot-scope="scope">
                                                 <!-- <span v-if="scope.row.cscx != null">{{ scope.row.cscx.showLabel ? scope.row.cscx.showLabel  :'-' }}</span> -->
                                                 <el-tooltip v-if="scope.row.cscx != null" class="item" effect="dark" :content="preliminarySelectioMeasures(scope.row.wellId,1)" placement="top">
-                                                    <span >{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span>
+                                                    <span class="">{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span>
                                                 </el-tooltip>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="theDate" align="center"  min-width="150" label-class-name="twoRowHeader">
+                                        <el-table-column prop="theDate" align="center"  min-width="150">
                                             <template #header>
                                                 <div>
                                                     <span>推荐日期</span>
@@ -288,7 +290,7 @@
                                         </el-table-column>
                                     </el-table-column>
                                     <!--日增油量-->
-                                    <el-table-column prop="dailyOilIncrement" align="center" label-class-name="twoRowHeader">
+                                    <el-table-column prop="dailyOilIncrement" align="center">
                                         <template #header>
                                             <div>
                                                 <span>日增油量</span>
@@ -690,12 +692,14 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '油井动态分析详情列表')">下载</el-button>
                                 </div>
-                                <el-table :key="Math.random()" id="table2" highlight :data="tableData" height="calc(100% - 55px)" @sort-change="changeTableSort" ref="tableList" class="doubleHeader">
+                                <!-- @sort-change="changeTableSort"  -->
+                                <el-table :key="Math.random()" id="table2" highlight :data="tableData" height="calc(100% - 55px)" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
-                                    <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                    <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellName')}" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="150" sortable="custom" label-class-name="twoRowHeader">
+                                    <!-- :sort-method="(a, b) => {return borepipeNoSort1(a, b, item.code)}" -->
+                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="150" sortable >
                                         
                                         <template #header>
                                             <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
@@ -726,7 +730,7 @@
                                     </el-table-column>
                                     <!--生产问题监测项目-->
                                     <el-table-column prop="problemMonitoring" label="生产问题监测" align="center">
-                                        <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="260px" label-class-name="twoRowHeader">
+                                        <el-table-column v-for="(item, index) in problemMonitoringTab" min-width="100" :key="index" :prop="item.code" :label="item.name" align="center" width="260px">
                                             <template #header>
                                                 <div v-if="item.isTwoHeader">
                                                     <span>{{item.name}}</span>
@@ -770,7 +774,7 @@
                                                 <!-- <span v-if="scope.row.cscx != null">{{ preliminarySelectioMeasures(scope.row.wellId,1) }}</span> -->
                                             </template>
                                         </el-table-column>
-                                        <el-table-column prop="theDate" align="center"  min-width="150" label-class-name="twoRowHeader">
+                                        <el-table-column prop="theDate" align="center"  min-width="150">
                                             <template #header>
                                                 <div>
                                                     <span>推荐日期</span>
@@ -793,7 +797,7 @@
                                         </el-table-column>
                                     </el-table-column>
                                     <!--日增油量-->
-                                    <el-table-column prop="dailyOilIncrement" align="center" label-class-name="twoRowHeader">
+                                    <el-table-column prop="dailyOilIncrement" align="center">
                                         <template #header>
                                             <div>
                                                 <span>日增油量</span>
@@ -1693,10 +1697,10 @@
             preliminarySelectioMeasures(str,type){
                 let currentArr = this.recommendedMeasuresData.filter(item=>item.wellId == str);
                 if(type == 1){
-                    let currentName = currentArr.length> 0 ? currentArr.map(item=>item.measuresName).join(', ') : '-'
+                    let currentName = currentArr.length> 0 ? currentArr.map(item=>item.measuresName).join('\n') : '-'
                     return currentName
                 } else {
-                    let currentDate = currentArr.length> 0 ? currentArr.map(item=>item.theDate).join(', ') : '-'
+                    let currentDate = currentArr.length> 0 ? currentArr.map(item=>item.theDate).join('\n') : '-'
                     return currentDate
                 }
                
@@ -1967,9 +1971,22 @@
                 }
             },
             //自定义井号排序
-            borepipeNoSort(oa, ob) {
-                let wellA = oa.wellName;
-                let wellB = ob.wellName;
+            borepipeNoSort(oa, ob, code) {
+                let wellA = oa[code];
+                let wellB = ob[code];
+                return this.wellNoSort(wellA, wellB);
+            },
+            borepipeNoSort1(oa, ob, code) {
+                console.log(oa, ob, code)
+                let wellA = "";
+                let wellB = "";
+                if(oa.scdt[code] == null){
+                    wellA = this.productionStatus(oa.scdt,code);
+                    wellB = this.productionStatus(ob.scdt,code);
+                } else {
+                    wellA = oa[code]?.showLabel;
+                    wellB = ob[code]?.showLabel;
+                }
                 return this.wellNoSort(wellA, wellB);
             },
             // 判断数据
@@ -2684,5 +2701,23 @@
 
     .spActive{
         color:var(--light-blue-color);
+    }
+    ::v-deep .el-table__body .cell {
+        height: auto !important;
+        line-height: 20px !important;
+        .el-tooltip.item {
+            white-space: pre;
+        }
+    }
+    ::v-deep .el-table__fixed-body-wrapper {
+        top: 92px;
+    }
+    ::v-deep .el-table__fixed-header-wrapper .cell,
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto !important;
+        line-height: 30px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
 </style>

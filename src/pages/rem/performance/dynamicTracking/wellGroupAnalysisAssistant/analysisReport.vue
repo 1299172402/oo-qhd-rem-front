@@ -132,17 +132,16 @@
                                     id="table1"
                                     highlight 
                                     :data="tableData" 
-                                    height="calc(100% - 55px)" 
-                                    @sort-change="changeTableSort" 
+                                    height="calc(100% - 55px)"
                                     ref="tableList" 
                                     class="doubleHeader"
                                     row-key="id"
                                     default-expand-all
                                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
-                                    <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                    <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellId')}" fixed="left"></el-table-column>
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" sortable="custom" align="center" min-width="170" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" sortable :sort-method="(a, b) => {return borepipeNoSort(a, b, item.code)}" align="center" min-width="170">
                                         <template #header>
                                             <div class="headerSortRow1">
                                                 <span>{{ item.name}}</span>
@@ -441,16 +440,15 @@
                                     highlight 
                                     :data="tableData" 
                                     height="calc(100% - 55px)" 
-                                    @sort-change="changeTableSort" 
                                     ref="tableList" 
                                     class="doubleHeader"
                                     row-key="id"
                                     default-expand-all
                                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
-                                    <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="borepipeNoSort" fixed="left"></el-table-column>
+                                    <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellId')}" fixed="left"></el-table-column>
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" sortable="custom" align="center" min-width="170" label-class-name="twoRowHeader">
+                                    <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" sortable :sort-method="(a, b) => {return borepipeNoSort(a, b, item.code)}" align="center" min-width="170">
                                         <template #header>
                                             <div class="headerSortRow1">
                                                 <span>{{ item.name}}</span>
@@ -1447,9 +1445,9 @@
                 }
             },
             ///自定义井号排序
-            borepipeNoSort(oa, ob) {
-                let wellA = oa.wellId;
-                let wellB = ob.wellId;
+            borepipeNoSort(oa, ob, code) {
+                let wellA = oa[code];
+                let wellB = ob[code];
                 return this.wellNoSort(wellA, wellB);
             },
             //下载导出文件 tableId tableName
@@ -2080,5 +2078,16 @@
     
     .spActive{
         color:var(--light-blue-color);
+    }
+    ::v-deep .el-table__fixed-body-wrapper {
+        top: 92px;
+    }
+    ::v-deep .el-table__fixed-header-wrapper .cell,
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto !important;
+        line-height: 30px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
     }
 </style>
