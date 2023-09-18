@@ -146,7 +146,7 @@
                                             <div class="headerSortRow1">
                                                 <span>{{ item.name}}</span>
                                                 <br />
-                                                <span>{{ item.unit}}</span>
+                                                <span>({{ item.unit}})</span>
                                             </div>
                                         </template>
                                         <template slot-scope="{row}">
@@ -453,7 +453,7 @@
                                             <div class="headerSortRow1">
                                                 <span>{{ item.name}}</span>
                                                 <br />
-                                                <span>{{ item.unit}}</span>
+                                                <span>({{ item.unit }})</span>
                                             </div>
                                         </template>
                                         <template slot-scope="{row}">

@@ -195,10 +195,10 @@
                                         <el-table-column width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index10-${index}`" :prop="item.code" :label="item.name" align="center" :sort-method="(a, b) => {return borepipeNoSort(a, b, item.code)}">
                                             <template #header>
                                                <div>
-                                                <div v-if="item.unit">
+                                                <div v-if="borepipeNoSort">
                                                     <span>{{item.name}}</span>
                                                     <br />
-                                                    <span>{{item.unit}}</span>
+                                                    <span>({{item.unit}})</span>
                                                 </div>
                                                 <div v-else>
                                                     <span>{{item.name}}</span>
@@ -537,7 +537,7 @@
                                     <el-table-column prop="productionProblems" label="生产问题" align="center">
                                         <el-table-column width="140" v-for="(item, index) in trendOfIndicatorsTab" :key="`index24-${index}`" :prop="item.code" :label="item.name" align="center" sortable :sort-method="(a, b) => {return borepipeNoSort(a, b, item.code)}">
                                             <template #header>
-                                                <div v-if="item.unit">
+                                                <div v-if="borepipeNoSort">
                                                     <span>{{item.name}}</span>
                                                     <br />
                                                     <span>({{item.unit}})</span>
