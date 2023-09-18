@@ -5,6 +5,7 @@ import {
     getWellData,
 } from "@/api/rem/r-intelligentIPA.js";
 import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
+import {queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
 export default {
     data () {
         return {
@@ -30,8 +31,8 @@ export default {
          * 获取油田
          */
         queryOilFeild () {
-            getOgfInfo().then(({ ogfId }) => {
-                this.oilList = ogfId;
+            queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then((res) => {
+                this.oilList = res.data.data;
             });
         },
         //改变油田
