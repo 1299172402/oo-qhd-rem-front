@@ -193,16 +193,11 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '油井动态分析详情列表')">下载</el-button>
                                 </div>
-                                <!--  @sort-change="changeTableSort"  -->
                                 <el-table :key="Math.random()" id="table1" highlight :data="tableData" height="calc(100% - 55px)" ref="tableList" class="doubleHeader">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellName')}" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
-                                    <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                    <!-- sortable :sort-method="(a, b) => {return borepipeNoSort1(a, b, item.code)}" -->
-                                    <!-- :sort-method="(a, b) => {return borepipeNoSort1(a, b, item.code)}" -->
-                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="160" sortable >
-                                        
+                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="`column-${item.code}${index}`" :prop="item.code" align="center" min-width="160" sortable :sort-method="(a, b) => {return borepipeNoSort1(a, b, item.code)}">
                                         <template #header>
                                             <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
                                                 <span>{{ item.name.split(' ')[0] ? item.name.split(' ')[0] : ""}}</span>
@@ -693,14 +688,11 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table2', '油井动态分析详情列表')">下载</el-button>
                                 </div>
-                                <!-- @sort-change="changeTableSort"  -->
-                                <el-table :key="Math.random()" id="table2" highlight :data="tableData" height="calc(100% - 55px)" ref="tableList" class="doubleHeader">
+                                <el-table :key="Math.random()" id="table2" highlight :data="tableData" height="calc(100% - 55px)" ref="tableList" class="doubleHeader" >
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                                     <el-table-column prop="wellName" label="井号" align="center" width="180px" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellName')}" fixed="left"></el-table-column>
                                     <!--生产动态项目-->
-                                    <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
-                                    <!-- :sort-method="(a, b) => {return borepipeNoSort1(a, b, item.code)}" -->
-                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="150" sortable >
+                                    <el-table-column v-for="(item, index) in productionTrendsTab" :key="item.code" :prop="item.code" align="center" min-width="150" sortable :sort-method="(a, b) => {return borepipeNoSort1(a, b, item.code)}">
                                         
                                         <template #header>
                                             <div class="headerSortRow1" v-if="item.name && item.name!='正常' && item.name.split(' ')[1]">
@@ -1029,6 +1021,7 @@
                 //获取措施效果数据
                 recommendedMeasuresData: [],
                 //油井动态分析详细列表
+                tableLoading: false,
                 tableData: [],
                 oldTableData: [],
                 initTableData: [],
@@ -1941,54 +1934,21 @@
                     h('span', {}, header[1])
                 ])];
             },
-            // 排序列改变返回当前需要排序的列
-            changeTableSort(e) {
-                 //获取当前列的字段
-                 const prop = e.prop;
-                if (prop != 'wellName') {
-                    // 如果按降序
-                    if (e.order === 'descending') {
-                        //根据需要对字段进行写排序
-                        this.tableData = this.tableData.sort((a, b) => {
-                            if (!a.scdt[prop] || !a.scdt[prop].showLabel) {
-                                return -1;
-                            } else if (!b.scdt[prop] || !a.scdt[prop].showLabel) {
-                                return 1;
-                            } else {
-                                return parseFloat(Number(a.scdt[prop].showLabel)) - parseFloat(Number(b.scdt[prop].showLabel));
-                            }
-                        })
-                    } else { //发果是降序
-                        this.tableData = this.tableData.sort((a, b) => {
-                            if (!a.scdt[prop] || !a.scdt[prop].showLabel) {
-                                return 1;
-                            } else if (!b.scdt[prop] || !a.scdt[prop].showLabel) {
-                                return -1;
-                            } else {
-                                return parseFloat(Number(b.scdt[prop].showLabel)) - parseFloat(Number(a.scdt[prop].showLabel));
-                            }
-                        })
-                    }
+            //自定义井号排序 - 井号
+            borepipeNoSort(oa, ob, prop) {
+                let wellA = oa[prop];
+                let wellB = ob[prop];
+                return this.wellNoSort(wellA, wellB);
+            },
+            //自定义井号排序 - 生产动态监测
+            borepipeNoSort1(oa, ob, prop) {
+                if (!oa.scdt[prop] || !oa.scdt[prop]?.showLabel) {
+                    return 1;
+                } else if (!ob.scdt[prop] || !ob.scdt[prop]?.showLabel) {
+                    return -1;
+                } else {
+                    return parseFloat(oa.scdt[prop].showLabel) - parseFloat(ob.scdt[prop].showLabel)
                 }
-            },
-            //自定义井号排序
-            borepipeNoSort(oa, ob, code) {
-                let wellA = oa[code];
-                let wellB = ob[code];
-                return this.wellNoSort(wellA, wellB);
-            },
-            borepipeNoSort1(oa, ob, code) {
-                console.log(oa, ob, code)
-                let wellA = Number(oa.scdt[code].showLabel);
-                let wellB = Number(ob.scdt[code].showLabel)
-                // if(oa.scdt[code] == null){
-                //     wellA = this.productionStatus(oa.scdt,code);
-                //     wellB = this.productionStatus(ob.scdt,code);
-                // } else {
-                //     wellA = oa[code]?.showLabel;
-                //     wellB = ob[code]?.showLabel;
-                // }
-                return this.wellNoSort(wellA, wellB);
             },
             // 判断数据
             linkdata(){
