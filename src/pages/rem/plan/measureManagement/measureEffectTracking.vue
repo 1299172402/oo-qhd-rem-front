@@ -207,10 +207,10 @@
                                 header-cell-class-name="table_header"
                                 :cell-style="{ padding: '2px', 'text-align': 'center' }">
                                 <el-table-column label="序号" type="index"></el-table-column>
-                                <el-table-column :label="`日期\n(yyyy/mm/dd hh:mm:ss)`" prop="startTime"></el-table-column>
-                                <el-table-column label="含水" prop="waterCut" :formatter="toPrecise2"></el-table-column>
-                                <el-table-column label="含砂" prop="sand" :formatter="toPrecise2"></el-table-column>
-                                <el-table-column label="备注" prop="remark"></el-table-column>
+                                <el-table-column :label="`日期\n(yyyy/mm/dd)`" prop="dateTime"></el-table-column>
+                                <el-table-column :label="`含水\n(%)`" prop="wtr" :formatter="toPrecise2"></el-table-column>
+                                <el-table-column :label="`含砂\n(%)`" prop="sand" :formatter="toPrecise2"></el-table-column>
+                                <!-- <el-table-column label="备注" prop="remark"></el-table-column> -->
                             </el-table>
                         </div>
                     </div>
@@ -273,6 +273,7 @@
     import verticalSwitchButton from '@/components/intelligentOilfield/vertical-switch-button/index.vue';
     import Echarts from '@/components/tools/Echarts/index.vue';
     import {fetchMeasureStatInfos} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
+    import {getAnalysisResult} from '@/api/oilDeposit/rem-01/fielddynamicanalysis.js';
     import {uploadFile} from '@/api/oilDeposit/rem-02/primaryinfo.js';
     import {produceData} from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
     import {getDocDownloadUrl} from '@/api/oilDeposit/ipm-01/measuresmanageinfo.js';
@@ -1818,6 +1819,7 @@
                     this.wellType,
                     this.wellBoreName,
                 );
+                this.getAnalysisResult();
                 this.getWorkProgress();
                 this.doSearchCharts();
             },
@@ -1940,6 +1942,7 @@
                     this.type = 1;
                 }
                 this.doSearchCharts();
+                this.getAnalysisResult();
                 this.getFetchMeasureStatInfos(
                     this.selectOilField,
                     this.selectPlatform,
@@ -1972,18 +1975,31 @@
                     pageSize,
                     wellType,
                 };
-                this.tableData = [];
                 this.chemicalTableData = [];
                 fetchMeasureStatInfos(request).then((res) => {
                     console.log(res, 99)
                     if (res.data.code == 200) {
                         this.tableData = res.data.data.measureResultStat;  
-                        this.chemicalTableData = res.data.data.taskPlanExcuteRecordList;
                         if (this.type == 0) {
                             this.oilWellTableData = this.tableData;
                         } else if (this.type == 1) {
                             this.waterWellTableData = this.tableData;
                         }
+                    }
+                });
+            },
+            getAnalysisResult() {
+                const request = {
+                    date: this.dateTime,
+                    oilFieldId: this.selectOilField,
+                    platformId: this.selectPlatform,
+                    wellId: this.selectWellId,
+                };
+                // this.tableData = [];
+                this.chemicalTableData = [];
+                getAnalysisResult(request).then((res) => {
+                    if (res.data.code == 200) {
+                        this.chemicalTableData = res.data.data;
                     }
                 });
             },

@@ -575,3 +575,17 @@ export function wellTieProfiles(request) {
     data: request,
   })
 }
+
+/**
+ * hwh
+ * 0304-化验数据
+ * @param request
+ * @returns {AxiosPromise}
+ */
+export function getAnalysisResult(request) {
+  return Axios({
+    url: `${baseUrl}/fieldDynamicAnalysisController/getAnalysisResult`,
+    method: "post",
+    data: request,
+  })
+}
