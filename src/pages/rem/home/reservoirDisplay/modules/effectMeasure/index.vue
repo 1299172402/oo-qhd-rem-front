@@ -6,8 +6,8 @@
             header-title="措施效果跟踪表"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('oilAnalysisReport')">详细</button>
-            <button class="detailLinkBtn"  style="right:110px"  @click="downtable">下载</button>
+            <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('oilAnalysisReport')">详细</el-button>
+            <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downtable">下载</el-button>
             <el-table
                 :data="tableData"
                 highlight-current-row
@@ -125,17 +125,15 @@ export default {
 }
 
 .detailLinkBtn {
-    position: absolute;
-    right: 50px;
+position: absolute;
+    right: 45px;
     top: 10px;
     width: 50px;
-    height: 20px;
-    background: linear-gradient(90deg, #0751b0, #50a6ec);
-    text-align: center;
-    font-size: smaller;
-    border: 0;
-    cursor: pointer;
-    color: #ffffff;
+    line-height: 20px;
+    padding: 0 !important;
+    height: 20px !important;
+    font-size: smaller !important;
+    text-align: center !important;
 }
 
 .inputstyle ::v-deep.el-input__inner {

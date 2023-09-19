@@ -1,6 +1,6 @@
 <template>
     <div class="app-container" style="width: 100%; height: 100%">
-        <button class="detailLinkBtn"   @click="downEcharts">下载</button>
+        <el-button  type="primary" class="buttonActive_primary detailLinkBtn"   @click="downEcharts">下载</el-button>
         <Echart ref="echartChart" :chart-data="productLineChart" width="100%" height="80%"></Echart>
         <el-row :gutter="20">
             <el-col :span="8">
@@ -1130,16 +1130,14 @@ export default {
 }
 .detailLinkBtn {
     position: absolute;
-    right: 120px;
+    right: 105px;
     top: 10px;
     width: 50px;
-    height: 20px;
-    background: linear-gradient(90deg, #0751b0, #50a6ec);
-    text-align: center;
-    font-size: smaller;
-    border: 0;
-    cursor: pointer;
-    color: #ffffff;
+    line-height: 23px;
+    padding: 0 !important;
+    height: 20px !important;
+    font-size: smaller !important;
+    text-align: center !important;
 }
 .xbox {
     display: flex;
