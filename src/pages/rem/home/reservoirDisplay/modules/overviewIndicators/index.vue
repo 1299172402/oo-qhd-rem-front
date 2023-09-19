@@ -6,8 +6,8 @@
             header-title="秦皇岛32-6油田生产指标总览"
             :is-show-max-btn="true"
         >
-            <button class="detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</button>
-            <button class="detailLinkBtn"  style="right:110px"  @click="downlist">下载</button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn"  style="right:110px"  @click="downlist">下载</el-button>
             <el-row :gutter="20" style="margin-top: 20px;padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
@@ -874,15 +874,13 @@ export default {
 
 .detailLinkBtn {
     position: absolute;
-    right: 50px;
+    right: 45px;
     top: 10px;
     width: 50px;
-    height: 20px;
-    background: linear-gradient(90deg, #0751b0, #50a6ec);
-    text-align: center;
-    font-size: smaller;
-    border: 0;
-    cursor: pointer;
-    color: #ffffff;
+    line-height: 22px;
+    padding: 0 !important;
+    height: 20px !important;
+    font-size: smaller !important;
+    text-align: center !important;
 }
 </style>
