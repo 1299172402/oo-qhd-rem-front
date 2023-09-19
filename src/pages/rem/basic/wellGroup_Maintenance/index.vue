@@ -663,7 +663,10 @@ export default {
             }
             wellGroupEvaluation(data).then((res)=>{
                 if(res.data.code ==200){
-                    this.$message.success("运行计算成功！！");
+                    this.$message.success("运行计算成功！");
+                    this.loading = false
+                }else{
+                    this.$message.error("运算失败，请刷新页面或联系运维人员！");
                     this.loading = false
                 }
             })
