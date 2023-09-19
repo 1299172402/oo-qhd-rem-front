@@ -13,9 +13,9 @@
                                    @change="changeOilfield">
                             <el-option
                                 v-for="item in options"
-                                :key="item.ogfId"
-                                :value="item.ogfId"
-                                :label="item.ogfName"
+                                :key="item.oilFieldId"
+                                :value="item.oilFieldId"
+                                :label="item.name"
                             ></el-option>
                         </el-select>
                     </el-form-item>
@@ -72,14 +72,14 @@
                             <i class="el-icon-edit el-icon--left"/>
                             更改
                         </el-button>
-<!--                        <el-button-->
-<!--                            type="primary"-->
-<!--                            :loading="loading"-->
-<!--                            @click="calculate"-->
-<!--                        >-->
-<!--                            <i class="el-icon-s-platform el-icon&#45;&#45;left"/>-->
-<!--                            运行计算-->
-<!--                        </el-button>-->
+                        <el-button
+                            type="primary"
+                            :loading="loading"
+                            @click="calculate"
+                        >
+                            <i class="el-icon-s-platform el-icon--left"/>
+                            运行计算
+                        </el-button>
                         <el-button
                             type="primary"
                             @click="preserve"
@@ -252,7 +252,8 @@ import {
     postsaveAndupdateWellGroup, delectByWellGroupId, saveAllWellGroup, getMonthlyActionStatus
 } from "@/api/rem/r-wellConnectEvaluate.js"
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
-
+import {wellGroupEvaluation} from "@/api/rem/model";
+import {fetchOilFields} from "@/api/oilDeposit/rem-02/primaryinfo";
 export default {
     name: "wellGroup_Maintenance",
     components: {treeMultipleSelection},
@@ -310,7 +311,9 @@ export default {
     },
     methods: {
         reset() {
-            this.query.selectBlock = this.blanks[0].fieldId;
+            this.query.selectField = '3FC9A818F5BC43B88270DB80BBB3018F'
+            this.changeOilfield()
+            this.query.selectBlock = 'YCFXDY8B643EDC9007F96F570600457D'
             this.getDate();
             this.tableOilfield();
         },
@@ -534,8 +537,8 @@ export default {
         },
         // 获取油田下拉数据
         selectData() {
-            getoilfield({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(({ogfId}) => {
-                this.options = ogfId;
+            fetchOilFields({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then((res) => {
+                this.options = res.data.data.oilFields;
             });
         },
         // 获取区块数据
@@ -566,22 +569,29 @@ export default {
             getblock({
                 ogfId: this.query.selectField
             }).then(({blockList}) => {
-                this.blanks = blockList
-                let data = []
-                blockList.map((n) => {
-                    data.push({
-                        label: n.blockName,
-                        level: "4",
-                        value: n.blockId,
-                        children: []
-                    })
-                })
-                this.listdata[0].children[0].children[0].children.push(...data)
-                this.key++
+               if(blockList[0].blockId ==null){
+                   this.blanks = []
+               }
+               else{
+                   this.blanks = blockList
+                   let data = []
+                   blockList.map((n) => {
+                       data.push({
+                           label: n.blockName,
+                           level: "4",
+                           value: n.blockId,
+                           children: []
+                       })
+                   })
+                   this.listdata[0].children[0].children[0].children.push(...data)
+                   this.key++
+               }
+               
             });
         },
         // 油田下拉点击事件
         changeOilfield() {
+            this.query.selectBlock = ''
             this.selectblock()
         },
         // 获取油田列表数据
@@ -644,12 +654,19 @@ export default {
         },
         calculate() {
             // 运行计算测试效果
+            // 获取当前日期
             this.loading = true
-            // const firstLoading = document.querySelector("#first-loading");
-            setTimeout(() => {
-                this.loading = false
-                this.$message.error('计算失败')
-            }, 2000);
+            let data = {
+                ogfId:this.query.selectField,
+                start:new Date().format('YYYY-MM') + '-01',
+                end:new Date().format('YYYY-MM-dd'),
+            }
+            wellGroupEvaluation(data).then((res)=>{
+                if(res.data.code ==200){
+                    this.$message.success("运行计算成功！！");
+                    this.loading = false
+                }
+            })
         }
 
     }
