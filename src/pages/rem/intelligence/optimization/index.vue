@@ -237,9 +237,11 @@ import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} from "@/api/rem/r-intelligentIPA.js";
 // import Iframe from '@/components/rem/tools/iframe.vue'
 import {exportExcel} from '@/lib/exportExcel';
+import Iframe from "@/components/rem/tools/iframe.vue";
 
 export default {
     components: {
+        Iframe
         // Iframe
     },
     mixins: [queryConditionMixin],
