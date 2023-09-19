@@ -210,6 +210,7 @@
             <iframe
                 style="height:100%; width:100%; border:none;"
                 v-show="activeName == 'second'"
+                allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" oallowfullscreen="true" msallowfullscreen="true"
                 src="https://intelinj.tjioms-test.tjltd.cnooc/"
             ></iframe>
 

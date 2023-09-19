@@ -224,6 +224,7 @@
             <iframe
                 ref="iframe"
                 :style="getStyle"
+                allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" oallowfullscreen="true" msallowfullscreen="true"
                 v-show="activeName == 'second'"
                 :src="src"
             ></iframe>
