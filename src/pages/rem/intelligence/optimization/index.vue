@@ -250,7 +250,7 @@ export default {
         }else{
             this.queryTableData(this.form.tableData2)
         }
-        this.src = 'https://intelinj.tjioms-test.tjltd.cnooc/'
+        this.src = 'https://intelinj.tjioms-dev.tjltd.cnooc/'
     },
     data() {
         return {
