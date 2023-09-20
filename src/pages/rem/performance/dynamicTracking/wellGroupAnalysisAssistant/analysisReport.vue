@@ -139,7 +139,7 @@
                                     default-expand-all
                                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
-                                    <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellId')}" fixed="left"></el-table-column>
+                                    <el-table-column prop="wellId" align="center" label="井组" width="240px" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellId')}" fixed="left"></el-table-column>
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
                                     <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" sortable :sort-method="(a, b) => {return borepipeNoSort(a, b, item.code)}" align="center" min-width="170">
                                         <template #header>
@@ -187,12 +187,18 @@
                                     <el-table-column align="center" label="措施初选">
                                         <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140">
                                             <template slot-scope="{row}">
-                                                <span>{{row.measuresName?row.measuresName:'-'}}</span>
+                                                <!-- <span>{{row.measuresName?row.measuresName:'-'}}</span> -->
+                                                <el-tooltip class="item" effect="dark" :content="preliminarySelectioMeasures(row.wellId,1)" placement="top">
+                                                    <span class="">{{ preliminarySelectioMeasures(row.wellId,1) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
                                         <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期">
                                             <template slot-scope="{row}">
-                                                <span>{{row.theDate?row.theDate:'-'}}</span>
+                                                <!-- <span>{{row.theDate?row.theDate:'-'}}</span> -->
+                                                <el-tooltip  class="item" effect="dark" :content="preliminarySelectioMeasures(row.wellId,2)" placement="top">
+                                                    <span class="">{{ preliminarySelectioMeasures(row.wellId,2) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
                                         <el-table-column prop="address" align="center" label="操作" min-width="140">
@@ -446,7 +452,7 @@
                                     default-expand-all
                                     :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                                     <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
-                                    <el-table-column prop="wellId" align="center" label="井组" width="200px" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellId')}" fixed="left"></el-table-column>
+                                    <el-table-column prop="wellId" align="center" label="井组" width="240px" :sortable="true" :sort-method="(a, b) => {return borepipeNoSort(a, b, 'wellId')}" fixed="left"></el-table-column>
                                     <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
                                     <el-table-column v-for="(item, index) in trendOfIndicatorsTab" :key="index" :prop="item.code" sortable :sort-method="(a, b) => {return borepipeNoSort(a, b, item.code)}" align="center" min-width="170">
                                         <template #header>
@@ -494,12 +500,18 @@
                                     <el-table-column align="center" label="措施初选">
                                         <el-table-column prop="measuresName" align="center" label="推荐措施" min-width="140">
                                             <template slot-scope="{row}">
-                                                <span>{{row.measuresName?row.measuresName:'-'}}</span>
+                                                <!-- <span>{{row.measuresName?row.measuresName:'-'}}</span> -->
+                                                <el-tooltip class="item" effect="dark" :content="preliminarySelectioMeasures(row.wellId,1)" placement="top">
+                                                    <span class="">{{ preliminarySelectioMeasures(row.wellId,1) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
                                         <el-table-column prop="theDate" min-width="140px" align="center" label="推荐日期">
                                             <template slot-scope="{row}">
-                                                <span>{{row.theDate?row.theDate:'-'}}</span>
+                                                <!-- <span>{{row.theDate?row.theDate:'-'}}</span> -->
+                                                <el-tooltip  class="item" effect="dark" :content="preliminarySelectioMeasures(row.wellId,2)" placement="top">
+                                                    <span class="">{{ preliminarySelectioMeasures(row.wellId,2) }}</span>
+                                                </el-tooltip>
                                             </template>
                                         </el-table-column>
                                         <el-table-column prop="address" align="center" label="操作" min-width="140">
@@ -1369,7 +1381,7 @@
                     if (msg == "success") {
                         let myData = res.data.data.evaluationResults;
                         this.recommendedMeasuresData = myData;
-                        this.recommendedMeasuresWells = [];
+                        this.recommendedMeasuresWells = {};
                         this.initRecommendedMeasuresWells(); //生成井清单
                     }
                 });
@@ -1379,8 +1391,18 @@
                 if (this.recommendedMeasuresData) {
                     for (let i = 0; i < this.recommendedMeasuresData.length; i++) {
                         let tData = this.recommendedMeasuresData[i];
-                        this.recommendedMeasuresWells[tData.wellId] = i;
+                        this.recommendedMeasuresWells[tData.wellGroupName] = i;
                     }
+                }
+            },
+            preliminarySelectioMeasures(str,type){
+                let currentArr = this.recommendedMeasuresData.filter(item=>item.wellGroupName == str);
+                if(type == 1){
+                    let currentName = currentArr.length> 0 ? currentArr.map(item=>item.measuresName).join('\n') : '-'
+                    return currentName
+                } else {
+                    let currentDate = currentArr.length> 0 ? currentArr.map(item=>item.theDate).join('\n') : '-'
+                    return currentDate
                 }
             },
             //跳转到水井页面
@@ -1400,40 +1422,10 @@
                     }
                 })
             },
-            // 排序列改变返回当前需要排序的列
-            changeTableSort(e) {
-                //获取当前列的字段
-                const prop = e.prop;
-                if (prop != 'wellId') {
-                    // 如果按降序
-                    if (e.order === 'descending') {
-                        //根据需要对字段进行写排序
-                        this.tableData = this.tableData.sort((a, b) => {
-                            if (!a[prop]) {
-                                return -1;
-                            } else if (!b[prop]) {
-                                return 1;
-                            } else {
-                                return parseFloat(Number(a[prop])) - parseFloat(Number(b[prop]));
-                            }
-                        })
-                    } else { //发果是降序
-                        this.tableData = this.tableData.sort((a, b) => {
-                            if (!a[prop]) {
-                                return 1;
-                            } else if (!b[prop]) {
-                                return -1;
-                            } else {
-                                return parseFloat(Number(b[prop])) - parseFloat(Number(a[prop]));
-                            }
-                        })
-                    }
-                }
-            },
             ///自定义井号排序
-            borepipeNoSort(oa, ob, code) {
-                let wellA = oa[code];
-                let wellB = ob[code];
+            borepipeNoSort(oa, ob, prop) {
+                let wellA = oa[prop];
+                let wellB = ob[prop];
                 return this.wellNoSort(wellA, wellB);
             },
             //下载导出文件 tableId tableName
@@ -2064,6 +2056,13 @@
     
     .spActive{
         color:var(--light-blue-color);
+    }
+    ::v-deep .el-table__body .cell {
+        height: auto !important;
+        line-height: 20px !important;
+        .el-tooltip.item {
+            white-space: pre;
+        }
     }
     ::v-deep .el-table__fixed-body-wrapper {
         top: 92px;

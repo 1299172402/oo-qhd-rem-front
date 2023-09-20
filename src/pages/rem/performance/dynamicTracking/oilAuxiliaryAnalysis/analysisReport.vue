@@ -1697,14 +1697,6 @@
                     let currentDate = currentArr.length> 0 ? currentArr.map(item=>item.theDate).join('\n') : '-'
                     return currentDate
                 }
-               
-
-                // for(let i=0;i< this.recommendedMeasuresData.length;i++){
-                //     if( this.recommendedMeasuresData[i].wellId==str){
-                //         return type==1?this.recommendedMeasuresData[i].measuresName:this.recommendedMeasuresData[i].theDate
-                //     }
-                // }
-                // return '-'
             },
             //初始化有措施的井清单
             initRecommendedMeasuresWells() {
