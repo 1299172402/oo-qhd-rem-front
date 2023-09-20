@@ -13,9 +13,9 @@
                                    @change="changeOilfield">
                             <el-option
                                 v-for="item in options"
-                                :key="item.oilFieldId"
-                                :value="item.oilFieldId"
-                                :label="item.name"
+                                :key="item.ogfId"
+                                :value="item.ogfId"
+                                :label="item.ogfName"
                             ></el-option>
                         </el-select>
                     </el-form-item>
@@ -254,6 +254,7 @@ import {
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 import {wellGroupEvaluation} from "@/api/rem/model";
 import {fetchOilFields} from "@/api/oilDeposit/rem-02/primaryinfo";
+import {queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
 export default {
     name: "wellGroup_Maintenance",
     components: {treeMultipleSelection},
@@ -537,8 +538,9 @@ export default {
         },
         // 获取油田下拉数据
         selectData() {
-            fetchOilFields({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then((res) => {
-                this.options = res.data.data.oilFields;
+            queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then((res) => {
+                this.options = res.data.data;
+                console.log(this.options)
             });
         },
         // 获取区块数据

@@ -283,7 +283,7 @@ export default {
         },
         //平台下拉-change
         onPlatfromChange(val) {
-            queryWellControlReservesWell({assetCode: val, ogfId: this.queryData.ogfId}).then((res) => {
+            queryPlatformQueryWellListDetail({platformId: val, ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = this.wells[0]?.wellId
             })
