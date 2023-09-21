@@ -576,6 +576,7 @@
                 selBlock: "", //选中项
                 //附加条件
                 searchKeys: "", //区块名模糊查询
+                searchNames: "",
                 //评价日期条件
                 currentDate: "",
                 //有推荐措施的井
@@ -643,6 +644,7 @@
                 if(this.$route.query.wellId){//判断路由是否有井号参数
                     let wellItem=this.wellGroupList.find(e=>e.wellGroupName==this.$route.query.wellId);
                     this.searchKeys=wellItem.wellId;
+                    this.searchNames=wellItem.wellGroupName;
                     this.doSearch();
                 }
             },
@@ -704,6 +706,7 @@
                 await selectWellGroup({ogfId: this.selYtdm, blockId: this.selBlock, dateTime: new Date().format('yyyy-MM-dd')}).then((res) => {
                     if (res.data.code == 200) {
                         this.searchKeys = '';
+                        this.searchNames = '';
                         this.wellGroupList = res.data.data;
                         this.wellGroupList.unshift({wellGroupName: '全部',wellGroupId: ''});
                     }
@@ -711,6 +714,7 @@
                         if(this.$route.query.wellId){//判断路由是否有井组参数
                             let wellItem=this.wellGroupList.find(e=>e.wellGroupName==this.$route.query.wellId);
                             this.searchKeys=wellItem.wellGroupId;
+                            this.searchNames=wellItem.wellGroupName;
                         }
                         this.doSearch();
                         this.initTypes--;
@@ -724,6 +728,9 @@
             },
             changeWellGroup() {
                 this.$refs.treeSelectionCustom.setCheckedKeys([this.selBlock, this.searchKeys]);
+                let wellItem=this.wellGroupList.find(e=>e.wellGroupId==this.searchKeys);
+                console.log(wellItem,this.searchKeys);
+                this.searchNames=wellItem?.wellGroupName || "";
             },
             // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
             getSelectItems(selectList, selectData) {
@@ -755,6 +762,7 @@
                     "fieldId": this.selBlock,
                     "fileName": this.searchKeys,
                     "wellGroupId": this.searchKeys,
+                    "wellGroupName": this.searchNames,
                     "yearMonth": this.currentDate,
                     "evalTopic": "",
                     "evalTypeId": "",
