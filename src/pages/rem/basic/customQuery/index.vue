@@ -10,7 +10,7 @@
                     <el-row style="margin: 20px 0">
                         <div style="display: inline-block">
                             <span>油田：</span>
-                            <el-select v-model="ogfId" >
+                            <el-select v-model="ogfId"  @change="choicewell">
                                 <el-option
                                     v-for="(item, index) in oilFields"
                                     :key="index"
@@ -611,6 +611,13 @@ export default {
                 ];
                 this.key++
             }
+        },
+        choicewell(val){
+            queryPlatformQueryWellListDetail({ogfId:val}).then(res => {
+                if (res.data.code == 200) {
+                    this.wellData =res.data.data
+                }
+            })
         },
         initData() {
             //查询条件
