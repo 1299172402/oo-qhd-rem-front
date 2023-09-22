@@ -224,7 +224,7 @@ export default Vue.extend({
           // TODO: Maybe change back
           // 调接口
           popoverRingMessage().then(response => {
-            if (response.data.data.hasPopup === "1") {
+            if (response?.data?.data?.hasPopup === "1") {
               // 是否弹窗 0否 1是
               this.isNoticeVisible = true;
               if (response.data.data.hasSound === "1") {
