@@ -25,7 +25,7 @@
                                 ></el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="年份：">
+                        <el-form-item label="年度：">
                             <el-date-picker
                                 type="year"
                                 placeholder="选择年份"

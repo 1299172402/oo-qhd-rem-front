@@ -23,7 +23,7 @@
                                 <el-option v-for="(item, index) in wellData" :key="index" :label="item.wellName"
                                            :value="item.wellId"/>
                             </el-select>
-                            <span style="padding-left: 20px">日期：</span>
+                            <span style="padding-left: 20px">日期选择：</span>
                             <el-date-picker
                                 v-show="activeTabIndexDate == 3"
                                 v-model="selectDate"
