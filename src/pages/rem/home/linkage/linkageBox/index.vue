@@ -80,9 +80,6 @@ export default {
             selectObj: this.currentList.boxBottomContent ? this.currentList.boxBottomContent : []
         }
     },
-    // mounted() {
-    //     console.log(this.currentList.boxBottomContent)
-    // },
     methods: {
         btnBack: function () {
             if (this.currentList.boxBottomContent) {
