@@ -30,7 +30,7 @@
                         :value="item.blockId"
                     ></el-option>
                 </el-select>
-                <span>时间：</span>
+                <span>年度：</span>
                 <el-date-picker
                     v-model="queryData.dateTime"
                     type="month"

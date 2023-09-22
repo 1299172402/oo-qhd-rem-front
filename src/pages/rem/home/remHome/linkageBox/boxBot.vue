@@ -167,7 +167,7 @@ export default {
         }
     },
     mounted() {
-
+        console.log(this.currentList,'xxxxxxxxxxxxxxxxx')
     }
 }
 </script>

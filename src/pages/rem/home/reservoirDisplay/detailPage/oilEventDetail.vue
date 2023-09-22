@@ -24,7 +24,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="日期：">
+                <el-form-item label="日期选择：">
                     <el-date-picker
                         v-model="queryData.selectDate"
                         type="daterange"
