@@ -289,7 +289,7 @@ export default {
           sz: "",
           hb: "",
           tb: "",
-          dw: "10⁴t",
+          dw: "10⁴m³",
         },
         {
           title: "采油速度",
