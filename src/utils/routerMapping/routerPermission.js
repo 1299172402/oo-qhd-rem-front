@@ -42,7 +42,6 @@ const GenerateRouter = {
   // 20230925添加路由映射
   "Density": () => import("@/pages/rem/basic/densityMaintenance/index.vue"),
   "Reserves": () => import("@/pages/rem/basic/wellControlReserves/index.vue"),
-  "Maintenance": () => import("@/pages/rem/basic/wellGroupMaintenance/index.vue"),
   "CustomQuery": () => import("@/pages/rem/basic/customQuery/index.vue"),
   "WellGroup_Maintenance": () => import("@/pages/rem/basic/wellGroup_Maintenance/index.vue"),
 
