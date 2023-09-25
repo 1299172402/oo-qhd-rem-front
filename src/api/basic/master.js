@@ -52,3 +52,10 @@ export function queryOperatorsCheckFieldListsDetail(data) {
     });
 }
 
+export function userListByUserNames(data) {
+    return request({
+        url: `system/syncData/userListByUserNames`,
+        method: "post",
+        data
+    });
+}

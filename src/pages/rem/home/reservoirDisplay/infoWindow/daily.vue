@@ -27,7 +27,7 @@ export default {
     methods:{
         linkroute() {
             this.$router.push({
-                path: "/plan/annualPlan?page=/reservoirDisplay/oilexhibition",
+                name: "AnnualPlan",query:{page:'Oilexhibition'},
             })
         },
     }

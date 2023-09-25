@@ -816,43 +816,43 @@ export default {
       if (index == 1) {
         // 年注入量
         this.$router.push({
-          name: "annualInjection",
+          name: "AnnualInjection",
           query: {},
         });
       } else if (index == 2) {
         // 地层压力保持水平
         this.$router.push({
-          name: "stratumPressure",
+          name: "StratumPressure",
           query: {},
         });
       } else if (index == 3) {
         // 注水水质达标率
         this.$router.push({
-          name: "waterQuality",
+          name: "WaterQuality",
           query: {},
         });
       } else if (index == 4) {
         // 分注井层段合格率
         this.$router.push({
-          name: "splitHole",
+          name: "SplitHole",
           query: {},
         });
       } else if (index == 6) {
         // 注水井分注率
         this.$router.push({
-          name: "waterInjectionWell",
+          name: "WaterInjectionWell",
           query: {},
         });
       } else if (index == 7) {
         // 动态监测完成率
         this.$router.push({
-          name: "dynamicMonitoring",
+          name: "DynamicMonitoring",
           query: {},
         });
       } else if (index == 8) {
         // 分注井测试率
         this.$router.push({
-          name: "splitWellTest",
+          name: "SplitWellTest",
           query: {},
         });
       } else {
