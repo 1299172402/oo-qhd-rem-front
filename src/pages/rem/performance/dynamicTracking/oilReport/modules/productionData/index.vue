@@ -342,7 +342,7 @@ export default {
                   },
                   {
                       gridIndex: 1,
-                      name: "气\n油\n比\n︵\n方\n/\n方\n︶",
+                      name: "气\n油\n比\n︵\nm³\n/\nm³\n︶",
                       nameLocation: "center",
                       nameRotate: 0,
                       nameGap: 50,
@@ -372,7 +372,7 @@ export default {
                   },
                   {
                       gridIndex: 1,
-                      name: "生\n产\n时\n间\n︵\nH\n︶",
+                      name: "生\n产\n时\n间\n︵\nh\n︶",
                       nameLocation: "center",
                       nameRotate: 0,
                       nameGap: 50,
@@ -624,7 +624,7 @@ export default {
                       } else if (lineName == '井口温度') {
                           series.xAxisIndex = 1;
                           series.yAxisIndex = 7;
-                          series.itemStyle={color:'#5a9df2'}
+                          series.itemStyle={color:'rgb(154,205,50)'}
                       } else if (lineName == '气油比') {
                           series.xAxisIndex = 1;
                           series.yAxisIndex = 5;

@@ -13,7 +13,7 @@
             v-model="queryParams.userName"
             placeholder="请输入用户账号"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -22,7 +22,7 @@
             v-model="queryParams.email"
             placeholder="请输入用户邮箱"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -31,7 +31,7 @@
             v-model="queryParams.phonenumber"
             placeholder="请输入用户手机"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -100,7 +100,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :row-key="(row) => row.userId"
         @selection-change="handleSelectionChange"
       >
@@ -138,7 +138,7 @@
               v-hasPermi="['system:roleUser:unbind']"
               size="mini"
               type="text"
-              style="color: #ff4d4f"
+              style="color: #ff4d4f;"
               @click="cancelAuthUser(scope.row)"
             >
               取消授权

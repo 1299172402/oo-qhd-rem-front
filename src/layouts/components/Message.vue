@@ -24,7 +24,7 @@
         <div
           v-if="tableData.length > 0"
           ref="listDiv"
-          style="height: 400px; overflow-y: scroll"
+          style="height: 400px; overflow-y: scroll;"
           class="narrow-scrollbar"
           :split="true"
         >
@@ -88,7 +88,7 @@
         theme="default"
         shape="square"
         variant="text"
-        style="background: transparent; border: 0"
+        style="background: transparent; border: 0;"
         @click="updateData"
       >
         <!-- <notification-icon style="color: var(--white-color);"/> -->
@@ -152,7 +152,7 @@ export default Vue.extend({
   },
   destroyed() {
     window.clearInterval(this.timer);
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("scroll", this.handleScroll, true);
   },
   methods: {
     handleScroll(e) {
@@ -325,7 +325,7 @@ export default Vue.extend({
       //     }
       //   ];
       // 获取列表
-      if (process.env.NODE_ENV !== "development" && window.location.host !== "114.115.233.247:38085") {
+      if (process.env.NODE_ENV === "release") {
         const param = {
           pageNum: 1,
           pageSize: 10
@@ -386,7 +386,7 @@ export default Vue.extend({
 </script>
 
 <style>
-.t-badge--circle{
+.t-badge--circle {
   color: transparent;
   width: 10px;
   height: 11px;

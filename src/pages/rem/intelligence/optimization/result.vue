@@ -58,10 +58,10 @@
                 </span> -->
             </div>
         </header-search>
-        <pagePanelNew style="height: calc(100% - 140px)">
+        <pagePanelNew style="height: calc(100% - 100px)">
             <el-row v-if="activeName == 'first'" :gutter="20" style="margin: 0px 20px;height: 100%">
                 <el-col :span="6" style="height:100%">
-                    <pagePanel :headerTitle="title1"
+                    <pagePanel :headerTitle="title1" show-btn
                                style="height:calc(100% - 25px)">
                         <el-table
                             v-loading="sigleWellTable.length>0?false:true"
@@ -69,6 +69,7 @@
                             element-loading-text="数据加载中"
                             element-loading-spinner="el-icon-loading"
                             :data="sigleWellTable"
+                            id="indexscv"
                             highlight
                             style="margin-top: 10px"
                             height="100%"
@@ -89,7 +90,7 @@
                     </pagePanel>
                 </el-col>
                 <el-col :span="18" style="height:100%">
-                    <pagePanel :headerTitle="title2" style="height:calc(100% - 25px)">
+                    <pagePanel :headerTitle="title2" style="height:calc(100% - 25px)" show-btn>
                         <div class="buttonBox">
                             <el-button class="button" icon="el-icon-search" @click="assessBut">可行性评估</el-button>
                             <!-- @click="modify = true" -->
@@ -114,7 +115,11 @@
                                 :span-method="mergeTable"
                             >
                                 <el-table-column prop="injWellNo" label="注水井" align="center"
-                                                 min-width="120"></el-table-column>
+                                                 min-width="120">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.injWellNo.includes("秦皇岛32-6")? scope.row.injWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.injWellNo}}</span>
+                                    </template>    
+                                </el-table-column>
                                 <el-table-column
                                     prop="injWellDaily"
                                     :render-header="renderheader"
@@ -205,7 +210,8 @@
             <iframe
                 style="height:100%; width:100%; border:none;"
                 v-show="activeName == 'second'"
-                src="https://intelinj.tjioms-test.tjltd.cnooc/"
+                allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" oallowfullscreen="true" msallowfullscreen="true"
+                src="https://intelinj.tjioms-dev.tjltd.cnooc/"
             ></iframe>
 
         </pagePanelNew>
@@ -490,6 +496,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+#indexscv {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
+}
 .buttonBox {
     float: right;
     margin-bottom: 10px;

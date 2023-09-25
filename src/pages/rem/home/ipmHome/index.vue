@@ -19,6 +19,7 @@
 
 <script>
 import linkageBoxBot from "@/pages/rem/home/remHome/linkageBox/boxBot.vue";
+import {queryLinkageAlarmInfo} from "@/api/rem/injectionproductionlinkage";
 
 export default {
     name:'ipmHome',
@@ -31,8 +32,16 @@ export default {
         }else if (window.location.origin.includes('dev') || window.location.origin.includes('808')){
             this.baseUrl = 'tjioms-dev.tjltd.cnooc'
         }
-        this.arrowFun()
         this.getinfo()
+        this.arrowFun()
+        this.getWarningInfo()
+        this.timmerWarning = setInterval(() => {
+            this.getWarningInfo()
+        }, 1000 * 30)
+        //转动弹出图片循环
+        this.timmer = setInterval(() => {
+            this.arrowFun()
+        }, 100 * 20)
     },
     data() {
         return {
@@ -59,10 +68,12 @@ export default {
                         },
                         {
                             name: '劈分剖面',
-                            url: `https://rem.${this.baseUrl}/#/injection/splitSection?link=ipmHome`
+                            url: `https://rem.${this.baseUrl}/#/injection/splitSection?link=ipmHome`,
+                            alarmPageCode: 'SPLSEC',
                         },
                         {
                             name: '劈分系数',
+                            alarmPageCode: 'SPLFAC',
                             url: `https://rem.${this.baseUrl}/#/injection/DividingCoefficient?link=ipmHome`
                         }],
                     boxStyle: {
@@ -70,6 +81,7 @@ export default {
                     },
                     imgUrl: new URL('./ipmHome/01.png', import.meta.url).href,
                     down: false,
+                    warningShowFlag: false,
                     showFlag: false,
                     mcShow: false
                 },
@@ -79,14 +91,17 @@ export default {
                     // boxBottomText: ['注采井组维护', '井间连通系数', '平面液量分流'],
                     boxBottomText: [{
                         name: '注采井组维护',
-                        url: `https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance`
+                        url: `https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance`,
+                        alarmPageCode: 'IAPGMA',
                     },
                         {
                             name: '井间连通系数',
-                            url: `https://rem.${this.baseUrl}/#/injection/connectivityData`
+                            url: `https://rem.${this.baseUrl}/#/injection/connectivityData`,
+                            alarmPageCode: 'WECOCO',
                         },
                         {
                             name: '平面液量分流',
+                            alarmPageCode: 'FLVOSH',
                             url: `https://rem.${this.baseUrl}/#/injection/connectivityData`
                         },],
                     boxStyle: {
@@ -94,6 +109,7 @@ export default {
                     },
                     imgUrl: new URL('./ipmHome/02.gif', import.meta.url).href,
                     down: false,
+                    warningShowFlag: false,
                     showFlag: false,
                     mcShow: false
                 },
@@ -116,7 +132,8 @@ export default {
                     imgUrl: new URL('./ipmHome/03.png', import.meta.url).href,
                     down: false,
                     showFlag: false,
-                    mcShow: false
+                    mcShow: false,
+                    warningShowFlag: false,
                 },
                 {
                     style: 'position:absolute;left: 70%;top: 55%;width:20%;height:40%;',
@@ -127,7 +144,8 @@ export default {
                     },
                     imgUrl: new URL('./ipmHome/06.png', import.meta.url).href,
                     down: true,
-                    showFlag: false
+                    showFlag: false,
+                    warningShowFlag: false,
                 },
                 {
                     style: 'position:absolute;left: 40%;top: 55%;width:20%;height:40%;',
@@ -141,6 +159,7 @@ export default {
                     },
                     imgUrl: new URL('./ipmHome/05.png', import.meta.url).href,
                     down: true,
+                    warningShowFlag: false,
                     showFlag: false
                 },
                 {
@@ -148,6 +167,7 @@ export default {
                     boxText: '注采结构优化',
                     boxBottomText: [{
                         name: '注采强度判定',
+                        alarmPageCode: 'DOINST',
                         url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport`
                     }, {
                         name: '井组注采比分析',
@@ -158,12 +178,12 @@ export default {
                     },
                     imgUrl: new URL('./ipmHome/04.png', import.meta.url).href,//暂无图片
                     down: true,
+                    warningShowFlag: false,
                     showFlag: false
                 },
             ]  
         },
         arrowFun() {
-            this.timer = setInterval(() => {
                 if(this.loopNum == -1) this.currentLists[5].showFlag = false
                 if(this.loopNum<7 && this.loopNum >0) this.currentLists[this.loopNum -1].showFlag = false
                 if(this.loopNum<6 && this.loopNum !=-1) this.currentLists[this.loopNum].showFlag = true
@@ -175,14 +195,129 @@ export default {
                 if (this.loopNum == 6) {
                     this.loopNum = -1
                 }
-            }, 2000)
         },
-        stopTimer(flag){
-            if(flag){
-                this.currentLists.forEach(item=>{item.showFlag = false})
-                clearInterval(this.timer)
-            }else{
-                this.arrowFun()
+        filterchild(array1, array2) {
+            return array1.filter(item => item.boxBottomText.some(val => array2.has(val.alarmPageCode)));
+        },
+        async matchAndOutputchild(array1, array2) {
+            const set = new Set(array1.map(item => item.alarmPageCode));
+            const result = array2.filter(item => set.has(item.alarmPageCode));
+            const filteredChild = this.filterchild(this.currentLists, set);
+            return {result, filteredChild};
+        },
+        findIndex(array, obj) {
+            return array.findIndex(item => item === obj);
+        },
+        async getWarningInfo() {
+            this.currentLists.map((i, index) => {
+                i.warningShowFlag = false;
+                i.alarmTime = '';
+                if (i.boxBottomText) {
+                    i?.boxBottomText.map((j) => {
+                        j.warningShowFlag = false;
+                        j.alarmTime = '';
+                    });
+                }
+            });
+
+            const data = {
+                authorizedPersonnel: this.$store.getters['user/name'],
+                alarmTime: new Date().format('YYYY-MM-dd'),
+                alarmPageCode: ['SPLSEC',
+                    'SPLFAC',
+                    'IAPGMA',
+                    'WECOCO',
+                    'FLVOSH',
+                    'DOINST'],
+            };
+            try {
+                const [res1] = await Promise.all([
+                    queryLinkageAlarmInfo(data),
+                ]);
+                let isConditionMet = false;
+                if (res1.data.data.length < 1) {
+                    return
+                } else {
+                    // 获取含有标识的对象
+                    const {result, filteredChild} = await this.matchAndOutputchild(res1.data.data, this.currentLists);
+                    // 获取在数组的下标
+                    const index = result.map((item) => this.findIndex(this.currentLists, item));
+                    const childindex = filteredChild.map((item) => this.findIndex(this.currentLists, item));
+                    // 匹配数组中的标识设置为true
+                    for (let i = 0; i < childindex.length; i++) {
+                        let a = this.currentLists[childindex[i]].boxBottomText;
+                        const {result: childResult} = await this.matchAndOutputchild(res1.data.data, a);
+                        const number = childResult.map((item) => this.findIndex(a, item));
+                        if (number.length > 1) {
+                            number.map((n, index) => {
+                                this.currentLists[childindex[i]].boxBottomText[n].warningShowFlag = true;
+                                res1.data.data.map((j) => {
+                                    if (this.currentLists[childindex[i]].boxBottomText[n].alarmPageCode.includes(j.alarmPageCode)) {
+                                        this.currentLists[childindex[i]].boxBottomText[n].alarmTime = j.alarmTime;
+                                    }
+                                });
+                            });
+                        } else {
+                            this.currentLists[childindex[i]].boxBottomText[number[0]].warningShowFlag = true;
+                            res1.data.data.map((j) => {
+                                if (this.currentLists[childindex[i]].boxBottomText[number[0]].alarmPageCode.includes(j.alarmPageCode)) {
+                                    this.currentLists[childindex[i]].boxBottomText[number[0]].alarmTime = j.alarmTime;
+                                }
+                            });
+                        }
+                        this.currentLists[childindex[i]].warningShowFlag = true;
+                        isConditionMet = true;
+                    }
+                    for (let i = 0; i < index.length; i++) {
+                        this.currentLists[index[i]].warningShowFlag = true;
+                        isConditionMet = true;
+                    }
+                }
+                // 如果无报警开启定时器，有报警关闭定时器和箭头图片
+                if (isConditionMet === false) {
+                    this.timmer = setInterval(() => {
+                        this.arrowFun();
+                    }, 100 * 20);
+                } else {
+                    clearInterval(this.timmer);
+                    this.currentLists.forEach((item) => {
+                        item.showFlag = false;
+                    });
+                    for (let i = 0; i < 7; i++) {
+                        this.$el.querySelectorAll('img')[i].style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                // 错误处理
+                console.error(error)
+                this.$message.error('系统错误请重新尝试或联系运维人员！');
+            }
+        },
+        stopTimer() {
+            this.currentLists.forEach(item => {
+                item.showFlag = false
+            })
+        },
+        startTimer(url) {
+            const hasTrueValue = this.currentLists.some(item => {
+                if (Array.isArray(item.boxBottomText)) {
+                    return item.boxBottomText.some(subItem => subItem.warningShowFlag === true);
+                } else {
+                    return item.warningShowFlag === true;
+                }
+            });
+            if (url) {
+                let index = this.findIndex(this.currentLists, url)
+                this.currentLists[index].warningShowFlag = false
+            }
+            console.log(hasTrueValue)
+            if (hasTrueValue == true) {
+                clearInterval(this.timmer)
+            } else {
+                clearInterval(this.timmer)
+                this.timmer = setInterval(() => {
+                    this.arrowFun()
+                }, 2000)
             }
         }
     },

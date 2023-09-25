@@ -6,7 +6,7 @@
                 <headerSearch class="g-w100 g-h100" style="height: auto">
                     <el-form :model="queryParams" :inline="true" style="margin-top: 18px">
                         <el-form-item label="油田:" style="margin-left:20px">
-                            <el-select v-model="queryParams.ogfId" disabled style="width: 160px;">
+                            <el-select v-model="queryParams.ogfId" @change="choicepla" style="width: 160px;">
                                 <el-option v-for="(item, index) in oilFields" :key="index" :label="item.ogfName"
                                            :value="item.ogfId">
                                 </el-option>
@@ -30,7 +30,7 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="年份:" style="margin-left:20px">
+                        <el-form-item label="年度:" style="margin-left:20px">
                             <el-date-picker
                                 type="year"
                                 placeholder="选择年份"
@@ -67,6 +67,9 @@
                         <el-table-column label="序号"  width="50px" type="index" align="center">
                         </el-table-column>
                         <el-table-column label="油田" prop="ogfNo" min-width="100px" align="center">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.ogfNo.includes("QHD32-6")? scope.row.ogfNo.replace("QHD32-6", "秦皇岛32-6油田") : scope.row.ogfNo}}</span>
+                            </template>  
                         </el-table-column>
                         <el-table-column label="井号" prop="wellNo" align="center">
                             <template slot-scope="scope">
@@ -211,6 +214,17 @@ export default {
                 this.wellList = res.data.data;
             });
         },
+        choicepla(val){
+            queryListOfOilfieldQueryPlatformsDetail({ogfId:val}).then(res=>{
+                this.platforms = res.data.data
+            })
+            const requestPlat = {
+                ogfId: this.queryParams.ogfId,
+            };
+            queryPlatformQueryWellListDetail(requestPlat).then((res) => {
+                this.wellList = res.data.data;
+            });
+        },
         downTable(){
             queryProblemWellStatisDetailsDownloadFile(this.queryParams).then((res)=>{
                 const aBlob = new Blob([res]);
@@ -238,8 +252,11 @@ export default {
         },
         // 重置
         reset() {
+            this.queryParams.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
+            this.choicepla(this.queryParams.ogfId)
             this.queryParams.assetCode = ''
             this.queryParams.wellId = ''
+           
             this.queryParams.yearDate = '2022'
             this.getlist()
             // this.getInfo()

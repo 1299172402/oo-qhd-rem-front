@@ -80,7 +80,7 @@
         <el-col :span="4" style="text-align: right;">
           <el-button
             v-hasPermi="['messageConfig:export']"
-            style="margin-right: 4px"
+            style="margin-right: 4px;"
             type="primary"
             @click="handleExport"
           >
@@ -95,7 +95,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column

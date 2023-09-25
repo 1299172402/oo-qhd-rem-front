@@ -427,7 +427,7 @@
                         }
                     },
                     yAxis: {
-                        name: '综合含水率(%)',
+                        name: '含水率(%)',
                         nameLocation: 'center',
                         nameTextStyle: {
                             color: '#8FA4CC'

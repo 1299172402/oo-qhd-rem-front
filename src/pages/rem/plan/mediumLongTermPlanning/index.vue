@@ -7,9 +7,9 @@
         <el-select v-model="selectOilField" disabled>
           <el-option
             v-for="item in oilField"
-            :key="item.oilFieldId"
-            :label="item.name"
-            :value="item.oilFieldId"
+            :key="item.ogfId"
+            :label="item.ogfName"
+            :value="item.ogfId"
           ></el-option>
         </el-select>
         <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField"
@@ -67,7 +67,7 @@
   </div>
 </template>
 <script>
-import { fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import { QueryOgfDetail } from "@/api/rem/marster.js";
 import { searchLongTermPlan } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       //选择油田
-      selectOilField: "",
+      selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
       //油田列表
       oilField: [],
       //油田名称
@@ -267,18 +267,16 @@ export default {
     //初始化
     async initData() {
       //获取油田信息
-      await fetchOilFields().then((res) => {
-        this.oilField = res.data.data.oilFields;
+      await QueryOgfDetail({}).then((res) => {
+        this.oilField = res.data.data;
         if (this.oilField.length == 0) {
           this.selectOilField = "";
         } else {
-          this.selectOilField = this.oilField[0].oilFieldId;
+          this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
         }
       });
-      //设置默认油田
-      this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
       //发现油田名称
-      let oilFieldContent = this.oilField.find((item) => item.oilFieldId == this.selectOilField);
+      let oilFieldContent = this.oilField.find((item) => item.ogfId == this.selectOilField);
       //油田名称
       this.oilFieldName = oilFieldContent.name;
       //调用中长期规划获取信息数据  油田id 当前页数 页大小
@@ -323,7 +321,7 @@ export default {
       let pageSize = this.pageSize;
       this.page = page;
       //根据数组获得油田名称
-      let oilFieldContent = this.oilField.find((item) => item.oilFieldId == this.selectOilField);
+      let oilFieldContent = this.oilField.find((item) => item.ogfId == this.selectOilField);
       //修改油田名称
       this.oilFieldName = oilFieldContent.name;
       this.getSearchLongTermPlan(this.selectOilField, page, pageSize);

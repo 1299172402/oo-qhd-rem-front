@@ -5,7 +5,7 @@
         v-show="showSearch"
         ref="queryForm"
         :model="queryParams"
-        style="margin-top: 20px"
+        style="margin-top: 20px;"
         :inline="true"
         label-width="68px"
       >
@@ -15,7 +15,7 @@
             placeholder="请输入字典名称"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -25,7 +25,7 @@
             placeholder="请输入字典类型"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -35,7 +35,7 @@
             placeholder="字典状态"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -49,7 +49,7 @@
           <el-date-picker
             v-model="dateRange"
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             value-format="yyyy-MM-dd"
             type="daterange"
             range-separator="-"
@@ -79,7 +79,7 @@
     </header-search>
 
     <page-panel-new header-title="字典管理" style="height: calc(100% - 100px);">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px;">
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:dict:add']"

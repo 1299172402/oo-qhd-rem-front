@@ -12,15 +12,15 @@
                     <div class="g-row-flex-V g-w100 g-h100">
                         <div>
                             <el-form :inline="true">
-                                <el-form-item label="作业公司：">
-                                    <el-select v-model="queryData.orgId" disabled>
-                                        <el-option v-for="(item, index) in deptSelect" :key="index"
-                                                   :label="item.orgName" :value="item.orgId">
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
+<!--                                <el-form-item label="作业公司：">-->
+<!--                                    <el-select v-model="queryData.orgId" disabled>-->
+<!--                                        <el-option v-for="(item, index) in deptSelect" :key="index"-->
+<!--                                                   :label="item.orgName" :value="item.orgId">-->
+<!--                                        </el-option>-->
+<!--                                    </el-select>-->
+<!--                                </el-form-item>-->
                                 <el-form-item label="油田：">
-                                    <el-select v-model="queryData.ogfId" disabled>
+                                    <el-select v-model="queryData.ogfId" @change="choicepla">
                                         <el-option
                                             v-for="(item, index) in oilFields"
                                             :key="index"
@@ -31,14 +31,14 @@
                                 </el-form-item>
                                 <el-form-item label="平台：" prop="pt">
                                     <el-select v-model="queryData.pt" @change="onPlatfromChange">
-                                        <el-option v-for="item in platforms" :key="item.id" :label="item.platformName"
+                                        <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformCode"
                                                    :value="item.platformId">
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="井号：">
                                     <el-select v-model="queryData.wellId" @change="changewell">
-                                        <el-option v-for="(item,index) in wells" :key="index" :label="item.wellNo"
+                                        <el-option v-for="(item,index) in wells" :key="item.wellId" :label="item.wellName"
                                                    :value="item.wellId">
                                         </el-option>
                                     </el-select>
@@ -134,14 +134,6 @@
     </div>
 </template>
 <script>
-import {
-    fetchOilFields,
-    fetchPlatforms,
-    fetchInjectionWells,
-    fetchInjectionWellsByPlatform,
-    fetchProductionWells,
-    fetchProductionWellsByPlatform,
-} from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {queryLayerList, getOilFieldList} from "@/api/rem/workcompanydesignate";
 import {
     addWellControlReserves,
@@ -154,7 +146,7 @@ import {
     queryOperatorsCheckFieldListsDetail,
     queryListOfOilfieldQueryPlatformsDetail,
     queryPlatformQueryWellListDetail,
-    queryOilAndGasFieldQueryPositionDetail
+    queryOilAndGasFieldQueryPositionDetail,userListByUserNames
 } from "@/api/basic/master";
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
@@ -208,8 +200,14 @@ export default {
     methods: {
         getList() {
             //获取作业公司
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+            }
             queryOperatingCompanyDetail({}).then(res => {
                 this.deptSelect = res.data.data
+            })
+            userListByUserNames(params).then((res)=>{
+                this.queryData.orgId = res.data.data[0].tenantInfos[0].deptId
             })
             //根据作业公司查询油田
             queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
@@ -237,6 +235,14 @@ export default {
                 }
             });
         },
+        choicepla(val){
+            queryListOfOilfieldQueryPlatformsDetail({ogfId: val}).then(res => {
+                this.platforms = res.data.data
+                this.queryData.pt = ''
+                this.wells = []
+                this.queryData.wellId =''
+            }) 
+        },
         redact() {
             this.edit = false;
         },
@@ -262,7 +268,10 @@ export default {
         },
         getData() {
             //根据平台获得井
-            queryWellControlReservesWell({ogfId: this.queryData.ogfId}).then((res) => {
+            // queryPlatformQueryWellListDetail(requestPlat).then((res) => {
+            //     this.wellList = res.data.data;
+            // });
+            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = this.wells[0].wellId
                 queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
@@ -272,15 +281,15 @@ export default {
         },
         //平台下拉-change
         onPlatfromChange(val) {
-            queryWellControlReservesWell({assetCode: val, ogfId: this.queryData.ogfId}).then((res) => {
+            queryPlatformQueryWellListDetail({platformId: val, ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = this.wells[0]?.wellId
             })
         },
-        // 重置仅重置搜索条件与下方查询内容无关
         refresh() {
+            this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
             this.queryData.pt = "";
-            queryWellControlReservesWell({ogfId: this.queryData.ogfId}).then((res) => {
+            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 if (res.data.code == 200) {
                     this.wells = res.data.data
                     this.queryData.wellId = this.wells[0].wellId

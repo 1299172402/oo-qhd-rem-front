@@ -15,7 +15,7 @@
                 v-model="queryParam.processDefinitionName"
                 placeholder="请输入流程名称"
                 clearable
-                style="width: 240px"
+                style="width: 240px;"
                 @keyup.enter.native="searchQuery"
               />
             </el-form-item>
@@ -24,7 +24,7 @@
                 v-model="queryParam.businessName"
                 placeholder="请输入业务名称"
                 clearable
-                style="width: 240px"
+                style="width: 240px;"
                 @keyup.enter.native="searchQuery"
               />
             </el-form-item>

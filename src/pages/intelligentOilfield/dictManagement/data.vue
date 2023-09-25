@@ -12,7 +12,7 @@
             v-model="queryParams.dictLabel"
             placeholder="请输入字典标签"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -21,7 +21,7 @@
             v-model="queryParams.status"
             placeholder="请选择数据状态"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -60,7 +60,7 @@
             新增
           </el-button>
         </el-col>
-        <el-col :span="4" style="text-align: right;padding-right: 2px">
+        <el-col :span="4" style="text-align: right;padding-right: 2px;">
           <el-button
             v-hasPermi="['system:dict:data:export']"
             type="primary"

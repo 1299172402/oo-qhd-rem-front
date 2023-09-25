@@ -462,7 +462,7 @@
 
                         this.formationPressureRemainsLevel.legend.data = legendData;
                         this.formationPressureRemainsLevel.series = seriesData;
-                        this.formationPressureRemainsLevel.title.text = `${this.oilFieldName || ''}${this.queryParams.year ? dayjs(this.queryParams.year).format("YYYY-MM-DD") : ""}地层压力保持水平`;
+                        this.formationPressureRemainsLevel.title.text = `${this.oilFieldName || ''}地层压力保持水平`;
                     }
                 });
             },

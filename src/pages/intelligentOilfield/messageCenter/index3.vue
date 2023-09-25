@@ -1,25 +1,25 @@
 <!-- 后台——消息中心备份2，带海上 -->
 <template>
-  <div class="g-w100 g-h100" style="font-size: 16px; color: #fff">
-    <page-panel-new class="g-w100 g-column-flex" style="height: calc(100% - 0px)">
-      <div style="height: 73%; position: relative" class="g-column-flex-H">
+  <div class="g-w100 g-h100" style="font-size: 16px; color: #fff;">
+    <page-panel-new class="g-w100 g-column-flex" style="height: calc(100% - 0px);">
+      <div style="height: 73%; position: relative;" class="g-column-flex-H">
         <el-button
-          style="position: absolute; top: 0; left: 0"
+          style="position: absolute; top: 0; left: 0;"
           type="primary"
           size="mini"
           @click="handleToPage()"
         >
           信息维护
         </el-button>
-        <div style="position: absolute; right: 0; color: var(--light-blue-color)">
+        <div style="position: absolute; right: 0; color: var(--light-blue-color);">
           <!-- TODO: Maybe change back -->
           <!-- {{ $store.getters["user/tenantName"] }} -->
           秦皇岛作业公司
         </div>
-        <div class="g-row-flex" style="margin-top: 40px">
-          <div class="topPage1" style="position: relative" />
-          <div class="topPage2" style="position: relative" />
-          <div class="topPage3" style="position: relative" />
+        <div class="g-row-flex" style="margin-top: 40px;">
+          <div class="topPage1" style="position: relative;" />
+          <div class="topPage2" style="position: relative;" />
+          <div class="topPage3" style="position: relative;" />
         </div>
         <div
           class="legend g-column-flex-HV"
@@ -29,7 +29,7 @@
             v-for="(item, index) in rightLegend"
             :key="index"
             class="g-row-flex"
-            style="margin-top: 15px"
+            style="margin-top: 15px;"
             :style="{
               color: $store.state.setting.mode === 'dark' ? '#fff' : '#0075E9',
               marginTop: index === 0 ? '0px' : '15px',
@@ -44,7 +44,7 @@
                 class="svgClass"
                 :start-color="item.runningStatus === '0' ? 'red' : '#32cd32'"
                 :end-color="item.runningStatus === '0' ? 'red' : '#32cd32'"
-                style="left: 0%; top: 0%"
+                style="left: 0%; top: 0%;"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="70"
@@ -52,18 +52,18 @@
                 set-points="0,10 70,10 70,11"
               />
             </div>
-            <div class="legendText" style="width: 100px">
+            <div class="legendText" style="width: 100px;">
               {{ item.endPoint }}
             </div>
           </div>
         </div>
-        <div class="topImage" style="position: relative">
+        <div class="topImage" style="position: relative;">
           <line-svg
             linear-id="liner1"
             start-color="#32cd32"
             end-color="#32cd32"
             class="svgClass"
-            style="left: 50%"
+            style="left: 50%;"
             :div-stroke-width="divStrokeWidth"
             :ball-stroke-width="ballStrokeWidth"
             :svg-width="svgWidth"
@@ -71,13 +71,13 @@
             set-points="10,44 10,0 11,-1"
           />
         </div>
-        <div class="topImage1" style="position: relative">
+        <div class="topImage1" style="position: relative;">
           <line-svg
             linear-id="liner2"
             start-color="#32cd32"
             end-color="#32cd32"
             class="svgClass"
-            style="left: 50%"
+            style="left: 50%;"
             :div-stroke-width="divStrokeWidth"
             :ball-stroke-width="ballStrokeWidth"
             :svg-width="svgWidth"
@@ -85,13 +85,13 @@
             set-points="10,44 10,0 11,-1"
           />
         </div>
-        <div class="centerImage" style="position: relative">
+        <div class="centerImage" style="position: relative;">
           <line-svg
             linear-id="liner3"
             class="svgClass"
             start-color="#32cd32"
             end-color="#32cd32"
-            style="left: 50%"
+            style="left: 50%;"
             :div-stroke-width="divStrokeWidth"
             :ball-stroke-width="ballStrokeWidth"
             :svg-width="svgWidth"
@@ -103,7 +103,7 @@
             class="svgClass"
             start-color="#32cd32"
             end-color="#32cd32"
-            style="left: 35%; top: 21%"
+            style="left: 35%; top: 21%;"
             :div-stroke-width="divStrokeWidth"
             :ball-stroke-width="ballStrokeWidth"
             svg-width="70"
@@ -115,7 +115,7 @@
             class="svgClass"
             start-color="#32cd32"
             end-color="#32cd32"
-            style="left: 57.8%; top: 21%"
+            style="left: 57.8%; top: 21%;"
             :div-stroke-width="divStrokeWidth"
             :ball-stroke-width="ballStrokeWidth"
             svg-width="70"
@@ -123,13 +123,13 @@
             set-points="0,25 70,25 70,24"
           />
         </div>
-        <div class="bottomImage" style="position: relative">
+        <div class="bottomImage" style="position: relative;">
           <line-svg
             linear-id="liner4"
             start-color="#32cd32"
             end-color="#32cd32"
             class="svgClass"
-            style="left: 50%"
+            style="left: 50%;"
             :div-stroke-width="divStrokeWidth"
             :ball-stroke-width="ballStrokeWidth"
             :svg-width="svgWidth"
@@ -138,9 +138,9 @@
           />
         </div>
       </div>
-      <div style="height: 27%" class="bottomWaterBg g-row-flex">
+      <div style="height: 27%;" class="bottomWaterBg g-row-flex">
         <div class="leftSystem g-w100 g-h100">
-          <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px">
+          <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px;">
             <div
               :class="parentSignList[0]?.[3] === '0' ? 'redSign' : 'greenSign'"
               @click="parentJumpDetail(parentSignList[0]?.[0], parentSignList[0]?.[1])"
@@ -149,7 +149,7 @@
             </div>
             <div
               :class="initList[keys[0]]?.[0]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: 180px; top: -52px"
+              style="position: absolute; left: 180px; top: -52px;"
             >
               <span @click="jumpDetail(initList[keys[0]]?.[0])">{{ initList[keys[0]]?.[0]?.terraceCode }}</span>
               <line-svg
@@ -157,7 +157,7 @@
                 :start-color="initList[keys[0]]?.[0]?.terraceState === '0' ? 'red' : '#32cd32'"
                 :end-color="initList[keys[0]]?.[0]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="left: -180px; top: -20%"
+                style="left: -180px; top: -20%;"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="177px"
@@ -168,7 +168,7 @@
             </div>
             <div
               :class="initList[keys[0]]?.[1]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: -101px; top: 48px"
+              style="position: absolute; left: -101px; top: 48px;"
             >
               <span @click="jumpDetail(initList[keys[0]]?.[1])">{{ initList[keys[0]]?.[1]?.terraceCode }}</span>
               <line-svg
@@ -176,7 +176,7 @@
                 :start-color="initList[keys[0]]?.[1]?.terraceState === '0' ? 'red' : '#32cd32'"
                 :end-color="initList[keys[0]]?.[1]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="top: -10px; left: 60px"
+                style="top: -10px; left: 60px;"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="65px"
@@ -187,7 +187,7 @@
             </div>
             <div
               :class="initList[keys[0]]?.[2]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: 181px; top: 5px"
+              style="position: absolute; left: 181px; top: 5px;"
             >
               <span @click="jumpDetail(initList[keys[0]]?.[2])">{{ initList[keys[0]]?.[2]?.terraceCode }}</span>
               <line-svg
@@ -195,7 +195,7 @@
                 :start-color="initList[keys[0]]?.[2]?.terraceState === '0' ? 'red' : '#32cd32'"
                 :end-color="initList[keys[0]]?.[2]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="left: -127px; top: -11px"
+                style="left: -127px; top: -11px;"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="125px"
@@ -206,7 +206,7 @@
             </div>
             <div
               :class="initList[keys[0]]?.[3]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: -120px; top: -0"
+              style="position: absolute; left: -120px; top: -0;"
             >
               <span @click="jumpDetail(initList[keys[0]]?.[3])">{{ initList[keys[0]]?.[3]?.terraceCode }}</span>
               <line-svg
@@ -214,7 +214,7 @@
                 :start-color="initList[keys[0]]?.[3]?.terraceState === '0' ? 'red' : '#32cd32'"
                 :end-color="initList[keys[0]]?.[3]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="top: -10px; left: 68px"
+                style="top: -10px; left: 68px;"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="52px"
@@ -225,7 +225,7 @@
             </div>
             <div
               :class="initList[keys[0]]?.[4]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: 151px; top: 59px"
+              style="position: absolute; left: 151px; top: 59px;"
             >
               <span @click="jumpDetail(initList[keys[0]]?.[4])">{{ initList[keys[0]]?.[4]?.terraceCode }}</span>
               <line-svg
@@ -245,7 +245,7 @@
           </div>
         </div>
         <div class="centerSystem g-w100 g-h100">
-          <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px">
+          <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px;">
             <div
               :class="parentSignList[1]?.[3] === '0' ? 'redSign' : 'greenSign'"
               @click="parentJumpDetail(parentSignList[1]?.[0], parentSignList[1]?.[1])"
@@ -313,7 +313,7 @@
           </div>
         </div>
         <div class="rightSystem g-w100 g-h100">
-          <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px">
+          <div class="g-w100" style="position: relative; margin-left: 45%; margin-top: 70px;">
             <div
               :class="parentSignList[2]?.[3] === '0' ? 'redSign' : 'greenSign'"
               @click="parentJumpDetail(parentSignList[2]?.[0], parentSignList[2]?.[1])"
@@ -322,7 +322,7 @@
             </div>
             <div
               :class="initList[keys[2]]?.[0]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: 195px; top: -52px"
+              style="position: absolute; left: 195px; top: -52px;"
             >
               <span @click="jumpDetail(initList[keys[2]]?.[0])">{{ initList[keys[2]]?.[0]?.terraceCode }}</span>
               <line-svg
@@ -330,7 +330,7 @@
                 :start-color="initList[keys[2]]?.[0]?.terraceState === '0' ? 'red' : '#32cd32'"
                 :end-color="initList[keys[2]]?.[0]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="left: -180px; top: -20%"
+                style="left: -180px; top: -20%;"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="177px"
@@ -341,7 +341,7 @@
             </div>
             <div
               :class="initList[keys[2]]?.[1]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: -100px; top: 48px"
+              style="position: absolute; left: -100px; top: 48px;"
             >
               <span @click="jumpDetail(initList[keys[2]]?.[1])">{{ initList[keys[2]]?.[1]?.terraceCode }}</span>
               <line-svg
@@ -349,7 +349,7 @@
                 :start-color="initList[keys[2]]?.[1]?.terraceState === '0' ? 'red' : '#32cd32'"
                 :end-color="initList[keys[2]]?.[1]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="top: -10px; left: 70px"
+                style="top: -10px; left: 70px;"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="90px"
@@ -360,7 +360,7 @@
             </div>
             <div
               :class="initList[keys[2]]?.[2]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: 181px; top: 5px"
+              style="position: absolute; left: 181px; top: 5px;"
             >
               <span @click="jumpDetail(initList[keys[2]]?.[2])"> {{ initList[keys[2]]?.[2]?.terraceCode }}</span>
               <line-svg
@@ -368,7 +368,7 @@
                 :start-color="initList[keys[2]]?.[2]?.terraceState === '0' ? 'red' : '#32cd32'"
                 :end-color="initList[keys[2]]?.[2]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="left: -127px; top: -11px"
+                style="left: -127px; top: -11px;"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="125px"
@@ -379,7 +379,7 @@
             </div>
             <div
               :class="initList[keys[2]]?.[3]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: -120px; top: -0"
+              style="position: absolute; left: -120px; top: -0;"
             >
               <span @click="jumpDetail(initList[keys[2]]?.[3])"> {{ initList[keys[2]]?.[3]?.terraceCode }}</span>
               <line-svg
@@ -387,7 +387,7 @@
                 :start-color="initList[keys[2]]?.[3]?.terraceState === '0' ? 'red' : '#32cd32'"
                 :end-color="initList[keys[2]]?.[3]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="top: -10px; left: 68px"
+                style="top: -10px; left: 68px;"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="52px"
@@ -398,7 +398,7 @@
             </div>
             <div
               :class="initList[keys[2]]?.[4]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: 160px; top: 59px"
+              style="position: absolute; left: 160px; top: 59px;"
             >
               <span @click="jumpDetail(initList[keys[2]]?.[4])"> {{ initList[keys[2]]?.[4]?.terraceCode }}</span>
               <line-svg
@@ -417,7 +417,7 @@
             </div>
             <div
               :class="initList[keys[2]]?.[5]?.terraceState === '0' ? 'redSign' : 'greenSign'"
-              style="position: absolute; left: -110px; top: -50px"
+              style="position: absolute; left: -110px; top: -50px;"
             >
               <span @click="jumpDetail(initList[keys[2]]?.[5])"> {{ initList[keys[2]]?.[5]?.terraceCode }}</span>
               <line-svg
@@ -425,7 +425,7 @@
                 :start-color="initList[keys[2]]?.[5]?.terraceState === '0' ? 'red' : '#32cd32'"
                 :end-color="initList[keys[2]]?.[5]?.terraceState === '0' ? 'red' : '#32cd32'"
                 class="svgClass"
-                style="top: -10px; left: 70px"
+                style="top: -10px; left: 70px;"
                 div-stroke-width="6"
                 ball-stroke-width="5"
                 svg-width="90px"

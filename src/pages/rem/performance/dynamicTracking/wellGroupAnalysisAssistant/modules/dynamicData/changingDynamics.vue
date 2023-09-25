@@ -67,7 +67,7 @@
           <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" align="cnter" prop="adjustRangeSplittingInjectWater" header-align="center" :formatter="toPrecise2">
           </el-table-column>
           <el-table-column
-            label="产液劈分量(m³)"
+            :label="`产液劈分量\n(m³)`"
             min-width="130"
             align="cnter"
             prop="adjustRangeSplittingSplittingFluid"

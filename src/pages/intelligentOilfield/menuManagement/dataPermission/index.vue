@@ -7,7 +7,7 @@
         ref="queryForm"
         :model="queryParams"
         :inline="true"
-        style="max-width: 1700px;margin-top: 18px"
+        style="max-width: 1700px;margin-top: 18px;"
       >
         <el-form-item label="应用名称" prop="appId">
           <el-select
@@ -15,7 +15,7 @@
             placeholder="请选择"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             @change="gettableList(queryParams.appId)"
           >
             <el-option
@@ -32,7 +32,7 @@
             placeholder="请选择"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             @change="getfieldsList(queryParams.tableId)"
           >
             <el-option
@@ -47,7 +47,7 @@
           <el-select
             v-model="queryParams.fieldId"
             placeholder="请选择"
-            style="width: 100%"
+            style="width: 100%;"
             clearable
           >
             <el-option
@@ -64,7 +64,7 @@
             placeholder="请选择"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="(item, index) in addtableRole"
@@ -80,7 +80,7 @@
             placeholder="请选择"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="(item, index) in addtablePer"
@@ -96,7 +96,7 @@
             placeholder="请选择"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -106,7 +106,7 @@
             />
           </el-select>
         </el-form-item>
-        <div style="float: right">
+        <div style="float: right;">
           <el-button
             type="primary"
             icon="el-icon-search"
@@ -132,7 +132,7 @@
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:quanxian:add']"
-            style="margin-bottom: 20px"
+            style="margin-bottom: 20px;"
             type="primary"
             size="mini"
             @click="handleAdd"
@@ -148,7 +148,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
@@ -284,7 +284,7 @@
               <el-select
                 v-model="addform.fieldIds"
                 placeholder="请选择字段"
-                style="width: 100%"
+                style="width: 100%;"
                 multiple
                 clearable
               >
@@ -304,7 +304,7 @@
               <el-table
                 ref="addTable"
                 :data="addtableRole"
-                style="width: 100%"
+                style="width: 100%;"
                 border
                 max-height="320px"
                 @selection-change="handleSelectionChange2"
@@ -320,7 +320,7 @@
               <el-table
                 ref="multipleTable"
                 :data="addtablePer"
-                style="width: 100%"
+                style="width: 100%;"
                 class="pertable"
                 border
                 max-height="320px"

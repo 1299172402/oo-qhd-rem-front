@@ -11,7 +11,7 @@
             <el-table-column prop="pt" label="平台" align="center" min-width="160"></el-table-column>
             <el-table-column prop="cljzly" label="处理的介质来源" align="center" min-width="240"></el-table-column>
             <el-table-column label="投产时间" align="center">
-                <el-table-column prop="tcrq" :label="`年/月/日\n(yyyy-dd-mm)`" align="center" min-width="130"></el-table-column>
+                <el-table-column prop="tcrq" :label="`(yyyy-dd-mm)`" align="center" min-width="130"></el-table-column>
             </el-table-column>
             <el-table-column label="设施处理能力" align="center">
                 <el-table-column label="最大液处理能力" align="center">

@@ -13,7 +13,7 @@
             v-model="queryParams.nickName"
             placeholder="请输入用户名称"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -22,7 +22,7 @@
             v-model="queryParams.userName"
             placeholder="请输入用户账号"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -32,7 +32,7 @@
             v-model="queryParams.deptId"
             placeholder="请选择组织机构"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="(item, index) in deptSelect"
@@ -45,7 +45,7 @@
         <el-form-item v-show="activeName === 'first'" label="操作时间">
           <el-date-picker
             v-model="queryParams.loginDate"
-            style="width: 240px"
+            style="width: 240px;"
             value-format="yyyy-MM-dd"
             type="date"
             placeholder="请选择操作时间"
@@ -55,7 +55,7 @@
         <el-form-item v-show="activeName === 'first'" label="自定义时间">
           <el-date-picker
             v-model="dateRange"
-            style="width: 240px"
+            style="width: 240px;"
             value-format="yyyy-MM-dd"
             type="daterange"
             range-separator="-"
@@ -69,7 +69,7 @@
             v-model="queryParams.appName"
             placeholder="请输入应用名称"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -78,7 +78,7 @@
             v-model="queryParams.apply"
             placeholder="请选择应用分类"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="(item, index) in dict.type.sys_app_applyCenter"
@@ -93,7 +93,7 @@
             v-model="queryParams.tenantId"
             placeholder="请选择绑定租户"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="(item, index) in deptList"
@@ -132,7 +132,7 @@
             <el-tab-pane label="应用访问统计" name="second" />
           </el-tabs>
         </el-col>
-        <el-col v-if="activeName === 'first'" :span="4" style="text-align: right">
+        <el-col v-if="activeName === 'first'" :span="4" style="text-align: right;">
           <el-button
             v-hasPermi="['system:userAccess:export']"
             type="primary"
@@ -228,7 +228,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div style="width: 100%">
+      <div style="width: 100%;">
         <pagination
           :total="total"
           :page.sync="queryParams.pageNum"

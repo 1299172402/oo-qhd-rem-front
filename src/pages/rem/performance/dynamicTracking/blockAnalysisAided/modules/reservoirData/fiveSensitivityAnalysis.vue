@@ -19,7 +19,7 @@
             <el-table-column :label="`临界矿化度_比值\n (ppm)`" align="center" prop="" width="140"></el-table-column>
             <el-table-column :label="`临界流速\n (m³/d)`" align="center" prop="criticalFlowVelocity" width="140"></el-table-column>
             <el-table-column :label="`临界流量\n (ml/min)`" align="center" prop="criticalFlow" width="140"></el-table-column>
-            <el-table-column label="临界碱度" align="center" prop="criticalAlkalinity" width="140"></el-table-column>
+            <el-table-column :label="`临界碱度\n (mmol/L)`" align="center" prop="criticalAlkalinity" width="140"></el-table-column>
             <el-table-column label="临界PH值" align="center" prop="criticalPh" width="140"></el-table-column>
             <el-table-column :label="`速敏损害率\n (%)`" align="center" prop="" width="140"></el-table-column>
             <el-table-column :label="`酸敏损害率\n (%)`" align="center" prop="acidDamageRate" width="140"></el-table-column>

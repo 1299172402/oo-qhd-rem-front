@@ -6,7 +6,7 @@
         v-for="item1 in 4"
         :key="item1"
         class="g-row-flex"
-        style="flex-wrap: wrap"
+        style="flex-wrap: wrap;"
       >
         <div v-for="item2 in 12" :key="item2" class="g-column-flex-H panelDiv">
           <div class="panelImg" />

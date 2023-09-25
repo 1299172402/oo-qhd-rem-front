@@ -1,6 +1,6 @@
 <!--注采对应曲线-->
 <template>
-    <pagePanel headerTitle="注采对应曲线" style="height: calc(100% - 101px);" show-btn>
+    <pagePanel headerTitle="注采对应曲线"  show-btn>
     <div class="z-main">
         <div class="z-search" style="display:flex;align-items: center;">
             <span>日期：</span>
@@ -15,26 +15,6 @@
                     <Echart :ref="'echartDown'+index" :chart-data="chart.option" height="100%"></Echart>
                 </page-panel>
             </div>
-            <div class="develop" v-if="wellOptions.length">
-                <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
-            </div>
-            <page-panel headerTitle="油井对应曲线表" v-show="isDevelop"  style="height: 450px; margin-top:10px;" show-btn>
-                <el-table id="tableData2" :data="wellOilCurves" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
-                          height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                    <el-table-column type="index" label="序号"></el-table-column>
-                    <el-table-column prop="time" label="时间"> </el-table-column>
-                    <el-table-column prop="flowingPress" :label="`流压\n(MPa)`"></el-table-column>
-                    <el-table-column prop="oilPress" :label="`油压\n(MPa)`"></el-table-column>
-                    <el-table-column prop="pumpFreq" :label="`泵频率\n(Hz)`"></el-table-column>
-                    <el-table-column prop="whTemp" :label="`井口温度\n(℃)`"></el-table-column>
-                    <el-table-column prop="prodDuration" :label="`生产时间\n(h)`"></el-table-column>
-                    <el-table-column prop="waterRatio" :label="`含水\n(%)`"></el-table-column>
-                    <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`"></el-table-column>
-                    <el-table-column prop="oilProdDaily" :label="`日产油\n(m³)`"></el-table-column>
-                    <el-table-column prop="gasProdDaily" :label="`日产气\n(10⁴m³)`"></el-table-column>
-                    <el-table-column prop="gasOilRatio" :label="`气油比\n(m³/m³)`"></el-table-column>
-                </el-table>
-            </page-panel>
         </div>
     </div>
     </pagePanel>
@@ -53,6 +33,14 @@ export default {
             selectDate: [],
             //油井折线图
             oilWellOption: {
+                dataZoom: [
+                    {
+                        type: "inside",
+                        xAxisIndex: [0, 1, 2],
+                        start: 0, //滚动条开始位置（共100等份）
+                        end: 100, //滚动条结束位置
+                    },
+                ],
                 title: {},
                 tooltip: {
                     trigger: 'axis',
@@ -60,11 +48,6 @@ export default {
                         type: "shadow",
                     },
                 },
-                oilFeildId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                //选择平台
-                platform: "3F1E5858C6CC41E2BF4FFC4902797C08",
-                //选择井号
-                wellId: "09D30C16BD1D4F759D53F74941701307",
                 legend: {
                     textStyle: {
                         color: '#8FA4CC',
@@ -176,6 +159,8 @@ export default {
                         },
                     },
                     {
+                        name: "日",
+                        nameGap: 40,
                         gridIndex: 2,
                         type: "category",
                         data: [
@@ -336,7 +321,7 @@ export default {
                         nameGap: 50,
                         nameRotate: 0,
                         nameTextStyle: {
-                            color: "#8FA4CC",
+                            color: "#274f97",
                             fontSize: 14,
                         },
                         scale: true,
@@ -359,7 +344,7 @@ export default {
                     },
                     {
                         gridIndex: 1,
-                        name: "气\n油\n比\n︵\n方\n/\n方\n︶", //5
+                        name: "气\n油\n比\n︵\nm³\n/\nm³\n︶", //5
                         nameLocation: "center",
                         nameRotate: 0,
                         nameGap: 50,
@@ -389,7 +374,7 @@ export default {
                     },
                     {
                         gridIndex: 1,
-                        name: "生\n产\n时\n间\n︵\nH\n︶", //6
+                        name: "生\n产\n时\n间\n︵\nh\n︶", //6
                         nameLocation: "center",
                         nameRotate: 0,
                         nameGap: 50,
@@ -450,12 +435,12 @@ export default {
                     },
                     {
                         gridIndex: 2,
-                        name: "日\n产\n油\n︵\n方\n︶", //8
+                        name: "日\n产\n油\n︵\nm³\n︶", //8
                         nameLocation: "center",
                         nameRotate: 0,
                         nameGap: 50,
                         nameTextStyle: {
-                            color: "rgb(0,255,0)",
+                            color: "#69b146",
                             fontSize: 14,
                         },
                         scale: true,
@@ -478,12 +463,12 @@ export default {
                     },
                     {
                         gridIndex: 2,
-                        name: "日\n产\n液\n︵\n方\n︶", //9
+                        name: "日\n产\n液\n︵\nm³\n︶", //9
                         nameLocation: "center",
                         nameRotate: 0,
                         nameGap: 50,
                         nameTextStyle: {
-                            color: "rgb(165,42,42)",
+                            color: "#8e2c2a",
                             fontSize: 14,
                         },
                         position: 'left',
@@ -508,12 +493,12 @@ export default {
                     },
                     {
                         gridIndex: 2,
-                        name: "日\n产\n气\n︵\n万\n方\n︶", //10
+                        name: "日\n产\n气\n︵\n10⁴m³\n︶", //10
                         nameLocation: "center",
                         nameRotate: 0,
                         nameGap: 50,
                         nameTextStyle: {
-                            color: "#8FA4CC",
+                            color: "#d92c28",
                             fontSize: 14,
                         },
                         position: 'right',
@@ -974,17 +959,19 @@ export default {
                         } else if (lineSet.label == '含水') {
                             series.xAxisIndex = 1;
                             series.yAxisIndex = 4;
+                            series.itemStyle={color:'#274f97'}
                         } else if (lineSet.label == '日产液') {
                             series.xAxisIndex = 2;
                             series.yAxisIndex = 9;
-                            series.itemStyle={color:'rgb(165,42,42)'}
+                            series.itemStyle={color:'#8e2c2a'}
                         } else if (lineSet.label == '日产油') {
                             series.xAxisIndex = 2;
                             series.yAxisIndex = 8;
-                            series.itemStyle={color:'rgb(0,255,255)'}
+                            series.itemStyle={color:'#69b146'}
                         } else if (lineSet.label == '日产气') {
                             series.xAxisIndex = 2;
                             series.yAxisIndex = 10;
+                            series.itemStyle={color:'#d92c28'}
                         } else if (lineSet.label == '井口温度') {
                             series.xAxisIndex = 1;
                             series.yAxisIndex = 7;

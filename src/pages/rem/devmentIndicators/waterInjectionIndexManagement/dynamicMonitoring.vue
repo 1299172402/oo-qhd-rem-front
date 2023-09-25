@@ -456,7 +456,7 @@
                         this.dynamicDetectionCompletionRate.legend.data = legendData;
                         this.dynamicDetectionCompletionRate.series = seriesData;
                         this.dynamicDetectionCompletionRate.title.text =
-                            `${this.oilFieldName || ''}${this.queryParams.beginDate && this.queryParams.endDate ? dayjs(this.queryParams.beginDate).format("YYYY-MM-DD") + "至" + dayjs(this.queryParams.endDate).format("YYYY-MM-DD") : ""}动态监测完成率`;
+                            `${this.oilFieldName || ''}动态监测完成率`;
                     } else {
                         //临时
                         let zb = this.zbData.find((item) => {

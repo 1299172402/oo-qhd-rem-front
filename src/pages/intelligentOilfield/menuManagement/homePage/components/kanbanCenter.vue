@@ -1,6 +1,6 @@
 <!-- 看板中心组件 -->
 <template>
-  <div style="font-size: 20px" class="g-w100 g-h100">
+  <div style="font-size: 20px;" class="g-w100 g-h100">
     <div id="fullScreen_panorama">
       <bottom-button v-if="linkUrl !== ''" class="bottomBtn" @bigScreenMode="fullExit" />
       <iframe
@@ -33,7 +33,7 @@
       </div>
     </el-dialog>
     <info-window info-width="100%" info-height="100%" header-title="已授权看板">
-      <div style="padding: 10px 20px" class="g-w100 g-h100 g-column-flex">
+      <div style="padding: 10px 20px;" class="g-w100 g-h100 g-column-flex">
         <!-- <el-tabs
           @tab-click="handleClick"
           v-model="activeName"
@@ -48,7 +48,7 @@
             v-for="(item, index) in list"
             :key="index"
             class="g-column-flex-H"
-            style="position: relative;padding: 20px; justify-content: space-around; flex-wrap: wrap;cursor: pointer"
+            style="position: relative;padding: 20px; justify-content: space-around; flex-wrap: wrap;cursor: pointer;"
             @click="toClick(item.boardUrl)"
           >
             <img
@@ -56,11 +56,11 @@
               :src="item.boardImg?item.boardImg:''"
               alt=""
               class="imgSetting"
-              style="width: 40px"
+              style="width: 40px;"
               @error="imgError(item)"
             >
             <!-- 增加未上传图标显示默认图标+首字母 -->
-            <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px">
+            <div v-else class="bgImage g-row-flex-HV" style="width: 40px;height: 40px;">
               {{ item.boardName[0] }}
             </div>
             <span class="textSpan">{{ item.boardName }}</span>

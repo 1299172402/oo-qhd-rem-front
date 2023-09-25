@@ -16,16 +16,16 @@
         >
             <el-table-column type="index" width="60" label="序号"></el-table-column>
             <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
-            <el-table-column prop="oilPoolMiddlePree" label="油藏中部压力">
+            <el-table-column prop="oilPoolMiddlePree" :label="`油藏中部压力\n(Mpa)`">
             </el-table-column>
-            <el-table-column prop="recdInjAllnWell" label="推荐注入井配注量"></el-table-column>
-            <el-table-column prop="dailyFluidProd" label="日产液量"></el-table-column>
-            <el-table-column prop="dailyOilProd" label="日产油量"></el-table-column>
-            <el-table-column prop="comeWaterCut" label="综合含水率"></el-table-column>
-            <el-table-column prop="dailyGasProd" label="日产气量"></el-table-column>
+            <el-table-column prop="recdInjAllnWell" :label="`推荐注入井配注量\n(m³)`"></el-table-column>
+            <el-table-column prop="dailyFluidProd" :label="`日产液量\n(m³)`"></el-table-column>
+            <el-table-column prop="dailyOilProd" :label="`日产油量\n(m³)`"></el-table-column>
+            <el-table-column prop="comeWaterCut" :label="`综合含水率\n(m³)`"></el-table-column>
+            <el-table-column prop="dailyGasProd" :label="`日产气量\n(m³)`"></el-table-column>
             <el-table-column prop="dailyGasFluidProd" label="气液比"></el-table-column>
-            <el-table-column prop="wellBottomStaticPree" label="井底静压"></el-table-column>
-            <el-table-column prop="wellBottomPree" label="井底流压"></el-table-column>
+            <el-table-column prop="wellBottomStaticPree" :label="`井底静压\n(Mpa)`"></el-table-column>
+            <el-table-column prop="wellBottomPree" :label="`井底流压\n(Mpa)`"></el-table-column>
             <el-table-column prop="fluidStaticPree" label="产液指数"></el-table-column>
         </el-table>
     </pagePanel>
@@ -86,7 +86,13 @@ export default {
     overflow: scroll;
   }
 }
-
+#tableData {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
+}
 ::v-deep .el-table__header-wrapper {
   .cell {
     height: auto !important;

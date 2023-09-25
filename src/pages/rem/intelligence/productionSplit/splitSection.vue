@@ -63,7 +63,7 @@
         <page-panel
             header-title="单井劈产剖面"
             v-if="params.wellCategory == '01'"
-            style="position: relative; margin-top: 20px;height: calc(100% - 100px);"
+            style="position: relative; margin-top: 20px;height: calc(100% - 100px);" show-btn
         >
             <el-container class="layout">
                 <el-header height="auto" align="left">
@@ -91,7 +91,11 @@
                             <page-panel-new style="margin-bottom: 20px; height: 400px ;width: 100%;">
                                 <el-table highlight :data="item" height="340" style="width: 100%;">
                                     <el-table-column width="150" prop="wellName" align="center"
-                                                     label="井号"></el-table-column>
+                                                     label="井号">
+                                        <template slot-scope="scope">
+                                            <span>{{ scope.row.wellName.includes("秦皇岛32-6")? scope.row.wellName.replace("秦皇岛32-6", "QHD32-6") : scope.row.wellName}}</span>
+                                        </template>   
+                                    </el-table-column>
                                     <el-table-column prop="intervNo" label="层段" align="center"></el-table-column>
                                     <el-table-column width="100" prop="stateDate" align="center"
                                                      label="时间"></el-table-column>
@@ -119,7 +123,7 @@
         <page-panel
             header-title="单井劈产剖面"
             v-if="params.wellCategory == '02'"
-            style="position: relative; margin-top: 20px;height: calc(100% - 100px);"
+            style="position: relative; margin-top: 20px;height: calc(100% - 100px);" show-btn
         >
             <el-container class="layout">
                 <el-header height="auto" align="left">

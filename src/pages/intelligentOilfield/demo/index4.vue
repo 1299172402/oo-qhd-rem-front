@@ -14,7 +14,7 @@
     <el-select
       v-model="value"
       placeholder="请选择"
-      style="margin: 0 20px"
+      style="margin: 0 20px;"
       clearable
     >
       <el-option
@@ -27,19 +27,19 @@
     <el-date-picker
       v-model="value1"
       type="daterange"
-      style="width: 400px"
+      style="width: 400px;"
       range-separator="-"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
     />
-    <irregularity-box style="margin: 20px 20px 20px 0" />
+    <irregularity-box style="margin: 20px 20px 20px 0;" />
     <el-table
       :row-style="{ height: '0px' }"
       :header-cell-style="{ 'text-align': 'center', padding: '6px 0' }"
       :data="tableData"
       header-cell-class-name="table_header"
       :cell-style="{ padding: '6px', 'text-align': 'center' }"
-      style="width: 700px; margin: 20px 0"
+      style="width: 700px; margin: 20px 0;"
       :default-sort="{ prop: 'date', order: 'descending' }"
     >
       <el-table-column
@@ -56,7 +56,7 @@
       />
       <el-table-column prop="address" label="地址" />
     </el-table>
-    <el-radio-group v-model="activeTabIndex" style="margin: 20px 0">
+    <el-radio-group v-model="activeTabIndex" style="margin: 20px 0;">
       <el-radio :label="0">
         力导布局
       </el-radio>
@@ -72,27 +72,27 @@
     <charts-components
       :chart-data-options="dataOption"
       echarts-type="pie1"
-      style="width: 400px; height: 400px"
+      style="width: 400px; height: 400px;"
     />
     <charts-components
       :chart-data-options="dataOptionLine"
       echarts-type="line1"
-      style="width: 600px; height: 400px"
+      style="width: 600px; height: 400px;"
     />
     <charts-components
       :chart-data-options="dataZhuzhuang"
       echarts-type="bar1"
-      style="width: 600px; height: 400px"
+      style="width: 600px; height: 400px;"
     />
-    <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px" />
-    <el-input v-model="input" style="width: 300px; margin: 20px 0" placeholder="请输入角色名称" />
+    <div id="lineContainer" ref="lineContainer" style="width: 50%; height: 410px;" />
+    <el-input v-model="input" style="width: 300px; margin: 20px 0;" placeholder="请输入角色名称" />
     <el-pagination
       background
       layout="prev, pager, next,total"
       :total="1000"
       class="paginationDiv"
     />
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px;">
       点击“点击打开Modal”按钮将出现Modal对话框
     </div>
     <el-button type="text" @click="dialogVisible = true">
@@ -130,7 +130,7 @@
       @cancel="onCancel"
       @ok="onConfirm"
     />
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px;">
       <el-alert
         title="成功提示的文案"
         type="success"
@@ -157,7 +157,7 @@
       />
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px;">
       <el-button :plain="true" class="commonBtn" @click="opensuccess">
         成功消息提示
       </el-button>
@@ -171,7 +171,7 @@
         失败消息提示
       </el-button>
     </div>
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px;">
       <el-button class="errorBtn">
         危险按钮
       </el-button>
@@ -182,7 +182,7 @@
         失效按钮
       </el-button>
     </div>
-    <div style="margin-top: 20px" class="dropdown">
+    <div style="margin-top: 20px;" class="dropdown">
       <el-select v-model="value" placeholder="请选择" clearable>
         <el-option
           v-for="item in options"
@@ -192,7 +192,7 @@
         />
       </el-select>
     </div>
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px;">
       <el-dropdown trigger="click">
         <span class="el-dropdown-link"> 下拉菜单<i class="el-icon-arrow-down el-icon--right" /> </span>
         <el-dropdown-menu slot="dropdown">
@@ -205,20 +205,20 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <div style="margin-top: 20px; width: 50%" class="stepsrow">
+    <div style="margin-top: 20px; width: 50%;" class="stepsrow">
       <el-steps :active="activerow" finish-status="success">
         <el-step title="步骤 1" />
         <el-step title="步骤 2" />
         <el-step title="步骤 3" />
       </el-steps>
-      <el-button style="margin-top: 12px" class="commonBtn" @click="next">
+      <el-button style="margin-top: 12px;" class="commonBtn" @click="next">
         下一步（横）
       </el-button>
-      <el-button style="margin-top: 12px" class="commonBtn" @click="next1">
+      <el-button style="margin-top: 12px;" class="commonBtn" @click="next1">
         下一步(竖)
       </el-button>
     </div>
-    <div style="margin-top: 20px; height: 300px" class="stepscolumn">
+    <div style="margin-top: 20px; height: 300px;" class="stepscolumn">
       <el-steps :active="activecolumn" finish-status="success" direction="vertical">
         <el-step title="步骤 1" />
         <el-step title="步骤 2" />
@@ -228,10 +228,10 @@
     <div class="block">
       <el-slider v-model="value2" />
     </div>
-    <div class="marquee-fa" style="margin: 20px 0">
+    <div class="marquee-fa" style="margin: 20px 0;">
       <div class="marquee_head">
         <!-- <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px"> -->
-        <p style="margin-left: 10px; width: 90px">
+        <p style="margin-left: 10px; width: 90px;">
           通知公告：
         </p>
       </div>
@@ -240,7 +240,7 @@
       </marquee>
     </div>
     <!-- tabs标签页 -->
-    <div style="margin: 10px 0">
+    <div style="margin: 10px 0;">
       ================================tabs标签页=================================
     </div>
     <el-tabs v-model="activeName" class="g-pageHeader">

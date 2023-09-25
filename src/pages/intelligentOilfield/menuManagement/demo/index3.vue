@@ -1,9 +1,9 @@
 <template>
-  <div style="width: 100%; height: 100%" class="pageBox">
+  <div style="width: 100%; height: 100%;" class="pageBox">
     <header-search class="g-w100 g-h100">
       <div class="g-row-flex-V g-w100 g-h100">
-        <div>角色名称：<el-input v-model="input" style="width: 200px" placeholder="请输入角色名称" /></div>
-        <div style="margin: 0 20px">
+        <div>角色名称：<el-input v-model="input" style="width: 200px;" placeholder="请输入角色名称" /></div>
+        <div style="margin: 0 20px;">
           状态：<el-select v-model="value" placeholder="请选择" clearable>
             <el-option
               v-for="item in options"
@@ -37,7 +37,7 @@
         header-cell-class-name="table_header"
         :cell-style="{ padding: '3px', 'text-align': 'center' }"
         :data="tableData"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column type="index" label="序号" width="100" />
@@ -54,7 +54,7 @@
           <el-button type="text" size="small">
             禁用
           </el-button>
-          <el-button type="text" size="small" style="color: #f56c6c">
+          <el-button type="text" size="small" style="color: #f56c6c;">
             删除
           </el-button>
         </el-table-column>

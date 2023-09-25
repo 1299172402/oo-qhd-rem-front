@@ -1,6 +1,6 @@
 <template>
     <div class="app-container" style="width: 100%; height: 100%">
-        <button class="detailLinkBtn"   @click="downEcharts">下载</button>
+        <el-button  type="primary" class="buttonActive_primary detailLinkBtn"   @click="downEcharts">下载</el-button>
         <Echart ref="echartChart" :chart-data="productLineChart" width="100%" height="80%"></Echart>
         <el-row :gutter="20">
             <el-col :span="8">
@@ -974,8 +974,8 @@ export default {
                     //各线的数据
                     this.productLineChart.series = seriesData;
                     // if (this.searchForm.selectUnitOfProduction == 'm') {
-                        this.productLineChart.yAxis[0].name = '日产m³/d';
-                        this.productLineChart.yAxis[1].name = '年产10⁴m³';
+                        this.productLineChart.yAxis[0].name = '日产(m³/d)';
+                        this.productLineChart.yAxis[1].name = '年产(10⁴m³)';
                     // } else if (this.searchForm.selectUnitOfProduction == 't') {
                     //     this.productLineChart.yAxis[0].name = '日产t/d';
                     //     this.productLineChart.yAxis[1].name = '年产10⁴t';
@@ -1130,16 +1130,14 @@ export default {
 }
 .detailLinkBtn {
     position: absolute;
-    right: 120px;
+    right: 105px;
     top: 10px;
     width: 50px;
-    height: 20px;
-    background: linear-gradient(90deg, #0751b0, #50a6ec);
-    text-align: center;
-    font-size: smaller;
-    border: 0;
-    cursor: pointer;
-    color: #ffffff;
+    line-height: 23px;
+    padding: 0 !important;
+    height: 20px !important;
+    font-size: smaller !important;
+    text-align: center !important;
 }
 .xbox {
     display: flex;

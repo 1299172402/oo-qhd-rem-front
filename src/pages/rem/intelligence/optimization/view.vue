@@ -64,7 +64,7 @@
             </el-radio-group>
             <el-row :gutter="20" style="height: calc(100% - 20px)">
                 <el-col :span="6" style="height: 100%">
-                    <pagePanel headerTitle="指定单井产量" style="height:calc(100% - 10px );">
+                    <pagePanel headerTitle="指定单井产量" style="height:calc(100% - 10px );" show-btn>
                         <div align="left">
                             <el-button type="primary" align="left" icon="el-icon-edit" @click="modify1 = true">修改
                             </el-button>
@@ -113,7 +113,7 @@
                 </el-col>
 
                 <el-col :span="10" style="height: 100%">
-                    <pagePanel headerTitle="指定注采比" style="height: calc(100% - 10px);">
+                    <pagePanel headerTitle="指定注采比" style="height: calc(100% - 10px);" show-btn>
                         <div class="buttonBox" align="left">
                             <el-button type="primary" icon="el-icon-edit" @click="queryEdit">修改</el-button>
                             <el-button type="primary" icon="el-icon-bank-card" @click="handleSubmit2('form')"
@@ -134,7 +134,11 @@
                             >
                                 <!-- :span-method="arrheader" -->
                                 <el-table-column prop="injWellNo" label="水井井号" width="150"
-                                                 align="center"></el-table-column>
+                                                 align="center">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.injWellNo.includes("秦皇岛32-6")? scope.row.injWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.injWellNo}}</span>
+                                    </template>
+                                </el-table-column>
                                 <el-table-column prop="layerNo" label="层位名称" align="center"
                                                  width="220"></el-table-column>
                                 <el-table-column
@@ -143,7 +147,11 @@
                                     label="油井井号"
                                     width="150"
                                     align="center"
-                                ></el-table-column>
+                                >
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.oilWellNo.includes("秦皇岛32-6")? scope.row.oilWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.oilWellNo}}</span>
+                                    </template>  
+                                </el-table-column>
                                 <el-table-column
                                     :render-header="renderheader"
                                     width="90"
@@ -189,7 +197,11 @@
                             >
                                 <!-- :span-method="arrheader1" -->
                                 <el-table-column prop="injWellNo" label="水井井号" align="center"
-                                                 min-width="160"></el-table-column>
+                                                 min-width="160">
+                                    <template slot-scope="scope">
+                                        <span>{{ scope.row.injWellNo.includes("秦皇岛32-6")? scope.row.injWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.injWellNo}}</span>
+                                    </template>   
+                                </el-table-column>
                                 <el-table-column prop="oilSplitData" align="center">
                                     <template slot="header">
                                         <p>
@@ -221,9 +233,9 @@
                     </pagePanel>
                 </el-col>
 
-                <el-col :span="8" style="height: 100%">
+                <el-col :span="8" style="height: 100%" >
                     <pagePanel headerTitle="预测结果"
-                               style="height:50%;margin-bottom: 20px;overflow-y: hidden"
+                               style="height:50%;margin-bottom: 20px;overflow-y: hidden" show-btn
                     >
 
                         <div style="display: flex; margin: 3px 10px 0 10px;justify-content: end;">
@@ -257,7 +269,7 @@
                             <el-table-column prop="layerRatio" label="层注采比" align="center"></el-table-column>
                         </el-table>
                     </pagePanel>
-                    <pagePanelNew style="height: 45%;">
+                    <pagePanelNew style="height: 45%;" show-btn>
                         <el-button type="text" class="foreBtn">预测结果</el-button>
                         <Echart height="100%" :chart-data="getEchart()"></Echart>
                     </pagePanelNew>
@@ -617,14 +629,14 @@ export default {
                     }
                 },
                 grid: {
-                    top: "15%",
+                    top: "10%",
                     left: "13%",
                     right: "10%",
-                    bottom: "20%",
+                    bottom: "25%",
                 },
                 legend: {
                     data: ['层配注量', '层配产量', '注采比'],
-                    bottom: '-2%',
+                    bottom: '0%',
                     textStyle: {
                         color: "#a9a8a8",
                         fontSize: 14,

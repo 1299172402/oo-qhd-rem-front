@@ -13,7 +13,7 @@
             v-model="queryParams.systemName"
             placeholder="请输入系统名称"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -22,7 +22,7 @@
             v-model="queryParams.systemCode"
             placeholder="请输入系统编号"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -31,7 +31,7 @@
             v-model="queryParams.terraceId"
             placeholder="请选择系统平台"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="(item, index2) in systemPlatformList"
@@ -47,7 +47,7 @@
             v-model="queryParams.equipmentType"
             placeholder="请输入设备名称"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -56,7 +56,7 @@
             v-model="queryParams.equipmentCode"
             placeholder="请输入设备编号"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -65,7 +65,7 @@
             v-model="queryParams.terraceId"
             placeholder="请选择设备所属平台"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @change="changeTerrace2"
           >
             <el-option
@@ -81,7 +81,7 @@
             v-model="queryParams.systemId"
             placeholder="请选择设备所属系统"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="(item, index3) in deviceSysList"
@@ -95,7 +95,7 @@
         <el-form-item v-show="activeName === 'third'" label="父级平台">
           <el-select
             v-model="queryParams.parentName"
-            style="width: 240px"
+            style="width: 240px;"
             placeholder="请选择父级平台"
             clearable
             @keyup.enter.native="handleQuery"
@@ -113,7 +113,7 @@
             v-model="queryParams.terraceName"
             placeholder="请输入平台名称"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -122,7 +122,7 @@
             v-model="queryParams.terraceCode"
             placeholder="请输入平台编码"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -131,7 +131,7 @@
           <el-input
             v-model="queryParams.startDescribe"
             clearable
-            style="width: 300px"
+            style="width: 300px;"
             placeholder="请输入链路起点"
             @keyup.enter.native="handleQuery"
           />
@@ -140,7 +140,7 @@
           <el-input
             v-model="queryParams.endDescribe"
             clearable
-            style="width: 300px"
+            style="width: 300px;"
             placeholder="请输入链路终点"
             @keyup.enter.native="handleQuery"
           />
@@ -150,7 +150,7 @@
             v-model="queryParams.linkType"
             placeholder="请选择链路类型"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           >
             <el-option
@@ -198,7 +198,7 @@
             新增
           </el-button>
         </el-col>
-        <el-col v-if="activeName === 'first' || activeName === 'second'" :span="8" style="text-align: right; float: right">
+        <el-col v-if="activeName === 'first' || activeName === 'second'" :span="8" style="text-align: right; float: right;">
           <el-button
             v-hasPermi="['system:equipment:import']"
             class="commonBtn"
@@ -231,7 +231,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px','text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
@@ -294,7 +294,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px','text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
@@ -367,7 +367,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px','text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
@@ -448,7 +448,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px','text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="{ prop: 'date', order: 'descending' }"
         @selection-change="handleSelectionChange"
       >
@@ -555,7 +555,7 @@
             <el-form-item label="系统名称" prop="systemName">
               <el-input
                 v-model="addSysForm.systemName"
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请输入系统名称"
                 clearable
               />
@@ -566,7 +566,7 @@
               <el-select
                 v-model="addSysForm.terraceId"
                 placeholder="请选择所属平台"
-                style="width: 300px"
+                style="width: 300px;"
                 clearable
               >
                 <el-option
@@ -582,7 +582,7 @@
             <el-form-item label="系统编号" prop="systemCode">
               <el-input
                 v-model="addSysForm.systemCode"
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请输入系统编号"
                 clearable
               />
@@ -603,7 +603,7 @@
             <el-form-item label="设备名称" prop="equipmentType">
               <el-input
                 v-model="addEquForm.equipmentType"
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请输入设备名称"
                 clearable
               />
@@ -615,7 +615,7 @@
                 v-model="addEquForm.terraceId"
                 clearable
                 placeholder="请选择设备所属平台"
-                style="width: 300px"
+                style="width: 300px;"
                 @change="changeTerrace"
               >
                 <el-option
@@ -633,7 +633,7 @@
                 v-model="addEquForm.systemId"
                 clearable
                 placeholder="请选择设备所属系统"
-                style="width: 300px"
+                style="width: 300px;"
                 @change="changeSystem"
               >
                 <el-option
@@ -650,7 +650,7 @@
               <el-input
                 v-model="addEquForm.equipmentCode"
                 clearable
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请输入设备编号"
               />
             </el-form-item>
@@ -680,7 +680,7 @@
               <el-input
                 v-model="addPlatformForm.terraceName"
                 clearable
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请输入平台名称"
               />
             </el-form-item>
@@ -689,7 +689,7 @@
             <el-form-item label="父级平台" prop="parentName">
               <el-select
                 v-model="addPlatformForm.parentName"
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请选择父级平台"
                 clearable
               >
@@ -707,7 +707,7 @@
               <el-input
                 v-model="addPlatformForm.terraceCode"
                 clearable
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请输入平台编码"
               />
             </el-form-item>
@@ -717,7 +717,7 @@
               <el-input
                 v-model="addPlatformForm.remark"
                 clearable
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请输入备注"
               />
             </el-form-item>
@@ -727,7 +727,7 @@
               <el-input
                 v-model="addPlatformForm.terraceUrl"
                 clearable
-                style="width: 300px"
+                style="width: 300px;"
                 placeholder="请输入平台链接"
               />
             </el-form-item>
@@ -769,7 +769,7 @@
                 v-model="addCloudForm.linkType"
                 placeholder="请选择链路类型"
                 clearable
-                style="width: 230px"
+                style="width: 230px;"
                 @keyup.enter.native="handleQuery"
               >
                 <el-option
@@ -1383,7 +1383,7 @@ export default {
 .app-container {
   height: 100%;
 
-  .footerBox{
+  .footerBox {
     height: calc(100% - 60px);
   }
 

@@ -1,7 +1,7 @@
 <!--自定义水平切换按钮-->
 <template>
   <div class="g-row-flex">
-    <div v-for="(item, index) in dataList" :key="index" style="border-radius: 4px">
+    <div v-for="(item, index) in dataList" :key="index" style="border-radius: 4px;">
       <div class="leftBtn g-row-flex-HV" :style="{background: item.isChecked?colorList[$store.state.setting.mode]:'transparent',border: `1px solid ${borderList[$store.state.setting.mode]}`,color:item.isChecked?'#fff':borderList[$store.state.setting.mode]}" @click="selectBtn(item)">
         {{ item.name }}
       </div>

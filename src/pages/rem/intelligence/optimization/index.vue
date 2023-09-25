@@ -224,6 +224,7 @@
             <iframe
                 ref="iframe"
                 :style="getStyle"
+                allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" oallowfullscreen="true" msallowfullscreen="true"
                 v-show="activeName == 'second'"
                 :src="src"
             ></iframe>
@@ -236,9 +237,11 @@ import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} from "@/api/rem/r-intelligentIPA.js";
 // import Iframe from '@/components/rem/tools/iframe.vue'
 import {exportExcel} from '@/lib/exportExcel';
+import Iframe from "@/components/rem/tools/iframe.vue";
 
 export default {
     components: {
+        Iframe
         // Iframe
     },
     mixins: [queryConditionMixin],
@@ -249,7 +252,7 @@ export default {
         }else{
             this.queryTableData(this.form.tableData2)
         }
-        this.src = 'https://intelinj.tjioms-test.tjltd.cnooc/'
+        this.src = 'https://intelinj.tjioms-dev.tjltd.cnooc/'
     },
     data() {
         return {
@@ -346,12 +349,7 @@ export default {
         },
         // 时间处理
         eeee() {
-            let data = new Date()
-            if (data.getMonth() < 10) {
-                return data.getFullYear() + '-0' + data.getMonth()
-            } else {
-                return data.getFullYear() + '-' + data.getMonth()
-            }
+            return new Date().format('YYYY-MM')
         },
         refresh() {
             this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C';

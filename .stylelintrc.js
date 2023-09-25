@@ -63,6 +63,7 @@ module.exports = {
     "font-family-no-missing-generic-family-keyword": null,
     "no-descending-specificity": null,
     "declaration-block-semicolon-space-after": "always-single-line",
-    "declaration-colon-space-after": "always"
+    "declaration-colon-space-after": "always",
+    "declaration-colon-newline-after": null
   }
 };

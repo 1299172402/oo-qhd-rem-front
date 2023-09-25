@@ -1,22 +1,16 @@
 <!-- 基本信息 -->
 <template>
   <div class="app-container">
-    <pagePanel headerTitle="单井基本信息" style="height: calc(100% - 101px);" show-btn>
+    <pagePanel headerTitle="单井基本信息" show-btn>
         <el-table
             id="tableData"
             :data="tableData"
-            :border="false"
-            :row-style="{ height: '0px' }"
-            header-cell-class-name="table_header"
             :cell-style="{ padding: '6px', 'text-align': 'center' }"
-            style="width:100%;"
-            height="100%"
-            :default-sort="{ prop: 'date', order: 'descending' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         >
             <el-table-column type="index" label="序号"></el-table-column>
             <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
-            <el-table-column prop="fieldName" label="区块"></el-table-column>
+            <el-table-column prop="fieldName" label="区块" min-width="90"></el-table-column>
             <el-table-column prop="coordX" label="井坐标位置" min-width="250px">
                 <template slot-scope="scope">
                     <span>{{ 'X：' + scope.row.coordX + ' , Y：' + scope.row.coordY }}</span>
@@ -25,9 +19,9 @@
             <el-table-column prop="horizontalLength" :label="`水平段长度\n (m)`"></el-table-column>
             <el-table-column prop="completeType" label="完井方式"></el-table-column>
             <el-table-column prop="boreType" label="管柱类型"></el-table-column>
-            <el-table-column prop="kb" :label="`补心海拔\n (m)`"></el-table-column>
+            <el-table-column prop="kb" :label="`补心海拔\n(m)`"></el-table-column>
             <el-table-column prop="baseLevelDepth" :label="`基准面深度\n (m)`"></el-table-column>
-            <el-table-column label="投产时间">
+            <el-table-column :label="`投产时间\n(yyyy/mm/dd)`" min-width="100" >
                 <template slot-scope="scope">
                     <span>{{ scope.row.productionDate | formatTime }}</span>
                 </template>
@@ -100,20 +94,17 @@ export default {
       }
       exportExcel("#tableData", fileName);
     },
-       renderHeader(h, { column }) {
-      let header = column.label.split(" ");
-      return [h("p", [h("p", {}, header[0]), h("span", {}, header[1])])];
-    },
   },
 };
 </script>
 <style scoped lang="scss">
 #tableData {
-  // ::v-deep .el-table__header-wrapper .cell{
-  //     height: auto;
-  //     line-height: 18px;
-  // }
-  ::v-deep .cell:empty {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
+    ::v-deep .cell:empty {
     &::before {
       content: "-";
     }

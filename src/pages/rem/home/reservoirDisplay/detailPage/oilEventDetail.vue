@@ -3,7 +3,7 @@
         <header-search>
             <el-form style="margin: 20px 0" :inline="true">
                 <el-form-item label="油田：">
-                    <el-select v-model="queryData.ogfId" disabled>
+                    <el-select v-model="queryData.ogfId" disabled @change="choicepla" >
                         <el-option
                             v-for="(item, index) in oilFields"
                             :key="index"
@@ -14,7 +14,7 @@
                 </el-form-item>
                 <el-form-item label="平台：">
                     <el-select v-model="queryData.platformId" @change="onPlatfromChange">
-                        <el-option v-for="item in platforms" :key="item.id" :label="item.platformName" :value="item.platformId">
+                        <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformName" :value="item.platformId">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -24,7 +24,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="日期：">
+                <el-form-item label="日期选择：">
                     <el-date-picker
                         v-model="queryData.selectDate"
                         type="daterange"
@@ -46,7 +46,7 @@
                 <el-button style="float: right" type="primary" @click="goBack()">返回</el-button>
             </el-form>
         </header-search>
-        <page-panel header-title="秦皇岛32-6油田单井大事记录表" style="height: calc(100% - 145px)" :show-btn="true">
+        <page-panel :header-title=title style="height: calc(100% - 145px)" :show-btn="true">
             <el-table
                 :data="tableData.slice((queryData.page - 1) * queryData.pageSize, queryData.page * queryData.pageSize)"
                 highlight-current-row
@@ -122,8 +122,10 @@
                     event:[],
                     page: 1,
                     pageSize: 16,
+                    orgId:'715AD1CD60484BB59E737CD18A9DE44A',
                 },
                 oilFields:[],
+                title:'秦皇岛32-6油田单井大事记录表',
                 platforms: [],
                 wells: [],
                 events:[],
@@ -137,7 +139,7 @@
         },
         methods:{
             goBack(){
-                this.$router.push({name:'oilexhibition'})
+                this.$router.push({name:'Oilexhibition'})
             },
             getList() {
                 //根据作业公司查询油田
@@ -151,6 +153,14 @@
                 //查询事件类型
                 queryOilFieldIncidentType().then(res=>{
                     this.events = res.data.data.data
+                })
+            },
+            choicepla(val){
+                this.queryData.platformId = '';
+                const oilname = (this.oilFields.find(obj =>  obj.ogfId == this.queryData.ogfId)).ogfName;
+                this.title = oilname +'单井大事记录表'
+                queryListOfOilfieldQueryPlatformsDetail({ogfId: val}).then(res => {
+                    this.platforms = res.data.data
                 })
             },
             getWellData() {
@@ -196,6 +206,14 @@
                     page: 1,
                     pageSize: 16,
                 }
+                let oilname = (this.oilFields.find(obj =>  obj.ogfId == this.queryData.ogfId)).ogfName;
+                queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryData.ogfId}).then(res => {
+                    this.platforms = res.data.data
+                })
+                queryPlatformQueryWellListDetail({ogfId:this.queryData.ogfId}).then((res) => {
+                    this.wells = res.data.data
+                })
+                this.title = oilname +'单井大事记录表'
                 this.getData()
             }
         }

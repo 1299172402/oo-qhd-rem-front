@@ -10,14 +10,14 @@
         class="left"
         style="overflow: scroll;"
       >
-        <div class="head-container" style="padding: 0 10px">
+        <div class="head-container" style="padding: 0 10px;">
           <el-input
             v-model="deptName"
             placeholder="请输入部门名称"
             clearable
             size="small"
             prefix-icon="el-icon-search"
-            style="margin-bottom: 10px; height: 40px"
+            style="margin-bottom: 10px; height: 40px;"
             @clear="getTreeselect"
           />
         </div>
@@ -54,7 +54,7 @@
         :span="20"
         :xs="24"
         class="right"
-        style="padding-left: 20px"
+        style="padding-left: 20px;"
       >
         <header-search class="g-w100 g-h100 colon">
           <el-form
@@ -68,7 +68,7 @@
                 v-model="queryParams.userName"
                 placeholder="请输入用户账号"
                 clearable
-                style="width: 240px; height: 40px"
+                style="width: 240px; height: 40px;"
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
@@ -77,14 +77,14 @@
                 v-model="queryParams.nickName"
                 placeholder="请输入用户名称"
                 clearable
-                style="width: 240px"
+                style="width: 240px;"
                 @keyup.enter.native="handleQuery"
               />
             </el-form-item>
             <el-form-item label="用户租户" prop="tenantName">
               <el-select
                 v-model="queryParams.tenantId"
-                style="width: 240px"
+                style="width: 240px;"
                 placeholder="请选择用户租户"
                 collapse-tags
                 clearable
@@ -127,7 +127,7 @@
                 新增
               </el-button>
             </el-col>
-            <el-col :span="8" style="text-align: right">
+            <el-col :span="8" style="text-align: right;">
               <el-button
                 v-hasPermi="['system:user:importModel']"
                 class="commonBtn"
@@ -159,7 +159,7 @@
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
             header-cell-class-name="table_header"
             :cell-style="{ padding: '2px', 'text-align': 'center' }"
-            style="width: 100%; height: 100%"
+            style="width: 100%; height: 100%;"
             :default-sort="{ prop: 'date', order: 'descending' }"
             @selection-change="handleSelectionChange"
           >
@@ -217,7 +217,7 @@
                     v-for="(item,index) in scope.row.sysTenants"
                     :key="index"
                     :title="item.tenantName"
-                    style="text-overflow: ellipsis;overflow: hidden;white-space: pre"
+                    style="text-overflow: ellipsis;overflow: hidden;white-space: pre;"
                   >
                     {{ item.tenantName }}
                     <br>
@@ -348,7 +348,7 @@
         <div class="headerinfo">
           账号
         </div>
-        <el-row type="flex" justify="start" style="margin-top: 15px">
+        <el-row type="flex" justify="start" style="margin-top: 15px;">
           <el-col :span="8">
             <el-form-item label="用户名称" prop="nickName">
               <el-input
@@ -383,7 +383,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row type="flex" justify="start" style="margin: 5px 0">
+        <el-row type="flex" justify="start" style="margin: 5px 0;">
           <el-col :span="8">
             <el-form-item label="账号邮箱" prop="email">
               <el-input
@@ -436,7 +436,7 @@
           </el-col>
         </el-row>
         <el-row />
-        <el-row v-if="form.userId == undefined" style="display: block;margin-bottom: 5px">
+        <el-row v-if="form.userId == undefined" style="display: block;margin-bottom: 5px;">
           <el-col :span="8">
             <el-form-item label="用户密码" prop="password">
               <el-input
@@ -483,7 +483,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <div class="headerinfo" style="margin-bottom: 15px">
+        <div class="headerinfo" style="margin-bottom: 15px;">
           角色与岗位信息
         </div>
         <el-form-item label="用户角色" prop="roleIds">
@@ -508,7 +508,7 @@
         <el-form-item label="用户岗位">
           <el-select
             v-model="form.tempPostId"
-            style="margin-top: 5px"
+            style="margin-top: 5px;"
             filterable
             :disabled="form.ehr === '0' ? false : keys.includes('postIds')"
             class="customSelect"
@@ -1436,17 +1436,18 @@ export default {
   display: inline-block;
 }
 
-/deep/ .image-container,  .el-upload--text {
+/deep/ .image-container,
+.el-upload--text {
   border: unset !important;
 }
 
-.signature{
+.signature {
   width: 400px;
   height: 350px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto
+  margin: 0 auto;
 }
 
 /deep/ .signature .el-upload {

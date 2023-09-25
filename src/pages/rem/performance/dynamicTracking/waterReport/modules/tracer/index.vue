@@ -10,25 +10,25 @@
             <div class="z-container">
                 <div class="z-row">
                     <div class="z-col">
-                        <info-window infoWidth="100%" infoHeight="100%" headerTitle="示踪剂结果" isShowMaxBtn>
+                        <page-panel infoWidth="100%" infoHeight="100%" headerTitle="示踪剂结果" isShowMaxBtn>
                             <el-image :src="imageFirst" style="height: 100%; display: block; margin: 0 auto">
                                 <div slot="error"></div>
                             </el-image>
-                        </info-window>
+                        </page-panel>
                     </div>
                     <div class="z-col">
-                        <info-window infoWidth="100%" infoHeight="100%" headerTitle="示踪剂报告" isShowMaxBtn>
+                        <page-panel infoWidth="100%" infoHeight="100%" headerTitle="示踪剂报告" isShowMaxBtn>
                             <iframe
                                 :src="imageSecond ? imageSecond + '#toolbar=0' : ''"
                                 style="width: 100%; height: 100%"
                                 v-if="imageSecond"
                             ></iframe>
-                        </info-window>
+                        </page-panel>
                     </div>
                 </div>
                 <div class="z-row">
                     <div class="z-col">
-                        <info-window infoWidth="100%" infoHeight="100%" headerTitle="示踪剂信息" isShowMaxBtn>
+                        <page-panel infoWidth="100%" infoHeight="100%" headerTitle="示踪剂信息" isShowMaxBtn>
                             <!-- <el-image :src="imageThird"><div slot="error"></div></el-image> -->
                             <el-table
                                 id="tableData"
@@ -52,7 +52,7 @@
                                 <el-table-column prop="recoveryRatio" :label="`回采率\n(%)`"></el-table-column>
                                 <el-table-column prop="recoveryRat" :label="`回采率比例\n(%)`"></el-table-column>
                             </el-table>
-                        </info-window>
+                        </page-panel>
                     </div>
                 </div>
             </div>

@@ -75,7 +75,7 @@ const defaultRouterList = [
     name: "PreviewPage",
     component: () => import("@/components/upload/preview/PreviewPage.tsx")
   },
-  ...asyncRouterList
+  // ...asyncRouterList
 ];
 
 const createRouter = () =>

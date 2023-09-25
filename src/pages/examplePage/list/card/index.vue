@@ -100,7 +100,7 @@
               name="description"
             />
           </t-form-item>
-          <t-form-item style="float: right">
+          <t-form-item style="float: right;">
             <t-button variant="outline" @click="onClickCloseBtn">
               取消
             </t-button>

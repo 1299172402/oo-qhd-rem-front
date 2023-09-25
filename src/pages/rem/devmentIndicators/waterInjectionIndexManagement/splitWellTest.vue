@@ -423,7 +423,7 @@
                         this.separateInjectionWellTestRate.xAxis.data = xData;
                         this.separateInjectionWellTestRate.legend.data = legendData;
                         this.separateInjectionWellTestRate.series = seriesData;
-                        this.separateInjectionWellTestRate.title.text = `${this.oilFieldName || ''}${this.queryParams.year ? dayjs(this.queryParams.year).format("YYYY-MM-DD") : ""}分注井测试率`;
+                        this.separateInjectionWellTestRate.title.text = `${this.oilFieldName || ''}分注井测试率`;
                     }
                 });
             },

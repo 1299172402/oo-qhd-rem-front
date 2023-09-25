@@ -10,7 +10,7 @@
                     <el-row style="margin: 20px 0">
                         <div style="display: inline-block">
                             <span>油田：</span>
-                            <el-select v-model="ogfId" disabled>
+                            <el-select v-model="ogfId"  @change="choicewell">
                                 <el-option
                                     v-for="(item, index) in oilFields"
                                     :key="index"
@@ -23,7 +23,7 @@
                                 <el-option v-for="(item, index) in wellData" :key="index" :label="item.wellName"
                                            :value="item.wellId"/>
                             </el-select>
-                            <span style="padding-left: 20px">日期：</span>
+                            <span style="padding-left: 20px">日期选择：</span>
                             <el-date-picker
                                 v-show="activeTabIndexDate == 3"
                                 v-model="selectDate"
@@ -612,9 +612,16 @@ export default {
                 this.key++
             }
         },
+        choicewell(val){
+            queryPlatformQueryWellListDetail({ogfId:val}).then(res => {
+                if (res.data.code == 200) {
+                    this.wellData =res.data.data
+                }
+            })
+        },
         initData() {
             //查询条件
-            queryOperatorsCheckFieldListsDetail({}).then(res => {
+            queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res => {
                 if (res.data.code == 200) {
                     this.oilFields = res.data.data
                 }

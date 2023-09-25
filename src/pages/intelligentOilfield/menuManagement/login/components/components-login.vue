@@ -118,7 +118,7 @@
             <components-company-login />
           </t-tab-panel>
           <t-tab-panel value="password" label="外部人员登录">
-            <t-form-item name="username" style="margin-bottom: 7%">
+            <t-form-item name="username" style="margin-bottom: 7%;">
               <div class="textDiv">
                 用户名
               </div>
@@ -129,12 +129,12 @@
                 v-model="formData.username"
                 class="loginInput"
                 placeholder="请输入用户名/手机号"
-                style="width: 100%"
+                style="width: 100%;"
               />
               <div class="bottomBorderDiv" />
             </t-form-item>
 
-            <t-form-item name="password" style="margin-bottom: 6%">
+            <t-form-item name="password" style="margin-bottom: 6%;">
               <div class="textDiv">
                 密 码
               </div>
@@ -145,7 +145,7 @@
                 v-model="formData.password"
                 class="loginInput"
                 placeholder="请输入密码"
-                style="width: 100%"
+                style="width: 100%;"
                 show-password
               />
               <div class="bottomBorderDiv" />
@@ -163,14 +163,14 @@
                 class="loginInput"
                 auto-complete="off"
                 placeholder="验证码"
-                style="width: 63%"
+                style="width: 63%;"
               />
-              <div class="bottomBorderDiv" style="width: 68%" />
+              <div class="bottomBorderDiv" style="width: 68%;" />
               <div class="login-code">
                 <img
                   :src="codeUrl"
                   class="login-code-img"
-                  style="height: 38px; width: 100%"
+                  style="height: 38px; width: 100%;"
                   @click="getCode"
                 >
               </div>
@@ -186,7 +186,7 @@
           </t-tab-panel>
         </t-tabs>
         <div class="loginBtn">
-          <t-form-item v-if="tabValue === 'password'" class="btn-container" style="margin-top: 5%">
+          <t-form-item v-if="tabValue === 'password'" class="btn-container" style="margin-top: 5%;">
             <t-button
               block
               size="large"

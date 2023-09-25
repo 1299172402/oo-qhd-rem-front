@@ -13,7 +13,7 @@
             v-model="queryParams.roleName"
             placeholder="请输入角色名称"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -32,7 +32,7 @@
             v-model="queryParams.status"
             placeholder="请选择角色状态"
             clearable
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_normal_disable"
@@ -45,7 +45,7 @@
         <el-form-item v-if="showAppSearch" label="所属应用" prop="appId">
           <el-select
             v-model="queryParams.appId"
-            style="width: 240px"
+            style="width: 240px;"
             placeholder="请选择所属应用"
             clearable
             filterable
@@ -317,7 +317,7 @@
             <el-form-item label="角色类型" prop="roleType">
               <el-select
                 v-model="form.roleType"
-                style="width: 267px"
+                style="width: 267px;"
                 placeholder="请选择角色类型"
                 :disabled="!!($route.params.id || form.appId !== '$system$' )"
               >
@@ -334,7 +334,7 @@
             <el-form-item label="角色顺序" prop="roleSort">
               <el-input-number
                 v-model="form.roleSort"
-                style="width: 267px"
+                style="width: 267px;"
                 controls-position="right"
                 :min="0"
                 @input.native="roleSortlChange"
@@ -416,7 +416,7 @@
         <el-form-item label="权限范围">
           <el-select
             v-model="form.dataScope"
-            style="width: 360px"
+            style="width: 360px;"
             clearable
             @change="dataScopeSelectChange"
           >
@@ -976,7 +976,6 @@ export default {
   .el-table {
     overflow: scroll;
   }
-
 }
 
 .el-tree {

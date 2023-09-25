@@ -1,6 +1,6 @@
 <!-- 水井分析报告 -->
 <template>
-  <div class="app-container">
+  <div class="app-container" style="overflow-y: scroll">
 <!--      单井基本信息表-->
       <el-row :gutter="20">
           <individualWellBasicInformationSheet :queryData="queryData"></individualWellBasicInformationSheet>

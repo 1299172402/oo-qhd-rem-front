@@ -5,7 +5,7 @@
         v-show="showSearch"
         ref="queryForm"
         :model="queryParams"
-        style="margin-top: 20px"
+        style="margin-top: 20px;"
         :inline="true"
         label-width="68px"
       >
@@ -15,7 +15,7 @@
             placeholder="请输入系统模块"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -25,7 +25,7 @@
             placeholder="请输入操作人员"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
@@ -35,7 +35,7 @@
             placeholder="操作类型"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_oper_type"
@@ -51,7 +51,7 @@
             placeholder="操作状态"
             clearable
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
           >
             <el-option
               v-for="dict in dict.type.sys_common_status"
@@ -65,7 +65,7 @@
           <el-date-picker
             v-model="dateRange"
             size="small"
-            style="width: 240px"
+            style="width: 240px;"
             value-format="yyyy-MM-dd"
             type="daterange"
             range-separator="-"
@@ -94,8 +94,8 @@
       </el-form>
     </header-search>
 
-    <page-panel-new header-title="操作日志" style="height: calc(100% - 165px)">
-      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px">
+    <page-panel-new header-title="操作日志" style="height: calc(100% - 165px);">
+      <el-row :gutter="10" class="mb8" style="margin-bottom: 20px;">
         <el-col :span="1.5">
           <el-button
             v-hasPermi="['system:operlog:export']"
@@ -141,7 +141,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '2px', 'text-align': 'center' }"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 100%;"
         :default-sort="defaultSort"
         @selection-change="handleSelectionChange"
         @sort-change="handleSortChange"

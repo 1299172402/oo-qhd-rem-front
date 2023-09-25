@@ -31,7 +31,7 @@
       <el-form-item label="所属机构" prop="deptId">
         <treeselect
           v-model="queryParams.deptId"
-          style="width: 300px"
+          style="width: 300px;"
           :options="deptOptions"
           :show-count="true"
           placeholder="请选择所属机构"

@@ -21,7 +21,7 @@
                 <el-table id="tableData1" :data="wellInjCurves" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
                     height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column type="index" label="序号"></el-table-column>
-                    <el-table-column prop="time" label="时间"> </el-table-column>
+                    <el-table-column prop="time" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
                     <el-table-column prop="injDaily" :label="`日注水量\n(m³)`" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="cgsPress" :label="`套压\n(MPa)`" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="whInjPress" :label="`井口压力\n(MPa)`" :formatter="toPrecise2"></el-table-column>
@@ -34,7 +34,7 @@
                 <el-table id="tableData2" :data="wellOilCurves" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
                     height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                     <el-table-column type="index" label="序号"></el-table-column>
-                    <el-table-column prop="time" label="时间"> </el-table-column>
+                    <el-table-column prop="time" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
                     <el-table-column prop="flowingPress" :label="`流压\n(MPa)`" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="oilPress" :label="`油压\n(MPa)`" :formatter="toPrecise2"></el-table-column>
                     <el-table-column prop="pumpFreq" :label="`泵频率\n(Hz)`" :formatter="toPrecise2"></el-table-column>
@@ -415,7 +415,7 @@
                         },
                         {
                             gridIndex: 1,
-                            name: "生\n产\n时\n间\n︵\nH\n︶", //6
+                            name: "生\n产\n时\n间\n︵\nh\n︶", //6
                             nameLocation: "center",
                             nameRotate: 0,
                             nameGap: 50,

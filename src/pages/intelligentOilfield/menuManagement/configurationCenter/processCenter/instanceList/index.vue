@@ -3,7 +3,7 @@
   <div class="app-container">
     <header-search class="g-w100 g-h100">
       <el-form
-        style="margin-top: 18px"
+        style="margin-top: 18px;"
         :model="queryParams"
         :inline="true"
         @keyup.enter.native="searchQuery"
@@ -33,8 +33,8 @@
       </el-form>
     </header-search>
 
-    <div class="footer-box table-box container-box--background" style="height: calc(100% - 100px)">
-      <page-panel-new header-title="流程实例清单" style="height: 100%">
+    <div class="footer-box table-box container-box--background" style="height: calc(100% - 100px);">
+      <page-panel-new header-title="流程实例清单" style="height: 100%;">
         <el-table
           height="calc(100% - 46px)"
           :data="dataSource"

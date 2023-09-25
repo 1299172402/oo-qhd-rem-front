@@ -11,7 +11,6 @@
                     class="f2"
                     filterable
                     clearable
-                    disabled
                     style="width:180px"
                     @change="changeOil"
                 >
@@ -31,7 +30,7 @@
                         :value="item.blockId"
                     ></el-option>
                 </el-select>
-                <span>时间：</span>
+                <span>年度：</span>
                 <el-date-picker
                     v-model="queryData.dateTime"
                     type="month"
@@ -259,9 +258,9 @@
                             <el-table-column prop="date" label="序号" align="center" width="50">
                                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
                             </el-table-column>
-                            <el-table-column prop="wellName" label="井号" width="130"
+                            <el-table-column prop="wellName" label="井号" min-width="130"
                                              align="center"></el-table-column>
-                            <el-table-column prop="productionIntervalNo" label="层位" align="center" width="200">
+                            <el-table-column prop="productionIntervalNo" label="层位" align="center" min-width="200">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.productionIntervalNo }}</span>
                                 </template>
@@ -271,7 +270,7 @@
                                     <span>{{ scope.row.injPump }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="overflowInj" align="center" width="90">
+                            <el-table-column prop="overflowInj" align="center" min-width="90">
                                 <template slot="header">
                                     超/欠注量<br/>(m³/d)
                                 </template>
@@ -280,9 +279,9 @@
                                 </template>
                             </el-table-column>
                             <el-table-column prop="dayNum" label="天数?(d)" :render-header="renderheader"
-                                             width="70" align="center"></el-table-column>
+                                             min-width="70" align="center"></el-table-column>
                             <el-table-column prop="injAllocRatio" label="比例?(%)" :render-header="renderheader"
-                                             width="70" align="center"></el-table-column>
+                                             min-width="70" align="center"></el-table-column>
                         </el-table>
                     </page-panel>
                 </div>
@@ -773,7 +772,19 @@ export default {
     width: 100%;
     background: rgba(143, 164, 204, 0.3);
 }
+#tabledow {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
 
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
+}
 .condationRow {
     height: 30px;
     line-height: 30px;

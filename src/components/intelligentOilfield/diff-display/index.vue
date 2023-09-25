@@ -202,14 +202,16 @@ export default {
     }
   }
 
-  /deep/ .is-add td,
-  /deep/ .is-add {
-    background-color: var(--add-color) !important;
-  }
+  /deep/ table.el-table__body {
+    .is-add td,
+    .is-add {
+      background-color: var(--add-color) !important;
+    }
 
-  /deep/ .is-delete td,
-  /deep/ .is-delete {
-    background-color: var(--delete-color) !important;
+    .is-delete td,
+    .is-delete {
+      background-color: var(--delete-color) !important;
+    }
   }
 }
 

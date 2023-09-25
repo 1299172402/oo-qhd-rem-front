@@ -128,7 +128,7 @@ export default Vue.extend({
     myIconStyle() {
       return {
         "height": this.backgroundStyle.height || defaultSetting.backgroundStyle.height,
-        "transform": "translateX(11px)"
+        "transform": "translateX(1px)"
       };
     },
     myIconClass() {

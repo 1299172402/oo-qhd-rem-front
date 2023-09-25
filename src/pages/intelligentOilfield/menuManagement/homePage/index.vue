@@ -1,9 +1,9 @@
 <template>
-  <div style="height: calc(100% - 70px)">
-    <div class="home-marquee-fa" style="margin-bottom: 20px">
+  <div style="height: calc(100% - 70px);">
+    <div class="home-marquee-fa" style="margin-bottom: 20px;">
       <div class="home-marquee_head">
-        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px">
-        <p style="margin-left: 10px; width: 70px">
+        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px;">
+        <p style="margin-left: 10px; width: 70px;">
           通知公告：
         </p>
       </div>
@@ -11,7 +11,7 @@
         {{ $store.getters['user/notice'] }}
       </marquee>
     </div>
-    <div style="width: 100%; height: 100%; overflow: scroll; overflow-x: hidden;padding: 10px" class="el_row_wrap home-main">
+    <div style="width: 100%; height: 100%; overflow: scroll; overflow-x: hidden;padding: 10px;" class="el_row_wrap home-main">
       <el-row :gutter="0">
         <el-col v-for="(item, index) in listNumData" :key="index" :span="8">
           <!-- TODO: Maybe change back -->
@@ -63,12 +63,12 @@
                 <p>今日活跃用户统计</p>
               </div>
             </div>
-            <div style="text-align: center">
+            <div style="text-align: center;">
               <el-button
                 v-if="$store.state.setting.mode === 'dark'"
                 type="primary"
                 size="mini"
-                style="width: 80px; height: 32px"
+                style="width: 80px; height: 32px;"
                 @click="handleAuth(item.tenantId)"
               >
                 查看
@@ -76,7 +76,7 @@
               <el-button
                 v-else
                 size="mini"
-                style="width: 80px;height: 32px;color: #fff;background: #3490d3"
+                style="width: 80px;height: 32px;color: #fff;background: #3490d3;"
                 @click="handleAuth(item.tenantId)"
               >
                 查看

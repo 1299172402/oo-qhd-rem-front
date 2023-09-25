@@ -7,10 +7,10 @@
                     <div class="z-chartHead">
                         <div class="sp1">层位</div>
                         <div class="sp2">解释井段</div>
-                        <div class="sp3">绝对吸入量</div>
-                        <div class="sp3">相对吸入量</div>
-                        <div class="sp3">日总注入量</div>
-                        <div class="sp3">注入压力</div>
+                        <div class="sp3">绝对吸入量<br/>(m³)</div>
+                        <div class="sp3">相对吸入量<br/>(m³)</div>
+                        <div class="sp3">日总注入量<br/>(m³)</div>
+                        <div class="sp3">注入压力<br/>(MPa)</div>
                     </div>
                     <div class="z-chartBody">
                         <div class="z-chartBody-row" v-for="(item,index) in tableData" :key="index">
@@ -43,7 +43,7 @@
                                             <span class="z_proess_sp2"></span>
                                         </div>
                                     </div>
-                                    <div class="sp3">{{item.injWhPressure}}MPa</div>
+                                    <div class="sp3">{{item.injWhPressure}}</div>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                     <el-table-column prop="injTotal" :label="`日总注入量\n(m³)`" align="center" min-width="100"></el-table-column>
                     <el-table-column prop="injWhPressure" :label="`注入压力\n(MPa)`" align="center" min-width="80"></el-table-column>
                     <el-table-column prop="interpConclusion" :label="`解释结论`" align="center" min-width="80"></el-table-column>
-                    <el-table-column prop="interpDate" :label="`解释日期`" align="center" min-width="130"></el-table-column>
+                    <el-table-column prop="interpDate" :label="`解释日期\n(yyyy/mm/dd)`" align="center" min-width="140"></el-table-column>
                 </el-table>
             </page-panel>
         </div>
@@ -212,7 +212,7 @@
                 display: flex;
                 flex-direction: column;
                 .z-chartHead{
-                    height:60px;
+                    height:auto;
                     display: flex;
                     align-items: center;
                     font-size:14px;

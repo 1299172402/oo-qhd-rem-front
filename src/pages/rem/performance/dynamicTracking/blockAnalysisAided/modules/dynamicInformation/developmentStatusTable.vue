@@ -7,7 +7,7 @@
             header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
             style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-            <el-table-column prop="date" label="时间" align="center" show-overflow-tooltip min-width="200" fixed="left">
+            <el-table-column prop="date" :label="`时间\n (yyyy/mm)`" align="center" show-overflow-tooltip min-width="200" fixed="left">
                 <template slot-scope="scope">{{ scope.row.date | dateFormat }}</template>
             </el-table-column>
             <el-table-column prop="ogfName" label="区块" show-overflow-tooltip min-width="180" fixed="left"></el-table-column>
@@ -41,7 +41,7 @@
                 <el-table-column prop="reservoirsProduceSpeed" label="地质储量" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                 <el-table-column prop="reservoirsProduceSpeedAvaliable" label="可采储量" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
             </el-table-column>
-            <el-table-column :label="`累计产量\n (×10⁴m³)`">
+            <el-table-column :label="`累计产量\n (10⁴m³)`">
                 <el-table-column prop="oilSum" label="油量" show-overflow-tooltip min-width="120" :formatter="toPrecise4"></el-table-column>
                 <el-table-column prop="waterSum" label="水量" show-overflow-tooltip min-width="120" :formatter="toPrecise4"></el-table-column>
             </el-table-column>
@@ -53,8 +53,8 @@
                 <el-table-column prop="natureDeclineRate" label="自然递减率" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                 <el-table-column prop="compressveDeclineRate" label="综合递减率" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
             </el-table-column>
-            <el-table-column prop="waterContainRaiseRate" label="含水上升率" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
-            <el-table-column prop="waterOilRateSum" label="累计水油比" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="waterContainRaiseRate" :label="`含水上升率\n (%)`" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
+            <el-table-column prop="waterOilRateSum" :label="`累计水油比\n (m³/m³)`" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
         </el-table>
     </page-panel-new>
 </template>
@@ -140,6 +140,7 @@ export default {
 
 <style scoped lang="scss">
     #tableData{
+        ::v-deep .el-table__fixed-header-wrapper .cell,
         ::v-deep .el-table__header-wrapper .cell{
             height: auto;
             line-height: 18px;

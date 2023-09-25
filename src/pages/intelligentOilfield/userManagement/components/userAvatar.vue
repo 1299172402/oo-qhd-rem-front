@@ -4,7 +4,7 @@
       <img
         :src="imgUrl1"
         title="点击上传头像"
-        style="width: 150px;height: 198px"
+        style="width: 150px;height: 198px;"
         class="img-circle img-lg"
       >
     </div>
@@ -17,7 +17,7 @@
       @opened="modalOpened"
       @close="closeDialog"
     >
-      <div style="text-align: center">
+      <div style="text-align: center;">
         <file-upload
           v-model="imgUrl2"
           upload-type="local"

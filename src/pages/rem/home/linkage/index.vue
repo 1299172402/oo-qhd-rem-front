@@ -103,7 +103,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 57%;top: 60%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 65%;top: 60%;width:20%;height:40%;',
                     boxText: '注采调控油藏方案',
                     boxBottomText: [{
                         name: '分层注水优化',
@@ -127,7 +127,7 @@ export default {
                     analysisUrl: `https://rem.${this.baseUrl}/#/injection/optimization?page=reservoirDisplay/linkage`
                 },
                 {
-                    style: 'position:absolute;left: 42%;top: 56%;width:18%;height:40%;',
+                    style: 'position:absolute;left: 52%;top: 56%;width:18%;height:40%;',
                     boxText: '注采状况分析',
                     boxBottomText: [
                         {
@@ -165,7 +165,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 30%;top: 60%;width:18%;height:40%;',
+                    style: 'position:absolute;left:40%;top: 60%;width:18%;height:40%;',
                     boxText: '剩余油分布',
                     boxBottomText: [{
                         name: '动态分析法/数模剩余油分析',
@@ -182,7 +182,44 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 17%;top: 56%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 17%;top: 50%;width:20%;height:40%;',
+                    boxText: '确定调整井组',
+                    boxBottomText: [{
+                        name: '油井动态分析',
+                        warningShowFlag: false,
+                        alarmPageCode: 'TYOBAR', alarmTime: "",
+                        url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingOilAuxiliary/oilAnalysisReport?page=reservoirDisplay/linkage`
+                    },
+                        {
+                            name: '水井动态分析',
+                            warningShowFlag: false,
+                            alarmPageCode: 'TYOBAR', alarmTime: "",
+                            url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingWaterAuxiliary/waterAnalysisReport?page=reservoirDisplay/linkage`
+                        },
+                        {
+                            name: '井组动态分析',
+                            warningShowFlag: false,
+                            alarmPageCode: 'TYOBAR', alarmTime: "",
+                            url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport?page=reservoirDisplay/linkage`
+                        },
+                        {
+                            name: '开采现状分析',
+                            warningShowFlag: false,
+                            alarmPageCode: 'TYOBAR', alarmTime: "",
+                            url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage`
+                        }],
+                   
+                    boxStyle: {
+                        pWidth: 'width:8.5vw'
+                    },
+                    imgUrl: new URL('./topBox/25.png', import.meta.url).href,
+                    showFlag: false,
+                    typeIdList: [],
+                    alarmPageCode: [],
+                    warningShowFlag: false,
+                },
+                {
+                    style: 'position:absolute;left: 29%;top: 56%;width:20%;height:40%;',
                     boxText: '调整区块确定',
                     boxBottomText: [{
                         name: '层间/平面矛盾分析',
@@ -430,7 +467,7 @@ export default {
                     this.currentLists.forEach((item) => {
                         item.showFlag = false;
                     });
-                    for (let i = 0; i < 7; i++) {
+                    for (let i = 0; i < 8; i++) {
                         this.$el.querySelectorAll('img')[i].style.display = 'none';
                     }
                 }
@@ -444,7 +481,7 @@ export default {
             if (this.loopNum != -1 && this.loopNum < 5) this.currentLists[this.loopImgNum[this.loopNum]].showFlag = true
             if (this.loopNum != -1 && this.loopNum < 5) this.currentLists[this.loopImgNumClose[this.loopNum]].showFlag = false
             this.loopNum++
-            for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < 8; i++) {
                 this.$el.querySelectorAll('img')[i].style.display = 'none'
             }
             this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'

@@ -9,7 +9,7 @@
         >
             <div class="g-w100 g-h100 g-row-flex" style="">
                 <div style="height: 100%; width: 100%" class="g-w100">
-                    <button class="detailLinkBtn" @click="linkroute('oilEventDetail')">详细</button>
+                    <el-button  type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('OilEventDetail')">详细</el-button>
                     <el-table
                         id="tableD"
                         :data="tableData"
@@ -110,16 +110,14 @@ export default {
 <style scoped lang="less">
 .detailLinkBtn {
     position: absolute;
-    right: 60px;
+    right: 45px;
     top: 10px;
     width: 50px;
-    height: 20px;
-    background: linear-gradient(90deg, #0751b0, #50a6ec);
-    text-align: center;
-    font-size: smaller;
-    border: 0;
-    cursor: pointer;
-    color: #ffffff;
+    line-height: 23px;
+    padding: 0 !important;
+    height: 20px !important;
+    font-size: smaller !important;
+    text-align: center !important;
 }
 
 .table-name {
