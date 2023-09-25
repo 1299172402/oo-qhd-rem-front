@@ -919,6 +919,7 @@
                                             wellId:groupEvalBases[a].wellNo,
                                             [key1]:groupEvalBases[a].message,
                                             [key2]:groupEvalBases[a].itemValue,
+                                            injectionResponseAnalysis: t_data.name
                                         })
                                     }
                                 }
@@ -928,7 +929,8 @@
                                         id:Math.random()  *3,
                                         wellId:el.wellNo,
                                         [key1]:el.message,
-                                        [key2]:el.itemValue
+                                        [key2]:el.itemValue,
+                                        injectionResponseAnalysis: t_data.name
                                     })
                                 })
                             }
@@ -1176,6 +1178,7 @@
                     this.recommendedMeasuresOptions[j].value = t_count; //登记条数
                 }
                 this.tableData = myData; 
+                console.log("this.tableData: ", this.tableData);
                 this.$nextTick(() => {
                     this.$refs.tableList.doLayout();
                 })
