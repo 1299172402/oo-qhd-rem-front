@@ -18,7 +18,8 @@ let modules = [];
 Object.keys(myFiles).forEach(el => {
   modules = [].concat(modules, myFiles[el].default);
 });
-export const asyncRouterList = modules;
+// export const asyncRouterList = modules;
+export const asyncRouterList = [];
 
 // 存放固定的路由
 const defaultRouterList = [
