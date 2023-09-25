@@ -5,13 +5,13 @@
             <div class="g-row-flex-V g-w100 g-h100">
                 <div style="width: 100%">
                     <el-form :inline="true">
-                        <el-form-item label="作业公司:" style="margin-left: 30px">
-                            <el-select v-model="queryData.orgId" disabled>
-                                <el-option v-for="item in zygsSelect" :key="item.orgId" :label="item.orgName"
-                                           :value="item.orgId">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
+<!--                        <el-form-item label="作业公司:" style="margin-left: 30px">-->
+<!--                            <el-select v-model="queryData.orgId" disabled>-->
+<!--                                <el-option v-for="item in zygsSelect" :key="item.orgId" :label="item.orgName"-->
+<!--                                           :value="item.orgId">-->
+<!--                                </el-option>-->
+<!--                            </el-select>-->
+<!--                        </el-form-item>-->
                         <el-form-item label="油田:">
                             <el-select v-model="queryData.ogfId" disabled style="width: 160px">
                                 <el-option v-for="(item, index) in oilFields" :key="index" :label="item.ogfName"
@@ -350,7 +350,7 @@ import {queryProductionAnalysisList} from "@/api/rem/productionanalysis";
 import toFixed from "xe-utils/toFixed";
 
 export default {
-    name:'a',
+    name:'AttributtonAnalysis',
     components: {
         Echart
     },
@@ -1309,7 +1309,7 @@ export default {
             },
         };
     },
-    activated() {
+    mounted() {
         // 在组件被激活时执行操作
         this.getData();
         //跳转路由中获取参数赋值给查询条件

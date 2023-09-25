@@ -7,7 +7,7 @@
             header-title="秦皇岛32-6油田月度产量对比图"
             :is-show-max-btn="true"
         >
-            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('annualPlan')">详细</el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('AnnualPlan')">详细</el-button>
             <el-button type="primary" class="buttonActive_primary detailLinkBtn" style="right:110px"  @click="downEcharts">下载</el-button>
             <Echart ref="echartChart" :chart-data="histogram" style="height: 100%"></Echart>
         </info-window>
@@ -158,7 +158,7 @@ export default {
     },
     methods: {
         linkroute(rname) {
-            this.$router.push({name: rname,query: {page:'/reservoirDisplay/oilexhibition'}});
+            this.$router.push({name: rname,query: {page:'Oilexhibition'}});
         },
         downEcharts(){
             this.$refs.echartChart.chartDownLoad( '油田月度产量对比');

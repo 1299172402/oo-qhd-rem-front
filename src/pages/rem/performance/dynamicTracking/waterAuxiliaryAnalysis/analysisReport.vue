@@ -245,7 +245,7 @@
                             type="primary"
                             @click="
                               $router.push({
-                                name: 'attributtonAnalysis',
+                                name: 'AttributtonAnalysis',
                                 query: {
                                   selectBlock: selectBlock,
                                   platform: platform,
@@ -754,7 +754,7 @@
                         style="position: absolute; bottom: -52px; right: 0"
                         @click="
                           $router.push({
-                            name: 'attributtonAnalysis',
+                            name: 'AttributtonAnalysis',
                             query: {
                               selectBlock: selectBlock,
                               platform: platform,

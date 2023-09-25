@@ -66,7 +66,7 @@ const GenerateRouter = {
   "SplitWellTest": () => import("@/pages/rem/devmentIndicators/waterInjectionIndexManagement/splitWellTest.vue"),
 
   "OilAnalysisReport": () => import("@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/analysisReport.vue"),
-  "attributtonAnalysis": () => import("@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/attributtonAnalysis.vue"),
+  "AttributtonAnalysis": () => import("@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/attributtonAnalysis.vue"),
   "OilAuxiliaryAnalysis": () => import("@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/index.vue"),
   "WaterAnalysisReport": () => import("@/pages/rem/performance/dynamicTracking/waterAuxiliaryAnalysis/analysisReport.vue"),
   "WaterAuxiliaryAnalysis": () => import("@/pages/rem/performance/dynamicTracking/waterAuxiliaryAnalysis/index.vue"),
@@ -81,9 +81,9 @@ const GenerateRouter = {
   "Worker": () => import("@/pages/rem/home/reservoirDisplay/worker.vue"),
   "Director": () => import("@/pages/rem/home/reservoirDisplay/director.vue"),
   "Leader": () => import("@/pages/rem/home/reservoirDisplay/leader.vue"),
-  "shutdownDetection": () => import("@/pages/rem/home/reservoirDisplay/shutdownDetection.vue"),
-  "oilEventDetail": () => import("@/pages/rem/home/reservoirDisplay/detailPage/oilEventDetail.vue"),
-  "problemWellStatistics": () => import("@/pages/rem/home/reservoirDisplay/table/problemWellStatistics.vue"),
+  "ShutdownDetection": () => import("@/pages/rem/home/reservoirDisplay/shutdownDetection.vue"),
+  "OilEventDetail": () => import("@/pages/rem/home/reservoirDisplay/detailPage/oilEventDetail.vue"),
+  "ProblemWellStatistics": () => import("@/pages/rem/home/reservoirDisplay/table/problemWellStatistics.vue"),
 
   "Modelconfig": () => import("@/pages/rem/modelConfiguration/modelconfig.vue"),
   "ModelOperate": () => import("@/pages/rem/modelConfiguration/modelOperate.vue"),

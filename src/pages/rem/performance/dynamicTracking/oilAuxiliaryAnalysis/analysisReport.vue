@@ -299,7 +299,7 @@
                 "
                 @click="
                   $router.push({
-                    path: 'attributtonAnalysis',
+                    name:'AttributtonAnalysis',
                     query: { platform, wellId, currentDate, link: linkdata(), evalResult: selCode },
                   })
                 "
@@ -1222,7 +1222,7 @@
                             "
                             @click="
                               $router.push({
-                                path: 'attributtonAnalysis',
+                                name: 'AttributtonAnalysis',
                                 query: { platform, wellId, currentDate, link: linkdata(), evalResult: selCode },
                               })
                             "

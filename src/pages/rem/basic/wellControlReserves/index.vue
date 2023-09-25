@@ -134,14 +134,6 @@
     </div>
 </template>
 <script>
-import {
-    fetchOilFields,
-    fetchPlatforms,
-    fetchInjectionWells,
-    fetchInjectionWellsByPlatform,
-    fetchProductionWells,
-    fetchProductionWellsByPlatform,
-} from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {queryLayerList, getOilFieldList} from "@/api/rem/workcompanydesignate";
 import {
     addWellControlReserves,
@@ -154,7 +146,7 @@ import {
     queryOperatorsCheckFieldListsDetail,
     queryListOfOilfieldQueryPlatformsDetail,
     queryPlatformQueryWellListDetail,
-    queryOilAndGasFieldQueryPositionDetail
+    queryOilAndGasFieldQueryPositionDetail,userListByUserNames
 } from "@/api/basic/master";
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
@@ -208,6 +200,12 @@ export default {
     methods: {
         getList() {
             //获取作业公司
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+            }
+            userListByUserNames(params).then((res)=>{
+                console.log(res)
+            })
             queryOperatingCompanyDetail({}).then(res => {
                 this.deptSelect = res.data.data
             })

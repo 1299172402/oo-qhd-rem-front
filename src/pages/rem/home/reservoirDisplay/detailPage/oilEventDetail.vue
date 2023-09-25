@@ -3,7 +3,7 @@
         <header-search>
             <el-form style="margin: 20px 0" :inline="true">
                 <el-form-item label="油田：">
-                    <el-select v-model="queryData.ogfId" @change="choicepla" >
+                    <el-select v-model="queryData.ogfId" disabled @change="choicepla" >
                         <el-option
                             v-for="(item, index) in oilFields"
                             :key="index"
@@ -139,7 +139,7 @@
         },
         methods:{
             goBack(){
-                this.$router.push({name:'oilexhibition'})
+                this.$router.push({name:'Oilexhibition'})
             },
             getList() {
                 //根据作业公司查询油田

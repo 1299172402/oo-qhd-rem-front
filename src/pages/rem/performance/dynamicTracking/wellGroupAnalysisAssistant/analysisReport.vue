@@ -185,7 +185,7 @@
                   v-if="selCode && selCode == '2010802'"
                   @click="
                     $router.push({
-                      name: 'attributtonAnalysis',
+                      name: 'AttributtonAnalysis',
                       query: { platform, wellId, currentDate, link: 6, evalResult: selCode },
                     })
                   "
@@ -516,7 +516,7 @@
                         v-if="selCode && selCode == '2010802'"
                         @click="
                           $router.push({
-                            name: 'attributtonAnalysis',
+                            name: 'AttributtonAnalysis',
                             query: {
                               platform,
                               wellId,
