@@ -152,8 +152,8 @@ spec:
               value: 17315608afe042f48f106a9775b18ab6
           resources:
             limits:
-              cpu: 250m
-              memory: 512Mi
+              cpu: '2'
+              memory: 4Gi
             requests:
               cpu: 250m
               memory: 512Mi
