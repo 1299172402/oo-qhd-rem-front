@@ -2530,7 +2530,7 @@ export default {
     //跳转到分析
     openAnalysis(wellNumber) {
       this.$router.push({
-        name: "oilAuxiliaryAnalysis",
+        name: "OilAuxiliaryAnalysis",
         query: {
           oilField: this.selYtdm,
           wellId: wellNumber,

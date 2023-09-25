@@ -1816,7 +1816,7 @@ export default {
     //跳转到分析
     openAnalysis(wellNumber) {
       this.$router.push({
-        name: "wellGroupAnalysisAssistant",
+        name: "WellGroupAnalysisAssistant",
         query: {
           oilField: this.selYtdm,
           block: this.selBlock,

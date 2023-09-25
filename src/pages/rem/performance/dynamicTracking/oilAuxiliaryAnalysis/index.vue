@@ -239,6 +239,7 @@
 <script>
 import { getLjpmWells } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
+import { userListByUserNames } from "@/api/basic/master";
 //miniIo
 import { getBlockWell, getMajorEventsBriefly } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
@@ -322,6 +323,8 @@ export default {
 
       majorEventsBrieflyValue: "", //大事间要绑定值
       majorEventsBrieflyList: [], //大事间要数据源
+      // 作业公司Id
+      companyId: "",
       //选择油田
       selectOilField: "",
       //油田列表
@@ -692,11 +695,20 @@ export default {
 
     //初始化数据
     async initData() {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
+        console.log(res);
+        if (res.data.code == 200) {
+          this.companyId = res.data?.data[0]?.tenantInfos[0]?.deptId || undefined;
+        }
+      });
       let oilFeildId = this.$route.query.oilField;
       console.log(this.$route.query);
       let wellId = this.$route.query.wellId;
       //获得油田信息给下拉列表
-      await QueryOgfDetail({}).then((res) => {
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((res) => {
         if (res.data.code == 200) {
           this.oilField = res.data.data;
           if (this.oilField.length == 0) {
