@@ -203,11 +203,11 @@ export default {
             let params = {
                 searchKeys:[this.$store.getters["user/userDetail"].user.userName],
             }
-            userListByUserNames(params).then((res)=>{
-                console.log(res)
-            })
             queryOperatingCompanyDetail({}).then(res => {
                 this.deptSelect = res.data.data
+            })
+            userListByUserNames(params).then((res)=>{
+                this.queryData.orgId = res.data.data[0].tenantInfos[0].deptId
             })
             //根据作业公司查询油田
             queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {

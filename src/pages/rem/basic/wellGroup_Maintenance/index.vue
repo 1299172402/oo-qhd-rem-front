@@ -254,7 +254,11 @@ import {
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 import {wellGroupEvaluation} from "@/api/rem/model";
 import {fetchOilFields} from "@/api/oilDeposit/rem-02/primaryinfo";
-import {queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
+import {
+    queryOperatingCompanyDetail,
+    queryOperatorsCheckFieldListsDetail,
+    userListByUserNames
+} from "@/api/basic/master";
 export default {
     name: "wellGroup_Maintenance",
     components: {treeMultipleSelection},
@@ -538,10 +542,17 @@ export default {
         },
         // 获取油田下拉数据
         selectData() {
-            queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then((res) => {
-                this.options = res.data.data;
-                console.log(this.options)
-            });
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+            }
+            let ogfid 
+            userListByUserNames(params).then((res)=>{
+                ogfid = res.data.data[0].tenantInfos[0].deptId
+                queryOperatorsCheckFieldListsDetail({orgId:ogfid}).then((res) => {
+                    this.options = res.data.data;
+                });
+            })
+           
         },
         // 获取区块数据
         selectblock() {

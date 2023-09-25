@@ -5,7 +5,7 @@ import {
     getWellData,
 } from "@/api/rem/r-intelligentIPA.js";
 import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
-import {queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
+import {queryOperatorsCheckFieldListsDetail, userListByUserNames} from "@/api/basic/master";
 export default {
     data () {
         return {
@@ -31,9 +31,17 @@ export default {
          * 获取油田
          */
         queryOilFeild () {
-            queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then((res) => {
-                this.oilList = res.data.data;
-            });
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+            }
+            let ogfid
+            userListByUserNames(params).then((res)=>{
+                ogfid = res.data.data[0].tenantInfos[0].deptId
+                queryOperatorsCheckFieldListsDetail({orgId:ogfid}).then((res) => {
+                    this.oilList = res.data.data;
+                });
+            })
+           
         },
         //改变油田
         changeOil () {
