@@ -1,55 +1,92 @@
 <!-- 开发效果评价 -->
 <template>
-    <div class="app-container">
-        <header-search style="height: 80px">
-            <div class="g-row-flex-V g-w100 g-h100">
-                <div class="fl">
-                    <span>油田：</span>
-                    <el-select v-model="selectOilField" disabled @change="getFetchFields">
-                        <el-option v-for="item in oilField" :key="item.oilFieldId" :label="item.name" :value="item.oilFieldId"></el-option>
-                    </el-select>
-                    <span class="QU" style="margin-left: 20px">区块：</span>
-                    <el-select v-model="selectBlock"><el-option v-for="item in block" :key="item.fieldId" :label="item.name" :value="item.fieldId"></el-option></el-select>
-                    <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
-                    <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
-                    <el-button  class="commonBtn"  v-if="$route.query.page" style="position: absolute;right:2%" @click="$router.push({
-                            path:$route.query.page
-                        })">返回</el-button>
-                </div>
-            </div>
-        </header-search>
-        <page-panel-new style="height: calc(100% - 100px);">
-            <el-tabs class="g-pageHeader" v-model="tabsValue" topline @tab-click="handleClick">
-                <el-tab-pane style="height: auto" v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
-                    <div class="tab-view">
-                        <el-button v-for="(module, index) in item.modules" :key="index" :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'" @click="currentModule = module.name">
-                            {{ module.label }}
-                        </el-button>
-                    </div>
-                </el-tab-pane>
-            </el-tabs>
-            <div class="childContent">
-                <evaluation v-if="tabsValue == 'evaluation'&&selectOilField&&selectBlock" ref="childComponents" :selectOilField="selectOilField" :selectBlock="selectBlock"></evaluation>
-                <reserves v-if="tabsValue == 'reserves'" ref="childComponents" :selectOilField="selectOilField" :selectBlock="selectBlock"></reserves>
-                <water v-if="tabsValue == 'water'" ref="childComponents" :selectOilField="selectOilField" :selectBlock="selectBlock"></water>
-                <decreasing v-if="tabsValue == 'decreasing'" ref="childComponents" :selectOilField="selectOilField" :selectBlock="selectBlock"></decreasing>
-            </div>
-        </page-panel-new>
-    </div>
+  <div class="app-container">
+    <header-search style="height: 80px">
+      <div class="g-row-flex-V g-w100 g-h100">
+        <div class="fl">
+          <span>油田：</span>
+          <el-select v-model="selectOilField" disabled @change="getFetchFields">
+            <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
+          </el-select>
+          <span class="QU" style="margin-left: 20px">区块：</span>
+          <el-select v-model="selectBlock"
+            ><el-option
+              v-for="item in block"
+              :key="item.reservoirAnalyseUnitId"
+              :label="item.reservoirAnalyseUnitName"
+              :value="item.reservoirAnalyseUnitId"
+            ></el-option
+          ></el-select>
+          <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
+          <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+          <el-button
+            class="commonBtn"
+            v-if="$route.query.page"
+            style="position: absolute; right: 2%"
+            @click="
+              $router.push({
+                path: $route.query.page,
+              })
+            "
+            >返回</el-button
+          >
+        </div>
+      </div>
+    </header-search>
+    <page-panel-new style="height: calc(100% - 100px)">
+      <el-tabs class="g-pageHeader" v-model="tabsValue" topline @tab-click="handleClick">
+        <el-tab-pane
+          style="height: auto"
+          v-for="(item, index) in tabs"
+          :key="index"
+          :label="item.label"
+          :name="item.name"
+        >
+          <div class="tab-view">
+            <el-button
+              v-for="(module, index) in item.modules"
+              :key="index"
+              :class="currentModule == module.name ? 'el-button--primary' : 'commonBtn'"
+              @click="currentModule = module.name"
+            >
+              {{ module.label }}
+            </el-button>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+      <div class="childContent">
+        <evaluation
+          v-if="tabsValue == 'evaluation' && selectOilField && selectBlock"
+          ref="childComponents"
+          :selectOilField="selectOilField"
+          :selectBlock="selectBlock"
+        ></evaluation>
+        <reserves
+          v-if="tabsValue == 'reserves'"
+          ref="childComponents"
+          :selectOilField="selectOilField"
+          :selectBlock="selectBlock"
+        ></reserves>
+        <water
+          v-if="tabsValue == 'water'"
+          ref="childComponents"
+          :selectOilField="selectOilField"
+          :selectBlock="selectBlock"
+        ></water>
+        <decreasing
+          v-if="tabsValue == 'decreasing'"
+          ref="childComponents"
+          :selectOilField="selectOilField"
+          :selectBlock="selectBlock"
+        ></decreasing>
+      </div>
+    </page-panel-new>
+  </div>
 </template>
 
 <script>
-import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
-import { fetchOilFields, fetchFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import {
-  outputSpeed,
-  outputDegree,
-  outputDegreeTongChart,
-  injectionProRate,
-  generalPressure,
-  indicatorEveluationResults,
-} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
 import evaluation from "./components/evaluation.vue";
 import reserves from "./components/reserves.vue";
 import water from "./components/water.vue";
@@ -119,31 +156,29 @@ export default {
     };
   },
   mounted() {
-     this.initData();
-      if(this.$route.query.link){
-          this.tabsValue = this.$route.query.link;
-          console.log(this.tabsValue)
-          setTimeout(()=>{
-              this.$refs.childComponents.doSearch();
-          },1000)
-      }
+    this.initData();
+    if (this.$route.query.link) {
+      this.tabsValue = this.$route.query.link;
+      console.log(this.tabsValue);
+      setTimeout(() => {
+        this.$refs.childComponents.doSearch();
+      }, 1000);
+    }
   },
   methods: {
     //重置
-    resetting(){
-        Object.assign(this.$data, this.$options.data());
-        this.initData();
+    resetting() {
+      Object.assign(this.$data, this.$options.data());
+      this.initData();
     },
     //设置页面初始化
     async initData() {
       //调用油田接口
-      await fetchOilFields().then((res) => {
+      await QueryOgfDetail({}).then((res) => {
         if (res.data.code == 200) {
-          this.oilField = res.data.data.oilFields;
+          this.oilField = res.data.data;
           if (this.oilField.length == 0) {
             this.selectOilField = "";
-          } else {
-            this.selectOilField = this.oilField[0].oilFieldId;
           }
         }
       });
@@ -154,13 +189,15 @@ export default {
       } else {
         this.selectOilField = oilFieldId;
       }
-      let requestFields = {
-        oilFieldId: this.selectOilField,
-      };
       //获得区块信息
-      await fetchFields(requestFields).then((res) => {
+      await QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {
-          this.block = res.data.data.fields;
+          this.block = res.data.data;
+          this.block.unshift({
+            reservoirAnalyseUnitId: this.selectOilField,
+            reservoirAnalyseUnitName: "全部",
+            reservoirAnalyseUnitNo: "全部",
+          });
           //区块全部为油田的id。
           this.selectBlock = this.selectOilField;
         }
@@ -172,12 +209,14 @@ export default {
     },
     //获得区块信息
     getFetchFields(oilFieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-      };
-      fetchFields(request).then((res) => {
+      QueryReservoirAnalyseUnit({ ogfId: oilFieldId }).then((res) => {
         if (res.data.code == 200) {
-          this.block = res.data.data.fields;
+          this.block = res.data.data;
+          this.block.unshift({
+            reservoirAnalyseUnitId: oilFieldId,
+            reservoirAnalyseUnitName: "全部",
+            reservoirAnalyseUnitNo: "全部",
+          });
           //区块全部为油田的id。
           this.selectBlock = oilFieldId;
         }
