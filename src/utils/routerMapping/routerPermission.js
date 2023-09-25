@@ -62,7 +62,7 @@ const GenerateRouter = {
   "WaterQuality": () => import("@/pages/rem/devmentIndicators/waterInjectionIndexManagement/waterQuality.vue"),
   "SplitHole": () => import("@/pages/rem/devmentIndicators/waterInjectionIndexManagement/splitHole.vue"),
   "WaterInjectionWell": () => import("@/pages/rem/devmentIndicators/waterInjectionIndexManagement/waterInjectionWell.vue"),
-  "DynamicMonitoring": () => import("@/pages/rem/devmentIndicators/waterInjectionIndexManagement/dynamicMonitoring.vu"),
+  "DynamicMonitoring": () => import("@/pages/rem/devmentIndicators/waterInjectionIndexManagement/dynamicMonitoring.vue"),
   "SplitWellTest": () => import("@/pages/rem/devmentIndicators/waterInjectionIndexManagement/splitWellTest.vue"),
 
   "OilAnalysisReport": () => import("@/pages/rem/performance/dynamicTracking/oilAuxiliaryAnalysis/analysisReport.vue"),
