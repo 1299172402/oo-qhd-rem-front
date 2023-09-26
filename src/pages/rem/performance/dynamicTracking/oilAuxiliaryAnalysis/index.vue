@@ -701,7 +701,6 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.companyId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
-
         }
       });
       let oilFeildId = this.$route.query.oilField;
