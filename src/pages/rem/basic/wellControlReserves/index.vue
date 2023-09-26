@@ -207,7 +207,7 @@ export default {
                 this.deptSelect = res.data.data
             })
             userListByUserNames(params).then((res)=>{
-                this.queryData.orgId = res.data.data[0].tenantInfos[0].deptId
+                this.queryData.orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
             })
             //根据作业公司查询油田
             queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
