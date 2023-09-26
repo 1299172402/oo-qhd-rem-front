@@ -547,7 +547,7 @@ export default {
             }
             let ogfid 
             userListByUserNames(params).then((res)=>{
-                ogfid = res.data.data[0].tenantInfos[0].deptId
+                ogfid = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
                 queryOperatorsCheckFieldListsDetail({orgId:ogfid}).then((res) => {
                     this.options = res.data.data;
                 });
