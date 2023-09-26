@@ -19,6 +19,7 @@ Object.keys(myFiles).forEach(el => {
   modules = [].concat(modules, myFiles[el].default);
 });
 export const asyncRouterList = modules;
+// export const asyncRouterList = [];
 
 // 存放固定的路由
 const defaultRouterList = [
@@ -75,7 +76,7 @@ const defaultRouterList = [
     name: "PreviewPage",
     component: () => import("@/components/upload/preview/PreviewPage.tsx")
   },
-  ...asyncRouterList
+  // ...asyncRouterList
 ];
 
 const createRouter = () =>

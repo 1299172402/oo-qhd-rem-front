@@ -6,7 +6,7 @@
             header-title="秦皇岛32-6油田生产指标总览"
             :is-show-max-btn="true"
         >
-            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('IndexHome')">详细</el-button>
             <el-button type="primary" class="buttonActive_primary detailLinkBtn"  style="right:110px"  @click="downlist">下载</el-button>
             <el-row :gutter="20" style="margin-top: 20px;padding: 0 20px">
                 <el-col :span="8">
@@ -492,7 +492,7 @@ export default {
     },
     methods: {
         linkroute(rname) {
-            this.$router.push({path: rname,query: {link:'remHome'}});
+            this.$router.push({name: rname,query: {link:'remHome'}});
         },
         downlist(){
                 const screenEl = document.getElementById('overviewIndicators');

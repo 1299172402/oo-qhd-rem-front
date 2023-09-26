@@ -299,7 +299,7 @@
                 "
                 @click="
                   $router.push({
-                    path: 'attributtonAnalysis',
+                    name:'AttributtonAnalysis',
                     query: { platform, wellId, currentDate, link: linkdata(), evalResult: selCode },
                   })
                 "
@@ -1222,7 +1222,7 @@
                             "
                             @click="
                               $router.push({
-                                path: 'attributtonAnalysis',
+                                name: 'AttributtonAnalysis',
                                 query: { platform, wellId, currentDate, link: linkdata(), evalResult: selCode },
                               })
                             "
@@ -2530,7 +2530,7 @@ export default {
     //跳转到分析
     openAnalysis(wellNumber) {
       this.$router.push({
-        name: "oilAuxiliaryAnalysis",
+        name: "OilAuxiliaryAnalysis",
         query: {
           oilField: this.selYtdm,
           wellId: wellNumber,

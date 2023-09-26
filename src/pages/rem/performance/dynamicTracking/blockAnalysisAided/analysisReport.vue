@@ -1683,13 +1683,13 @@ export default {
     //区块模型配置页面跳转
     blockModel() {
       this.$router.push({
-        path: "blockAnalysisAided",
+        path: "BlockAnalysisAided",
       });
     },
     //跳转区块分析
     switchToAnaylsis() {
       this.$router.push({
-        name: "blockAnalysisAided",
+        name: "BlockAnalysisAided",
       });
     },
     //点击井跳转 动态分析界面

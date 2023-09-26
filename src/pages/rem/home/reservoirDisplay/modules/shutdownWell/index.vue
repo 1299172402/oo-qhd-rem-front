@@ -6,7 +6,7 @@
           header-title="关停井统计"
           :is-show-max-btn="true"
       >
-          <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('shutdownDetection')">详细</el-button>
+          <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('ShutdownDetection')">详细</el-button>
           <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downEcharts">下载</el-button>
           <Echart ref="echartChart" :chart-data="histogram" width="100%" height="100%"></Echart>
       </info-window>

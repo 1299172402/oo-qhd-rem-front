@@ -6,7 +6,7 @@
             header-title="问题井统计"
             :is-show-max-btn="true"
         >
-            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('problemWellStatistics')">详细</el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('ProblemWellStatistics')">详细</el-button>
             <el-button type="primary" class="buttonActive_primary detailLinkBtn"  style="right:110px"  @click="downEcharts">下载</el-button>
             <Echart ref="echartChart" :chart-data="histogram" width="100%" height="100%"></Echart>
         </info-window>

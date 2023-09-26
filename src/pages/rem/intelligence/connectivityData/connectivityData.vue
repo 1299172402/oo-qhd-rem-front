@@ -29,7 +29,7 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="时间：">
+                <el-form-item label="日期：">
                     <el-date-picker
                         v-model="queryData.dateTime"
                         type="month"

@@ -185,7 +185,7 @@
                   v-if="selCode && selCode == '2010802'"
                   @click="
                     $router.push({
-                      name: 'attributtonAnalysis',
+                      name: 'AttributtonAnalysis',
                       query: { platform, wellId, currentDate, link: 6, evalResult: selCode },
                     })
                   "
@@ -516,7 +516,7 @@
                         v-if="selCode && selCode == '2010802'"
                         @click="
                           $router.push({
-                            name: 'attributtonAnalysis',
+                            name: 'AttributtonAnalysis',
                             query: {
                               platform,
                               wellId,
@@ -1816,7 +1816,7 @@ export default {
     //跳转到分析
     openAnalysis(wellNumber) {
       this.$router.push({
-        name: "wellGroupAnalysisAssistant",
+        name: "WellGroupAnalysisAssistant",
         query: {
           oilField: this.selYtdm,
           block: this.selBlock,
