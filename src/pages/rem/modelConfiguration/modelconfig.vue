@@ -596,7 +596,7 @@ import {
             //跳转模型配置界面
             getModelOperate(){
                 this.$router.push({
-                    path:'modelOperate'
+                    name:'ModelOperate'
                 })
             },
         },

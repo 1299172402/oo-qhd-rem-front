@@ -330,7 +330,7 @@
             //跳转详情
             switchToOilfieldWater() {
               this.$router.push({
-                name: 'waterInjectionVolumeDetail',
+                name: 'WaterInjectionVolumeDetail',
                 params: this.searchForm
               });
             },
