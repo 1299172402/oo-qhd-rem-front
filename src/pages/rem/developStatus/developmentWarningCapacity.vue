@@ -708,7 +708,7 @@
                 if (row.warningCode == "6" || row.warningCode == "7" || row.warningCode == "8") {
                     //oil
                     this.$router.push({
-                        name: "warningDisposeOil",
+                        name: "WarningDisposeOil",
                         query: {
                             warningType: row.warningType,
                             theDate: row.theDate,
@@ -722,7 +722,7 @@
                 } else if (row.warningCode == "9") {
                     //water
                     this.$router.push({
-                        name: "warningDisposeWater",
+                        name: "WarningDisposeWater",
                         query: {
                             warningType: row.warningType,
                             theDate: row.theDate,
