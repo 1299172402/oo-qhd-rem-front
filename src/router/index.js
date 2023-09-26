@@ -92,5 +92,11 @@ export function resetRouter() {
   const newRouter = createRouter();
   router.matcher = newRouter.matcher; // reset router
 }
-
+router.onError(error => {
+  const targetPath = router.history.pending?.fullPath;
+  if (targetPath && error.message.includes("Failed to fetch dynamically imported module")) {
+    window.location = router.resolve(targetPath).href;
+    window.location.reload();
+  }
+});
 export default router;

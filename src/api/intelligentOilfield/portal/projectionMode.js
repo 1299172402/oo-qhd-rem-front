@@ -2,12 +2,13 @@
 import request from "@/utils/request";
 
 // 查询报警信息【分页】
-export function queryAlcAlarmByParam(data) {
+export function queryAlcAlarmByParam(data, showLoading = true) {
   return request({
     url: `/gem001b/queryAlcAlarmByParam?pageNum=${data.pageNum}&pageSize=${data.pageSize}`,
     method: "post",
     headers: {
-      isAlarm: false
+      isAlarm: false,
+      showLoading
     },
     data
   });

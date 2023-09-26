@@ -61,7 +61,13 @@ export default ({ mode }) => {
     ],
 
     build: {
-      cssCodeSplit: false
+      cssCodeSplit: false,
+      minify: "terser",
+      terserOptions: {
+        format: {
+          comments: false // 禁用注释
+        }
+      }
     },
 
     server: {

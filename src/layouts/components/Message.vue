@@ -339,8 +339,7 @@ export default Vue.extend({
         //   } else {
         //     this.tableData = [...this.tableData, ..._res];
         //   }
-        this.$store.commit("permission/setScrollLoading", false);
-        queryAlcAlarmByParam(currentParam).then(response => {
+        queryAlcAlarmByParam(currentParam, false).then(response => {
           const _res = JSON.parse(JSON.stringify(response.data.rows));
           if (firstPage) {
             this.queryParams.pageNum = 1;
