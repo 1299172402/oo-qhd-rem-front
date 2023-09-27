@@ -1722,7 +1722,7 @@ export default {
     //返回
     goBack() {
       this.$router.push({
-        path: "/" + this.$route.query.page,
+        name: this.$route.query.page,
       });
     },
     // 新版左下角图放大缩小时重置状态
