@@ -67,7 +67,7 @@ export default {
                         name: '智能配产器调控模型',
                         warningShowFlag: false,
                         alarmTime: "",
-                        url: `https://ipm.${this.baseUrl}/#/intelligentDispensing/intelligentSubMining?page=reservoirDisplay/linkage`
+                        url: `https://ipm.${this.baseUrl}/#/intelligentDispensing/sumMining?page=reservoirDisplay/linkage`
                     }, {name: '举升设备调控模型', warningShowFlag: false,},
                         {name: '智能测试模型', warningShowFlag: false,}],
                     //弹出框自定义样式
@@ -85,7 +85,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 69%;top: 26%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 67%;top: 22%;width:20%;height:42%;',
                     boxText: '智能分注井调控测试',
                     boxBottomText: [{
                         name: '智能分注井调控测试',
@@ -103,7 +103,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 65%;top: 60%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 65%;top: 60%;width:20%;height:38%;',
                     boxText: '注采调控油藏方案',
                     boxBottomText: [{
                         name: '分层注水优化',
@@ -182,7 +182,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 17%;top: 50%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 25%;top: 50%;width:20%;height:40%;',
                     boxText: '确定调整井组',
                     boxBottomText: [{
                         name: '油井动态分析',
@@ -218,24 +218,24 @@ export default {
                     alarmPageCode: [],
                     warningShowFlag: false,
                 },
-                {
-                    style: 'position:absolute;left: 29%;top: 56%;width:20%;height:40%;',
-                    boxText: '调整区块确定',
-                    boxBottomText: [{
-                        name: '层间/平面矛盾分析',
-                        warningShowFlag: false,
-                        alarmPageCode: 'TYOBAR', alarmTime: "",
-                        url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage`
-                    }],
-                    boxStyle: {
-                        pWidth: 'width:8.5vw'
-                    },
-                    imgUrl: new URL('./topBox/25.png', import.meta.url).href,
-                    showFlag: false,
-                    typeIdList: [],
-                    alarmPageCode: [],
-                    warningShowFlag: false,
-                },
+                // {
+                //     style: 'position:absolute;left: 29%;top: 56%;width:20%;height:40%;',
+                //     boxText: '调整区块确定',
+                //     boxBottomText: [{
+                //         name: '层间/平面矛盾分析',
+                //         warningShowFlag: false,
+                //         alarmPageCode: 'TYOBAR', alarmTime: "",
+                //         url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=reservoirDisplay/linkage`
+                //     }],
+                //     boxStyle: {
+                //         pWidth: 'width:8.5vw'
+                //     },
+                //     imgUrl: new URL('./topBox/25.png', import.meta.url).href,
+                //     showFlag: false,
+                //     typeIdList: [],
+                //     alarmPageCode: [],
+                //     warningShowFlag: false,
+                // },
                 {
                     style: 'position:absolute;left: 2%;top: 60%;width:20%;height:40%;',
                     boxText: '产量运行监控',
@@ -284,7 +284,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 58%;top: 36%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 50%;top: 36%;width:20%;height:40%;',
                     boxText: '分注分采调控策略',
                     boxBottomText: [{
                         name: '注采调控最优化方案',
@@ -467,7 +467,7 @@ export default {
                     this.currentLists.forEach((item) => {
                         item.showFlag = false;
                     });
-                    for (let i = 0; i < 8; i++) {
+                    for (let i = 0; i < 7; i++) {
                         this.$el.querySelectorAll('img')[i].style.display = 'none';
                     }
                 }
@@ -481,7 +481,7 @@ export default {
             if (this.loopNum != -1 && this.loopNum < 5) this.currentLists[this.loopImgNum[this.loopNum]].showFlag = true
             if (this.loopNum != -1 && this.loopNum < 5) this.currentLists[this.loopImgNumClose[this.loopNum]].showFlag = false
             this.loopNum++
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 7; i++) {
                 this.$el.querySelectorAll('img')[i].style.display = 'none'
             }
             this.$el.querySelectorAll('img')[this.loopNum].style.display = 'block'
