@@ -548,7 +548,7 @@ export default {
                 }
                 localStorage.setItem('CONNECTIVITY_DATA', JSON.stringify(params));
                 this.$router.push({
-                    name: "coefficientCalculates",
+                    name: "CoefficientCalculates",
                     params,
                 });
             } else {

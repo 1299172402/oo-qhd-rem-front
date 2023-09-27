@@ -448,7 +448,7 @@ export default {
             }
             localStorage.setItem('OPTIMIZATION', JSON.stringify(params))
             this.$router.push({
-                name: 'optimizationDetail',
+                name: 'OptimizationDetail',
                 params,
             })
         },
