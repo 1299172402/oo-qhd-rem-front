@@ -87,7 +87,7 @@
               style="position: absolute; right: 2%"
               @click="
                 $router.push({
-                  path: $route.query.page,
+                  name: $route.query.page,
                 })
               "
               >返回</el-button
@@ -608,7 +608,7 @@
               style="position: absolute; right: 2%"
               @click="
                 $router.push({
-                  path: $route.query.page,
+                  name: $route.query.page,
                 })
               "
               >返回</el-button
