@@ -1452,7 +1452,7 @@ export default {
             if(this.link==4){
                 resultDate = this.queryData.month
             }else{
-                if( this.queryData.month.length>7){
+                if( this.queryData.month.length > 7){
                     resultDate = this.decreaseMonth(this.queryData.month);
                 }else{
                     resultDate = this.decreaseMonth(this.queryData.month+'-06'); 
