@@ -68,6 +68,17 @@
             ></el-date-picker>
             <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
             <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+            <el-button
+              class="commonBtn"
+              v-if="$route.query.page"
+              style="position: absolute; right: 2%"
+              @click="
+                $router.push({
+                  name: $route.query.page,
+                })
+              "
+              >返回</el-button
+            >
           </div>
         </headerSearch>
         <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
@@ -410,6 +421,17 @@
             ></el-date-picker>
             <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
             <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+            <el-button
+              class="commonBtn"
+              v-if="$route.query.page"
+              style="position: absolute; right: 2%"
+              @click="
+                $router.push({
+                  name: $route.query.page,
+                })
+              "
+              >返回</el-button
+            >
           </div>
         </headerSearch>
         <div class="app-container3">

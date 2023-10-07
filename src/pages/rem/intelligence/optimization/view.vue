@@ -614,7 +614,7 @@ export default {
                 schemeId: this.tableData3.length ? this.tableData3[0].schemeId : ''
             }))
             localStorage.setItem('PRATIE_TABLEDATE', JSON.stringify(this.tableData1))
-            this.$router.push({name: 'optimizationResult'})
+            this.$router.push({name: 'OptimizationResult'})
         },
         //图表
         getEchart() {

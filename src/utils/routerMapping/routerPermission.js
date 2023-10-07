@@ -106,10 +106,10 @@ const GenerateRouter = {
   "splitSection": () => import("@/pages/rem/intelligence/productionSplit/splitSection.vue"),
   "DividingCoefficient": () => import("@/pages/rem/intelligence/productionSplit/DividingCoefficient.vue"),
   "ConnectivityData": () => import("@/pages/rem/intelligence/connectivityData/connectivityData.vue"),
-  "coefficientCalculates": () => import("@/pages/rem/intelligence/connectivityData/connectivityCoefficientCalculatesProperty.vue"),
+  "CoefficientCalculates": () => import("@/pages/rem/intelligence/connectivityData/connectivityCoefficientCalculatesProperty.vue"),
   "Optimization": () => import("@/pages/rem/intelligence/optimization/index.vue"),
-  "optimizationDetail": () => import("@/pages/rem/intelligence/optimization/view.vue"),
-  "optimizationResult": () => import("@/pages/rem/intelligence/optimization/result.vue"),
+  "OptimizationDetail": () => import("@/pages/rem/intelligence/optimization/view.vue"),
+  "OptimizationResult": () => import("@/pages/rem/intelligence/optimization/result.vue"),
 
   "FluctuationWarningAnalysis": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/index.vue"),
   "ProductionOperationAnalysisReport": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/productionOperationAnalysisReport.vue"),
