@@ -350,7 +350,6 @@ import {queryProductionAnalysisList} from "@/api/rem/productionanalysis";
 import toFixed from "xe-utils/toFixed";
 
 export default {
-    name:'AttributtonAnalysis',
     components: {
         Echart
     },
