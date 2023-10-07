@@ -74,8 +74,8 @@ export default {
                 },
                 grid: {
                     top: "8%",
-                    left: "10%",
-                    right: "10%",
+                    left: "5%",
+                    right: "5%",
                     bottom: "22%",
                 },
                 dataZoom: {
@@ -122,8 +122,6 @@ export default {
                 yAxis: [
                     {
                         name: '日产m³/d',
-                        nameLocation:'middle',
-                        nameGap:70,
                         nameTextStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
@@ -152,8 +150,6 @@ export default {
                     },
                     {
                         name: '年产10⁴m³',
-                        nameLocation:'middle',
-                        nameGap:70,
                         nameTextStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
@@ -256,7 +252,6 @@ export default {
                         },
                         min:0,
                         max:10000,
-                        nameLocation: "center",
                         axisLine: {
                             show: true,
                             lineStyle: {
@@ -282,7 +277,6 @@ export default {
                         },
                         min:0,
                         max:10000,
-                        nameLocation: "center",
                         scale: true,
                         axisLine: {
                             show: true,

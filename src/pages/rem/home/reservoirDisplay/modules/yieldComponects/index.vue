@@ -82,10 +82,6 @@ export default {
                     {
                         type: "value",
                         name: '当年累产油量(10⁴m³)',
-                        nameLocation: "center",
-                        nameTextStyle: {
-                            padding: [0, 0, 20, 0], // 上、右、下、左
-                        },
                         axisLabel: {
                             formatter: "{value} ",
                             color:'#a9a8a8'

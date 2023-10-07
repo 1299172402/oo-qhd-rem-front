@@ -52,8 +52,8 @@ export default {
                     type: "inside",
                 },
                 grid: {
-                    top: 30,
-                    left: '7%',
+                    top: '10%',
+                    left: '5%',
                     right: 10,
                     bottom: 50,
                 },
@@ -84,12 +84,8 @@ export default {
                     {
                         type: "value",
                         name: "月产油(10⁴m³)",
-                        nameTextStyle: {
-                            padding: [0, 0, 30, 0], // 上、右、下、左
-                        },
                         min: 0,
                         max: 100,
-                        nameLocation: "center",
                         axisLabel: {
                             color: "#a9a8a8",
                             fontSize: 14,

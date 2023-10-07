@@ -42,9 +42,9 @@ export default {
                     type: "inside",
                 },
                 grid: {
-                    top: "5%",
-                    left: "8%",
-                    right: "5%",
+                    top: "15%",
+                    left: "3%",
+                    right: "10%",
                     bottom: "12%",
                     containLabel: true,
                 },
@@ -57,11 +57,9 @@ export default {
                 },
                 xAxis: {
                     name: "含水率(%)",
-                    nameLocation: "center",
                     nameTextStyle: {
                         color: "#8FA4CC",
                     },
-                    nameGap: 25,
                     //min:90,
                     type: "value",
                     axisLabel: {
@@ -85,14 +83,12 @@ export default {
                 },
                 yAxis: {
                     name: "含水上升率(%)",
-                    nameLocation: "center",
                     nameTextStyle: {
                         color: "#a9a8a8",
                         // padding: [0, 0, 0, 0], // 上、右、下、左
                     },
                     max: 100,
                     min: 0,
-                    nameGap: 35,
                     type: "value",
                     axisLabel: {
                         color: "#8FA4CC",
