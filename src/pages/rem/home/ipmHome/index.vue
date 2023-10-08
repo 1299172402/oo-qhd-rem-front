@@ -70,7 +70,7 @@ export default {
                         },
                         {
                             name: '劈分剖面',
-                            url: `https://rem.${this.baseUrl}/#//injection/splitSection?page=IpmHome`,
+                            url: `https://rem.${this.baseUrl}/#/injection/splitSection?page=IpmHome`,
                             alarmPageCode: 'SPLSEC',
                         },
                         {
