@@ -80,6 +80,7 @@
                     @click="resettingQuery"
                 >重置
                 </el-button>
+                <el-button type="primary" style="float: right" class="buttonActive_primary" v-if="this.$route.query.page" @click="$router.push({name: this.$route.query.page});">返回</el-button>
             </el-form>
         </header-search>
         <page-panel
@@ -90,7 +91,7 @@
             <div style="margin-bottom: 20px">
                 <el-button
                     type="primary"
-                    @click="splitSection('splitSection')"
+                    @click="splitSection('SplitSection')"
                 >劈分剖面
                 </el-button>
                 <el-button
