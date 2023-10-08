@@ -167,7 +167,7 @@ export default {
                         name: '递减率分析',
                         alarmPageCode: 'DERAAN',
                         warningShowFlag: false,
-                        url: `https://rem.${this.baseUrl}/#/developStatus/developmentEffectEvaluation?link=decreasing`
+                        url: `https://rem.${this.baseUrl}/#/developStatus/developmentEffectEvaluation?link=decreasing&page=/dynamicManagement/remHome`
                     }, {
                         name: '产量变化趋势分析',
                         alarmPageCode: 'YITRAN',
