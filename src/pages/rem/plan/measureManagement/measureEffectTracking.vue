@@ -321,14 +321,14 @@
           <div class="svg" v-else-if="oilTabType == '1'">
             <div class="search-date">
               <span>日期：</span>
+              <!-- @change="createChange" -->
               <el-date-picker
-                v-model="dateDetail"
+                v-model="selectRealData"
                 type="datetimerange"
                 range-separator="-"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-                value-format="yyyy-MM-dd"
-                @change="createChange"
+                value-format="yyyy-MM-dd HH:mm:ss"
               ></el-date-picker>
               <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts"
                 >搜索</el-button
@@ -481,7 +481,7 @@
                 range-separator="-"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-                value-format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd HH:mm:ss"
               ></el-date-picker>
               <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts"
                 >搜索</el-button
@@ -611,7 +611,6 @@ export default {
         ],
         borepipeId: "",
       },
-      dateDetail: [new Date().addDays(-1).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")],
       checkList: [],
       realTimeData: [],
       isSelect: 0,
@@ -2053,7 +2052,7 @@ export default {
       // 获得年份
       const year = new Date().getFullYear();
       this.selectData = [new Date(`${year}-01-01`).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
-      this.selectRealData = [new Date().addDays(-1).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
+      this.selectRealData = [new Date().addDays(-1).format("yyyy-MM-dd hh:mm:ss"), new Date().format("yyyy-MM-dd hh:mm:ss")];
       // this.selectData.push(new Date(year+'-01-01').format('yyyy-MM-dd'));
       // this.selectData.push(new Date().format('yyyy-MM-dd'));
       this.getFetchMeasureStatInfos(
@@ -2659,14 +2658,19 @@ export default {
     },
     getRealtimeData() {
       this.realTimeData = [];
-      getOilWellData(this.queryParams).then((res) => {
+      const request = {
+        ...this.queryParams,
+        beginDate: this.selectRealData[0],
+        endDate: this.selectRealData[1],
+      };
+      getOilWellData(request).then((res) => {
         if (res.data.code == 200) {
           const data = res.data.data;
           if (Object.keys(data).length) {
             this.realTimeData = data;
           }
         }
-        getPumpData(this.queryParams).then((ref) => {
+        getPumpData(request).then((ref) => {
           if (ref.data.code == 200) {
             const data = ref.data.data;
             if (Object.keys(data).length) {
