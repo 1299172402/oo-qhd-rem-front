@@ -173,7 +173,7 @@ export default {
                     }, {
                         name: '采收率分析',
                         alarmPageCode: 'RECANA',
-                        url: `https://rem.${this.baseUrl}/#/recoveryEfficiency/index?page=/dynamicManagement/remHome`
+                        url: `https://rem.${this.baseUrl}/#/recoveryEfficiency/RecoveryEfficiencyIndex?page=/dynamicManagement/remHome`
                     }],
                     boxBottomContent: [[{
                         name: '递减预测',

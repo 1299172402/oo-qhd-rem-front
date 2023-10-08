@@ -1,37 +1,46 @@
 <!-- 采收率及可采储量预测 -->
 <template>
   <div class="app-container" style="height: 100%">
-    <header-search style="height: 80px">
-      <div class="g-row-flex-V g-w100 g-h100">
-        <div style="margin-right: 15px">
-          <span>油田：</span>
-          <el-select v-model="selectOilField" placeholder="请选择" class="f2" disabled @change="changeOilfield">
-            <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId">
-            </el-option>
-          </el-select>
-        </div>
-        <div style="margin-right: 15px">
-          <span>区块：</span>
-          <el-select v-model="selectBlock" placeholder="请选择" class="f2" @change="changeBlock">
-            <el-option
-              v-for="item in block"
-              :key="item.reservoirAnalyseUnitId"
-              :label="item.reservoirAnalyseUnitName"
-              :value="item.reservoirAnalyseUnitId"
-            >
-            </el-option>
-          </el-select>
-        </div>
-        <!-- <div>
+    <header-search style="height: auto; padding: 10px 20px 12px">
+      <div class="g-row-flex-V" style="justify-content: space-between">
+        <div class="g-row-flex-V" style="flex-wrap: wrap">
+          <div style="margin: 10px 20px 10px 0px">
+            <span>油田：</span>
+            <el-select v-model="selectOilField" placeholder="请选择" class="f2" disabled @change="changeOilfield">
+              <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId">
+              </el-option>
+            </el-select>
+          </div>
+          <div style="margin: 10px 20px 10px 0px">
+            <span>区块：</span>
+            <el-select v-model="selectBlock" placeholder="请选择" class="f2" @change="changeBlock">
+              <el-option
+                v-for="item in block"
+                :key="item.reservoirAnalyseUnitId"
+                :label="item.reservoirAnalyseUnitName"
+                :value="item.reservoirAnalyseUnitId"
+              >
+              </el-option>
+            </el-select>
+          </div>
+          <!-- <div>
                 <span>层系：</span>
                 <el-select v-model="cx" class="f2" style="width:180px">
                     <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId" :disabled="item.disabled">
                     </el-option>
                 </el-select>
             </div> -->
-        <div style="margin-right: 15px">
-          <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="Retrieval">搜索</el-button>
-          <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+          <div style="margin: 10px 20px 10px 0px">
+            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="Retrieval"
+              >搜索</el-button
+            >
+            <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+          </div>
+        </div>
+        <div class="g-row-flex-V" style="flex-wrap: wrap; align-self: flex-end" v-if="$route.query.page || $route.query.name">
+          <div style="margin: 10px 0px 10px 0px">
+            <el-button class="commonBtn" @click="switchToBack">返回</el-button>
+          </div>
         </div>
       </div>
     </header-search>
@@ -1462,6 +1471,10 @@ export default {
         this.paramater = {};
         this.Retrieval();
       });
+    },
+    // 返回
+    switchToBack() {
+      this.$router.push(this.$route.query.page || this.$route.query.name);
     },
     //切换tabs
     handleClick() {
