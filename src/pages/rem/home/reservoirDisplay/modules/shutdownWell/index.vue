@@ -30,7 +30,7 @@ export default {
     return {
       histogram: {
         grid: {
-          top: "18",
+          top: "10%",
           left: "5%",
           right: "6%",
           bottom: "8%",
@@ -92,9 +92,7 @@ export default {
             name: "关停影响产量(10⁴m³)",
             nameTextStyle: {
               color: "#a9a8a8",
-              padding: [0, 0, 35, 0], // 上、右、下、左
             },
-            nameLocation: "center",
             splitLine: {
               show: false,
               lineStyle: {

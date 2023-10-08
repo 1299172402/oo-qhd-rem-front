@@ -248,7 +248,7 @@ export default {
     },
     //保存结果,策略:先删除，后保存
     save() {
-      this.$message.info("保存中...");
+      // this.$message.info("保存中...");
       insertWellDailyMeasureInfo(this.tableData).then((res) => {
         console.log(res);
         this.$message.info("保存成功...");

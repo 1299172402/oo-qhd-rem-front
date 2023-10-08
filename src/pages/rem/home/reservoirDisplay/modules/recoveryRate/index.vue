@@ -54,9 +54,9 @@ export default {
             },
             grid:{
                 top: "15%",
-                right: "15%",
+                right: "10%",
                 bottom:"15%",
-                left: "15%",
+                left: "10%",
             },
             xAxis: {
                 type: 'category',
@@ -85,13 +85,11 @@ export default {
             yAxis: [
                 {
                     name: '地质储量采油速度(%)',
-                    nameLocation: 'center',
                     nameTextStyle: {
                         color: '#8FA4CC'
                     },
                     max:100,
                     min:0,
-                    nameGap: 44,
                     type: 'value',
                     minInterval: 0,
                     axisLabel: {
@@ -115,13 +113,11 @@ export default {
                 },
                 {
                     name: '可采、剩余可采采油速度(%)',
-                    nameLocation: 'center',
                     nameTextStyle: {
                         color: '#8FA4CC'
                     },
                     max:100,
                     min:0,
-                    nameGap: 44,
                     type: 'value',
                     minInterval: 0,
                     axisLabel: {

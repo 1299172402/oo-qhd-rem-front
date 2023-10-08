@@ -350,7 +350,6 @@ import {queryProductionAnalysisList} from "@/api/rem/productionanalysis";
 import toFixed from "xe-utils/toFixed";
 
 export default {
-    name:'AttributtonAnalysis',
     components: {
         Echart
     },
@@ -1453,7 +1452,11 @@ export default {
             if(this.link==4){
                 resultDate = this.queryData.month
             }else{
-                resultDate = this.decreaseMonth(this.queryData.month);
+                if( this.queryData.month.length > 7){
+                    resultDate = this.decreaseMonth(this.queryData.month);
+                }else{
+                    resultDate = this.decreaseMonth(this.queryData.month+'-06'); 
+                }
                 resultDate = resultDate.toISOString().substr(0, 10)//日期
             }
             let params = {

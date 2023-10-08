@@ -425,7 +425,8 @@ export default {
                     }
                     wellAvgFluidProdAllocUpdate({
                         injWellMonthDtos: this.form.tableData2,
-                        dateTime: this.queryData.dateTime
+                        dateTime: this.queryData.dateTime,
+                        blockId: this.queryData.blockId
                     }).then((bool) => {
                         this.$message.success("保存成功")
                         this.queryTableData()
@@ -448,7 +449,7 @@ export default {
             }
             localStorage.setItem('OPTIMIZATION', JSON.stringify(params))
             this.$router.push({
-                name: 'optimizationDetail',
+                name: 'OptimizationDetail',
                 params,
             })
         },

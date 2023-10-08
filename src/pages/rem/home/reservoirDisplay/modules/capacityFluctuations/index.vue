@@ -40,8 +40,8 @@ export default {
                     },
                 },
                 grid: {
-                    top: 15,
-                    left: 85,
+                    top: '10%',
+                    left: '12%',
                     right: 10,
                     bottom: 50,
                 },
@@ -87,11 +87,8 @@ export default {
                     type: "value",
                     min:0,
                     max:100,
-                    nameLocation: "center",
-                    nameGap: 30,
                     nameTextStyle: {
                         color: "#a9a8a8",
-                        padding: [0, 0, 30, 0],
                         fontSize: 12,
                     },
                     axisLabel: {
