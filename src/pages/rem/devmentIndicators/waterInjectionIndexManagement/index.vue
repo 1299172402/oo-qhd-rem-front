@@ -1,37 +1,47 @@
 <!-- 注水指标管理 -->
 <template>
   <div class="app-container">
-    <header-search style="width: 100%; height: 80px">
-      <div class="g-row-flex-V g-w100 g-h100">
-        <!-- <div style="margin: 10px 20px 10px 0px">
+    <header-search style="height: auto; padding: 10px 20px 12px">
+      <div class="g-row-flex-V" style="justify-content: space-between">
+        <div class="g-row-flex-V g-w100 g-h100" style="flex-wrap: wrap">
+          <!-- <div style="margin: 10px 20px 10px 0px">
                     作业公司：
                     <el-select v-model="queryParams.companyId" placeholder="请选择" disabled @change="changeCompany">
                         <el-option v-for="item in companyList" :key="item.orgId" :label="item.orgName" :value="item.orgId"></el-option>
                     </el-select>
                 </div> -->
-        <div style="margin: 10px 20px 10px 0px">
-          油田：
-          <el-select v-model="queryParams.oilFieldId" disabled>
-            <el-option
-              v-for="item in oilFieldList"
-              :key="item.ogfId"
-              :label="item.ogfName"
-              :value="item.ogfId"
-            ></el-option>
-          </el-select>
+          <div style="margin: 10px 20px 10px 0px">
+            油田：
+            <el-select v-model="queryParams.oilFieldId" disabled>
+              <el-option
+                v-for="item in oilFieldList"
+                :key="item.ogfId"
+                :label="item.ogfName"
+                :value="item.ogfId"
+              ></el-option>
+            </el-select>
+          </div>
+          <div style="margin: 10px 20px 10px 0px">
+            年度：
+            <el-date-picker
+              v-model="queryParams.year"
+              type="year"
+              placeholder="选择年"
+              value-format="yyyy-12-31"
+            ></el-date-picker>
+          </div>
+          <div style="margin: 10px 20px 10px 0px">
+            <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
+            <el-button icon="el-icon-refresh" class="commonBtn" @click="resetting">重置</el-button>
+          </div>
         </div>
-        <div style="margin: 10px 20px 10px 0px">
-          年度：
-          <el-date-picker
-            v-model="queryParams.year"
-            type="year"
-            placeholder="选择年"
-            value-format="yyyy-12-31"
-          ></el-date-picker>
-        </div>
-        <div style="margin: 10px 20px 10px 0px">
-          <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
-          <el-button icon="el-icon-refresh" class="commonBtn" @click="resetting">重置</el-button>
+        <div class="g-row-flex-V" style="flex-wrap: wrap">
+          <el-button
+            class="commonBtn"
+            v-if="$route.query.page || $route.query.name"
+            @click="$router.push($route.query.page || $route.query.name)"
+            >返回</el-button
+          >
         </div>
       </div>
     </header-search>

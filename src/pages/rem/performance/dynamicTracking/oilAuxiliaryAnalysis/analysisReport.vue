@@ -30,7 +30,7 @@
             <el-select
               v-model="selYtdm"
               class="f2"
-              style="width: 180px"
+              style="width: 170px"
               filterable
               clearable
               disabled
@@ -41,7 +41,7 @@
             </el-select>
 
             <span style="margin-left: 15px">区块：</span>
-            <el-select v-model="selectBlock" style="width: 180px" filterable @change="changeBlock">
+            <el-select v-model="selectBlock" style="width: 170px" filterable @change="changeBlock">
               <el-option
                 v-for="item in blocks"
                 :key="item.reservoirAnalyseUnitId"
@@ -51,7 +51,7 @@
             </el-select>
 
             <span style="margin-left: 15px">平台：</span>
-            <el-select v-model="platform" class="f2" style="width: 220px" filterable @change="changePlatform">
+            <el-select v-model="platform" class="f2" style="width: 170px" filterable @change="changePlatform">
               <el-option
                 v-for="item in ptData"
                 :key="item.platFormId"
@@ -62,7 +62,7 @@
             </el-select>
             :
             <span style="margin-left: 15px">井号：</span>
-            <el-select v-model="wellId" class="f2" style="width: 180px" filterable clearable @change="changeWell">
+            <el-select v-model="wellId" class="f2" style="width: 170px" filterable clearable @change="changeWell">
               <el-option
                 v-for="item in wellData"
                 :key="item.wellId"
@@ -75,6 +75,7 @@
             <span style="margin-left: 15px">评价时间：</span>
             <el-date-picker
               v-model="currentDate"
+              style="width: 170px"
               type="date"
               value-format="yyyy-MM-dd"
               :clearable="false"
@@ -551,7 +552,7 @@
             <el-select
               v-model="selYtdm"
               class="f2"
-              style="width: 180px"
+              style="width: 170px"
               filterable
               clearable
               disabled
@@ -562,7 +563,7 @@
             </el-select>
 
             <span style="margin-left: 15px">区块：</span>
-            <el-select v-model="selectBlock" style="width: 180px" filterable @change="changeBlock">
+            <el-select v-model="selectBlock" style="width: 170px" filterable @change="changeBlock">
               <el-option
                 v-for="item in blocks"
                 :key="item.reservoirAnalyseUnitId"
@@ -572,7 +573,7 @@
             </el-select>
 
             <span style="margin-left: 15px">平台：</span>
-            <el-select v-model="platform" class="f2" style="width: 220px" filterable @change="changePlatform">
+            <el-select v-model="platform" class="f2" style="width: 170px" filterable @change="changePlatform">
               <el-option
                 v-for="item in ptData"
                 :key="item.platFormId"
@@ -583,7 +584,7 @@
             </el-select>
 
             <span style="margin-left: 15px">井号：</span>
-            <el-select v-model="wellId" class="f2" style="width: 180px" filterable clearable @change="changeWell">
+            <el-select v-model="wellId" class="f2" style="width: 170px" filterable clearable @change="changeWell">
               <el-option
                 v-for="item in wellData"
                 :key="item.wellId"
@@ -596,6 +597,7 @@
             <span style="margin-left: 15px">评价时间：</span>
             <el-date-picker
               v-model="currentDate"
+              style="width: 170px"
               type="date"
               value-format="yyyy-MM-dd"
               :clearable="false"

@@ -2199,12 +2199,12 @@ export default {
                 flex: 1;
                 height: 0;
               }
-              .z-table {
-                ::v-deep .cell {
-                  height: 60px;
-                  line-height: inherit;
-                }
-              }
+              // .z-table {
+              //   ::v-deep .cell {
+                  // height: 60px;
+                  // line-height: inherit;
+                // }
+              // }
             }
           }
         }
