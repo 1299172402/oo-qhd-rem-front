@@ -31,6 +31,8 @@ export default {
             this.baseUrl = 'tjioms-test.tjltd.cnooc'
         } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
             this.baseUrl = 'tjioms-dev.tjltd.cnooc'
+        }else if (window.location.origin.includes('tpro')) {
+            this.baseUrl = 'tjioms-tpro.tjltd.cnooc'
         }
         this.getinfo()
         this.arrowFun()
@@ -69,7 +71,7 @@ export default {
                             name: '井底流压监测',
                             alarmPageCode: 'BWFPMA',
                             warningShowFlag: false,
-                            url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=dynamicManagement/remHome`
+                            url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=/dynamicManagement/remHome`
                         }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
@@ -126,7 +128,7 @@ export default {
                     boxText: '剩余油分布状况分析',
                     boxBottomText: [{
                         name: '剩余油甜点分析',
-                        url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem`
+                        url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=/dynamicManagement/remHome`
                     }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;'
@@ -165,7 +167,7 @@ export default {
                         name: '递减率分析',
                         alarmPageCode: 'DERAAN',
                         warningShowFlag: false,
-                        url: `https://rem.${this.baseUrl}/#/developStatus/developmentEffectEvaluation?link=decreasing`
+                        url: `https://rem.${this.baseUrl}/#/developStatus/developmentEffectEvaluation?link=decreasing&page=/dynamicManagement/remHome`
                     }, {
                         name: '产量变化趋势分析',
                         alarmPageCode: 'YITRAN',

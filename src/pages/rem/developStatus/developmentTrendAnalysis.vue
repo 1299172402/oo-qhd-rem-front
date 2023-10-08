@@ -37,6 +37,15 @@
         </el-date-picker>
         <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
         <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+        <el-button
+          class="commonBtn"
+          v-if="$route.query.page || $route.query.name"
+          style="position: absolute; right: 2%"
+          @click="
+            $router.push($route.query.page || $route.query.name)
+          "
+          >返回</el-button
+        >
       </div>
     </headerSearch>
     <pagePanelNew style="height: calc(100% - 180px)" class="z-main" show-btn>
