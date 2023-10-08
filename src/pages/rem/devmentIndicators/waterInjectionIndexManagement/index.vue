@@ -300,7 +300,7 @@
         <Echart :chart-data="rateOfWaterCutRise" height="calc(100% - 75px)"></Echart>
       </pagePanel>
       <pagePanel headerTitle="自然递减率" v-if="currentIndex == 9" style="height: 500px" show-btn>
-        <div class="g-row-flex-V" style="justify-content: space-between;  margin-bottom: 20px">
+        <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 20px">
           <div class="g-row-flex-V" style="flex-wrap: wrap">
             <span>油藏分析单元：</span>
             <el-select v-model="queryParams.fileId">
@@ -987,8 +987,8 @@ export default {
             if (item.name == "地层压力保持水平（%）") item.real = 90.3;
             if (item.name == "地层压力保持水平（%）") item.chain = 0.03;
             // if (item.name == "注水水质达标率（%）") item.real = 100;
-            if (item.name == "动态监测完成率（%）") item.real = 43.59;
-            if (item.name == "动态监测完成率（%）") item.chain = 56.41;
+            // if (item.name == "动态监测完成率（%）") item.real = 43.59;
+            // if (item.name == "动态监测完成率（%）") item.chain = 56.41;
             // if (item.name == "含水上升率（%）") item.real = -0.33;
             // if (item.name == "注水井分注率（%）") item.real = 94.26;
             // if (item.name == "分注井层段合格率（%）") item.real = 78.97;
@@ -1267,11 +1267,10 @@ export default {
           let zb = this.zbData.find((item) => {
             return item.title == "动态监测完成率";
           });
-          //指标详情 // TODO lv 临时
-          zb.sz = detail.detail || 43.59;
+          //指标详情
+          zb.sz = detail.detail || "-";
           //环比
-          // zb.hb = detail.mom;// TODO lv 临时
-          zb.hb = detail.mom || 56.41;
+          zb.hb = detail.mom || "-";
           zb.hbTag = detail.chainTag;
           /*//同比
                         zb.tb=detail.moy;
