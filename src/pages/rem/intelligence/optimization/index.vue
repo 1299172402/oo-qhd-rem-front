@@ -7,7 +7,7 @@
                     <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
                 </el-tab-pane>
             </el-tabs>
-            <el-button v-if ="activeName =='second' && this.$route.query.link "  style="position: absolute;z-index:50;right: 20px;top:110px" type="primary"  @click="gogo">返回</el-button>
+            <el-button v-if ="activeName =='second' && this.$route.query.page"  style="position: absolute;z-index:50;right: 20px;top:110px" type="primary"  @click="gogo">返回</el-button>
         </div>
         <header-search v-if="activeName=='first'" style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
@@ -45,7 +45,7 @@
                 </el-button>
                 <el-button class="commonBtn" @click="refresh" icon="el-icon-refresh"> 重置</el-button>
                 <el-button  type="primary" v-if="$route.query.page" style="position: absolute;right:2%;top:110px" @click="$router.push({
-                        path:$route.query.page
+                        name:$route.query.page
                     })">返回</el-button>
                 <span class="fangan">
             <span style="color: #00b4ff;">{{ queryData.dateTime }}月配产配注方案</span>
@@ -299,7 +299,7 @@ export default {
     },
     methods: {
         gogo() {
-            this.$router.push({name: 'linkage'});
+            this.$router.push({name: this.$route.query.page});
         },
         // 合并单元格
         mergeTable({row, column, rowIndex, columnIndex}) {
@@ -405,10 +405,12 @@ export default {
                 type: 'warning'
             }).then(() => {
                 let baseUrl = ''
-                if(window.location.origin.includes('test')){
-                    baseUrl = 'tjioms-test.tjltd.cnooc'
-                }else if (window.location.origin.includes('dev') || window.location.origin.includes('808')){
-                    baseUrl = 'tjioms-dev.tjltd.cnooc'
+                if (window.location.origin.includes('test')) {
+                    this.baseUrl = 'tjioms-test.tjltd.cnooc'
+                } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
+                    this.baseUrl = 'tjioms-dev.tjltd.cnooc'
+                }else if (window.location.origin.includes('tpro')) {
+                    this.baseUrl = 'tjioms-tpro.tjltd.cnooc'
                 }
                 window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`,'_blank')
                 // this.$router.push({name: "schemePrediction"})
