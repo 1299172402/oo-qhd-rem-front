@@ -44,7 +44,7 @@
                                class="confirmBut" @click="tableOilfield" :disabled="isDisabled">搜索
                     </el-button>
                     <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置</el-button>
-                    <el-button type="primary" style="float: right" class="buttonActive_primary" v-if="this.$route.query.page" @click="$router.push({name: this.$route.query.page});">返回</el-button>
+                    <el-button type="primary" style="float: right" class="buttonActive_primary" v-if="this.$route.query.page" @click="this.$router.push({name: this.$route.query.page});">返回</el-button>
                 </el-form>
 
             </header-search>
