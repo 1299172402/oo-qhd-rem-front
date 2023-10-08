@@ -31,9 +31,9 @@ export default {
       currentModel: this.$store.state.setting.mode,
         relationship: {
             grid:{
-                top: "5%",
+                top: "15%",
                 right: "5%",
-                bottom:"25%",
+                bottom:"20%",
                 left: "12%",
             },
             tooltip: {
@@ -55,11 +55,9 @@ export default {
             },
             xAxis: {
                 name: '地质储量采出程度(%)',
-                nameLocation: 'center',
                 nameTextStyle: {
                     color: '#8FA4CC'
                 },
-                nameGap: 30,
                 type: 'value',
                 axisLabel: {
                     color: '#8FA4CC'
@@ -82,13 +80,11 @@ export default {
             },
             yAxis: {
                 name: '综合含水率(%)',
-                nameLocation: 'center',
                 nameTextStyle: {
                     color: '#8FA4CC'
                 },
                 max:100,
                 min:0,
-                nameGap: 30,
                 type: 'value',
                 axisLabel: {
                     color: '#8FA4CC'

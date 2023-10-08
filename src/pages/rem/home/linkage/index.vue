@@ -1,12 +1,12 @@
 <template>
     <div class="container" style="height: calc(100% - 20px);width: 100%;position:relative">
         <div class="topBanner">注采联动</div>
-        <video
-            autoPlay
-            loop
-            style="width: 100%;height: 100%;object-fit: cover;position: absolute;top: 10;left: 0;"
-            muted
-            src="@/pages/rem/home/linkage/liandong-bg.mp4"/>
+<!--        <video-->
+<!--            autoPlay-->
+<!--            loop-->
+<!--            style="width: 100%;height: 100%;object-fit: cover;position: absolute;top: 10;left: 0;"-->
+<!--            muted-->
+<!--            src="@/pages/rem/home/linkage/liandong-bg.mp4"/>-->
         <linkageBox @stopTimer="stopTimer" @startTimer="startTimer" :style="item.style" :showFlag="item.showFlag"
                     :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
         <div class="studySelf">
@@ -41,6 +41,8 @@ export default {
             this.baseUrl = 'tjioms-test.tjltd.cnooc'
         } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
             this.baseUrl = 'tjioms-dev.tjltd.cnooc'
+        }else if (window.location.origin.includes('tpro')) {
+            this.baseUrl = 'tjioms-tpro.tjltd.cnooc'
         }
         this.getWarningInfo()
         this.getinfo()
@@ -545,7 +547,9 @@ video {
 
 .container {
     height: calc(100% - 20px);
-
+    background: url('./1.gif');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     .topBanner {
         width: 100%;
         height: 38px;

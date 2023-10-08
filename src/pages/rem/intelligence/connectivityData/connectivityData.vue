@@ -55,6 +55,7 @@
                 >
                     重置
                 </el-button>
+                <el-button type="primary" style="float: right" class="buttonActive_primary" v-if="this.$route.query.page" @click="$router.push({name:$route.query.page});">返回</el-button>
                 <el-button type="danger" style="float: right" class="countBut" @click="examine">
                     查看连通系数计算基础数据
                 </el-button>
