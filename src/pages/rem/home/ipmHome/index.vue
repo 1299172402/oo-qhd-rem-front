@@ -70,7 +70,7 @@ export default {
                         },
                         {
                             name: '劈分剖面',
-                            url: `https://rem.${this.baseUrl}/#//injection/splitSection?page=IpmHome`,
+                            url: `https://rem.${this.baseUrl}/#/injection/splitSection?page=IpmHome`,
                             alarmPageCode: 'SPLSEC',
                         },
                         {
@@ -126,7 +126,7 @@ export default {
                     },
                         {
                             name: '平面剩余油分布',
-                            url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem`
+                            url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=IpmHome`
                         }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;'
