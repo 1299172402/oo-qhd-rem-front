@@ -225,7 +225,7 @@
                 let res = this.chart.getDataURL({
                     type: "png",
                     pixelRatio: 1.5,
-                    backgroundColor: "#022644",
+                    backgroundColor: this.$store.state.setting.mode == "dark"? '#022644':'#fff',
                 });
                 let name =  typeof(fileName)  == 'string' ? fileName : this.chartData.toolbox.feature.saveAsImage.name;
                 console.log(typeof(fileName)  == 'string', fileName)
