@@ -391,12 +391,13 @@ export default {
             })
         },
         eeee() {
-            let data = new Date()
-            if (data.getMonth() < 10) {
-                return data.getFullYear() + '-0' + (data.getMonth() + 1)
-            } else {
-                return data.getFullYear() + '-' + (data.getMonth() + 1)
-            }
+            var today = new Date(); // 获取当前日期
+            var yesterday = new Date(today); // 创建一个新的日期对象，并将其设置为当前日期
+            yesterday.setDate(today.getDate() - 1); // 将日期设置为前一天
+            var year = yesterday.getFullYear(); // 获取年份
+            var month = (yesterday.getMonth() + 1).toString().padStart(2, '0'); // 获取月份，并确保格式正确
+            var day = yesterday.getDate().toString().padStart(2, '0'); // 获取日期，并确保格式正确
+            return `${year}-${month}-${day}`; // 构造日期字符串
         },
         tableColor({row, column, rowIndex, columnIndex}) {
             if (rowIndex === 0 && columnIndex === 4 || columnIndex === 10) {
