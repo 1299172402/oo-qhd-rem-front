@@ -993,9 +993,9 @@ export default {
         if (res.data.code == 200) {
           this.tableData = res.data.data.injectionIndicatorManagements || [];
           // TODO lv 临时
-          this.tableData.forEach((item) => {
-            if (item.name == "地层压力保持水平（%）") item.real = 90.3;
-            if (item.name == "地层压力保持水平（%）") item.chain = 0.03;
+          // this.tableData.forEach((item) => {
+            // if (item.name == "地层压力保持水平（%）") item.real = 90.3;
+            // if (item.name == "地层压力保持水平（%）") item.chain = 0.03;
             // if (item.name == "注水水质达标率（%）") item.real = 100;
             // if (item.name == "动态监测完成率（%）") item.real = 43.59;
             // if (item.name == "动态监测完成率（%）") item.chain = 56.41;
@@ -1005,7 +1005,7 @@ export default {
             // if (item.name == "年注入量（10⁴m³）") item.real = 1552;
             // if (item.name == "自然递减率（%）") item.real = 21.13;
             // if (item.name == "分注井测试率（%）") item.real = 95.48;
-          });
+          // });
           if (this.tableData?.length) {
             this.tableData.forEach((item) => (item.state = 1));
           } else {
@@ -1049,9 +1049,9 @@ export default {
             return item.title == "地层压力保持水平";
           });
           //指标详情 // TODO lv 临时
-          zb.sz = detail.detail || 90.3;
+          zb.sz = detail.detail || 0;
           //环比
-          zb.hb = detail.mom || 0.03;
+          zb.hb = detail.mom || 0;
           // zb.hbTag = detail.chainTag;
           zb.hbTag = "up";
           //同比

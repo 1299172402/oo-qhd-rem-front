@@ -171,7 +171,7 @@
                     },
                     grid: {
                         x: 120,
-                        y: 30,
+                        y: 50,
                         x2: 120,
                         y2: 40,
                     },
@@ -386,46 +386,16 @@
             doLayerPressureLevelRate() {
                 layerPressureLevelRate(this.queryParams).then((res) => {
                     if (res.data.code == 200) {
-                        let legendData = [];
+                        // let legendData = [];
                         let seriesData = [];
                         let xData = [];
-                        // TODO lv 临时
-                        // let xSet = new Set();
-                        let xSet = [];
-
+                        let xSet = new Set();
                         let resData = res.data.data;
-                        // let barCharts = resData?.chart?.barDataSets || [];
-                        // TODO lv 临时
-                        let barCharts = [{
-                            label: "",
-                            color: null,
-                            barDatas: [
-                                {
-                                    label: "2020",
-                                    value: 89.54,
-                                    description: null,
-                                },
-                                {
-                                    label: "2021",
-                                    value: 89.87,
-                                    description: null,
-                                },
-                                {
-                                    label: "2022",
-                                    value: 90.27,
-                                    description: null,
-                                },
-                                {
-                                    label: "2023",
-                                    value: 90.30,
-                                    description: null,
-                                },
-                            ],
-                        }];
+                        let barCharts = resData?.chart?.linearDataSets || [];
                         this.tableData1 = resData.tableList && resData.tableList[0] ? resData.tableList[0] : [];
                         this.tableData2 = resData.tableList && resData.tableList[1] ? resData.tableList[1] : [];
                         barCharts.forEach((item, index) => {
-                            legendData.push(item.label);
+                            // legendData.push(item.label);
                             let series = {};
                             series.name = item.label;
                             series.type = "bar";
@@ -440,14 +410,12 @@
                                     borderRadius: [7, 7, 0, 0],
                                 },
                             };
-                            let barData = item.barDatas;
+                            let barData = item.linearData;
                             let seriesMess = [];
                             barData.forEach((dot, index) => {
                                 let point = [];
                                 point.push(dot.label);
-                                // TODO lv 临时
-                                // xSet.add(dot.label);
-                                xSet.push(dot.label);
+                                xSet.add(dot.label);
 
                                 point.push(dot.value);
                                 seriesMess.push(point);
@@ -455,12 +423,10 @@
                             series.data = seriesMess;
                             seriesData.push(series);
                         });
-                        // TODO lv 临时
-                        // xData = Array.from(xSet).sort();
-                        // this.formationPressureRemainsLevel.xAxis.data = xData;
-                        this.formationPressureRemainsLevel.xAxis.data = xSet;
+                        xData = Array.from(xSet).sort();
+                        this.formationPressureRemainsLevel.xAxis.data = xData;
 
-                        this.formationPressureRemainsLevel.legend.data = legendData;
+                        // this.formationPressureRemainsLevel.legend.data = legendData;
                         this.formationPressureRemainsLevel.series = seriesData;
                         this.formationPressureRemainsLevel.title.text = `${this.oilFieldName || ''}地层压力保持水平`;
                     }
