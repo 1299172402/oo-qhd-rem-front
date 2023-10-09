@@ -1,5 +1,5 @@
 /**
- * ng-handsontable 0.13.0
+ * ng-handsontable
  * 
  * Copyright 2012-2015 Marcin Warpechowski
  * Copyright 2015 Handsoncode sp. z o.o. <hello@handsontable.com>

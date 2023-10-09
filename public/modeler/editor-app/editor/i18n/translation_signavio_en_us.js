@@ -56,7 +56,7 @@ ORYX.I18N.Save.failed = "Something went wrong when trying to save your diagram. 
 ORYX.I18N.Save.exception = "Some exceptions are raised while trying to save your diagram. Please try again. If the problem resides, please contact the Signavio Support via the envelope symbol in the toolbar.";
 ORYX.I18N.Save.retrieveData = "Please wait, data is retrieving.";
 
-/** New Language Properties: 10.6.09*/
+/** New Language Properties:*/
 if(!ORYX.I18N.ShapeMenuPlugin) ORYX.I18N.ShapeMenuPlugin = {};
 ORYX.I18N.ShapeMenuPlugin.morphMsg = "Transform shape";
 ORYX.I18N.ShapeMenuPlugin.morphWarningTitleMsg = "Transform shape";

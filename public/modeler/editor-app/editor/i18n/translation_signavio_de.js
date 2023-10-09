@@ -70,7 +70,7 @@ ORYX.I18N.Save.failed = "Beim Speichern Ihres Diagramms ist ein Problem aufgetre
 ORYX.I18N.Save.exception = "Beim Speichern Ihres Diagramms sind einige Probleme aufgetreten. Bitte versuchen Sie es erneut. Wenn das Problem weiterhin besteht, wenden Sie sich bitte an den Signavio Support über das Briefumschlagssymbol in der Toolbar.";
 ORYX.I18N.Save.retrieveData = "Bitte warten, Daten werden geladen";
 
-/** New Language Properties: 10.6.09*/
+/** New Language Properties:*/
 if(!ORYX.I18N.ShapeMenuPlugin) ORYX.I18N.ShapeMenuPlugin = {};
 ORYX.I18N.ShapeMenuPlugin.morphMsg = "Umwandeln";
 ORYX.I18N.ShapeMenuPlugin.morphWarningTitleMsg = "Umwandeln";
