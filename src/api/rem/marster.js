@@ -114,3 +114,10 @@ export function QueryReservoirAnalyseUnit(data) {
     data,
   });
 }
+export function userListByUserNames(data) {
+    return request({
+        url: `${masterUrl}/system/syncData/userListByUserNames`,
+        method: "post",
+        data,
+    });
+}
