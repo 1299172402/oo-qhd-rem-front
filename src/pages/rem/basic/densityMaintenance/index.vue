@@ -310,11 +310,13 @@ export default {
             userListByUserNames(params).then((res)=>{
                 orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
                 queryOperatorsCheckFieldListsDetail({orgId:orgId}).then((res) => {
-                    console.log(res)
                     this.ogfList = res.data.data;
-                    if(orgId==='715AD1CD60484BB59E737CD18A9DE44A'){
-                        this.queryParams.ogfId='3FC9A818F5BC43B88270DB80BBB3018F'
+                    if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
+                        this.queryParams.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
+                    } else {
+                        this.queryParams.ogfId = this.ogfList[0].ogfId
                     }
+                    this.getInfo()
                 });
             })
 
@@ -449,11 +451,9 @@ export default {
         },
         // 重置
         reset() {
-            this.selectData();
-            // this.queryParams.orgId= orgId;
-            this.queryParams.productTypeCode = "002001"
             this.queryParams.year = this.year
-            this.getInfo()
+            this.queryParams.productTypeCode = "002001"
+            this.selectData();
         },
     },
 };

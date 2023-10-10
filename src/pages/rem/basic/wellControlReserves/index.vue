@@ -200,7 +200,7 @@ export default {
         }
     },
     methods: {
-        getList() {
+         getList() {
             //获取作业公司
             let params = {
                 searchKeys: [this.$store.getters["user/userDetail"].user.userName],
@@ -215,13 +215,19 @@ export default {
             queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
                 this.oilFields = res.data.data
                 if (this.queryData.orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
-                    this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
+                    this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
+                } else {
+                    this.queryData.ogfId = this.oilFields[0].ogfId
                 }
+                //根据油田查询平台列表
+                queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
+                    this.platforms = res.data.data
+                })
+                this.queryData.pt = "";
+                this.queryData.wellId=''
+                this.getData();
             })
-            //根据油田查询平台列表
-            queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
-                this.platforms = res.data.data
-            })
+            
         },
         selectcw() {
             let adta = {
@@ -294,10 +300,7 @@ export default {
         },
         refresh() {
             this.getList();
-            this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
-            this.queryData.pt = "";
-            this.queryData.wellId=''
-            this.getData();
+            // this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
             // queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
             //     if (res.data.code == 200) {
             //         this.wells = res.data.data
