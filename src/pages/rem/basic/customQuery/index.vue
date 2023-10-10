@@ -330,7 +330,11 @@
 <script>
 import {queryCustomQueryList} from "@/api/basic/basic";
 import {fetchProductionWells} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import {queryOperatorsCheckFieldListsDetail, queryPlatformQueryWellListDetail} from "@/api/basic/master";
+import {
+    queryOperatingCompanyDetail,
+    queryOperatorsCheckFieldListsDetail,
+    queryPlatformQueryWellListDetail, userListByUserNames
+} from "@/api/basic/master";
 import {exportExcel} from "@/lib/exportExcel";
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
@@ -342,6 +346,7 @@ export default {
     mounted() {
         const year = new Date().getFullYear();
         this.selectDate = [new Date(`${year}-01-01`).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
+        
         this.initData();
     },
     data() {
@@ -353,6 +358,7 @@ export default {
             ], //树形数组
             pageTotal: 0,
             page: 1,
+            orgId:'',
             pageSize: 15,
             queryData: [],
             dowload: [],
@@ -621,10 +627,16 @@ export default {
         },
         initData() {
             //查询条件
-            queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res => {
-                if (res.data.code == 200) {
-                    this.oilFields = res.data.data
-                }
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+            }
+            userListByUserNames(params).then((res)=>{
+                this.orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                queryOperatorsCheckFieldListsDetail({orgId:this.orgId}).then(res => {
+                    if (res.data.code == 200) {
+                        this.oilFields = res.data.data
+                    }
+                })
             })
             let ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
             const request = {

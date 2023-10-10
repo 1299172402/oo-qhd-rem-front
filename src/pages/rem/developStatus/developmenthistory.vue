@@ -1361,14 +1361,22 @@ export default {
             data: [],
           },
           {
-            type: "line",
+            type: "bar",
             name: "地层压降(MPa)",
-
-            symbol: "none",
+            barWidth: 22,
             xAxisIndex: 7,
             yAxisIndex: 7,
             itemStyle: {
-              color: "#1379F7",
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "#00D9EA",
+                },
+                {
+                  offset: 1,
+                  color: "#0F65EA",
+                },
+              ]),
             },
             data: [],
           },
@@ -1514,14 +1522,14 @@ export default {
       let request = {
         oilFieldId: oilFieldId,
       };
-      QueryReservoirAnalyseUnit({ogfId: oilFieldId}).then((res) => {
+      QueryReservoirAnalyseUnit({ ogfId: oilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.blockoptions1 = res.data.data;
           this.blockoptions1.unshift({
-          reservoirAnalyseUnitId: oilFieldId,
-          reservoirAnalyseUnitName: "全部",
-          reservoirAnalyseUnitNo: "全部",
-        });
+            reservoirAnalyseUnitId: oilFieldId,
+            reservoirAnalyseUnitName: "全部",
+            reservoirAnalyseUnitNo: "全部",
+          });
           this.block1 = oilFieldId;
         }
       });

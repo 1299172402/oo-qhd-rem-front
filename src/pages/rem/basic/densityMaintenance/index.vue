@@ -9,6 +9,22 @@
                 style="display: flex;flex-direction: column;  height:100%;margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
                 <headerSearch class="g-w100 g-h100" style="height: auto">
                     <el-form :model="queryParams" :inline="true" style="margin-top: 18px">
+                        <el-form-item label="油田：">
+                            <el-select
+                                v-model="queryParams.productTypeCode"
+                                placeholder="请选择产品类型"
+                                clearable
+                                size="small"
+                                style="width: 240px"
+                            >
+                                <el-option
+                                    v-for="(item, index) in producttype"
+                                    :key="index"
+                                    :label="item.appendixValueName"
+                                    :value="item.appendixValueCode"
+                                ></el-option>
+                            </el-select>
+                        </el-form-item>
                         <el-form-item label="产品类型：">
                             <el-select
                                 v-model="queryParams.productTypeCode"
