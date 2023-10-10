@@ -450,7 +450,7 @@ export default {
         // 重置
         reset() {
             this.selectData();
-            this.queryParams.orgId= orgId;
+            // this.queryParams.orgId= orgId;
             this.queryParams.productTypeCode = "002001"
             this.queryParams.year = this.year
             this.getInfo()
