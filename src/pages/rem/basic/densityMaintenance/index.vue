@@ -11,17 +11,17 @@
                     <el-form :model="queryParams" :inline="true" style="margin-top: 18px">
                         <el-form-item label="油田：">
                             <el-select
-                                v-model="queryParams.productTypeCode"
+                                v-model="queryParams.ogfId"
                                 placeholder="请选择产品类型"
                                 clearable
                                 size="small"
                                 style="width: 240px"
                             >
                                 <el-option
-                                    v-for="(item, index) in producttype"
+                                    v-for="(item, index) in ogfList"
                                     :key="index"
-                                    :label="item.appendixValueName"
-                                    :value="item.appendixValueCode"
+                                    :label="item.ogfName"
+                                    :value="item.ogfId"
                                 ></el-option>
                             </el-select>
                         </el-form-item>
@@ -248,7 +248,7 @@
 <script>
 import {queryProductList} from "@/api/rem/workcompanydesignate";
 import {queryDensityInfo, save} from "@/api/rem/density.js";
-import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
+import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail,userListByUserNames} from "@/api/basic/master";
 import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 import {exportExcel} from "@/lib/exportExcel";
 
@@ -275,6 +275,8 @@ export default {
             oilFields: [],
             // 表格数据
             noticeList: [],
+            //油田列表
+            ogfList:[],
             // 查询参数
             queryParams: {
                 productTypeCode: "002001",
@@ -296,8 +298,27 @@ export default {
         this.queryParams.year = String(y);
         this.year = String(y);
         this.getInfo();
+        this.selectData();
     },
     methods: {
+        // 获取油田下拉数据  
+        selectData() {
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+            }
+            let orgId
+            userListByUserNames(params).then((res)=>{
+                orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                queryOperatorsCheckFieldListsDetail({orgId:orgId}).then((res) => {
+                    console.log(res)
+                    this.ogfList = res.data.data;
+                    if(orgId==='715AD1CD60484BB59E737CD18A9DE44A'){
+                        this.queryParams.ogfId='3FC9A818F5BC43B88270DB80BBB3018F'
+                    }
+                });
+            })
+
+        },
         // change时间
         layoutChange() {
             this.$refs.table.doLayout()
@@ -428,8 +449,8 @@ export default {
         },
         // 重置
         reset() {
-            (this.queryParams.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F"),
-                (this.queryParams.orgId = "715AD1CD60484BB59E737CD18A9DE44A");
+            this.selectData();
+            this.queryParams.orgId= orgId;
             this.queryParams.productTypeCode = "002001"
             this.queryParams.year = this.year
             this.getInfo()
