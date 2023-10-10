@@ -44,7 +44,9 @@
                                class="confirmBut" @click="tableOilfield" :disabled="isDisabled">搜索
                     </el-button>
                     <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置</el-button>
-                    <el-button type="primary" style="float: right" class="buttonActive_primary" v-if="$route.query.page" @click="$router.push({name:$route.query.page});">返回</el-button>
+                    <el-button type="primary" style="float: right" class="buttonActive_primary" v-if="$route.query.page"
+                               @click="$router.push({name:$route.query.page});">返回
+                    </el-button>
                 </el-form>
 
             </header-search>
@@ -257,6 +259,7 @@ import {
     queryOperatorsCheckFieldListsDetail,
     userListByUserNames
 } from "@/api/basic/master";
+
 export default {
     name: "wellGroup_Maintenance",
     components: {treeMultipleSelection},
@@ -313,12 +316,9 @@ export default {
         },
     },
     methods: {
-        reset() {
-            this.query.selectField = '3FC9A818F5BC43B88270DB80BBB3018F'
-            this.changeOilfield()
-            this.query.selectBlock = 'YCFXDY8B643EDC9007F96F570600457D'
-            this.getDate();
-            this.tableOilfield();
+        async reset() {
+            await this.getDate();
+            await this.selectData();
         },
         getDate() {
             let data = new Date()
@@ -541,16 +541,22 @@ export default {
         // 获取油田下拉数据
         selectData() {
             let params = {
-                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+                searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             }
-            let ogfid 
-            userListByUserNames(params).then((res)=>{
+            let ogfid
+            userListByUserNames(params).then((res) => {
                 ogfid = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
-                queryOperatorsCheckFieldListsDetail({orgId:ogfid}).then((res) => {
+                queryOperatorsCheckFieldListsDetail({orgId: ogfid}).then((res) => {
                     this.options = res.data.data;
+                    if (ogfid === '715AD1CD60484BB59E737CD18A9DE44A') {
+                        this.query.selectField = '3FC9A818F5BC43B88270DB80BBB3018F'
+                    } else {
+                        this.query.selectField = this.options[0].ogfId
+                    }
+                    this.changeOilfield();
                 });
             })
-           
+
         },
         // 获取区块数据
         selectblock() {
@@ -580,24 +586,33 @@ export default {
             getblock({
                 ogfId: this.query.selectField
             }).then(({blockList}) => {
-               if(blockList[0].blockId ==null){
-                   this.blanks = []
-               }
-               else{
-                   this.blanks = blockList
-                   let data = []
-                   blockList.map((n) => {
-                       data.push({
-                           label: n.blockName,
-                           level: "4",
-                           value: n.blockId,
-                           children: []
-                       })
-                   })
-                   this.listdata[0].children[0].children[0].children.push(...data)
-                   this.key++
-               }
-               
+                if (blockList[0].blockId == null) {
+                    this.blanks = []
+                } else {
+                    this.blanks = blockList
+                    let data = []
+                    blockList.map((n) => {
+                        data.push({
+                            label: n.blockName,
+                            level: "4",
+                            value: n.blockId,
+                            children: []
+                        })
+                    })
+                    this.listdata[0].children[0].children[0].children.push(...data)
+                    this.key++
+                }
+
+                if (this.blanks != null && this.blanks.length > 0) {
+                    if (this.query.selectField === '3FC9A818F5BC43B88270DB80BBB3018F') {
+                        this.query.selectBlock= 'YCFXDY8B643EDC9007F96F570600457D'
+                    } else {
+                        this.query.selectBlock = this.blanks[0].blockId;
+                    }
+                } else {
+                    this.query.selectBlock = ''
+                }
+                this.tableOilfield();
             });
         },
         // 油田下拉点击事件
@@ -668,15 +683,15 @@ export default {
             // 获取当前日期
             this.loading = true
             let data = {
-                ogfId:this.query.selectField,
-                start:new Date().format('YYYY-MM') + '-01',
-                end:new Date().format('YYYY-MM-dd'),
+                ogfId: this.query.selectField,
+                start: new Date().format('YYYY-MM') + '-01',
+                end: new Date().format('YYYY-MM-dd'),
             }
-            wellGroupEvaluation(data).then((res)=>{
-                if(res.data.code ==200){
+            wellGroupEvaluation(data).then((res) => {
+                if (res.data.code == 200) {
                     this.$message.success("运行计算成功！");
                     this.loading = false
-                }else{
+                } else {
                     this.$message.error("运算失败，请刷新页面或联系运维人员！");
                     this.loading = false
                 }
