@@ -105,7 +105,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 62.5%;top: 60%;width:20%;height:38%;',
+                    style: 'position:absolute;left: 70%;top: 60%;width:20%;height:38%;',
                     boxText: '注采调控油藏方案',
                     boxBottomText: [{
                         name: '分层注水优化',
@@ -129,7 +129,7 @@ export default {
                     analysisUrl: `https://rem.${this.baseUrl}/#/injection/optimization?page=Linkage`
                 },
                 {
-                    style: 'position:absolute;left: 49%;top: 56%;width:18%;height:40%;',
+                    style: 'position:absolute;left: 55%;top: 56%;width:18%;height:40%;',
                     boxText: '注采状况分析',
                     boxBottomText: [
                         {
@@ -167,7 +167,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left:34%;top: 60%;width:18%;height:40%;',
+                    style: 'position:absolute;left:37.5%;top: 60%;width:18%;height:40%;',
                     boxText: '剩余油分布',
                     boxBottomText: [{
                         name: '动态分析法/数模剩余油分析',
@@ -184,7 +184,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 20%;top: 50%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 22%;top: 50%;width:20%;height:40%;',
                     boxText: '确定调整井组',
                     boxBottomText: [{
                         name: '油井动态分析',
@@ -547,7 +547,7 @@ video {
 
 .container {
     height: calc(100% - 20px);
-    background: url('./1.gif');
+    background: url('./注采联动20231011-big.gif');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     .topBanner {

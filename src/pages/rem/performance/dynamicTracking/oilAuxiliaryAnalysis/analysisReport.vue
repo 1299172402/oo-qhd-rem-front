@@ -516,7 +516,7 @@
                       <div>
                         <span>日增油量</span>
                         <br />
-                        <span>(m³/d)</span>
+                        <span>(m³)</span>
                       </div>
                     </template>
                     <template slot-scope="scope">
@@ -1436,7 +1436,7 @@
                       <div>
                         <span>日增油量</span>
                         <br />
-                        <span>(m³/d)</span>
+                        <span>(m³)</span>
                       </div>
                     </template>
                     <template slot-scope="scope">

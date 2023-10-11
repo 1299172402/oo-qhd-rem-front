@@ -4,7 +4,7 @@
     <headerSearch class="g-w100 g-h100" style="height: 80px; margin-bottom: 20px">
       <div style="height: 100%; display: flex; align-items: center; flex-wrap: wrap">
         <span>油田：</span>
-        <el-select v-model="selectOilField" placeholder="请选择" disabled style="margin-right: 15px">
+        <el-select v-model="selectOilField" placeholder="请选择" style="margin-right: 15px">
           <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
         </el-select>
         <span>区块：</span>
@@ -388,7 +388,7 @@
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import * as echarts from "echarts";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import {
   outputTracingAnalysis,
   reasonAnalysis,
@@ -421,6 +421,7 @@ export default {
       wellAllNum: "",
       //油田
       oilField: [],
+      companyId: "",
       //油田名字
       oilFieldName: "秦皇岛32-6油田",
       //油田选中值
@@ -961,8 +962,27 @@ export default {
 
     //初始化页面数据
     async initData() {
-      await QueryOgfDetail({}).then((res) => {
-        this.oilField = res.data.data;
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
+        if (res.data.code == 200) {
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
+        }
       });
       await QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {

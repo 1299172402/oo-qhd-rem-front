@@ -29,13 +29,13 @@
             </el-table-column>
             <el-table-column label="2019年12月日均产量" align="center">
                 <el-table-column label="日产液" align="center">
-                    <el-table-column prop="nmrcye" label="(m³/d)" align="center" min-width="120"></el-table-column>
+                    <el-table-column prop="nmrcye" label="(m³)" align="center" min-width="120"></el-table-column>
                 </el-table-column>
                 <el-table-column label="日产油" align="center">
-                    <el-table-column prop="nmrcyou" label="(m³/d)" align="center" min-width="120"></el-table-column>
+                    <el-table-column prop="nmrcyou" label="(m³)" align="center" min-width="120"></el-table-column>
                 </el-table-column>
                 <el-table-column label="日产气" align="center">
-                    <el-table-column prop="nmrcq" label="(10⁴m³/d)" align="center" min-width="120"></el-table-column>
+                    <el-table-column prop="nmrcq" label="(10⁴m³)" align="center" min-width="120"></el-table-column>
                 </el-table-column>
             </el-table-column>
             <el-table-column label="电量" align="center">

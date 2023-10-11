@@ -4,7 +4,7 @@
     <headerSearch style="height: 80px">
       <div class="g-row-flex-V g-w100 g-h100">
         <span class="title" style="margin-left: 20px">油田：</span>
-        <el-select v-model="selectOilField" placeholder="请选择" filterable clearable disabled>
+        <el-select v-model="selectOilField" placeholder="请选择" filterable @change="getFieldsDataApi">
           <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
         </el-select>
         <!--开发构成曲线不显示 区块选择框-->
@@ -111,7 +111,7 @@
   </div>
 </template>
 <script>
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import sliderTabs from "./components/slider-tabs.vue";
 // Minio
 import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
@@ -274,6 +274,7 @@ export default {
       },
       fileId: "",
       downloadButton: false,
+      companyId: "",
       //油田
       oilField: [],
       //油田名字
@@ -588,19 +589,29 @@ export default {
     },
     //初始化页面
     async initData() {
-      //油田信息初始化
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilField = res.data.data;
-          if (!this.oilField.length) {
-            this.selectOilField = "";
-          } else {
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
             this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
           }
         }
       });
       //区块信息初始化
-
       await QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {
           this.block = res.data.data;
@@ -616,6 +627,22 @@ export default {
       });
       this.$nextTick(() => {
         this.doSearch();
+      });
+    },
+    //获取区块信息
+    async getFieldsDataApi() {
+      await QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {
+        if (res.data.code == 200) {
+          this.block = res.data.data;
+          this.block.unshift({
+            reservoirAnalyseUnitId: this.selectOilField,
+            reservoirAnalyseUnitName: "全部",
+            reservoirAnalyseUnitNo: "全部",
+          });
+          if (this.block.length) {
+            this.selectBlock = this.selectOilField;
+          }
+        }
       });
     },
     //搜索功能
