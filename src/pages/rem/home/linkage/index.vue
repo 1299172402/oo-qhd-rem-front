@@ -167,7 +167,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left:36%;top: 60%;width:18%;height:40%;',
+                    style: 'position:absolute;left:37.5%;top: 60%;width:18%;height:40%;',
                     boxText: '剩余油分布',
                     boxBottomText: [{
                         name: '动态分析法/数模剩余油分析',
