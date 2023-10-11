@@ -6,7 +6,7 @@
         <div class="g-row-flex-V" style="flex-wrap: wrap">
           <div style="margin: 10px 20px 10px 0px">
             <span>油田：</span>
-            <el-select v-model="selectOilField" placeholder="请选择" class="f2" disabled @change="changeOilfield">
+            <el-select v-model="selectOilField" placeholder="请选择" class="f2" @change="changeOilfield">
               <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId">
               </el-option>
             </el-select>
@@ -818,7 +818,7 @@
 import { mapState, mapGetters } from "vuex";
 import Echart from "@/components/tools/Echarts/index.vue";
 import { fieldOilLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import {
   oilFieldRecoveryRatio,
   waterDriveChartData,
@@ -872,6 +872,7 @@ export default {
       radio2: "图表",
       radio3: 1,
       radio4: "图表",
+      companyId: "",
       selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
       oilField: [],
       selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
@@ -1513,10 +1514,28 @@ export default {
       this.dateTime2 = [new Date().addDays(-365).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
     },
     //获取油田信息
-    getOilFields() {
-      QueryOgfDetail({}).then((res) => {
-        //获取油田信息
-        this.oilField = res.data.data;
+    async getOilFields() {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
+        if (res.data.code == 200) {
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
+        }
       });
     },
     //获得区块信息

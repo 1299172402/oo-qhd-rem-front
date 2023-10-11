@@ -5,7 +5,7 @@
       <div class="g-row-flex-V g-w100 g-h100">
         <div class="fl">
           <span>油田：</span>
-          <el-select v-model="selectOilField" disabled @change="getFetchFields">
+          <el-select v-model="selectOilField" @change="getFetchFields">
             <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
           </el-select>
           <span class="QU" style="margin-left: 20px">区块：</span>
@@ -86,7 +86,7 @@
 
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import evaluation from "./components/evaluation.vue";
 import reserves from "./components/reserves.vue";
 import water from "./components/water.vue";
@@ -110,6 +110,7 @@ export default {
       oilField: [],
       //区块
       block: [],
+      companyId: "",
       //区块选中值
       selectOilField: "",
       selectBlock: "",
@@ -173,21 +174,31 @@ export default {
     },
     //设置页面初始化
     async initData() {
-      //调用油田接口
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilField = res.data.data;
-          if (this.oilField.length == 0) {
-            this.selectOilField = "";
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
           }
         }
       });
-      let oilFieldId = this.$route.params.oilFieldId;
-      if (oilFieldId == undefined) {
+      if (this.$route.params.oilFieldId) {
         //设置默认油田
-        this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
-      } else {
-        this.selectOilField = oilFieldId;
+        this.selectOilField = this.$route.params.oilFieldId;
       }
       //获得区块信息
       await QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {

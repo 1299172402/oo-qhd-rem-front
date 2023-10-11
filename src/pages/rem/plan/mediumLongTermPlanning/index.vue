@@ -4,7 +4,7 @@
     <header-search style="height: 80px">
       <div class="g-row-flex-V g-w100 g-h100">
         <span>油田：</span>
-        <el-select v-model="selectOilField" disabled>
+        <el-select v-model="selectOilField"  placeholder="请选择">
           <el-option
             v-for="item in oilField"
             :key="item.ogfId"
@@ -67,7 +67,7 @@
   </div>
 </template>
 <script>
-import { QueryOgfDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { searchLongTermPlan } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 
@@ -75,6 +75,7 @@ export default {
   name: "mediumLongTermPlanning",
   data() {
     return {
+      companyId: "",
       //选择油田
       selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
       //油田列表
@@ -266,13 +267,27 @@ export default {
     },
     //初始化
     async initData() {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
+        if (res.data.code == 200) {
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
       //获取油田信息
-      await QueryOgfDetail({}).then((res) => {
-        this.oilField = res.data.data;
-        if (this.oilField.length == 0) {
-          this.selectOilField = "";
-        } else {
-          this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
         }
       });
       //发现油田名称

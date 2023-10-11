@@ -137,7 +137,7 @@
 </template>
 
 <script>
-import { QueryOgfDetail, QueryPlatformDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryPlatformDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { getForecastDate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import {
   getWellDailyMeasureInfo,
@@ -202,10 +202,26 @@ export default {
       this.ogfList = [];
       this.platformList = [];
       this.conditions.platformId = "";
-      // 加载新数据
-      await QueryOgfDetail({ operationZoneId: this.conditions.companyId }).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.ogfList = res.data.data;
+          this.conditions.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.conditions.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.ogfList = data.data.data;
+          if (this.conditions.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.conditions.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.conditions.ogfId = this.ogfList[0].ogfId ? this.ogfList[0].ogfId : undefined;
+          }
         }
       });
     },
@@ -213,6 +229,7 @@ export default {
     searchPlatFormList() {
       QueryPlatformDetail({ ogfId: this.conditions.ogfId }).then((res) => {
         if (res.data.code == 200) {
+          this.conditions.platformId = "";
           this.platformList = res.data.data;
         }
       });

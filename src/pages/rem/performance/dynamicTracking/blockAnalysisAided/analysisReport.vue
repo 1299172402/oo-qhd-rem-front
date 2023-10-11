@@ -5,7 +5,8 @@
       <div class="g-row-flex-V g-w100 g-h100">
         <div style="margin-left: 10px">
           <span>油田：</span>
-          <el-select v-model="selectOilField" style="width: 180px" filterable clearable disabled>
+          <el-select v-model="selectOilField" style="width: 180px" filterable @change="getFieldsDataApi"
+          >
             <el-option
               v-for="item in fieldsData"
               :key="item.ogfId"
@@ -513,7 +514,7 @@ import {
   proInjectionBalanceAnalysis,
   proStatusAnalysis,
 } from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import { getBorepipeType } from "@/api/oilDeposit/ipm-03/basedata.js";
 import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 // Minio
@@ -540,6 +541,7 @@ export default {
       imageurl: "",
       //接受路由参数
       queryLink: "", //如果为1 默认选中注采平衡分析分类中的第一个，如果为2默认选中采出状况分析下的第一个
+      companyId: "",
       //油田
       fieldsData: [],
       selectOilField: "",
@@ -770,12 +772,29 @@ export default {
           console.log("初始化接口报错!");
         });
     },
+    
     //获取油田信息
     async fetchOilFieldsApi() {
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.fieldsData = res.data.data;
-          this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.fieldsData = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.fieldsData[0].ogfId ? this.fieldsData[0].ogfId : undefined;
+          }
         }
       });
     },

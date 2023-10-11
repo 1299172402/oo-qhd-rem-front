@@ -6,7 +6,7 @@
         <div class="g-row-flex-V g-w100 g-h100" style="flex-wrap: wrap">
           <div style="margin: 10px 20px 10px 0px">
             <span>油田：</span>
-            <el-select v-model="selectOilFieldId" disabled>
+            <el-select v-model="selectOilFieldId">
               <el-option
                 v-for="item in oilFieldList"
                 :key="item.ogfId"
@@ -20,7 +20,7 @@
                     <el-date-picker v-model="year" type="year" placeholder="选择年" value-format="yyyy-12-31"></el-date-picker>
                 </div> -->
           <div style="margin: 10px 20px 10px 0px">
-            <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
+            <el-button icon="el-icon-search" type="primary" @click="doSearch('all')">搜索</el-button>
           </div>
         </div>
         <div class="g-row-flex-V" style="flex-wrap: wrap">
@@ -250,7 +250,7 @@ import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
 import { exportExcel } from "@/lib/exportExcel.js";
 import { fetchPlatforms } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import {
   oilYear,
   compositeDeclineRate,
@@ -284,6 +284,7 @@ export default {
       currentIndex: 0,
       //查询参数
       queryParams: {},
+      companyId: "",
       //选中油田
       selectOilFieldId: "",
       // 年度
@@ -1473,16 +1474,30 @@ export default {
     },
     //页面初始化操作
     async initData() {
-      //获取油田信息
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilFieldList = res.data.data;
-        } else {
-          this.$message.error("油田读取错误");
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilFieldList = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilFieldId = this.oilFieldList[0].ogfId ? this.oilFieldList[0].ogfId : undefined;
+          }
         }
       });
       //默认qhd3-26油田
-      this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+      // this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       //对标油田默认qhd3-26油田
       this.selectTargetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       let requestField = {
@@ -1506,6 +1521,9 @@ export default {
           this.selectNaturalDeclinePlatform = res.data.data.platform[0].platFormId;
         }
       });
+      this.initAllData();
+    },
+    initAllData() {
       //以下接口平台 区块 参数默认为全部 全部默认为油田id
       this.getTechIndicatorStat(this.selectOilFieldId, this.selectTargetOilFieldId, "", "", this.developmentPhase);
       this.doOilYear2(this.selectOilFieldId);
@@ -1548,7 +1566,11 @@ export default {
       });
     },
     //每一个子标签调用接口
-    doSearch() {
+    doSearch(type) {
+      if(type === "all") {
+        this.initAllData();
+        return
+      }
       let oilFieldId = this.selectOilFieldId;
       //技术指标管理
       if (this.currentIndex == 0) {

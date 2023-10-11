@@ -7,7 +7,6 @@
         <el-select
           v-model="selectOilField"
           placeholder="请选择"
-          disabled
           @change="onFieldChange"
           style="margin-right: 20px"
         >
@@ -77,7 +76,7 @@
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import { searchDevTrendAnalysis } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getSearchDevTrendAnalysisDate } from "@/api/oilDeposit/rem-04/developStatus.js";
 export default {
@@ -87,6 +86,7 @@ export default {
   },
   data() {
     return {
+      companyId: "",
       //油田
       oilField: [],
       //油田选中值
@@ -668,12 +668,28 @@ export default {
       });
     },
     async initData() {
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilField = res.data.data;
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
         }
       });
-      this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
+        }
+      });
       await QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {
           this.block = res.data.data;

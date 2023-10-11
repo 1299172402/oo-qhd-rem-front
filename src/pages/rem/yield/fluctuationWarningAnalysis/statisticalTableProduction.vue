@@ -8,7 +8,7 @@
       <div style="display: flex; align-items: center; flex-wrap: wrap">
         <div style="margin-right: 15px; margin-bottom: 10px">
           <span>油田：</span>
-          <el-select v-model="searchForm.ogfId" disabled @change="onFieldChange" style="width: 165px">
+          <el-select v-model="searchForm.ogfId" @change="onFieldChange" style="width: 165px">
             <el-option
               v-for="(item, index) in oilFields"
               :key="item.ogfId"
@@ -86,7 +86,7 @@
             margin-left: 0;
           "
         >
-          <span>秦皇岛32-6油田单井产量变化</span>
+          <span>{{searchForm.ogfName}}单井产量变化</span>
           <div>
             <el-button type="primary" style="height: 30px" @click="doDownIndex">下载</el-button>
             <el-button type="primary" style="height: 30px" @click="goBack">返回</el-button>
@@ -428,7 +428,7 @@
 </template>
 
 <script>
-import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { getWellOutputWaveTable, getWellOutputWaveTableDate } from "@/api/oilDeposit/rem-04/yieId.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 import * as D3 from "d3";
@@ -465,7 +465,9 @@ export default {
       ],
       //参数
       searchForm: {
+        companyId: "",
         ogfId: "",
+        ogfName: "",
         platId: "",
         wellId: "",
         wellIds: [], //井标识集合
@@ -534,11 +536,26 @@ export default {
   methods: {
     //页面初始化信息
     async initData() {
-      //油田
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilFields = res.data.data;
-          this.searchForm.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
+          this.searchForm.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.searchForm.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilFields = data.data.data;
+          if (this.searchForm.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.searchForm.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.searchForm.ogfId = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
+          }
         }
       });
       //平台
@@ -584,6 +601,7 @@ export default {
     },
     //产量波动统计表
     getWellOutputWaveTable(isWellIdsNull) {
+      this.searchForm.ogfName = this.oilFields.filter(item => item.ogfId === this.searchForm.ogfId)[0].ogfName || "";
       if (this.searchForm.wellId || isWellIdsNull) {
         this.searchForm.wellIds = [];
       }
@@ -667,7 +685,7 @@ export default {
     },
     //下载导出csv文件
     doDownIndex() {
-      exportExcel("#tableData", "秦皇岛32-6油田单井产量变化");
+      exportExcel("#tableData", `${this.searchForm.ogfName}单井产量变化`);
     },
     //自定义井号排序
     borepipeNoSort(oa, ob, code) {
