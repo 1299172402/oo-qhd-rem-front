@@ -70,7 +70,6 @@ export default {
             })
         },
         remark(row){
-            console.log(row)
             const text = row.remark;
             const firstChar = text.charAt(0);
             const isLetter = /^[A-Za-z]$/.test(firstChar);
