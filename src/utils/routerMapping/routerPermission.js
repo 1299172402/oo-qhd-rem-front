@@ -94,7 +94,7 @@ const GenerateRouter = {
   "MeasureManagement": () => import("@/pages/rem/plan/measureManagement/index.vue"),
   "MeasureEffectTracking": () => import("@/pages/rem/plan/measureManagement/measureEffectTracking.vue"),
   "PersonnelMeasures": () => import("@/pages/rem/plan/measureManagement/personnelMeasures.vue"),
-  "planmessage": () => import("@/pages/rem/plan/measureManagement/components/planmessage.vue"),
+  "Planmessage": () => import("@/pages/rem/plan/measureManagement/components/planmessage.vue"),
   "TwoIncreasesOneDecrease": () => import("@/pages/rem/plan/twoIncreasesOneDecrease/index.vue"),
 
   "RecoveryEfficiencyIndex": () => import("@/pages/rem/recoveryEfficiency/index.vue"), // 采收率及可采储量预测

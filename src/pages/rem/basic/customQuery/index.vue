@@ -621,7 +621,8 @@ export default {
         choicewell(val){
             queryPlatformQueryWellListDetail({ogfId:val}).then(res => {
                 if (res.data.code == 200) {
-                    this.wellData =res.data.data
+                    this.wellData = res.data.data
+                    this.wellId = ''
                 }
             })
         },
