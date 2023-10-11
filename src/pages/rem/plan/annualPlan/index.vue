@@ -8,7 +8,7 @@
       <div style="display: flex; align-items: center; flex-wrap: wrap">
         <div style="margin-right: 15px; margin-bottom: 10px">
           <span>油田：</span>
-          <el-select v-model="searchForm.selectOilField" placeholder="请选择" disabled>
+          <el-select v-model="searchForm.selectOilField" placeholder="请选择">
             <el-option
               v-for="(item, index) in oilField"
               :key="item.ogfId"
@@ -159,6 +159,9 @@ import basicYield from "./crudeOil/basicYield.vue";
 import measureProduction from "./crudeOil/measureProduction.vue";
 import adjustingWellProduction from "./crudeOil/adjustingWellProduction.vue";
 import devWellProduction from "./crudeOil/devWellProduction.vue";
+import {
+    userListByUserNames
+} from "@/api/basic/master";
 export default {
   name: "annualPlan",
   components: {
@@ -231,6 +234,20 @@ export default {
       await QueryOgfDetail({}).then((res) => {
         if (res.data.code == 200) {
           this.oilField = res.data.data || [];
+            let params = {
+                searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+            }
+            let orgId
+            userListByUserNames(params).then((res) => {
+                orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
+                    this.searchForm.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+                } else {
+                    if (this.oilField != null && this.oilField.length > 0) {
+                        this.searchForm.selectOilField = this.oilField[0].ogfId;
+                    }
+                }
+            })
         }
       });
       //获取滚动预测版本
