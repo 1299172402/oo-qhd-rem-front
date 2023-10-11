@@ -32,7 +32,7 @@
                         <el-checkbox label="自然递减率" name="type"/>
                         <el-checkbox label="采油速度" name="type"/>
                         <el-checkbox label="采出程度与含水率关系图" name="type"/>
-                        <el-checkbox label="含水上升" name="type"/>
+                        <el-checkbox label="含水上升率" name="type"/>
                         <el-checkbox label="秦皇岛32-6油田生产指标总览" name="type"/>
                     </el-checkbox-group>
                 </el-form-item>
@@ -103,7 +103,7 @@ export default {
                 { x: 0, y: 60, w: 6, h: 10, i: "11", name: "措施效果跟踪表", show: true },
                 { x: 6, y: 60, w: 6, h: 10, i: "12", name: "超欠注情况统计", show: true },
                 { x: 0, y: 70, w: 6, h: 10, i: "13", name: "自然递减率", show: true },
-                { x: 6, y: 70, w: 6, h: 10, i: "16", name: "含水上升", show: true },
+                { x: 6, y: 70, w: 6, h: 10, i: "16", name: "含水上升率", show: true },
                 { x: 0, y: 80, w: 6, h: 10, i: "15", name: "采出程度与含水率关系图", show: true },
                 { x: 6, y: 80, w: 6, h: 10, i: "14", name: "采油速度", show: true },
                 
