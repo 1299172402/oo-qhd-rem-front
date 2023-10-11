@@ -3,7 +3,7 @@
         <header-search>
             <el-form style="margin: 20px 0" :inline="true">
                 <el-form-item label="油田：">
-                    <el-select v-model="queryData.ogfId" disabled @change="choicepla" >
+                    <el-select v-model="queryData.ogfId" @change="choicepla" >
                         <el-option
                             v-for="(item, index) in oilFields"
                             :key="index"
@@ -106,7 +106,8 @@
         queryOperatorsCheckFieldListsDetail,
         queryListOfOilfieldQueryPlatformsDetail,
         queryPlatformQueryWellListDetail,
-        queryOilAndGasFieldQueryPositionDetail
+        queryOilAndGasFieldQueryPositionDetail,
+        userListByUserNames
     } from "@/api/basic/master";
     import {queryOilFieldIncident, queryOilFieldIncidentType} from "@/api/rem/reservoirbillboards";
     export default {
@@ -141,17 +142,31 @@
             goBack(){
                 this.$router.push({name:'Oilexhibition'})
             },
-            getList() {
-                //根据作业公司查询油田
-                queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
+            async getList() {
+                //根据作业公司查询油田 111222
+                await queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
                     this.oilFields = res.data.data
+                    let params = {
+                        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+                    }
+                    let orgId
+                    userListByUserNames(params).then((res) => {
+                        orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                        if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
+                            this.queryData.ogfId= '3FC9A818F5BC43B88270DB80BBB3018F';
+                        } else {
+                            if (this.oilFields != null && this.oilFields.length > 0) {
+                                this.queryData.ogfId = this.oilFields[0].ogfId;
+                            }
+                        }
+                    })
                 })
                 //根据油田查询平台列表
-                queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
+                await queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
                     this.platforms = res.data.data
                 })
                 //查询事件类型
-                queryOilFieldIncidentType().then(res=>{
+                await queryOilFieldIncidentType().then(res=>{
                     this.events = res.data.data.data
                 })
             },
@@ -196,7 +211,7 @@
             queryserch(){
                 this.getData()
             },
-            refresh(){
+           async refresh(){
                 this.queryData = {
                     ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                     wellId: "",
@@ -206,6 +221,7 @@
                     page: 1,
                     pageSize: 16,
                 }
+                await this.getList();
                 let oilname = (this.oilFields.find(obj =>  obj.ogfId == this.queryData.ogfId)).ogfName;
                 queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryData.ogfId}).then(res => {
                     this.platforms = res.data.data
