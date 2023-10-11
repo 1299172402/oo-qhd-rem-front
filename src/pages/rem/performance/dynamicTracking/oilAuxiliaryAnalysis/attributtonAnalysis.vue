@@ -1516,7 +1516,6 @@ export default {
         },
         //表格鼠标悬浮事件
         handleCurrentChange(row){
-            console.log(row)
             const targetName = row.measure?row.measure.split(';').join(''):row.vauleMeasure.split(';').join('')
                 this.chart.dispatchAction({
                     type:'highlight',

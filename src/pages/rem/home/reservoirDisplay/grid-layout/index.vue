@@ -364,7 +364,7 @@ export default {
                     return recoverLevel;
                 case "采油速度":
                     return recoveryRate;
-                case "含水上升":
+                case "含水上升率":
                     return waterUp;
                 case "秦皇岛32-6油田生产指标总览":
                     return overviewIndicators;

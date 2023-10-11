@@ -3,7 +3,7 @@
         <info-window
             info-width="100%"
             info-height="100%"
-            header-title="含水上升"
+            header-title="含水上升率"
             :is-show-max-btn="true"
         >
             <el-button  type="primary" class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</el-button>
