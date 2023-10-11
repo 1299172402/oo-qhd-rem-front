@@ -95,7 +95,7 @@
             ></el-table-column>
             <el-table-column
               prop="liquidDaily"
-              :label="`阶段末日产液\n (m³/d)`"
+              :label="`阶段末日产液\n (m³)`"
               align="center"
               width="180px"
               show-overflow-tooltip
@@ -103,7 +103,7 @@
             ></el-table-column>
             <el-table-column
               prop="oilDaily"
-              :label="`阶段末日产油量\n (m³/d)`"
+              :label="`阶段末日产油量\n (m³)`"
               align="center"
               width="190px"
               show-overflow-tooltip
@@ -223,7 +223,7 @@
               <el-checkbox label="水井总井数（口)"></el-checkbox>
             </el-col>
             <el-col :span="12">
-              <el-checkbox label="日注水（m³/d)"></el-checkbox>
+              <el-checkbox label="日注水（m³)"></el-checkbox>
             </el-col>
           </el-row>
           <el-row style="margin-top: 10px">
@@ -236,7 +236,7 @@
           </el-row>
           <el-row style="margin-top: 10px">
             <el-col :span="12">
-              <el-checkbox label="单元日产液（m³/d)"></el-checkbox>
+              <el-checkbox label="单元日产液（m³)"></el-checkbox>
             </el-col>
             <el-col :span="12">
               <el-checkbox label="月注采比"></el-checkbox>
@@ -244,7 +244,7 @@
           </el-row>
           <el-row style="margin-top: 10px">
             <el-col :span="12">
-              <el-checkbox label="单元日产油（m³/d)"></el-checkbox>
+              <el-checkbox label="单元日产油（m³)"></el-checkbox>
             </el-col>
             <el-col :span="12">
               <el-checkbox label="年产油（m³)"></el-checkbox>
@@ -334,7 +334,7 @@
               min-width="120"
             ></el-table-column>
           </el-table-column>
-          <el-table-column :label="'月均日产水平' + (currentUnit == 'm' ? '（m³/d)' : '（t/d)')" align="center">
+          <el-table-column :label="'月均日产水平' + (currentUnit == 'm' ? '（m³)' : '（t)')" align="center">
             <el-table-column
               prop="liquidDailySum"
               label="液量"
@@ -352,7 +352,7 @@
               :formatter="toPrecise2"
             ></el-table-column>
           </el-table-column>
-          <el-table-column :label="'平均单井日产' + (currentUnit == 'm' ? '（m³/d)' : '（t/d)')" align="center">
+          <el-table-column :label="'平均单井日产' + (currentUnit == 'm' ? '（m³)' : '（t)')" align="center">
             <el-table-column
               prop="liquidDailyAvg"
               label="液量"
@@ -386,7 +386,7 @@
               min-width="120"
             ></el-table-column>
           </el-table-column>
-          <el-table-column label="日注水（m³/d)" align="center">
+          <el-table-column label="日注水（m³)" align="center">
             <el-table-column
               prop="injectionDailySum"
               label="合计"
@@ -978,7 +978,7 @@ export default {
             },
           },
           {
-            name: "油田日产液(m³/d)\n\n油田日产油(m³/d)",
+            name: "油田日产液(m³)\n\n油田日产油(m³)",
             nameLocation: "center",
             nameGap: 35,
             nameRotate: 0,
@@ -1010,7 +1010,7 @@ export default {
             },
           },
           {
-            name: "平均单井日产液(m³/d)\n\n平均单井日产油(m³/d)",
+            name: "平均单井日产液(m³)\n\n平均单井日产油(m³)",
             nameLocation: "center",
             nameGap: 35,
             nameRotate: 0,
@@ -1104,7 +1104,7 @@ export default {
             },
           },
           {
-            name: "油田平均日注水(m³/d)",
+            name: "油田平均日注水(m³)",
             nameLocation: "center",
             nameGap: 35,
             nameRotate: 0,
@@ -1280,7 +1280,7 @@ export default {
           },
           {
             type: "line",
-            name: "油田日产液(m³/d)",
+            name: "油田日产液(m³)",
             symbol: "none",
             xAxisIndex: 2,
             yAxisIndex: 2,
@@ -1291,7 +1291,7 @@ export default {
           },
           {
             type: "line",
-            name: "油田日产油(m³/d)",
+            name: "油田日产油(m³)",
 
             symbol: "none",
             xAxisIndex: 2,
@@ -1303,7 +1303,7 @@ export default {
           },
           {
             type: "line",
-            name: "平均单井日产液(m³/d)",
+            name: "平均单井日产液(m³)",
 
             symbol: "none",
             xAxisIndex: 3,
@@ -1315,7 +1315,7 @@ export default {
           },
           {
             type: "line",
-            name: "平均单井日产油(m³/d)",
+            name: "平均单井日产油(m³)",
 
             symbol: "none",
             xAxisIndex: 3,
@@ -1351,7 +1351,7 @@ export default {
           },
           {
             type: "line",
-            name: "油田平均日注水(m³/d)",
+            name: "油田平均日注水(m³)",
 
             symbol: "none",
             xAxisIndex: 6,

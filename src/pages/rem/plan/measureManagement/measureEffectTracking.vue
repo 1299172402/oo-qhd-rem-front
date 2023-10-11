@@ -126,14 +126,14 @@
           <el-table-column
             prop="avgOilDaily"
             align="center"
-            :label="`平均日增油\n(m³/d)`"
+            :label="`平均日增油\n(m³)`"
             width="100"
             :formatter="toPrecise2"
           ></el-table-column>
           <el-table-column
             prop=""
             align="center"
-            :label="`滚动预测日增油\n(m³/d)`"
+            :label="`滚动预测日增油\n(m³)`"
             width="140"
             :formatter="toPrecise2"
           ></el-table-column>
@@ -196,7 +196,7 @@
         <el-table-column align="center" label="措施前注入情况" min-width="100">
           <el-table-column
             align="center"
-            :label="`日注水量\n(m³/d)`"
+            :label="`日注水量\n(m³)`"
             min-width="100"
             prop="bmInjWater"
           ></el-table-column>
@@ -205,14 +205,14 @@
           <el-table-column
             prop="injDaily"
             align="center"
-            :label="`当日日增注\n( m³/d)`"
+            :label="`当日日增注\n( m³)`"
             min-width="100"
           ></el-table-column>
           <el-table-column align="center" :label="`累增注\n(m³)`" min-width="100" prop="sumInjDaily"></el-table-column>
           <el-table-column align="center" :label="`增注有效期\n(d)`" min-width="100" prop="days"></el-table-column>
           <el-table-column
             align="center"
-            :label="`地质设计日配注\n(m³/d)`"
+            :label="`地质设计日配注\n(m³)`"
             min-width="120"
             prop="geoDesignInjDaily"
           ></el-table-column>

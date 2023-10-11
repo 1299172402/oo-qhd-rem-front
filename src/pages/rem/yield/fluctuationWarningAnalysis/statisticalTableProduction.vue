@@ -111,7 +111,7 @@
               <el-table-column
                 sortable
                 prop="fluidProdDaily"
-                :label="`日产液\n(m³/d)`"
+                :label="`日产液\n(m³)`"
                 width="90"
                 :formatter="formatter"
                 :sort-method="
@@ -123,7 +123,7 @@
               <el-table-column
                 sortable
                 prop="oilProdDaily"
-                :label="`日产油\n(m³/d)`"
+                :label="`日产油\n(m³)`"
                 width="90"
                 :formatter="formatter"
                 :sort-method="
@@ -172,7 +172,7 @@
               <el-table-column
                 sortable
                 prop="fluidProdDailyCompare"
-                :label="`日产液\n(m³/d)`"
+                :label="`日产液\n(m³)`"
                 width="90"
                 :formatter="formatter"
                 :sort-method="
@@ -184,7 +184,7 @@
               <el-table-column
                 sortable
                 prop="oilProdDailyCompare"
-                :label="`日产油\n(m³/d)`"
+                :label="`日产油\n(m³)`"
                 width="90"
                 :formatter="formatter"
                 :sort-method="

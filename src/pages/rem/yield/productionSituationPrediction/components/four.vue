@@ -60,7 +60,7 @@
           ></el-date-picker>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="`日增油/日产油\n(m³/d)`" prop="" width="160">
+      <el-table-column align="center" :label="`日增油/日产油\n(m³)`" prop="" width="160">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.dailyAllocatingBase"
