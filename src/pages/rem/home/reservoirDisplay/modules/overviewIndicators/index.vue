@@ -28,7 +28,7 @@
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
-                        <div class="text">年产油量</div>
+                        <div class="text">年产油</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
@@ -39,7 +39,7 @@
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
-                        <div class="text">累产油量</div>
+                        <div class="text">累产油</div>
                     </div>
                 </el-col>
               
