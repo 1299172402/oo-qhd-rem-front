@@ -39,7 +39,7 @@
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
-                        <div class="text">累产油</div>
+                        <div class="text">总累产油</div>
                     </div>
                 </el-col>
               
