@@ -32,7 +32,7 @@ export default {
         relationship: {
             grid:{
                 top: "15%",
-                right: "5%",
+                right: "18%",
                 bottom:"20%",
                 left: "12%",
             },
