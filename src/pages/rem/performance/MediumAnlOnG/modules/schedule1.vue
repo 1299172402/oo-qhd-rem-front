@@ -49,10 +49,10 @@
           <el-table-column prop="oilproduction" label="10⁴m³" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="日产油水平" align="center">
-          <el-table-column prop="dailyoillevel" label="m³/d" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="dailyoillevel" label="m³" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="日产油能力" align="center">
-          <el-table-column prop="dailyfuelcapacity" label="m³/d" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="dailyfuelcapacity" label="m³" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="综合气油比" align="center">
           <el-table-column

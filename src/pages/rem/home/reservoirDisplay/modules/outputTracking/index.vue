@@ -246,7 +246,7 @@ export default {
                 yAxis: [
                     {
                         type: "value",
-                        name: "日产 (m³/d)",
+                        name: "日产 (m³)",
                         nameTextStyle: {
                             padding: [0, 0, 60, 0], // 上、右、下、左
                         },
@@ -968,7 +968,7 @@ export default {
                     //各线的数据
                     this.productLineChart.series = seriesData;
                     // if (this.searchForm.selectUnitOfProduction == 'm') {
-                        this.productLineChart.yAxis[0].name = '日产(m³/d)';
+                        this.productLineChart.yAxis[0].name = '日产(m³)';
                         this.productLineChart.yAxis[1].name = '年产(10⁴m³)';
                     // } else if (this.searchForm.selectUnitOfProduction == 't') {
                     //     this.productLineChart.yAxis[0].name = '日产t/d';

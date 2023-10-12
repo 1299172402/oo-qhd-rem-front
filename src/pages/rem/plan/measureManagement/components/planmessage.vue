@@ -111,13 +111,13 @@
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable :label="`日产液\n（m³/d）`" min-width="130px" prop="fluidProdDaily" align="center">
+          <el-table-column sortable :label="`日产液\n（m³）`" min-width="130px" prop="fluidProdDaily" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.fluidProdDaily !== null && scope.row.fluidProdDaily !== ''">{{scope.row.fluidProdDaily}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable :label="`日产油\n（m³/d）`" min-width="130px" prop="oilProdDaily" align="center">
+          <el-table-column sortable :label="`日产油\n（m³）`" min-width="130px" prop="oilProdDaily" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.oilProdDaily !== null && scope.row.oilProdDaily !== ''">{{scope.row.oilProdDaily}}</span>
                   <span v-else>-</span>
@@ -197,13 +197,13 @@
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="120px" :label="`日增油\n（m³/d）`" prop="forecastOilInc" align="center">
+          <el-table-column sortable min-width="120px" :label="`日增油\n（m³）`" prop="forecastOilInc" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.forecastOilInc !== null && scope.row.forecastOilInc !== ''">{{scope.row.forecastOilInc}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="120px"  :label="`日产油\n（m³/d）`" prop="forecastOil" align="center">
+          <el-table-column sortable min-width="120px"  :label="`日产油\n（m³）`" prop="forecastOil" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.forecastOil !== null && scope.row.forecastOil !== ''">{{scope.row.forecastOil}}</span>
                   <span v-else>-</span>

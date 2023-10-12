@@ -84,13 +84,13 @@
                                 </template>
                         </el-table-column>
                         <el-table-column label="生产情况"   align="center">
-                            <el-table-column :label="`日产油\n(m³/d)`" prop="dailyOil"   align="center">
+                            <el-table-column :label="`日产油\n(m³)`" prop="dailyOil"   align="center">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.dailyOil !== null && scope.row.dailyOil !== ''">{{scope.row.dailyOil}}</span>
                                     <span v-else>-</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`日产气\n(m³/d)`" prop="dailyGas" align="center">
+                            <el-table-column :label="`日产气\n(m³)`" prop="dailyGas" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.dailyGas !== null && scope.row.dailyGas !== ''">{{scope.row.dailyGas}}</span>
                                     <span v-else>-</span>
@@ -129,7 +129,7 @@
                                 <span v-else>-</span>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="`计划日产\n(m³/d)`" prop="planOil" align="center">
+                        <el-table-column :label="`计划日产\n(m³)`" prop="planOil" align="center">
                             <template slot-scope="scope">
                                 <span v-if="scope.row.planOil !== null && scope.row.planOil !== ''">{{scope.row.planOil}}</span>
                                 <span v-else>-</span>
