@@ -129,7 +129,7 @@ export default {
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 wellId: "",
                 platformId: "",
-                selectDate: '',
+                selectDate: [],
                 event: [],
                 page: 1,
                 pageSize: 16,
@@ -144,11 +144,30 @@ export default {
         }
     },
     mounted() {
+        this.initializeDate();
         this.getList();
         this.getWellData();
         this.getData();
     },
     methods: {
+        initializeDate() {
+            var data = new Date();
+            var y = data.getFullYear();
+            var time = new Date().getTime() - 24 * 60 * 60 * 1000;
+            var yesday = new Date(time); // 获取的是前一天日期  
+            yesday =
+                yesday.getFullYear() +
+                "-" +
+                (yesday.getMonth() > 8 ? yesday.getMonth() + 1 : "0" + (yesday.getMonth() + 1)) +
+                "-" +
+                (yesday.getDate() > 8 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式  
+            var startTime = y + "-" + "01-01";
+            var endTime = yesday;
+            this.$set(this.queryData.selectDate, 0, startTime);
+            this.$set(this.queryData.selectDate, 1, endTime);
+            
+        },
+        
         goBack() {
             this.$router.push({name: 'Oilexhibition'})
         },
@@ -229,11 +248,12 @@ export default {
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 wellId: "",
                 platformId: "",
-                selectDate: '',
+                selectDate: [],
                 event: [],
                 page: 1,
                 pageSize: 16,
             }
+            this.initializeDate();
             await this.getList();
             let oilname = (this.oilFields.find(obj => obj.ogfId == this.queryData.ogfId)).ogfName;
             QueryPlatformDetail({ogfId: this.queryData.ogfId}).then(res => {
