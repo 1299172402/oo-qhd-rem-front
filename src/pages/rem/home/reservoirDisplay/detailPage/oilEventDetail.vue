@@ -136,7 +136,7 @@ export default {
                 orgId: '715AD1CD60484BB59E737CD18A9DE44A',
             },
             oilFields: [],
-            title: '秦皇岛32-6油田单井大事记录表',
+            title: '单井大事记录表',
             platforms: [],
             wells: [],
             events: [],
