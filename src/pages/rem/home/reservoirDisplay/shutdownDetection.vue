@@ -24,7 +24,7 @@
                                 <el-option
                                     v-for="(item, index) in platforms"
                                     :key="index"
-                                    :label="item.platformName"
+                                    :label="item.platformCode"
                                     :value="item.platformId"
                                 >
                                 </el-option>
@@ -141,7 +141,8 @@ import {
     queryListOfOilfieldQueryPlatformsDetail,
     queryOperatingCompanyDetail,
     queryPlatformQueryWellListDetail,
-    userListByUserNames
+    userListByUserNames,
+    QueryPlatformDetail
 } from "@/api/rem/marster.js";
 import {queryShutDownWellStatisDetails,queryShutDownWellStatisDetailsDownloadFile, queryShutDownValueDict, queryPlanValueDict} from '@/api/rem/reservoirbillboards'
 import FileSaver from 'file-saver'
@@ -237,7 +238,7 @@ export default {
         },
         //平台
         async queryPlatformSelect() {
-            await queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryData.ogfId}).then((res) => {
+            await QueryPlatformDetail({ogfId:this.queryData.ogfId}).then((res) => {
                 if (res.data.code == 200) {
                     this.platforms = res.data.data;
                     this.platforms.map((n) => {
@@ -302,10 +303,7 @@ export default {
             this.$router.go(-1);
         },
         async result() {
-            this.queryData.platformId = ''
-            let requestPlat = {
-                ogfId: this.selectOilField,
-            };
+            await this.getData();
             var data = new Date();
             var y = data.getFullYear();
             var time = data.getTime() - 24 * 60 * 60 * 1000;
@@ -314,19 +312,15 @@ export default {
             yesday =
                 yesday.getFullYear() +
                 "-" +
-                (yesday.getMonth() > 9 ? yesday.getMonth() + 1 : "0" + (yesday.getMonth() + 1)) +
+                (yesday.getMonth() > 8 ? yesday.getMonth() + 1 :  "0" + (yesday.getMonth() + 1)) +
                 "-" +
-                (yesday.getDate() > 9 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
-            this.queryData.wellId = ''
-            this.queryData.shutdownPlanTypeCode = ''
-            this.queryData.injShutdownTypeCode = ''
-            // this.month = this.startmonth
-            this.queryData.startTime =y + "-" + "01-01";
+                (yesday.getDate() > 8 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
+            this.queryData.startTime = y + "-" + "01-01";
             this.queryData.endTime = yesday;
             this.$set(this.month, 0, this.queryData.startTime);
             this.$set(this.month, 1, this.queryData.endTime);
-            await this.getData();
-            await this.queryinfo();
+            this.startmonth = this.month
+            await this.queryinfo()
         },
         queryinfo() {
             this.queryData.startTime = this.month[0]
