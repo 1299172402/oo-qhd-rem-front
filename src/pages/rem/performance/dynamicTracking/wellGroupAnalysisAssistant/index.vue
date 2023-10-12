@@ -29,7 +29,6 @@
             v-model="selectOilField"
             placeholder="请选择"
             filterable
-            disabled
             @change="changeSelectOilField"
             style="margin-right: 15px"
           >
@@ -177,7 +176,7 @@
 </template>
 
 <script>
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import { wellGroupList } from "@/api/rem/wellgroupinformaintenance";
 import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
 // Minio
@@ -217,6 +216,7 @@ export default {
 
       //油田
       oilField: [],
+      companyId: "",
       //油田名字
       oilFieldName: "",
       //油田选中值
@@ -434,11 +434,26 @@ export default {
 
     //初始化页面
     async initData() {
-      //油田信息初始化
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilField = res.data.data;
-          this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
         }
       });
       //区块信息初始化
@@ -509,12 +524,13 @@ export default {
       });
     },
     //改变选中油田内容
-    changeSelectOilField() {
-      this.getFetchFields();
+    async changeSelectOilField() {
+      await this.getFetchFields();
+      await this.getWellGroups();
     },
     //获得区块类型
-    getFetchFields() {
-      QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {
+    async getFetchFields() {
+      await QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {
           this.block = res.data.data;
           this.block.unshift({
@@ -533,7 +549,7 @@ export default {
       this.getWellGroups();
     },
     //获得井组信息
-    getWellGroups() {
+    async getWellGroups() {
       // TODO lv 页面没有使用，代码检查错误先注释
       // let oilFieldId = [];
       // if (this.selectOilField == this.selectBlock) {
@@ -552,7 +568,7 @@ export default {
         blockId: blockId,
       };
       //动态资料-井组配注变化动态||井组连通性变化动态||注采井网状态变化 调zxp这个接口
-      wellGroupList(obj).then((res) => {
+      await wellGroupList(obj).then((res) => {
         if (res.data.code == 200) {
           if (res.data.data && res.data.data.length) {
             this.newWellGroup = res.data.data;

@@ -14,7 +14,7 @@
       <div class="g-row-flex-V g-w100 g-h100">
         <div style="margin-right: 15px">
           <span>油田：</span>
-          <el-select v-model="selectOilField" class="f2" disabled @change="onFieldChange">
+          <el-select v-model="selectOilField" class="f2" @change="onFieldChange">
             <el-option
               v-for="(item, index) in oilFields"
               :key="item.ogfId"
@@ -25,7 +25,7 @@
         </div>
         <div style="margin-right: 15px">
           <span>平台：</span>
-          <el-select v-model="selectPlatform" class="f2" style="width: 220px" @change="onPlatfromChange">
+          <el-select v-model="selectPlatform" class="f2" @change="onPlatfromChange">
             <el-option
               v-for="(item, index) in platforms"
               :key="item.platformId"
@@ -53,11 +53,11 @@
           </el-select>
         </div>
         <div style="margin-right: 15px">
-          <span>时间:</span>
+          <span>日期：</span>
           <el-date-picker
             class="f3"
             v-model="dateTime"
-            style="margin-left: 10px"
+            style="margin-left: 10px;"
             type="year"
             placeholder="选择日期"
             value-format="yyyy"
@@ -126,14 +126,14 @@
           <el-table-column
             prop="avgOilDaily"
             align="center"
-            :label="`平均日增油\n(m³/d)`"
+            :label="`平均日增油\n(m³)`"
             width="100"
             :formatter="toPrecise2"
           ></el-table-column>
           <el-table-column
             prop=""
             align="center"
-            :label="`滚动预测日增油\n(m³/d)`"
+            :label="`滚动预测日增油\n(m³)`"
             width="140"
             :formatter="toPrecise2"
           ></el-table-column>
@@ -148,31 +148,12 @@
                 >方案查看</el-button
               >
             </div>
-            <!-- TODO 临时 -->
-            <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
-              <el-button
-                type="text"
-                @click="switchToPlan(scope.row.geoDesg, scope.row.geoDesgSl)"
-                :disabled="!canDownload"
-                >方案查看</el-button
-              >
-            </div>
             <span v-else>-</span>
           </template>
         </el-table-column>
         <el-table-column label="工艺设计" align="center">
           <template slot-scope="scope">
-            <!-- TODO 临时 -->
             <div v-if="scope.row.oprgProcDesg" class="chicked">
-              <el-button
-                type="text"
-                @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)"
-                :disabled="!canDownload"
-                >方案查看
-              </el-button>
-            </div>
-            <!-- TODO 临时 -->
-            <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
               <el-button
                 type="text"
                 @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)"
@@ -186,15 +167,6 @@
         <el-table-column label="施工设计" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.oprgDesg" class="chicked">
-              <el-button
-                type="text"
-                @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)"
-                :disabled="!canDownload"
-                >方案查看
-              </el-button>
-            </div>
-            <!-- TODO 临时 -->
-            <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
               <el-button
                 type="text"
                 @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)"
@@ -224,7 +196,7 @@
         <el-table-column align="center" label="措施前注入情况" min-width="100">
           <el-table-column
             align="center"
-            :label="`日注水量\n(m³/d)`"
+            :label="`日注水量\n(m³)`"
             min-width="100"
             prop="bmInjWater"
           ></el-table-column>
@@ -233,14 +205,14 @@
           <el-table-column
             prop="injDaily"
             align="center"
-            :label="`当日日增注\n( m³/d)`"
+            :label="`当日日增注\n( m³)`"
             min-width="100"
           ></el-table-column>
           <el-table-column align="center" :label="`累增注\n(m³)`" min-width="100" prop="sumInjDaily"></el-table-column>
           <el-table-column align="center" :label="`增注有效期\n(d)`" min-width="100" prop="days"></el-table-column>
           <el-table-column
             align="center"
-            :label="`地质设计日配注\n(m³/d)`"
+            :label="`地质设计日配注\n(m³)`"
             min-width="120"
             prop="geoDesignInjDaily"
           ></el-table-column>
@@ -515,7 +487,7 @@ import {
 } from "@/api/oilDeposit/ipm-03/machineprodwellipm.js";
 import { transformBorepipeNo } from "@/api/oilDeposit/ipm-03/basedata.js";
 import { wellFluxLastDayHour } from "@/api/oilDeposit/opm/opmData.js";
-import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { nameAndCode } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getWorkProgress } from "@/api/oilDeposit/rem-04/plan.js";
 import { exportExcel, exportExcelFromJson } from "@/lib/exportExcel.js";
@@ -529,6 +501,7 @@ export default {
     return {
       //油田下拉框
       oilFields: [],
+      companyId: "",
       //油田id
       selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
       //平台下拉框
@@ -2052,7 +2025,10 @@ export default {
       // 获得年份
       const year = new Date().getFullYear();
       this.selectData = [new Date(`${year}-01-01`).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
-      this.selectRealData = [new Date().addDays(-1).format("yyyy-MM-dd hh:mm:ss"), new Date().format("yyyy-MM-dd hh:mm:ss")];
+      this.selectRealData = [
+        new Date().addDays(-1).format("yyyy-MM-dd hh:mm:ss"),
+        new Date().format("yyyy-MM-dd hh:mm:ss"),
+      ];
       // this.selectData.push(new Date(year+'-01-01').format('yyyy-MM-dd'));
       // this.selectData.push(new Date().format('yyyy-MM-dd'));
       this.getFetchMeasureStatInfos(
@@ -2071,10 +2047,26 @@ export default {
       this.doSearchCharts();
     },
     async initSearchSelect() {
-      //油田
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilFields = res.data.data;
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilFields = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
+          }
         }
       });
       //平台
@@ -2598,29 +2590,17 @@ export default {
     },
     //下载文档 跳转至方案查看
     switchToPlan(filePath, fileType) {
-      this.$modal
-        .confirm("是否确认下载？")
-        .then(() => {
-          // this.$message.success("下载成功！");
-          // return this.loadData();
-        })
-        .catch(() => {
-          // this.$message.warning("已取消下载");
-        });
-      return;
-      const fp = encodeURI(filePath);
-      const ft = fileType;
-      const request = {
-        filePath: fp,
-        fileType: ft,
-      };
-      getDocDownloadUrl(request).then((res) => {
-        if (res.code == 200) {
-          const fn = res.headers.filename;
-          const fileName = decodeURI(fn);
-          fileSaver.saveAs(res.data, fileName);
-        }
-      });
+      // this.$modal
+      //   .confirm("是否确认下载？")
+      //   .then(() => {
+      // this.$message.success("下载成功！");
+      // return this.loadData();
+      fileSaver.saveAs(filePath);
+      // })
+      // .catch(() => {
+      //   // this.$message.warning("已取消下载");
+      //   fileSaver.saveAs(filePath);
+      // });
     },
     fatchAllData() {
       this.getRealtimeData();
@@ -3143,7 +3123,7 @@ export default {
 }
 
 .f2 {
-  width: 250px !important;
+  width: 200px !important;
 }
 
 .f3 {

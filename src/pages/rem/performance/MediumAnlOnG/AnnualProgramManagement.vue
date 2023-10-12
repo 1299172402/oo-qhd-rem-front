@@ -92,13 +92,13 @@
               <el-table-column
                 prop="oilAudit"
                 align="center"
-                :label="currentUnitType == 'm' ? '考核日产(m³/d)' : '考核日产(t/d)'"
+                :label="currentUnitType == 'm' ? '考核日产(m³)' : '考核日产(t)'"
               >
               </el-table-column>
               <el-table-column
                 prop="oilReal"
                 align="center"
-                :label="currentUnitType == 'm' ? '实际日产(m³/d)' : '实际日产(t/d)'"
+                :label="currentUnitType == 'm' ? '实际日产(m³)' : '实际日产(t)'"
               >
               </el-table-column>
               <el-table-column
@@ -165,8 +165,8 @@
               <el-table-column type="index" align="center" label="序号" :index="indexMethodInjection">
               </el-table-column>
               <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
-              <el-table-column prop="injectionDailyReal" align="center" label="实际日注入量(m³/d)"> </el-table-column>
-              <el-table-column prop="injectionDailyPlan" align="center" label="计划日注入量(m³/d)"> </el-table-column>
+              <el-table-column prop="injectionDailyReal" align="center" label="实际日注入量(m³)"> </el-table-column>
+              <el-table-column prop="injectionDailyPlan" align="center" label="计划日注入量(m³)"> </el-table-column>
               <el-table-column
                 property="injectionSumReal"
                 align="center"

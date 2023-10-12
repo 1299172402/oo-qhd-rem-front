@@ -29,7 +29,6 @@
             v-model="selectOilField"
             placeholder="请选择"
             filterable
-            clearable
             @change="doChangeYt"
             style="margin-right: 15px"
           >
@@ -703,24 +702,21 @@ export default {
           this.companyId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
         }
       });
-      let oilFeildId = this.$route.query.oilField;
-      console.log(this.$route.query);
-      let wellId = this.$route.query.wellId;
-      //获得油田信息给下拉列表
-      await QueryOgfDetail({ operationZoneId: this.companyId }).then((res) => {
-        if (res.data.code == 200) {
-          this.oilField = res.data.data;
-          if (this.oilField.length == 0) {
-            this.selectOilField = "";
-          } else {
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
             this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
           }
         }
       });
-      if (oilFeildId == undefined || oilFeildId == null) {
-        this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
-      } else {
-        this.selectOilField = oilFeildId;
+
+      let wellId = this.$route.query.wellId;
+      if (this.$route.query.oilField) {
+        this.selectOilField = this.$route.query.oilField;
       }
       await QueryPlatformDetail({ ogfId: this.selectOilField }).then((res) => {
         //判断联通状态
@@ -870,6 +866,7 @@ export default {
       this.selectPlatform = "";
       this.selectWellId = "";
       this.getFetchPlatforms(val);
+      this.doChangePT(this.selectOilField);
     },
     //切换平台级联改变
     doChangePT(val) {

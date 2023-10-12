@@ -294,7 +294,7 @@
                             }
                         },
                         {
-                            name: '油田日产液(m³/d)\n\n油田日产油(m³/d)',
+                            name: '油田日产液(m³)\n\n油田日产油(m³)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -325,7 +325,7 @@
                             }
                         },
                         {
-                            name: '平均单井日产液(m³/d)\n\n平均单井日产油(m³/d)',
+                            name: '平均单井日产液(m³)\n\n平均单井日产油(m³)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -418,7 +418,7 @@
                             }
                         },
                         {
-                            name: '油田平均日注水(m³/d)',
+                            name: '油田平均日注水(m³)',
                             nameLocation: 'center',
                             nameGap: 50,
                             nameRotate: 0,
@@ -597,7 +597,7 @@
                         },
                         {
                             type: 'line',
-                            name: '油田日产液(m³/d)',
+                            name: '油田日产液(m³)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
@@ -610,7 +610,7 @@
                         },
                         {
                             type: 'line',
-                            name: '油田日产油(m³/d)',
+                            name: '油田日产油(m³)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
@@ -623,7 +623,7 @@
                         },
                         {
                             type: 'line',
-                            name: '平均单井日产液(m³/d)',
+                            name: '平均单井日产液(m³)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
@@ -636,7 +636,7 @@
                         },
                         {
                             type: 'line',
-                            name: '平均单井日产油(m³/d)',
+                            name: '平均单井日产油(m³)',
                             /*symbol: "circle",
               symbolSize: 4,*/
                             symbol: 'none',
@@ -675,7 +675,7 @@
                         },
                         {
                             type: 'line',
-                            name: '油田平均日注水(m³/d)',
+                            name: '油田平均日注水(m³)',
                             /*symbol: "circle",
                 symbolSize: 4,*/
                             symbol: 'none',

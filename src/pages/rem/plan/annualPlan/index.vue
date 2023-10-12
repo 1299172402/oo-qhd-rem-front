@@ -18,7 +18,7 @@
           </el-select>
         </div>
         <div style="margin-right: 15px; margin-bottom: 10px">
-          <span>时间：</span>
+          <span>日期：</span>
           <el-date-picker
             v-model="searchForm.selectDate"
             :clearable="false"
@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import { QueryOgfDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { getRollForecastVersion } from "@/api/oilDeposit/rem-04/plan.js";
 import crudeOil from "./crudeOil/index.vue";
 import naturalGas from "./naturalGas/index.vue";
@@ -159,9 +159,6 @@ import basicYield from "./crudeOil/basicYield.vue";
 import measureProduction from "./crudeOil/measureProduction.vue";
 import adjustingWellProduction from "./crudeOil/adjustingWellProduction.vue";
 import devWellProduction from "./crudeOil/devWellProduction.vue";
-import {
-    userListByUserNames
-} from "@/api/basic/master";
 export default {
   name: "annualPlan",
   components: {
@@ -203,6 +200,7 @@ export default {
       pageType: "原油产量",
       //搜索对象
       searchForm: {
+        companyId: "",
         oilFieldName: "秦皇岛32-6油田", //油田名称
         selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F", //油田绑定值
         selectDate: ["2023-01-01", "2023-12-31"], //日期
@@ -230,24 +228,26 @@ export default {
     },
     //初始化信息
     async initData() {
-      //获取油田
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilField = res.data.data || [];
-            let params = {
-                searchKeys: [this.$store.getters["user/userDetail"].user.userName],
-            }
-            let orgId
-            userListByUserNames(params).then((res) => {
-                orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
-                if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
-                    this.searchForm.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
-                } else {
-                    if (this.oilField != null && this.oilField.length > 0) {
-                        this.searchForm.selectOilField = this.oilField[0].ogfId;
-                    }
-                }
-            })
+          this.searchForm.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.searchForm.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.searchForm.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.searchForm.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.searchForm.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
         }
       });
       //获取滚动预测版本
@@ -266,6 +266,7 @@ export default {
     },
     //查询事件
     doSearch() {
+      this.searchForm.oilFieldName = this.oilField.filter(item => item.ogfId === this.searchForm.selectOilField)[0].ogfName || "";
       this.$refs.childComponent.initData();
     },
   },
