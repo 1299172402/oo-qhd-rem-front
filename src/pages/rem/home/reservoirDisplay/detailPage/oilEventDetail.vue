@@ -3,7 +3,7 @@
         <header-search>
             <el-form style="margin: 20px 0" :inline="true">
                 <el-form-item label="油田：">
-                    <el-select v-model="queryData.ogfId" @change="choicepla" >
+                    <el-select v-model="queryData.ogfId" @change="choicepla">
                         <el-option
                             v-for="(item, index) in oilFields"
                             :key="index"
@@ -14,7 +14,8 @@
                 </el-form-item>
                 <el-form-item label="平台：">
                     <el-select v-model="queryData.platformId" @change="onPlatfromChange">
-                        <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformName" :value="item.platformId">
+                        <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformCode"
+                                   :value="item.platformId">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -64,176 +65,188 @@
                     </template>
                 </el-table-column>
                 <el-table-column label="井号" min-width="130px" prop="wellNo" align="center"></el-table-column>
-                <el-table-column label="大事类型"  min-width="130px" prop="appendixValueName" align="center">
+                <el-table-column label="大事类型" min-width="130px" prop="appendixValueName" align="center">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.appendixValueName !== null && scope.row.appendixValueName !== ''">{{scope.row.appendixValueName}}</span>
+                        <span
+                            v-if="scope.row.appendixValueName !== null && scope.row.appendixValueName !== ''">{{scope.row.appendixValueName}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="开始时间"  min-width="130px" prop="startTime" align="center">
+                <el-table-column label="开始时间" min-width="130px" prop="startTime" align="center">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.startTime !== null && scope.row.startTime !== ''">{{ scope.row.startTime?scope.row.startTime.split(' ')[0]:'' }}</span>
+                        <span
+                            v-if="scope.row.startTime !== null && scope.row.startTime !== ''">{{ scope.row.startTime ? scope.row.startTime.split(' ')[0] : ''
+                            }}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="结束时间"  min-width="130px" prop="endTime" align="center">
+                <el-table-column label="结束时间" min-width="130px" prop="endTime" align="center">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.endTime !== null && scope.row.endTime !== ''">{{ scope.row.endTime?scope.row.endTime.split(' ')[0]:'' }}</span>
+                        <span
+                            v-if="scope.row.endTime !== null && scope.row.endTime !== ''">{{ scope.row.endTime ? scope.row.endTime.split(' ')[0] : ''
+                            }}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="大事简要"  min-width="130px" prop="chronicle" align="center">
+                <el-table-column label="大事简要" min-width="130px" prop="chronicle" align="center">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.chronicle !== null && scope.row.chronicle !== ''">{{scope.row.chronicle}}</span>
+                        <span
+                            v-if="scope.row.chronicle !== null && scope.row.chronicle !== ''">{{scope.row.chronicle}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="备注"  min-width="500px" show-overflow-tooltip prop="remark" align="center">
+                <el-table-column label="备注" min-width="500px" show-overflow-tooltip prop="remark" align="center">
                     <template slot-scope="scope">
                         <span v-if="scope.row.remark !== null && scope.row.remark !== ''">{{scope.row.remark}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
             </el-table>
-            <pagination v-if="pageTotal" :pageSizes="[16, 50, 100]" :total="pageTotal" :page.sync="queryData.page" :limit.sync="queryData.pageSize" @pagination="pagination" />
+            <pagination v-if="pageTotal" :pageSizes="[16, 50, 100]" :total="pageTotal" :page.sync="queryData.page"
+                        :limit.sync="queryData.pageSize" @pagination="pagination"/>
         </page-panel>
     </div>
 </template>
 
 <script>
-    import {
-        queryOperatingCompanyDetail,
-        queryOperatorsCheckFieldListsDetail,
-        queryListOfOilfieldQueryPlatformsDetail,
-        queryPlatformQueryWellListDetail,
-        queryOilAndGasFieldQueryPositionDetail,
-        userListByUserNames
-    } from "@/api/basic/master";
-    import {queryOilFieldIncident, queryOilFieldIncidentType} from "@/api/rem/reservoirbillboards";
-    export default {
-        name:'oilEventDetail',
-        data(){
-            return {
-                pageTotal:'',
-                queryData: {
-                    ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                    wellId: "",
-                    platformId: "",
-                    selectDate:'',
-                    event:[],
-                    page: 1,
-                    pageSize: 16,
-                    orgId:'715AD1CD60484BB59E737CD18A9DE44A',
-                },
-                oilFields:[],
-                title:'秦皇岛32-6油田单井大事记录表',
-                platforms: [],
-                wells: [],
-                events:[],
-                tableData:[]
-            }
-        },
-        mounted() {
-            this.getList();
-            this.getWellData();
-            this.getData();
-        },
-        methods:{
-            goBack(){
-                this.$router.push({name:'Oilexhibition'})
-            },
-            async getList() {
-                let params = {
-                    searchKeys: [this.$store.getters["user/userDetail"].user.userName],
-                }
-                let orgId
-                await userListByUserNames(params).then((res) => {
-                    orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
-                    this.queryData.orgId= orgId
-                })
-                //根据作业公司查询油田
-                await queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
-                    this.oilFields = res.data.data
-                    if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
-                        this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
-                    } else {
-                        this.queryData.ogfId = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
-                    }
+import {
+    queryOperatingCompanyDetail,
+    queryOperatorsCheckFieldListsDetail,
+    queryListOfOilfieldQueryPlatformsDetail,
+    queryPlatformQueryWellListDetail,
+    queryOilAndGasFieldQueryPositionDetail,
+    userListByUserNames
+} from "@/api/basic/master";
+import {queryOilFieldIncident, queryOilFieldIncidentType} from "@/api/rem/reservoirbillboards";
+import {QueryPlatformDetail} from "@/api/rem/marster.js"
 
-                })
-                //根据油田查询平台列表
-                await queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
-                    this.platforms = res.data.data
-                })
-                //查询事件类型
-                await queryOilFieldIncidentType().then(res=>{
-                    this.events = res.data.data.data
-                })
+export default {
+    name: 'oilEventDetail',
+    data() {
+        return {
+            pageTotal: '',
+            queryData: {
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                wellId: "",
+                platformId: "",
+                selectDate: '',
+                event: [],
+                page: 1,
+                pageSize: 16,
+                orgId: '715AD1CD60484BB59E737CD18A9DE44A',
             },
-            choicepla(val){
-                this.queryData.platformId = '';
-                const oilname = (this.oilFields.find(obj =>  obj.ogfId == this.queryData.ogfId)).ogfName;
-                this.title = oilname +'单井大事记录表'
-                queryListOfOilfieldQueryPlatformsDetail({ogfId: val}).then(res => {
-                    this.platforms = res.data.data
-                })
-            },
-            getWellData() {
-                queryPlatformQueryWellListDetail({ogfId:this.queryData.ogfId}).then((res) => {
-                    this.wells = res.data.data
-                })
-            },
-            onPlatfromChange(val){
-                //根据平台获得井
-                queryPlatformQueryWellListDetail({platformId:val}).then((res) => {
-                    this.wells = res.data.data
-                })
-            },
-            getData(){
-                let params = {
-                    ogfId:this.queryData.ogfId,
-                    platformId:this.queryData.platformId,
-                    wellId:this.queryData.wellId,
-                    chronicleTypeCode:this.queryData.event,
-                    startTime:this.queryData.selectDate?this.queryData.selectDate[0]:'',
-                    endTime:this.queryData.selectDate?this.queryData.selectDate[1]:''
-                }
-                queryOilFieldIncident(params).then(res=>{
-                    this.tableData = res.data.data.data
-                    this.pageTotal = res.data.data.data.length
-                })
-            },
-            //切换分页
-            pagination(e) {
-                this.queryData.page = e.page;
-                this.queryData.pageSize = e.limit;
-            },
-            queryserch(){
-                this.getData()
-            },
-           async refresh(){
-                this.queryData = {
-                    ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                    wellId: "",
-                    platformId: "",
-                    selectDate:'',
-                    event:[],
-                    page: 1,
-                    pageSize: 16,
-                }
-                await this.getList();
-                let oilname = (this.oilFields.find(obj =>  obj.ogfId == this.queryData.ogfId)).ogfName;
-                queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryData.ogfId}).then(res => {
-                    this.platforms = res.data.data
-                })
-                queryPlatformQueryWellListDetail({ogfId:this.queryData.ogfId}).then((res) => {
-                    this.wells = res.data.data
-                })
-                this.title = oilname +'单井大事记录表'
-                this.getData()
+            oilFields: [],
+            title: '秦皇岛32-6油田单井大事记录表',
+            platforms: [],
+            wells: [],
+            events: [],
+            tableData: []
+        }
+    },
+    mounted() {
+        this.getList();
+        this.getWellData();
+        this.getData();
+    },
+    methods: {
+        goBack() {
+            this.$router.push({name: 'Oilexhibition'})
+        },
+        async getList() {
+            let params = {
+                searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             }
+            let orgId
+            await userListByUserNames(params).then((res) => {
+                orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                this.queryData.orgId = orgId
+            })
+            //根据作业公司查询油田
+            await queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
+                this.oilFields = res.data.data
+                if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
+                    this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
+                } else {
+                    this.queryData.ogfId = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
+                }
+
+            })
+            //根据油田查询平台列表
+            await QueryPlatformDetail({ogfId: this.queryData.ogfId}).then(res => {
+                this.platforms = res.data.data
+            })
+            //查询事件类型
+            await queryOilFieldIncidentType().then(res => {
+                this.events = res.data.data.data
+            })
+        },
+        choicepla(val) {
+            this.queryData.platformId = '';
+            const oilname = (this.oilFields.find(obj => obj.ogfId == this.queryData.ogfId)).ogfName;
+            this.title = oilname + '单井大事记录表'
+            QueryPlatformDetail({ogfId: val}).then(res => {
+                this.platforms = res.data.data
+            })
+            this.getWellData();
+        },
+        getWellData() {
+            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+                this.wells = res.data.data
+                this.queryData.wellId = ''
+            })
+        },
+        onPlatfromChange(val) {
+            //根据平台获得井
+            queryPlatformQueryWellListDetail({platformId: val}).then((res) => {
+                this.wells = res.data.data
+                this.queryData.wellId = ''
+            })
+        },
+        getData() {
+            let params = {
+                ogfId: this.queryData.ogfId,
+                platformId: this.queryData.platformId,
+                wellId: this.queryData.wellId,
+                chronicleTypeCode: this.queryData.event,
+                startTime: this.queryData.selectDate ? this.queryData.selectDate[0] : '',
+                endTime: this.queryData.selectDate ? this.queryData.selectDate[1] : ''
+            }
+            queryOilFieldIncident(params).then(res => {
+                this.tableData = res.data.data.data
+                this.pageTotal = res.data.data.data.length
+            })
+        },
+        //切换分页
+        pagination(e) {
+            this.queryData.page = e.page;
+            this.queryData.pageSize = e.limit;
+        },
+        queryserch() {
+            this.getData()
+        },
+        async refresh() {
+            this.queryData = {
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                wellId: "",
+                platformId: "",
+                selectDate: '',
+                event: [],
+                page: 1,
+                pageSize: 16,
+            }
+            await this.getList();
+            let oilname = (this.oilFields.find(obj => obj.ogfId == this.queryData.ogfId)).ogfName;
+            QueryPlatformDetail({ogfId: this.queryData.ogfId}).then(res => {
+                this.platforms = res.data.data
+            })
+            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+                this.wells = res.data.data
+            })
+            this.title = oilname + '单井大事记录表'
+            this.getData()
         }
     }
+}
 </script>
 
 <style scoped lang="less"></style>
