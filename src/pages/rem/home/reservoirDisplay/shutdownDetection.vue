@@ -5,17 +5,17 @@
             <div class="g-row-flex-V g-w100 g-h100">
                 <div style="margin: 0px; width: 100%">
                     <el-form :inline="true">
-                        <el-form-item label="作业公司:">
-                            <el-select v-model="queryData.orgId" disabled>
-                                <el-option v-for="item in zygsSelect" :key="item.orgId" :label="item.orgName"
-                                           :value="item.orgId">
-                                </el-option>
-                            </el-select>
-                        </el-form-item>
+<!--                        <el-form-item label="作业公司:">-->
+<!--                            <el-select v-model="queryData.orgId">-->
+<!--                                <el-option v-for="item in zygsSelect" :key="item.orgId" :label="item.orgName"-->
+<!--                                           :value="item.orgId">-->
+<!--                                </el-option>-->
+<!--                            </el-select>-->
+<!--                        </el-form-item>-->
                         <el-form-item label="油田:" style="margin-left:20px">
-                            <el-select v-model="queryData.ogfId" disabled style="width: 160px;">
+                            <el-select v-model="queryData.ogfId" style="width: 160px;"  @change="queryPlatformSelect" >
                                 <el-option v-for="(item, index) in oilFields" :key="index" :label="item.ogfName"
-                                           :value="item.ogfId">
+                                           :value="item.ogfId" >
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -141,6 +141,7 @@ import {
     queryListOfOilfieldQueryPlatformsDetail,
     queryOperatingCompanyDetail,
     queryPlatformQueryWellListDetail,
+    userListByUserNames
 } from "@/api/rem/marster.js";
 import {queryShutDownWellStatisDetails,queryShutDownWellStatisDetailsDownloadFile, queryShutDownValueDict, queryPlanValueDict} from '@/api/rem/reservoirbillboards'
 import FileSaver from 'file-saver'
@@ -180,6 +181,7 @@ export default {
             PlanValueDict: {},
             startmonth: {},
             ShutDownValueDict: {},
+            orgId: ''
         };
     },
     mounted() {
@@ -192,9 +194,9 @@ export default {
         yesday =
             yesday.getFullYear() +
             "-" +
-            (yesday.getMonth() > 9 ? yesday.getMonth() + 1 : "0" + (yesday.getMonth() + 1)) +
+            (yesday.getMonth() > 8 ? yesday.getMonth() + 1 :  "0" + (yesday.getMonth() + 1)) +
             "-" +
-            (yesday.getDate() > 9 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
+            (yesday.getDate() > 8 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
         this.queryData.startTime = y + "-" + "01-01";
         this.queryData.endTime = yesday;
         this.$set(this.month, 0, this.queryData.startTime);
@@ -203,6 +205,73 @@ export default {
         this.queryinfo()
     },
     methods: {
+        //作业公司
+        // queryJobCompanySelect() {
+        //     queryOperatingCompanyDetail({}).then((res) => {
+        //         this.zygsSelect = res.data.data;
+        //     });
+        // },
+        //获取当前作业公司
+        async getCurrentJobCompany() {
+            let params = {
+                searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+            }
+            await userListByUserNames(params).then((res) => {
+                this.ogfId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+            })
+        },
+        //油田
+        async queryOrgSelect() {
+            await queryOperatorsCheckFieldListsDetail({orgId: this.ogfId}).then((res) => {
+                if (res.data.code === 200) {
+                    this.oilFields = res.data.data;
+                    if (this.orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
+                        this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
+                    } else {
+                        if (this.oilFields != null && this.oilFields.length > 0) {
+                            this.queryData.ogfId = this.oilFields[0].ogfId;
+                        }
+                    }
+                }
+            });
+        },
+        //平台
+        async queryPlatformSelect() {
+            await queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryData.ogfId}).then((res) => {
+                if (res.data.code == 200) {
+                    this.platforms = res.data.data;
+                    this.platforms.map((n) => {
+                        if (n.platformName == "全部") {
+                            n.platformId = "";
+                        }
+                    });
+                    this.queryData.platformId = "";
+                }
+            });
+            await this.queryWellSelect()
+        },
+        //井号
+        async queryWellSelect() {
+            await queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+                this.wellList = res.data.data;
+                this.queryData.wellId = ''
+            });
+        },
+        //关停井分类
+        queryShutdownCategorySelect() {
+            queryShutDownValueDict().then((res) => {
+                this.ShutDownValueDict = res.data.data.data
+                this.queryData.injShutdownTypeCode=''
+            })
+        },
+        //计划属性
+        queryPlanAttributesSelect() {
+            queryPlanValueDict().then((res) => {
+                this.PlanValueDict = res.data.data.data
+                this.queryData.shutdownPlanTypeCode = ''
+            })
+        },
+        
         // 下载
         doDownExcel(){
             this.queryData.startTime = this.month[0]
@@ -212,56 +281,27 @@ export default {
                 FileSaver.saveAs(aBlob, `秦皇岛32-6油田关停井跟踪.xls` );
             })
         },
-        getData() {
-            queryOperatingCompanyDetail({}).then((res) => {
-                this.zygsSelect = res.data.data;
-            });
-            queryOperatorsCheckFieldListsDetail({orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then((res) => {
-                if (res.data.code == 200) {
-                    this.oilFields = res.data.data;
-                    if (this.oilFields.length == 0) {
-                        this.oilField = "";
-                    } else {
-                        this.oilField = "3FC9A818F5BC43B88270DB80BBB3018F";
-                    }
-                    this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
-                    const requestPlat = {
-                        ogfId: this.selectOilField,
-                    };
-                    queryPlatformQueryWellListDetail(requestPlat).then((res) => {
-                        this.wellList = res.data.data;
-                    });
-                    queryListOfOilfieldQueryPlatformsDetail(requestPlat).then((res) => {
-                        if (res.data.code == 200) {
-                            this.platforms = res.data.data;
-                            this.platforms.map((n) => {
-                                if (n.platformName == "全部") {
-                                    n.platformId = "";
-                                }
-                            });
-                            this.queryData.platformId = "";
-                        }
-                    });
-                }
-            });
-            queryPlanValueDict().then((res) => {
-                this.PlanValueDict = res.data.data.data
-            })
-            queryShutDownValueDict().then((res) => {
-                this.ShutDownValueDict = res.data.data.data
-            })
-
+        async getData() {
+            // this.queryJobCompanySelect();
+            await this.getCurrentJobCompany();
+            await this.queryOrgSelect();
+            await this.queryPlatformSelect();
+            await this.queryWellSelect();
+            await this.queryShutdownCategorySelect();
+            await this.queryPlanAttributesSelect();
+            await this.queryPlanAttributesSelect();
         },
         choicewell() {
             queryPlatformQueryWellListDetail({platformId: this.queryData.platformId}).then((res) => {
                 this.wellList = res.data.data;
+                this.queryData.wellId=''
             });
         },
         // 返回按钮
         returnrouter() {
             this.$router.go(-1);
         },
-        result() {
+        async result() {
             this.queryData.platformId = ''
             let requestPlat = {
                 ogfId: this.selectOilField,
@@ -277,9 +317,6 @@ export default {
                 (yesday.getMonth() > 9 ? yesday.getMonth() + 1 : "0" + (yesday.getMonth() + 1)) +
                 "-" +
                 (yesday.getDate() > 9 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
-            queryPlatformQueryWellListDetail(requestPlat).then((res) => {
-                this.wellList = res.data.data;
-            });
             this.queryData.wellId = ''
             this.queryData.shutdownPlanTypeCode = ''
             this.queryData.injShutdownTypeCode = ''
@@ -288,14 +325,16 @@ export default {
             this.queryData.endTime = yesday;
             this.$set(this.month, 0, this.queryData.startTime);
             this.$set(this.month, 1, this.queryData.endTime);
-            this.queryinfo()
+            await this.getData();
+            await this.queryinfo();
         },
         queryinfo() {
             this.queryData.startTime = this.month[0]
             this.queryData.endTime = this.month[1]
+            // this.getData();
             queryShutDownWellStatisDetails(this.queryData).then((res) => {
                 this.tableData = res.data.data.data.rows
-                this.total = res.data.data.data.total
+                this.total = Number(res.data.data.data.total)
             })
         },
     },
