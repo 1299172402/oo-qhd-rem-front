@@ -338,7 +338,7 @@ export default {
                     return daily;
                 case "剩余油情况":
                     return oilInfo;
-                case "油田大事件":
+                case "单井大事件":
                     return oilEvent;
                 case "秦皇岛32-6油田月度产量对比图":
                     return monthContrast;

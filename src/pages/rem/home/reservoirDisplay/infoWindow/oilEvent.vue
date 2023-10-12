@@ -4,7 +4,7 @@
         <info-window
             info-width="100%"
             info-height="100%"
-            header-title="油田大事件"
+            header-title="单井大事件"
             :is-show-max-btn="true"
         >
             <div class="g-w100 g-h100 g-row-flex" style="">
