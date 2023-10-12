@@ -143,23 +143,23 @@
                 this.$router.push({name:'Oilexhibition'})
             },
             async getList() {
-                //根据作业公司查询油田 111222
+                let params = {
+                    searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+                }
+                let orgId
+                await userListByUserNames(params).then((res) => {
+                    orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                    this.queryData.orgId= orgId
+                })
+                //根据作业公司查询油田
                 await queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
                     this.oilFields = res.data.data
-                    let params = {
-                        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+                    if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
+                        this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
+                    } else {
+                        this.queryData.ogfId = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
                     }
-                    let orgId
-                    userListByUserNames(params).then((res) => {
-                        orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
-                        if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
-                            this.queryData.ogfId= '3FC9A818F5BC43B88270DB80BBB3018F';
-                        } else {
-                            if (this.oilFields != null && this.oilFields.length > 0) {
-                                this.queryData.ogfId = this.oilFields[0].ogfId;
-                            }
-                        }
-                    })
+
                 })
                 //根据油田查询平台列表
                 await queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
