@@ -72,7 +72,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="开始时间" min-width="130px" prop="startTime" align="center">
+                <el-table-column label="开始时间(yyyy/mm/dd)" min-width="140px" prop="startTime" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.startTime !== null && scope.row.startTime !== ''">{{ scope.row.startTime ? scope.row.startTime.split(' ')[0] : ''
@@ -80,7 +80,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="结束时间" min-width="130px" prop="endTime" align="center">
+                <el-table-column label="结束时间(yyyy/mm/dd)" min-width="140px" prop="endTime" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.endTime !== null && scope.row.endTime !== ''">{{ scope.row.endTime ? scope.row.endTime.split(' ')[0] : ''
