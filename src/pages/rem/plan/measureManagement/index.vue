@@ -774,13 +774,14 @@ export default {
       this.pageSize = e.limit;
     },
     //油田下拉-change
-    onFieldChange(val) {
-      this.getFetchPlatforms(val);
+   async onFieldChange(val) {
+      await this.getFetchPlatforms(val);
+      this.getFetchWells(this.selectOilField, this.selectPlatform);
       this.getMeasureNameAndCode();
     },
     //通过油田查询平台
-    getFetchPlatforms(oilFieldId) {
-      QueryPlatformDetail({ ogfId: oilFieldId }).then((res) => {
+    async getFetchPlatforms(oilFieldId) {
+      await QueryPlatformDetail({ ogfId: oilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.platforms = res.data.data;
           this.selectPlatform = this.platforms[0].platformId;
@@ -847,7 +848,6 @@ export default {
           this.wells = res.data.data;
         }
       });
-      0;
       this.wells.unshift({
         wellId: "",
         wellName: "全部",

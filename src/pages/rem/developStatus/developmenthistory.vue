@@ -1863,7 +1863,7 @@ export default {
         linearData.forEach((item, index) => {
           let point = [];
           let label = item.label.split("-");
-          point.push(label[0] + "-" + label[1]);
+          point.push(label[0]);
           point.push(item.value);
           xData.push(label[0] + "-" + label[1]);
           seriesData.push(point);
@@ -1910,6 +1910,7 @@ export default {
         });
       }
       this.option.xAxis[9].data = xData;
+      this.option.xAxis[7].data = xData;
       this.option.series[13].data = seriesData;
     },
     //清空图表内容
