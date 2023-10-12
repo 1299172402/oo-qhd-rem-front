@@ -52,12 +52,12 @@
             </el-table-column>
             <el-table-column prop="dailyoillevel" min-width="100" label-class-name="twoRowHeader">
                 <template #header>
-                    <div><span>日产油水平</span><br><span style="font-size: 12px">（m³/d）</span></div>
+                    <div><span>日产油水平</span><br><span style="font-size: 12px">（m³）</span></div>
                 </template>
             </el-table-column>
             <el-table-column prop="dailyfuelcapacity" min-width="100" label-class-name="twoRowHeader">
                 <template #header>
-                    <div><span>日产油能力</span><br><span style="font-size: 12px">（m³/d）</span></div>
+                    <div><span>日产油能力</span><br><span style="font-size: 12px">（m³）</span></div>
                 </template>
             </el-table-column>
             <el-table-column prop="Comprehensivegasoilratio" min-width="100" label-class-name="twoRowHeader">

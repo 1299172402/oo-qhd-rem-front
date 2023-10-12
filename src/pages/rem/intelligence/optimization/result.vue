@@ -82,7 +82,7 @@
                             ></el-table-column>
                             <el-table-column
                                 prop="allocating"
-                                label="本月日配产量?(m³/d)"
+                                label="本月日配产量?(m³)"
                                 :render-header="renderheader"
                                 align="center"
                             ></el-table-column>
@@ -123,7 +123,7 @@
                                 <el-table-column
                                     prop="injWellDaily"
                                     :render-header="renderheader"
-                                    label="日配注量?(m³/d)"
+                                    label="日配注量?(m³)"
                                     min-width="100"
                                     align="center"
                                 ></el-table-column>
@@ -133,21 +133,21 @@
                                 <el-table-column
                                     prop="froecastInjDaily"
                                     :render-header="renderheader"
-                                    label="预测日配注量?(m³/d)"
+                                    label="预测日配注量?(m³)"
                                     min-width="120"
                                     align="center"
                                 ></el-table-column>
                                 <el-table-column
                                     prop="afterConfigurationInjDaily"
                                     :render-header="renderheader"
-                                    label="上月实际日注水量?(m³/d)"
+                                    label="上月实际日注水量?(m³)"
                                     min-width="150"
                                     align="center"
                                 ></el-table-column>
                                 <el-table-column
                                     prop="afterInjDaily"
                                     :render-header="renderheader"
-                                    label="上月日配注水量?(m³/d)"
+                                    label="上月日配注水量?(m³)"
                                     min-width="120"
                                     align="center"
                                 ></el-table-column>
@@ -155,7 +155,7 @@
                                 <el-table-column
                                     prop="configurationInjDaily"
                                     :render-header="renderheader"
-                                    label="本月日配注量?(m³/d)"
+                                    label="本月日配注量?(m³)"
                                     min-width="150"
                                     align="center"
                                 >
@@ -325,7 +325,7 @@ export default {
         // table表头标题样式
         tableColorone({row, column, rowIndex, columnIndex}) {
             if (
-                column.label === "本月日配注量?(m³/d)"
+                column.label === "本月日配注量?(m³)"
             ) {
                 return "color:#66ffff"; //修改的样式
             } else {

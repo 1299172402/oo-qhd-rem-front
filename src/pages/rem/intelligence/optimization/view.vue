@@ -90,7 +90,7 @@
                             ></el-table-column>
                             <el-table-column
                                 prop="fluidProd"
-                                label="上月日均产液量?(m³/d)"
+                                label="上月日均产液量?(m³)"
                                 :render-header="renderheader"
                                 show-overflow-tooltip
                                 width="120"
@@ -98,7 +98,7 @@
                             ></el-table-column>
                             <el-table-column
                                 prop="allocating"
-                                label="本月日配产量?(m³/d)"
+                                label="本月日配产量?(m³)"
                                 width="115"
                                 :render-header="renderheader"
                                 align="center"
@@ -454,7 +454,7 @@ export default {
         },
         tableColorone({row, column, rowIndex, columnIndex}) {
             if (
-                column.label === "本月日配产量?(m³/d)" ||
+                column.label === "本月日配产量?(m³)" ||
                 column.label === "注采比"
             ) {
                 return "color:#66ffff"; //修改的样式
