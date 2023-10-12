@@ -162,7 +162,8 @@
 import {
     queryListOfOilfieldQueryPlatformsDetail,
     queryOperatingCompanyDetail,
-    queryOperatorsCheckFieldListsDetail
+    queryOperatorsCheckFieldListsDetail,
+    userListByUserNames
 } from "@/api/basic/master";
 import {queryPlatformQueryWellListDetail} from "@/api/rem/marster";
 import FileSaver from 'file-saver'
@@ -198,24 +199,39 @@ export default {
         this.searchinfo()
     },
     methods: {
-        getlist() {
-            //根据作业公司查询油田
-            queryOperatorsCheckFieldListsDetail({orgId:this.queryParams.orgId}).then(res=>{
+        async getlist() {
+            let params = {
+                searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+            }
+            let orgId
+            await userListByUserNames(params).then((res) => {
+                orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                this.queryParams.orgId = orgId
+            })
+            //根据作业公司查询油田 jgl
+            await queryOperatorsCheckFieldListsDetail({orgId:this.queryParams.orgId}).then(res=>{
                 this.oilFields = res.data.data
+                if (this.queryParams.orgId === "715AD1CD60484BB59E737CD18A9DE44A") {
+                    this.queryParams.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
+                } else {
+                    this.queryParams.ogfId = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
+                }
             })
             //根据油田查询平台列表
-            queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryParams.ogfId}).then(res=>{
+            await queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryParams.ogfId}).then(res=>{
                 this.platforms = res.data.data
             })
             const requestPlat = {
                 ogfId: this.queryParams.ogfId,
             };
-            queryPlatformQueryWellListDetail(requestPlat).then((res) => {
+            await queryPlatformQueryWellListDetail(requestPlat).then((res) => {
                 this.wellList = res.data.data;
             });
         },
-        choicepla(val){
-            queryListOfOilfieldQueryPlatformsDetail({ogfId:val}).then(res=>{
+        async choicepla(val) {
+            this.queryParams.assetCode = ''
+            this.queryParams.wellId = ''
+            await queryListOfOilfieldQueryPlatformsDetail({ogfId: val}).then(res => {
                 this.platforms = res.data.data
             })
             const requestPlat = {
@@ -252,8 +268,8 @@ export default {
         },
         // 重置
         reset() {
-            this.queryParams.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
-            this.choicepla(this.queryParams.ogfId)
+            this.queryParams.ogfId = ''
+            // this.choicepla(this.queryParams.ogfId)
             this.queryParams.assetCode = ''
             this.queryParams.wellId = ''
            
