@@ -4,7 +4,7 @@
         <info-window
             info-width="100%"
             info-height="100%"
-            header-title="秦皇岛32-6油田月度产量对比图"
+            header-title="月度产量完成情况"
             :is-show-max-btn="true"
         >
             <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('AnnualPlan')">详细</el-button>

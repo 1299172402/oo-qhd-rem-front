@@ -340,7 +340,7 @@ export default {
                     return oilInfo;
                 case "单井大事件":
                     return oilEvent;
-                case "秦皇岛32-6油田月度产量对比图":
+                case "月度产量完成情况":
                     return monthContrast;
                 case "产量构成详情":
                     return yieldComponects;

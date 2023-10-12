@@ -92,7 +92,7 @@ export default {
                 { x: 0, y: 0, w: 8, h: 16, i: "0", name: "秦皇岛32-6油田日度产量跟踪", show: true },
                 { x: 8, y: 0, w: 4, h: 8, i: "1", name: "剩余油情况", show: true },
                 { x: 8, y: 8, w: 4, h: 8, i: "2", name: "单井大事件", show: true },
-                { x: 0, y: 16, w: 8, h: 13, i: "3", name: "秦皇岛32-6油田月度产量对比图", show: true },
+                { x: 0, y: 16, w: 8, h: 13, i: "3", name: "月度产量完成情况", show: true },
                 { x: 8, y: 40, w: 4, h: 13, i: "4", name: "产量构成详情", show: true },
                 
             ]
