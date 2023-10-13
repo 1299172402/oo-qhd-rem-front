@@ -27,6 +27,7 @@ export default {
     },
     data() {
         return {
+            xAxisData: [],
             histogram: {
                 tooltip: {
                     trigger: "axis",
@@ -60,7 +61,7 @@ export default {
                 xAxis: [
                     {
                         type: "category",
-                        data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+                        data: [],
                         axisLabel: {
                             color: "#a9a8a8",
                             fontSize: 14,
@@ -169,6 +170,11 @@ export default {
                 this.histogram.series[1].data = res.data.data.monthlyActualOutputVoList.map(item => {
                     return Number(item.checkedProdMonthly / 10000).toFixed(4)
                 })
+                this.xAxisData = [];
+                res.data.data.monthlyPlannedOutputVo.map(item => {
+                    return this.xAxisData.push(item.yearMonthesG)
+                })
+                this.histogram.xAxis[0].data = this.xAxisData;
             })
         }
     },
