@@ -37,7 +37,7 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="日期选择：">
+                        <el-form-item label="日期：">
                             <el-date-picker
                                 v-model="month"
                                 type="daterange"
@@ -90,7 +90,6 @@
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
-                :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
                 height="calc(100% - 100px)"
@@ -100,7 +99,7 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="wellName" label="井号"></el-table-column>
+                <el-table-column prop="wellName"  label="井号"></el-table-column>
                 <el-table-column prop="appendixValueName" label="*关停分类"></el-table-column>
                 <el-table-column prop="reasonAppendixValueName" label="*关停原因"></el-table-column>
                 <el-table-column prop="planAppendixValueName" label="*计划属性"></el-table-column>
@@ -116,7 +115,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`">
+                <el-table-column prop="impactProdution" align="right" :label="`影响产量\n(m³)`">
                     <template slot-scope="scope">
                       <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution).toFixed(2)}}</span>  
                         <span v-else>-</span>
@@ -185,27 +184,45 @@ export default {
             orgId: ''
         };
     },
-    mounted() {
-        this.getData();
-        var data = new Date();
-        var y = data.getFullYear();
-        var time = data.getTime() - 24 * 60 * 60 * 1000;
-        var time = new Date().getTime() - 24 * 60 * 60 * 1000;
-        var yesday = new Date(time); // 获取的是前一天日期
-        yesday =
-            yesday.getFullYear() +
-            "-" +
-            (yesday.getMonth() > 8 ? yesday.getMonth() + 1 :  "0" + (yesday.getMonth() + 1)) +
-            "-" +
-            (yesday.getDate() > 8 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
-        this.queryData.startTime = y + "-" + "01-01";
-        this.queryData.endTime = yesday;
-        this.$set(this.month, 0, this.queryData.startTime);
-        this.$set(this.month, 1, this.queryData.endTime);
-        this.startmonth = this.month
-        this.queryinfo()
+    async mounted() {
+        await this.initializeDate();
+        await this.getData();
+        await this.queryinfo();
     },
     methods: {
+        initializeDate() {
+            let now = new Date();
+            // 当前年月的日
+            let nowDay = now.getDate();
+            //当前月份完整日期 (Thu Jul 07 2022 12:03:37 GMT+0800 (中国标准时间))
+            let lastMonth = new Date(now.getTime());
+            // 设置上一个月（这里不需要减1） getMonth()返回表示月份的数字 setMonth()设置月份参数
+            lastMonth.setMonth(lastMonth.getMonth());
+            // 设置为0，默认为当前月的最后一天
+            lastMonth.setDate(0);
+            // 上一个月的天数
+            let daysOflastMonth = lastMonth.getDate();
+            // 设置上一个月的日期，如果当前月的日期大于上个月的总天数，则为最后一天
+            // 例如当前是3月31，而2月只有28或29天，则取2月的最后一天
+            lastMonth.setDate(nowDay > daysOflastMonth ? daysOflastMonth : nowDay);
+            var startDate =
+                lastMonth.getFullYear() +
+                "-" +
+                (lastMonth.getMonth() + 1 >= 10 ? lastMonth.getMonth() + 1 : "0" + (lastMonth.getMonth() + 1)) +//月份从0开始
+                "-" +
+                (lastMonth.getDate() >= 10 ? lastMonth.getDate() : "0" + lastMonth.getDate());
+            
+            var endDate =
+                now.getFullYear() +
+                "-" +
+                (now.getMonth() + 1 >= 10 ? now.getMonth() + 1 : "0" + (now.getMonth() + 1)) +//月份从0开始
+                "-" +
+                (now.getDate() >= 10 ? now.getDate() : "0" + now.getDate());
+
+            this.$set(this.month, 0, startDate);
+            this.$set(this.month, 1, endDate);
+
+        },
         //作业公司
         // queryJobCompanySelect() {
         //     queryOperatingCompanyDetail({}).then((res) => {
@@ -303,23 +320,8 @@ export default {
             this.$router.go(-1);
         },
         async result() {
+            await this.initializeDate();
             await this.getData();
-            var data = new Date();
-            var y = data.getFullYear();
-            var time = data.getTime() - 24 * 60 * 60 * 1000;
-            var time = new Date().getTime() - 24 * 60 * 60 * 1000;
-            var yesday = new Date(time); // 获取的是前一天日期
-            yesday =
-                yesday.getFullYear() +
-                "-" +
-                (yesday.getMonth() > 8 ? yesday.getMonth() + 1 :  "0" + (yesday.getMonth() + 1)) +
-                "-" +
-                (yesday.getDate() > 8 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式
-            this.queryData.startTime = y + "-" + "01-01";
-            this.queryData.endTime = yesday;
-            this.$set(this.month, 0, this.queryData.startTime);
-            this.$set(this.month, 1, this.queryData.endTime);
-            this.startmonth = this.month
             await this.queryinfo()
         },
         queryinfo() {

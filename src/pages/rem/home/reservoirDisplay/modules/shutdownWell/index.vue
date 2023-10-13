@@ -89,7 +89,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            name: "关停影响产量(10⁴m³)",
+            name: "关停影响产量(m³)",
             nameTextStyle: {
               color: "#a9a8a8",
             },
@@ -120,9 +120,7 @@ export default {
             name: "关停井数(口)",
             nameTextStyle: {
               color: "#a9a8a8",
-                padding: [20, 0, 0, 0], // 上、右、下、左
             },
-            nameLocation: "center",
             splitLine: {
               show: false,
             },

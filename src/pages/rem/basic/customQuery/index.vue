@@ -210,7 +210,7 @@
                     </el-row>
                 </page-panel-new>
                 <page-panel
-                    headerTitle=""
+                    headerTitle="自定义查询"
                     :show-btn="true"
                     v-else-if="activeEchart"
                     style="height: calc(100% - 112px); padding-bottom: 60px"
