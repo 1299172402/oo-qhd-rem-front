@@ -275,7 +275,7 @@
                 :value="item.ogfId"
               ></el-option>
             </el-select>
-            <span style="color: #fff">月份：</span>
+            <span style="color: #fff">日期：</span>
             <el-date-picker v-model="dateFirst" type="month" value-format="yyyy-MM"></el-date-picker>
             <!-- <span>~</span> -->
             <!-- <el-date-picker v-model="dateSecond" type="month" placeholder="对比时间2" value-format="yyyy-MM"></el-date-picker> -->
