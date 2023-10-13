@@ -134,7 +134,7 @@
                                 <span v-else>-</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="备注" prop="remark" show-overflow-tooltip align="right">
+                        <el-table-column label="备注" prop="remark" show-overflow-tooltip align="left">
                             <template slot-scope="scope">
                                 <span v-if="scope.row.remark !== null && scope.row.remark !== ''">{{scope.row.remark}}</span>
                                 <span v-else>-</span>

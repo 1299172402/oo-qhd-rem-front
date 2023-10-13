@@ -32,7 +32,7 @@
       <el-table
         highlight
         :key="itemKey"
-        :cell-style="{ padding: '3px', 'text-align': 'center' }"
+        :header-cell-style="{'text-align':'center'}"
         :data="tableData"
         id="tableData"
         :span-method="objectSpanMethod"
@@ -46,30 +46,30 @@
           <template slot="header">
             <div>{{ queryData.firstMonth }}注水情况</div>
           </template>
-          <el-table-column label="连通系数"  min-width="90" prop="firstMonthInjCoeff" header-align="center" :formatter="toPrecise2"> </el-table-column>
-          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingFluid" header-align="center" :formatter="toPrecise2"> </el-table-column>
-          <el-table-column :label="`产液劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingInjectWater" header-align="center" :formatter="toPrecise2"></el-table-column>
+          <el-table-column label="连通系数"  min-width="90" prop="firstMonthInjCoeff" align="right" :formatter="toPrecise2"> </el-table-column>
+          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingFluid" align="right" :formatter="toPrecise2"> </el-table-column>
+          <el-table-column :label="`产液劈分量\n(m³)`"  min-width="160" prop="firstMonthSplittingInjectWater" align="right" :formatter="toPrecise2"></el-table-column>
         </el-table-column>
         <el-table-column header-align="center">
           <template slot="header">
             <div>{{ queryData.secondMonth }}注水情况</div>
           </template>
-          <el-table-column label="连通系数" prop="secondMonthInjCoeff" header-align="center" :formatter="toPrecise2"> </el-table-column>
-          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingFluid" header-align="center" :formatter="toPrecise2"> </el-table-column>
-          <el-table-column :label="`产液劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingInjectWater" header-align="center" :formatter="toPrecise2"> </el-table-column>
+          <el-table-column label="连通系数" prop="secondMonthInjCoeff" align="right" :formatter="toPrecise2"> </el-table-column>
+          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingFluid" align="right" :formatter="toPrecise2"> </el-table-column>
+          <el-table-column :label="`产液劈分量\n(m³)`"  min-width="130" prop="secondMonthSplittingInjectWater" align="right" :formatter="toPrecise2"> </el-table-column>
         </el-table-column>
         <el-table-column header-align="center">
           <template slot="header">
             <div>调整幅度</div>
           </template>
-          <el-table-column label="连通系数" align="cnter" prop="adjustRangeInjCoeff" header-align="center" :formatter="toPrecise2">
+          <el-table-column label="连通系数" align="right" prop="adjustRangeInjCoeff" header-align="center" :formatter="toPrecise2">
           </el-table-column>
-          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" align="cnter" prop="adjustRangeSplittingInjectWater" header-align="center" :formatter="toPrecise2">
+          <el-table-column :label="`注水劈分量\n(m³)`"  min-width="130" align="right" prop="adjustRangeSplittingInjectWater" header-align="center" :formatter="toPrecise2">
           </el-table-column>
           <el-table-column
             :label="`产液劈分量\n(m³)`"
             min-width="130"
-            align="cnter"
+            align="right"
             prop="adjustRangeSplittingSplittingFluid"
             header-align="center"
             :formatter="toPrecise2"

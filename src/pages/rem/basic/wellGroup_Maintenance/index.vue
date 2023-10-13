@@ -97,13 +97,13 @@
                             highlight
                             style="margin-top:10px;width: 100%"
                             height="calc(100% - 80px)"
-                            :header-cell-style="wipeborder"
+                            :header-cell-style="{'text-align':'center'}"
                         >
                             <el-table-column label="井组关系" align="center">
-                                <el-table-column prop="injWellNo" show-overflow-tooltip label="水井" sortable
-                                                 align="center"></el-table-column>
+                                <el-table-column prop="injWellNo"  show-overflow-tooltip label="水井" sortable
+                                                 align="left"></el-table-column>
                                 <el-table-column prop="proWellNo" label="油井" show-overflow-tooltip sortable
-                                                 align="center"></el-table-column>
+                                                 align="left"></el-table-column>
                             </el-table-column>
                         </el-table>
                     </div>
@@ -115,7 +115,7 @@
                             border
                             style="margin-top:10px;width: 100%;"
                             height="calc(100% - 80px)"
-                            :header-cell-style="wipeborder"
+                            :header-cell-style="{'text-align':'center'}"
                             :span-method="mergeTable"
                         >
                             <el-table-column label="小层井组定义" align="center">
@@ -124,14 +124,14 @@
                                     show-overflow-tooltip
                                     label="井组名称"
                                     min-width="115"
-                                    align="center"
+                                    align="left"
                                 ></el-table-column>
                                 <el-table-column prop="injWellNo" label="水井" show-overflow-tooltip
-                                                 align="center"></el-table-column>
+                                                 align="left"></el-table-column>
                                 <el-table-column prop="layerName" label="层位名称" show-overflow-tooltip
                                                  align="center"></el-table-column>
                                 <el-table-column prop="proWellNo" min-width="70px" label="油井" show-overflow-tooltip
-                                                 align="center"></el-table-column>
+                                                 align="left"></el-table-column>
                                 <el-table-column label="操作" min-width="45px" show-overflow-tooltip align="center">
                                     <template slot-scope="scope">
                                         <el-button type="text" @click="deleteWellGroup(scope.row)"
