@@ -121,9 +121,9 @@
                                     return false;
                                 }
                             },
-                            formatter:function(value, index){
-                                return value.substring(0,7);
-                            }
+                            // formatter:function(value, index){
+                            //     return value.substring(0,7);
+                            // }
                         },
                         axisTick: {
                             show: false,

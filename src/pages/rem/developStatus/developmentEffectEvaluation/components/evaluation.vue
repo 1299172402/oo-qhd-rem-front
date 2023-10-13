@@ -32,7 +32,7 @@
         </div>
         <div class="rowBox" style="margin-top:20px;">
             <div class="row" style="margin-right:20px;">
-                <pagePanel headerTitle="地层总压降"  style="height: 360px; margin-top:0;" show-btn>
+                <pagePanel headerTitle="地层压力保持水平"  style="height: 360px; margin-top:0;" show-btn>
                     <div class="search">
                         <span>合理地层压力：</span>
                         <el-input-number v-model="lineStandThree" :controls="false" style="width: 180px" @change="setThirdLine"></el-input-number>
@@ -564,7 +564,7 @@
                         }
                     ]
                 },
-                //地层总压降
+                //地层压力保持水平
                 totalFormationPressureDrop: {
                     dataZoom: [
                         {
@@ -586,19 +586,19 @@
                             type: 'shadow'
                         }
                     },
-                    legend: {
-                        data: ['合理地层压力', '压力保持水平'],
-                        x:'center',
-                        bottom:0,
-                        textStyle: {
-                            color: '#8FA4CC'
-                        }
-                    },
+                    // legend: {
+                    //     data: ['合理地层压力', '压力保持水平'],
+                    //     x:'center',
+                    //     bottom:0,
+                    //     textStyle: {
+                    //         color: '#8FA4CC'
+                    //     }
+                    // },
                     toolbox: {
                         show: true,
                         feature: {
                             saveAsImage: {
-                                name: '地层总压降',
+                                name: '地层压力保持水平',
                                 pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
                                 backgroundColor: '#022644',
                                 iconStyle:{
@@ -623,6 +623,12 @@
                         }
                     },
                     yAxis: {
+                        name: '地层压力保持水平(%)',
+                        nameLocation: 'center',
+                        nameTextStyle: {
+                            color: '#8FA4CC'
+                        },
+                        nameGap: 44,
                         type: 'value',
                         axisLabel: {
                             color: '#8FA4CC'
@@ -892,7 +898,7 @@
                     }
                 });
             },
-            //地层总压降
+            //地层压力保持水平
             getGeneralPressure(oilFieldId, fieldId) {
                 let request = {
                     oilFieldId: oilFieldId,

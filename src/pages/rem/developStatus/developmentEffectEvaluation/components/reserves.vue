@@ -388,7 +388,7 @@
                         },
                     },
                     yAxis: {
-                        name: "动用程度(%)",
+                        name: "水驱动用程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -490,7 +490,7 @@
                         },
                     },
                     yAxis: {
-                        name: "控制程度(%)",
+                        name: "水驱控制程度(%)",
                         nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
