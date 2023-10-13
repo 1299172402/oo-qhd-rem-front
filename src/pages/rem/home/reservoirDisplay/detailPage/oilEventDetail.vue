@@ -25,7 +25,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="日期选择：">
+                <el-form-item label="日期：">
                     <el-date-picker
                         v-model="queryData.selectDate"
                         type="daterange"
@@ -53,10 +53,10 @@
                 highlight-current-row
                 height="calc(100% - 50px)"
                 style="margin-top: 10px"
+                id="tabledata"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
                 header-cell-class-name="table_header"
-                :cell-style="{ 'text-align': 'center', padding: '2px' }"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
                 <el-table-column label="序号" min-width="40px" prop="ogfName" align="center">
@@ -64,15 +64,15 @@
                         {{ scope.$index + 1 }}
                     </template>
                 </el-table-column>
-                <el-table-column label="井号" min-width="130px" prop="wellNo" align="center"></el-table-column>
-                <el-table-column label="大事类型" min-width="130px" prop="appendixValueName" align="center">
+                <el-table-column label="井号" min-width="130px" prop="wellNo" align="left"></el-table-column>
+                <el-table-column label="大事类型" min-width="130px" prop="appendixValueName" align="left">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.appendixValueName !== null && scope.row.appendixValueName !== ''">{{scope.row.appendixValueName}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="开始时间(yyyy/mm/dd)" min-width="140px" prop="startTime" align="center">
+                <el-table-column :label="`开始时间\n(yyyy/mm/dd)`" min-width="140px" prop="startTime" align="right">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.startTime !== null && scope.row.startTime !== ''">{{ scope.row.startTime ? scope.row.startTime.split(' ')[0] : ''
@@ -80,7 +80,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="结束时间(yyyy/mm/dd)" min-width="140px" prop="endTime" align="center">
+                <el-table-column :label="`结束时间\n(yyyy/mm/dd)`" min-width="140px" prop="endTime" align="right">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.endTime !== null && scope.row.endTime !== ''">{{ scope.row.endTime ? scope.row.endTime.split(' ')[0] : ''
@@ -88,14 +88,14 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="大事简要" min-width="130px" prop="chronicle" align="center">
+                <el-table-column label="大事简要" min-width="130px" prop="chronicle" align="left">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.chronicle !== null && scope.row.chronicle !== ''">{{scope.row.chronicle}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="备注" min-width="500px" show-overflow-tooltip prop="remark" align="center">
+                <el-table-column label="备注" min-width="500px" show-overflow-tooltip prop="remark" align="left">
                     <template slot-scope="scope">
                         <span v-if="scope.row.remark !== null && scope.row.remark !== ''">{{scope.row.remark}}</span>
                         <span v-else>-</span>
@@ -266,4 +266,12 @@ export default {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+#tabledata {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 18px;
+        white-space: pre;
+    }
+}
+</style>

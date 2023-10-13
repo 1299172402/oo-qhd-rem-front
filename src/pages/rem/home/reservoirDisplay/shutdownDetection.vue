@@ -37,7 +37,7 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="日期选择：">
+                        <el-form-item label="日期：">
                             <el-date-picker
                                 v-model="month"
                                 type="daterange"
@@ -90,7 +90,6 @@
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
-                :cell-style="{ padding: '3px', 'text-align': 'center' }"
                 :data="tableData"
                 border
                 height="calc(100% - 100px)"
@@ -100,7 +99,7 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="wellName" label="井号"></el-table-column>
+                <el-table-column prop="wellName"  label="井号"></el-table-column>
                 <el-table-column prop="appendixValueName" label="*关停分类"></el-table-column>
                 <el-table-column prop="reasonAppendixValueName" label="*关停原因"></el-table-column>
                 <el-table-column prop="planAppendixValueName" label="*计划属性"></el-table-column>
@@ -116,7 +115,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="impactProdution" :label="`影响产量\n(m³)`">
+                <el-table-column prop="impactProdution" align="right" :label="`影响产量\n(m³)`">
                     <template slot-scope="scope">
                       <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution).toFixed(2)}}</span>  
                         <span v-else>-</span>

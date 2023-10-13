@@ -110,7 +110,7 @@
                             }
                         },
                         {
-                            name: "日",
+                            name: "日期 (日)",
                             nameGap: 30,
                             gridIndex: 1,
                             type: 'category',

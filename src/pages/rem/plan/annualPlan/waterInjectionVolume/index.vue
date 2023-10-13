@@ -108,7 +108,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: '日',
+                        name: "日期 (日)",
                         nameGap: 55,
                         type: 'category',
                         boundaryGap: false,

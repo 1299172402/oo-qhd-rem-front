@@ -57,7 +57,7 @@
               >
               </el-option>
             </el-select>
-            <span style="margin-left: 15px">年月：</span>
+            <span style="margin-left: 15px">日期：</span>
             <el-date-picker
               v-model="currentDate"
               type="date"
@@ -423,7 +423,7 @@
               >
               </el-option>
             </el-select>
-            <span style="margin-left: 15px">年月：</span>
+            <span style="margin-left: 15px">日期：</span>
             <el-date-picker
               v-model="currentDate"
               type="date"

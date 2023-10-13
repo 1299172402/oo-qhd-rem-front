@@ -969,7 +969,7 @@ export default {
             },
           },
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 50,
             gridIndex: 2,
             type: "category",
@@ -1555,7 +1555,7 @@ export default {
             },
           },
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 30,
             gridIndex: 1,
             type: "category",
@@ -2736,7 +2736,7 @@ export default {
           ...this.defaultType
             .map((arr, index) => arr.filter((item) => this.queryParams.paramCodes.includes(item)))
             .map((item, index) => ({
-              // name: "日",
+              // name: "日期 (日)",
               // nameGap: 30,
               gridIndex: index,
               type: "category",

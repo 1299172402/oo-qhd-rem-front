@@ -52,7 +52,7 @@
                         
                         <div style="display: flex; justify-content: space-between;">
                             <div style="margin-right: 20px">
-                                日期选择：
+                                日期：
                                 <el-date-picker v-model="queryParams.month" type="month" placeholder="选择月" value-format="yyyy-MM" @change="doSearch"></el-date-picker>
                             </div>
                             <el-button style="margin-bottom: 20px" type="primary" @click="doDownExcel('#fzjcdhglmx', `${oilFieldName || ''}分注井层段合格率明细`)">
@@ -74,7 +74,7 @@
                     <pagePanel :headerTitle="`${oilFieldName || ''}单井层段合格明细`" style="height: 550px;" show-btn>
                         <div style="display: flex; justify-content: space-between;">
                             <div style="margin-right: 20px; margin-bottom:">
-                                日期选择：
+                                日期：
                                 <el-date-picker v-model="queryParams.date" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" @change="doSearch"></el-date-picker>
                             </div>
                             <el-button style="margin-bottom: 20px" type="primary" @click="doDownExcel('#djcdhgmx', `${oilFieldName || ''}单井层段合格明细`)">
@@ -207,7 +207,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "月",
+                        name: "日期 (月)",
                         nameTextStyle: {
                             color: "#8FA4CC"
                         },
