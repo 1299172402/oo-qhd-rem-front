@@ -8,7 +8,7 @@
                     <div style="width: 50%">
                         <Echart :chart-data="option"></Echart>
                         <div style="position:absolute;bottom:20%;left:2%;font-size: 10px;text-align: center">
-                            <h5 style="color: #0d84ff">开井数(口)/油田总井数(口)</h5>
+                            <h5 style="color: #0d84ff">开井数(口)/油井总井数(口)</h5>
                             <div style="font-size: 20px;">{{dataList.oilWellOpenTotal}}/{{dataList.oilWellTotal}}</div>
                         </div>
                         
