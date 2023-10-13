@@ -1,17 +1,17 @@
 <template>
   <div style="height: 100%">
-    <div class="buttonleft">
+    <div>
       <el-radio v-model="radio" label="1" type="text" @change="tabChange(1)">区块结果展示</el-radio>
       <el-radio v-model="radio" label="2" type="text" @change="tabChange(2)">单井结果展示</el-radio>
     </div>
       <!-- 无数据空白 -->
       <div v-if="this.modelBasicInfo.modelStep == 0" >
-          <el-empty :image="require('@/icons/svg/data.png')" :image-size="250" description="暂无数据，请上传模型后查看"></el-empty>
+<!--          <el-empty :image="require('@/icons/svg/data.png')" :image-size="250" description="暂无数据，请上传模型后查看"></el-empty>-->
       </div>
 
       <!-- 区块指标 -->
       <div v-show="isShowqk" style="height: 100%">
-          <el-button style="color: white; font-size: 14px; line-height: 10px;float:right;margin-top:-50px"
+          <el-button type="primary" style="float: right; margin-top: -50px"
                      class="buttonright" @click="isShowTable = true">查看数据
           </el-button>
           <div v-show="isShowChart" style="margin-top:10px; height: 100% !important;">
@@ -2835,39 +2835,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.buttonleft {
-    margin-top: -10px;
-    width: 300px;
-    height: 35px;
-    text-align: center; //水平居中
-    line-height: 35px; //上下居中
-    background: inherit;
-    background-color: #004473;
-    border: none;
-    box-shadow: inset 0px 0px 13px 3px rgba(36, 222, 255, 0.5);
-}
-.buttonright {
-    width: 100px;
-    height: 35px;
-    left: 660px;
-    top: -595px;
-    text-align: center; //水平居中
-    line-height: 30px; //上下居中
-    background: inherit;
-    background-color: #004473;
-    border: none;
-    box-shadow: inset 0px 0px 13px 3px rgba(36, 222, 255, 0.35);
-}
-.dialogback {
-    width: 100px;
-    height: 30px;
-    left: 635px;
-    top: 440px;
-    text-align: center; //水平居中
-    line-height: 25px; //上下居中
-    background: inherit;
-    background-color: #004473;
-    border: none;
-    box-shadow: inset 0px 0px 13px 3px rgba(36, 222, 255, 0.35);
-}
+
 </style>
