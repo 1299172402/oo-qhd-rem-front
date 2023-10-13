@@ -1,118 +1,106 @@
 <template>
     <div style="height: 100%">
         <!-- 模型管理  油藏优化模型 -->
-        <el-card class="modelManagerClass" v-show="modelManagerDialog" style="height: 780px;">
-            <el-row style="width:100%; top: -10px;" type="flex" justify="space-between">
-                <span style="color:white;font-size:14px;margin-top: 7px;">油田：</span>
-                <el-select filterable disabled type="primary"
-                           style="border-radius: 0px;border-Radius:0px;width:150px;margin-left: -40px;height: 45px;"
-                           v-model="modelObject.ogfId" placeholder="全部" clearable>
-                    <el-option v-for="item in ogfList" :key="item.ogfId" :label="item.ogfName"
-                               :value="item.ogfId"></el-option>
-                </el-select>
-                <span style="color:white;font-size:14px;margin-left: -20px;margin-top: 7px;">区块：</span>
-                <el-select filterable v-model="modelObject.blockId" clearable
-                           style="margin-left:-40px;width:150px;"
-                           placeholder="全部">
-                    <el-option v-for="item in blockList" :key="item.blockId" :label="item.blockName" :value="item.blockId"></el-option>
-                </el-select>
-                <span style="margin-left:500px;margin-right:-30px;margin-top: 7px;font-size: 14px;color: white">模型创建时间:</span>
-                <el-date-picker style="width:150px;margin-right:-40px;" type="date" v-model="modelObject.startDate"
-                                :picker-options="pickerOptions" @change="handleTime" placeholder="年/月/日"
-                                popper-class="elDatePicker" value-format="yyyy-MM-dd">
-                </el-date-picker>
-                <span style="color:white;font-size:14px;margin-right:-40px;margin-top: 7px;">&nbsp; --- &nbsp;</span>
-                <el-date-picker style="width:150px;margin-right:-20px"
-                                type="date" v-model="modelObject.endDate" :picker-options="pickerOptions2"
-                                placeholder="年/月/日" popper-class="elDatePicker" value-format="yyyy-MM-dd">
-                </el-date-picker>
-                <el-button type="primary"
-                           style="border-Radius:0px;margin-left:-10px;margin-right:-50px;font-size: 14px;height: 35px;"
-                           size="small" @click="searchTableList()" icon="el-icon-search">检索
-                </el-button>
-                <el-button size="small" type="primary"
-                           style="border-Radius:0px;margin-right:px;margin-left:0px;font-size: 14px;height: 35px;"
-                           icon="el-icon-circle-plus-outline" @click="handleAdd">创建油藏优化模型</el-button>
+        <el-row style="width:100%; top: -10px;" type="flex">
+            <span style="color:white;font-size:14px;margin-top: 7px">油田：</span>
+            <el-select filterable disabled type="primary"
+                       v-model="modelObject.ogfId" placeholder="全部" clearable>
+                <el-option v-for="item in ogfList" :key="item.ogfId" :label="item.ogfName"
+                           :value="item.ogfId">
+                </el-option>
+            </el-select>
+            <span style="color:white;font-size:14px;margin-top: 7px;margin-left: 20px">区块：</span>
+            <el-select filterable v-model="modelObject.blockId" clearable
+                       placeholder="全部">
+                <el-option v-for="item in blockList" :key="item.blockId" :label="item.blockName" :value="item.blockId"></el-option>
+            </el-select>
+            <span style="font-size: 14px;color: white;margin-top: 7px;margin-left: 210px">模型创建时间 : </span>
+            <el-date-picker type="date" v-model="modelObject.startDate" style="margin-left: 10px"
+                            :picker-options="pickerOptions" @change="handleTime" placeholder="年/月/日"
+                            popper-class="elDatePicker" value-format="yyyy-MM-dd">
+            </el-date-picker> 
+             ----
+            <el-date-picker  type="date" v-model="modelObject.endDate" :picker-options="pickerOptions2"
+                             placeholder="年/月/日" popper-class="elDatePicker" value-format="yyyy-MM-dd">
+            </el-date-picker>
+            <el-button type="primary" style="margin-left: 15px"
+                       size="small" @click="searchTableList()" icon="el-icon-search">检索
+            </el-button>
+            <el-button size="small" type="primary" style=""
+                       icon="el-icon-circle-plus-outline" @click="handleAdd">创建油藏优化模型</el-button>
             </el-row>
-            <pagePanel headerTitle="油藏优化模型" :show-btn="true" style="height: calc(100% - 10px);margin-top: -5px; height:700px">
-                <!-- 表格-->
-                <el-table  highlight style="margin-top: -10px;margin-left: 1px;" height="calc(100% - 15px)"
-                           v-loading="deleteModelLoading" element-loading-background="rgba(0,0,0,0.5)"
-                           element-loading-text="删除中" element-loading-spinner="el-icon-loading"
-                           :data="modelList" :header-cell-style="modelTableStyle" :cell-style="tableColorone">
-                    <el-table-column label="序号" type="index" width="100" align="center"
-                                     :index="table_index"></el-table-column>
-                    <el-table-column prop="modelCode" label="模型代码" align="center"></el-table-column>
-                    <el-table-column prop="modelName" label="模型名称" align="center"></el-table-column>
-                    <el-table-column prop="blockName" label="对应区块" align="center"></el-table-column>
-                    <el-table-column prop="inputDate" label="生成时间" align="center"></el-table-column>
-                    <el-table-column prop="operate" label="操作" align="center">
-                        <!-- 插槽 -->
-                        <template v-slot="scope">
-                            <el-button size="mini" class="ckjg" icon="el-icon-document" @click="lookResClick(scope.row.modelBasicId)">查看结果
-                            </el-button>
-                            <el-button class="scjg" link size="small" icon="el-icon-delete"
-                                       @click="deleteClick(scope.row.modelBasicId)">删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <el-row>
-                    <el-button type="primary" @click="returnMainScreen" style="float: right;">返回主界面</el-button>
-                    <el-pagination style="float: left;"
-                                   :current-page="modelObject.pn"
-                                   :total="totalPage"
-                                   :page-size="modelObject.pageSize"
-                                   layout="prev, pager, next" @current-change="getTableList">
-                    </el-pagination>
-                </el-row>
-            </pagePanel>
-            <el-card align="center" v-show="dialogModelVisible" class="createModelClass"
-                     style="position: absolute; top: 100px;width: 1600px;height: 660px;border: 0px;">
-                <el-row align="center">
-              <span
-                  style="color:white;font-size: 16px;position: absolute; left: 725px;top: 120px;z-index: 1100;">创建油藏优化模型</span>
-                    <el-image :src="require('@/icons/svg/fabj.png')"
-                              style="width: 400px;height: 35px;margin-top: 120px;"></el-image>
-                </el-row>
-                <el-row align="center">
-                    <el-image :src="require('@/icons/svg/bdzt2.png')"
-                              style="width:400px;height:367px;margin-top: -10px;"></el-image>
-                </el-row>
-                <el-form :model="modelForm" :rules="modelRules" ref="modelForm" label-width="140px"
-                         style="position: absolute;left:610px;right:60px;top:180px;border:0;">
-                    <el-form-item style="margin-left:-30px;margin-top:30px" label="模型名称:" prop="modelName" class="item">
-                        <el-input clearable v-model.trim="modelForm.modelName" style="width: 260px;float: left"
+        <pagePanel headerTitle="油藏优化模型" :show-btn="true" style="height: calc(100% - 10px);margin-top: 5px;height: 700px">
+            <!-- 表格-->
+            <el-table  highlight style="margin-top: -10px;margin-left: 1px;" height="calc(100% - 15px)"
+                       v-loading="deleteModelLoading" element-loading-background="rgba(0,0,0,0.5)"
+                       element-loading-text="删除中" element-loading-spinner="el-icon-loading"
+                       :data="modelList" :header-cell-style="modelTableStyle" :cell-style="tableColorone">
+                <el-table-column label="序号" type="index" width="100" align="center"
+                                 :index="table_index"></el-table-column>
+                <el-table-column prop="modelCode" label="模型代码" align="center"></el-table-column>
+                <el-table-column prop="modelName" label="模型名称" align="center"></el-table-column>
+                <el-table-column prop="blockName" label="对应区块" align="center"></el-table-column>
+                <el-table-column prop="inputDate" label="生成时间" align="center"></el-table-column>
+                <el-table-column prop="operate" label="操作" align="center">
+                    <!-- 插槽 -->
+                    <template v-slot="scope">
+                        <el-button size="mini" class="ckjg" icon="el-icon-document" @click="lookResClick(scope.row.modelBasicId)">查看结果
+                        </el-button>
+                        <el-button class="scjg" link size="small" icon="el-icon-delete"
+                                   @click="deleteClick(scope.row.modelBasicId)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <el-row>
+                <el-pagination style="float: left;"
+                               :current-page="modelObject.pn"
+                               :total="totalPage"
+                               :page-size="modelObject.pageSize"
+                               layout="prev, pager, next" @current-change="getTableList">
+                </el-pagination>
+            </el-row>
+            <el-dialog title="创建油藏优化模型" 
+                       :visible.sync="dialogModelVisible" width="460px" >
+                <el-form label-width="110px" :model="modelForm" :rules="modelRules" ref="modelForm" >
+                    <el-form-item label="模型名称:" prop="modelName" class="item">
+                        <el-input clearable v-model.trim="modelForm.modelName" style="width: 240px;"
                                   placeholder="请输入模型名称"></el-input>
                     </el-form-item>
-                    <el-form-item style="margin-left:-30px" label="所选区块:" prop="blockId" class="item">
-                        <div style="width: 260px;float: left">
-                            <el-cascader :options="modelForm.options" clearable @clear="getTableList" style="width: 100%;"
-                                         v-model="modelForm.blockId" @change="selectBlock" placeholder="请选择区块"></el-cascader>
-                        </div>
+                    <el-form-item label="所选区块:" prop="blockId" class="item">
+                        <!--                        <div style="width: 260px;float: left">-->
+                        <el-cascader :options="modelForm.options" clearable @clear="getTableList"
+                                     style="width: 240px;"
+                                     v-model="modelForm.blockId" @change="selectBlock" placeholder="请选择区块"></el-cascader>
+                        <!--                        </div>-->
                     </el-form-item>
-                    <el-form-item style="margin-left:-30px" label="模拟起始时间:" prop="imitateInitDate" class="item">
-                        <div class="block" style="width: 260px;float: left">
-                            <el-date-picker style="width: 100%;" v-model.trim="modelForm.imitateInitDate" type="date"
-                                            placeholder="年/月/日" popper-class="elDatePicker">
-                            </el-date-picker>
-                        </div>
+                    <el-form-item label="模拟起始时间:" prop="imitateInitDate" class="item">
+                        <!--                        <div class="block" style="width: 260px;float: left">-->
+                        <el-date-picker style="width: 240px;" v-model.trim="modelForm.imitateInitDate" type="date"
+                                        placeholder="年/月/日" popper-class="elDatePicker">
+                        </el-date-picker>
+                        <!--                        </div>-->
                     </el-form-item>
-                    <el-form-item style="margin-left:-30px" label="模型创建人:" prop="modelAuthor" class="item">
+                    <el-form-item  label="模型创建人:" prop="modelAuthor" class="item">
                         <el-input clearable @clear="getTableList" v-model.trim="modelForm.modelAuthor"
-                                  style="width: 260px;float: left" placeholder="请输入模型创建人"></el-input>
+                                  style="width: 240px;"
+                                  placeholder="请输入模型创建人"></el-input>
                     </el-form-item>
-                    <el-form-item style="margin-left:-30px" label="制定时间:" prop="inputDate" v-model.trim="modelForm.inputData"
+                    <el-form-item label="制定时间:" prop="inputDate" v-model.trim="modelForm.inputData"
                                   class="item">
                         <p align="left" style="color:white;font-size: 14px">{{ modelForm.inputDate }}</p>
                     </el-form-item>
-                    <el-button style="position: absolute;left: 190px;top: 300px" type="primary" @click="getAddListData('modelForm')">开始创建
-                    </el-button>
-                    <el-button style="position:absolute;left: 275px;top: 300px" type="primary"
-                               @click="dialogModelVisible = false">取 消
-                    </el-button>
+                    <el-row >
+                        <el-button type="primary" @click="getAddListData('modelForm')">开始创建
+                        </el-button>
+                        <el-button type="primary" @click="dialogModelVisible = false">取 消
+                        </el-button>
+                    </el-row>
+
+
                 </el-form>
-            </el-card>
-        </el-card>
+            </el-dialog>
+        </pagePanel>
+        
     </div>
 </template>
 
@@ -236,13 +224,7 @@ export default {
         this.djClick();
     },
     methods:{
-        //模型管理页面
-        // 返回主界面
-        returnMainScreen(){
-            this.modelManagerDialog = false
-            this.ModelYunSuan = true
-            this.getCaseByMax()
-        },
+        
         //分页序号连续
         table_index(index){
             return (this. modelObject.pn-1) * this. modelObject.pageSize + index + 1
@@ -439,6 +421,29 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.ckjg {
+    padding-left: 9px;
+    //padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 110px;
+    height: 32px;
+    font-size: 14px;
+    border-color: #84bede;
+    color: #84bede;
+    background: rgba(0, 0, 0, 0);
+}
+.scjg {
+    margin-left: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    height: 32px;
+    border-color: #84bede;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0);
+}
 </style>

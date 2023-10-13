@@ -7,7 +7,6 @@
       <el-table v-loading="fileLoading" element-loading-text="上传中"
                 element-loading-background="rgb(0, 40, 80, 0.6)"
                 :data="tableData"
-                style="position:absolute;width: 675px;top: 40px;font-size: 14px; left:20px"
                 :header-cell-style="headerClass">
         <el-table-column prop="fileName" label="文件类型"  width="112"  align="center" ></el-table-column>
         <el-table-column prop="uploadedFileNum" label="已上传文件个数" width="128" align="center">

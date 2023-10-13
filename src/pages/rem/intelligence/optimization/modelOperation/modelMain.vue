@@ -4,7 +4,11 @@
                 element-loading-background="rgba(0, 40, 80, 0.7)"
                 style=" left: -20px; top: -15px; border: none !important;height: 100%">
             <!-- 模型管理  油藏优化模型 -->
-<!--            <modelManager ref="modelManager"></modelManager>-->
+            <el-card class="modelManagerClass" v-show="modelManagerDialog" style="height: 100%;">
+                <el-button type="primary" @click="returnMainScreen" 
+                           style="position: absolute;top: 710px;left:1500px;z-index: 10">返回主界面</el-button>
+                <modelManager ref="modelManager"></modelManager>
+            </el-card>
             <!-- 模型运算界面 优化方案区块指标和剩余油分布图 + 模型代码 -->
             <div v-show="ModelYunSuan" style="height: 100%">
                 <!-- 五个按钮 -->
@@ -47,18 +51,18 @@
             <!--  遮罩封装  -->
             <div v-show="zhezhao">
                 <el-image :src="require('@/icons/svg/zhezhao.jpg')"
-                          style="position: absolute; top: 0px; opacity: 0.7; width: 1645px; height: 730px; z-index: 100"></el-image>
+                          style="position: absolute; top: 0px; opacity: 0.7;width:102.5%;height:100%;z-index: 100">
+                </el-image>
             </div>
-            
             <!-- 1、上传历史阶段文件dialog class="uploadDialogStyle"-->
-            <div>
+            <div >
                 <el-dialog title="上传历史阶段文件" :show-close="false" :close-on-click-modal="false"
-                           :visible.sync="modelDialogVisibleF" :modal="false" class="dialogUpload" width="740px"
+                           :visible.sync="modelDialogVisibleF" :modal="false"  width="740px"
                            style="position: absolute; top: -25px">
                     <fileUpload ref="fileChild" :modelBasicId="modelBasicId" @aa="aa" @parseSureButtonTrue="parseSureButtonTrue"
                                 @parseSureButtonFalse="parseSureButtonFalse">
                     </fileUpload>
-                    <el-row style="text-align: center;float: right;">
+                    <el-row style="text-align: center;float: right;line-height: 50px">
                         <el-button @click="sureClickAfter" size="small" :disabled="parseSureButton" type="primary">确 定</el-button>
                         <el-button @click="closeDialogF" size="small" :disabled="parseSureButton" type="primary">取 消</el-button>
                     </el-row>
@@ -67,14 +71,14 @@
             <!-- 2、上传预测阶段文件dialog  class="uploadDialogStyle"  src="@/icons/svg/zhezhao.jpg"-->
             <div>
                 <el-dialog title="上传预测阶段文件" :close-on-click-modal="false" :show-close="false"
-                           :visible.sync="modelDialogVisibleA" :modal="false" class="dialogUploadPredict" width="715px"
+                           :visible.sync="modelDialogVisibleA" :modal="false" width="715px"
                            style="position: absolute; top: -380px">
                     <fileUploadPredict ref="fileChildPredict" :modelBasicId="modelBasicId" @aa="aa"
                                        @parseSureButtonTrue="parseSureButtonTrue" @parseSureButtonFalse="parseSureButtonFalse">
                     </fileUploadPredict>
                     <el-row style="text-align: center; float: right;">
-                        <el-button type="prymary" @click="sureClickAfterA" size="small" :disabled="parseSureButton">确 定</el-button>
-                        <el-button type="prymary" @click="closeDialogA" size="small" :disabled="parseSureButton">取 消</el-button>
+                        <el-button type="primary" @click="sureClickAfterA" size="small" :disabled="parseSureButton">确 定</el-button>
+                        <el-button type="primary" @click="closeDialogA" size="small" :disabled="parseSureButton">取 消</el-button>
                     </el-row>
                 </el-dialog>
             </div>
@@ -85,7 +89,7 @@
                         <!--  区块参数 ——  区块调控值 -->
                         <pagePanel headerTitle="区块参数 : 区块调控值"  :show-btn="true"
                                    style="height: calc(100% - 10px);height: 650px;">
-                            <el-table height="570" :cell-style="changeColor" :data="tableListOne">
+                            <el-table height="calc(100% - 10px)" :cell-style="changeColor" :data="tableListOne">
                                 <el-table-column property="blockName" label="区块" align="center"></el-table-column>
                                 <el-table-column property="maxBlockValue" label="最大调控值//(m³/d)"
                                                  :render-header="renderHeader" align="center" style="width:95px">
@@ -99,7 +103,7 @@
                         <!--  水井参数 ——  注采参数 -->
                         <pagePanel headerTitle="水井参数 : 注采参数"  :show-btn="true"
                                    style="height: calc(100% - 10px);height: 650px;">
-                            <el-table :data="tableListTwo" height="570">
+                            <el-table :data="tableListTwo" height="calc(100% - 10px)">
                                 <el-table-column type="index" label="序号" align="center"></el-table-column>
                                 <el-table-column property="modelWellNo" label="操作井名" align="center"></el-table-column>
                                 <el-table-column property="modelWellType" label="油水井" align="center"></el-table-column>
@@ -114,7 +118,7 @@
                         <!--  油井参数 ——  注采参数 -->
                         <pagePanel headerTitle="油井参数 : 注采参数" :show-btn="true"
                                    style="height: calc(100% - 10px);height: 650px;">
-                            <el-table :data="tableListThree" height="570">
+                            <el-table :data="tableListThree" height="calc(100% - 10px)">
                                 <el-table-column type="index" label="序号" align="center"></el-table-column>
                                 <el-table-column property="modelWellNo" label="操作井名" align="center"></el-table-column>
                                 <el-table-column property="modelWellType" label="油水井" align="center"></el-table-column>
@@ -130,18 +134,167 @@
                            style="height: 30px;font-size: 14px;float: right;margin-top: 20px;margin-right: 30px">退出查看
                 </el-button>
             </el-card>
-            
+            <!-- 模型运行dialog表格card -->
+            <el-card v-show="cardtable" class="modelManagerClass" style="z-index: 111;">
+                <pagePanel headerTitle="模型运行文件" :show-btn="true" style="width: 50%; height:680px;text-align: center">
+                    <el-table ref="multipleTable" :data="tableData1" height="95%"
+                              :header-cell-style="headerClass" @selection-change="selectItem">
+                        <el-table-column type="selection" align="center" />
+                        <el-table-column label="日期" prop="inputDate" align="center" />
+                        <el-table-column label=".F文件名称" prop="fileName"  align="center" />
+                        <el-table-column label="文件阶段类型" prop="fileVersion" align="center">
+                            <template slot-scope="scope">
+                                <span v-show="scope.row.fileVersion == '0'">历史状态</span>
+                                <span v-show="scope.row.fileVersion == '1'">优化状态</span>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <el-row style="float: right;line-height:40px;margin-top: 5px">
+                        <el-button @click="Fupload" type="primary">确定</el-button>
+                        <el-button @click=" cardtable = false;zhezhao=false" type="primary">取消</el-button>
+                    </el-row>
+                    </pagePanel>
+            </el-card>
+            <!-- 运行过程card -->
+            <el-card v-show="showcard" class="modelManagerClass" style="z-index: 111;">
+                <el-row v-loading="loading" element-loading-text="模型正在运行中，请稍后" element-loading-background="rgba(0, 40, 80, 0.7)"
+                     style="text-align:center; ">
+                </el-row>
+            </el-card>
+            <!-- 运行成功card -->
+            <el-card v-show="showChange1" class="modelManagerClass" style=";z-index: 111;">
+                <div ref="card" style="text-align:center;width: 600px;">
+                    <p style="font-size:22px;color:white;">{{ modelData }}</p>
+                </div>
+            </el-card>
+            <!-- 制度下载dialog  class="DialogStyle"-->
+            <el-dialog title="预测方案下载" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogVisible" width="400px"
+                           ref="outDialog" :modal="false" :close-on-click-modal="false" :modal-append-to-body="false"
+                           style="position: absolute">
+                <el-row style="line-height: 50px">
+                    <span style="color: white; font-size: 16px">开始时间 : </span>
+                    <el-date-picker v-model="startDate" type="date" value-format="yyyy-MM-dd" 
+                                    placeholder="年/月/日" @change="clearDateDisable"
+                                    popper-class="elDatePicker">
+                    </el-date-picker>
+                </el-row>
+                <el-row style="line-height: 50px">
+                    <span style="color: white; font-size: 16px">结束时间 : </span>
+                    <el-date-picker  v-model="endDate" type="date" placeholder="年/月/日"
+                                     value-format="yyyy-MM-dd" @change="clearDateDisable"
+                                     popper-class="elDatePicker">
+                    </el-date-picker>
+                </el-row>
+                <el-row class="footer" style="margin-top: 5px">
+                    <el-button type="primary" @click="predictDownloadTable">
+                            下载预测制度
+                        </el-button>
+                    <el-tooltip class="item" effect="dark" content="请选择时间" placement="top-start">
+                        <el-button type="primary" @click="realDownloadTable">下载实际制度</el-button>
+                    </el-tooltip>
+                    <el-button type="primary" @click=" dialogVisible = false; zhezhao = false; ">取 消
+                    </el-button>
+                </el-row>
+            </el-dialog>
+            <!-- 下载预测制度 -->
+            <el-dialog title="下载预测制度" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogFormVisible"
+                          :modal="false" :close-on-click-modal="false" width="80%">
+                    <el-row type="flex" justify="space-between" :gutter="20">
+                        <el-col :span="12">
+                            <pagePanel headerTitle="WCONPROD" :show-btn="true"
+                                       style="height: calc(100% - 10px);height: 650px;">
+                                <predictTableWater :prodListTable="prodList" :tStep="tStep" :submit1="submit1" ref="preWater">
+                                </predictTableWater>
+                            </pagePanel>
+                        </el-col>
+                        <el-col :span="12">
+                            <pagePanel headerTitle="WCONINJE" :show-btn="true"
+                                       style="height: calc(100% - 10px);height: 650px;">
+                                <predictTableInj style="margin-left:-40px; " :tStep="tStep" :submit1="submit1" :chooseAllData="tableData"
+                                                 ref="preInj"></predictTableInj>
+                            </pagePanel>
+                        </el-col>
+                    </el-row>
+                    <!-- 显示折线图 -->
+                    <el-row>
+                        <el-card v-show="dialogVisiblePicture" class="cardreset">
+                            <span style="color:white;font-size:16px">请选择优化时间:</span>
+                            <el-row style="position: absolute; left: 20px; top: 60px">
+                                <div class="lineChart" style="position: absolute; left: 18px; top: 10px">
+                                    <div id="smain" ref="smain"></div>
+                                </div>
+                                <!--选择框-->
+                                <el-select class="radioselect" v-model="falutName" :popper-append-to-body="false"
+                                           @change="changeSelectImage($event, item)" size="small"
+                                           style="position: absolute;  left: 141px;top: -45px;width;:100px">
+                                    <el-option v-for="item in pictureOption" :key="item.pictureOption" :label="item.stepTime"
+                                               :value="item.fileStepId">
+                                    </el-option>
+                                </el-select>
+                                <!--   放置echarts       -->
+                                <button @click="close" style=" border:0px solid;border-radius:0px;color:white;
+                                background-image: linear-gradient(rgba(0, 68, 115, 0.85), rgba(0, 72, 122, 0.85));
+                                box-shadow: rgb(36, 222, 255) 0px 0px 5px 1px inset !important;  margin:3px 0px 0px 715px;
+                size: medium;
+                width: 62px;
+                height: 32px">取 消</button>
+                            </el-row>
+                            <!--              </div>-->
+                        </el-card>
+                    </el-row>
+                    <div slot="footer" class="dialog-footer">
+                        <el-row>
+                            <el-button type="primary"
+                                       @click="showTable">显示图片</el-button>
+                            <!-- <el-tooltip class="item" effect="dark" content="请选择相同的时间步进行下载"
+                            placement="top-start"> -->
+                            <span @click="enter()">
+                                <el-button :disabled="tooltipdiabled" type="primary">下载</el-button>
+                            </span>
+                            <el-button type="primary" :disabled="tooltipdiabled" @click="cancel">取 消</el-button>
+                        </el-row>
+                    </div>
+                </el-dialog>
+            <!-- 下载实际制度 -->
+            <el-dialog title="下载实际制度" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogReal" width="1650px"
+                           :modal="false" :close-on-click-modal="false">
+                    <el-row type="flex" justify="space-between" :gutter="20">
+                        <el-col :span="12">
+                            <pagePanel headerTitle="WCONPROD" :show-btn="true"
+                                       style="height: calc(100% - 10px);height: 650px;">
+                                <realTableOil :prodRealList="prodRealList" :modelBasicId="modelBasicId" :startDate="startDate"
+                                              :endDate="endDate" ref="prodRealList"></realTableOil>
+                            </pagePanel>
+                        </el-col>
+                        <el-col :span="12">
+                            <pagePanel headerTitle="WCONINJE" :show-btn="true"
+                                       style="height: calc(100% - 10px);height: 650px;">
+                                <realTableWater :injRealList="injRealList" :modelBasicId="modelBasicId" :startDate="startDate"
+                                                :endDate="endDate" ref="injRealList"></realTableWater>
+                            </pagePanel>
+                        </el-col>
+                    </el-row>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button class="buttonClassLogo" @click="downLoadRealFile" type="primary">下载</el-button>
+                        <el-button class="buttonClassLogo" @click="cancel1" type="primary">取 消</el-button>
+                    </div>
+
+                </el-dialog>
         </el-row>
     </div>
 </template>
 
 <script>
 //-组件
-// import modelManager from "@/pages/rem/intelligence/optimization/modelOperation/modelManager.vue";
+import modelManager from "@/pages/rem/intelligence/optimization/modelOperation/modelManager.vue";
 import blockIndicators from "@/pages/rem/intelligence/optimization/modelOperation/modelRun/blockIndicators.vue";
 import surplusOil from "@/pages/rem/intelligence/optimization/modelOperation/modelRun/surplusOil.vue";
 import fileUpload from "@/pages/rem/intelligence/optimization/modelOperation/modelUpload/fileUpload.vue"
 import fileUploadPredict from "@/pages/rem/intelligence/optimization/modelOperation/modelUpload/fileUploadPredict.vue"
+import predictTableInj from "@/pages/rem/intelligence/optimization/modelOperation/predictTable/predictTableInj.vue";
+import predictTableWater from "@/pages/rem/intelligence/optimization/modelOperation/predictTable/predictTable.vue";
+import realTableOil from "@/pages/rem/intelligence/optimization/modelOperation/realTable/realTableOil.vue";
+import realTableWater from "@/pages/rem/intelligence/optimization/modelOperation/realTable/realTableWater.vue";
 //-接口
 import {
     // GetBlockListByOgfId,
@@ -169,12 +322,15 @@ import {
 export default {    
     name: "modelMain",
     components:{
-        // modelManager,
+        modelManager,
         blockIndicators,
         surplusOil,
         fileUpload,
-        // fileUploadPredict,
-        
+        fileUploadPredict,
+        predictTableInj,
+        predictTableWater,
+        realTableOil,
+        realTableWater,
     },
     data(){
         return{
@@ -469,13 +625,27 @@ export default {
                     },
                 ],
             },
-            
         }
     },
     mounted() {
         this.getCaseByMax()
     },
     methods: {
+        //模型管理页面
+        // 返回主界面
+        returnMainScreen(){
+            this.modelManagerDialog = false
+            this.ModelYunSuan = true
+            this.getCaseByMax()
+        },
+        //表格单位换行
+        renderHeader(h, { column }) {
+            return h("span", {}, [
+                h("span", {}, column.label.split("//")[0]),
+                h("br"),
+                h("span", {}, column.label.split("//")[1]),
+            ])
+        },
         //获取最新方案方法--智能配注请求后台
         getCaseByMax() {
             //判断是哪里传过来的caseId
@@ -828,7 +998,6 @@ export default {
                     console.log(err);
                 });
         },
-
         //上传历史文件点击确定之后
         //优化前点击确定按钮开始解析文件
         sureClickAfter() {
@@ -1010,7 +1179,6 @@ export default {
                 console.log("父组件是否被条用啊！！！！");
             }, 1000);
         },
-
         //结果上传 -------------------------------------------------------------------------
         resultUpload() {
             this.zhezhao = true;
@@ -1205,7 +1373,6 @@ export default {
                 console.log(res);
             });
         },
-
         selectItem(rows) {
             if (rows.length > 1) {
                 const newRows = rows.filter((it, index) => {
@@ -1222,7 +1389,6 @@ export default {
                 this.multipleSelection = rows;
                 console.log("selectItem", rows);
             }
-            // this.userId = this.multipleSelection.length? this.multipleSelection[0].guid: "";
             console.log("2", this.multipleSelection);
         },
         onSelectOp(row) {
@@ -1462,27 +1628,7 @@ export default {
             window.URL.revokeObjectURL(file.href);
             document.body.removeChild(file);
         },
-        
-        
-        //数据上传代码结束
-
-        //调控参数部分代码
-
-        //调控参数代码结束
-
-        //模型运行部分代码
-
-        //模型运行代码结束
-
-        //预测方案部分代码
-
-        //预测方案代码结束
-
-        //结果上传部分代码
-
-        //结果上传代码结束
     }
-    
 }
 </script>
 
@@ -1495,100 +1641,5 @@ export default {
     width: 102%;
     border: 0px !important;
 }
-/* 数据上传dialog样式 */
-.dialogUpload {
-    
-}
-::v-deep .el-dialog__title {
-    line-height: 20px;
-    font-size: 16px !important;
-    color: white !important;
-}
 
-
-
-
-
-::v-deep .el-table__header-wrapper .cell {
-    height: 30px !important;
-    font-size: 15px !important;
-    transform: translateY(5px);
-}
-
-/* 弹出层设置背景色  头部 */
-::v-deep .el-dialog__header {
-    text-align: center;
-    border: #136f93 0px solid !important;
-    border-bottom: 0;
-    margin-top: 0px;
-    background: transparent !important;
-}
-
-::v-deep .no-header-dialog .el-dialog__header {
-    display: none;
-}
-
-::v-deep .el-dialog__body {
-    /*background-color: #ffffff !important;*/
-    /*background-color: transparent !important;*/
-    background: linear-gradient(#0484ae, #042e4d) !important;
-    border: #136f93 0px solid;
-    border-top: 0;
-    height: 520px !important;
-}
-
-::v-deep .el-dialog__footer {
-    border: #136f93 1px solid;
-    border-top: 0;
-}
-/* 预测 */
-.dialogUploadPredict {
-    position: absolute;
-    top: 40px;
-    
-}
-::v-deep .el-dialog__title {
-    line-height: 20px;
-    font-size: 16px;
-    color: white;
-}
-
-::v-deep .el-dialog {
-    background: linear-gradient(#0484ae, #042e4d) !important;
-}
-
-::v-deep .el-upload--text {
-    border: none !important;
-}
-
-/* 弹出层设置背景色  头部 */
-::v-deep .el-dialog__header {
-    text-align: center;
-    background: transparent !important;
-    border: #136f93 1px solid;
-    border-bottom: 0;
-    margin-top: 0px;
-}
-
-::v-deep .el-dialog__header .el-icon-close {
-    margin-top: 15px;
-}
-
-::v-deep .el-table__header-wrapper .cell {
-    height: 30px !important;
-    font-size: 14px !important;
-    transform: translateY(5px);
-}
-
-::v-deep .el-dialog__body {
-    background-color: transparent !important;
-    border: none;
-    border-top: 0;
-    height: 140px;
-}
-
-::v-deep .el-dialog__footer {
-    border: #136f93 1px solid;
-    border-top: 0;
-}
 </style>
