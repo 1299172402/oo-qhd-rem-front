@@ -151,21 +151,18 @@ export default {
     },
     methods: {
         initializeDate() {
-            var data = new Date();
-            var y = data.getFullYear();
-            var time = new Date().getTime() - 24 * 60 * 60 * 1000;
-            var yesday = new Date(time); // 获取的是前一天日期  
-            yesday =
-                yesday.getFullYear() +
+            var nowTime = new Date();
+            var year = nowTime.getFullYear();
+            nowTime =
+                nowTime.getFullYear() +
                 "-" +
-                (yesday.getMonth() > 8 ? yesday.getMonth() + 1 : "0" + (yesday.getMonth() + 1)) +
+                (nowTime.getMonth() + 1 >= 10 ? nowTime.getMonth() + 1 : "0" + (nowTime.getMonth() + 1)) +//月份从0开始
                 "-" +
-                (yesday.getDate() > 8 ? yesday.getDate() : "0" + yesday.getDate()); //字符串拼接转格式  
-            var startTime = y + "-" + "01-01";
-            var endTime = yesday;
+                (nowTime.getDate() >= 10 ? nowTime.getDate() : "0" + nowTime.getDate());
+            var startTime = year + "-" + "01-01";
+            var endTime = nowTime;
             this.$set(this.queryData.selectDate, 0, startTime);
             this.$set(this.queryData.selectDate, 1, endTime);
-            
         },
         
         goBack() {
