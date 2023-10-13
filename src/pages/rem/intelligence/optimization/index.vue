@@ -56,8 +56,8 @@
           </span>
             </div>
         </header-search>
-        <pagePanelNew style="height: auto">
-            <el-row v-if="activeName == 'first'" :gutter="20" style="height:800px">
+        <pagePanelNew v-if="activeName == 'first'" style="height: auto">
+            <el-row  :gutter="20" style="height:800px">
                 <el-col :span="6" style="height:100%">
                     <pagePanel :headerTitle="title1" :title="title1" :show-btn="true"
                                style="text-align: center;height:calc(100% - 10px)">
@@ -221,28 +221,25 @@
                     </pagePanel>
                 </el-col>
             </el-row>
-            <iframe
-                ref="iframe"
-                :style="getStyle"
-                allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" oallowfullscreen="true" msallowfullscreen="true"
-                v-show="activeName == 'second'"
-                :src="src"
-            ></iframe>
-
+            <!--  模型运算  -->
+           
         </pagePanelNew>
+        <pagePanelNew v-else style="height: 100%">
+            <modelOperation ref="modelOpreation" style="height: 100%"></modelOperation>
+        </pagePanelNew>
+        
     </div>
 </template>
 <script>
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} from "@/api/rem/r-intelligentIPA.js";
-// import Iframe from '@/components/rem/tools/iframe.vue'
 import {exportExcel} from '@/lib/exportExcel';
-import Iframe from "@/components/rem/tools/iframe.vue";
+// 智能配注-模型运算界面
+import modelOperation from "@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue";
 
 export default {
     components: {
-        Iframe
-        // Iframe
+        modelOperation, //智能配注
     },
     mixins: [queryConditionMixin],
     created(){
@@ -531,11 +528,15 @@ export default {
             exportExcel("#indexscvSecond", this.title2);
         },
         setWidth(){
-            this.iframeWidth = this.$refs.iframe.parentNode.clientWidth;
+            // this.iframeWidth = this.$refs.iframe.parentNode.clientWidth;
         }
     },
   
     mounted() {
+        //智能配注调用子组件方法
+        this.$nextTick(()=>{
+            this.$refs.modelOpreation.getCaseByMax()
+        })
         this.$nextTick(()=>{
             setTimeout(()=>{
                 window.addEventListener('resize',this.setWidth);
