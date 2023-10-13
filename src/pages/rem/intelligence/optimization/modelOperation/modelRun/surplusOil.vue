@@ -29,7 +29,7 @@
                 </div>
             </el-row>
             <!--   展示图片   -->
-            <el-row v-show="showPicture" style="margin-top: 5px;width: 100%;height: 100% ">
+            <el-row v-show="showPicture" class="imgbody" style="margin-top: 5px;width: 100%;height: 100% ">
                 <el-carousel style="height: 100%"
                              arrow="never"  indicator-position="none" ref="carousel" trigger="click" :autoplay="autoplay"
                              @change="changeItem" >
@@ -191,6 +191,9 @@ export default {
             //this.faultSelect();
         },
         //默认显示
+        ismax(val){
+            console.log(val)
+        },
         faultSelect() {
             const params = {
                 modelLayerId: this.mo,
@@ -584,5 +587,4 @@ export default {
     border-color: rgba(44, 215, 252, 1);
     border-radius: 0px;
 }
-
 </style>

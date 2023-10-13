@@ -33,7 +33,7 @@
                     </el-col>
                     <!--  剩余油分布图  -->
                     <el-col :span="12" style="margin-top:10px;margin-right: -40px;height: 90%">
-                        <pagePanel headerTitle="剩余油分布图" :show-btn="true" style="height:100%">
+                        <pagePanel headerTitle="剩余油分布图" @zoom-out-com="zoomOutComNew" :show-btn="true" style="height:100%">
                             <surplusOil ref="surplusOil" :modelBasicInfo="modelBasicInfo"></surplusOil>
                         </pagePanel>
                     </el-col>
@@ -1274,6 +1274,9 @@ export default {
                 this.modelBasicInfo.isModelRun = 1;
                 this.modelBasicInfo.modelRun = this.modelBasicInfo.modelRun + 1;
             }
+        },
+        zoomOutComNew(ismax){
+            this.$refs.surplusOil.ismax(ismax)
         },
         //模型测试
         getRunModelTest() {

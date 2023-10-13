@@ -37,7 +37,7 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="日期选择：">
+                        <el-form-item label="日期：">
                             <el-date-picker
                                 v-model="month"
                                 type="daterange"
