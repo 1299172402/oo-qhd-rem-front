@@ -222,7 +222,7 @@
                             },
                         },
                         {
-                            name: "日",
+                            name: "日期 (日)",
                             nameGap: 30,
                             gridIndex: 2,
                             type: "category",

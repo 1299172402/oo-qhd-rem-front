@@ -367,7 +367,7 @@
                         },
                     },
                     xAxis: {
-                        name: "年",
+                        name: "日期 (年)",
                         // nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"
@@ -469,7 +469,7 @@
                         },
                     },
                     xAxis: {
-                        name: "年",
+                        name: "日期 (年)",
                         // nameLocation: "center",
                         nameTextStyle: {
                             color: "#8FA4CC"

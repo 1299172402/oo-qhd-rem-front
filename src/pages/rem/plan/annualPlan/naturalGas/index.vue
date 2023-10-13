@@ -24,7 +24,7 @@
                 <el-table-column prop="prodDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
                 <el-table-column property="gasProdPlan" align="center" :label="`计划产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
                 <el-table-column property="gasProdDaily" align="center" :label="`产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
-                <el-table-column prop="oilEquivalent" align="center" :label="`油当量\n(m³/d)`" :formatter="toPrecise2"></el-table-column>
+                <el-table-column prop="oilEquivalent" align="center" :label="`油当量\n(m³/d)`"></el-table-column>
                 <el-table-column prop="gasProdRollFocecast" align="center" :label="`滚动预测产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
             </el-table>
             <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/>
@@ -108,7 +108,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: '日',
+                        name: "日期 (日)",
                         // nameTextStyle: {
                         //     color: '#8FA4CC',
                         //     fontSize: 14,

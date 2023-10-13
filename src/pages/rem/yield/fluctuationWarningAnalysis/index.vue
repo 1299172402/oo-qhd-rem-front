@@ -462,9 +462,9 @@ export default {
           type: "inside",
         },
         grid: {
-          x: 170,
+          x: 150,
           y: 50,
-          x2: 50,
+          x2: 80,
           y2: 100,
         },
         toolbox: {
@@ -495,7 +495,7 @@ export default {
           bottom: 30,
         },
         xAxis: {
-          name: "日",
+          name: "日期 (日)",
           // nameTextStyle: {
           //     color: "#8FA4CC",
           //     fontSize: 14,

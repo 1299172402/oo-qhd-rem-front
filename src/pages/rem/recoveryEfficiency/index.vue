@@ -1122,7 +1122,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "日",
+          name: "日期 (日)",
           // name: "时间",
           type: "category",
           nameTextStyle: {

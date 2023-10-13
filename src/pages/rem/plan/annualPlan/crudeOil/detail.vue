@@ -113,7 +113,7 @@
                         itemGap: 14,
                     },
                     xAxis: [{
-                        name: '日',
+                        name: "日期 (日)",
                         nameTextStyle: {
                             color: '#fff',
                             fontSize: 14,
@@ -212,7 +212,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: '日',
+                        name: "日期 (日)",
                         nameTextStyle: {
                             color: '#fff',
                             fontSize: 14,
@@ -336,7 +336,7 @@
                         itemGap: 14,
                     },
                     xAxis: [{
-                        name: '日',
+                        name: "日期 (日)",
                         nameTextStyle: {
                             color: '#fff',
                             fontSize: 14,
@@ -463,7 +463,7 @@
                     },
                     xAxis: [
                         {
-                            name: '日',
+                            name: "日期 (日)",
                             nameTextStyle: {
                                 color: '#fff',
                                 fontSize: 14,
@@ -558,7 +558,7 @@
                     },
                     xAxis: [
                         {
-                            name: '日',
+                            name: "日期 (日)",
                             nameTextStyle: {
                                 color: '#fff',
                                 fontSize: 14,
@@ -652,7 +652,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: '日',
+                        name: "日期 (日)",
                         nameTextStyle: {
                             color: '#fff',
                             fontSize: 14,

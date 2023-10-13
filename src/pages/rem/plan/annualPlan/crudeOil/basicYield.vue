@@ -103,7 +103,7 @@
                         itemGap: 14,
                     },
                     xAxis: [{
-                        name: '日',
+                        name: "日期 (日)",
                         // nameLocation: 'center',
                         nameGap: 30,
                         // nameTextStyle: {

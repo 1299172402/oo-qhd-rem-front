@@ -166,7 +166,7 @@
                     grid: {
                         x: 120,
                         y: 80,
-                        x2: 50,
+                        x2: 100,
                         y2: 60,
                     },
                     toolbox: {
@@ -202,7 +202,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: "年",
+                        name: "日期 (年)",
                         nameGap: 20,
                         nameTextStyle: { color: '#8FA4CC' },
                         type: "category",

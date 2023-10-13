@@ -620,7 +620,7 @@ export default {
         },
         xAxis: [
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 30,
             nameTextStyle: { color: "#8FA4CC" },
             type: "category",
@@ -760,7 +760,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -877,7 +877,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -999,7 +999,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -1113,7 +1113,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -1219,7 +1219,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -1370,7 +1370,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },

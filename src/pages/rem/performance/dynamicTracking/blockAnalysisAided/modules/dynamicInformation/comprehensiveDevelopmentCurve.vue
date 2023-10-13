@@ -44,16 +44,16 @@
                         },
                     ],
                     grid: [
-                        { x: '180', y: '2%', width: '85%', height: '6%' },
-                        { x: '180', y: '10%', width: '85%', height: '7%' },
-                        { x: '180', y: '20%', width: '85%', height: '7%' },
-                        { x: '180', y: '30%', width: '85%', height: '7%' },
-                        { x: '180', y: '40%', width: '85%', height: '7%' },
-                        { x: '180', y: '50%', width: '85%', height: '6%' },
-                        { x: '180', y: '60%', width: '85%', height: '6%' },
-                        { x: '180', y: '70%', width: '85%', height: '6%' },
-                        { x: '180', y: '80%', width: '85%', height: '6%' },
-                        { x: '180', y: '90%', width: '85%', height: '6%' }
+                        { x: '180', y: '2%', width: '84%', height: '6%' },
+                        { x: '180', y: '10%', width: '84%', height: '7%' },
+                        { x: '180', y: '20%', width: '84%', height: '7%' },
+                        { x: '180', y: '30%', width: '84%', height: '7%' },
+                        { x: '180', y: '40%', width: '84%', height: '7%' },
+                        { x: '180', y: '50%', width: '84%', height: '6%' },
+                        { x: '180', y: '60%', width: '84%', height: '6%' },
+                        { x: '180', y: '70%', width: '84%', height: '6%' },
+                        { x: '180', y: '80%', width: '84%', height: '6%' },
+                        { x: '180', y: '90%', width: '84%', height: '6%' }
                     ],
                     tooltip: {
                         show: true,
@@ -211,7 +211,7 @@
                             }
                         },
                         {
-                            name: '年',
+                            name: "日期 (年)",
                             gridIndex: 9,
                             data: [],
                             axisLabel: {

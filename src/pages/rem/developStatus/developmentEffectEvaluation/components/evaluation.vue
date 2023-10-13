@@ -58,11 +58,11 @@
                         <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table1', '指标评价结果表')">下载</el-button>
                     </div>
                     <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)">
-                        <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
+                        <el-table-column prop="indicatorName" label="指标" min-width="120" align="center"></el-table-column>
                         <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
                         <el-table-column prop="lastPhaseValue" label="上阶段值" align="center" :formatter="toPrecise4"></el-table-column>
                         <el-table-column prop="diffLastPhaseValue" label="与上阶段对比差值" align="center" :formatter="toPrecise4"></el-table-column>
-                        <el-table-column label="理论值" align="center">
+                        <el-table-column label="理论值" min-width="100" align="center">
                             <template slot-scope="scope">
                                 <el-input-number v-model="scope.row.theoryValue" :controls="false" class="el-input-number" style="width: 70px"></el-input-number>
                             </template>
@@ -163,7 +163,7 @@
                         }
                     },
                     xAxis: {
-                        name: "月",
+                        name: "日期 (月)",
                         nameGap: 30,
                         nameTextStyle: { color: '#8FA4CC' },
                         type: 'category',
@@ -488,7 +488,7 @@
                         }
                     },
                     xAxis: {
-                        name: "月",
+                        name: "日期 (月)",
                         nameGap: 30,
                         nameTextStyle: { color: '#8FA4CC' },
                         type: 'category',

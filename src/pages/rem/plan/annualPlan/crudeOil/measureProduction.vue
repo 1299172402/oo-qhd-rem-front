@@ -104,7 +104,7 @@
                         itemGap: 14,
                     },
                     xAxis: {
-                        name: '日',
+                        name: "日期 (日)",
                         // nameTextStyle: {
                         //     color: '#8FA4CC',
                         //     fontSize: 14,
