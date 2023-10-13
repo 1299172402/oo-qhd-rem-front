@@ -29,34 +29,32 @@
                 </div>
             </el-row>
             <!--   展示图片   -->
-            <el-row v-show="showPicture" class="imgbody" style="margin-top: 5px;width: 100%;height: 100% ">
+            <el-row v-show="showPicture" class="imgbody" style="margin-top: 5px;width: 100%;height: 85% ">
                 <el-carousel style="height: 100%"
                              arrow="never"  indicator-position="none" ref="carousel" trigger="click" :autoplay="autoplay"
                              @change="changeItem" >
-                    <el-carousel-item  v-for="(pic, index) in stepList" :key="index" style="height: 100%">
-                        <el-image :src="pic.imageUrl"style="height: 100%" ></el-image>
+                    <el-carousel-item  v-for="(pic, index) in stepList" :key="index" style="width: 100%;height: 100%">
+                        <el-image :src="pic.imageUrl"style="width: 100%;height: 100%" ></el-image>
                     </el-carousel-item>
                 </el-carousel>
             </el-row>
-
             <!--        动图时间步-->
-            <el-row v-show="showfont3" style="font-size: 14px;line-height: 20px; width:300px;margin-top: 15px">
+            <el-row v-show="showfont3" style="font-size: 14px;line-height: 20px; width:300px;margin-top: 35px">
                 <div v-for="(step, index) in timestep2" :key="index" style="color: white;font-size: 14px"
                      v-show="index === pid" ref="changStep">
                     ({{ pid + 1 }}) {{ step }}
                 </div>
             </el-row>
             <!--    base64动图测试-->
-            <el-row v-show="showGif" ref="carouselGif" style="margin-top: 5px;width: 100%;height: 480px !important;">
+            <el-row v-show="showGif" ref="carouselGif" style="margin-top: 5px;width: 100%;height: 85% !important;">
                 <el-image style="width: 100%;height: 100%" :src="img1"></el-image>
             </el-row>
-            <el-row style="text-align: center;">
-                <el-button type="text" class="radionpv" style="color: white; font-size: 14px;line-height:0px"
+            <el-row style="text-align: center;margin-top: 5px">
+                <el-button type="text" class="radionpv" style="color: white; font-size: 14px;"
                            @click="beforeOptimization(b = 1)">历史阶段</el-button>
                 <el-button type="text" class="radionpv" style="margin-left:70px;color: white; font-size: 14px;line-height:0px"
                            @click="afterOptimization(a = 0)">预测阶段</el-button>
             </el-row>
-            <!-- </div> -->
         </div>
     </div>
 </template>
@@ -66,7 +64,6 @@ import { GetModelLayerList, GetModelImageList, } from "@/api/rem/dispenseModel.j
 import { GetModelBasicById } from "@/api/rem/dispenseIndex.js";
 export default {
     name: "surplusOil",
-    //props: ['modelBasicInfo'],
     props: {
         modelBasicInfo: {
             type: Object,
@@ -122,16 +119,6 @@ export default {
         }
     },
     mounted() {
-        // 首次加载时,初始化高度
-        this.screenWidth = window.innerWidth
-        this.bannerHeight = 600 / 1550 * this.screenWidth
-        console.log(this.bannerHeight,'xxxxxxxxxxxxxx');
-        // 窗口大小发生改变
-        window.onresize = () => {
-            this.screenWidth = window.innerWidth
-            this.bannerHeight = 600 / 1550 * this.screenWidth
-            console.log(this.bannerHeight,'yyyyyy');
-        }
         setTimeout(() => {
             this.h();
         }, 1000)
@@ -162,18 +149,6 @@ export default {
         },
         h() {
             this.tt = this.modelBasicInfo.modelBasicId;
-            console.log("h方法里面的id", this.tt)
-        },
-        isMax(val){
-            let imgstyle = document.getElementById('imgstyle')
-            if(val==true){
-                console.log('max');
-                imgstyle.style.height = '500px'
-                imgstyle.style.width = '500px'
-            }else {
-                imgstyle.style.height = '3000px'
-                imgstyle.style.width = '3000px'
-            }
         },
         //获取小层数据
         getModelLayerList() {
@@ -188,23 +163,16 @@ export default {
                 console.log("option", this.options)
                 console.log("hh", this.options[0].modelLayerId)
             })
-            //this.faultSelect();
         },
         //默认显示
-        ismax(val){
-            console.log(val)
-        },
         faultSelect() {
             const params = {
                 modelLayerId: this.mo,
                 modelBasicId: this.modelBasicInfo.modelBasicId,
                 isRealData: 2,
             };
-            console.log("paramms", params)
-            console.log('默认里面', this.mo);
             console.log('默认里面', this.modelBasicInfo.modelBasicId);
             GetModelImageList(params).then(res => {
-                console.log("默认zonghhhhhhhhhhhhhhhhhhhhhhhhhhhhh000000000000000000000000000", res);
                 //循环一个
                 this.stepList = [];
                 this.timestep = [];
@@ -226,9 +194,6 @@ export default {
                     ttt = date + " " + month + " " + year;
                     this.timestep2.push(ttt)
                 }
-                console.log("默认图片1总", this.stepList)
-                console.log("默认时间步总", this.timestep)
-                console.log("默认时间步转化时间总", this.timestep2)
                 //循环两张图片
                 this.timestep3 = [];
                 this.stepList2 = [];
@@ -253,16 +218,10 @@ export default {
                     this.timechange.push(0);
                     this.timechange.push(this.timestep.length - 1);
                 }
-                console.log("stepList2", this.stepList2);
-                console.log("默认时间步3总timestep3", this.timestep3)
-                console.log("默认时间步转化时间总timestep4", this.timestep4)
-                console.log("默认经济timechange", this.timechange)
             })
         },
-
         //各个小层优化前加优化后总数据
         changeSelectImage(item) {
-            console.log("优化zong", item)
             this.itempara = item;
             const params = {
                 modelLayerId: item,
@@ -292,9 +251,6 @@ export default {
                     ttt = date + " " + month + " " + year;
                     this.timestep2.push(ttt)
                 }
-                console.log("图片1总", this.stepList)
-                console.log("时间步总", this.timestep)
-                console.log("时间步转化时间总", this.timestep2)
                 //循环两张
                 this.timestep3 = [];
                 this.stepList2 = [];
@@ -303,7 +259,6 @@ export default {
                         this.stepList2.push(res.result.modelImageList[i]);
                         this.timestep3.push(res.result.modelImageList[i].stepToDate)
                     }
-
                     this.timestep4 = [];
                     for (let i = 0; i < this.timestep3.length; i++) {
                         var dt2 = new Date(this.timestep3[i]);
@@ -319,14 +274,8 @@ export default {
                     this.timechange.push(0);
                     this.timechange.push(this.timestep.length - 1);
                 }
-                console.log("stepLost2总", this.stepList2);
-                console.log("时间步3总", this.timestep3)
-                console.log("时间步转化时间总", this.timestep4)
-                console.log("总", this.timechange)
             })
-
         },
-
         //图片向前循环
         clickBtnPre() {
             //循环一次step
@@ -337,11 +286,9 @@ export default {
             this.showfont3 = false;
             clearInterval(this.timerGif);
             this.timerGif = null;
-            console.log("2222")
             this.showGif = false;
             this.showPicture = true
             this.$refs.carousel.prev()
-            console.log("11111")
         },
         //图片向后循环
         clickBtnNext() {
@@ -354,10 +301,8 @@ export default {
             this.$refs.carousel._props.autoplay = false;
             clearInterval(this.timerGif);
             this.timerGif = null;
-            console.log("2222")
             this.showGif = false;
             this.showPicture = true
-
             this.$refs.carousel.next()
         },
         //动图展示
@@ -373,7 +318,6 @@ export default {
             this.showfont2 = false;
             this.showfont3 = true;
         },
-
         //图片相隔一张展示（向右）
         loopShow(e) {
             this.showPicture = true;
@@ -388,12 +332,10 @@ export default {
             // tab切换的下标
             this.active = e;
             this.num = e;
-            console.log("loopshow", e)
         },
         //图片相隔一张展示（向左）
         loopShow2(e) {
             this.showPicture = true;
-            //this.showPicture1 = true
             this.showfont = true;
             this.showfont2 = false;
             this.showfont3 = false;
@@ -404,14 +346,10 @@ export default {
             // tab切换的下标
             this.active = e;
             this.num = e;
-            console.log("loopshow1", e)
         },
         changeItem(e) {
             this.active = e
             this.num = e;
-            console.log("danxiangnum", this.num)
-            console.log("e", e)
-
         },
         //停止按钮
         stop() {
@@ -435,9 +373,7 @@ export default {
                 modelBasicId: this.modelBasicInfo.modelBasicId,
                 isRealData: b,
             };
-            console.log("modeliiii", params)
             GetModelImageList(params).then(res => {
-                console.log("优化前", res);
                 //循环一个图片
                 this.stepList = [];
                 this.timestep = [];
@@ -458,9 +394,6 @@ export default {
                     ttt = date + " " + month + " " + year;
                     this.timestep2.push(ttt)
                 }
-                console.log("图片1qian", this.stepList)
-                console.log("时间步qian", this.timestep)
-                console.log("时间步转化时间qian", this.timestep2)
                 //循环两张图片
                 this.timestep3 = [];
                 this.stepList2 = [];
@@ -469,7 +402,6 @@ export default {
                         this.stepList2.push(res.result.modelImageList[i]);
                         this.timestep3.push(res.result.modelImageList[i].stepToDate)
                     }
-
                     this.timestep4 = [];
                     for (let i = 0; i < this.timestep3.length; i++) {
                         var dt2 = new Date(this.timestep3[i]);
@@ -485,10 +417,6 @@ export default {
                     this.timechange.push(0);
                     this.timechange.push(this.timestep.length - 1);
                 }
-                console.log("stepLost2qian", this.stepList2);
-                console.log("时间步3qian", this.timestep3)
-                console.log("时间步转化时间4qian", this.timestep4)
-                console.log("有钱", this.timechange)
             })
         },
         //优化后
@@ -499,10 +427,7 @@ export default {
                 modelBasicId: this.modelBasicInfo.modelBasicId,
                 isRealData: a,
             };
-            console.log("", this.itempara)
-            console.log(this.itempara)
             GetModelImageList(param).then(res => {
-                console.log("优化后", res);
                 //循环一个
                 this.stepList = [];
                 this.timestep = [];
@@ -523,9 +448,6 @@ export default {
                     ttt = date + " " + month + " " + year;
                     this.timestep2.push(ttt)
                 }
-                console.log("图片1", this.stepList)
-                console.log("时间步", this.timestep)
-                console.log("时间步转化时间", this.timestep2)
                 //循环两张
                 this.timestep3 = [];
                 this.stepList2 = [];
@@ -549,33 +471,25 @@ export default {
                     this.timechange.push(0);
                     this.timechange.push(this.timestep.length - 1);
                 }
-                console.log("stepLost2", this.stepList2);
-                console.log("时间步3", this.timestep3)
-                console.log("时间步转化时间4", this.timestep4)
-                console.log("youhou", this.timechange)
             })
         },
         //控制动图
         gif() {
             this.img1 = this.stepList[this.pid].imageUrl;
-            console.log("this.img1", this.img1)
             // 页面显示 加载默认图片
             this.timerGif = setInterval(() => {
                 // 如果当前图片是最后一张就把id清零 从第一张开始
                 if (this.pid === this.stepList.length - 1) {
                     this.pid = 0
                     this.img1 = this.stepList[this.pid].imageUrl
-                    console.log("if", this.img1)
                 } else {
                     // 如果当前不是最后一张 就切换下一张
                     this.pid += 1
                     this.img1 = this.stepList[this.pid].imageUrl
-                    // console.log("else",this.img1)
                 }
             }, 1000)
         },
     },
-
 }
 </script>
 
@@ -586,5 +500,8 @@ export default {
     box-sizing: border-box;
     border-color: rgba(44, 215, 252, 1);
     border-radius: 0px;
+}
+.imgbody ::v-deep.el-carousel__container{
+    height: 100% !important;
 }
 </style>
