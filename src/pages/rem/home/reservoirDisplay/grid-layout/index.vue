@@ -338,7 +338,7 @@ export default {
                     return daily;
                 case "剩余油情况":
                     return oilInfo;
-                case "单井大事件":
+                case "油田单井大事件":
                     return oilEvent;
                 case "月度产量完成情况":
                     return monthContrast;

@@ -19,7 +19,7 @@
                     <el-checkbox-group v-model="chooseList">
                         <el-checkbox label="日度产量跟踪" name="type"/>
                         <el-checkbox label="剩余油情况" name="type"/>
-                        <el-checkbox label="单井大事件" name="type"/>
+                        <el-checkbox label="油田单井大事件" name="type"/>
                         <el-checkbox label="月度产量对比图" name="type"/>
                         <el-checkbox label="产量构成详情" name="type"/>
                         <el-checkbox label="产能波动" name="type"/>
@@ -91,7 +91,7 @@ export default {
             layout: [
                 { x: 0, y: 0, w: 8, h: 16, i: "0", name: "秦皇岛32-6油田日度产量跟踪", show: true },
                 { x: 8, y: 0, w: 4, h: 8, i: "1", name: "剩余油情况", show: true },
-                { x: 8, y: 8, w: 4, h: 8, i: "2", name: "单井大事件", show: true },
+                { x: 8, y: 8, w: 4, h: 8, i: "2", name: "油田单井大事件", show: true },
                 { x: 0, y: 16, w: 8, h: 13, i: "3", name: "月度产量完成情况", show: true },
                 { x: 8, y: 16, w: 4, h: 27, i: "4", name: "秦皇岛32-6油田生产指标总览", show: true },
                 { x: 0, y: 28, w: 4, h: 14, i: "5", name: "产能波动", show: true },

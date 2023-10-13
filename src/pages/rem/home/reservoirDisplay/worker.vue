@@ -18,7 +18,7 @@
                 <el-form-item label="展示页签" prop="type">
                     <el-checkbox-group v-model="chooseList">
                         <el-checkbox label="剩余油情况" name="type"/>
-                        <el-checkbox label="单井大事件" name="type"/>
+                        <el-checkbox label="油田单井大事件" name="type"/>
                         <el-checkbox label="月度产量对比图" name="type"/>
                         <el-checkbox label="产量构成详情" name="type"/>
                         <el-checkbox label="产能波动" name="type"/>
