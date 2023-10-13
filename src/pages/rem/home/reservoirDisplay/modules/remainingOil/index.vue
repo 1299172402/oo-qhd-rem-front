@@ -1,19 +1,10 @@
 <template>
-    <div class="box">
-        <img id="im" height="100%" width="80%" />
-    </div>
-<!--  <video-->
-<!--    id="my-video"-->
-<!--    class="box"-->
-<!--    height="100%"-->
-<!--    width="100%"-->
-<!--    autoplay-->
-<!--    src="./剩余油.mp4"-->
-<!--  >-->
-<!--    <div class="progress-bar"></div>-->
-<!--    <div class="progress"></div>-->
-<!--  </video>-->
-    
+        <div class="box">
+            <img id="im" height="100%" width="80%" />
+            <el-image v-if="initiate" :src="require('@/icons/svg/u2080.png')" style="height:20px;position: absolute;cursor:pointer;left:93%;top:30%" @click="startImageRotation"></el-image>
+            <el-image v-else  :src="require('@/icons/svg/u2077.png')" style="height:20px;cursor:pointer;position: absolute;left:93%;top:30%" @click="stop"></el-image>
+           
+        </div>
 </template>
 
 <script>
@@ -26,10 +17,14 @@ import proxy from "@/config/host";
 export default {
     data() {
         return {
-    image:[],
+          image:[],
+            initiate:true,
+            SImg:'',
+            rotationTimer:''
         };
     },
   mounted() {
+      this.SImg = document.getElementById('im');
       GetModelBasicByMaxModelSort().then((res)=>{
           let data = {
               modelBasicId:res.result.modelBasicEntity.modelBasicId,
@@ -40,40 +35,30 @@ export default {
               res.result.modelImageList.map((n)=>{
                   this.image.push(n.imageUrl) 
               })
-              this.startImageRotation() // 开始图片轮播
+              this.SImg.src = this.image[0]; // 切换图片
           })
       })
       
   },
   methods: {
-//       setInterval("changeImg()",10);
-// i=1
-// function
       startImageRotation() {
+          this.initiate = !this.initiate
           let currentIndex = 0; // 当前图片索引
-          var SImg = document.getElementById('im');
-
-          // 定义每隔一定时间切换图片的函数
           const rotateImage = () => {
-              SImg.src = this.image[currentIndex]; // 切换图片
-
+              this.SImg.src = this.image[currentIndex]; // 切换图片
               currentIndex++; // 索引递增
               if (currentIndex >= this.image.length) {
                   currentIndex = 0; // 若到达最后一张图片，则重置索引为 0
               }
           };
-
+          this.rotationTimer = setInterval(rotateImage, 200);
           // 设置定时器，每隔 10 毫秒切换一次图片
-          setInterval(rotateImage, 200);
       },
-    //   video() {
-    //   const video = document.getElementById("im");
-    //   video.onresize = () => {
-    //     const videoWidth = video.offsetWidth;
-    //     const newWidth = Math.floor((videoWidth / barWidth) * 100);
-    //       video.style.width = `${newWidth}%`;
-    //   };
-    // },
+      stop(){
+          this.initiate = !this.initiate
+          clearInterval(this.rotationTimer);
+      },
+      
   },
 };
 </script>
