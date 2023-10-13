@@ -6,7 +6,7 @@
             <!-- 模型管理  油藏优化模型 -->
             <el-card class="modelManagerClass" v-show="modelManagerDialog" style="height: 100%;">
                 <el-button type="primary" @click="returnMainScreen" 
-                           style="position: absolute;top: 710px;left:1500px;z-index: 10">返回主界面</el-button>
+                           style="position: absolute;top: 10px;left:1510px;z-index: 10">返回主界面</el-button>
                 <modelManager ref="modelManager"></modelManager>
             </el-card>
             <!-- 模型运算界面 优化方案区块指标和剩余油分布图 + 模型代码 -->
@@ -76,7 +76,7 @@
                     <fileUploadPredict ref="fileChildPredict" :modelBasicId="modelBasicId" @aa="aa"
                                        @parseSureButtonTrue="parseSureButtonTrue" @parseSureButtonFalse="parseSureButtonFalse">
                     </fileUploadPredict>
-                    <el-row style="text-align: center; float: right;">
+                    <el-row style="text-align: center; float: right;line-height: 50px">
                         <el-button type="primary" @click="sureClickAfterA" size="small" :disabled="parseSureButton">确 定</el-button>
                         <el-button type="primary" @click="closeDialogA" size="small" :disabled="parseSureButton">取 消</el-button>
                     </el-row>
@@ -135,24 +135,25 @@
                 </el-button>
             </el-card>
             <!-- 模型运行dialog表格card -->
-            <el-card v-show="cardtable" class="modelManagerClass" style="z-index: 111;">
-                <pagePanel headerTitle="模型运行文件" :show-btn="true" style="width: 50%; height:680px;text-align: center">
-                    <el-table ref="multipleTable" :data="tableData1" height="95%"
-                              :header-cell-style="headerClass" @selection-change="selectItem">
-                        <el-table-column type="selection" align="center" />
-                        <el-table-column label="日期" prop="inputDate" align="center" />
-                        <el-table-column label=".F文件名称" prop="fileName"  align="center" />
-                        <el-table-column label="文件阶段类型" prop="fileVersion" align="center">
-                            <template slot-scope="scope">
-                                <span v-show="scope.row.fileVersion == '0'">历史状态</span>
-                                <span v-show="scope.row.fileVersion == '1'">优化状态</span>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <el-row style="float: right;line-height:40px;margin-top: 5px">
-                        <el-button @click="Fupload" type="primary">确定</el-button>
-                        <el-button @click=" cardtable = false;zhezhao=false" type="primary">取消</el-button>
-                    </el-row>
+            <el-card v-show="cardtable" width="100px" class="modelManagerClass" style="z-index: 111;">
+                <pagePanel headerTitle="模型运行文件"  :show-btn="true" style=" height:680px;text-align: center">
+                        <el-table ref="multipleTable"  :data="tableData1" height="95%"
+                                  :header-cell-style="headerClass" @selection-change="selectItem">
+                            <el-table-column type="selection" align="center" />
+                            <el-table-column label="日期" prop="inputDate" align="center" />
+                            <el-table-column label=".F文件名称" prop="fileName"  align="center" />
+                            <el-table-column label="文件阶段类型" prop="fileVersion" align="center">
+                                <template slot-scope="scope">
+                                    <span v-show="scope.row.fileVersion == '0'">历史状态</span>
+                                    <span v-show="scope.row.fileVersion == '1'">优化状态</span>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                        <el-row style="float: right;line-height:40px;margin-top: 5px">
+                            <el-button @click="Fupload" type="primary">确定</el-button>
+                            <el-button @click=" cardtable = false;zhezhao=false" type="primary">取消</el-button>
+                        </el-row>
+                   
                     </pagePanel>
             </el-card>
             <!-- 运行过程card -->

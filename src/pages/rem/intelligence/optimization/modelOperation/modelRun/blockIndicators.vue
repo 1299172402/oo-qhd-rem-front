@@ -2843,7 +2843,6 @@ export default {
     line-height: 35px; //上下居中
     background: inherit;
     background-color: #004473;
-    background: url("@/assets/styles/dispenseStyle/right-sign-trans.png") top right no-repeat !important;
     border: none;
     box-shadow: inset 0px 0px 13px 3px rgba(36, 222, 255, 0.5);
 }
@@ -2855,7 +2854,6 @@ export default {
     text-align: center; //水平居中
     line-height: 30px; //上下居中
     background: inherit;
-    background: url("@/assets/styles/dispenseStyle/right-sign-trans.png") top right no-repeat !important;
     background-color: #004473;
     border: none;
     box-shadow: inset 0px 0px 13px 3px rgba(36, 222, 255, 0.35);
@@ -2869,7 +2867,6 @@ export default {
     line-height: 25px; //上下居中
     background: inherit;
     background-color: #004473;
-    background: url("@/assets/styles/dispenseStyle/right-sign-trans.png") top right no-repeat !important;
     border: none;
     box-shadow: inset 0px 0px 13px 3px rgba(36, 222, 255, 0.35);
 }

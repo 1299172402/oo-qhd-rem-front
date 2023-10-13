@@ -1,15 +1,13 @@
 <template>
   <!-- 上传优化前文件 -->
-  <div>
+  <div class="tablebody">
     <el-table
       v-loading="fileLoading"
       element-loading-text="上传中"
       element-loading-background="rgb(0, 40, 80, 0.6)"
       :data="tableData"
       style="font-size: 14px;"
-      :header-cell-style="headerClass"
-      
-    >
+      :header-cell-style="headerClass">
       <el-table-column prop="fileName" label="文件类型" min-width="50" align="center"></el-table-column>
       <el-table-column prop="uploadedFileNum" min-width="45" label="已上传文件个数" align="center">
         <template v-slot="scope">
@@ -20,8 +18,8 @@
         <el-table-column align="right">
           <template v-slot="scope">
             <!-- 路由跳转  :limit="scope.row.limit+1" :limit="scope.row.limit"-->
-            <el-row>
-              <el-upload
+            <el-row style="border: none !important;">
+              <el-upload style="border: none !important;"
                 ref="upload"
                 action=""
                 :multiple="true"
@@ -132,9 +130,7 @@
         </el-table-column>
         <el-table-column align="left" min-width="55">
           <template v-slot="scope">
-            <span slot="tip" class="el-upload__tip" style="font-size: 14px; color: #6dbbe6"
-              >允许上传“{{ scope.row.fileType }}”</span
-            >
+            <span slot="tip" class="el-upload__tip" style="font-size: 14px; color: #6dbbe6">允许上传“{{ scope.row.fileType }}”</span>
           </template>
         </el-table-column>
       </el-table-column>
@@ -328,11 +324,6 @@ export default {
     this.receiveId();
   },
   methods: {
-    //控制dialog展示
-    // dialogShowF(){
-    //   this.uploadFileDialogVisible=false;
-    // },
-
     //表格表头样式
     headerClass({ column, rowIndex, columnIndex }) {
       if (rowIndex === 0 && columnIndex === 0) {
@@ -773,23 +764,12 @@ export default {
           console.log(err);
         });
     },
-
-    // //点击确定之后 传---------------校验是否每行都传了文件
-    // sureClickAfter(){
-    //   this.modelDialogVisibleF = false
-    //   const param = {
-    //     caseId: this.caseInfo.caseId
-    //   }
-    //   ParseFiles(param).then(res => {
-    //     //将caseId传到后端，暂时不需要做什么工作
-    //   }).catch(err => {
-    //     console.log(err)
-    //   });
-    // },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
+.tablebody ::v-deep.el-table--border .el-table__cell {
+    border-right:#012733 !important;
+}
 </style>

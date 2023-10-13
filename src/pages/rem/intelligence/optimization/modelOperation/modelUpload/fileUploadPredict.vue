@@ -1,15 +1,14 @@
 <template>
-  <div>
+  <div class="tablebody">
     <!-- 上传优化后文件 -->
-    <div>
       <!-- <el-image :src="require('@/icons/svg/tableHeader.png')"
                 style="position:absolute;top: 45px;height: 35px;width: 675px"></el-image> -->
       <el-table v-loading="fileLoading" element-loading-text="上传中"
                 element-loading-background="rgb(0, 40, 80, 0.6)"
                 :data="tableData"
                 :header-cell-style="headerClass">
-        <el-table-column prop="fileName" label="文件类型"  width="112"  align="center" ></el-table-column>
-        <el-table-column prop="uploadedFileNum" label="已上传文件个数" width="128" align="center">
+        <el-table-column prop="fileName" label="文件类型"  min-width="40"  align="center" ></el-table-column>
+        <el-table-column prop="uploadedFileNum" label="已上传文件个数" min-width="45" align="center">
           <template v-slot="scope">
             {{ scope.row.uploadedFileNum }}
           </template>
@@ -18,8 +17,8 @@
           <el-table-column align="right">
             <template v-slot="scope">
               <!-- 路由跳转 -->
-              <el-row>
-                <el-upload
+              <el-row >
+                <el-upload style="border: none !important;"
                     class="upload-file"
                     ref="upload"
                     action=""
@@ -31,7 +30,7 @@
                     :on-change="(file,fileList)=>{return handleChange(file, fileList, scope.row, scope.$index)}">
                     
                     <el-row type="flex" justify="space-around">
-                      <el-button class="buttonClassLogo"
+                      <el-button
                              style="width:65px;height:25px;line-height:10px;padding-left:10px;background-color: transparent;color: rgba(255,255,255,0.8);border: 1px dashed rgba(255,255,255,0.5)"
                              size="mini" icon="el-icon-thumb" @click="choose(scope.$index,scope.row)">
                     <span style="font-size:13px">选择</span>
@@ -98,14 +97,13 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="left" width="200">
+          <el-table-column align="left" min-width="55">
             <template v-slot="scope">
               <span slot="tip" class="el-upload__tip" style="font-size: 14px;color: #6DBBE6" >允许上传“{{ scope.row.fileType }}”</span>
             </template>
           </el-table-column>
         </el-table-column>
       </el-table>
-    </div>
     <!--    <el-row style="text-align: center; margin-top: 20px">-->
     <!--      <el-button @click="sureClickAfterA"-->
     <!--                 style="font-size: 17px;-->
@@ -419,109 +417,13 @@ export default {
         console.log(err)
       });
     },
-    // //点击确定之后
-    // sureClickAfter(){
-    //   this.modelDialogVisibleF = false
-    //   const param = {
-    //     caseId: this.caseInfo.caseId
-    //   }
-    //   ParseFiles(param).then(res => {
-    //     //将caseId传到后端，暂时不需要做什么工作
-    //   }).catch(err => {
-    //     console.log(err)
-    //   });
-    // },
+    
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
-:root[theme-mode="dark"] .el-table--border, :root[theme-mode="dark"] .el-table--group {
-    border: none !important;
-}
-
-
-.buttonClassLogo{
-  background: url('@/assets/styles/dispenseStyle/right-sign-trans.png') top right no-repeat !important;
-}
-::v-deep .el-dialog__body{
-  height: 500px!important;
-}
-::v-deep .el-dialog__title {
-  line-height: 20px;
-  font-size: 14px;
-  color: white;
-}
-::v-deep .th.el-table_7_column_33{
-  text-align: center;
-  font-size: 14px;
-}
-
-::v-deep .el-table thead.is-group th {
-  /*background: #F5F7FA;*/
-  border: none !important;
-  text-align: center;
-  font-size: 14px;
-}
-/*最外层透明*/
-::v-deep .el-table, ::v-deep .el-table__expanded-cell{
-  background-color: transparent;
-}
-/* 表格内背景颜色 */
-::v-deep .el-table th,
-::v-deep .el-table tr,
-::v-deep .el-table td {
-  background-color: transparent;
-}
-/*表格内字体大小及颜色*/
-::v-deep .el-table {
-  color: #6DBBE6;
-  font-size: 14px;
-}
-/*改变表格内行线颜色*/
-::v-deep .el-table  td, ::v-deep .el-table th.is-leaf  {
-  border-bottom: 1px solid rgba(36,222,255,0.4)!important;
-}
-::v-deep .el-table--border{
-  /* 去除左边框 */
-  border: none!important;
-}
-::v-deep .el-table--border::after{
-  /* 去除右边框 */
-  border-right: none !important;
-  width: 0;
-}
-::v-deep .el-table th.is-leaf {
-  /* 去除上边框 */
-  border: none !important;
-}
-::v-deep .el-table::before{
-  /* 去除下边框 */
-  height: 0;
-}
-::v-deep .el-table__row>td{
-  /* 去除所有竖线 */
-  border: none !important;
-}
-/*改变表头字体颜色 */
-::v-deep .el-table thead {
-  color: #8c939d;
-}
-::v-deep .el-table__body-wrapper::-webkit-scrollbar {
-  width: 10px; /*滚动条宽度*/
-  height: 5px; /*滚动条高度*/
-}
-/*定义滚动条轨道 内阴影+圆角*/
-::v-deep .el-table__body-wrapper::-webkit-scrollbar-track {
-  box-shadow: 0px 1px 3px #003655 inset; /*滚动条的背景区域的内阴影*/
-  border-radius: 10px; /*滚动条的背景区域的圆角*/
-  background-color: #003655; /*滚动条的背景颜色*/
-}
-/*定义滑块 内阴影+圆角*/
-::v-deep .el-table__body-wrapper::-webkit-scrollbar-thumb {
-  box-shadow: 0px 1px 3px #4F7298 inset; /*滚动条的内阴影*/
-  border-radius: 10px; /*滚动条的圆角*/
-  background-color: #4F7298; /*滚动条的背景颜色*/
+.tablebody ::v-deep.el-table--border .el-table__cell {
+    border-right:#012733 !important;
 }
 </style>

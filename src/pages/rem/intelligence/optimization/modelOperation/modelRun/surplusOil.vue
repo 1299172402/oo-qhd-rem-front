@@ -47,7 +47,7 @@
             </el-row>
             <!--    base64动图测试-->
             <el-row v-show="showGif" ref="carouselGif" style="margin-top: 5px;width: 100%;height: 85% !important;">
-                <el-image style="width: 100%;height: 100%" :src="img1"></el-image>
+                <img width="100%" height="100%"  id="imagebody"></img>
             </el-row>
             <el-row style="text-align: center;margin-top: 5px">
                 <el-button type="text" class="radionpv" style="color: white; font-size: 14px;"
@@ -104,6 +104,7 @@ export default {
             temp: [],
             stepStep: [],
             showGif: false,
+            
             showPicture: true,
             showStep: true,
             timestep: [],
@@ -475,19 +476,20 @@ export default {
         },
         //控制动图
         gif() {
-            this.img1 = this.stepList[this.pid].imageUrl;
+            // this.img1 = this.stepList[this.pid].imageUrl;
+            this.img1 = document.getElementById('imagebody');
             // 页面显示 加载默认图片
-            this.timerGif = setInterval(() => {
-                // 如果当前图片是最后一张就把id清零 从第一张开始
-                if (this.pid === this.stepList.length - 1) {
+            let currentIndex = 0; // 当前图片索引  
+            const rotateImage = () => {
+                this.img1.src = this.stepList[currentIndex].imageUrl; // 切换图片
+                currentIndex++; // 索引递增
+                this.pid = currentIndex
+                if (currentIndex >= this.stepList.length) {
+                    currentIndex = 0; // 若到达最后一张图片，则重置索引为 0
                     this.pid = 0
-                    this.img1 = this.stepList[this.pid].imageUrl
-                } else {
-                    // 如果当前不是最后一张 就切换下一张
-                    this.pid += 1
-                    this.img1 = this.stepList[this.pid].imageUrl
                 }
-            }, 1000)
+            };
+            this.timerGif  = setInterval(rotateImage, 1000);
         },
     },
 }

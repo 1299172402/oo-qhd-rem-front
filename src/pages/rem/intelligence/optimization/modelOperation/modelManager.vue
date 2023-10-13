@@ -14,7 +14,7 @@
                        placeholder="全部">
                 <el-option v-for="item in blockList" :key="item.blockId" :label="item.blockName" :value="item.blockId"></el-option>
             </el-select>
-            <span style="font-size: 14px;color: white;margin-top: 7px;margin-left: 210px">模型创建时间 : </span>
+            <span style="font-size: 14px;color: white;margin-top: 7px;margin-left: 100px">模型创建时间 : </span>
             <el-date-picker type="date" v-model="modelObject.startDate" style="margin-left: 10px"
                             :picker-options="pickerOptions" @change="handleTime" placeholder="年/月/日"
                             popper-class="elDatePicker" value-format="yyyy-MM-dd">
@@ -44,15 +44,15 @@
                 <el-table-column prop="operate" label="操作" align="center">
                     <!-- 插槽 -->
                     <template v-slot="scope">
-                        <el-button size="mini" class="ckjg" icon="el-icon-document" @click="lookResClick(scope.row.modelBasicId)">查看结果
+                        <el-button size="mini"  icon="el-icon-document" type="text" @click="lookResClick(scope.row.modelBasicId)">查看结果
                         </el-button>
-                        <el-button class="scjg" link size="small" icon="el-icon-delete"
+                        <el-button size="small" icon="el-icon-delete" type="text" style="color: #f56c6c;"
                                    @click="deleteClick(scope.row.modelBasicId)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <el-row>
-                <el-pagination style="float: left;"
+                <el-pagination style="float: right;"
                                :current-page="modelObject.pn"
                                :total="totalPage"
                                :page-size="modelObject.pageSize"
@@ -89,18 +89,14 @@
                                   class="item">
                         <p align="left" style="color:white;font-size: 14px">{{ modelForm.inputDate }}</p>
                     </el-form-item>
-                    <el-row >
+                    <el-row style="float: right;margin-top: -10px;line-height: 50px">
                         <el-button type="primary" @click="getAddListData('modelForm')">开始创建
                         </el-button>
-                        <el-button type="primary" @click="dialogModelVisible = false">取 消
-                        </el-button>
+                        <el-button type="primary" @click="dialogModelVisible = false">取 消</el-button>
                     </el-row>
-
-
                 </el-form>
             </el-dialog>
         </pagePanel>
-        
     </div>
 </template>
 
@@ -115,10 +111,6 @@ import {
     GetModelBasicListByCondition,
     GetOgfBlockCascader,
     GetOgfList,
-    GetModelBasicByMaxModelSort,
-    GetModelFileAttrListByModelBasicId,
-    ParseFiles,
-    GetRegulationList,
 } from "@/api/rem/dispenseIndex.js";
 
 export default {
@@ -216,7 +208,6 @@ export default {
             selectedBlockID: '',
             value: '',
         }
-        
     },
     created() {
         this.getTableList();
