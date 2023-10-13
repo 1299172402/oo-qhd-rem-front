@@ -39,19 +39,13 @@
                 "
               >
                 <el-row type="flex" justify="space-around" style="border: 0px !important;">
-                  <el-button  size="mini" icon="el-icon-thumb" @click="choose(scope.$index,scope.row)"
-                      style="width:60px;height:25px;line-height:10px;padding-left:5px;
-                      color: white;background-color: transparent;border: 1px dashed rgba(255,255,255,0.5) !important">
-                  <span style="font-size:13px">选择</span>
-                </el-button>
-                <el-button size="mini" icon="el-icon-upload2" @click.stop="uploadFiles(scope.row,scope.$index)"
-                    style="width:60px;height:25px;line-height:10px;margin-left: 5px;padding-left:5px;
-                    color: white;background-color: transparent;border: 1px dashed rgba(255,255,255,0.5) !important">
+                  <el-button  size="mini" icon="el-icon-thumb" type="text" @click="choose(scope.$index,scope.row)">
+                    <span style="font-size:13px">选择</span>
+                  </el-button>
+                <el-button size="mini" icon="el-icon-upload2" type="text" @click.stop="uploadFiles(scope.row,scope.$index)">
                   <span style="font-size:13px;">上传</span>
                 </el-button>
-                <el-button  size="mini" icon="el-icon-upload" @click.stop="updateFileType(scope.row, scope.$index)"
-                           style="width:60px;height:25px;line-height:10px;margin-left: 5px;padding-left:5px;
-                           color: white;background-color: transparent;border: 1px dashed rgba(255,255,255,0.5) !important">
+                <el-button  size="mini" icon="el-icon-upload" type="text" @click.stop="updateFileType(scope.row, scope.$index)">
                   <span style="font-size:13px">查看</span>
                 </el-button>
                 </el-row>

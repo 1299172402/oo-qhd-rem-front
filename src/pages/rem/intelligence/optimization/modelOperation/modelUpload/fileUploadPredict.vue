@@ -60,8 +60,6 @@
                         width="715px"
                         footer=""
                         style="text-align: center;margin-top: 180px;margin-left: 190px">
-                      <el-image :src="require('@/icons/svg/tableHeader.png')"
-                                style="position:absolute;  top:55px;left:28px;height: 40px;width: 655px"></el-image>
                       <el-table :data="uploadFileList" height="500" v-loading="fileDeleteLoading"
                                 element-loading-text="删除中" element-loading-background="rgb(0, 40, 80, 0.6)"
                                 style="width: 715px;top: -30px;font-size: 14px"
