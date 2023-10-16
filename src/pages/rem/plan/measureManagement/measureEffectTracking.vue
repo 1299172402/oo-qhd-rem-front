@@ -57,7 +57,7 @@
           <el-date-picker
             class="f3"
             v-model="dateTime"
-            style="margin-left: 10px;"
+            style="margin-left: 10px"
             type="year"
             placeholder="选择日期"
             value-format="yyyy"
@@ -194,12 +194,7 @@
           min-width="110px"
         ></el-table-column>
         <el-table-column align="center" label="措施前注入情况" min-width="100">
-          <el-table-column
-            align="center"
-            :label="`日注水量\n(m³)`"
-            min-width="100"
-            prop="bmInjWater"
-          ></el-table-column>
+          <el-table-column align="center" :label="`日注水量\n(m³)`" min-width="100" prop="bmInjWater"></el-table-column>
         </el-table-column>
         <el-table-column align="center" label="措施效果">
           <el-table-column
@@ -932,7 +927,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -965,7 +961,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -974,7 +971,7 @@ export default {
             },
           },
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 50,
             gridIndex: 2,
             type: "category",
@@ -999,7 +996,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -1025,7 +1023,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1055,7 +1054,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1084,7 +1084,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1116,7 +1117,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1144,7 +1146,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1174,7 +1177,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1205,7 +1209,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1235,7 +1240,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1263,7 +1269,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1293,7 +1300,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1323,7 +1331,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1428,7 +1437,8 @@ export default {
             color: "#8FA4CC",
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             lineStyle: {
@@ -1450,7 +1460,8 @@ export default {
             color: "#8FA4CC",
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1551,7 +1562,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -1560,7 +1572,7 @@ export default {
             },
           },
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 30,
             gridIndex: 1,
             type: "category",
@@ -1585,7 +1597,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -1613,7 +1626,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1642,7 +1656,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1672,7 +1687,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1700,7 +1716,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1730,7 +1747,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1759,7 +1777,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1789,7 +1808,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1845,7 +1865,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -1889,7 +1910,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1920,7 +1942,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -2107,8 +2130,22 @@ export default {
       });
     },
     //油田下拉框change事件
-    onFieldChange(val) {
-      this.getFetchPlatforms(val);
+    async onFieldChange(val) {
+      await QueryPlatformDetail({ ogfId: val }).then((res) => {
+        if (res.data.code == 200) {
+          this.platforms = res.data.data || [];
+          this.selectPlatform = this.platforms[0]?.platformId || "";
+        }
+      });
+      await QueryWellDetail({
+        ogfId: val,
+        platformId: this.selectPlatform,
+      }).then((res) => {
+        if (res.data.code == 200) {
+          this.wells = res.data.data;
+          this.selectWellId = this.wells[0].wellId;
+        }
+      });
     },
     //根据油田id查-平台数据
     getFetchPlatforms(oilFieldId) {
@@ -2727,7 +2764,7 @@ export default {
           ...this.defaultType
             .map((arr, index) => arr.filter((item) => this.queryParams.paramCodes.includes(item)))
             .map((item, index) => ({
-              // name: "日",
+              // name: "日期 (日)",
               // nameGap: 30,
               gridIndex: index,
               type: "category",
@@ -2743,7 +2780,8 @@ export default {
                 color: "#8FA4CC",
               },
               axisTick: {
-                show: false,
+                show: true,
+                inside: true,
               },
               axisLine: {
                 lineStyle: {
@@ -2781,7 +2819,8 @@ export default {
                     minInterval: 0,
                   },
                   axisTick: {
-                    show: false,
+                    show: true,
+                    inside: true,
                   },
                   axisLine: {
                     show: true,

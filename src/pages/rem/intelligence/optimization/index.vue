@@ -56,8 +56,8 @@
           </span>
             </div>
         </header-search>
-        <pagePanelNew style="height: auto">
-            <el-row v-if="activeName == 'first'" :gutter="20" style="height:800px">
+        <pagePanelNew v-if="activeName == 'first'" style="height: auto">
+            <el-row  :gutter="20" style="height:800px">
                 <el-col :span="6" style="height:100%">
                     <pagePanel :headerTitle="title1" :title="title1" :show-btn="true"
                                style="text-align: center;height:calc(100% - 10px)">
@@ -78,7 +78,7 @@
                         >
                             <el-table-column prop="wellNo" label="油井井号" show-overflow-tooltip align="center"
                                              min-width="160"></el-table-column>
-                            <el-table-column prop="fluidProdDaily" label="日配产量(m³/d)" align="center">
+                            <el-table-column prop="fluidProdDaily" label="日配产量(m³)" align="center">
                                 <template slot="header">
                                     <p>
                                         日配产量
@@ -132,7 +132,7 @@
                                 <el-table-column
                                     prop="injWellDaily"
                                     :render-header="renderheader"
-                                    label="日配注量?(m³/d)"
+                                    label="日配注量?(m³)"
                                     min-width="100"
                                     align="center"
                                 ></el-table-column>
@@ -147,21 +147,21 @@
                                 <el-table-column
                                     prop="froecastInjDaily"
                                     :render-header="renderheader"
-                                    label="预测日配注量?(m³/d)"
+                                    label="预测日配注量?(m³)"
                                     min-width="120"
                                     align="center"
                                 ></el-table-column>
                                 <el-table-column
                                     prop="afterConfigurationInjDaily"
                                     :render-header="renderheader"
-                                    label="上月实际日注水量?(m³/d)"
+                                    label="上月实际日注水量?(m³)"
                                     min-width="150"
                                     align="center"
                                 ></el-table-column>
                                 <el-table-column
                                     prop="afterInjDaily"
                                     :render-header="renderheader"
-                                    label="上月日配注水量?(m³/d)"
+                                    label="上月日配注水量?(m³)"
                                     min-width="120"
                                     align="center"
                                 ></el-table-column>
@@ -169,7 +169,7 @@
                                 <el-table-column
                                     prop="configurationInjDaily"
                                     :render-header="renderheader"
-                                    label="本月日配注量?(m³/d)"
+                                    label="本月日配注量?(m³)"
                                     min-width="150"
                                     align="center"
                                 >
@@ -221,28 +221,25 @@
                     </pagePanel>
                 </el-col>
             </el-row>
-            <iframe
-                ref="iframe"
-                :style="getStyle"
-                allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" oallowfullscreen="true" msallowfullscreen="true"
-                v-show="activeName == 'second'"
-                :src="src"
-            ></iframe>
-
+            <!--  模型运算  -->
+           
         </pagePanelNew>
+        <pagePanelNew v-else style="height: 100%">
+        <modelOperation ref="modelOpreation" style="height: 100%"></modelOperation>
+        </pagePanelNew>
+        
     </div>
 </template>
 <script>
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} from "@/api/rem/r-intelligentIPA.js";
-// import Iframe from '@/components/rem/tools/iframe.vue'
 import {exportExcel} from '@/lib/exportExcel';
-import Iframe from "@/components/rem/tools/iframe.vue";
+// 智能配注-模型运算界面
+import modelOperation from "@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue";
 
 export default {
     components: {
-        Iframe
-        // Iframe
+        modelOperation, //智能配注
     },
     mixins: [queryConditionMixin],
     created(){
@@ -360,7 +357,7 @@ export default {
         // table表头标题样式
         tableColorone({row, column, rowIndex, columnIndex}) {
             if (
-                column.label === "本月日配注量?(m³/d)"
+                column.label === "本月日配注量?(m³)"
             ) {
                 return "color:#66ffff"; //修改的样式
             } else {
@@ -531,11 +528,15 @@ export default {
             exportExcel("#indexscvSecond", this.title2);
         },
         setWidth(){
-            this.iframeWidth = this.$refs.iframe.parentNode.clientWidth;
+            // this.iframeWidth = this.$refs.iframe.parentNode.clientWidth;
         }
     },
   
     mounted() {
+        //智能配注调用子组件方法
+        this.$nextTick(()=>{
+            this.$refs.modelOpreation.getCaseByMax()
+        })
         this.$nextTick(()=>{
             setTimeout(()=>{
                 window.addEventListener('resize',this.setWidth);

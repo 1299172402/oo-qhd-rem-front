@@ -66,7 +66,8 @@ export default {
                         color: "#8FA4CC",
                     },
                     axisTick: {
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     axisLine: {
                         show: true,
@@ -94,7 +95,8 @@ export default {
                         color: "#8FA4CC",
                     },
                     axisTick: {
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     axisLine: {
                         lineStyle: {

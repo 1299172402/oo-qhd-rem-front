@@ -83,7 +83,7 @@
                         :row-style="{ height: '0px' }"
                         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
                         header-cell-class-name="table_header"
-                        :cell-style="{ 'text-align': 'center', padding: '2px' }"
+                        :cell-style="{ 'text-align': 'right', padding: '2px' }"
                         :default-sort="{ prop: 'date', order: 'descending' }"
                     >
                         <el-table-column label="油气田" fixed width="130px" prop="ogfName"

@@ -275,7 +275,7 @@
                 :value="item.ogfId"
               ></el-option>
             </el-select>
-            <span style="color: #fff">月份：</span>
+            <span style="color: #fff">日期：</span>
             <el-date-picker v-model="dateFirst" type="month" value-format="yyyy-MM"></el-date-picker>
             <!-- <span>~</span> -->
             <!-- <el-date-picker v-model="dateSecond" type="month" placeholder="对比时间2" value-format="yyyy-MM"></el-date-picker> -->
@@ -682,61 +682,61 @@ export default {
           {
             x: "160",
             y: "1%",
-            width: "88%",
+            width: "85%",
             height: "7%",
           },
           {
             x: "160",
             y: "10%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "20%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "30%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "40%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "50%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "60%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "70%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "80%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "90%",
-            width: "88%",
+            width: "85%",
             height: "7%",
           },
         ],
@@ -754,7 +754,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -771,7 +772,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -787,7 +789,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -803,7 +806,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -819,7 +823,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -835,7 +840,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -851,7 +857,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -867,7 +874,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -883,7 +891,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -892,7 +901,7 @@ export default {
             },
           },
           {
-            name: "年",
+            name: "日期 (年)",
             gridIndex: 9,
             data: [],
             axisLabel: {
@@ -900,6 +909,7 @@ export default {
             },
             axisTick: {
               show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -1863,7 +1873,7 @@ export default {
         linearData.forEach((item, index) => {
           let point = [];
           let label = item.label.split("-");
-          point.push(label[0] + "-" + label[1]);
+          point.push(label[0]);
           point.push(item.value);
           xData.push(label[0] + "-" + label[1]);
           seriesData.push(point);
@@ -1910,6 +1920,7 @@ export default {
         });
       }
       this.option.xAxis[9].data = xData;
+      this.option.xAxis[7].data = xData;
       this.option.series[13].data = seriesData;
     },
     //清空图表内容

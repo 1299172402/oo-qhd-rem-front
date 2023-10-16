@@ -4,7 +4,7 @@
         <info-window
             info-width="100%"
             info-height="100%"
-            header-title="秦皇岛32-6油田月度产量对比图"
+            header-title="月度产量完成情况"
             :is-show-max-btn="true"
         >
             <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('AnnualPlan')">详细</el-button>
@@ -27,6 +27,7 @@ export default {
     },
     data() {
         return {
+            xAxisData: [],
             histogram: {
                 tooltip: {
                     trigger: "axis",
@@ -60,13 +61,14 @@ export default {
                 xAxis: [
                     {
                         type: "category",
-                        data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+                        data: [],
                         axisLabel: {
                             color: "#a9a8a8",
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         label: {
                             interval: 0,
@@ -91,7 +93,8 @@ export default {
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,
@@ -169,6 +172,11 @@ export default {
                 this.histogram.series[1].data = res.data.data.monthlyActualOutputVoList.map(item => {
                     return Number(item.checkedProdMonthly / 10000).toFixed(4)
                 })
+                this.xAxisData = [];
+                res.data.data.monthlyPlannedOutputVo.map(item => {
+                    return this.xAxisData.push(item.yearMonthesG)
+                })
+                this.histogram.xAxis[0].data = this.xAxisData;
             })
         }
     },

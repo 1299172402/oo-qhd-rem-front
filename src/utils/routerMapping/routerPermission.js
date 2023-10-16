@@ -101,7 +101,7 @@ const GenerateRouter = {
 
   "IndexHome": () => import("@/pages/rem/intelligence/indexHome.vue"),
   "IpmHome": () => import("@/pages/rem/home/ipmHome/index.vue"),
-  "intelligenceDetail": () => import("@/pages/rem/intelligence/detail.vue"),
+  "IntelligenceDetail": () => import("@/pages/rem/intelligence/detail.vue"),
   "ProductionSplit": () => import("@/pages/rem/intelligence/productionSplit/index.vue"),
   "SplitSection": () => import("@/pages/rem/intelligence/productionSplit/splitSection.vue"),
   "DividingCoefficient": () => import("@/pages/rem/intelligence/productionSplit/DividingCoefficient.vue"),

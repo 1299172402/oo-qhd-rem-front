@@ -10,9 +10,9 @@
                 <el-radio label="OIL">产油</el-radio>
                 <el-radio label="WATER">含水</el-radio>
             </el-radio-group>
-            <span>开始年月：</span>
+            <span>开始日期：</span>
             <el-date-picker v-model="beginTime" type="month" placeholder="选择起始月" value-format="yyyy-MM-dd" style="margin-right:20px;"></el-date-picker>
-            <span>结束年月：</span>
+            <span>结束日期：</span>
             <el-date-picker v-model="endTime" type="month" placeholder="选择结束月" value-format="yyyy-MM-dd" style="margin-right:20px;"></el-date-picker>
             <el-button type="primary" @click="OnChangeImage">确定</el-button>
         </div>

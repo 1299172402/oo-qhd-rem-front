@@ -37,7 +37,11 @@
             <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
           </div>
         </div>
-        <div class="g-row-flex-V" style="flex-wrap: wrap; align-self: flex-end" v-if="$route.query.page || $route.query.name">
+        <div
+          class="g-row-flex-V"
+          style="flex-wrap: wrap; align-self: flex-end"
+          v-if="$route.query.page || $route.query.name"
+        >
           <div style="margin: 10px 0px 10px 0px">
             <el-button class="commonBtn" @click="switchToBack">返回</el-button>
           </div>
@@ -983,7 +987,8 @@ export default {
             padding: [10, 0, 0, 0],
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1012,7 +1017,8 @@ export default {
             color: "#8FA4CC",
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             lineStyle: {
@@ -1122,7 +1128,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "日",
+          name: "日期 (日)",
           // name: "时间",
           type: "category",
           nameTextStyle: {
@@ -1135,7 +1141,8 @@ export default {
             padding: [10, 0, 0, 0],
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1166,7 +1173,8 @@ export default {
             fontSize: 14,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1271,7 +1279,8 @@ export default {
             padding: [10, 0, 0, 0],
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1301,7 +1310,8 @@ export default {
             fontSize: 14,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,

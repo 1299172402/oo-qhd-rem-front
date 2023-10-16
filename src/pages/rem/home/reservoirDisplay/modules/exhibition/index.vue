@@ -143,7 +143,7 @@ export default {
                       data: this.ResidueOilRank.map(item => Number(item.dhFlowingPress).toFixed(1)),
                   },
                   {
-                      name: '日产液量(m³/d)',
+                      name: '日产液量(m³)',
                       type: 'bar',
                       xAxisIndex: 0,
                       color: 'rgb(4,182,131)',

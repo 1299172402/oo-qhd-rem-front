@@ -19,7 +19,7 @@
         </div>
         <div style="margin-right: 15px; margin-bottom: 10px">
           <span>平台：</span>
-          <el-select v-model="searchForm.platId" @change="onPlatfromChange" style="width: 220px">
+          <el-select v-model="searchForm.platId" clearable @change="onPlatfromChange" style="width: 220px">
             <el-option
               v-for="(item, index) in platforms"
               :key="item.platformId"
@@ -562,7 +562,7 @@ export default {
       await QueryPlatformDetail({ ogfId: this.searchForm.ogfId }).then((res) => {
         if (res.data.code == 200) {
           let platforms = res.data.data;
-          this.searchForm.platId = platforms[0].platformId;
+          // this.searchForm.platId = platforms[0].platformId;
           this.platforms = platforms;
         }
       });
@@ -590,7 +590,7 @@ export default {
       this.wells = [];
       QueryWellDetail({
         ogfId: this.searchForm.ogfId,
-        platformId: this.searchForm.platId,
+        platformId: this.searchForm.platId || undefined,
       }).then((res) => {
         if (res.data.code == 200) {
           this.wells = res.data.data;

@@ -3,7 +3,7 @@
         <info-window
             info-width="100%"
             info-height="100%"
-            header-title="措施效果跟踪表"
+            header-title="措施建议表"
             :is-show-max-btn="true"
         >
             <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('OilAnalysisReport')">详细</el-button>
@@ -30,7 +30,7 @@
                 </el-table-column>
                 <el-table-column prop="evalTime" width="100px" label="">
                     <template slot="header">
-                        <div >推荐日期</div>
+                        <div >评价日期</div>
                     </template>
                     <template slot-scope="scope">
                         <span v-if="scope.row.evalTime !== null && scope.row.evalTime !== ''">{{scope.row.evalTime}}</span>
@@ -93,7 +93,7 @@ export default {
             })
         },
         downtable(){
-                exportExcel("#tablecsxg", "措施效果跟踪表");
+                exportExcel("#tablecsxg", "措施建议表");
         },
         linkroute(rname) {
             this.$router.push({name: rname});

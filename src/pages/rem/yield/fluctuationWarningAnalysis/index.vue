@@ -9,7 +9,12 @@
         </el-select>
         <span>区块：</span>
         <el-select v-model="selectBlock" placeholder="请选择" style="margin-right: 15px">
-          <el-option v-for="item in block" :key="item.reservoirAnalyseUnitId" :label="item.reservoirAnalyseUnitName" :value="item.reservoirAnalyseUnitId"></el-option>
+          <el-option
+            v-for="item in block"
+            :key="item.reservoirAnalyseUnitId"
+            :label="item.reservoirAnalyseUnitName"
+            :value="item.reservoirAnalyseUnitId"
+          ></el-option>
         </el-select>
         <span>预警分析日期设置：</span>
         <el-date-picker
@@ -462,9 +467,9 @@ export default {
           type: "inside",
         },
         grid: {
-          x: 170,
+          x: 150,
           y: 50,
-          x2: 50,
+          x2: 80,
           y2: 100,
         },
         toolbox: {
@@ -495,7 +500,7 @@ export default {
           bottom: 30,
         },
         xAxis: {
-          name: "日",
+          name: "日期 (日)",
           // nameTextStyle: {
           //     color: "#8FA4CC",
           //     fontSize: 14,
@@ -512,7 +517,8 @@ export default {
             },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           splitLine: {
             show: false,
@@ -531,8 +537,12 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#979797",
+              color: "#8FA4CC",
             },
+          },
+          axisTick: {
+            show: true,
+            inside: true,
           },
           axisLabel: {
             color: "#8FA4CC",
@@ -684,7 +694,8 @@ export default {
             margin: 20,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -708,7 +719,8 @@ export default {
             fontSize: 14,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -2221,9 +2233,9 @@ export default {
               }
               // .z-table {
               //   ::v-deep .cell {
-                  // height: 60px;
-                  // line-height: inherit;
-                // }
+              // height: 60px;
+              // line-height: inherit;
+              // }
               // }
             }
           }

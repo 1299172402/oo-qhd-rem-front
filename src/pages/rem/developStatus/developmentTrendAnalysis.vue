@@ -4,12 +4,7 @@
     <headerSearch style="height: 80px">
       <div class="g-row-flex-V g-w100 g-h100">
         <span>油田：</span>
-        <el-select
-          v-model="selectOilField"
-          placeholder="请选择"
-          @change="onFieldChange"
-          style="margin-right: 20px"
-        >
+        <el-select v-model="selectOilField" placeholder="请选择" @change="onFieldChange" style="margin-right: 20px">
           <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"> </el-option>
         </el-select>
         <span>区块：</span>
@@ -40,9 +35,7 @@
           class="commonBtn"
           v-if="$route.query.page || $route.query.name"
           style="position: absolute; right: 2%"
-          @click="
-            $router.push($route.query.page || $route.query.name)
-          "
+          @click="$router.push($route.query.page || $route.query.name)"
           >返回</el-button
         >
       </div>
@@ -207,31 +200,31 @@ export default {
           {
             x: "8%",
             y: "8%",
-            width: "90%",
+            width: "88%",
             height: "14%",
           },
           {
             x: "8%",
             y: "26%",
-            width: "90%",
+            width: "88%",
             height: "14%",
           },
           {
             x: "8%",
             y: "44%",
-            width: "90%",
+            width: "88%",
             height: "14%",
           },
           {
             x: "8%",
             y: "62%",
-            width: "90%",
+            width: "88%",
             height: "14%",
           },
           {
             x: "8%",
             y: "80%",
-            width: "90%",
+            width: "88%",
             height: "14%",
           },
         ],
@@ -255,7 +248,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -272,7 +266,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -289,7 +284,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -306,7 +302,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -315,7 +312,7 @@ export default {
             },
           },
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 5,
             nameTextStyle: { color: "#8FA4CC" },
             gridIndex: 4,
@@ -330,7 +327,8 @@ export default {
               verticalAlign: "top",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               onZero: false,
@@ -358,7 +356,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -390,7 +389,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -422,7 +422,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -454,7 +455,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -486,7 +488,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -559,7 +562,7 @@ export default {
             },
           },
           {
-            name: "含水量",
+            name: "含水率",
             type: "line",
             xAxisIndex: 2,
             yAxisIndex: 2,

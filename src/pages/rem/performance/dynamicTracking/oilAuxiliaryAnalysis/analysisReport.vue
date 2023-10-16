@@ -54,7 +54,7 @@
               </el-option>
             </el-select>
 
-            <span style="margin-left: 15px">评价时间：</span>
+            <span style="margin-left: 15px">评价日期：</span>
             <el-date-picker
               v-model="currentDate"
               style="width: 170px"
@@ -485,7 +485,7 @@
                     <el-table-column prop="theDate" align="center" min-width="150">
                       <template #header>
                         <div>
-                          <span>推荐日期</span>
+                          <span>评价日期</span>
                           <br />
                           <span>(yyyy/mm/dd)</span>
                         </div>
@@ -572,7 +572,7 @@
               </el-option>
             </el-select>
 
-            <span style="margin-left: 15px">评价时间：</span>
+            <span style="margin-left: 15px">评价日期：</span>
             <el-date-picker
               v-model="currentDate"
               style="width: 170px"
@@ -1405,7 +1405,7 @@
                     <el-table-column prop="theDate" align="center" min-width="150">
                       <template #header>
                         <div>
-                          <span>推荐日期</span>
+                          <span>评价日期</span>
                           <br />
                           <span>(yyyy/mm/dd)</span>
                         </div>
@@ -1562,7 +1562,8 @@ export default {
           code: "cyqd",
           name: "采液强度",
           isTwoHeader: true,
-          unit: "[t/(d.m)]",
+          // unit: "[t/(d.m)]",
+          unit: "(m³)",
         },
         {
           code: "cyzs",

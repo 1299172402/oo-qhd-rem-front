@@ -6,7 +6,7 @@
             header-title="产能波动"
             :is-show-max-btn="true"
         >
-            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('statisticalTableProduction')">详细</el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('StatisticalTableProduction')">详细</el-button>
             <el-button type="primary" class="buttonActive_primary detailLinkBtn"  style="right:110px"  @click="downEcharts">下载</el-button>
             <Echart ref="echartChart" :chart-data="histogram" height="100%"></Echart>
         </info-window>
@@ -62,11 +62,8 @@ export default {
                         interval:0
                     },
                     axisTick: {
-                        lineStyle: {
-                            color: "#a9a8a8",
-                            width: 1,
-                        },
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     splitLine: {
                         show: false,
@@ -97,11 +94,8 @@ export default {
                         fontSize: 16,
                     },
                     axisTick: {
-                        lineStyle: {
-                            color: "#a9a8a8",
-                            width: 1,
-                        },
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     splitLine: {
                         show: false,
@@ -166,7 +160,18 @@ export default {
             this.$refs.echartChart.chartDownLoad( '产能波动');
         },
         getinfo() {
-            getYieldFluctuation().then((res) => {
+            var today = new Date();
+            var yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+            var yesterdayStr = yesterday.toISOString().slice(0,10);
+            var beforeYesterday = new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000);
+            var beforeYesterdayStr = beforeYesterday.toISOString().slice(0,10);
+            let pormps = {
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                platId: "",
+                prodDate: yesterdayStr,
+                prodDateCompare: beforeYesterdayStr
+            }
+            getYieldFluctuation(pormps).then((res) => {
                 this.histogram.yAxis.min = null
                 this.histogram.yAxis.max = null
                 var previousDay = new Date(res.data.data.maxProdDate);

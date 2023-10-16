@@ -338,9 +338,9 @@ export default {
                     return daily;
                 case "剩余油情况":
                     return oilInfo;
-                case "油田大事件":
+                case "油田单井大事件":
                     return oilEvent;
-                case "秦皇岛32-6油田月度产量对比图":
+                case "月度产量完成情况":
                     return monthContrast;
                 case "产量构成详情":
                     return yieldComponects;
@@ -354,7 +354,7 @@ export default {
                     return exhibition;
                 case "分层注入量":
                     return stratifiedInjection;
-                case "措施效果跟踪表":
+                case "措施建议表":
                     return effectMeasure;
                 case "超欠注情况统计":
                     return owing;
