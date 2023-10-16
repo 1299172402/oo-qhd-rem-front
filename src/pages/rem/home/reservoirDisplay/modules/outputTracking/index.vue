@@ -75,7 +75,7 @@ export default {
                 grid: {
                     top: "8%",
                     left: "5%",
-                    right: "5%",
+                    right: "7%",
                     bottom: "22%",
                 },
                 dataZoom: {
@@ -102,16 +102,10 @@ export default {
                         color: '#8FA4CC',
                         fontSize: 10,
                         padding:[10,0,0,70],
-                        interval: function(index, val) {
-                            if (val.substr(-2) == '01') {
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        },
                     },
                     axisTick: {
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     axisLine: {
                         lineStyle: {
@@ -133,7 +127,8 @@ export default {
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,
@@ -161,7 +156,8 @@ export default {
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,

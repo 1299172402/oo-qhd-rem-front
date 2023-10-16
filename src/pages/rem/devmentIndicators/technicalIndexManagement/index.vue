@@ -6,7 +6,7 @@
         <div class="g-row-flex-V g-w100 g-h100" style="flex-wrap: wrap">
           <div style="margin: 10px 20px 10px 0px">
             <span>油田：</span>
-            <el-select v-model="selectOilFieldId">
+            <el-select v-model="selectOilFieldId" @change="initAllData">
               <el-option
                 v-for="item in oilFieldList"
                 :key="item.ogfId"
@@ -20,7 +20,7 @@
                     <el-date-picker v-model="year" type="year" placeholder="选择年" value-format="yyyy-12-31"></el-date-picker>
                 </div> -->
           <div style="margin: 10px 20px 10px 0px">
-            <el-button icon="el-icon-search" type="primary" @click="doSearch('all')">搜索</el-button>
+            <el-button icon="el-icon-search" type="primary" @click="doSearch()">搜索</el-button>
           </div>
         </div>
         <div class="g-row-flex-V" style="flex-wrap: wrap">
@@ -69,7 +69,7 @@
             <div style="display: flex; margin-left: 10px; height: 82px">
               <div style="width: 50%">
                 <span style="vertical-align: middle">
-                  <span style="font-size: 26px; margin-right: 6px">{{ item.sz }}</span>
+                  <span style="font-size: 26px; margin-right: 6px">{{ item.sz | numberFormat }}</span>
                   <sub style="color: #8fa4cc; font-size: 15px">{{ item.dw }}</sub>
                 </span>
                 <div style="margin-top: 10px">
@@ -352,8 +352,6 @@ export default {
       oilFieldList: [],
       //区块列表
       blockList: [],
-      //平台列表
-      platformList: [],
       //综合递减率 区块选择
       selectDecreaseBlock: "",
       //含水上升率 平台选择
@@ -1506,7 +1504,7 @@ export default {
       QueryReservoirAnalyseUnit({ ogfId: this.selectOilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.blockList = res.data.data;
-          _this.blockList.unshift({
+          this.blockList.unshift({
             reservoirAnalyseUnitId: this.selectOilFieldId,
             reservoirAnalyseUnitName: "全部",
             reservoirAnalyseUnitNo: "全部",
@@ -1514,16 +1512,21 @@ export default {
           this.selectDecreaseBlock = this.selectOilFieldId;
         }
       });
-      fetchPlatforms(requestField).then((res) => {
-        if (res.data.code == 200) {
-          this.platformList = res.data.data.platform;
-          this.selectIncreasingRatePlatform = res.data.data.platform[0].platFormId;
-          this.selectNaturalDeclinePlatform = res.data.data.platform[0].platFormId;
-        }
-      });
       this.initAllData();
     },
     initAllData() {
+      QueryReservoirAnalyseUnit({ ogfId: this.selectOilFieldId }).then((res) => {
+        if (res.data.code == 200) {
+          this.blockList = res.data.data;
+          this.blockList.unshift({
+            reservoirAnalyseUnitId: this.selectOilFieldId,
+            reservoirAnalyseUnitName: "全部",
+            reservoirAnalyseUnitNo: "全部",
+          });
+          this.selectDecreaseBlock = this.selectOilFieldId;
+        }
+      });
+
       //以下接口平台 区块 参数默认为全部 全部默认为油田id
       this.getTechIndicatorStat(this.selectOilFieldId, this.selectTargetOilFieldId, "", "", this.developmentPhase);
       this.doOilYear2(this.selectOilFieldId);
@@ -1552,25 +1555,8 @@ export default {
         }
       });
     },
-    //获得平台数据
-    getFetchPlatforms(oilFieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-      };
-      fetchPlatforms(request).then((res) => {
-        if (res.data.code == 200) {
-          this.platformList = res.data.data.platform;
-          this.selectIncreasingRatePlatform = res.data.data.platform[0].platFormId;
-          this.selectNaturalDeclinePlatform = res.data.data.platform[0].platFormId;
-        }
-      });
-    },
     //每一个子标签调用接口
-    doSearch(type) {
-      if(type === "all") {
-        this.initAllData();
-        return
-      }
+    doSearch() {
       let oilFieldId = this.selectOilFieldId;
       //技术指标管理
       if (this.currentIndex == 0) {

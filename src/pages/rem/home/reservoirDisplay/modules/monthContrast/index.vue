@@ -67,7 +67,8 @@ export default {
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         label: {
                             interval: 0,
@@ -92,7 +93,8 @@ export default {
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,
