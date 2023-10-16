@@ -227,7 +227,11 @@ export default {
           const currentMonth = now.getMonth() + 1; // 获取当前月份
           const months = []; // 定义存放月份的数组
           for (let i = 1; i <= currentMonth; i++) {
-              let monthString = `${i}月`;
+              let m = `${i}`;
+              if (m.length < 2) {
+                  m = '0' + m;
+              }
+              let monthString = now.getFullYear() + '-' + m;
               months.push(monthString);
           }
           this.histogram.xAxis.data = months
