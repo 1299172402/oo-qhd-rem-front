@@ -354,7 +354,7 @@ export default {
                     return exhibition;
                 case "分层注入量":
                     return stratifiedInjection;
-                case "措施效果跟踪表":
+                case "措施建议表":
                     return effectMeasure;
                 case "超欠注情况统计":
                     return owing;

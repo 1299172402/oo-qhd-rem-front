@@ -26,7 +26,7 @@
                         <el-checkbox label="关停井统计" name="type"/>
                         <el-checkbox label="秦皇岛32-6南区" name="type"/>
                         <el-checkbox label="分层注入量" name="type"/>
-                        <el-checkbox label="措施效果跟踪表" name="type"/>
+                        <el-checkbox label="措施建议表" name="type"/>
                         <el-checkbox label="超欠注情况统计" name="type"/>
                         <el-checkbox label="自然递减率" name="type"/>
                         <el-checkbox label="采油速度" name="type"/>
