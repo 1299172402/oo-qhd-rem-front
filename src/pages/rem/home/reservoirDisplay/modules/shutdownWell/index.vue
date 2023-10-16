@@ -76,9 +76,10 @@ export default {
               color: 'rgba(143,164,204,.5)'
             }
           },
-          axisTick: {
-            show: false,
-          },
+            axisTick: {
+                show:true,
+                inside: true
+            },
           axisLabel: {
             show: true,
             textStyle: {
@@ -89,7 +90,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            name: "关停影响产量(10⁴m³)",
+            name: "关停影响产量(m³)",
             nameTextStyle: {
               color: "#a9a8a8",
             },
@@ -99,9 +100,10 @@ export default {
                   color: "#a9a8a8",
               },
             },
-            axisTick: {
-              show: false,
-            },
+              axisTick: {
+                  show:true,
+                  inside: true
+              },
             axisLine: {
               show: true,
               lineStyle: {
@@ -120,15 +122,14 @@ export default {
             name: "关停井数(口)",
             nameTextStyle: {
               color: "#a9a8a8",
-                padding: [20, 0, 0, 0], // 上、右、下、左
             },
-            nameLocation: "center",
             splitLine: {
               show: false,
             },
-            axisTick: {
-              show: false,
-            },
+              axisTick: {
+                  show:true,
+                  inside: true
+              },
             axisLine: {
               show: true,
               lineStyle: {
@@ -229,7 +230,11 @@ export default {
           const currentMonth = now.getMonth() + 1; // 获取当前月份
           const months = []; // 定义存放月份的数组
           for (let i = 1; i <= currentMonth; i++) {
-              let monthString = `${i}月`;
+              let m = `${i}`;
+              if (m.length < 2) {
+                  m = '0' + m;
+              }
+              let monthString = now.getFullYear() + '-' + m;
               months.push(monthString);
           }
           this.histogram.xAxis.data = months

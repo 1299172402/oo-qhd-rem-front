@@ -27,15 +27,7 @@
         <headerSearch style="height: 80px">
           <div class="g-row-flex-V g-w100 g-h100">
             <span>油田：</span>
-            <el-select
-              v-model="selYtdm"
-              class="f2"
-              style="width: 170px"
-              filterable
-              clearable
-              disabled
-              @change="getFieldsData"
-            >
+            <el-select v-model="selYtdm" class="f2" style="width: 170px" filterable @change="getFieldsData">
               <el-option v-for="item in ytData" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId">
               </el-option>
             </el-select>
@@ -52,27 +44,17 @@
 
             <span style="margin-left: 15px">平台：</span>
             <el-select v-model="platform" class="f2" style="width: 170px" filterable @change="changePlatform">
-              <el-option
-                v-for="item in ptData"
-                :key="item.platFormId"
-                :label="item.platName"
-                :value="item.platFormId"
-              >
+              <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
               </el-option>
             </el-select>
             :
             <span style="margin-left: 15px">井号：</span>
             <el-select v-model="wellId" class="f2" style="width: 170px" filterable clearable @change="changeWell">
-              <el-option
-                v-for="item in wellData"
-                :key="item.wellId"
-                :label="item.wellName"
-                :value="item.wellId"
-              >
+              <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId">
               </el-option>
             </el-select>
 
-            <span style="margin-left: 15px">评价时间：</span>
+            <span style="margin-left: 15px">评价日期：</span>
             <el-date-picker
               v-model="currentDate"
               style="width: 170px"
@@ -300,7 +282,7 @@
                 "
                 @click="
                   $router.push({
-                    name:'AttributtonAnalysis',
+                    name: 'AttributtonAnalysis',
                     query: { platform, wellId, currentDate, link: linkdata(), evalResult: selCode },
                   })
                 "
@@ -322,12 +304,12 @@
                     selCode == '0100114')
                 "
                 @click="
-                  $router.push({ name: 'planmessage', query: { platform, wellId, currentDate, measureCode: selCode } })
+                  $router.push({ name: 'Planmessage', query: { platform, wellId, currentDate, measureCode: selCode } })
                 "
                 >措施推荐详情</el-button
               >
             </div>
-            <div style="flex: 1; min-height: 600px">
+            <div style="flex: 1; min-height: 700px">
               <pagePanel headerTitle="油井动态分析详情列表" style="margin-top: 0; height: 100%">
                 <div style="display: flex; justify-content: flex-end">
                   <el-button
@@ -339,26 +321,35 @@
                   >
                 </div>
                 <el-table
-                  :key="Math.random()"
+                  key="oilAuxiliaryAnalysis-table1"
                   id="table1"
                   highlight
-                  :data="tableData"
-                  height="calc(100% - 55px)"
+                  :data="
+                    tableData.slice(
+                      (queryParams.page - 1) * queryParams.pageSize,
+                      queryParams.page * queryParams.pageSize,
+                    )
+                  "
+                  height="calc(100% - 110px)"
                   ref="tableList"
                   class="doubleHeader"
+                  @sort-change="sortChange"
                 >
-                  <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                   <el-table-column
+                    type="index"
+                    label="序号"
+                    align="center"
+                    width="80px"
+                    fixed="left"
+                    :index="formatIndex"
+                  ></el-table-column>
+                  <el-table-column
+                    key="table1-wellName"
                     prop="wellName"
                     label="井号"
                     align="center"
                     width="180px"
-                    :sortable="true"
-                    :sort-method="
-                      (a, b) => {
-                        return borepipeNoSort(a, b, 'wellName');
-                      }
-                    "
+                    sortable="custom"
                     fixed="left"
                   ></el-table-column>
                   <!--生产动态项目-->
@@ -368,12 +359,7 @@
                     :prop="item.code"
                     align="center"
                     min-width="160"
-                    sortable
-                    :sort-method="
-                      (a, b) => {
-                        return borepipeNoSort1(a, b, item.code);
-                      }
-                    "
+                    sortable="custom"
                   >
                     <template #header>
                       <div class="headerSortRow1" v-if="item.name && item.name != '正常' && item.name.split(' ')[1]">
@@ -499,7 +485,7 @@
                     <el-table-column prop="theDate" align="center" min-width="150">
                       <template #header>
                         <div>
-                          <span>推荐日期</span>
+                          <span>评价日期</span>
                           <br />
                           <span>(yyyy/mm/dd)</span>
                         </div>
@@ -530,7 +516,7 @@
                       <div>
                         <span>日增油量</span>
                         <br />
-                        <span>(m³/d)</span>
+                        <span>(m³)</span>
                       </div>
                     </template>
                     <template slot-scope="scope">
@@ -539,6 +525,16 @@
                     </template>
                   </el-table-column>
                 </el-table>
+                <pagination
+                  v-show="pageTotal > 0"
+                  layout="prev, pager, next, sizes, total"
+                  :page-sizes="[10, 20, 50, 100]"
+                  :pager-count="5"
+                  :total="pageTotal"
+                  :page.sync="queryParams.page"
+                  :limit.sync="queryParams.pageSize"
+                  @pagination="pagination"
+                />
               </pagePanel>
             </div>
           </div>
@@ -549,15 +545,7 @@
         <headerSearch style="height: 80px">
           <div class="g-row-flex-V g-w100 g-h100">
             <span>油田：</span>
-            <el-select
-              v-model="selYtdm"
-              class="f2"
-              style="width: 170px"
-              filterable
-              clearable
-              disabled
-              @change="getFieldsData"
-            >
+            <el-select v-model="selYtdm" class="f2" style="width: 170px" filterable @change="getFieldsData">
               <el-option v-for="item in ytData" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId">
               </el-option>
             </el-select>
@@ -574,27 +562,17 @@
 
             <span style="margin-left: 15px">平台：</span>
             <el-select v-model="platform" class="f2" style="width: 170px" filterable @change="changePlatform">
-              <el-option
-                v-for="item in ptData"
-                :key="item.platFormId"
-                :label="item.platName"
-                :value="item.platFormId"
-              >
+              <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
               </el-option>
             </el-select>
 
             <span style="margin-left: 15px">井号：</span>
             <el-select v-model="wellId" class="f2" style="width: 170px" filterable clearable @change="changeWell">
-              <el-option
-                v-for="item in wellData"
-                :key="item.wellId"
-                :label="item.wellName"
-                :value="item.wellId"
-              >
+              <el-option v-for="item in wellData" :key="item.wellId" :label="item.wellName" :value="item.wellId">
               </el-option>
             </el-select>
 
-            <span style="margin-left: 15px">评价时间：</span>
+            <span style="margin-left: 15px">评价日期：</span>
             <el-date-picker
               v-model="currentDate"
               style="width: 170px"
@@ -732,7 +710,7 @@
                           v-if="selCode && selCode == '0100111'"
                           @click="
                             $router.push({
-                              name: 'planmessage',
+                              name: 'Planmessage',
                               query: { platform, wellId, currentDate, page: 'oilAnalysisReport', measureCode: selCode },
                             })
                           "
@@ -894,7 +872,7 @@
                         v-if="selCode && (selCode == hdbSelCode || selCode == '0100112')"
                         @click="
                           $router.push({
-                            name: 'planmessage',
+                            name: 'Planmessage',
                             query: { platform, wellId, currentDate, page: 'oilAnalysisReport', measureCode: selCode },
                           })
                         "
@@ -1193,7 +1171,7 @@
                             "
                             @click="
                               $router.push({
-                                name: 'planmessage',
+                                name: 'Planmessage',
                                 query: {
                                   platform,
                                   wellId,
@@ -1238,7 +1216,7 @@
                 </div>
               </pagePanel>
             </div>
-            <div style="height: 800px; position: relative; z-index: 3">
+            <div style="height: 650px; position: relative; z-index: 3">
               <pagePanel header-title="油井动态分析详情列表" style="height: 100%">
                 <div style="display: flex; justify-content: flex-end">
                   <el-button
@@ -1250,26 +1228,35 @@
                   >
                 </div>
                 <el-table
-                  :key="Math.random()"
+                  key="oilAuxiliaryAnalysis-table2"
                   id="table2"
                   highlight
-                  :data="tableData"
-                  height="calc(100% - 55px)"
+                  :data="
+                    tableData.slice(
+                      (queryParams.page - 1) * queryParams.pageSize,
+                      queryParams.page * queryParams.pageSize,
+                    )
+                  "
+                  height="calc(100% - 110px)"
                   ref="tableList"
                   class="doubleHeader"
+                  @sort-change="sortChange"
                 >
-                  <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                   <el-table-column
+                    type="index"
+                    label="序号"
+                    align="center"
+                    width="80px"
+                    fixed="left"
+                    :index="formatIndex"
+                  ></el-table-column>
+                  <el-table-column
+                    key="table2-wellName"
                     prop="wellName"
                     label="井号"
                     align="center"
                     width="180px"
-                    :sortable="true"
-                    :sort-method="
-                      (a, b) => {
-                        return borepipeNoSort(a, b, 'wellName');
-                      }
-                    "
+                    sortable="custom"
                     fixed="left"
                   ></el-table-column>
                   <!--生产动态项目-->
@@ -1279,12 +1266,7 @@
                     :prop="item.code"
                     align="center"
                     min-width="150"
-                    sortable
-                    :sort-method="
-                      (a, b) => {
-                        return borepipeNoSort1(a, b, item.code);
-                      }
-                    "
+                    sortable="custom"
                   >
                     <template #header>
                       <div class="headerSortRow1" v-if="item.name && item.name != '正常' && item.name.split(' ')[1]">
@@ -1423,7 +1405,7 @@
                     <el-table-column prop="theDate" align="center" min-width="150">
                       <template #header>
                         <div>
-                          <span>推荐日期</span>
+                          <span>评价日期</span>
                           <br />
                           <span>(yyyy/mm/dd)</span>
                         </div>
@@ -1454,7 +1436,7 @@
                       <div>
                         <span>日增油量</span>
                         <br />
-                        <span>(m³/d)</span>
+                        <span>(m³)</span>
                       </div>
                     </template>
                     <template slot-scope="scope">
@@ -1463,6 +1445,16 @@
                     </template>
                   </el-table-column>
                 </el-table>
+                <pagination
+                  v-show="pageTotal > 0"
+                  layout="prev, pager, next, sizes, total"
+                  :page-sizes="[10, 20, 50, 100]"
+                  :pager-count="5"
+                  :total="pageTotal"
+                  :page.sync="queryParams.page"
+                  :limit.sync="queryParams.pageSize"
+                  @pagination="pagination"
+                />
               </pagePanel>
             </div>
           </div>
@@ -1487,10 +1479,8 @@ import {
   proWellDynamicAnalysisDetail,
   findDynamicAnalysisUsingPOST,
 } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-import {
-  fetchPlatforms,
-} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit, QueryWellDetail } from "@/api/rem/marster.js";
+import { fetchPlatforms } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 import compareSort from "@/lib/compareSort.js";
 import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
@@ -1513,6 +1503,11 @@ export default {
       }
     },
   },
+  computed: {
+    pageTotal() {
+      return this.tableData.length || 0;
+    },
+  },
   data() {
     return {
       // 主数据树结构默认选中的值
@@ -1526,6 +1521,7 @@ export default {
       paramMap: {}, //检索条件
       //默认油井(标签)
       radio1: "oil",
+      companyId: "",
       //油田筛选条件
       ytData: [],
       selYtdm: "", //选中项
@@ -1566,7 +1562,8 @@ export default {
           code: "cyqd",
           name: "采液强度",
           isTwoHeader: true,
-          unit: "[t/(d.m)]",
+          // unit: "[t/(d.m)]",
+          unit: "(m³)",
         },
         {
           code: "cyzs",
@@ -1689,6 +1686,10 @@ export default {
       dom: {},
       dealTableData: [],
       scrollFlag: false,
+      queryParams: {
+        page: 1,
+        pageSize: 10,
+      },
     };
   },
   mounted() {
@@ -1717,13 +1718,26 @@ export default {
       }
     },
     //油井下拉框数据获取
-    queryOilFeildList() {
-      QueryOgfDetail({}).then((res) => {
+    async queryOilFeildList() {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.ytData = res.data.data;
-          //初始选中油田
-          if (this.selYtdm == "" || this.selYtdm == undefined) {
-            this.selYtdm = "3FC9A818F5BC43B88270DB80BBB3018F"; //hwh xg 默认初始化 qhd326//myData[0].oilFieldId;
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.ytData = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selYtdm = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selYtdm = this.ytData[0].ogfId ? this.ytData[0].ogfId : undefined;
           }
           this.getFieldsData();
         }
@@ -2560,22 +2574,6 @@ export default {
       let header = column.label.split(" ");
       return [h("span", [h("p", {}, header[0]), h("span", {}, header[1])])];
     },
-    //自定义井号排序 - 井号
-    borepipeNoSort(oa, ob, prop) {
-      let wellA = oa[prop];
-      let wellB = ob[prop];
-      return this.wellNoSort(wellA, wellB);
-    },
-    //自定义井号排序 - 生产动态监测
-    borepipeNoSort1(oa, ob, prop) {
-      if (!oa.scdt[prop] || !oa.scdt[prop]?.showLabel) {
-        return 1;
-      } else if (!ob.scdt[prop] || !ob.scdt[prop]?.showLabel) {
-        return -1;
-      } else {
-        return parseFloat(oa.scdt[prop].showLabel) - parseFloat(ob.scdt[prop].showLabel);
-      }
-    },
     // 判断数据
     linkdata() {
       const codeMapping = {
@@ -2631,6 +2629,68 @@ export default {
     //下载导出文件 tableId tableName
     doDownExcel(tableId, tableName) {
       exportExcel(tableId, tableName);
+    },
+    //自定义井号排序 - 井号
+    borepipeNoSort(oa, ob, prop) {
+      let wellA = oa[prop];
+      let wellB = ob[prop];
+      return this.wellNoSort(wellA, wellB);
+    },
+    //自定义井号排序 - 生产动态监测
+    borepipeNoSort1(oa, ob, prop) {
+      if (!oa.scdt[prop] || !oa.scdt[prop]?.showLabel) {
+        return 1;
+      } else if (!ob.scdt[prop] || !ob.scdt[prop]?.showLabel) {
+        return -1;
+      } else {
+        return parseFloat(oa.scdt[prop].showLabel) - parseFloat(ob.scdt[prop].showLabel);
+      }
+    },
+    // 表格排序自定义方法
+    sortChange({ column, prop, order }) {
+      this.queryParams.page = 1;
+      if (order === "ascending") {
+        this.tableData = this.tableData.sort((a, b) => {
+          if (prop === "wellName") {
+            return this.wellNoSort(a[prop], b[prop]);
+          } else {
+            if (!a.scdt[prop] || !a.scdt[prop]?.showLabel) {
+              return 1;
+            } else if (!b.scdt[prop] || !b.scdt[prop]?.showLabel) {
+              return -1;
+            } else {
+              return parseFloat(a.scdt[prop].showLabel) - parseFloat(b.scdt[prop].showLabel);
+            }
+          }
+        });
+      } else if (order === "descending") {
+        this.tableData = this.tableData.sort((a, b) => {
+          if (prop === "wellName") {
+            return this.wellNoSort(b[prop], a[prop]);
+          } else {
+            if (!b.scdt[prop] || !b.scdt[prop]?.showLabel) {
+              return 1;
+            } else if (!a.scdt[prop] || !a.scdt[prop]?.showLabel) {
+              return -1;
+            } else {
+              return parseFloat(b.scdt[prop].showLabel) - parseFloat(a.scdt[prop].showLabel);
+            }
+          }
+        });
+      } else {
+        this.tableData = cloneDeep(this.oldTableData);
+      }
+    },
+    // 自定序号
+    formatIndex(index) {
+      return (this.queryParams.page - 1) * this.queryParams.pageSize + index + 1;
+    },
+    /**
+     * 切换分页
+     */
+    pagination(e) {
+      this.queryParams.page = e.page;
+      this.queryParams.pageSize = e.limit;
     },
   },
 };

@@ -29,7 +29,7 @@
         <div style="display: flex; align-items: center; flex-wrap: wrap">
           <div style="margin-right: 15px; margin-bottom: 10px">
             <span>油田：</span>
-            <el-select v-model="selectOilField" disabled @change="onFieldChange" style="width: 165px">
+            <el-select v-model="selectOilField" @change="onFieldChange" style="width: 165px">
               <el-option
                 v-for="(item, index) in oilFields"
                 :key="item.ogfId"
@@ -94,7 +94,7 @@
             </el-select>
           </div>
           <div style="margin-right: 15px; margin-bottom: 10px">
-            <span>年份:</span>
+            <span>年度:</span>
             <el-date-picker
               v-model="dateTime"
               style="width: 160px; margin-left: 10px"
@@ -105,7 +105,7 @@
             ></el-date-picker>
           </div>
           <div style="margin-right: 15px; margin-bottom: 10px">
-            <span>开始月份：</span>
+            <span>开始日期：</span>
             <el-select v-model="beginMonth" style="width: 100px" placeholder="选择开始月">
               <el-option
                 v-for="(item, index) in 12"
@@ -116,7 +116,7 @@
             </el-select>
           </div>
           <div style="margin-right: 15px; margin-bottom: 10px">
-            <span>结束月份：</span>
+            <span>结束日期：</span>
             <el-select v-model="endMonth" style="width: 100px" placeholder="选择结束月">
               <el-option
                 v-for="(item, index) in 12"
@@ -147,7 +147,7 @@
               margin-left: 0;
             "
           >
-            <span>秦皇岛32-6油田作业计划跟踪</span>
+            <span>{{selectOilFieldName}}作业计划跟踪</span>
             <el-button type="primary" icon="el-icon-download" style="height: 30px" @click="doExportFile"
               >下载</el-button
             >
@@ -358,7 +358,7 @@
 <script>
 import fieldOperations from "./popups/fieldOperations.vue";
 import moment from "dayjs";
-import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { fetchMeasureInfos, nameAndCode } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getMeasureVersion, getFetchMeasureInfos } from "@/api/oilDeposit/rem-04/plan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
@@ -405,8 +405,10 @@ export default {
         pageSize: 15,
       },
       pageTotal: 0,
+      companyId: "",
       // 油田
       selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
+      selectOilFieldName: "",
       // 油田下拉框
       oilFields: [],
       // 平台
@@ -538,6 +540,29 @@ export default {
     },
     //页面初始化信息
     async initData() {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
+        if (res.data.code == 200) {
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilFields = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
+          }
+          this.selectOilFieldName = this.oilFields.filter(item => item.ogfId === this.selectOilField)[0].ogfName || "";
+        }
+      });
       //油田
       await QueryOgfDetail({}).then((res) => {
         if (res.data.code == 200) {
@@ -603,6 +628,7 @@ export default {
     },
     //措施列表数据
     getFetchMeasureInfos() {
+      this.selectOilFieldName = this.oilFields.filter(item => item.ogfId === this.selectOilField)[0].ogfName || "";
       if (!this.dateTime) {
         this.$message.warning("开始年份不能为空！");
         return false;
@@ -748,16 +774,17 @@ export default {
       this.pageSize = e.limit;
     },
     //油田下拉-change
-    onFieldChange(val) {
-      this.getFetchPlatforms(val);
+   async onFieldChange(val) {
+      await this.getFetchPlatforms(val);
+      this.getFetchWells(this.selectOilField, this.selectPlatform);
       this.getMeasureNameAndCode();
     },
     //通过油田查询平台
-    getFetchPlatforms(oilFieldId) {
-      QueryPlatformDetail({ ogfId: oilFieldId }).then((res) => {
+    async getFetchPlatforms(oilFieldId) {
+      await QueryPlatformDetail({ ogfId: oilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.platforms = res.data.data;
-          this.selectPlatform = oilFieldId;
+          this.selectPlatform = this.platforms[0].platformId;
         }
       });
     },
@@ -821,7 +848,6 @@ export default {
           this.wells = res.data.data;
         }
       });
-      0;
       this.wells.unshift({
         wellId: "",
         wellName: "全部",

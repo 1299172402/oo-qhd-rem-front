@@ -6,7 +6,7 @@
         <div class="g-row-flex-V g-w100 g-h100" style="flex-wrap: wrap">
           <div style="margin: 10px 20px 10px 0px">
             <span>油田：</span>
-            <el-select v-model="selectOilFieldId" disabled>
+            <el-select v-model="selectOilFieldId" @change="initAllData">
               <el-option
                 v-for="item in oilFieldList"
                 :key="item.ogfId"
@@ -20,7 +20,7 @@
                     <el-date-picker v-model="year" type="year" placeholder="选择年" value-format="yyyy-12-31"></el-date-picker>
                 </div> -->
           <div style="margin: 10px 20px 10px 0px">
-            <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
+            <el-button icon="el-icon-search" type="primary" @click="doSearch()">搜索</el-button>
           </div>
         </div>
         <div class="g-row-flex-V" style="flex-wrap: wrap">
@@ -69,7 +69,7 @@
             <div style="display: flex; margin-left: 10px; height: 82px">
               <div style="width: 50%">
                 <span style="vertical-align: middle">
-                  <span style="font-size: 26px; margin-right: 6px">{{ item.sz }}</span>
+                  <span style="font-size: 26px; margin-right: 6px">{{ item.sz | numberFormat }}</span>
                   <sub style="color: #8fa4cc; font-size: 15px">{{ item.dw }}</sub>
                 </span>
                 <div style="margin-top: 10px">
@@ -157,7 +157,7 @@
             <el-table-column prop="real" label="实际值" align="center" :formatter="toPrecise2"></el-table-column>
             <el-table-column
               prop="compareOilField"
-              label="对标油田(羊三木)"
+              label="对标油田"
               align="center"
               :formatter="toPrecise2"
             ></el-table-column>
@@ -250,7 +250,7 @@ import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
 import { exportExcel } from "@/lib/exportExcel.js";
 import { fetchPlatforms } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import {
   oilYear,
   compositeDeclineRate,
@@ -284,6 +284,7 @@ export default {
       currentIndex: 0,
       //查询参数
       queryParams: {},
+      companyId: "",
       //选中油田
       selectOilFieldId: "",
       // 年度
@@ -351,8 +352,6 @@ export default {
       oilFieldList: [],
       //区块列表
       blockList: [],
-      //平台列表
-      platformList: [],
       //综合递减率 区块选择
       selectDecreaseBlock: "",
       //含水上升率 平台选择
@@ -491,7 +490,8 @@ export default {
             },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             lineStyle: {
@@ -520,7 +520,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -549,7 +550,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -619,7 +621,7 @@ export default {
         },
         xAxis: [
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 30,
             nameTextStyle: { color: "#8FA4CC" },
             type: "category",
@@ -637,7 +639,8 @@ export default {
               },
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -662,7 +665,8 @@ export default {
               fontSize: 14,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -692,7 +696,8 @@ export default {
               fontSize: 14,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -759,7 +764,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -770,7 +775,8 @@ export default {
             padding: [10, 0, 0, 0],
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -800,7 +806,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -876,7 +883,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -890,7 +897,8 @@ export default {
             },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -922,7 +930,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -998,7 +1007,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -1012,7 +1021,8 @@ export default {
             },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1044,7 +1054,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1112,7 +1123,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -1121,7 +1132,8 @@ export default {
             color: "#8FA4CC",
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1151,7 +1163,8 @@ export default {
             },
             //scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1218,7 +1231,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -1227,7 +1240,8 @@ export default {
             color: "#8FA4CC",
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1271,7 +1285,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1369,7 +1384,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -1383,7 +1398,8 @@ export default {
             },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1414,7 +1430,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1473,16 +1490,30 @@ export default {
     },
     //页面初始化操作
     async initData() {
-      //获取油田信息
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilFieldList = res.data.data;
-        } else {
-          this.$message.error("油田读取错误");
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilFieldList = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilFieldId = this.oilFieldList[0].ogfId ? this.oilFieldList[0].ogfId : undefined;
+          }
         }
       });
       //默认qhd3-26油田
-      this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+      // this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       //对标油田默认qhd3-26油田
       this.selectTargetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       let requestField = {
@@ -1491,7 +1522,7 @@ export default {
       QueryReservoirAnalyseUnit({ ogfId: this.selectOilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.blockList = res.data.data;
-          _this.blockList.unshift({
+          this.blockList.unshift({
             reservoirAnalyseUnitId: this.selectOilFieldId,
             reservoirAnalyseUnitName: "全部",
             reservoirAnalyseUnitNo: "全部",
@@ -1499,13 +1530,21 @@ export default {
           this.selectDecreaseBlock = this.selectOilFieldId;
         }
       });
-      fetchPlatforms(requestField).then((res) => {
+      this.initAllData();
+    },
+    initAllData() {
+      QueryReservoirAnalyseUnit({ ogfId: this.selectOilFieldId }).then((res) => {
         if (res.data.code == 200) {
-          this.platformList = res.data.data.platform;
-          this.selectIncreasingRatePlatform = res.data.data.platform[0].platFormId;
-          this.selectNaturalDeclinePlatform = res.data.data.platform[0].platFormId;
+          this.blockList = res.data.data;
+          this.blockList.unshift({
+            reservoirAnalyseUnitId: this.selectOilFieldId,
+            reservoirAnalyseUnitName: "全部",
+            reservoirAnalyseUnitNo: "全部",
+          });
+          this.selectDecreaseBlock = this.selectOilFieldId;
         }
       });
+
       //以下接口平台 区块 参数默认为全部 全部默认为油田id
       this.getTechIndicatorStat(this.selectOilFieldId, this.selectTargetOilFieldId, "", "", this.developmentPhase);
       this.doOilYear2(this.selectOilFieldId);
@@ -1531,19 +1570,6 @@ export default {
             reservoirAnalyseUnitNo: "全部",
           });
           this.selectDecreaseBlock = oilFieldId;
-        }
-      });
-    },
-    //获得平台数据
-    getFetchPlatforms(oilFieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-      };
-      fetchPlatforms(request).then((res) => {
-        if (res.data.code == 200) {
-          this.platformList = res.data.data.platform;
-          this.selectIncreasingRatePlatform = res.data.data.platform[0].platFormId;
-          this.selectNaturalDeclinePlatform = res.data.data.platform[0].platFormId;
         }
       });
     },

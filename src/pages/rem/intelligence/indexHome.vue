@@ -235,7 +235,7 @@
                             </el-table-column>
                             <el-table-column prop="dhFlowingPress" label="井底流压(MPa)" align="center">
                             </el-table-column>
-                            <el-table-column prop="fluidProdDaily" label="日产液量(m³/d)" align="center">
+                            <el-table-column prop="fluidProdDaily" label="日产液量(m³)" align="center">
                             </el-table-column>
                         </el-table>
                     </el-dialog>
@@ -623,7 +623,7 @@ export default {
                         data: this.ResidueOilRank.map(item => Number(item.dhFlowingPress).toFixed(1)),
                     },
                     {
-                        name: '日产液量(m³/d)',
+                        name: '日产液量(m³)',
                         type: 'bar',
                         xAxisIndex: 0,
                         color: 'rgb(4,182,131)',
@@ -742,7 +742,7 @@ export default {
         //分层注采量详情
         getDetail() {
             localStorage.setItem('INTELLIGENCE', JSON.stringify(this.queryData))
-            this.$router.push({name: 'intelligenceDetail', params: this.queryData})
+            this.$router.push({name: 'IntelligenceDetail', params: this.queryData})
         }
     },
     computed: {

@@ -9,7 +9,7 @@
                 <el-radio label="LIQUID">产液</el-radio>
                 <el-radio label="OIL">产油</el-radio>
             </el-radio-group>
-            <span>时间：</span>
+            <span>日期：</span>
             <el-date-picker v-model="yearTime" type="month" placeholder="选择年月" value-format="yyyy-MM-dd" style="margin-right:20px;"></el-date-picker>
             <el-button type="primary" @click="OnChangeImage">确认</el-button>
         </div>

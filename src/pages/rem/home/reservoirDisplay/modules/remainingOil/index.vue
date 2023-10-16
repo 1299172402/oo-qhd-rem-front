@@ -1,37 +1,64 @@
 <template>
-<!--    <div class="box">-->
-<!--        <img :src="require('./oil.gif')" alt="" style="width: 100%;height: 100%">-->
-<!--    </div>-->
-  <video
-    id="my-video"
-    class="box"
-    height="100%"
-    width="100%"
-    autoplay
-    src="./剩余油.mp4"
-  >
-    <div class="progress-bar"></div>
-    <div class="progress"></div>
-  </video>
+        <div class="box">
+            <img id="im" height="100%" width="80%" />
+            <el-image v-if="initiate" :src="require('@/icons/svg/u2080.png')" style="height:20px;position: absolute;cursor:pointer;left:93%;top:30%" @click="startImageRotation"></el-image>
+            <el-image v-else  :src="require('@/icons/svg/u2077.png')" style="height:20px;cursor:pointer;position: absolute;left:93%;top:30%" @click="stop"></el-image>
+           
+        </div>
 </template>
 
 <script>
+import {
+    GetModelBasicByMaxModelSort,
+} from "@/api/rem/dispenseIndex.js";
+import { GetModelLayerList, GetModelImageList, } from "@/api/rem/dispenseModel.js";
+import {TOKEN_NAME, USER_NAME} from "@/config/global";
+import proxy from "@/config/host";
 export default {
+    data() {
+        return {
+          image:[],
+            initiate:true,
+            SImg:'',
+            rotationTimer:''
+        };
+    },
   mounted() {
-    this.video();
+      this.SImg = document.getElementById('im');
+      GetModelBasicByMaxModelSort().then((res)=>{
+          let data = {
+              modelBasicId:res.result.modelBasicEntity.modelBasicId,
+              modelLayerId: '27F34A07749947F5BC2417DD0E18D14B',
+              isRealData: 0
+          }
+          GetModelImageList(data).then((res)=>{
+              res.result.modelImageList.map((n)=>{
+                  this.image.push(n.imageUrl) 
+              })
+              this.SImg.src = this.image[0]; // 切换图片
+          })
+      })
+      
   },
   methods: {
-    video() {
-      const video = document.getElementById("my-video");
-      const progressBar = document.querySelector(".progress-bar");
-      const progress = document.querySelector(".progress");
-      video.onresize = () => {
-        const videoWidth = video.offsetWidth;
-        const barWidth = progressBar.offsetWidth;
-        const newWidth = Math.floor((videoWidth / barWidth) * 100);
-        progress.style.width = `${newWidth}%`;
-      };
-    },
+      startImageRotation() {
+          this.initiate = !this.initiate
+          let currentIndex = 0; // 当前图片索引
+          const rotateImage = () => {
+              this.SImg.src = this.image[currentIndex]; // 切换图片
+              currentIndex++; // 索引递增
+              if (currentIndex >= this.image.length) {
+                  currentIndex = 0; // 若到达最后一张图片，则重置索引为 0
+              }
+          };
+          this.rotationTimer = setInterval(rotateImage, 200);
+          // 设置定时器，每隔 10 毫秒切换一次图片
+      },
+      stop(){
+          this.initiate = !this.initiate
+          clearInterval(this.rotationTimer);
+      },
+      
   },
 };
 </script>
@@ -47,15 +74,5 @@ export default {
   padding: 4% 0 4% 0;
   overflow: hidden;
 }
-.progress-bar {
-  width: 100%; /* 进度条容器的初始宽度 */
-  height: 10px;
-  background-color: #ccc;
-}
 
-.progress {
-  width: 0%; /* 进度条的初始宽度为 0 */
-  height: 100%;
-  background-color: #f00;
-}
 </style>

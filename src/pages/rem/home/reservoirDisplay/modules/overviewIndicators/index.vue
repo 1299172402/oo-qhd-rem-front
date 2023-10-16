@@ -28,7 +28,7 @@
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
-                        <div class="text">年产油量</div>
+                        <div class="text">年产油</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
@@ -39,7 +39,7 @@
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
-                        <div class="text">累产油量</div>
+                        <div class="text">总累产油</div>
                     </div>
                 </el-col>
               
@@ -75,7 +75,7 @@
                         <Echart
                             :chart-data="getEchartData(mainList[0], '(%)', 'rgb(0, 220, 187)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(0, 220, 187)')"
                         ></Echart>
-                        <div class="chartText">自然递减</div>
+                        <div class="chartText">自然递减率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
@@ -83,7 +83,7 @@
                         <Echart
                             :chart-data="getEchartData(mainList[1], '(%)', 'rgb(0, 150, 215)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(0, 150, 215)')"
                         ></Echart>
-                        <div class="chartText">综合递减</div>
+                        <div class="chartText">综合递减率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
@@ -91,7 +91,7 @@
                         <Echart
                             :chart-data="getEchartData(mainList[2], '(%)', 'rgb(209, 74, 202)',$store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(209, 74, 202)')"
                         ></Echart>
-                        <div class="chartText">总递减</div>
+                        <div class="chartText">总递减率</div>
                     </div>
                 </el-col>
              

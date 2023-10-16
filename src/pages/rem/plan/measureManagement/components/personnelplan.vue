@@ -4,7 +4,7 @@
         <headerSearch class="g-w100 g-h100" style="width: 100%;margin-top: 12px">
             <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
                 <el-form-item label="油田：">
-                    <el-select v-model="queryParams.selectOilField" disabled>
+                    <el-select v-model="queryParams.selectOilField">
                         <el-option
                             v-for="(item, index) in oilFields"
                             :key="index"

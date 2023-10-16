@@ -23,7 +23,7 @@
                                 <el-option v-for="(item, index) in wellData" :key="index" :label="item.wellName"
                                            :value="item.wellId"/>
                             </el-select>
-                            <span style="padding-left: 20px">日期选择：</span>
+                            <span style="padding-left: 20px">日期：</span>
                             <el-date-picker
                                 v-show="activeTabIndexDate == 3"
                                 v-model="selectDate"
@@ -210,7 +210,7 @@
                     </el-row>
                 </page-panel-new>
                 <page-panel
-                    headerTitle=""
+                    headerTitle="自定义查询"
                     :show-btn="true"
                     v-else-if="activeEchart"
                     style="height: calc(100% - 112px); padding-bottom: 60px"
@@ -621,7 +621,8 @@ export default {
         choicewell(val){
             queryPlatformQueryWellListDetail({ogfId:val}).then(res => {
                 if (res.data.code == 200) {
-                    this.wellData =res.data.data
+                    this.wellData = res.data.data
+                    this.wellId = ''
                 }
             })
         },
@@ -851,14 +852,14 @@ export default {
                             {val: "MONTHLY_OIL_PROD", name: "月产油", unit: "m³"},
                             {val: "MONTHLY_WATER_PROD", name: "月产水", unit: "m³"},
                             {val: "MONTHLY_GAS_PROD", name: "月产气", unit: "m³"},
-                            {val: "DAILY_LIQUID_PROD_LEVEL", name: "日产液水平", unit: "m³/d"},
-                            {val: "DAILY_OIL_PROD_LEVEL", name: "日产油水平", unit: "m³/d"},
-                            {val: "DAILY_WATER_PROD_LEVEL", name: "日产水水平", unit: "m³/d"},
-                            {val: "DAILY_GAS_PROD_LEVEL", name: "日产气水平", unit: "m³/d"},
-                            {val: "DAILY_LIQUID_PROD_CAP", name: "日产液能力", unit: "m³/d"},
-                            {val: "DAILY_OIL_PROD_CAP", name: "日产油能力", unit: "m³/d"},
-                            {val: "DAILY_WATER_PROD_CAP", name: "日产水能力", unit: "m³/d"},
-                            {val: "DAILY_GAS_PROD_CAP", name: "日产气能力", unit: "m³/d"},
+                            {val: "DAILY_LIQUID_PROD_LEVEL", name: "日产液水平", unit: "m³"},
+                            {val: "DAILY_OIL_PROD_LEVEL", name: "日产油水平", unit: "m³"},
+                            {val: "DAILY_WATER_PROD_LEVEL", name: "日产水水平", unit: "m³"},
+                            {val: "DAILY_GAS_PROD_LEVEL", name: "日产气水平", unit: "m³"},
+                            {val: "DAILY_LIQUID_PROD_CAP", name: "日产液能力", unit: "m³"},
+                            {val: "DAILY_OIL_PROD_CAP", name: "日产油能力", unit: "m³"},
+                            {val: "DAILY_WATER_PROD_CAP", name: "日产水能力", unit: "m³"},
+                            {val: "DAILY_GAS_PROD_CAP", name: "日产气能力", unit: "m³"},
                             {val: "GAS_OIL_RATIO", name: "气油比", unit: "m³/m³"},
                             {val: "OIL_GAS_RATIO", name: "油气比", unit: "m³/m³"},
                             {val: "WATER_GAS_RATIO", name: "水气比", unit: "m³/m³"},
@@ -1020,23 +1021,23 @@ export default {
                         (this.productList = [
                             {val: "SYN_WATER_RATIO", name: "综合含水", unit: "%"},
                             {val: "SYN_OIL_GAS_RATIO", name: "综合气油比", unit: "m³/m³"},
-                            {val: "DAILY_LIQUID_PROD_LEVEL", name: "日产液水平", unit: "m³/d"},
-                            {val: "DAILY_OIL_PROD_LEVEL", name: "日产油水平", unit: "m³/d"},
-                            {val: "DAILY_WATER_PROD_LEVEL", name: "日产水水平", unit: "m³/d"},
-                            {val: "DAILY_GAS_PROD_LEVEL", name: "日产气水平", unit: "m³/d"},
-                            {val: "DAILY_LIQUID_PROD_CAP", name: "日产液能力", unit: "m³/d"},
-                            {val: "DAILY_OIL_PROD_CAP", name: "日产油能力", unit: "m³/d"},
-                            {val: "DAILY_WATER_PROD_CAP", name: "日产水能力", unit: "m³/d"},
-                            {val: "DAILY_GAS_PROD_CAP", name: "日产气能力", unit: "m³/d"},
+                            {val: "DAILY_LIQUID_PROD_LEVEL", name: "日产液水平", unit: "m³"},
+                            {val: "DAILY_OIL_PROD_LEVEL", name: "日产油水平", unit: "m³"},
+                            {val: "DAILY_WATER_PROD_LEVEL", name: "日产水水平", unit: "m³"},
+                            {val: "DAILY_GAS_PROD_LEVEL", name: "日产气水平", unit: "m³"},
+                            {val: "DAILY_LIQUID_PROD_CAP", name: "日产液能力", unit: "m³"},
+                            {val: "DAILY_OIL_PROD_CAP", name: "日产油能力", unit: "m³"},
+                            {val: "DAILY_WATER_PROD_CAP", name: "日产水能力", unit: "m³"},
+                            {val: "DAILY_GAS_PROD_CAP", name: "日产气能力", unit: "m³"},
                         ]),
                         (this.totalList = []),
                         (this.injectList = [
-                            {val: "DAILY_LIQUID_INJ_LEVEL", name: "日注液水平", unit: "m³/d"},
-                            {val: "DAILY_WATER_INJ_LEVEL", name: "日注水水平", unit: "m³/d"},
-                            {val: "DAILY_GAS_INJ_LEVEL", name: "日注气水平", unit: "m³/d"},
-                            {val: "DAILY_LIQUID_INJ_CAPACITY", name: "日注液能力", unit: "m³/d"},
-                            {val: "DAILY_WATER_INJ_CAPACITY", name: "日注水能力", unit: "m³/d"},
-                            {val: "DAILY_GAS_INJ_CAPACITY", name: "日注气能力", unit: "m³/d"},
+                            {val: "DAILY_LIQUID_INJ_LEVEL", name: "日注液水平", unit: "m³"},
+                            {val: "DAILY_WATER_INJ_LEVEL", name: "日注水水平", unit: "m³"},
+                            {val: "DAILY_GAS_INJ_LEVEL", name: "日注气水平", unit: "m³"},
+                            {val: "DAILY_LIQUID_INJ_CAPACITY", name: "日注液能力", unit: "m³"},
+                            {val: "DAILY_WATER_INJ_CAPACITY", name: "日注水能力", unit: "m³"},
+                            {val: "DAILY_GAS_INJ_CAPACITY", name: "日注气能力", unit: "m³"},
                         ]),
                         (this.managerList = []);
                     // this.storeList = ['井口储采比','井口采油速度','井口采出油速度','剩余油储量','剩余气储量','剩余油采出速度','剩余气采出速度','剩余油采出程度','剩余气采出程度']

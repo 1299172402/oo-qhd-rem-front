@@ -94,14 +94,14 @@ const GenerateRouter = {
   "MeasureManagement": () => import("@/pages/rem/plan/measureManagement/index.vue"),
   "MeasureEffectTracking": () => import("@/pages/rem/plan/measureManagement/measureEffectTracking.vue"),
   "PersonnelMeasures": () => import("@/pages/rem/plan/measureManagement/personnelMeasures.vue"),
-  "planmessage": () => import("@/pages/rem/plan/measureManagement/components/planmessage.vue"),
+  "Planmessage": () => import("@/pages/rem/plan/measureManagement/components/planmessage.vue"),
   "TwoIncreasesOneDecrease": () => import("@/pages/rem/plan/twoIncreasesOneDecrease/index.vue"),
 
   "RecoveryEfficiencyIndex": () => import("@/pages/rem/recoveryEfficiency/index.vue"), // 采收率及可采储量预测
 
   "IndexHome": () => import("@/pages/rem/intelligence/indexHome.vue"),
   "IpmHome": () => import("@/pages/rem/home/ipmHome/index.vue"),
-  "intelligenceDetail": () => import("@/pages/rem/intelligence/detail.vue"),
+  "IntelligenceDetail": () => import("@/pages/rem/intelligence/detail.vue"),
   "ProductionSplit": () => import("@/pages/rem/intelligence/productionSplit/index.vue"),
   "SplitSection": () => import("@/pages/rem/intelligence/productionSplit/splitSection.vue"),
   "DividingCoefficient": () => import("@/pages/rem/intelligence/productionSplit/DividingCoefficient.vue"),

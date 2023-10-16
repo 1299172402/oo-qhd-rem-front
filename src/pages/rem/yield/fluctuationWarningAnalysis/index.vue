@@ -4,12 +4,17 @@
     <headerSearch class="g-w100 g-h100" style="height: 80px; margin-bottom: 20px">
       <div style="height: 100%; display: flex; align-items: center; flex-wrap: wrap">
         <span>油田：</span>
-        <el-select v-model="selectOilField" placeholder="请选择" disabled style="margin-right: 15px">
+        <el-select v-model="selectOilField" placeholder="请选择" style="margin-right: 15px">
           <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
         </el-select>
         <span>区块：</span>
         <el-select v-model="selectBlock" placeholder="请选择" style="margin-right: 15px">
-          <el-option v-for="item in block" :key="item.reservoirAnalyseUnitId" :label="item.reservoirAnalyseUnitName" :value="item.reservoirAnalyseUnitId"></el-option>
+          <el-option
+            v-for="item in block"
+            :key="item.reservoirAnalyseUnitId"
+            :label="item.reservoirAnalyseUnitName"
+            :value="item.reservoirAnalyseUnitId"
+          ></el-option>
         </el-select>
         <span>预警分析日期设置：</span>
         <el-date-picker
@@ -388,7 +393,7 @@
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import * as echarts from "echarts";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import {
   outputTracingAnalysis,
   reasonAnalysis,
@@ -421,6 +426,7 @@ export default {
       wellAllNum: "",
       //油田
       oilField: [],
+      companyId: "",
       //油田名字
       oilFieldName: "秦皇岛32-6油田",
       //油田选中值
@@ -461,9 +467,9 @@ export default {
           type: "inside",
         },
         grid: {
-          x: 170,
+          x: 150,
           y: 50,
-          x2: 50,
+          x2: 80,
           y2: 100,
         },
         toolbox: {
@@ -494,7 +500,7 @@ export default {
           bottom: 30,
         },
         xAxis: {
-          name: "日",
+          name: "日期 (日)",
           // nameTextStyle: {
           //     color: "#8FA4CC",
           //     fontSize: 14,
@@ -511,7 +517,8 @@ export default {
             },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           splitLine: {
             show: false,
@@ -530,8 +537,12 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#979797",
+              color: "#8FA4CC",
             },
+          },
+          axisTick: {
+            show: true,
+            inside: true,
           },
           axisLabel: {
             color: "#8FA4CC",
@@ -683,7 +694,8 @@ export default {
             margin: 20,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -707,7 +719,8 @@ export default {
             fontSize: 14,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -961,8 +974,27 @@ export default {
 
     //初始化页面数据
     async initData() {
-      await QueryOgfDetail({}).then((res) => {
-        this.oilField = res.data.data;
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
+        if (res.data.code == 200) {
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
+        }
       });
       await QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {
@@ -2201,9 +2233,9 @@ export default {
               }
               // .z-table {
               //   ::v-deep .cell {
-                  // height: 60px;
-                  // line-height: inherit;
-                // }
+              // height: 60px;
+              // line-height: inherit;
+              // }
               // }
             }
           }

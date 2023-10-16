@@ -1,10 +1,11 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
-export function getYieldFluctuation() {
+export function getYieldFluctuation(data) {
   return request({
     url: `${baseUrl}/reservoirBillboards/getYieldFluctuation`,
-    method: "get",
+    method: "post",
+      data,
       headers: {
           showLoading: false
       }

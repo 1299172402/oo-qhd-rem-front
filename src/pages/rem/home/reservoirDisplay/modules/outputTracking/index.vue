@@ -8,7 +8,7 @@
                     <div style="width: 50%">
                         <Echart :chart-data="option"></Echart>
                         <div style="position:absolute;bottom:20%;left:2%;font-size: 10px;text-align: center">
-                            <h5 style="color: #0d84ff">开井数(口)/油田总井数(口)</h5>
+                            <h5 style="color: #0d84ff">开井数(口)/油井总井数(口)</h5>
                             <div style="font-size: 20px;">{{dataList.oilWellOpenTotal}}/{{dataList.oilWellTotal}}</div>
                         </div>
                         
@@ -75,7 +75,7 @@ export default {
                 grid: {
                     top: "8%",
                     left: "5%",
-                    right: "5%",
+                    right: "7%",
                     bottom: "22%",
                 },
                 dataZoom: {
@@ -102,16 +102,10 @@ export default {
                         color: '#8FA4CC',
                         fontSize: 10,
                         padding:[10,0,0,70],
-                        interval: function(index, val) {
-                            if (val.substr(-2) == '01') {
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        },
                     },
                     axisTick: {
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     axisLine: {
                         lineStyle: {
@@ -133,7 +127,8 @@ export default {
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,
@@ -161,7 +156,8 @@ export default {
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,
@@ -246,7 +242,7 @@ export default {
                 yAxis: [
                     {
                         type: "value",
-                        name: "日产 (m³/d)",
+                        name: "日产 (m³)",
                         nameTextStyle: {
                             padding: [0, 0, 60, 0], // 上、右、下、左
                         },
@@ -968,7 +964,7 @@ export default {
                     //各线的数据
                     this.productLineChart.series = seriesData;
                     // if (this.searchForm.selectUnitOfProduction == 'm') {
-                        this.productLineChart.yAxis[0].name = '日产(m³/d)';
+                        this.productLineChart.yAxis[0].name = '日产(m³)';
                         this.productLineChart.yAxis[1].name = '年产(10⁴m³)';
                     // } else if (this.searchForm.selectUnitOfProduction == 't') {
                     //     this.productLineChart.yAxis[0].name = '日产t/d';

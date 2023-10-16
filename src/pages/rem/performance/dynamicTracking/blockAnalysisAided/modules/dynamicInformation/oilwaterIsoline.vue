@@ -10,7 +10,7 @@
                 <el-radio label="OIL">产油</el-radio>
                 <el-radio label="WATER">含水</el-radio>
             </el-radio-group>
-            <span>时间：</span>
+            <span>日期：</span>
             <el-date-picker v-model="yearTime" type="month" placeholder="选择月" value-format="yyyy-MM" style="margin-right:20px;"></el-date-picker>
             <el-button type="primary" @click="OnChangeImage">确认</el-button>
             <el-button type="primary" @click="openSetUpDialog">设置底图</el-button>

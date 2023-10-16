@@ -4,7 +4,7 @@
         <info-window
             info-width="100%"
             info-height="100%"
-            header-title="油田大事件"
+            header-title="油田单井大事件"
             :is-show-max-btn="true"
         >
             <div class="g-w100 g-h100 g-row-flex" style="">
@@ -70,7 +70,6 @@ export default {
             })
         },
         remark(row){
-            console.log(row)
             const text = row.remark;
             const firstChar = text.charAt(0);
             const isLetter = /^[A-Za-z]$/.test(firstChar);

@@ -32,8 +32,6 @@
               class="f2"
               style="width: 180px"
               filterable
-              clearable
-              disabled
               @change="getFieldsData"
             >
               <el-option v-for="item in ytData" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
@@ -290,32 +288,40 @@
                   >
                 </div>
                 <el-table
-                  :key="Math.random()"
+                  key="waterAuxiliaryAnalysis-table1"
                   id="table1"
                   class="doubleHeader"
                   :row-style="{ height: '0px' }"
                   :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                  :data="tableData"
+                  :data="
+                    tableData.slice(
+                      (queryParams.page - 1) * queryParams.pageSize,
+                      queryParams.page * queryParams.pageSize,
+                    )
+                  "
                   header-cell-class-name="table_header"
                   :cell-style="{ padding: '6px', 'text-align': 'center' }"
                   :default-sort="{ prop: 'date', order: 'descending' }"
-                  height="calc(100% - 55px)"
+                  height="calc(100% - 110px)"
                   ref="tableList"
                   row-key="id"
                   default-expand-all
                   :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+                  @sort-change="sortChange"
                 >
-                  <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
+                  <el-table-column
+                    type="index"
+                    label="序号"
+                    align="center"
+                    width="80px"
+                    fixed="left"
+                    :index="formatIndex"
+                  ></el-table-column>
                   <el-table-column
                     prop="wellId"
                     label="井号"
                     align="center"
-                    :sortable="true"
-                    :sort-method="
-                      (a, b) => {
-                        return borepipeNoSort(a, b, 'wellId');
-                      }
-                    "
+                    sortable="custom"
                     fixed="left"
                     width="160"
                   ></el-table-column>
@@ -327,11 +333,7 @@
                       :prop="item.code"
                       :label="item.name"
                       align="center"
-                      :sort-method="
-                        (a, b) => {
-                          return borepipeNoSort(a, b, item.code);
-                        }
-                      "
+                      sortable="custom"
                     >
                       <template #header>
                         <div>
@@ -448,6 +450,16 @@
                     </el-table-column>
                   </el-table-column>
                 </el-table>
+                <pagination
+                  v-show="pageTotal > 0"
+                  layout="prev, pager, next, sizes, total"
+                  :page-sizes="[10, 20, 50, 100]"
+                  :pager-count="5"
+                  :total="pageTotal"
+                  :page.sync="queryParams.page"
+                  :limit.sync="queryParams.pageSize"
+                  @pagination="pagination"
+                />
               </pagePanel>
             </div>
           </div>
@@ -463,8 +475,6 @@
               class="f2"
               style="width: 170px"
               filterable
-              clearable
-              disabled
               @change="getFieldsData"
             >
               <el-option v-for="item in ytData" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
@@ -546,7 +556,7 @@
               <div class="btns0">
                 <img src="@/assets/rem/performance/help.png" alt="" class="helpImg" />
                 <span>{{ potentialWellNum }}</span>
-                <b>潜力井</b>
+                <b>措施井</b>
               </div>
             </div>
             <div class="v2" style="z-index: 5">
@@ -858,32 +868,40 @@
                   >
                 </div>
                 <el-table
-                  :key="Math.random()"
+                  key="waterAuxiliaryAnalysis-table2"
                   id="table2"
                   class="doubleHeader"
                   :row-style="{ height: '0px' }"
                   :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                  :data="tableData"
+                  :data="
+                    tableData.slice(
+                      (queryParams.page - 1) * queryParams.pageSize,
+                      queryParams.page * queryParams.pageSize,
+                    )
+                  "
                   header-cell-class-name="table_header"
                   :cell-style="{ padding: '6px', 'text-align': 'center' }"
                   :default-sort="{ prop: 'date', order: 'descending' }"
-                  height="calc(100% - 55px)"
+                  height="calc(100% - 110px)"
                   ref="tableList"
                   row-key="id"
                   default-expand-all
                   :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+                  @sort-change="sortChange"
                 >
-                  <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
+                  <el-table-column
+                    type="index"
+                    label="序号"
+                    align="center"
+                    width="80px"
+                    fixed="left"
+                    :index="formatIndex"
+                  ></el-table-column>
                   <el-table-column
                     prop="wellId"
                     label="井号"
                     align="center"
-                    :sortable="true"
-                    :sort-method="
-                      (a, b) => {
-                        return borepipeNoSort(a, b, 'wellId');
-                      }
-                    "
+                    sortable="custom"
                     fixed="left"
                     width="160"
                   ></el-table-column>
@@ -895,12 +913,7 @@
                       :prop="item.code"
                       :label="item.name"
                       align="center"
-                      sortable
-                      :sort-method="
-                        (a, b) => {
-                          return borepipeNoSort(a, b, item.code);
-                        }
-                      "
+                      sortable="custom"
                     >
                       <template #header>
                         <div v-if="item.unit">
@@ -1028,6 +1041,16 @@
                     </el-table-column>
                   </el-table-column>
                 </el-table>
+                <pagination
+                  v-show="pageTotal > 0"
+                  layout="prev, pager, next, sizes, total"
+                  :page-sizes="[10, 20, 50, 100]"
+                  :pager-count="5"
+                  :total="pageTotal"
+                  :page.sync="queryParams.page"
+                  :limit.sync="queryParams.pageSize"
+                  @pagination="pagination"
+                />
               </pagePanel>
             </div>
           </div>
@@ -1049,20 +1072,24 @@ import {
   injectionWellDynamicAnalysisDetail,
   queryEvaluationWaterInjCount,
 } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-import {
-  fetchPlatforms,
-} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit, QueryWellDetail } from "@/api/rem/marster.js";
+import { fetchPlatforms } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
 import { exportExcel } from "@/lib/exportExcel.js";
 import compareSort from "@/lib/compareSort.js";
+import { cloneDeep } from "lodash";
 
 export default {
   name: "waterAnalysisReport",
   mixins: [compareSort],
   components: {
     treeSelectionCustom,
+  },
+  computed: {
+    pageTotal() {
+      return this.tableData.length || 0;
+    },
   },
   data() {
     return {
@@ -1078,6 +1105,7 @@ export default {
       paramMap: {}, //检索条件
       //默认水井(标签)
       radio1: "water",
+      companyId: "",
       //油田筛选条件
       ytData: [],
       selYtdm: "", //选中项
@@ -1177,8 +1205,13 @@ export default {
       recommendedMeasuresData: [],
       //动态分析详细列表
       tableData: [],
+      oldTableData: [],
       //井层指标变化趋势指标动态表头
       trendOfIndicatorsTab: [],
+      queryParams: {
+        page: 1,
+        pageSize: 10,
+      },
     };
   },
   mounted() {
@@ -1220,13 +1253,26 @@ export default {
       }
     },
     //获取油田数据
-    queryOilFeildList() {
-      QueryOgfDetail({}).then((res) => {
+    async queryOilFeildList() {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.ytData = res.data.data;
-          //初始选中油田
-          if (this.selYtdm == "" || this.selYtdm == undefined) {
-            this.selYtdm = "3FC9A818F5BC43B88270DB80BBB3018F"; //hwh xg 默认初始化qhd326 //myData[0].oilFieldId;
+          this.companyId =
+            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
+              ? res.data.data[0].tenantInfos[0]?.deptId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.ytData = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selYtdm = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selYtdm = this.ytData[0].ogfId ? this.ytData[0].ogfId : undefined;
           }
           this.getFieldsData();
         }
@@ -1913,6 +1959,7 @@ export default {
       //停注恢复 stopInjectionRecovery
       //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
       this.tableData = myData; //加载数据
+      this.oldTableData = cloneDeep(myData); //加载数据
       console.log("this.tableData", this.tableData);
 
       this.$nextTick(() => {
@@ -2776,6 +2823,7 @@ export default {
         this.recommendedMeasuresOptions[j].value = t_count; //登记条数
       }
       this.tableData = myData; //加载数据
+      this.oldTableData = cloneDeep(myData); //加载数据
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
       });
@@ -2864,15 +2912,35 @@ export default {
         }
       }
     },
-    //自定义井号排序
-    borepipeNoSort(oa, ob, code) {
-      let wellA = oa[code];
-      let wellB = ob[code];
-      return this.wellNoSort(wellA, wellB);
-    },
     //下载导出文件 tableId tableName
     doDownExcel(tableId, tableName) {
       exportExcel(tableId, tableName);
+    },
+    // 表格排序自定义方法
+    sortChange({ column, prop, order }) {
+      this.queryParams.page = 1;
+      if (order === "ascending") {
+        this.tableData = this.tableData.sort((a, b) => {
+          return prop === "wellId" ? this.wellNoSort(a[prop], b[prop]) : a[prop] - b[prop];
+        });
+      } else if (order === "descending") {
+        this.tableData = this.tableData.sort((a, b) => {
+          return prop === "wellId" ? this.wellNoSort(b[prop], a[prop]) : b[prop] - a[prop];
+        });
+      } else {
+        this.tableData = cloneDeep(this.oldTableData);
+      }
+    },
+    // 自定序号
+    formatIndex(index) {
+      return (this.queryParams.page - 1) * this.queryParams.pageSize + index + 1;
+    },
+    /**
+     * 切换分页
+     */
+    pagination(e) {
+      this.queryParams.page = e.page;
+      this.queryParams.pageSize = e.limit;
     },
   },
 };
