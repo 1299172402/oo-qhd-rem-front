@@ -215,7 +215,8 @@ export default {
             },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -247,7 +248,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,

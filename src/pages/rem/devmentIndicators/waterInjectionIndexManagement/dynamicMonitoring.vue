@@ -1,4 +1,4 @@
-<!-- 动态监测完成率 -->
+ <!-- 动态监测完成率 -->
 <template>
   <div class="app-container">
     <header-search style="width: 100%; height: 80px">
@@ -234,8 +234,9 @@ export default {
             padding: [10, 0, 0, 0],
           },
           axisTick: {
-            show: false,
-          },
+              show: true,
+              inside: true,
+            },
           axisLine: {
             show: true,
             lineStyle: {
@@ -266,7 +267,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,

@@ -166,7 +166,8 @@ export default {
             // rotate: 20,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             lineStyle: {
@@ -189,7 +190,8 @@ export default {
               fontSize: 14,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,

@@ -562,7 +562,7 @@ export default {
       await QueryPlatformDetail({ ogfId: this.searchForm.ogfId }).then((res) => {
         if (res.data.code == 200) {
           let platforms = res.data.data;
-          this.searchForm.platId = platforms[0].platformId;
+          // this.searchForm.platId = platforms[0].platformId;
           this.platforms = platforms;
         }
       });

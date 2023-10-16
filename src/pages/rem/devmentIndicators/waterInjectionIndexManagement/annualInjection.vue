@@ -188,8 +188,9 @@ export default {
             // },
           },
           axisTick: {
-            show: false,
-          },
+              show: true,
+              inside: true,
+            },
           axisLine: {
             show: true,
             lineStyle: {
@@ -218,7 +219,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -247,11 +249,13 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
+              show: true,
               lineStyle: {
-                color: "rgba(255,255,255,.16)",
+                color: "#8FA4CC",
               },
             },
             splitLine: {
@@ -332,7 +336,8 @@ export default {
     },
     //注水指标管理-年注入量
     doInjectionYear() {
-      this.oilFieldName = this.oilFieldList.filter((item) => item.ogfId === this.queryParams.oilFieldId)[0].ogfName || "";
+      this.oilFieldName =
+        this.oilFieldList.filter((item) => item.ogfId === this.queryParams.oilFieldId)[0].ogfName || "";
       injectionYear(this.queryParams).then((res) => {
         if (res.data.code == 200) {
           //图例数据集

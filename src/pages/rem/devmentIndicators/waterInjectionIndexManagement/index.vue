@@ -246,7 +246,7 @@
           ></el-table-column>
           <el-table-column
             prop="compareOilField"
-            label="对标 (羊三木)"
+            label="对标油田"
             align="center"
             :formatter="formatterNumber"
           ></el-table-column>
@@ -594,9 +594,10 @@ export default {
               return Number(val) + "月";
             },
           },
-          axisTick: {
-            show: false,
-          },
+           axisTick: {
+              show: true,
+              inside: true,
+            },
           axisLine: {
             show: true,
             onZero: false,
@@ -627,7 +628,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -713,9 +715,10 @@ export default {
               return Number(val) + "月";
             },
           },
-          axisTick: {
-            show: false,
-          },
+           axisTick: {
+              show: true,
+              inside: true,
+            },
           axisLine: {
             show: true,
             onZero: false,
@@ -745,7 +748,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,

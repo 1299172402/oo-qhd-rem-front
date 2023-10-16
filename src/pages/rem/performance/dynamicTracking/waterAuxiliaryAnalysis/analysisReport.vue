@@ -556,7 +556,7 @@
               <div class="btns0">
                 <img src="@/assets/rem/performance/help.png" alt="" class="helpImg" />
                 <span>{{ potentialWellNum }}</span>
-                <b>潜力井</b>
+                <b>措施井</b>
               </div>
             </div>
             <div class="v2" style="z-index: 5">

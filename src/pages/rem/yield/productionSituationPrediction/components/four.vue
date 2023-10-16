@@ -46,8 +46,8 @@
       <el-button icon="el-icon-download" type="primary" @click="doDownExcel('#table1', '单井产量预测')">下载</el-button>
     </div>
     <el-table :key="Math.random()" id="table1" :data="tableData" height="calc(100% - 58px - 55px)">
-      <el-table-column type="index" width="50"></el-table-column>
-      <el-table-column align="left" label="当前作业井名" prop="wellNo" width="150"></el-table-column>
+      <el-table-column type="index" width="60" fixed></el-table-column>
+      <el-table-column align="left" label="当前作业井名" prop="wellNo" width="150" fixed></el-table-column>
       <el-table-column align="center" label="当前作业措施" prop="measureTypeName" width="150"></el-table-column>
       <el-table-column align="center" label="产品类型" prop="productTypeName" width="100"></el-table-column>
       <el-table-column align="center" :label="`措施见效日期\n(yyyy/mm/dd)`" prop="measureSeffectDate" width="160">
@@ -105,12 +105,12 @@
           ></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="left" label="备注" prop="remark">
+      <el-table-column align="left" label="备注" min-width="300" prop="remark">
         <template slot-scope="scope">
           <el-input v-model="scope.row.remark" size="medium"></el-input>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="200">
+      <el-table-column align="center" label="操作" width="200" fixed="right">
         <template slot-scope="scope">
           <el-button type="text" @click="calcSingleWellMeasure(scope.row)">计算配产量</el-button>
           <el-button type="text" style="color: #f56c6c" @click="deleteRow(scope.$index, scope.row)">删除</el-button>
@@ -330,6 +330,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .el-table__fixed-header-wrapper .cell,
 ::v-deep .el-table__header-wrapper .cell {
   height: auto !important;
   line-height: 18px !important;

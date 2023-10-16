@@ -5,7 +5,7 @@
       <div class="g-row-flex-V g-w100 g-h100">
         <div style="margin: 10px 20px 10px 0px">
           油田：
-          <el-select v-model="queryParams.oilFieldId"  @change="oilFieldChange">
+          <el-select v-model="queryParams.oilFieldId" @change="oilFieldChange">
             <el-option
               v-for="item in oilFieldList"
               :key="item.ogfId"
@@ -278,7 +278,8 @@ export default {
             padding: [10, 0, 0, 0],
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -310,7 +311,8 @@ export default {
             max: 100,
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,

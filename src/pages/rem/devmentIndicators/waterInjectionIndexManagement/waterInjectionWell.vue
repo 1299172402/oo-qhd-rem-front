@@ -5,7 +5,7 @@
       <div class="g-row-flex-V g-w100 g-h100">
         <div style="margin: 10px 20px 10px 0px">
           油田：
-          <el-select v-model="queryParams.oilFieldId" >
+          <el-select v-model="queryParams.oilFieldId">
             <el-option
               v-for="item in oilFieldList"
               :key="item.ogfId"
@@ -205,7 +205,8 @@ export default {
             padding: [10, 0, 0, 0],
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -237,7 +238,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -337,7 +339,8 @@ export default {
     },
     //注水井分注率
     doInjectionWellDividingRate() {
-      this.oilFieldName = this.oilFieldList.filter((item) => item.ogfId === this.queryParams.oilFieldId)[0].ogfName || "";
+      this.oilFieldName =
+        this.oilFieldList.filter((item) => item.ogfId === this.queryParams.oilFieldId)[0].ogfName || "";
       injectionWellDividingRate(this.queryParams).then((res) => {
         if (res.data.code == 200) {
           let legendData = [];
