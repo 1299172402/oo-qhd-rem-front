@@ -742,7 +742,7 @@ export default {
         //分层注采量详情
         getDetail() {
             localStorage.setItem('INTELLIGENCE', JSON.stringify(this.queryData))
-            this.$router.push({name: 'intelligenceDetail', params: this.queryData})
+            this.$router.push({name: 'IntelligenceDetail', params: this.queryData})
         }
     },
     computed: {
