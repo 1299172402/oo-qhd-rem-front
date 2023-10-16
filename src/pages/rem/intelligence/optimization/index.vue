@@ -225,7 +225,7 @@
            
         </pagePanelNew>
         <pagePanelNew v-else style="height: 100%">
-            <modelOperation ref="modelOpreation" style="height: 100%"></modelOperation>
+        <modelOperation ref="modelOpreation" style="height: 100%"></modelOperation>
         </pagePanelNew>
         
     </div>

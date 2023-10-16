@@ -34,6 +34,13 @@ export default {
                 start: 95,
                 type: "inside",
             },
+            grid: {
+                top: "15%",
+                left: "3%",
+                right: "5%",
+                bottom: "12%",
+                containLabel: true,
+            },
             xAxis: {
                 type: "category",
                 axisLabel: {
@@ -41,7 +48,8 @@ export default {
                     margin: 20,
                 },
                 axisTick: {
-                    show: false,
+                    show:true,
+                    inside: true
                 },
                 axisLine: {
                     lineStyle: {
@@ -61,7 +69,8 @@ export default {
                     color: "#8FA4CC",
                 },
                 axisTick: {
-                    show: false,
+                    show:true,
+                    inside: true
                 },
                 axisLine: {
                     show: true,

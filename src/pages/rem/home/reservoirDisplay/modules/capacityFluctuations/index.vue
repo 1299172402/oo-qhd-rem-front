@@ -62,11 +62,8 @@ export default {
                         interval:0
                     },
                     axisTick: {
-                        lineStyle: {
-                            color: "#a9a8a8",
-                            width: 1,
-                        },
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     splitLine: {
                         show: false,
@@ -97,11 +94,8 @@ export default {
                         fontSize: 16,
                     },
                     axisTick: {
-                        lineStyle: {
-                            color: "#a9a8a8",
-                            width: 1,
-                        },
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     splitLine: {
                         show: false,

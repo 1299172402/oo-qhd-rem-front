@@ -76,9 +76,10 @@ export default {
               color: 'rgba(143,164,204,.5)'
             }
           },
-          axisTick: {
-            show: false,
-          },
+            axisTick: {
+                show:true,
+                inside: true
+            },
           axisLabel: {
             show: true,
             textStyle: {
@@ -99,9 +100,10 @@ export default {
                   color: "#a9a8a8",
               },
             },
-            axisTick: {
-              show: false,
-            },
+              axisTick: {
+                  show:true,
+                  inside: true
+              },
             axisLine: {
               show: true,
               lineStyle: {
@@ -124,9 +126,10 @@ export default {
             splitLine: {
               show: false,
             },
-            axisTick: {
-              show: false,
-            },
+              axisTick: {
+                  show:true,
+                  inside: true
+              },
             axisLine: {
               show: true,
               lineStyle: {

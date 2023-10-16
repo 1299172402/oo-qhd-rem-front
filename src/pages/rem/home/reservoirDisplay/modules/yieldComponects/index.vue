@@ -68,7 +68,8 @@ export default {
                             },
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLabel: {
                             show: true,
@@ -87,7 +88,8 @@ export default {
                             color:'#a9a8a8'
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,
