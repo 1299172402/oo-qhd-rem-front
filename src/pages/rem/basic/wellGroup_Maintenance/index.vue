@@ -545,7 +545,7 @@ export default {
             }
             let ogfid
             userListByUserNames(params).then((res) => {
-                ogfid = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                ogfid = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
                 queryOperatorsCheckFieldListsDetail({orgId: ogfid}).then((res) => {
                     this.options = res.data.data;
                     if (ogfid === '715AD1CD60484BB59E737CD18A9DE44A') {

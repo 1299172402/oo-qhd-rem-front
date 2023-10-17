@@ -87,6 +87,7 @@
 
 <style scoped lang="scss">
     #tableData{
+        ::v-deep .el-table__fixed-header-wrapper .cell,
         ::v-deep .el-table__header-wrapper .cell{
             height: auto;
             line-height: 18px;

@@ -105,7 +105,7 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="生产现状" prop="name" align="center">
-          <el-table-column sortable :label="`投产日期\n    （yyyy/mm/dd）`" min-width="200" prop="startDate" align="center">
+          <el-table-column sortable :label="`投产日期\n    （yyyy-mm-dd）`" min-width="200" prop="startDate" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.startDate !== null && scope.row.startDate !== ''">{{scope.row.startDate}}</span>
                   <span v-else>-</span>
@@ -141,7 +141,7 @@
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable :label="`地层压力测试时间\n （yyyy/mm/dd）`"  prop="testDate" min-width="200" align="center">
+          <el-table-column sortable :label="`地层压力测试时间\n （yyyy-mm-dd）`"  prop="testDate" min-width="200" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.testDate !== null && scope.row.testDate !== ''">{{(scope.row.testDate)}}</span>
                   <span v-else>-</span>

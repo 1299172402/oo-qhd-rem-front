@@ -3,7 +3,7 @@
     <page-panel-new style="height:calc(100% - 101px);" show-btn>
         <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
             <el-table-column type="index" label="序号" align="center"></el-table-column>
-            <el-table-column prop="startTime" :label="`开始时间\n(yyyy/mm/dd)`" align="center" width="180"></el-table-column>
+            <el-table-column prop="startTime" :label="`开始时间\n(yyyy-mm-dd)`" align="center" width="180"></el-table-column>
             <el-table-column prop="chronicle" label="大事简要" align="center" width="200"></el-table-column>
             <el-table-column prop="remark" label="备注" align="center"></el-table-column>
         </el-table>

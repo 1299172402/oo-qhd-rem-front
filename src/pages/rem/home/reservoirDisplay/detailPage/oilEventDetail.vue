@@ -72,7 +72,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column :label="`开始时间\n(yyyy/mm/dd)`" min-width="140px" prop="startTime" align="right">
+                <el-table-column :label="`开始时间\n(yyyy-mm-dd)`" min-width="140px" prop="startTime" align="right">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.startTime !== null && scope.row.startTime !== ''">{{ scope.row.startTime ? scope.row.startTime.split(' ')[0] : ''
@@ -80,7 +80,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column :label="`结束时间\n(yyyy/mm/dd)`" min-width="140px" prop="endTime" align="right">
+                <el-table-column :label="`结束时间\n(yyyy-mm-dd)`" min-width="140px" prop="endTime" align="right">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.endTime !== null && scope.row.endTime !== ''">{{ scope.row.endTime ? scope.row.endTime.split(' ')[0] : ''
@@ -174,7 +174,7 @@ export default {
             }
             let orgId
             await userListByUserNames(params).then((res) => {
-                orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
                 this.queryData.orgId = orgId
             })
             //根据作业公司查询油田

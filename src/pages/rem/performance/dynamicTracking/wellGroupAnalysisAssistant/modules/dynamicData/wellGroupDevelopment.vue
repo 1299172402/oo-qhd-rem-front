@@ -33,7 +33,7 @@
           :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         >
           <el-table-column type="index" label="序号"></el-table-column>
-          <el-table-column prop="time" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+          <el-table-column prop="time" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
           <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" :formatter="toPrecise2"></el-table-column>
           <el-table-column prop="oilProdDail" :label="`日产油\n(m³)`" :formatter="toPrecise2"></el-table-column>
           <el-table-column prop="waterRatio" :label="`含水率\n(%)`" :formatter="toPrecise2"></el-table-column>

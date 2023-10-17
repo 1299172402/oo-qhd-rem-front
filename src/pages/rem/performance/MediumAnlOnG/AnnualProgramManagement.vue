@@ -88,7 +88,7 @@
             <el-table id="yyclcsv" highlight :data="runTimeData" style="width: 100%">
               <el-table-column type="index" align="center" label="序号" :index="indexMethodOilProduct">
               </el-table-column>
-              <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+              <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
               <el-table-column
                 prop="oilAudit"
                 align="center"
@@ -164,7 +164,7 @@
             <el-table id="ytzslcsv" highlight :data="oilYearData" style="width: 100%">
               <el-table-column type="index" align="center" label="序号" :index="indexMethodInjection">
               </el-table-column>
-              <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+              <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
               <el-table-column prop="injectionDailyReal" align="center" label="实际日注入量(m³)"> </el-table-column>
               <el-table-column prop="injectionDailyPlan" align="center" label="计划日注入量(m³)"> </el-table-column>
               <el-table-column

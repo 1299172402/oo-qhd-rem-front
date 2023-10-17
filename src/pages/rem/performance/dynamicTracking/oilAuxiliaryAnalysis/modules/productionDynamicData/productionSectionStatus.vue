@@ -9,7 +9,7 @@
             <el-table-column prop="wellNo" label="井号"></el-table-column>
             <el-table-column prop="productionIntervalNo" label="生产段"></el-table-column>
             <el-table-column prop="openOrClose" label="变更状态"></el-table-column>
-            <el-table-column prop="startDate" :label="`变更时间\n(yyyy/mm/dd)`"></el-table-column>
+            <el-table-column prop="startDate" :label="`变更时间\n(yyyy-mm-dd)`"></el-table-column>
         </el-table>
     </page-panel-new>
 </template>

@@ -120,7 +120,7 @@
                                     :default-sort="{ prop: 'date', order: 'descending' }" 
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
                                     <el-table-column prop="wellNo" label="井号" width="120" fixed></el-table-column>
-                                    <el-table-column prop="prodDate" :label="`日期\n(yyyy/mm/dd)`" width="140"></el-table-column>
+                                    <el-table-column prop="prodDate" :label="`日期\n(yyyy-mm-dd)`" width="140"></el-table-column>
                                     <el-table-column prop="prodDuration" :label="`生产时间\n(h)`" width=""></el-table-column>
                                     <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" width="" :formatter="toPrecise2"></el-table-column>
                                     <el-table-column prop="gasProdDaily" :label="`日产气\n(10⁴/m³)`" width="130" :formatter="toPrecise4"></el-table-column>

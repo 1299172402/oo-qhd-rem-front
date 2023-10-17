@@ -240,7 +240,7 @@
                         <div>
                           <span>日期</span>
                           <br />
-                          <span>(yyyy/mm/dd)</span>
+                          <span>(yyyy-mm-dd)</span>
                         </div>
                       </template>
                     </el-table-column>
@@ -411,7 +411,7 @@
                             <div>
                               <span>日期</span>
                               <br />
-                              <span>(yyyy/mm/dd)</span>
+                              <span>(yyyy-mm-dd)</span>
                             </div>
                           </template>
                         </el-table-column>
@@ -558,7 +558,7 @@
                             <div>
                               <span>日期</span>
                               <br />
-                              <span>(yyyy/mm/dd)</span>
+                              <span>(yyyy-mm-dd)</span>
                             </div>
                           </template>
                         </el-table-column>
@@ -1531,8 +1531,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });

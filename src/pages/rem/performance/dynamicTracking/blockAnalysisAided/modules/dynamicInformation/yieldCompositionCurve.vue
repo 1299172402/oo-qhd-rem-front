@@ -18,7 +18,7 @@
         <pagePanel style="height: 100%; margin-top: 0" headerTitle="产量构成表" show-btn>
           <el-table id="tableData1" highlight :data="tableDataStruct" height="100%">
             <el-table-column type="index" label="序号" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="baseOutput" :label="`基础产量\n (m³)`" align="center"></el-table-column>
             <el-table-column prop="adjustWells" :label="`调整井\n (m³)`" align="center"></el-table-column>
             <el-table-column prop="newWells" :label="`开发新井\n (m³)`" align="center"></el-table-column>
@@ -30,7 +30,7 @@
         <pagePanel style="height: 100%; margin-top: 0" headerTitle="措施产量构成表" show-btn>
           <el-table id="tableData2" highlight :data="tableDataProduct" height="100%">
             <el-table-column type="index" label="序号" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="acidize" :label="`酸化\n (m³)`" align="center"></el-table-column>
             <el-table-column prop="crushing" :label="`压裂\n (m³)`" align="center"></el-table-column>
             <el-table-column prop="profile" :label="`调剖\n (m³)`" align="center"></el-table-column>

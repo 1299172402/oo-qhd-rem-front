@@ -147,7 +147,7 @@
             <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
             <el-table-column prop="layerName" label="层位/油组" align="center"></el-table-column>
             <el-table-column prop="wellNo" label="井号" align="center"></el-table-column>
-            <el-table-column prop="measureTime" :label="`测试日期\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="measureTime" :label="`测试日期\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column
               prop="basalLevelStaticPress"
               :label="`基准面压力\n(MPa)`"
@@ -364,8 +364,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.queryParams.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });

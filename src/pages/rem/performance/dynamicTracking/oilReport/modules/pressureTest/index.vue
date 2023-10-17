@@ -11,7 +11,7 @@
             <el-table-column type="index" label="序号" fixed></el-table-column>
             <el-table-column prop="borepipeName" label="井号" width="140px" fixed></el-table-column>
             <el-table-column prop="wellInterceptType" label="试井项目解析类型" width="140"></el-table-column>
-            <el-table-column prop="interpDate" :label="`解释时间\n(yyyy/mm/dd)`" width="140">
+            <el-table-column prop="interpDate" :label="`解释时间\n(yyyy-mm-dd)`" width="140">
                 <template slot-scope="scope">
                     <span>{{scope.row.interpDate | dateTimeFormat}}</span>
                 </template>

@@ -224,7 +224,7 @@ export default {
             searchKeys: [this.$store.getters["user/userDetail"].user.userName],
         }
         userListByUserNames(params).then((res) => {
-           this.orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+           this.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
             queryOperatorsCheckFieldListsDetail({orgId: this.orgId}).then(res => {
                 this.oilFields = res.data.data
                 if(this.orgId=='715AD1CD60484BB59E737CD18A9DE44A'){

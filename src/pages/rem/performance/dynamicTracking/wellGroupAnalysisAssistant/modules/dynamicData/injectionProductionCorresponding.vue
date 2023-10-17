@@ -44,7 +44,7 @@
           :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         >
           <el-table-column type="index" label="序号"></el-table-column>
-          <el-table-column prop="time" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+          <el-table-column prop="time" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
           <el-table-column prop="injDaily" :label="`日注水量\n(m³)`" :formatter="toPrecise2"></el-table-column>
           <el-table-column prop="cgsPress" :label="`套压\n(MPa)`" :formatter="toPrecise2"></el-table-column>
           <el-table-column prop="whInjPress" :label="`井口压力\n(MPa)`" :formatter="toPrecise2"></el-table-column>
@@ -67,7 +67,7 @@
           :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         >
           <el-table-column type="index" label="序号"></el-table-column>
-          <el-table-column prop="time" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+          <el-table-column prop="time" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
           <el-table-column prop="flowingPress" :label="`流压\n(MPa)`" :formatter="toPrecise2"></el-table-column>
           <el-table-column prop="oilPress" :label="`油压\n(MPa)`" :formatter="toPrecise2"></el-table-column>
           <el-table-column prop="pumpFreq" :label="`泵频率\n(Hz)`" :formatter="toPrecise2"></el-table-column>

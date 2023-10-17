@@ -60,14 +60,14 @@
             ></el-table-column>
             <el-table-column
               prop="beginDate"
-              :label="`阶段开始时间\n (yyyy/mm)`"
+              :label="`阶段开始时间\n (yyyy-mm)`"
               align="center"
               width="140"
               show-overflow-tooltip
             ></el-table-column>
             <el-table-column
               prop="endDate"
-              :label="`阶段结束时间\n (yyyy/mm)`"
+              :label="`阶段结束时间\n (yyyy-mm)`"
               align="center"
               width="140"
               show-overflow-tooltip
@@ -300,7 +300,7 @@
         <el-table id="kfxz" :data="tableData2" highlight height="400px">
           <el-table-column
             prop="date"
-            :label="`时间\n(yyyy/mm/dd)`"
+            :label="`时间\n(yyyy-mm-dd)`"
             align="center"
             show-overflow-tooltip
             min-width="200"
@@ -1493,8 +1493,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });

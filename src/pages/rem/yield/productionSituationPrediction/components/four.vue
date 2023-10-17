@@ -50,7 +50,7 @@
       <el-table-column align="left" label="当前作业井名" prop="wellNo" width="150" fixed></el-table-column>
       <el-table-column align="center" label="当前作业措施" prop="measureTypeName" width="150"></el-table-column>
       <el-table-column align="center" label="产品类型" prop="productTypeName" width="100"></el-table-column>
-      <el-table-column align="center" :label="`措施见效日期\n(yyyy/mm/dd)`" prop="measureSeffectDate" width="160">
+      <el-table-column align="center" :label="`措施见效日期\n(yyyy-mm-dd)`" prop="measureSeffectDate" width="160">
         <template slot-scope="scope">
           <el-date-picker
             v-model="scope.row.measureSeffectDate"
@@ -208,8 +208,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.conditions.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });
