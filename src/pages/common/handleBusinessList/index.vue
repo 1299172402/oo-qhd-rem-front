@@ -176,7 +176,8 @@ export default {
       spinning: false,
       url: {
         list: "/system/flow/integration/todo/assigned"
-      }
+      },
+      isActivated: true
     };
   },
   computed: {
@@ -202,11 +203,14 @@ export default {
     $route: routeWatch.bind(this)
   },
   activated() {
-    if (this.$route.query.isRefresh) {
+    if (this.$route.query.isRefresh && this.isActivated) {
       this.searchQuery();
+    } else {
+      this.isActivated = true;
     }
   },
   mounted() {
+    this.isActivated = false;
     this.searchQuery();
     document.addEventListener("visibilitychange", this.visibilitychange);
   },

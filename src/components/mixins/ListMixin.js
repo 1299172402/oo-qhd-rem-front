@@ -60,7 +60,8 @@ export default {
       deleteTitle: "提示",
       deleteConfirmText: "确定",
       deleteCancelText: "取消",
-      deleteType: "warning"
+      deleteType: "warning",
+      isActivated: true
     };
   },
   computed: {
@@ -69,10 +70,16 @@ export default {
     }
   },
   created() {
+    this.isActivated = false;
     this.init();
   },
   activated() {
-    this.init();
+    // 此处保留是因为可能会有非缓存页面使用该混合
+    if (this.isActivated) {
+      this.init();
+    } else {
+      this.isActivated = true;
+    }
   },
   methods: {
     init() {
