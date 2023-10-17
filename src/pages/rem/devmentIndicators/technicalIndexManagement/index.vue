@@ -793,7 +793,7 @@ export default {
         },
         yAxis: [
           {
-            name: "采油速度(%)",
+            name: "可采储量采油速度(%)",
             nameLocation: "middle",
             nameGap: 70,
             nameTextStyle: {
