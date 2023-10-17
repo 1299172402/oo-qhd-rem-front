@@ -56,7 +56,7 @@
             </div>
             <!-- 1、上传历史阶段文件dialog class="uploadDialogStyle"-->
             <div >
-                <el-dialog title="上传历史阶段文件" :show-close="false" :close-on-click-modal="false"
+                <el-dialog title="上传历史阶段文件" 
                            :visible.sync="modelDialogVisibleF" :modal="false"  width="740px"
                            style="position: absolute; top: -25px">
                     <fileUpload ref="fileChild" :modelBasicId="modelBasicId" @aa="aa" @parseSureButtonTrue="parseSureButtonTrue"
@@ -588,7 +588,6 @@ export default {
                             fontSize: "13",
                         },
                     },
-                    type: "value",
                     splitLine: {
                         lineStyle: {
                             type: "dotted",

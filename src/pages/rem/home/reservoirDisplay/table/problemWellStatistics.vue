@@ -76,8 +76,8 @@
                                 <span v-else>-</span>
                             </template>              
                         </el-table-column>
-                        <el-table-column label="低产低效类别" prop="lowProdEffTypeCode"  align="left">
-                                <template slot-scope="scope">
+                        <el-table-column label="低产低效类别"  min-width="100px" prop="lowProdEffTypeCode"  align="left">
+                                <template slot-scope="scope"  min-width="100px">
                                     <span v-if="scope.row.lowProdEffTypeCode !== null && scope.row.lowProdEffTypeCode !== ''">{{scope.row.lowProdEffTypeCode}}</span>
                                     <span v-else>-</span>
                                 </template>
@@ -102,14 +102,14 @@
                                 </template>
                             </el-table-column>
                         </el-table-column>
-                        <el-table-column label="低产低效原因"  align="center">
-                            <el-table-column label="一级原因"  prop="shutdownTypeFirstClass" align="left">
+                        <el-table-column label="低产低效原因" align="center">
+                            <el-table-column label="一级原因"   prop="shutdownTypeFirstClass" align="left">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.shutdownTypeFirstClass !== null && scope.row.shutdownTypeFirstClass !== ''">{{scope.row.shutdownTypeFirstClass}}</span>
                                     <span v-else>-</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="二级原因" prop="shutdownTypeSecondClass"  align="left">
+                            <el-table-column label="二级原因"  prop="shutdownTypeSecondClass"  align="left">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.shutdownTypeSecondClass !== null && scope.row.shutdownTypeSecondClass !== ''">{{scope.row.shutdownTypeSecondClass}}</span>
                                     <span v-else>-</span>
@@ -122,13 +122,13 @@
                                 <span v-else>-</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="是否纳入当年计划" min-width="100px" prop="isPlan" align="left">
+                        <el-table-column label="是否纳入当年计划" min-width="120px" prop="isPlan" align="left">
                             <template slot-scope="scope">
                                 <span v-if="scope.row.isPlan !== null && scope.row.isPlan !== ''">{{scope.row.isPlan}}</span>
                                 <span v-else>-</span>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="`计划日产\n(m³)`" prop="planOil" align="right">
+                        <el-table-column :label="`计划日产油\n(m³)`" prop="planOil" align="right">
                             <template slot-scope="scope">
                                 <span v-if="scope.row.planOil !== null && scope.row.planOil !== ''">{{scope.row.planOil}}</span>
                                 <span v-else>-</span>
