@@ -17,12 +17,12 @@
                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
                     <el-table-column type="index" label="序号" width="80" fixed></el-table-column>
                     <el-table-column prop="wellboreName" label="井号" width="120" fixed></el-table-column>
-                    <el-table-column prop="interceptBeginDate" :label="`开始时间\n (yyyy/mm/dd)`" width="140">
+                    <el-table-column prop="interceptBeginDate" :label="`开始时间\n (yyyy-mm-dd)`" width="140">
                         <template slot-scope="scope">
                             <span>{{scope.row.interceptBeginDate | dateTimeFormat}}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="interceptEndDate" :label="`完成时间\n (yyyy/mm/dd)`" width="140">
+                    <el-table-column prop="interceptEndDate" :label="`完成时间\n (yyyy-mm-dd)`" width="140">
                         <template slot-scope="scope">
                             <span>{{scope.row.interceptEndDate | dateTimeFormat}}</span>
                         </template>

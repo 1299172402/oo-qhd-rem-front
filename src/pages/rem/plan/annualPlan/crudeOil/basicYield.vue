@@ -33,7 +33,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
         <el-table-column type="index" label="序号" :index="tableIndex"></el-table-column>
-        <el-table-column prop="prodDate" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+        <el-table-column prop="prodDate" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
         <el-table-column
           prop="oilprodReal"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际产量\n(m³)' : '实际产量\n(t)'"

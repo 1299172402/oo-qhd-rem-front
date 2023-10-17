@@ -73,13 +73,13 @@
         <el-table-column
           prop="beginDate"
           align="center"
-          :label="`措施开始日期\n(yyyy/mm/dd)`"
+          :label="`措施开始日期\n(yyyy-mm-dd)`"
           width="140"
         ></el-table-column>
         <el-table-column
           prop="endDate"
           align="center"
-          :label="`措施结束日期\n(yyyy/mm/dd)`"
+          :label="`措施结束日期\n(yyyy-mm-dd)`"
           width="140"
         ></el-table-column>
         <el-table-column align="center" label="措施前生产情况">
@@ -184,13 +184,13 @@
         <el-table-column
           prop="beginDate"
           align="center"
-          :label="`措施开始日期\n(yyyy/mm/dd)`"
+          :label="`措施开始日期\n(yyyy-mm-dd)`"
           min-width="110px"
         ></el-table-column>
         <el-table-column
           prop="endDate"
           align="center"
-          :label="`措施结束日期\n(yyyy/mm/dd)`"
+          :label="`措施结束日期\n(yyyy-mm-dd)`"
           min-width="110px"
         ></el-table-column>
         <el-table-column align="center" label="措施前注入情况" min-width="100">
@@ -361,7 +361,7 @@
                 :cell-style="{ padding: '2px', 'text-align': 'center' }"
               >
                 <el-table-column label="序号" type="index"></el-table-column>
-                <el-table-column :label="`日期\n(yyyy/mm/dd)`" prop="dateTime"></el-table-column>
+                <el-table-column :label="`日期\n(yyyy-mm-dd)`" prop="dateTime"></el-table-column>
                 <el-table-column :label="`含水\n(%)`" prop="wtr" :formatter="toPrecise2"></el-table-column>
                 <el-table-column :label="`含砂\n(%)`" prop="sand" :formatter="toPrecise2"></el-table-column>
                 <!-- <el-table-column label="备注" prop="remark"></el-table-column> -->
@@ -390,10 +390,10 @@
                 header-cell-class-name="table_header"
                 :cell-style="{ padding: '2px', 'text-align': 'center' }"
               >
-                <el-table-column :label="`日期\n(yyyy/mm/dd)`" prop="dateTime" width="180"></el-table-column>
+                <el-table-column :label="`日期\n(yyyy-mm-dd)`" prop="dateTime" width="180"></el-table-column>
                 <el-table-column label="井号" prop="wellNo" width="180"></el-table-column>
-                <el-table-column :label="`开始时间\n(yyyy/mm/dd)`" prop="beginTime" width="250"></el-table-column>
-                <el-table-column :label="`预计结束时间\n(yyyy/mm/dd)`" prop="endTime" width="250"></el-table-column>
+                <el-table-column :label="`开始时间\n(yyyy-mm-dd)`" prop="beginTime" width="250"></el-table-column>
+                <el-table-column :label="`预计结束时间\n(yyyy-mm-dd)`" prop="endTime" width="250"></el-table-column>
                 <el-table-column label="当前作业内容" prop="workContent"></el-table-column>
               </el-table>
               <pagination

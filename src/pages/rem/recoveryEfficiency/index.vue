@@ -240,7 +240,7 @@
                         <div>
                           <span>日期</span>
                           <br />
-                          <span>(yyyy/mm/dd)</span>
+                          <span>(yyyy-mm-dd)</span>
                         </div>
                       </template>
                     </el-table-column>
@@ -411,7 +411,7 @@
                             <div>
                               <span>日期</span>
                               <br />
-                              <span>(yyyy/mm/dd)</span>
+                              <span>(yyyy-mm-dd)</span>
                             </div>
                           </template>
                         </el-table-column>
@@ -558,7 +558,7 @@
                             <div>
                               <span>日期</span>
                               <br />
-                              <span>(yyyy/mm/dd)</span>
+                              <span>(yyyy-mm-dd)</span>
                             </div>
                           </template>
                         </el-table-column>

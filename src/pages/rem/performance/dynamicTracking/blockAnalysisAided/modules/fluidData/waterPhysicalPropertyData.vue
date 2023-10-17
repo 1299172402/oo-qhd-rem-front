@@ -9,7 +9,7 @@
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
             <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
             <el-table-column prop="borepipeNo" label="井号" align="center" min-width="160"></el-table-column>
-            <el-table-column prop="date" :label="`日期\n(yyyy/mm/dd)`" align="center" min-width="140">
+            <el-table-column prop="date" :label="`日期\n(yyyy-mm-dd)`" align="center" min-width="140">
             </el-table-column>
             <el-table-column prop="sampleId" label="流体样品类型" align="center" min-width="140">
             </el-table-column>

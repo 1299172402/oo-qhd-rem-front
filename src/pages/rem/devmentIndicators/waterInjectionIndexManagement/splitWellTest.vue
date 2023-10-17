@@ -82,7 +82,7 @@
           <el-table-column prop="injSeparateTypeName" label="分注类型" align="center"></el-table-column>
           <el-table-column
             prop="prodDate"
-            :label="`调配日期\n(yyyy/mm/dd)`"
+            :label="`调配日期\n(yyyy-mm-dd)`"
             :formatter="formatTime"
             align="center"
           ></el-table-column>

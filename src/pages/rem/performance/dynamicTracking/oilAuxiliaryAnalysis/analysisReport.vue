@@ -535,7 +535,7 @@
                         <div>
                           <span>评价日期</span>
                           <br />
-                          <span>(yyyy/mm/dd)</span>
+                          <span>(yyyy-mm-dd)</span>
                         </div>
                       </template>
                       <template slot-scope="scope">
@@ -1503,7 +1503,7 @@
                         <div>
                           <span>评价日期</span>
                           <br />
-                          <span>(yyyy/mm/dd)</span>
+                          <span>(yyyy-mm-dd)</span>
                         </div>
                       </template>
                       <template slot-scope="scope">

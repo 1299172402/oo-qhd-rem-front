@@ -40,7 +40,7 @@
       >
         <el-table-column type="index" label="序号" width="50px" align="center"></el-table-column>
         <el-table-column prop="wellGroupName" label="井组" width="230px" header-align="center"></el-table-column>
-        <el-table-column prop="yearMonth" :label="`时间\n(yyyy/mm)`" header-align="center"></el-table-column>
+        <el-table-column prop="yearMonth" :label="`时间\n(yyyy-mm)`" header-align="center"></el-table-column>
         <el-table-column prop="wellCount" :label="`总井数\n(口)`" align="right"></el-table-column>
         <el-table-column prop="oilWellsCount" :label="`油井数\n(口)`" align="right"></el-table-column>
         <el-table-column prop="waterWellsCount" :label="`水井数\n(口)`" align="right"></el-table-column>

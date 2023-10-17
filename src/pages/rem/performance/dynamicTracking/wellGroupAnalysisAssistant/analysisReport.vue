@@ -777,6 +777,7 @@
                       queryParams.page * queryParams.pageSize,
                     )
                   "
+                  row-key="id"
                   height="calc(100% - 110px)"
                   ref="tableList"
                   class="doubleHeader"
@@ -1281,6 +1282,7 @@ export default {
             let key2 = t_data.code;
             let groupEvalBases = messData.groupEvalBases; //层位数据
             let children = myData[i].children;
+            console.log("children信息", myData,children,i,messData)
             if (children.length) {
               for (let a = 0; a < groupEvalBases.length; a++) {
                 let isFindOut = false; //默认没有查到

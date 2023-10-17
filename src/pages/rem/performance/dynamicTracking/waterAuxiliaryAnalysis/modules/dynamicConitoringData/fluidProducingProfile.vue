@@ -61,7 +61,7 @@
                     <el-table-column prop="injTotal" :label="`日总注入量\n(m³)`" align="center" min-width="100"></el-table-column>
                     <el-table-column prop="injWhPressure" :label="`注入压力\n(MPa)`" align="center" min-width="80"></el-table-column>
                     <el-table-column prop="interpConclusion" :label="`解释结论`" align="center" min-width="80"></el-table-column>
-                    <el-table-column prop="interpDate" :label="`解释日期\n(yyyy/mm/dd)`" align="center" min-width="140"></el-table-column>
+                    <el-table-column prop="interpDate" :label="`解释日期\n(yyyy-mm-dd)`" align="center" min-width="140"></el-table-column>
                 </el-table>
             </page-panel>
         </div>

@@ -37,10 +37,10 @@
             height="calc(100% - 130px)"
           >
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -110,10 +110,10 @@
           </div>
           <el-table ref="table2" :data="tableData" highlight height="calc(100% - 130px)">
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -215,10 +215,10 @@
           </div>
           <el-table ref="table3" :data="tableData" highlight height="calc(100% - 130px)">
             <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -280,10 +280,10 @@
             height="calc(100% - 130px)"
           >
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -353,10 +353,10 @@
           </div>
           <el-table ref="table5" :data="tableData" highlight height="calc(100% - 130px)">
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"> </el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"> </el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -459,10 +459,10 @@
           </div>
           <el-table ref="table6" :data="tableData" highlight height="calc(100% - 130px)">
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div

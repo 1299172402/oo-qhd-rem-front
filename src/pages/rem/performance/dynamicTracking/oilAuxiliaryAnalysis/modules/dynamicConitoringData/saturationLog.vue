@@ -17,12 +17,12 @@
                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
                     <el-table-column type="index" label="序号" fixed></el-table-column>
                     <el-table-column prop="wellBore" label="井号" width="140" fixed></el-table-column>
-                    <el-table-column prop="beginDate" :label="`解释开始时间\n (yyyy/mm/dd)`" width="140">
+                    <el-table-column prop="beginDate" :label="`解释开始时间\n (yyyy-mm-dd)`" width="140">
                         <template slot-scope="scope">
                             <span>{{scope.row.beginDate | dateTimeFormat}}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="endDate" :label="`解释完成时间\n (yyyy/mm/dd)`" width="140">
+                    <el-table-column prop="endDate" :label="`解释完成时间\n (yyyy-mm-dd)`" width="140">
                         <template slot-scope="scope">
                             <span>{{scope.row.endDate | dateTimeFormat}}</span>
                         </template>

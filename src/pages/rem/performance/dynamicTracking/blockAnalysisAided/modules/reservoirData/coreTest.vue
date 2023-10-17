@@ -8,7 +8,7 @@
             style="width:100%;padding:0 10px;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }">
             <el-table-column label="序号" align="center" type="index" width="80"></el-table-column>
             <el-table-column label="样本标识" align="center" prop="sampleID"></el-table-column>
-            <el-table-column :label="`实验日期\n (yyyy/mm/dd)`" min-width="130" align="center" prop="testDate"></el-table-column>
+            <el-table-column :label="`实验日期\n (yyyy-mm-dd)`" min-width="130" align="center" prop="testDate"></el-table-column>
             <el-table-column label="报告编号" align="center" prop="reportNO"></el-table-column>
             <el-table-column label="实验方法" align="center" prop="testMethod"></el-table-column>
             <el-table-column :label="`模拟水密度\n (g/cm³)`" align="center" prop="simulationWaterDensity"></el-table-column>

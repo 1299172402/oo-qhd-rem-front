@@ -41,7 +41,7 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
         <el-table-column type="index" align="center" label="序号"></el-table-column>
-        <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+        <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
         <el-table-column
           prop="oilAudit"
           align="center"

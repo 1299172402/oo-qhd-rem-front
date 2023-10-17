@@ -80,7 +80,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column :label="`结束时间\n(yyyy/mm/dd)`" min-width="140px" prop="endTime" align="right">
+                <el-table-column :label="`结束时间\n(yyyy-mm-dd)`" min-width="140px" prop="endTime" align="right">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.endTime !== null && scope.row.endTime !== ''">{{ scope.row.endTime ? scope.row.endTime.split(' ')[0] : ''

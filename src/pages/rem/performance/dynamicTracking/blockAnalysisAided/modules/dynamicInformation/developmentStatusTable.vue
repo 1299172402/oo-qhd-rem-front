@@ -7,7 +7,7 @@
             header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
             style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-            <el-table-column prop="date" :label="`时间\n (yyyy/mm)`" align="center" show-overflow-tooltip min-width="200" fixed="left">
+            <el-table-column prop="date" :label="`时间\n (yyyy-mm)`" align="center" show-overflow-tooltip min-width="200" fixed="left">
                 <template slot-scope="scope">{{ scope.row.date | dateFormat }}</template>
             </el-table-column>
             <el-table-column prop="ogfName" label="区块" show-overflow-tooltip min-width="180" fixed="left"></el-table-column>
