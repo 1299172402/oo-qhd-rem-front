@@ -1375,7 +1375,7 @@ export default {
                 searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             }
             await userListByUserNames(params).then((res)=>{
-                this.queryData.orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;  
+                this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;  
             })
             await queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then((res) => {
                 if (res.data.code == 200) {

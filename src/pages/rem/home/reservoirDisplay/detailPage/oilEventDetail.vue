@@ -174,7 +174,7 @@ export default {
             }
             let orgId
             await userListByUserNames(params).then((res) => {
-                orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
                 this.queryData.orgId = orgId
             })
             //根据作业公司查询油田

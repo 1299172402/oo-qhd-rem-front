@@ -235,7 +235,7 @@ export default {
                 searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             }
             await userListByUserNames(params).then((res) => {
-                this.ogfId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                this.ogfId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
             })
         },
         //油田

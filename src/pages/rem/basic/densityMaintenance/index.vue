@@ -308,7 +308,7 @@ export default {
             }
             let orgId
             userListByUserNames(params).then((res)=>{
-                orgId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
                 queryOperatorsCheckFieldListsDetail({orgId:orgId}).then((res) => {
                     this.ogfList = res.data.data;
                     if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
