@@ -7,7 +7,7 @@
                 <div style="display: flex;position: relative;bottom: 45px">
                     <div style="width: 50%">
                         <Echart :chart-data="option"></Echart>
-                        <div style="position:absolute;bottom:20%;left:2%;font-size: 10px;text-align: center">
+                        <div style="position:relative;bottom:30%;left:0%;font-size: 10px;text-align: center">
                             <h5 style="color: #0d84ff">开井数(口)/油井总井数(口)</h5>
                             <div style="font-size: 20px;">{{dataList.oilWellOpenTotal}}/{{dataList.oilWellTotal}}</div>
                         </div>
@@ -15,7 +15,7 @@
                     </div>
                     <div style="width: 50%">
                         <Echart :chart-data="option2"></Echart>
-                        <div style="position:absolute;bottom:20%;right:5%;font-size: 10px;text-align: center">
+                        <div style="position:relative;bottom:30%;right:1%;font-size: 10px;text-align: center">
                             <h5 style="color: #0d84ff">开井数(口)/水井总井数(口)</h5>
                             <div style="font-size: 20px;">{{dataList.injWellOpenTotal}}/{{dataList.injWellTotal}}</div>
                         </div>
