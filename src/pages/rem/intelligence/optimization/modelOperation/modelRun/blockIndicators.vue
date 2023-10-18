@@ -4,20 +4,19 @@
       <el-radio v-model="radio" label="1" type="text" @change="tabChange(1)">区块结果展示</el-radio>
       <el-radio v-model="radio" label="2" type="text" @change="tabChange(2)">单井结果展示</el-radio>
     </div>
-      <!-- 无数据空白 -->
-      <div v-if="this.modelBasicInfo.modelStep == 0" >
-<!--          <el-empty :image="require('@/icons/svg/data.png')" :image-size="250" description="暂无数据，请上传模型后查看"></el-empty>-->
-      </div>
-
-      <!-- 区块指标 -->
+            <!-- 区块指标 -->
       <div v-show="isShowqk" style="height: 100%">
           <el-button type="primary" style="float: right; margin-top: -50px"
                      class="buttonright" @click="isShowTable = true">查看数据
           </el-button>
+          <!-- 无数据空白 -->
+          <div v-if="this.modelBasicInfo.modelStep == 0" style="height: 85%;margin-top: 20px;">
+              <el-empty :image="require('@/icons/svg/data.png')" :image-size="250" description="暂无数据，请上传模型后查看"></el-empty>
+          </div>
           <div v-show="isShowChart" style="margin-top:10px; height: 100% !important;">
               <!-- 放置折线图 -->
               <div v-show="control1" style="height: 90% !important;">
-                  <Echart  :chart-data="echartsAll" height="100%" width="100%" style="100% !important;"></Echart>
+                  <Echart  :chart-data="echartsAll" height="100%" width="100%" style="height: 100% !important;"></Echart>
               </div>
               <div style="text-align:center">
                   <el-radio-group v-model="radio2" @change="changeRadio2" class="radioqk">
@@ -85,7 +84,7 @@
                           </template>
                       </el-table-column>
                   </el-table>
-                  <el-button @click="isShowTable = false" type="text" size="small" class="dialogback"
+                  <el-button @click="isShowTable = false" type="primary"
                              style="color: white; font-size: 14px; line-height: 10px; float: right;margin-top: 10px">退出查看
                   </el-button>
               </pagePanel>
@@ -94,13 +93,17 @@
 
       <!-- 单井指标 -->
       <div v-show="isShowdj" style="height: 100%">
-          <el-button class="buttonright" type="text" style="color: white; font-size: 14px; line-height: 10px;float:right;margin-top:-50px"
+          <el-button class="buttonright" type="primary" style="color: white; font-size: 14px; line-height: 10px;float:right;margin-top:-50px"
                      @click="djViewData">查看数据</el-button>
+          <!-- 无数据空白 -->
+          <div v-if="this.modelBasicInfo.modelStep == 0" style="height: 85%;margin-top: 20px;">
+              <el-empty :image="require('@/icons/svg/data.png')" :image-size="250" description="暂无数据，请上传模型后查看"></el-empty>
+          </div>
           <!-- 单井 油井 折线图 -->
           <div v-show="isChartOil" style="margin-top:10px; height: 100% !important;">
               <!-- 放置折线图 -->
               <div v-if="this.modelBasicInfo.modelStep" style="height: 90% !important;">
-                  <Echart :chart-data="echartsAllOil" height="100%" width="100%" style="100% !important;"></Echart>
+                  <Echart :chart-data="echartsAllOil" height="100%" width="100%" style="height:100% !important;"></Echart>
               </div>
               <!-- 选择框 -->
               <div style="text-align:center">
@@ -219,12 +222,10 @@
                           </template>
                       </el-table-column>
                   </el-table>
-                  <!--          <el-row class="dialogback">-->
-                  <el-button class="dialogback" @click="isDjTable = false" type="text"
+                  <el-button  @click="isDjTable = false" type="primary"
                              style="color: white; font-size: 14px; line-height: 10px;float: right;margin-top: 10px">
                       退出查看
                   </el-button>
-                  <!--          </el-row>-->
               </pagePanel>
           </div>
       </div>
@@ -266,9 +267,9 @@ export default {
       control1: false,
       isShowdj: false,
       // histogram:[],
-      echartsAll: [],  //echarts图标接收数据----区块
-      echartsAllOil: [],  //echarts图标接收数据----油井
-      echartsAllWater: [],  //echarts图标接收数据----水井
+      echartsAll: { },  //echarts图标接收数据----区块
+      echartsAllOil: { },  //echarts图标接收数据----油井
+      echartsAllWater: { },  //echarts图标接收数据----水井
       //1-"日产水", "日注水", "日产油"
       echartsListDay: {
         backgroundColor: "rgba(128, 128, 128, 0)",
@@ -368,9 +369,9 @@ export default {
               color: "#FFFFFF",
               fontSize: "13",
             },
-            formatter: function (value) {
-              return value + "";
-            },
+            // formatter: function (value) {
+            //   return value + "";
+            // },
             formatter: function (value) {
               let indexList = ["⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"];
               if (Math.abs(value) > 10) {
@@ -1012,7 +1013,7 @@ export default {
             symbolSize: 8,
             symbol: "circle",
             data: [],
-            data: ["200", "300"],
+            // data: ["200", "300"],
             lineStyle: {
               color: "#FDF5E6",
               width: 1,

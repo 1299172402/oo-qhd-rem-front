@@ -534,9 +534,9 @@ export default {
   
     mounted() {
         //智能配注调用子组件方法
-        this.$nextTick(()=>{
-            this.$refs.modelOpreation.getCaseByMax()
-        })
+        // this.$nextTick(()=>{
+        //     this.$refs.modelOpreation.getCaseByMax()
+        // })
         this.$nextTick(()=>{
             setTimeout(()=>{
                 window.addEventListener('resize',this.setWidth);
