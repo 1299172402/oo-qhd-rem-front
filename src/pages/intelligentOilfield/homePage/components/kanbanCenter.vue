@@ -56,6 +56,7 @@
             trigger="click"
             :autoplay="false"
             :arrow="carouselList.length > 1 ? 'always' : 'never'"
+            :indicator-position="carouselList.length > 1 ? '' : 'none'"
           >
             <el-carousel-item v-for="(item, index) in carouselList" :key="index">
               <div

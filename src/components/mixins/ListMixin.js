@@ -1,8 +1,10 @@
 import { postAction, getAction } from "@/api/common/manage";
 import dayjs from "dayjs";
 import { filterObj } from "../audit/utils";
+import ActivatedMixin from "@/components/mixins/ActivatedMixin.js";
 
 export default {
+  mixins: [ActivatedMixin],
   data() {
     return {
       format: {
@@ -60,8 +62,7 @@ export default {
       deleteTitle: "提示",
       deleteConfirmText: "确定",
       deleteCancelText: "取消",
-      deleteType: "warning",
-      isActivated: true
+      deleteType: "warning"
     };
   },
   computed: {
@@ -70,16 +71,7 @@ export default {
     }
   },
   created() {
-    this.isActivated = false;
     this.init();
-  },
-  activated() {
-    // 此处保留是因为可能会有非缓存页面使用该混合
-    if (this.isActivated) {
-      this.init();
-    } else {
-      this.isActivated = true;
-    }
   },
   methods: {
     init() {
@@ -281,6 +273,9 @@ export default {
           query: this.routerInfo?.view?.query
         });
       }
+    },
+    handlerActivated() {
+      this.init();
     }
   }
 };

@@ -142,6 +142,7 @@ import OpenOtherTab from "@/pages/common/mixins/commonMixin";
 import { mapGetters } from "vuex";
 import { getApp } from "@/api/intelligentOilfield/system/applicationCenter/applicationCenter.js";
 import jumpSupApp from "@/utils/jumpSupApp.js";
+import ActivatedMixin from "@/components/mixins/ActivatedMixin.js";
 /* eslint-disable */
 function routeWatch(val) {
   if (val.path === "/bpm/personalOffice/HandleBusinessList" && this.closeTabKey) {
@@ -154,7 +155,7 @@ function routeWatch(val) {
 export default {
   name: "HandleBusinessList",
   description: "我的待办任务",
-  mixins: [OpenOtherTab],
+  mixins: [OpenOtherTab, ActivatedMixin],
   data() {
     return {
       description: "我的待办",
@@ -176,8 +177,7 @@ export default {
       spinning: false,
       url: {
         list: "/system/flow/integration/todo/assigned"
-      },
-      isActivated: true
+      }
     };
   },
   computed: {
@@ -202,15 +202,7 @@ export default {
     // eslint-disable-next-line
     $route: routeWatch.bind(this)
   },
-  activated() {
-    if (this.$route.query.isRefresh && this.isActivated) {
-      this.searchQuery();
-    } else {
-      this.isActivated = true;
-    }
-  },
   mounted() {
-    this.isActivated = false;
     this.searchQuery();
     document.addEventListener("visibilitychange", this.visibilitychange);
   },
@@ -218,6 +210,11 @@ export default {
     document.removeEventListener("visibilitychange", this.visibilitychange);
   },
   methods: {
+    handlerActivated() {
+      if (this.$route.query.isRefresh) {
+        this.searchQuery();
+      }
+    },
     searchQuery() {
       this.ipagination.current = 1;
       this.lazyLoad();
