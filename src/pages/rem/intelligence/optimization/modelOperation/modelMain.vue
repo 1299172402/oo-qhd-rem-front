@@ -293,8 +293,7 @@ import {
     GetmodelExec
 } from "@/api/rem/dispenseModel.js";
 
-export default {    
-    name: "modelMain",
+export default {
     components:{
         Echart,
         modelManager,
