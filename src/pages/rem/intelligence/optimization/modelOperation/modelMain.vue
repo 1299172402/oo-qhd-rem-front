@@ -636,6 +636,8 @@ export default {
                 this.modelBasicInfo.modelSubmitNum = res.result.modelBasicEntity.modelSubmitNum;
                 this.modelBasicInfo.modelRun = res.result.modelBasicEntity.modelRunNum;
                 console.log("方案idmodelrun", this.modelBasicInfo.modelRun)
+                this.$refs.blockIndicators.run();
+                this.$refs.surplusOil.run();
             }).catch(err => {
                 console.log(err)
             });
