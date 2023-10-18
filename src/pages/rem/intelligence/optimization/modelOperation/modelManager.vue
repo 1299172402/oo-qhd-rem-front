@@ -265,6 +265,7 @@ export default {
         // 查看结果
         lookResClick(id) {
             this.$emit('fatherMethod',id)
+            console.log('查看结果的id', id)
             //接收查看结果传来的id
             // this.lookResClickId = id
             // this.getResultCaseId()
@@ -366,7 +367,7 @@ export default {
                     // 将创建表单中的数据提交到后端caseVo中
                     GddModelBasic(modelBasicVo).then(res => {
                         console.log(res)
-                        this.$emit('fatherModelMethod',res.result.modelBasicId)
+                        this.$emit('fatherMethod',res.result.modelBasicId)
                         console.log('res.result.modelBasicId',res.result.modelBasicId)
                         this.dialogModelVisible = false;
                         this.getTableList();

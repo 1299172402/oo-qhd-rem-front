@@ -406,4 +406,7 @@ export default {
 ::v-deep .el-upload--text {
     border: 0px !important;
 }
+::v-deep .el-dialog__header{
+    text-align: left;
+}
 </style>

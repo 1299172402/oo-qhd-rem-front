@@ -7,7 +7,8 @@
             <el-card class="modelManagerClass" v-show="modelManagerDialog" style="height: 100%;">
                 <el-button type="primary" @click="returnMainScreen" 
                            style="position: absolute;top: 10px;left:1510px;z-index: 10">返回主界面</el-button>
-                <modelManager ref="modelManager" @fatherMethod="getResultCaseId" @fatherModelMethod="createModelMethod"></modelManager>
+                <modelManager ref="modelManager" 
+                              @fatherMethod="getResultCaseId"></modelManager>
             </el-card>
             <!-- 模型运算界面 优化方案区块指标和剩余油分布图 + 模型代码 -->
             <div v-show="ModelYunSuan" style="height: 100%">
@@ -308,6 +309,7 @@ export default {
     },
     data(){
         return{
+            modelId:'',
             fileParseLoading: false,
             ModelYunSuan: true,   //模型运算页面和模型管理页面
             modelManagerDialog: false, //是否显示模型管理页面
@@ -597,78 +599,48 @@ export default {
         }
     },
     mounted() {
-        this.getCaseByMax()
+        this.getCaseId()
     },
     methods: {
-        //模型管理页面“创建模型”方法调用
-        createModelMethod(id){
-            const param = {
-                modelBasicId: id,
-            };
-            console.log(param,'chakanjieguo')
-            //通过方案ID查询一个方案信息
-            GetModelBasicById(param)
-                .then((res) => {
-                    console.log('123reshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',res)
-                    this.modelBasicId = res.result.modelBasicEntity.modelBasicId;
-                    this.modelBasicInfo.modelBasicId = res.result.modelBasicEntity.modelBasicId;
-                    this.modelBasicInfo.modelStep = res.result.modelBasicEntity.modelStep;
-                    this.modelBasicInfo.modelCode = res.result.modelBasicEntity.modelCode;
-                    this.modelBasicInfo.isModelRun = res.result.modelBasicEntity.isModelRun;
-                    this.modelBasicInfo.fileNum = res.result.modelBasicEntity.fileNum;
-                    this.modelBasicInfo.modelSubmitNum = res.result.modelBasicEntity.modelSubmitNum;
-                    // this.modelBasicInfo.modelRun = res.result.modelBasicEntity.modelRunNum;
-                })
-                .catch((err) => {
-                    console.log(err);
-
-                });
-            this.$refs.blockIndicators.run();
-            this.$refs.surplusOil.run();
-            this.ModelYunSuan = true
-            this.modelManagerDialog = false
+        //进入页面之后调用“获取最新方案”的方法
+        //但是，查看结果和创建新的方案不能调用“获取最新方案”方法
+        //需要判断id到底是哪里过来的，进而更新modelBasicInfo
+        //创建新的方案和查看结果都需要传id，一共两个id
+        //三个
+        getCaseId(){
+            var flag = this.modelId
+            console.log('flag',flag)
+            if(flag != undefined){
+                this.getResultCaseId(flag)
+            }
+            else {
+                this.getCaseByMax()
+                console.log('获取最新方案')
+            }
         },
-        //接收“查看结果”传过来的caseId——方法
-        getResultCaseId(lookResClickId) {
-            console.log('123456789hhh',lookResClickId)
+        //接收模型管理页面传过来的id
+        getResultCaseId(id) {
+            this.modelId = id
             //通过caseId获取一条方案信息
             const param = {
-                modelBasicId: lookResClickId,
-            };
-            console.log(param,'chakanjieguo')
+                modelBasicId: id
+            }
             //通过方案ID查询一个方案信息
-            GetModelBasicById(param)
-                .then((res) => {
-                    console.log('123reshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',res)
-                    this.modelBasicId = res.result.modelBasicEntity.modelBasicId;
-                    this.modelBasicInfo.modelBasicId = res.result.modelBasicEntity.modelBasicId;
-                    this.modelBasicInfo.modelStep = res.result.modelBasicEntity.modelStep;
-                    this.modelBasicInfo.modelCode = res.result.modelBasicEntity.modelCode;
-                    this.modelBasicInfo.isModelRun = res.result.modelBasicEntity.isModelRun;
-                    this.modelBasicInfo.fileNum = res.result.modelBasicEntity.fileNum;
-                    this.modelBasicInfo.modelSubmitNum = res.result.modelBasicEntity.modelSubmitNum;
-                    // this.modelBasicInfo.modelRun = res.result.modelBasicEntity.modelRunNum;
-                })
-                .catch((err) => {
-                    console.log(err);
-                    
-                });
+            GetModelBasicById(param).then(res => {
+                this.modelBasicId = res.result.modelBasicEntity.modelBasicId;
+                this.modelBasicInfo.modelBasicId = res.result.modelBasicEntity.modelBasicId
+                this.modelBasicInfo.modelStep = res.result.modelBasicEntity.modelStep
+                this.modelBasicInfo.modelCode = res.result.modelBasicEntity.modelCode;
+                this.modelBasicInfo.isModelRun = res.result.modelBasicEntity.isModelRun
+                this.modelBasicInfo.fileNum = res.result.modelBasicEntity.fileNum
+                this.modelBasicInfo.modelSubmitNum = res.result.modelBasicEntity.modelSubmitNum;
+                this.modelBasicInfo.modelRun = res.result.modelBasicEntity.modelRunNum;
+                console.log("方案idmodelrun", this.modelBasicInfo.modelRun)
+            }).catch(err => {
+                console.log(err)
+            });
             this.ModelYunSuan = true
             this.modelManagerDialog = false
-        },
-        // 模型管理页面返回主界面
-        returnMainScreen(){
-            this.modelManagerDialog = false
-            this.ModelYunSuan = true
-            this.getCaseByMax()
-        },
-        //表格单位换行
-        renderHeader(h, { column }) {
-            return h("span", {}, [
-                h("span", {}, column.label.split("//")[0]),
-                h("br"),
-                h("span", {}, column.label.split("//")[1]),
-            ])
         },
         //获取最新方案方法--智能配注请求后台
         getCaseByMax() {
@@ -689,6 +661,21 @@ export default {
                 .catch((err) => {
                     console.log(err);
                 });
+        },
+        
+        // 模型管理页面返回主界面
+        returnMainScreen(){
+            this.modelManagerDialog = false
+            this.ModelYunSuan = true
+            this.getCaseByMax()
+        },
+        //表格单位换行
+        renderHeader(h, { column }) {
+            return h("span", {}, [
+                h("span", {}, column.label.split("//")[0]),
+                h("br"),
+                h("span", {}, column.label.split("//")[1]),
+            ])
         },
         //解析文件按钮禁用
         parseSureButtonTrue() {
@@ -855,13 +842,11 @@ export default {
             }
             console.log("111111111");
         },
-        
         //点击模型管理按钮
         modelManager() {
             this.modelManagerDialog = true;
             this.ModelYunSuan = false
         },
-
         closeDialogF() {
             // this.zhezhao = false;
             this.modelDialogVisibleF = false;
@@ -876,7 +861,6 @@ export default {
                 this.$refs.fileChildPredict.changeFileListA();
             });
         },
-
         //模型上传按钮——控制文件上传前||后
         modelUpload() {
             // this.zhezhao = true;
