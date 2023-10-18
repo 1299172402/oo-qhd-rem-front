@@ -652,6 +652,7 @@
             <img src="@/assets/rem/performance/01cai.gif" alt="" class="img5" />
             <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
             <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
+            <!-- <img src="@/assets/rem/performance/max-speed-1.gif" alt="" class="speed"> -->
           </div>
           <div class="rightBox">
             <div class="v1">
@@ -2827,6 +2828,10 @@ export default {
         position: absolute;
         left: 0;
         top: 0;
+        .speed {
+          width: 100%;
+          height: 100%;
+        }
         .img1 {
           width: 100%;
           height: 100%;

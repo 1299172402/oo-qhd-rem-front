@@ -16,7 +16,7 @@
           </el-select>
         </div>
         <div style="margin: 10px 20px 10px 0px">
-          开始与结束日期：
+          日期：
           <el-date-picker
             v-model="queryParams.dates"
             type="daterange"
@@ -93,7 +93,7 @@
               <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>
               <el-table-column prop="wellNo" label="注水井号" align="center"></el-table-column>
               <el-table-column prop="layerName" label="层段号" align="center"></el-table-column>
-              <el-table-column prop="statisticsDate" :label="`年月\n(yyy/mm/dd)`" align="center"></el-table-column>
+              <el-table-column prop="statisticsDate" :label="`年月日\n(yyy/mm/dd)`" align="center"></el-table-column>
               <el-table-column
                 prop="isUnqualified"
                 label="是否合格"

@@ -67,13 +67,14 @@
                 <el-button
                   v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
                   type="text"
+                  class="chicked"
                   size="small"
                   @click="warningDispose(scope.row)"
                 >
-                  <span style="color: #ffffff">处理</span>
+                  处理
                 </el-button>
-                <el-button type="text" size="small" @click="warningDispose(scope.row)">
-                  <span style="color: #ffffff">查看</span>
+                <el-button type="text" class="chicked" size="small" @click="warningDispose(scope.row)">
+                  查看
                 </el-button>
               </template>
             </el-table-column>
@@ -145,13 +146,14 @@
                 <el-button
                   v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
                   type="text"
+                  class="chicked"
                   size="small"
                   @click="warningDispose(scope.row)"
                 >
-                  <span style="color: #ffffff">处理</span>
+                  处理
                 </el-button>
-                <el-button type="text" size="small" @click="warningDispose(scope.row)">
-                  <span style="color: #ffffff">查看</span>
+                <el-button type="text" class="chicked" size="small" @click="warningDispose(scope.row)">
+                  查看
                 </el-button>
               </template>
             </el-table-column>
@@ -233,11 +235,11 @@
             <el-table-column prop="result" label="处置结果" align="center">
               <template slot-scope="scope">
                 <div v-if="scope.row.result == null || scope.row.result == ''">
-                  <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">关闭</span>
+                  <el-button type="text" class="chicked" @click="warningDispose(scope.row)">关闭</el-button>
                 </div>
-                <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">{{
+                <el-button type="text" class="chicked" @click="warningDispose(scope.row)">{{
                   scope.row.result
-                }}</span>
+                }}</el-button>
               </template>
             </el-table-column>
             <el-table-column prop="handler" label="处理人" align="center">
@@ -310,13 +312,14 @@
                 <el-button
                   v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
                   type="text"
+                  class="chicked"
                   size="small"
                   @click="warningDispose(scope.row)"
                 >
-                  <span style="color: #ffffff">处理</span>
+                  处理
                 </el-button>
-                <el-button type="text" size="small" @click="warningDispose(scope.row)">
-                  <span style="color: #ffffff">查看</span>
+                <el-button type="text" class="chicked" size="small" @click="warningDispose(scope.row)">
+                  查看
                 </el-button>
               </template>
             </el-table-column>
@@ -388,13 +391,14 @@
                 <el-button
                   v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
                   type="text"
+                  class="chicked"
                   size="small"
                   @click="warningDispose(scope.row)"
                 >
-                  <span style="color: #ffffff">处理</span>
+                  处理
                 </el-button>
-                <el-button type="text" size="small" @click="warningDispose(scope.row)">
-                  <span style="color: #ffffff">查看</span>
+                <el-button type="text" class="chicked" size="small" @click="warningDispose(scope.row)">
+                  查看
                 </el-button>
               </template>
             </el-table-column>
@@ -477,11 +481,11 @@
             <el-table-column prop="result" label="处置结果" align="center">
               <template slot-scope="scope">
                 <div v-if="scope.row.result == null || scope.row.result == ''">
-                  <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">关闭</span>
+                  <el-button type="text" class="chicked" @click="warningDispose(scope.row)">关闭</el-button>
                 </div>
-                <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">{{
+                <el-button type="text" class="chicked" @click="warningDispose(scope.row)">{{
                   scope.row.result
-                }}</span>
+                }}</el-button>
               </template>
             </el-table-column>
             <el-table-column prop="handler" label="处理人" align="center">
@@ -886,6 +890,8 @@ export default {
             warningCode: row.warningCode,
             oilfieldId: this.oilFieldId,
             ycglKfyj: this.ycglKfyj,
+            fieldId: row.fieldId,
+            radioValue: this.radioValue,
           },
         });
       } else if (row.warningCode == "9") {
@@ -900,6 +906,8 @@ export default {
             warningCode: row.warningCode,
             oilfieldId: this.oilFieldId,
             ycglKfyj: this.ycglKfyj,
+            fieldId: row.fieldId,
+            radioValue: this.radioValue,
           },
         });
       } else if (row.warningCode == "11") {
@@ -914,6 +922,8 @@ export default {
             warningCode: row.warningCode,
             oilfieldId: this.oilFieldId,
             ycglKfyj: this.ycglKfyj,
+            fieldId: row.fieldId,
+            radioValue: this.radioValue,
           },
         });
       } else {
@@ -927,6 +937,8 @@ export default {
             warningCode: row.warningCode,
             oilfieldId: this.oilFieldId,
             ycglKfyj: this.ycglKfyj,
+            fieldId: row.fieldId,
+            radioValue: this.radioValue,
           },
         });
       }
