@@ -57,7 +57,8 @@
                     :close-on-click-modal="false" :show-close="false"
                     :visible.sync="uploadFileDialogVisible"
                     :modal="false"
-                    width="44%" style="margin-top: 150px;margin-left: 170px">
+                    width="44%" style="margin-top: 150px;margin-left: 170px;"
+                  >
                     <el-table
                       :data="uploadFileList"
                       v-loading="fileDeleteLoading"
@@ -708,5 +709,8 @@ export default {
 }
 ::v-deep .el-upload--text {
     border: 0px !important;
+}
+::v-deep .el-dialog__header{
+    text-align: left;
 }
 </style>

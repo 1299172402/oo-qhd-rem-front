@@ -59,3 +59,10 @@ export function userListByUserNames(data) {
         data
     });
 }
+export function QueryBlockDetail(data) {
+    return request({
+        url: `${masterUrl}/QueryBlockDetail`,
+        method: "post",
+        data
+    });
+}

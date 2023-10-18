@@ -537,14 +537,6 @@ export default {
         // this.$nextTick(()=>{
         //     this.$refs.modelOpreation.getCaseByMax()
         // })
-        this.$nextTick(()=>{
-            setTimeout(()=>{
-                window.addEventListener('resize',this.setWidth);
-            },1000)
-        })
-        this.$once('hook:beforeDestroy',()=>{
-            window.removeEventListener('resize',this.setWidth)
-        })
         if(this.$route.query.link == 'rem'){
             this.activeName = 'second'
             this.setWidth()

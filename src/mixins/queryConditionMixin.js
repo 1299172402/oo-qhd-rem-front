@@ -5,7 +5,7 @@ import {
     getWellData,
 } from "@/api/rem/r-intelligentIPA.js";
 import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
-import {queryOperatorsCheckFieldListsDetail, userListByUserNames} from "@/api/basic/master";
+import {queryOperatorsCheckFieldListsDetail, userListByUserNames,QueryBlockDetail} from "@/api/basic/master";
 export default {
     data () {
         return {
