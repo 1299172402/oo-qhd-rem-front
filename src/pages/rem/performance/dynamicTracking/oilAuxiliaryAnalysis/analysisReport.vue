@@ -403,7 +403,10 @@
                       align="center"
                       width="180px"
                     >
-                      <template #header v-if="item.code != 'djl' && item.code != 'cyqd'">
+                      <template
+                        #header
+                        v-if="item.code == 'yjgk' || item.code == 'gpgx'"
+                      >
                         <div v-if="item.isTwoHeader">
                           <span>{{ item.name }}</span>
                           <br />
@@ -413,7 +416,10 @@
                           <span>{{ item.name }}</span>
                         </div>
                       </template>
-                      <template slot-scope="scope" v-if="item.code != 'djl' && item.code != 'cyqd'">
+                      <template
+                        slot-scope="scope"
+                        v-if="scope.row[item.code] == null || item.code == 'yjgk' || item.code == 'gpgx'"
+                      >
                         <span class="1" v-if="scope.row[item.code] == null"></span>
                         <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{
                           scope.row[item.code].showLabel ? scope.row[item.code].showLabel : "-"
@@ -449,7 +455,7 @@
                           />
                         </span>
                       </template>
-                      <template v-if="item.code == 'djl' || item.code == 'cyqd'">
+                      <template v-if="item.code != 'yjgk' || item.code != 'gpgx'">
                         <el-table-column min-width="100" label="区块均值" align="center">
                           <template slot-scope="scope">
                             <span style="display: flex; align-items: center; justify-content: center">
@@ -1371,7 +1377,10 @@
                       align="center"
                       width="260px"
                     >
-                      <template #header v-if="item.code != 'djl' && item.code != 'cyqd'">
+                      <template
+                        #header
+                        v-if="item.code == 'yjgk' || item.code == 'gpgx'"
+                      >
                         <div v-if="item.isTwoHeader">
                           <span>{{ item.name }}</span>
                           <br />
@@ -1381,7 +1390,10 @@
                           <span>{{ item.name }}</span>
                         </div>
                       </template>
-                      <template slot-scope="scope" v-if="item.code != 'djl' && item.code != 'cyqd'">
+                      <template
+                        slot-scope="scope"
+                        v-if="scope.row[item.code] == null || item.code == 'yjgk' || item.code == 'gpgx'"
+                      >
                         <span class="1" v-if="scope.row[item.code] == null"></span>
                         <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{
                           scope.row[item.code].showLabel ? scope.row[item.code].showLabel : "-"
@@ -1417,7 +1429,7 @@
                           />
                         </span>
                       </template>
-                      <template v-if="item.code == 'djl' || item.code == 'cyqd'">
+                      <template v-if="item.code != 'yjgk' || item.code != 'gpgx'">
                         <el-table-column min-width="100" label="区块均值" align="center">
                           <template slot-scope="scope">
                             <span style="display: flex; align-items: center; justify-content: center">
@@ -1821,10 +1833,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
