@@ -52,7 +52,7 @@ export default {
               }
           };
           this.rotationTimer = setInterval(rotateImage, 200);
-          // 设置定时器，每隔 10 毫秒切换一次图片
+          // 设置定时器
       },
       stop(){
           this.initiate = !this.initiate
