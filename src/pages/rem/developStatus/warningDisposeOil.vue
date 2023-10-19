@@ -4,7 +4,7 @@
     <el-header height="auto">
       <div class="titleBox">
         <header-search style="height: 60px" class="Header">
-          <span class="title">油田预警处理</span>
+          <span class="title">{{ headTitle }}</span>
           <el-button type="primary" class="buttonActive_primary" @click="switchToBack">返回 </el-button>
         </header-search>
       </div>
@@ -24,14 +24,14 @@
       </el-header>
       <el-main>
         <el-row :gutter="20" style="height: 80%">
-          <el-col span="12" style="height: 100%">
+          <el-col :span="12" style="height: 100%">
             <page-panel-new style="height: 100%" :show-btn="true">
               <div>
                 <Echart :chart-data="lineTable" height="583px"></Echart>
               </div>
             </page-panel-new>
           </el-col>
-          <el-col span="12" style="height: 100%">
+          <el-col :span="12" style="height: 100%">
             <page-panel-new :show-btn="true" title="QHD32-6油田指标预警关联分析" class="m1" style="margin-top: 20px">
               <el-row>
                 <span>油井指标变化排名</span>
@@ -43,10 +43,34 @@
                       <span>{{ scope.row.yearMonth.substr(0, 7) }}</span>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="fluidMonthly" :label="`月产液变化量\n(10⁴m³)`" align="center" min-width="120" :formatter="toPrecise4"></el-table-column>
-                  <el-table-column prop="oilMonthly" :label="`月产油变化量\n(10⁴m³)`" align="center" min-width="120" :formatter="toPrecise4"></el-table-column>
-                  <el-table-column prop="waterRatio" :label="`含水率变化量\n(%)`" align="center" min-width="120" :formatter="toPrecise2"></el-table-column>
-                  <el-table-column prop="flowingPress" width="100px" :label="`流压\n(MPa)`" align="center" :formatter="toPrecise2"></el-table-column>
+                  <el-table-column
+                    prop="fluidMonthly"
+                    :label="`月产液变化量\n(10⁴m³)`"
+                    align="center"
+                    min-width="120"
+                    :formatter="toPrecise4"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="oilMonthly"
+                    :label="`月产油变化量\n(10⁴m³)`"
+                    align="center"
+                    min-width="120"
+                    :formatter="toPrecise4"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="waterRatio"
+                    :label="`含水率变化量\n(%)`"
+                    align="center"
+                    min-width="120"
+                    :formatter="toPrecise2"
+                  ></el-table-column>
+                  <el-table-column
+                    prop="flowingPress"
+                    width="100px"
+                    :label="`流压\n(MPa)`"
+                    align="center"
+                    :formatter="toPrecise2"
+                  ></el-table-column>
                 </el-table>
               </el-row>
             </page-panel-new>
@@ -105,6 +129,7 @@ export default {
   },
   data() {
     return {
+      headTitle: "",
       //hwh 修改
       oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
       eee: "",
@@ -138,7 +163,7 @@ export default {
         dataZoom: [
           {
             type: "inside",
-            xAxisIndex: [0,1,2,3,4],
+            xAxisIndex: [0, 1, 2, 3, 4],
             start: 80, //滚动条开始位置（共100等份）
             end: 100, //滚动条结束位置
           },
@@ -565,7 +590,7 @@ export default {
   mounted: function () {
     //获取权限信息
     //   this.userInfo = VSAuth.getAuthInfo();
-
+    this.headTitle = this.$route.query.radioValue == "区块指标预警" ? "区块预警处理" : "油田预警处理";
     this.ycglKfyj = this.$route.query.ycglKfyj;
     this.textarea = this.$route.query.opinion;
     let warningTypeCode = this.$route.query.warningCode;
@@ -576,7 +601,7 @@ export default {
     }
     //F35E226D47CE4B09B497B852D774D122
     //折线图
-    this.charts("", this.oilFieldId, theDate);
+    this.charts(this.$route.query.fieldId || "", this.oilFieldId, theDate);
     //获取水井组数据
     this.injectionWellData(warningTypeCode, theDate);
     //获取油井组数据
@@ -590,7 +615,7 @@ export default {
       let queryParams = {
         beginDate: "",
         endDate: endDate,
-        fieldId: "",
+        fieldId: this.$route.query.fieldId || "",
         oilFieldId: this.oilFieldId,
         warningTypeCode: warningTypeCode,
       };
@@ -605,7 +630,7 @@ export default {
       let queryParams = {
         beginDate: "",
         endDate: endDate,
-        fieldId: "",
+        fieldId: this.$route.query.fieldId || "",
         oilFieldId: this.oilFieldId,
         warningTypeCode: warningTypeCode,
       };
@@ -756,7 +781,11 @@ export default {
 
     //保存功能
     save() {
-      let request = { id: this.$route.query.id, opinion: this.textarea, handler: this.$store.getters["user/userInfo"].nickName };
+      let request = {
+        id: this.$route.query.id,
+        opinion: this.textarea,
+        handler: this.$store.getters["user/userInfo"].nickName,
+      };
       proWellIndicatorWarningAssosiationAnalysisSave(request).then((res) => {
         Message({
           showClose: true,
@@ -768,7 +797,11 @@ export default {
     },
     //加入观察室
     addWarning() {
-      let request = { id: this.$route.query.id, opinion: this.textarea, handler: this.$store.getters["user/userInfo"].nickName };
+      let request = {
+        id: this.$route.query.id,
+        opinion: this.textarea,
+        handler: this.$store.getters["user/userInfo"].nickName,
+      };
       proWellIndicatorWarningAssosiationAnalysisToObserve(request).then((res) => {
         Message({
           showClose: true,
@@ -780,7 +813,11 @@ export default {
     },
     //关闭预警
     delWarning() {
-      let request = { id: this.$route.query.id, opinion: this.textarea, handler: this.$store.getters["user/userInfo"].nickName };
+      let request = {
+        id: this.$route.query.id,
+        opinion: this.textarea,
+        handler: this.$store.getters["user/userInfo"].nickName,
+      };
       proWellIndicatorWarningAssosiationAnalysisClose(request).then((res) => {
         Message({
           showClose: true,
@@ -799,32 +836,32 @@ export default {
     // 表格格式化方法 - 数值只保留两位小数
     toPrecise2(row, column) {
       if (
-          (row[column.property] || parseFloat(row[column.property]) === 0) &&
-          typeof parseFloat(row[column.property]) === "number"
+        (row[column.property] || parseFloat(row[column.property]) === 0) &&
+        typeof parseFloat(row[column.property]) === "number"
       ) {
-          return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+        return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
           ? parseFloat(row[column.property]).toFixed(2)
           : "0";
       } else {
-          return row[column.property] ? row[column.property] : "-";
+        return row[column.property] ? row[column.property] : "-";
       }
     },
     toPrecise4(row, column) {
       if (
-          (row[column.property] || parseFloat(row[column.property]) === 0) &&
-          typeof parseFloat(row[column.property]) === "number"
+        (row[column.property] || parseFloat(row[column.property]) === 0) &&
+        typeof parseFloat(row[column.property]) === "number"
       ) {
-          return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+        return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
           ? parseFloat(row[column.property]).toFixed(4)
           : "0";
       } else {
-          return row[column.property] ? row[column.property] : "-";
+        return row[column.property] ? row[column.property] : "-";
       }
     },
   },
 };
 </script>
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
 .fl {
   margin-left: 10px;
 }
@@ -866,4 +903,3 @@ export default {
   flex-direction: row-reverse;
 }
 </style>
-  

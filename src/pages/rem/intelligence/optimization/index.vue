@@ -534,17 +534,9 @@ export default {
   
     mounted() {
         //智能配注调用子组件方法
-        this.$nextTick(()=>{
-            this.$refs.modelOpreation.getCaseByMax()
-        })
-        this.$nextTick(()=>{
-            setTimeout(()=>{
-                window.addEventListener('resize',this.setWidth);
-            },1000)
-        })
-        this.$once('hook:beforeDestroy',()=>{
-            window.removeEventListener('resize',this.setWidth)
-        })
+        // this.$nextTick(()=>{
+        //     this.$refs.modelOpreation.getCaseByMax()
+        // })
         if(this.$route.query.link == 'rem'){
             this.activeName = 'second'
             this.setWidth()

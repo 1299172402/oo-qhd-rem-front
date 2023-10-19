@@ -28,13 +28,15 @@
             </el-button>
             <el-button size="small" type="primary" style=""
                        icon="el-icon-circle-plus-outline" @click="handleAdd">创建油藏优化模型</el-button>
-            </el-row>
+        </el-row>
         <pagePanel headerTitle="油藏优化模型" :show-btn="true" style="height: calc(100% - 10px);margin-top: 5px;height: 700px">
             <!-- 表格-->
             <el-table  highlight style="margin-top: -10px;margin-left: 1px;" height="calc(100% - 15px)"
+                       :row-style="{ height: '0px' }"
+                       header-cell-class-name="table_header"
                        v-loading="deleteModelLoading" element-loading-background="rgba(0,0,0,0.5)"
                        element-loading-text="删除中" element-loading-spinner="el-icon-loading"
-                       :data="modelList" :header-cell-style="modelTableStyle" :cell-style="tableColorone">
+                       :data="modelList">
                 <el-table-column label="序号" type="index" width="100" align="center"
                                  :index="table_index"></el-table-column>
                 <el-table-column prop="modelCode" label="模型代码" align="center"></el-table-column>
@@ -44,9 +46,9 @@
                 <el-table-column prop="operate" label="操作" align="center">
                     <!-- 插槽 -->
                     <template v-slot="scope">
-                        <el-button size="mini"  icon="el-icon-document" type="text" @click="lookResClick(scope.row.modelBasicId)">查看结果
+                        <el-button icon="el-icon-document" type="text" @click="lookResClick(scope.row.modelBasicId)">查看结果
                         </el-button>
-                        <el-button size="small" icon="el-icon-delete" type="text" style="color: #f56c6c;"
+                        <el-button icon="el-icon-delete" type="text" style="color: #f56c6c;"
                                    @click="deleteClick(scope.row.modelBasicId)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -118,8 +120,6 @@ export default {
     data(){
         return {
             //模型管理页面
-            activeName: 'second',
-            zhezhao: false,
             modelPage: '',
             pageSize: '',
             isShowDeleteDialog: false, //是否显示点击删除按钮之后的弹框
@@ -215,7 +215,6 @@ export default {
         this.djClick();
     },
     methods:{
-        
         //分页序号连续
         table_index(index){
             return (this. modelObject.pn-1) * this. modelObject.pageSize + index + 1
@@ -265,15 +264,14 @@ export default {
         },
         // 查看结果
         lookResClick(id) {
-            this.modelManagerDialog = false;
-            this.ModelYunSuan = true;
+            this.$emit('fatherMethod',id)
+            console.log('查看结果的id', id)
             //接收查看结果传来的id
-            this.lookResClickId = id
-            this.getResultCaseId()
+            // this.lookResClickId = id
+            // this.getResultCaseId()
             //跳转页面
             // this.$router.push({ name: 'zctpyh', params: { modelParams: id } })
         },
-
         handleTime() {
             // this.time1是变化的量，需要赋值给常量, const一旦定义不可改变。
             console.log("时间变化", 11)
@@ -332,7 +330,7 @@ export default {
                 this.$message.warning("请选择开始时间")
             } else {
                 GetModelBasicListByCondition(param).then(res => {
-                    console.log(res.result)
+                    console.log('biaogeshuju模型管理表格数据',res.result)
                     if (res.code === 0) {
                         this.modelList = res.result.modelBasicList.list
                         this.totalPage = res.result.modelBasicList.total
@@ -352,11 +350,6 @@ export default {
         },
         // 插入一条方案数据
         getAddListData(formName) {
-
-            // this.$refs[formName].validate(() => {
-            //   console.log(123);
-            // });
-
             // //提交校验
             this.$refs.modelForm.validate((valid) => {
                 if (valid) {
@@ -374,9 +367,10 @@ export default {
                     // 将创建表单中的数据提交到后端caseVo中
                     GddModelBasic(modelBasicVo).then(res => {
                         console.log(res)
+                        this.$emit('fatherMethod',res.result.modelBasicId)
+                        console.log('res.result.modelBasicId',res.result.modelBasicId)
                         this.dialogModelVisible = false;
-                        this.ModelYunSuan = true;
-                        this.getCaseId();
+                        this.getTableList();
                         //------------------------------- 有问题
                         // this.$router.push({ name: 'zctpyh', params: { modelParams: res.result.modelBasicId } })
                     }).catch(error => {
@@ -400,8 +394,6 @@ export default {
                     this.getTableList();
                     this.deleteModelLoading = false
                 } else {
-                    // this.fileParseLoading = true
-                    // this.fileParseLoading = false
                     this.$message.success('删除失败')
                     this.deleteModelLoading = false
                 }
@@ -413,28 +405,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ckjg {
-    padding-left: 9px;
-    //padding-right: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 110px;
-    height: 32px;
-    font-size: 14px;
-    border-color: #84bede;
-    color: #84bede;
-    background: rgba(0, 0, 0, 0);
-}
-.scjg {
-    margin-left: 20px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-size: 14px;
-    height: 32px;
-    border-color: #84bede;
-    color: #ffffff;
-    background: rgba(0, 0, 0, 0);
-}
+
 </style>

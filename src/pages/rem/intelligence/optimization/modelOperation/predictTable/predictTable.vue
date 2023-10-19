@@ -1,40 +1,40 @@
 <template>
   <div class="stytable">
-    <el-table ref="multipleTable" :data="this.$attrs.prodListTable" height="541"
-              :header-cell-style="headerClass" stripe
+    <el-table ref="multipleTable" :data="this.$attrs.prodListTable" height="690"
+              stripe
                @selection-change="handleSelectionChange">
-      <el-table-column   align="center" type="selection"> </el-table-column>
-      <el-table-column type="index" label="序号" align="center" />
-      <el-table-column prop="name" label="模型井名" align="center">
+      <el-table-column   align="center" type="selection" min-width="10"> </el-table-column>
+      <el-table-column type="index" label="序号" align="center" min-width="10" />
+      <el-table-column prop="name" label="模型井名" min-width="50" align="center">
         <template slot-scope="scope">
           <span >{{scope.row.wellName}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="开关井状态" align="center" >
+      <el-table-column prop="status" label="开关井//状态" min-width="40" :render-header="renderHeader" align="center" >
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.status" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.status}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="ctrlMode" label="控制模式" align="center">
+      <el-table-column prop="ctrlMode" label="控制模式" min-width="40" align="center">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.ctrlMode" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.ctrlMode}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="defaultValue" label="默认参数" align="center">
+      <el-table-column prop="defaultValue" label="默认参数" min-width="40" align="center">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.defaultValue" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.defaultValue}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="maxProd" label="产液量" align="center">
+      <el-table-column prop="maxProd" label="产液量" min-width="40" align="center">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.maxProd" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.maxProd}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="tstep" label="时间步" width="75" align="center"
+      <el-table-column prop="tstep" label="时间步" min-width="40" align="center"
                        :filters="filterList"
                        :filter-multiple="false"
                        :filter-method="filterHandler">
@@ -62,7 +62,6 @@
 </template>
 
 <script>
-
 import Vue from "vue";
 export default {
   name: "predictTableWater",
@@ -90,6 +89,14 @@ export default {
       this.hh()}, 1000)
   },
   methods: {
+      //单位换行
+      renderHeader(h, { column }) {
+          return h("span", {}, [
+              h("span", {}, column.label.split("//")[0]),
+              h("br"),
+              h("span", {}, column.label.split("//")[1]),
+          ])
+      },
     hh(){
       for (let index = 0; index <this.$attrs.tStep.length; index++) {
         this.filterList.push({text:this.$attrs.tStep[index],value:this.$attrs.tStep[index]})
@@ -108,13 +115,6 @@ export default {
     },
     clearFilter() {
       this.$refs.multipleTable.clearFilter();
-    },
-    //表格表头样式
-    headerClass() {
-      return 'background-color:transparent!important;' +
-          'color:white;' +
-          'font-size:16px' +
-          'text-align:center!important'
     },
     //编辑按钮
     edit(row, index) {

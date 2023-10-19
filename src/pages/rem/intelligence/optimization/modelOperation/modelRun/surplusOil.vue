@@ -1,10 +1,10 @@
 <template>
     <div style="height: 100%">
         <div tabindex="0" style="height: 100%">
-            <!--    <div v-if="this.modelBasicInfo.modelStep == 0 "-->
-            <!--              style="position: absolute; top: 210px; left: 40px;width: 740px; height: 100% !important;">-->
-            <!--      <el-empty :image="require('@/icons/svg/data.png')" :image-size="250" description="暂无数据，请上传模型后查看"></el-empty>-->
-            <!--    </div>-->
+            <div v-if="this.modelBasicInfo.modelStep == 0 "
+                      style="position: absolute; top: 95px; left: 40px;width: 740px; height: 100% !important;">
+              <el-empty :image="require('@/icons/svg/data.png')" :image-size="250" description="暂无数据，请上传模型后查看"></el-empty>
+            </div>
             <!--选择框-->
             <el-select class="radioselect" v-model="falutName" :popper-append-to-body="false"
                        @change="changeSelectImage($event, item)" size="small"

@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 100%">
+    <div style="height: 100%" >
         <el-row v-loading="fileParseLoading" element-loading-text="加载中"
                 element-loading-background="rgba(0, 40, 80, 0.7)"
                 style=" left: -20px; top: -15px; border: none !important;height: 100%">
@@ -7,7 +7,8 @@
             <el-card class="modelManagerClass" v-show="modelManagerDialog" style="height: 100%;">
                 <el-button type="primary" @click="returnMainScreen" 
                            style="position: absolute;top: 10px;left:1510px;z-index: 10">返回主界面</el-button>
-                <modelManager ref="modelManager"></modelManager>
+                <modelManager ref="modelManager" 
+                              @fatherMethod="getResultCaseId"></modelManager>
             </el-card>
             <!-- 模型运算界面 优化方案区块指标和剩余油分布图 + 模型代码 -->
             <div v-show="ModelYunSuan" style="height: 100%">
@@ -15,19 +16,17 @@
                 <el-row>
                     <el-button size="small" type="primary" @click="modelManager">模型管理</el-button>
                     <el-button size="small" type="primary" @click="modelUpload">数据上传</el-button>
-                    <el-button size="small" type="primary" @click="lookParam">调控参数</el-button>
-                    <!-- :disabled="this.modelBasicInfo.modelStep == 0 ? true : false" -->
+                    <el-button size="small" type="primary" @click="lookParam" :disabled="this.modelBasicInfo.modelStep == 0 ? true : false">调控参数</el-button>
                     <div style="float: right;margin-right: -40px;">
                         <el-button size="small" type="primary" @click="getRunModelTest">模型运行</el-button>
                         <el-button size="small" type="primary" @click="schDownload">预测方案</el-button>
-                        <el-button size="small" type="primary" @click="resultUpload">结果上传</el-button>
-                        <!-- :disabled="this.modelBasicInfo.modelStep == 0 ? true : false" -->
+                        <el-button size="small" type="primary" @click="resultUpload" :disabled="this.modelBasicInfo.modelStep == 0 ? true : false">结果上传</el-button>
                     </div>
                     <el-image :src="require('@/icons/svg/bj.png')" style="width: 102.5%; height: 20px"></el-image>
                     <div style="z-index: 3;color: #40c2d4; text-align: center; margin-top: -48px;
                             margin-left: 280px; font-size: 22px;"> 模型运算 </div>
                 </el-row>
-                <!--  解析文件Loading  -->
+                <!--  解析文件Loading + echarts图表 + 剩余油分布图  -->
                 <el-row :gutter="15" type="flex" style="height: calc(100% - 20px )" justify="center">
                     <el-col :span="12" style="margin-top:10px;height: 90%">
                         <!--  echarts图表  -->
@@ -48,16 +47,10 @@
                     <span style="color: #40c2d4">{{ modelBasicInfo.modelCode }}</span>
                 </el-row>
             </div>
-            <!--  遮罩封装  -->
-            <div v-show="zhezhao">
-                <el-image :src="require('@/icons/svg/zhezhao.jpg')"
-                          style="position: absolute; top: 0px; opacity: 0.7;width:102.5%;height:100%;z-index: 100">
-                </el-image>
-            </div>
-            <!-- 1、上传历史阶段文件dialog class="uploadDialogStyle"-->
-            <div >
+            <!-- 1、上传历史阶段文件dialog -->
+            <div>
                 <el-dialog title="上传历史阶段文件" 
-                           :visible.sync="modelDialogVisibleF" :modal="false"  width="740px"
+                           :visible.sync="modelDialogVisibleF" width="47%"
                            style="position: absolute; top: -25px">
                     <fileUpload ref="fileChild" :modelBasicId="modelBasicId" @aa="aa" @parseSureButtonTrue="parseSureButtonTrue"
                                 @parseSureButtonFalse="parseSureButtonFalse">
@@ -68,10 +61,10 @@
                     </el-row>
                 </el-dialog>
             </div>
-            <!-- 2、上传预测阶段文件dialog  class="uploadDialogStyle"  src="@/icons/svg/zhezhao.jpg"-->
+            <!-- 2、上传预测阶段文件dialog -->
             <div>
                 <el-dialog title="上传预测阶段文件" :close-on-click-modal="false" :show-close="false"
-                           :visible.sync="modelDialogVisibleA" :modal="false" width="715px"
+                           :visible.sync="modelDialogVisibleA" width="45%"
                            style="position: absolute; top: -380px">
                     <fileUploadPredict ref="fileChildPredict" :modelBasicId="modelBasicId" @aa="aa"
                                        @parseSureButtonTrue="parseSureButtonTrue" @parseSureButtonFalse="parseSureButtonFalse">
@@ -89,7 +82,7 @@
                         <!--  区块参数 ——  区块调控值 -->
                         <pagePanel headerTitle="区块参数 : 区块调控值"  :show-btn="true"
                                    style="height: calc(100% - 10px);height: 650px;">
-                            <el-table height="calc(100% - 10px)" :cell-style="changeColor" :data="tableListOne">
+                            <el-table height="calc(100% - 10px)" :data="tableListOne">
                                 <el-table-column property="blockName" label="区块" align="center"></el-table-column>
                                 <el-table-column property="maxBlockValue" label="最大调控值//(m³/d)"
                                                  :render-header="renderHeader" align="center" style="width:95px">
@@ -135,43 +128,43 @@
                 </el-button>
             </el-card>
             <!-- 模型运行dialog表格card -->
-            <el-card v-show="cardtable" width="100px" class="modelManagerClass" style="z-index: 111;">
-                <pagePanel headerTitle="模型运行文件"  :show-btn="true" style=" height:680px;text-align: center">
-                        <el-table ref="multipleTable"  :data="tableData1" height="95%"
-                                  :header-cell-style="headerClass" @selection-change="selectItem">
-                            <el-table-column type="selection" align="center" />
-                            <el-table-column label="日期" prop="inputDate" align="center" />
-                            <el-table-column label=".F文件名称" prop="fileName"  align="center" />
-                            <el-table-column label="文件阶段类型" prop="fileVersion" align="center">
-                                <template slot-scope="scope">
-                                    <span v-show="scope.row.fileVersion == '0'">历史状态</span>
-                                    <span v-show="scope.row.fileVersion == '1'">优化状态</span>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                        <el-row style="float: right;line-height:40px;margin-top: 5px">
-                            <el-button @click="Fupload" type="primary">确定</el-button>
-                            <el-button @click=" cardtable = false;zhezhao=false" type="primary">取消</el-button>
-                        </el-row>
-                   
-                    </pagePanel>
-            </el-card>
-            <!-- 运行过程card -->
-            <el-card v-show="showcard" class="modelManagerClass" style="z-index: 111;">
-                <el-row v-loading="loading" element-loading-text="模型正在运行中，请稍后" element-loading-background="rgba(0, 40, 80, 0.7)"
-                     style="text-align:center; ">
+            <el-dialog style="margin-top: 120px"
+                title="模型运行文件"
+                :visible.sync="cardtable"
+                width="40%"
+                :close-on-click-modal="false">
+                <el-table ref="multipleTable"  :data="tableData1" height="450"
+                          @selection-change="selectItem">
+                    <el-table-column type="selection" align="center" />
+                    <el-table-column label="日期" prop="inputDate" align="center" />
+                    <el-table-column label=".F文件名称" prop="fileName"  align="center" />
+                    <el-table-column label="文件阶段类型" prop="fileVersion" align="center">
+                        <template slot-scope="scope">
+                            <span v-show="scope.row.fileVersion == '0'">历史状态</span>
+                            <span v-show="scope.row.fileVersion == '1'">优化状态</span>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-row style="float: right;line-height:60px;margin-top: 5px">
+                    <el-button @click="Fupload" type="primary">确定</el-button>
+                    <el-button @click=" cardtable = false" type="primary">取消</el-button>
                 </el-row>
+            </el-dialog>
+            <!-- 运行过程 loading -->
+            <el-card v-show="showcard" 
+                     style="height: 100%;width: 102.5%;position: absolute;top: 0px;background-color: rgba(0, 40, 80, 0.7);z-index: 111;border: 0px">
+                <div v-loading="loading" element-loading-text="模型运行中，请稍后" style="margin-top:300px;"></div>
             </el-card>
             <!-- 运行成功card -->
-            <el-card v-show="showChange1" class="modelManagerClass" style=";z-index: 111;">
-                <div ref="card" style="text-align:center;width: 600px;">
-                    <p style="font-size:22px;color:white;">{{ modelData }}</p>
+            <el-dialog title="模型运行结果" :show-close="false" :visible.sync="showChange1"  :close-on-click-modal="false" :modal-append-to-body="false"
+                       style="width: 50%;position: absolute;top: -200px;left: 410px">
+                <div ref="card" style="text-align:center;height: 60px">
+                    <p style="font-size:22px;color:white;margin-top: 50px">{{ modelData }}</p>
                 </div>
-            </el-card>
+            </el-dialog>
             <!-- 制度下载dialog  class="DialogStyle"-->
-            <el-dialog title="预测方案下载" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogVisible" width="400px"
-                           ref="outDialog" :modal="false" :close-on-click-modal="false" :modal-append-to-body="false"
-                           style="position: absolute">
+            <el-dialog title="预测方案下载" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogVisible" width="21%"
+                           ref="outDialog" :close-on-click-modal="false" :modal-append-to-body="false">
                 <el-row style="line-height: 50px">
                     <span style="color: white; font-size: 16px">开始时间 : </span>
                     <el-date-picker v-model="startDate" type="date" value-format="yyyy-MM-dd" 
@@ -186,106 +179,94 @@
                                      popper-class="elDatePicker">
                     </el-date-picker>
                 </el-row>
-                <el-row class="footer" style="margin-top: 5px">
+                <el-row class="footer" style="line-height: 50px;float: right">
                     <el-button type="primary" @click="predictDownloadTable">
                             下载预测制度
                         </el-button>
                     <el-tooltip class="item" effect="dark" content="请选择时间" placement="top-start">
                         <el-button type="primary" @click="realDownloadTable">下载实际制度</el-button>
                     </el-tooltip>
-                    <el-button type="primary" @click=" dialogVisible = false; zhezhao = false; ">取 消
+                    <el-button type="primary" @click=" dialogVisible = false">取 消
                     </el-button>
                 </el-row>
             </el-dialog>
             <!-- 下载预测制度 -->
-            <el-dialog title="下载预测制度" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogFormVisible"
-                          :modal="false" :close-on-click-modal="false" width="80%">
-                    <el-row type="flex" justify="space-between" :gutter="20">
-                        <el-col :span="12">
-                            <pagePanel headerTitle="WCONPROD" :show-btn="true"
-                                       style="height: calc(100% - 10px);height: 650px;">
-                                <predictTableWater :prodListTable="prodList" :tStep="tStep" :submit1="submit1" ref="preWater">
-                                </predictTableWater>
-                            </pagePanel>
-                        </el-col>
-                        <el-col :span="12">
-                            <pagePanel headerTitle="WCONINJE" :show-btn="true"
-                                       style="height: calc(100% - 10px);height: 650px;">
-                                <predictTableInj style="margin-left:-40px; " :tStep="tStep" :submit1="submit1" :chooseAllData="tableData"
-                                                 ref="preInj"></predictTableInj>
-                            </pagePanel>
-                        </el-col>
-                    </el-row>
-                    <!-- 显示折线图 -->
+            <el-dialog title="下载预测制度" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogFormVisible" 
+                          :close-on-click-modal="false" width="100%" style="height: 100%">
+                <el-row type="flex" justify="space-between" :gutter="10">
+                    <el-col :span="12">
+                        <pagePanel headerTitle="WCONPROD" :show-btn="true"
+                                   style="height: calc(100% - 10px)">
+                            <predictTableWater :prodListTable="prodList" :tStep="tStep" :submit1="submit1" ref="preWater">
+                            </predictTableWater>
+                        </pagePanel>
+                    </el-col>
+                    <el-col :span="12">
+                        <pagePanel headerTitle="WCONINJE" :show-btn="true"
+                                   style="height: calc(100% - 10px)">
+                            <predictTableInj :tStep="tStep" :submit1="submit1" :chooseAllData="tableData"
+                                             ref="preInj"></predictTableInj>
+                        </pagePanel>
+                    </el-col>
+                </el-row>                    
+                <div slot="footer" class="dialog-footer">
                     <el-row>
-                        <el-card v-show="dialogVisiblePicture" class="cardreset">
-                            <span style="color:white;font-size:16px">请选择优化时间:</span>
-                            <el-row style="position: absolute; left: 20px; top: 60px">
-                                <div class="lineChart" style="position: absolute; left: 18px; top: 10px">
-                                    <div id="smain" ref="smain"></div>
-                                </div>
-                                <!--选择框-->
-                                <el-select class="radioselect" v-model="falutName" :popper-append-to-body="false"
-                                           @change="changeSelectImage($event, item)" size="small"
-                                           style="position: absolute;  left: 141px;top: -45px;width;:100px">
-                                    <el-option v-for="item in pictureOption" :key="item.pictureOption" :label="item.stepTime"
-                                               :value="item.fileStepId">
-                                    </el-option>
-                                </el-select>
-                                <!--   放置echarts       -->
-                                <button @click="close" style=" border:0px solid;border-radius:0px;color:white;
-                                background-image: linear-gradient(rgba(0, 68, 115, 0.85), rgba(0, 72, 122, 0.85));
-                                box-shadow: rgb(36, 222, 255) 0px 0px 5px 1px inset !important;  margin:3px 0px 0px 715px;
-                size: medium;
-                width: 62px;
-                height: 32px">取 消</button>
-                            </el-row>
-                            <!--              </div>-->
-                        </el-card>
+                        <el-button type="primary"
+                                   @click="showTable" style="margin-left: 10px">显示图片</el-button>
+                        <!-- <el-tooltip class="item" effect="dark" content="请选择相同的时间步进行下载"
+                        placement="top-start"> -->
+                        <span @click="enter()">
+                            <el-button :disabled="tooltipdiabled" type="primary" style="margin-left: 10px">下载</el-button>
+                        </span>
+                        <el-button type="primary" :disabled="tooltipdiabled" style="margin-left: 10px" @click="cancel">取 消</el-button>
                     </el-row>
-                    <div slot="footer" class="dialog-footer">
-                        <el-row>
-                            <el-button type="primary"
-                                       @click="showTable">显示图片</el-button>
-                            <!-- <el-tooltip class="item" effect="dark" content="请选择相同的时间步进行下载"
-                            placement="top-start"> -->
-                            <span @click="enter()">
-                                <el-button :disabled="tooltipdiabled" type="primary">下载</el-button>
-                            </span>
-                            <el-button type="primary" :disabled="tooltipdiabled" @click="cancel">取 消</el-button>
-                        </el-row>
-                    </div>
+                </div>
+                <!-- 显示折线图 -->
+                <el-card v-show="dialogVisiblePicture" style="width: 50%; height: 70%;position: absolute;top: 140px;left:500px;background-color: rgba(5,52,73,0.8);">
+                    <span style="color:white;font-size:16px;margin-right: 10px">请选择优化时间:</span>
+                    <!--选择框-->
+                    <el-select class="radioselect" v-model="falutName" :popper-append-to-body="false"
+                               @change="changeSelectImage($event, item)">
+                        <el-option v-for="item in pictureOption" :key="item.pictureOption" :label="item.stepTime"
+                                   :value="item.fileStepId">
+                        </el-option>
+                    </el-select>
+                    <!--   放置echarts       -->
+                    <Echart :chart-data="echartsListaa" height="100%" width="100%" style="height: 100% !important;margin-top: 20px"></Echart>
+                    <el-button @click="close" type="primary" style="float: right">取 消</el-button>
+                </el-card>
                 </el-dialog>
             <!-- 下载实际制度 -->
-            <el-dialog title="下载实际制度" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogReal" width="1650px"
-                           :modal="false" :close-on-click-modal="false">
-                    <el-row type="flex" justify="space-between" :gutter="20">
+            <el-dialog title="下载实际制度" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogReal" width="100%"
+                            :close-on-click-modal="false" style="height: 100%">
+                    <el-row type="flex" justify="space-between" :gutter="15">
                         <el-col :span="12">
                             <pagePanel headerTitle="WCONPROD" :show-btn="true"
-                                       style="height: calc(100% - 10px);height: 650px;">
+                                       style="height: calc(100% - 10px)">
                                 <realTableOil :prodRealList="prodRealList" :modelBasicId="modelBasicId" :startDate="startDate"
                                               :endDate="endDate" ref="prodRealList"></realTableOil>
                             </pagePanel>
                         </el-col>
                         <el-col :span="12">
                             <pagePanel headerTitle="WCONINJE" :show-btn="true"
-                                       style="height: calc(100% - 10px);height: 650px;">
+                                       style="height: calc(100% - 10px);">
                                 <realTableWater :injRealList="injRealList" :modelBasicId="modelBasicId" :startDate="startDate"
                                                 :endDate="endDate" ref="injRealList"></realTableWater>
                             </pagePanel>
                         </el-col>
                     </el-row>
                     <div slot="footer" class="dialog-footer">
-                        <el-button class="buttonClassLogo" @click="downLoadRealFile" type="primary">下载</el-button>
-                        <el-button class="buttonClassLogo" @click="cancel1" type="primary">取 消</el-button>
+                        <el-button @click="downLoadRealFile" type="primary">下载</el-button>
+                        <el-button @click="cancel1" type="primary">取 消</el-button>
                     </div>
-
                 </el-dialog>
         </el-row>
     </div>
 </template>
 
 <script>
+import * as echarts from "echarts";
+import Echart from "@/components/tools/Echarts/index.vue";
 //-组件
 import modelManager from "@/pages/rem/intelligence/optimization/modelOperation/modelManager.vue";
 import blockIndicators from "@/pages/rem/intelligence/optimization/modelOperation/modelRun/blockIndicators.vue";
@@ -298,14 +279,7 @@ import realTableOil from "@/pages/rem/intelligence/optimization/modelOperation/r
 import realTableWater from "@/pages/rem/intelligence/optimization/modelOperation/realTable/realTableWater.vue";
 //-接口
 import {
-    // GetBlockListByOgfId,
-    // GddModelBasic,
-    // DeleteModelBasicById,
-    // JudgeModelBasicNameUnique,
     GetModelBasicById,
-    // GetModelBasicListByCondition,
-    // GetOgfBlockCascader,
-    // GetOgfList,
     GetModelBasicByMaxModelSort,
     GetModelFileAttrListByModelBasicId,
     ParseFiles,
@@ -320,9 +294,9 @@ import {
     GetmodelExec
 } from "@/api/rem/dispenseModel.js";
 
-export default {    
-    name: "modelMain",
+export default {
     components:{
+        Echart,
         modelManager,
         blockIndicators,
         surplusOil,
@@ -335,6 +309,7 @@ export default {
     },
     data(){
         return{
+            modelId:'',
             fileParseLoading: false,
             ModelYunSuan: true,   //模型运算页面和模型管理页面
             modelManagerDialog: false, //是否显示模型管理页面
@@ -356,9 +331,6 @@ export default {
             tooltipdiabled: false,
             modelBasicId: "", //父子传Id
             tStep: "",
-            zhezhao: false, //false
-            zhezhao1: false,
-            // schDownLoading: false,
             oneFlag: true, //模型管理按钮是否可用
             twoFlag: true, //按钮是否可用
             threeFlag: true, //按钮是否可用
@@ -389,7 +361,6 @@ export default {
                 fcCount: "", //9
                 fbCount: "", //10
                 fgCount: "", //11
-
                 baCount: "",
                 bfCount: "",
             },
@@ -628,23 +599,50 @@ export default {
         }
     },
     mounted() {
-        this.getCaseByMax()
+        this.getCaseId()
     },
     methods: {
-        //模型管理页面
-        // 返回主界面
-        returnMainScreen(){
-            this.modelManagerDialog = false
-            this.ModelYunSuan = true
-            this.getCaseByMax()
+        //进入页面之后调用“获取最新方案”的方法
+        //但是，查看结果和创建新的方案不能调用“获取最新方案”方法
+        //需要判断id到底是哪里过来的，进而更新modelBasicInfo
+        //创建新的方案和查看结果都需要传id，一共两个id
+        //三个
+        getCaseId(){
+            var flag = this.modelId
+            console.log('flag',flag)
+            if(flag != undefined){
+                this.getResultCaseId(flag)
+            }
+            else {
+                this.getCaseByMax()
+                console.log('获取最新方案')
+            }
         },
-        //表格单位换行
-        renderHeader(h, { column }) {
-            return h("span", {}, [
-                h("span", {}, column.label.split("//")[0]),
-                h("br"),
-                h("span", {}, column.label.split("//")[1]),
-            ])
+        //接收模型管理页面传过来的id
+        getResultCaseId(id) {
+            this.modelId = id
+            //通过caseId获取一条方案信息
+            const param = {
+                modelBasicId: id
+            }
+            //通过方案ID查询一个方案信息
+            GetModelBasicById(param).then(res => {
+                this.modelBasicId = res.result.modelBasicEntity.modelBasicId;
+                this.modelBasicInfo.modelBasicId = res.result.modelBasicEntity.modelBasicId
+                this.modelBasicInfo.modelStep = res.result.modelBasicEntity.modelStep
+                this.modelBasicInfo.modelCode = res.result.modelBasicEntity.modelCode;
+                this.modelBasicInfo.isModelRun = res.result.modelBasicEntity.isModelRun
+                this.modelBasicInfo.fileNum = res.result.modelBasicEntity.fileNum
+                this.modelBasicInfo.modelSubmitNum = res.result.modelBasicEntity.modelSubmitNum;
+                this.modelBasicInfo.modelRun = res.result.modelBasicEntity.modelRunNum;
+                console.log("方案idmodelrun", this.modelBasicInfo.modelRun)
+                this.$refs.blockIndicators.run();
+                this.$refs.surplusOil.run();
+            }).catch(err => {
+                console.log(err)
+            });
+            this.ModelYunSuan = true
+            this.modelManagerDialog = false
         },
         //获取最新方案方法--智能配注请求后台
         getCaseByMax() {
@@ -659,13 +657,29 @@ export default {
                     this.modelBasicInfo.isModelRun = res.result.modelBasicEntity.isModelRun;
                     this.modelBasicInfo.fileNum = res.result.modelBasicEntity.fileNum;
                     this.modelBasicInfo.modelSubmitNum = res.result.modelBasicEntity.modelSubmitNum;
-                    this.modelBasicInfo.modelRun = res.result.modelBasicEntity.modelRunNum;
+                    // this.modelBasicInfo.modelRun = res.result.modelBasicEntity.modelRunNum;
                     console.log("智能配注modelrun", res);
                 })
                 .catch((err) => {
                     console.log(err);
                 });
         },
+        
+        // 模型管理页面返回主界面
+        returnMainScreen(){
+            this.modelManagerDialog = false
+            this.ModelYunSuan = true
+            this.getCaseByMax()
+        },
+        //表格单位换行
+        renderHeader(h, { column }) {
+            return h("span", {}, [
+                h("span", {}, column.label.split("//")[0]),
+                h("br"),
+                h("span", {}, column.label.split("//")[1]),
+            ])
+        },
+        //解析文件按钮禁用
         parseSureButtonTrue() {
             this.parseSureButton = true;
         },
@@ -705,10 +719,7 @@ export default {
                     this.threeList.push(this.pictureArray[index].optimizeValue);
                     var oneArr = [this.threeList[0], this.threeList[1]];
                     var twoArr = [this.threeList[0], this.threeList[2]];
-                    // if(this.threeList[0]==='H22H'){
-                    //   console.log('this.threeList[1]',this.threeList[1])
-                    //   console.log('this.threeList[2]',this.threeList[2])
-                    // }
+                    
                     if (this.threeList[1] < this.threeList[2]) {
                         var markLineArr = [
                             {
@@ -744,25 +755,19 @@ export default {
                     }
                     this.markLineData.push(markLineArr);
                 }
-                //console.log('this.markLineData',this.markLineData)
                 console.log("this.startList", this.startList);
                 this.echartsListaa.series[0].data = this.startList;
                 this.echartsListaa.series[1].data = this.endList;
                 this.echartsListaa.series[0].markLine.data = this.markLineData;
-                // console.log('serises',this.echartsListaa.series[0].markLine.data)
-                var myChart = echarts.init(this.$refs.smain);
-                myChart.setOption(this.echartsListaa, true);
+                this.echartsListaa = this.echartsListaa
             });
         },
         changeSelectImage(item) {
             this.pictureArray = [];
-            console.log("222222222", item);
             for (let index = 0; index < this.pictureOption.length; index++) {
-                console.log("333333333", this.pictureOption[index].fileStepId);
                 if (item == this.pictureOption[index].fileStepId) {
                     //画图数据
                     this.pictureArray = this.pictureOption[index].schedulePictureList;
-                    //console.log("this.pictureArray",this.pictureArray)
                 }
             }
             this.startList = [];
@@ -784,10 +789,6 @@ export default {
                 this.threeList.push(this.pictureArray[index].optimizeValue);
                 var oneArr = [this.threeList[0], this.threeList[1]];
                 var twoArr = [this.threeList[0], this.threeList[2]];
-                // if(this.threeList[0]==='H22H'){
-                //   console.log('this.threeList[1]',this.threeList[1])
-                //   console.log('this.threeList[2]',this.threeList[2])
-                // }
                 if (this.threeList[1] < this.threeList[2]) {
                     var markLineArr = [
                         {
@@ -843,64 +844,33 @@ export default {
             }
             console.log("111111111");
         },
-
-        //接收“查看结果”传过来的caseId——方法
-        getResultCaseId() {
-            console.log('hhhhhhhhhhhhhhhhhhhhnihaoya')
-            //通过caseId获取一条方案信息
-            const param = {
-                modelBasicId: this.lookResClickId,
-            };
-            console.log(param,'chakanjieguo')
-            //通过方案ID查询一个方案信息
-            GetModelBasicById(param)
-                .then((res) => {
-                    console.log(res)
-                    this.modelBasicId = res.result.modelBasicEntity.modelBasicId;
-                    this.modelBasicInfo.modelBasicId = res.result.modelBasicEntity.modelBasicId;
-                    this.modelBasicInfo.modelStep = res.result.modelBasicEntity.modelStep;
-                    this.modelBasicInfo.modelCode = res.result.modelBasicEntity.modelCode;
-                    this.modelBasicInfo.isModelRun = res.result.modelBasicEntity.isModelRun;
-                    this.modelBasicInfo.fileNum = res.result.modelBasicEntity.fileNum;
-                    this.modelBasicInfo.modelSubmitNum = res.result.modelBasicEntity.modelSubmitNum;
-                    this.modelBasicInfo.modelRun = res.result.modelBasicEntity.modelRunNum;
-                    console.log("方案idmodelrun", this.modelBasicInfo.modelRun);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        },
         //点击模型管理按钮
         modelManager() {
             this.modelManagerDialog = true;
             this.ModelYunSuan = false
-            // this.$router.push({ name: "modelManager" });
         },
-
         closeDialogF() {
-            this.zhezhao = false;
+            // this.zhezhao = false;
             this.modelDialogVisibleF = false;
             this.$nextTick(() => {
                 this.$refs.fileChild.changeFileList();
             });
         },
         closeDialogA() {
-            this.zhezhao = false;
+            // this.zhezhao = false;
             this.modelDialogVisibleA = false;
             this.$nextTick(() => {
                 this.$refs.fileChildPredict.changeFileListA();
             });
         },
-
         //模型上传按钮——控制文件上传前||后
         modelUpload() {
-            this.zhezhao = true;
+            // this.zhezhao = true;
             this.modelDialogVisibleF = true;
             console.log("modelStep", this.modelBasicInfo.modelStep);
             this.$nextTick(() => {
                 this.$refs.fileChild.modelUploadChildF();
             });
-            console.log("this.$parent.fileLoading", this.$parent.fileLoading);
         },
         //校验每一行是否上传了文件
         checkFiles() {
@@ -1042,12 +1012,8 @@ export default {
                         .catch((err) => {
                             this.parseFlag = true;
                         });
-
                     //this.modelBasicInfo.modelStep = this.modelBasicInfo.modelStep + 1
                     this.modelBasicInfo.modelSubmitNum = this.modelBasicInfo.modelSubmitNum + 1;
-
-                    console.log("this.modelBasicInfo.modelSubmitNum", this.modelBasicInfo.modelSubmitNum);
-                    console.log("111111111111111111111111111000000000000000");
                     //30s
                     setTimeout(() => {
                         if (this.parseFlag === true) {
@@ -1159,14 +1125,12 @@ export default {
                             this.fileParseLoading = false;
                         }
                     }, 1000);
-
                     console.log("this.modelBasicInfo.modelSubmitNum", this.modelBasicInfo.modelSubmitNum);
-
                     this.modelDialogVisibleF = false;
-                    this.zhezhao = false;
+                    // this.zhezhao = false;
                 } else {
                     this.modelDialogVisibleF = true;
-                    this.zhezhao = true;
+                    // this.zhezhao = true;
                 }
             }, 1000);
         },
@@ -1175,13 +1139,11 @@ export default {
             setTimeout(() => {
                 this.$refs.blockIndicators.run();
                 this.$refs.surplusOil.run();
-                console.log("diaoyong+run111111111111");
-                console.log("父组件是否被条用啊！！！！");
             }, 1000);
         },
         //结果上传 -------------------------------------------------------------------------
         resultUpload() {
-            this.zhezhao = true;
+            // this.zhezhao = true;
             this.modelDialogVisibleA = true;
             this.$nextTick(() => {
                 this.$refs.fileChildPredict.modelUploadChildA();
@@ -1221,7 +1183,6 @@ export default {
                                 GetModelBasicById(param).then((res) => {
                                     console.log("计时器里的parameter", param);
                                     this.modelStepPanduan = res.result.modelBasicEntity.modelSubmitNum;
-
                                     //解析文件问题提醒
                                     if (this.modelStepPanduan === -1) {
                                         setTimeout(() => {
@@ -1308,7 +1269,7 @@ export default {
                     }, 1000);
 
                     this.modelDialogVisibleA = false;
-                    this.zhezhao = false;
+                    // this.zhezhao = false;
                 } else {
                     this.modelDialogVisibleA = true;
                     this.zhezhao = true;
@@ -1342,13 +1303,13 @@ export default {
             this.$refs.preInj.clearFilter();
             this.dialogVisible = true;
             this.dialogFormVisible = false;
-            this.zhezhao = true;
+            // this.zhezhao = true;
         },
         //取消制度下载第二层dialog
         cancel1() {
             this.dialogVisible = true;
             this.dialogReal = false;
-            this.zhezhao = true;
+            // this.zhezhao = true;
         },
         submit1() {
             this.$refs.preWater.transData();
@@ -1403,7 +1364,7 @@ export default {
                 this.$message.warning("请选择一个.F文件进行解析");
             } else {
                 this.cardtable = false;
-                this.zhezhao = true;
+                // this.zhezhao = true;
                 this.showcard = true;
                 console.log("111111", this.multipleSelection[0].modelFileAttributeId);
                 //传参
@@ -1422,14 +1383,14 @@ export default {
                             //控制card显示时间
                             setTimeout(() => {
                                 this.showChange1 = false;
-                                this.zhezhao = false;
+                                // this.zhezhao = false;
                             }, 2000);
                         } else {
                             this.showcard = false;
                             this.showChange1 = true;
                             setTimeout(() => {
                                 this.showChange1 = false;
-                                this.zhezhao = false;
+                                // this.zhezhao = false;
                             }, 2000);
                         }
                     })
@@ -1447,7 +1408,7 @@ export default {
         //模型测试
         getRunModelTest() {
             this.cardtable = true;
-            this.zhezhao = true;
+            // this.zhezhao = true;
             //传参
             const param = {
                 modelBasicId: this.modelBasicInfo.modelBasicId,
@@ -1471,7 +1432,7 @@ export default {
         },
         //预测接口请求
         predictDownloadTable() {
-            this.zhezhao = false;
+            // this.zhezhao = false;
             this.dialogFormVisible = true;
             this.dialogVisible = false;
             const param = {
@@ -1487,17 +1448,17 @@ export default {
         },
         //实际接口请求
         realDownloadTable() {
-            this.zhezhao = false;
+            // this.zhezhao = false;
             this.dialogReal = true;
             this.dialogVisible = false;
-            nextTick(() => {
+            this.nextTick(() => {
                 this.$refs.prodRealList.DownloadTable();
                 this.$refs.injRealList.DownloadINjTable();
             });
         },
         //下载实际制度
         downLoadRealFile() {
-            this.zhezhao = false;
+            // this.zhezhao = false;
             const param = {
                 modelBasicId: this.modelBasicId,
                 startDate: this.startDate,
@@ -1517,7 +1478,7 @@ export default {
         },
         //sch文件下载
         schDownload() {
-            this.zhezhao = true;
+            // this.zhezhao = true;
             this.dialogVisible = true;
             //再次打开文件下载，开始时间，结束时间设为空
             this.startDate = "";

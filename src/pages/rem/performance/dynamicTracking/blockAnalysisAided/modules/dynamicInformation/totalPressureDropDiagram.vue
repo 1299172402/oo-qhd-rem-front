@@ -13,7 +13,7 @@
                 <el-button :class="[picType=='COLUMN'?'':'commonBtn']" :type="picType=='COLUMN'?'primary':''" @click="doPicTypeSwitch('COLUMN')">柱状图</el-button>
                 <el-button :class="[picType=='BUBBLE'?'':'commonBtn']" :type="picType=='BUBBLE'?'primary':''" @click="doPicTypeSwitch('BUBBLE')">泡泡图</el-button>
             </div>
-            <span>选择年份：</span>
+            <span>年度：</span>
             <el-date-picker v-model="yearTime" type="year" placeholder="选择年" value-format="yyyy" style="margin-right:20px;" :clearable="false"></el-date-picker>
             <el-button type="primary" @click="OnChangeImage">确定</el-button>
         </div> 

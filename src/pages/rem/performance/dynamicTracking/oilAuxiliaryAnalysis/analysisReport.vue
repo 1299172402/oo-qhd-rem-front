@@ -399,11 +399,11 @@
                       min-width="120"
                       :key="index"
                       :prop="item.code"
-                      :label="item.name"
+                      :label="`${item.name }\n${ item.unit}`"
                       align="center"
                       width="180px"
                     >
-                      <template #header v-if="item.code != 'djl' && item.code != 'cyqd'">
+                      <template #header v-if="item.code == 'yjgk' || item.code == 'gpgx'">
                         <div v-if="item.isTwoHeader">
                           <span>{{ item.name }}</span>
                           <br />
@@ -413,7 +413,10 @@
                           <span>{{ item.name }}</span>
                         </div>
                       </template>
-                      <template slot-scope="scope" v-if="item.code != 'djl' && item.code != 'cyqd'">
+                      <template
+                        slot-scope="scope"
+                        v-if="scope.row[item.code] == null || item.code == 'yjgk' || item.code == 'gpgx'"
+                      >
                         <span class="1" v-if="scope.row[item.code] == null"></span>
                         <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{
                           scope.row[item.code].showLabel ? scope.row[item.code].showLabel : "-"
@@ -449,7 +452,7 @@
                           />
                         </span>
                       </template>
-                      <template v-if="item.code == 'djl' || item.code == 'cyqd'">
+                      <template v-if="item.code != 'yjgk' || item.code != 'gpgx'">
                         <el-table-column min-width="100" label="区块均值" align="center">
                           <template slot-scope="scope">
                             <span style="display: flex; align-items: center; justify-content: center">
@@ -652,6 +655,7 @@
             <img src="@/assets/rem/performance/01cai.gif" alt="" class="img5" />
             <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
             <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
+            <!-- <img src="@/assets/rem/performance/max-speed-1.gif" alt="" class="speed"> -->
           </div>
           <div class="rightBox">
             <div class="v1">
@@ -1366,11 +1370,11 @@
                       min-width="100"
                       :key="index"
                       :prop="item.code"
-                      :label="item.name"
+                      :label="`${item.name }\n${ item.unit}`"
                       align="center"
                       width="260px"
                     >
-                      <template #header v-if="item.code != 'djl' && item.code != 'cyqd'">
+                      <template #header v-if="item.code == 'yjgk' || item.code == 'gpgx'">
                         <div v-if="item.isTwoHeader">
                           <span>{{ item.name }}</span>
                           <br />
@@ -1380,7 +1384,10 @@
                           <span>{{ item.name }}</span>
                         </div>
                       </template>
-                      <template slot-scope="scope" v-if="item.code != 'djl' && item.code != 'cyqd'">
+                      <template
+                        slot-scope="scope"
+                        v-if="scope.row[item.code] == null || item.code == 'yjgk' || item.code == 'gpgx'"
+                      >
                         <span class="1" v-if="scope.row[item.code] == null"></span>
                         <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{
                           scope.row[item.code].showLabel ? scope.row[item.code].showLabel : "-"
@@ -1416,7 +1423,7 @@
                           />
                         </span>
                       </template>
-                      <template v-if="item.code == 'djl' || item.code == 'cyqd'">
+                      <template v-if="item.code != 'yjgk' || item.code != 'gpgx'">
                         <el-table-column min-width="100" label="区块均值" align="center">
                           <template slot-scope="scope">
                             <span style="display: flex; align-items: center; justify-content: center">
@@ -1820,10 +1827,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -2827,6 +2833,10 @@ export default {
         position: absolute;
         left: 0;
         top: 0;
+        .speed {
+          width: 100%;
+          height: 100%;
+        }
         .img1 {
           width: 100%;
           height: 100%;
@@ -3502,9 +3512,10 @@ export default {
 ::v-deep .el-table__fixed-header-wrapper .cell,
 ::v-deep .el-table__header-wrapper .cell {
   height: auto !important;
-  line-height: 30px !important;
+  line-height: 1.5 !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
+  white-space: pre !important;
 }
 </style>

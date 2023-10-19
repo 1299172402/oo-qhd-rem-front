@@ -7,18 +7,17 @@
                 element-loading-background="rgb(0, 40, 80, 0.6)"
                 :data="tableData"
                 :header-cell-style="headerClass">
-        <el-table-column prop="fileName" label="文件类型"  min-width="40"  align="center" ></el-table-column>
-        <el-table-column prop="uploadedFileNum" label="已上传文件个数" min-width="45" align="center">
+        <el-table-column prop="fileName" label="文件类型"  min-width="35"  align="center" ></el-table-column>
+        <el-table-column prop="uploadedFileNum" label="已上传文件个数" min-width="40" align="center">
           <template v-slot="scope">
             {{ scope.row.uploadedFileNum }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="235">
+        <el-table-column label="操作" align="center">
           <el-table-column align="right">
             <template v-slot="scope">
               <!-- 路由跳转 -->
-              <el-row >
-                <el-upload style="border: none !important;"
+                <el-upload 
                     class="upload-file"
                     ref="upload"
                     action=""
@@ -28,62 +27,49 @@
                     :accept="scope.row.accept"
                     :file-list="fileList"
                     :on-change="(file,fileList)=>{return handleChange(file, fileList, scope.row, scope.$index)}">
-                    
-                    <el-row type="flex" justify="space-around">
-                      <el-button
-                             style="width:65px;height:25px;line-height:10px;padding-left:10px;background-color: transparent;color: rgba(255,255,255,0.8);border: 1px dashed rgba(255,255,255,0.5)"
-                             size="mini" icon="el-icon-thumb" @click="choose(scope.$index,scope.row)">
-                    <span style="font-size:13px">选择</span>
+                      <el-button type="text" style="color: white;"
+                              icon="el-icon-thumb" @click="choose(scope.$index,scope.row)">选择
                   </el-button>
-                  <el-button class="buttonClassLogo"
-                      style="width:65px;height:25px;line-height:10px;margin-left: 5px;padding-left:10px;background-color: transparent;color: rgba(255,255,255,0.8);border: 1px dashed rgba(255,255,255,0.5)"
-                      size="mini" icon="el-icon-upload2"
-                      @click.stop="uploadFiles(scope.row,scope.$index)">
-                    <span style="font-size:13px;">上传</span>
+                  <el-button type="text" icon="el-icon-upload2" style="color: white;"
+                      @click.stop="uploadFiles(scope.row,scope.$index)">上传
                   </el-button>
-                  <el-button 
-                             size="mini" icon="el-icon-upload"
-                             class="buttonClassLogo"
-                             style="width:65px;height:25px;line-height:10px;margin-left: 5px;padding-left:10px;background-color: transparent;color: rgba(109,187,230,0.8);border: 1px dashed rgba(255,255,255,0.5)"
-                             @click.stop="updateFileType(scope.row)">
-                    <span style="font-size:13px">查看</span>
+                  <el-button  type="text"
+                              icon="el-icon-upload"
+                             @click.stop="updateFileType(scope.row)">查看
                   </el-button>
-                    </el-row>
                 
                   <!-- 查看已上传文件 -->
                   <el-row slot="tip">
                     <el-dialog
                         title="已上传优化文件"
-                        :close-on-click-modal="false"
+                        :close-on-click-modal="false" :show-close="false"
                         :visible.sync="uploadFileDialogVisible"
                         :modal="false"
-                        width="715px"
-                        footer=""
-                        style="text-align: center;margin-top: 180px;margin-left: 190px">
-                      <el-table :data="uploadFileList" height="500" v-loading="fileDeleteLoading"
+                        width="44%"
+                        style="margin-top: 180px;margin-left: 190px">
+                      <el-table :data="uploadFileList" height="480" v-loading="fileDeleteLoading"
                                 element-loading-text="删除中" element-loading-background="rgb(0, 40, 80, 0.6)"
-                                style="width: 715px;top: -30px;font-size: 14px"
-                                :header-cell-style="headerClassFile" :cell-style="cellFontStyle">
-                        <el-table-column prop="fileName" label="文件名称" width="400"  align="center"></el-table-column>
-                        <el-table-column prop="isParseFlag" label="文件状态" width="100" align="center">
+                                style="font-size: 14px"
+                                :row-style="{ height: '0px' }"
+                                :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
+                                header-cell-class-name="table_header" :cell-style="cellFontStyle">
+                        <el-table-column prop="fileName" label="文件名称"  min-width="100"  align="center"></el-table-column>
+                        <el-table-column prop="isParseFlag" label="文件状态"  min-width="40" align="center">
                           <template v-slot="scope">
                             <div :style="{'color':scope.row.isParseFlag == 1? 'orange':scope.row.isParseFlag == -1? 'red' : 'green' }">
                               <span>{{ scope.row.isParseFlag == 1? "已解析": scope.row.isParseFlag == 0 ? "未解析" : "解析错误"}}</span>
                             </div>
                           </template>
                         </el-table-column>
-                        <el-table-column prop="operate" label="操作" align="center">
+                        <el-table-column prop="operate" label="操作" min-width="40" align="center">
                           <template v-slot="scope">
-                            <el-button class="buttonClassLogo"
-                                style="background-color: transparent;color: rgba(109,187,230,0.8);border: 1px dashed rgba(255,255,255,0.5)"
-                                       size="mini" icon="el-icon-delete"
-                                       @click="deleteFile(scope.row)">
-                              <span style="font-size:14px">删除</span>
+                            <el-button type="text" icon="el-icon-delete" style="color: #f56c6c;"
+                                       @click="deleteFile(scope.row)">删除
                             </el-button>
                           </template>
                         </el-table-column>
                       </el-table>
-                      <el-row style="text-align: center; margin-top: -10px;float: right">
+                      <el-row style="text-align: center;line-height: 50px;float: right">
                         <el-button :disabled="exitShowButton" @click="function(){ uploadFileDialogVisible = false }" 
                           size="small" type="primary"
                                    >退出查看</el-button>
@@ -91,11 +77,10 @@
                     </el-dialog>
                   </el-row>
                 </el-upload>
-              </el-row>
             </template>
           </el-table-column>
 
-          <el-table-column align="left" min-width="55">
+          <el-table-column align="left" min-width="50">
             <template v-slot="scope">
               <span slot="tip" class="el-upload__tip" style="font-size: 14px;color: #6DBBE6" >允许上传“{{ scope.row.fileType }}”</span>
             </template>
@@ -196,18 +181,8 @@ export default {
         return {display:'none',
           border:'none!important'}
       }
-      return 'background-color:transparent!important;' +
-          'color:white;' +
-          'font-size:14px' +
-          'text-align:center!important'
     },
-    //查看文件表格表头样式
-    headerClassFile() {
-      return 'background-color:transparent!important;' +
-          'color:white;' +
-          'font-size:14px' +
-          'text-align:center!important'
-    },
+    
     //解析状态文字颜色
     cellFontStyle({ row, column, rowIndex, columnIndex }) {
       // 状态列字体颜色
@@ -423,5 +398,15 @@ export default {
 <style lang="scss" scoped>
 .tablebody ::v-deep.el-table--border .el-table__cell {
     border-right:#012733 !important;
+}
+::v-deep .el-upload {
+    width: 93% !important;
+    margin-top: 0px !important;
+}
+::v-deep .el-upload--text {
+    border: 0px !important;
+}
+::v-deep .el-dialog__header{
+    text-align: left;
 }
 </style>
