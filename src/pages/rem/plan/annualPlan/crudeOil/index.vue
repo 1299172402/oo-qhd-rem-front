@@ -125,7 +125,8 @@ export default {
             },
           },
         },
-        color: ["#1379F7", "#FF5844", "#69b146", "#00BC9C", "#9A72FF", "#DA835E"],
+        // color: ["#1379F7", "#FF5844", "#69b146", "#00BC9C", "#9A72FF", "#DA835E"],
+        color: ["#1379F7", "#DA835E", "#69b146", "#9A72FF", "#FF5844", "#FF5844"],
         tooltip: {
           trigger: "axis",
           axisPointer: {
