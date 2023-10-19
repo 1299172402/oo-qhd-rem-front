@@ -72,7 +72,7 @@
             </el-table-column>
             <el-table-column prop="workingreserve" min-width="110" label-class-name="twoRowHeader">
                 <template #header>
-                    <div><span>动用地质储量</span><br><span style="font-size: 12px">（10⁴t）</span></div>
+                    <div><span>动用地质储量</span><br><span style="font-size: 12px">（10⁴m³）</span></div>
                 </template>
             </el-table-column>
             <el-table-column prop="outputSpeed" min-width="100" label-class-name="twoRowHeader">

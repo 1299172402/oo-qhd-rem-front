@@ -430,15 +430,15 @@
                                     ? parseFloat(scope.row[item.code].average).toFixed(2)
                                     : ""
                                 } /`
-                              : ""
+                              : "-"
                           }}
-                          {{ replaceStr(scope.row[item.code].showLabel) }}
+                          {{ replaceStr(scope.row[item.code].showLabel) || "-" }}
                           {{
                             scope.row[item.code].value
                               ? parseFloat(scope.row[item.code].value).toFixed(2)
                               : !replaceStr(scope.row[item.code].showLabel)
                               ? "-"
-                              : ""
+                              : "-"
                           }}
                           <img
                             src="@/assets/rem/yieId/upTriangle.png"
@@ -462,9 +462,9 @@
                                       !isNaN(parseFloat(scope.row[item.code].average)) &&
                                       typeof parseFloat(scope.row[item.code].average) === "number"
                                         ? parseFloat(scope.row[item.code].average).toFixed(2)
-                                        : ""
+                                        : "-"
                                     }`
-                                  : ""
+                                  : "-"
                               }}
                             </span>
                           </template>
@@ -477,7 +477,7 @@
                                   ? parseFloat(scope.row[item.code].value).toFixed(2)
                                   : !replaceStr(scope.row[item.code].showLabel)
                                   ? "-"
-                                  : ""
+                                  : "-"
                               }}
                             </span>
                           </template>
@@ -485,7 +485,7 @@
                         <el-table-column min-width="100" label="评价结论" align="center">
                           <template slot-scope="scope">
                             <span style="display: flex; align-items: center; justify-content: center">
-                              {{ replaceStr(scope.row[item.code].showLabel) }}
+                              {{ replaceStr(scope.row[item.code].showLabel) || "-"}}
                               <img
                                 src="@/assets/rem/yieId/upTriangle.png"
                                 v-if="replaceStr(scope.row[item.code].showLabel) == '偏高'"
@@ -1401,15 +1401,15 @@
                                     ? parseFloat(scope.row[item.code].average).toFixed(2)
                                     : ""
                                 } /`
-                              : ""
+                              : "-"
                           }}
-                          {{ replaceStr(scope.row[item.code].showLabel) }}
+                          {{ replaceStr(scope.row[item.code].showLabel) || "-" }}
                           {{
                             scope.row[item.code].value
                               ? parseFloat(scope.row[item.code].value).toFixed(2)
                               : !replaceStr(scope.row[item.code].showLabel)
                               ? "-"
-                              : ""
+                              : "-"
                           }}
                           <img
                             src="@/assets/rem/yieId/upTriangle.png"
@@ -1433,9 +1433,9 @@
                                       !isNaN(parseFloat(scope.row[item.code].average)) &&
                                       typeof parseFloat(scope.row[item.code].average) === "number"
                                         ? parseFloat(scope.row[item.code].average).toFixed(2)
-                                        : ""
+                                        : "-"
                                     }`
-                                  : ""
+                                  : "-"
                               }}
                             </span>
                           </template>
@@ -1448,7 +1448,7 @@
                                   ? parseFloat(scope.row[item.code].value).toFixed(2)
                                   : !replaceStr(scope.row[item.code].showLabel)
                                   ? "-"
-                                  : ""
+                                  : "-"
                               }}
                             </span>
                           </template>
@@ -1456,7 +1456,7 @@
                         <el-table-column min-width="100" label="评价结论" align="center">
                           <template slot-scope="scope">
                             <span style="display: flex; align-items: center; justify-content: center">
-                              {{ replaceStr(scope.row[item.code].showLabel) }}
+                              {{ replaceStr(scope.row[item.code].showLabel) || "-" }}
                               <img
                                 src="@/assets/rem/yieId/upTriangle.png"
                                 v-if="replaceStr(scope.row[item.code].showLabel) == '偏高'"
