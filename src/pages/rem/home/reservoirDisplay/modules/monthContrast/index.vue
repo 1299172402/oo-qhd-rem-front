@@ -167,7 +167,7 @@ export default {
                 this.histogram.yAxis[0].min = null
                 this.histogram.yAxis[0].max = null
                 this.histogram.series[0].data = res.data.data.monthlyPlannedOutputVo.map(item => {
-                    return Number(item.allocProdMonthly).toFixed(4)
+                    return Number(item.allocProdMonthly / 10000).toFixed(4)
                 })
                 this.histogram.series[1].data = res.data.data.monthlyActualOutputVoList.map(item => {
                     return Number(item.checkedProdMonthly / 10000).toFixed(4)
