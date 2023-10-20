@@ -224,9 +224,9 @@
             <!--  模型运算  -->
            
         </pagePanelNew>
-        <pagePanelNew v-else style="height: 100%">
-        <modelOperation ref="modelOpreation" style="height: 100%"></modelOperation>
-        </pagePanelNew>
+        
+        <modelOperation v-else ref="modelOpreation" style="height: 100%"></modelOperation>
+        
         
     </div>
 </template>
@@ -372,7 +372,7 @@ export default {
         },
         // table表格单位换行
         renderheader(h, {column, $index}) {
-            return h('span', {}, [
+            return h('span', {}, [     
                 h('span', {}, column.label.split('?')[0]),
                 h('br'),
                 h('span', {}, column.label.split('?')[1])
