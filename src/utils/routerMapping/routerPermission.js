@@ -116,10 +116,10 @@ const GenerateRouter = {
   "AnalysisAbnormal": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/analysisAbnormal.vue"),
   "StatisticalTableProduction": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/statisticalTableProduction.vue"),
   "ProductionSituationPrediction": () => import("@/pages/rem/yield/productionSituationPrediction/index.vue"), 
-   "ModelMain": () => import("@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue"),
-   "ModelManager": () => import("@/pages/rem/intelligence/optimization/modelOperation/modelManager.vue"),
+   "ModelOperation\modelMain": () => import("@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue"),
+   "ModelOperation\modelManager": () => import("@/pages/rem/intelligence/optimization/modelOperation/modelManager.vue"),
     
-
+  // 
   // "": () => import(""),
   // "": () => import(""),
   // "": () => import(""),
