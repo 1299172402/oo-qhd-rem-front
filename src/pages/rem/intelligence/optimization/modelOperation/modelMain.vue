@@ -1,52 +1,53 @@
 <template>
     <div style="height: 100%" >
-        <el-row v-loading="fileParseLoading" element-loading-text="加载中"
+        <pagePanelNew  style="height: 100%">
+            <el-row v-loading="fileParseLoading" element-loading-text="加载中"
                 element-loading-background="rgba(0, 40, 80, 0.7)"
-                style=" left: -20px; top: -15px; border: none !important;height: 100%">
+                style=" margin-left: -20px; margin-top: -15px; border: none !important;height: 100%">
             <!-- 模型管理  油藏优化模型 -->
-            <el-card class="modelManagerClass" v-show="modelManagerDialog" style="height: 100%;">
-                <el-button type="primary" @click="returnMainScreen" 
-                           style="position: absolute;top: 10px;left:1510px;z-index: 10">返回主界面</el-button>
-                <modelManager ref="modelManager" 
-                              @fatherMethod="getResultCaseId"></modelManager>
-            </el-card>
+<!--            <el-card class="modelManagerClass" v-show="modelManagerDialog" style="height: 100%;">-->
+<!--                <el-button type="primary" @click="returnMainScreen" -->
+<!--                           style="position: absolute;top: 10px;left:1510px;z-index: 10">返回主界面</el-button>-->
+<!--                <modelManager ref="modelManager" -->
+<!--                              @fatherMethod="getResultCaseId"></modelManager>-->
+<!--            </el-card>-->
             <!-- 模型运算界面 优化方案区块指标和剩余油分布图 + 模型代码 -->
-            <div v-show="ModelYunSuan" style="height: 100%">
-                <!-- 五个按钮 -->
-                <el-row>
-                    <el-button size="small" type="primary" @click="modelManager">模型管理</el-button>
-                    <el-button size="small" type="primary" @click="modelUpload">数据上传</el-button>
-                    <el-button size="small" type="primary" @click="lookParam" :disabled="this.modelBasicInfo.modelStep == 0 ? true : false">调控参数</el-button>
-                    <div style="float: right;margin-right: -40px;">
-                        <el-button size="small" type="primary" @click="getRunModelTest">模型运行</el-button>
-                        <el-button size="small" type="primary" @click="schDownload">预测方案</el-button>
-                        <el-button size="small" type="primary" @click="resultUpload" :disabled="this.modelBasicInfo.modelStep == 0 ? true : false">结果上传</el-button>
-                    </div>
-                    <el-image :src="require('@/icons/svg/bj.png')" style="width: 102.5%; height: 20px"></el-image>
-                    <div style="z-index: 3;color: #40c2d4; text-align: center; margin-top: -48px;
-                            margin-left: 280px; font-size: 22px;"> 模型运算 </div>
-                </el-row>
-                <!--  解析文件Loading + echarts图表 + 剩余油分布图  -->
-                <el-row :gutter="15" type="flex" style="height: calc(100% - 20px )" justify="center">
-                    <el-col :span="12" style="margin-top:10px;height: 90%">
-                        <!--  echarts图表  -->
-                        <pagePanel headerTitle="优化方案区块指标"  :show-btn="true" style="height:100%">
-                            <blockIndicators ref="blockIndicators" :modelBasicInfo="modelBasicInfo"></blockIndicators>
-                        </pagePanel>
-                    </el-col>
-                    <!--  剩余油分布图  -->
-                    <el-col :span="12" style="margin-top:10px;margin-right: -40px;height: 90%">
-                        <pagePanel headerTitle="剩余油分布图" @zoom-out-com="zoomOutComNew" :show-btn="true" style="height:100%">
-                            <surplusOil ref="surplusOil" :modelBasicInfo="modelBasicInfo"></surplusOil>
-                        </pagePanel>
-                    </el-col>
-                </el-row>
-                <!--  显示模型代码  -->
-                <el-row style="float: right; margin-top: -46px; font-size: 14px; margin-right: -10px">
-                    <span style="color: white">模型代码：</span>
-                    <span style="color: #40c2d4">{{ modelBasicInfo.modelCode }}</span>
-                </el-row>
-            </div>
+<!--            <div v-show="ModelYunSuan" style="height: 100%">-->
+            <!-- 五个按钮 -->
+            <el-row>
+                <el-button size="small" type="primary" @click="modelManager">模型管理</el-button>
+                <el-button size="small" type="primary" @click="modelUpload">数据上传</el-button>
+                <el-button size="small" type="primary" @click="lookParam" :disabled="this.modelBasicInfo.modelStep == 0 ? true : false">调控参数</el-button>
+                <div style="float: right;margin-right: -20px;">
+                    <el-button size="small" type="primary" @click="getRunModelTest">模型运行</el-button>
+                    <el-button size="small" type="primary" @click="schDownload">预测方案</el-button>
+                    <el-button size="small" type="primary" @click="resultUpload" :disabled="this.modelBasicInfo.modelStep == 0 ? true : false">结果上传</el-button>
+                </div>
+                <el-image :src="require('@/icons/svg/bj.png')" style="width: 101.3%; height: 20px"></el-image>
+                <div style="z-index: 3;color: #40c2d4; text-align: center; margin-top: -48px;
+                        margin-left: 310px; font-size: 22px;"> 模型运算 </div>
+            </el-row>
+            <!--  解析文件Loading + echarts图表 + 剩余油分布图  -->
+            <el-row :gutter="15" type="flex" style="height: calc(100% - 20px )" justify="center">
+                <el-col :span="12" style="margin-top:10px;height: 90%;margin-left: -20px">
+                    <!--  echarts图表  -->
+                    <pagePanel headerTitle="优化方案区块指标"  :show-btn="true" style="height:100%">
+                        <blockIndicators ref="blockIndicators" :modelBasicInfo="modelBasicInfo"></blockIndicators>
+                    </pagePanel>
+                </el-col>
+                <!--  剩余油分布图  -->
+                <el-col :span="12" style="margin-top:10px;margin-right: -40px;height: 90%">
+                    <pagePanel headerTitle="剩余油分布图" @zoom-out-com="zoomOutComNew" :show-btn="true" style="height:100%">
+                        <surplusOil ref="surplusOil" :modelBasicInfo="modelBasicInfo"></surplusOil>
+                    </pagePanel>
+                </el-col>
+            </el-row>
+            <!--  显示模型代码  -->
+            <el-row style="float: right; margin-top: -46px; font-size: 14px; margin-right: -10px">
+                <span style="color: white">模型代码：</span>
+                <span style="color: #40c2d4">{{ modelBasicInfo.modelCode }}</span>
+            </el-row>
+<!--            </div>-->
             <!-- 1、上传历史阶段文件dialog -->
             <div>
                 <el-dialog title="上传历史阶段文件" 
@@ -261,6 +262,7 @@
                     </div>
                 </el-dialog>
         </el-row>
+        </pagePanelNew>
     </div>
 </template>
 
@@ -598,7 +600,11 @@ export default {
             },
         }
     },
-    mounted() {
+    // mounted() {
+    //     this.getCaseId()
+    //     this.getCaseByMax()
+    // },
+    created() {
         this.getCaseId()
     },
     methods: {
@@ -608,8 +614,8 @@ export default {
         //创建新的方案和查看结果都需要传id，一共两个id
         //三个
         getCaseId(){
-            var flag = this.modelId
-            console.log('flag',flag)
+            var flag = this.$route.params.modelParams
+            console.log('ymtz',flag)
             if(flag != undefined){
                 this.getResultCaseId(flag)
             }
@@ -620,7 +626,6 @@ export default {
         },
         //接收模型管理页面传过来的id
         getResultCaseId(id) {
-            this.modelId = id
             //通过caseId获取一条方案信息
             const param = {
                 modelBasicId: id
@@ -636,13 +641,13 @@ export default {
                 this.modelBasicInfo.modelSubmitNum = res.result.modelBasicEntity.modelSubmitNum;
                 this.modelBasicInfo.modelRun = res.result.modelBasicEntity.modelRunNum;
                 console.log("方案idmodelrun", this.modelBasicInfo.modelRun)
-                this.$refs.blockIndicators.run();
-                this.$refs.surplusOil.run();
+                // this.$refs.blockIndicators.run();
+                // this.$refs.surplusOil.run();
             }).catch(err => {
                 console.log(err)
             });
-            this.ModelYunSuan = true
-            this.modelManagerDialog = false
+            // this.ModelYunSuan = true
+            // this.modelManagerDialog = false
         },
         //获取最新方案方法--智能配注请求后台
         getCaseByMax() {
@@ -666,11 +671,11 @@ export default {
         },
         
         // 模型管理页面返回主界面
-        returnMainScreen(){
-            this.modelManagerDialog = false
-            this.ModelYunSuan = true
-            this.getCaseByMax()
-        },
+        // returnMainScreen(){
+        //     this.modelManagerDialog = false
+        //     this.ModelYunSuan = true
+        //     this.getCaseByMax()
+        // },
         //表格单位换行
         renderHeader(h, { column }) {
             return h("span", {}, [
@@ -846,8 +851,9 @@ export default {
         },
         //点击模型管理按钮
         modelManager() {
-            this.modelManagerDialog = true;
-            this.ModelYunSuan = false
+            // this.modelManagerDialog = true;
+            // this.ModelYunSuan = false
+            this.$router.push({name: 'ModelManager'})
         },
         closeDialogF() {
             // this.zhezhao = false;

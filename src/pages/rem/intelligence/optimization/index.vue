@@ -224,9 +224,9 @@
             <!--  模型运算  -->
            
         </pagePanelNew>
-        <pagePanelNew v-else style="height: 100%">
-        <modelOperation ref="modelOpreation" style="height: 100%"></modelOperation>
-        </pagePanelNew>
+        
+        <modelOperation v-else ref="modelOpreation" style="height: 100%"></modelOperation>
+        
         
     </div>
 </template>
