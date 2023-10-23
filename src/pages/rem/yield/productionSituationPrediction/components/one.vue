@@ -614,8 +614,8 @@ export default {
         unit2 = "";
       switch (this.searchForm.unitType) {
         case "t":
-          unit1 = "吨";
-          unit2 = "吨";
+          unit1 = "t";
+          unit2 = "t";
           break;
         case "m":
           unit1 = "m³";
