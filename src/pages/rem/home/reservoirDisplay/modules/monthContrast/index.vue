@@ -186,7 +186,7 @@ export default {
         },
     },
     watch: {
-        getGlobeTheme: {
+        getGlobeTheme: { 
             immediate: true,
             handler(Nval) {
                 if (Nval == "dark") {

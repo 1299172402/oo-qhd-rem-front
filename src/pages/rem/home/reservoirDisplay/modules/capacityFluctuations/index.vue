@@ -20,7 +20,9 @@ import {LineChart} from "echarts/charts";
 import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
-
+import {
+    outputTracingAnalysis,
+} from "@/api/oilDeposit/rem-02/outputmanagement.js";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 export default {
     props: ["infodata"],
@@ -160,36 +162,49 @@ export default {
             this.$refs.echartChart.chartDownLoad( '产能波动');
         },
         getinfo() {
-            var today = new Date();
-            var yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
-            var yesterdayStr = yesterday.toISOString().slice(0,10);
-            var beforeYesterday = new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000);
-            var beforeYesterdayStr = beforeYesterday.toISOString().slice(0,10);
-            let pormps = {
-                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                platId: "",
-                prodDate: yesterdayStr,
-                prodDateCompare: beforeYesterdayStr
+           let date = [new Date().addDays(-30).format("yyyy-MM-dd"), new Date().addDays(-1).format("yyyy-MM-dd")];
+            let data =  {
+                beginDate: date[0],
+                endDate: date[1],
+            fieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+            outputUnit: "m",
+            wellId: "3FC9A818F5BC43B88270DB80BBB3018F",
             }
-            getYieldFluctuation(pormps).then((res) => {
-                this.histogram.yAxis.min = null
-                this.histogram.yAxis.max = null
-                var previousDay = new Date(res.data.data.maxProdDate);
-                var previousDayTimestamp = previousDay.getTime() - (24 * 60 * 60 * 1000);
-                previousDay.setTime(previousDayTimestamp);
-                this.prodDate = res.data.data.maxProdDate
-                this.prodDateCompare = previousDay.format("yyyy-MM-dd")
-                res.data.data.xdata.forEach((item) => {
-                    if(item.indexOf('以上')!=-1){
-                        this.histogram.xAxis.data.push(item.replace(/以上/,'(m³)以上'))
-                    }else{
-                        this.histogram.xAxis.data.push(item+'(m³)')
-                    }
-                });
-                res.data.data.ydata.forEach((item) => {
-                    this.histogram.series[0].data.push(item)
-                });
+            outputTracingAnalysis(data).then((res)=>{
+                let yesterdayStr = res.data.data.chart.linearDataSets[0].linearData[res.data.data.chart.linearDataSets[0].linearData.length - 1].label
+                var dd = new Date(yesterdayStr);
+                dd.setDate(dd.getDate()  -1);
+                var y = dd.getFullYear();
+                var m = dd.getMonth() + 1 < 10 ? "0" + (dd.getMonth() + 1) : dd.getMonth() + 1;
+                var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
+                console.log()
+                let pormps = {
+                    ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                    platId: "",
+                    prodDate: yesterdayStr,
+                    prodDateCompare: y + "-" + m + "-" + d
+                }
+                getYieldFluctuation(pormps).then((res) => {
+                    this.histogram.yAxis.min = null
+                    this.histogram.yAxis.max = null
+                    var previousDay = new Date(res.data.data.maxProdDate);
+                    var previousDayTimestamp = previousDay.getTime() - (24 * 60 * 60 * 1000);
+                    previousDay.setTime(previousDayTimestamp);
+                    this.prodDate = res.data.data.maxProdDate
+                    this.prodDateCompare = previousDay.format("yyyy-MM-dd")
+                    res.data.data.xdata.forEach((item) => {
+                        if(item.indexOf('以上')!=-1){
+                            this.histogram.xAxis.data.push(item.replace(/以上/,'(m³)以上'))
+                        }else{
+                            this.histogram.xAxis.data.push(item+'(m³)')
+                        }
+                    });
+                    res.data.data.ydata.forEach((item) => {
+                        this.histogram.series[0].data.push(item)
+                    });
+                })
             })
+           
         }
     },
    
