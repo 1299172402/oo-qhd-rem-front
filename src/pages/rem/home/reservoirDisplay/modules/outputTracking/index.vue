@@ -75,8 +75,8 @@ export default {
                 },
                 grid: {
                     top: "8%",
-                    left: "5%",
-                    right: "7%",
+                    left: "6%",
+                    right: "6%",
                     bottom: "22%",
                 },
                 dataZoom: {
