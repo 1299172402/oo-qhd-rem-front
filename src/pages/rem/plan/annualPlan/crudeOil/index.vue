@@ -162,13 +162,13 @@ export default {
               color: "#8FA4CC",
               fontSize: 14,
               padding: [10, 0, 0, 0],
-              interval: function (index, val) {
-                if (val.substr(-2) == "01") {
-                  return true;
-                } else {
-                  return false;
-                }
-              },
+              // interval: function (index, val) {
+              //   if (val.substr(-2) == "01") {
+              //     return true;
+              //   } else {
+              //     return false;
+              //   }
+              // },
               // formatter:function(value, index){
               //     return value.substring(0,7);
               // }
