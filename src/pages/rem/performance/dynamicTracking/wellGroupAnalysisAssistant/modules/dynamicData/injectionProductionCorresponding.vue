@@ -34,7 +34,7 @@
         <el-table
           id="tableData1"
           :data="wellInjCurves"
-          :border="false"
+          border
           :row-style="{ height: '0px' }"
           header-cell-class-name="table_header"
           :cell-style="{ padding: '6px', 'text-align': 'center' }"
@@ -43,7 +43,7 @@
           :default-sort="{ prop: 'date', order: 'descending' }"
           :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         >
-          <el-table-column type="index" label="序号"></el-table-column>
+          <el-table-column type="index" label="序号" width="80"></el-table-column>
           <el-table-column prop="time" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
           <el-table-column prop="injDaily" :label="`日注水量\n(m³)`" :formatter="toPrecise2"></el-table-column>
           <el-table-column prop="cgsPress" :label="`套压\n(MPa)`" :formatter="toPrecise2"></el-table-column>
@@ -57,7 +57,7 @@
         <el-table
           id="tableData2"
           :data="wellOilCurves"
-          :border="false"
+          border
           :row-style="{ height: '0px' }"
           header-cell-class-name="table_header"
           :cell-style="{ padding: '6px', 'text-align': 'center' }"
@@ -66,7 +66,7 @@
           :default-sort="{ prop: 'date', order: 'descending' }"
           :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
         >
-          <el-table-column type="index" label="序号"></el-table-column>
+          <el-table-column type="index" label="序号" width="80"></el-table-column>
           <el-table-column prop="time" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
           <el-table-column prop="flowingPress" :label="`流压\n(MPa)`" :formatter="toPrecise2"></el-table-column>
           <el-table-column prop="oilPress" :label="`油压\n(MPa)`" :formatter="toPrecise2"></el-table-column>

@@ -399,7 +399,7 @@
                       min-width="120"
                       :key="index"
                       :prop="item.code"
-                      :label="`${item.name }\n${ item.unit}`"
+                      :label="`${item.name}\n${item.unit}`"
                       align="center"
                       width="180px"
                     >
@@ -485,7 +485,7 @@
                         <el-table-column min-width="100" label="评价结论" align="center">
                           <template slot-scope="scope">
                             <span style="display: flex; align-items: center; justify-content: center">
-                              {{ replaceStr(scope.row[item.code].showLabel) || "-"}}
+                              {{ replaceStr(scope.row[item.code].showLabel) || "-" }}
                               <img
                                 src="@/assets/rem/yieId/upTriangle.png"
                                 v-if="replaceStr(scope.row[item.code].showLabel) == '偏高'"
@@ -652,11 +652,13 @@
             <img src="@/assets/rem/performance/jing-small.png" alt="" class="img2" />
             <img src="@/assets/rem/performance/shui-donghua.gif" alt="" class="img3" />
             <img src="@/assets/rem/performance/di.png" alt="" class="img4" />
-            <img src="@/assets/rem/performance/01cai.gif" alt="" class="img5" />
+            <img src="@/assets/rem/performance/01cai.gif" alt="" class="img5" /> 
             <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
-            <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else /> -->
-            <img v-if="$store.state.setting.mode === 'light'" src="@/assets/rem/performance/youjing.gif" alt="" class="speed">
-            <img v-else src="@/assets/rem/performance/youjing-black.gif" alt="" class="speed">
+            <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
+            -->
+            <img src="@/assets/rem/performance/youjing.gif" alt="" class="speed" />
+            <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
+            <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
           </div>
           <div class="rightBox">
             <div class="v1">
@@ -1371,7 +1373,7 @@
                       min-width="100"
                       :key="index"
                       :prop="item.code"
-                      :label="`${item.name }\n${ item.unit}`"
+                      :label="`${item.name}\n${item.unit}`"
                       align="center"
                       width="260px"
                     >

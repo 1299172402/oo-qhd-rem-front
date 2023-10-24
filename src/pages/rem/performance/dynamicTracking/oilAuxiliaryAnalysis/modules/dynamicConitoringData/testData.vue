@@ -5,22 +5,22 @@
       <el-table
         id="tableData"
         :data="tableData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width: 100%; padding: 0 10px"
+        style="width: 100%"
         height="calc(100% - 10px)"
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
         <el-table-column type="index" label="序号" width="80"></el-table-column>
-        <el-table-column prop="borepipeNo" label="井号"></el-table-column>
+        <el-table-column prop="borepipeNo" label="井号" min-width="160"></el-table-column>
         <el-table-column prop="oilAnalyResultId" :label="`样品深度\n (m)`" :formatter="toPrecise2"></el-table-column>
         <el-table-column prop="testItemId" :label="`蜡含量\n (%)`" :formatter="toPrecise2"></el-table-column>
         <el-table-column prop="datasetClass" :label="`原油密度\n (g/cm³)`" :formatter="toPrecise2"></el-table-column>
         <el-table-column prop="sampleId" :label="`粘度\n (mPa.s)`" :formatter="toPrecise2"></el-table-column>
-        <el-table-column prop="remark" label="备注"></el-table-column>
+        <el-table-column prop="remark" label="备注" min-width="240"></el-table-column>
         <!-- <el-table-column prop="date" label="日期" width="100">
                         <template slot-scope="scope">
                           <span>{{scope.row.date | dateTimeFormat}}</span>

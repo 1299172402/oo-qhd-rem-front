@@ -81,24 +81,25 @@
                 下载
               </el-button>
             </div>
-            <el-table id="fzjcdhglmx" :data="tableData1" highlight height="calc(100% - 55px)">
+            <el-table id="fzjcdhglmx" :data="tableData1" border highlight height="calc(100% - 55px)">
               <!-- :index="formatIndex"  -->
               <el-table-column
                 label="序号"
                 header-align="center"
                 align="center"
                 type="index"
-                width="60"
+                width="80"
               ></el-table-column>
-              <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>
-              <el-table-column prop="wellNo" label="注水井号" align="center"></el-table-column>
-              <el-table-column prop="layerName" label="层段号" align="center"></el-table-column>
-              <el-table-column prop="statisticsDate" :label="`年月日\n(yyy/mm/dd)`" align="center"></el-table-column>
+              <el-table-column prop="ogfName" label="油田" align="center" min-width="140"></el-table-column>
+              <el-table-column prop="wellNo" label="注水井号" align="center" min-width="160"></el-table-column>
+              <el-table-column prop="layerName" label="层段号" align="center" min-width="220"></el-table-column>
+              <el-table-column prop="statisticsDate" :label="`年月日\n(yyy/mm/dd)`" align="center" min-width="120"></el-table-column>
               <el-table-column
                 prop="isUnqualified"
                 label="是否合格"
                 :formatter="formatterBoolean1"
                 align="center"
+                min-width="100"
               ></el-table-column>
             </el-table>
           </pagePanel>
@@ -124,16 +125,16 @@
                 下载
               </el-button>
             </div>
-            <el-table id="djcdhgmx" :data="tableData2" highlight height="calc(100% - 55px)">
+            <el-table id="djcdhgmx" :data="tableData2" border highlight height="calc(100% - 55px)">
               <!-- :index="formatIndex"  -->
               <el-table-column
                 label="序号"
                 header-align="center"
                 align="center"
                 type="index"
-                width="60"
+                width="80"
               ></el-table-column>
-              <el-table-column prop="wellNo" label="井号" align="center"></el-table-column>
+              <el-table-column prop="wellNo" label="井号" align="center" min-width="160"></el-table-column>
               <el-table-column
                 prop="isSplit"
                 label="是否分注"
@@ -340,10 +341,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.queryParams.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.queryParams.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.queryParams.companyId }).then((data) => {

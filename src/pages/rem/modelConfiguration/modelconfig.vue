@@ -87,6 +87,7 @@
           <el-table
             width="100%"
             height="100%"
+            border
             :row-style="{ height: '0px' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
             :data="tableData"

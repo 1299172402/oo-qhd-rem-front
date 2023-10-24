@@ -444,8 +444,10 @@
             <img src="@/assets/rem/performance/01cai.gif" alt="" class="img7" />
             <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
             <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else /> -->
-            <img v-if="$store.state.setting.mode === 'light'" src="@/assets/rem/performance/jingzu.gif" alt="" class="speed">
-            <img v-else src="@/assets/rem/performance/jingzu-black.gif" alt="" class="speed">
+            <img src="@/assets/rem/performance/jingzu.gif" alt="" class="speed" />
+            <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
+            <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
+            
           </div>
           <div class="rightBox">
             <div class="v1">
@@ -1955,7 +1957,7 @@ export default {
       .leftBox {
         width: 460px;
         // height:1240px;
-        height: 968px;
+        height: 1200px;
         position: relative;
         .speed {
           width: 100%;

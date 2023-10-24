@@ -276,7 +276,7 @@
                 </el-row>
               </div>
             </div>
-            <div style="flex: 1; min-height: 380px">
+            <div style="flex: 1; min-height: 680px">
               <pagePanel headerTitle="水井动态分析详情列表" style="margin-top: 0; height: 100%">
                 <div style="display: flex; justify-content: flex-end">
                   <el-button
@@ -537,12 +537,13 @@
             <img src="@/assets/rem/performance/jing-small.png" alt="" class="img2" />
             <img src="@/assets/rem/performance/shui-donghua.gif" alt="" class="img3" />
             <img src="@/assets/rem/performance/di.png" alt="" class="img4" />
-            <img src="@/assets/rem/performance/01zhu.gif" alt="" class="img5" /> -->
-            <img v-if="$store.state.setting.mode === 'light'" src="@/assets/rem/performance/shuijing.gif" alt="" class="speed">
-            <img v-else src="@/assets/rem/performance/shuijing-black.gif" alt="" class="speed">
+            <img src="@/assets/rem/performance/01zhu.gif" alt="" class="img5" /> 
             <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
             <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
-
+            -->
+            <img src="@/assets/rem/performance/shuijing.gif" alt="" class="speed" />
+            <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
+            <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
           </div>
           <div class="rightBox">
             <div class="v1">
@@ -2979,7 +2980,7 @@ export default {
       }
       .leftBox {
         width: 460px;
-        height: 968px;
+        height: 1208px;
         position: relative;
         .speed {
           width: 100%;

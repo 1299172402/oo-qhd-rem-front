@@ -1,4 +1,4 @@
- <!-- 动态监测完成率 -->
+<!-- 动态监测完成率 -->
 <template>
   <div class="app-container">
     <header-search style="width: 100%; height: 80px">
@@ -80,9 +80,9 @@
             下载
           </el-button>
         </div>
-        <el-table id="dtjcwcl" :data="tableData" highlight height="calc(100% - 55px)">
-          <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
-          <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>
+        <el-table id="dtjcwcl" :data="tableData" border highlight height="calc(100% - 55px)">
+          <el-table-column label="序号" header-align="center" align="center" type="index" width="80"></el-table-column>
+          <el-table-column prop="ogfName" label="油田" align="center" min-width="160"></el-table-column>
           <el-table-column :label="`动态监测计划\n(井次)`" align="center">
             <el-table-column prop="planNumberY" label="压力监测" align="center"></el-table-column>
             <el-table-column prop="planNumberC" label="产出剖面" align="center"></el-table-column>
@@ -234,9 +234,9 @@ export default {
             padding: [10, 0, 0, 0],
           },
           axisTick: {
-              show: true,
-              inside: true,
-            },
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -318,10 +318,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.queryParams.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.queryParams.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.queryParams.companyId }).then((data) => {
@@ -385,7 +384,8 @@ export default {
     },
     //动态监测完成率
     doDynamicMoniterFinshRate() {
-      this.oilFieldName = this.oilFieldList.filter((item) => item.ogfId === this.queryParams.oilFieldId)[0].ogfName || "";
+      this.oilFieldName =
+        this.oilFieldList.filter((item) => item.ogfId === this.queryParams.oilFieldId)[0].ogfName || "";
       dynamicMoniterFinshRate(this.queryParams).then((res) => {
         if (res.data.code == 200) {
           let legendData = [];

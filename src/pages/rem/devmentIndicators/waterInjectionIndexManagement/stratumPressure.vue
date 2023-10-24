@@ -74,8 +74,8 @@
             >下载</el-button
           >
         </div>
-        <el-table id="ysdcylbcsp" :data="tableData1" highlight height="calc(100% - 55px)">
-          <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
+        <el-table id="ysdcylbcsp" :data="tableData1" border highlight height="calc(100% - 55px)">
+          <el-table-column label="序号" header-align="center" align="center" type="index" width="80"></el-table-column>
           <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
           <el-table-column prop="layerName" label="层位/油组" align="center"></el-table-column>
           <el-table-column label="原始参数" align="center">
@@ -136,13 +136,13 @@
               >下载</el-button
             >
           </div>
-          <el-table id="djjymx" :data="tableData2" highlight height="calc(100% - 55px)">
+          <el-table id="djjymx" :data="tableData2" border highlight height="calc(100% - 55px)">
             <el-table-column
               label="序号"
               header-align="center"
               align="center"
               type="index"
-              width="60"
+              width="80"
             ></el-table-column>
             <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
             <el-table-column prop="layerName" label="层位/油组" align="center"></el-table-column>

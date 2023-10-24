@@ -49,7 +49,7 @@
           >
         </div>
         <div style="padding-bottom: 5px; height: calc(100% - 55px)">
-          <el-table id="tableData" :data="tableData" highlight height="100%">
+          <el-table id="tableData" :data="tableData" highlight border height="100%">
             <el-table-column
               prop="phase"
               label="开发阶段"
@@ -297,7 +297,7 @@
             >
           </div>
         </div>
-        <el-table id="kfxz" :data="tableData2" highlight height="400px">
+        <el-table id="kfxz" :data="tableData2" border highlight height="400px">
           <el-table-column
             prop="date"
             :label="`时间\n(yyyy-mm)`"

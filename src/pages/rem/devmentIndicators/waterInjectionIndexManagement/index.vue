@@ -196,7 +196,7 @@
             </div>
           </div>
         </div>
-        <el-table id="indexscv" :data="tableData" :key="Math.random()" highlight height="calc(100% - 55px)">
+        <el-table id="indexscv" :data="tableData" border :key="Math.random()" highlight height="calc(100% - 55px)">
           <el-table-column prop="name" label="指标" align="center"></el-table-column>
           <el-table-column prop="real" label="实际值" align="center" :formatter="formatterNumber"></el-table-column>
           <el-table-column prop="chain" label="环比 (上年/上月)" align="center">
@@ -283,7 +283,7 @@
           </el-table-column>
         </el-table>
       </pagePanel>
-      <pagePanel headerTitle="含水上升率" v-if="currentIndex == 5" style="height: 500px" show-btn>
+      <pagePanel headerTitle="含水上升率" v-if="currentIndex == 8" style="height: 500px" show-btn>
         <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 20px">
           <div class="g-row-flex-V" style="flex-wrap: wrap">
             <span>油藏分析单元：</span>
@@ -1272,43 +1272,43 @@ export default {
     cardClick(item, index) {
       this.queryParams.platFormId = "";
       // this.queryParams.year = "";
-      if (index == 1) {
+      if (item.title == "年注入量") {
         // 年注入量
         this.$router.push({
           name: "AnnualInjection",
           query: {},
         });
-      } else if (index == 2) {
+      } else if (item.title == "地层压力保持水平") {
         // 地层压力保持水平
         this.$router.push({
           name: "StratumPressure",
           query: {},
         });
-      } else if (index == 3) {
+      } else if (item.title == "注水水质达标率") {
         // 注水水质达标率
         this.$router.push({
           name: "WaterQuality",
           query: {},
         });
-      } else if (index == 4) {
+      } else if (item.title == "分注井层段合格率") {
         // 分注井层段合格率
         this.$router.push({
           name: "SplitHole",
           query: {},
         });
-      } else if (index == 6) {
+      } else if (item.title == "注水井分注率") {
         // 注水井分注率
         this.$router.push({
           name: "WaterInjectionWell",
           query: {},
         });
-      } else if (index == 7) {
+      } else if (item.title == "动态监测完成率") {
         // 动态监测完成率
         this.$router.push({
           name: "DynamicMonitoring",
           query: {},
         });
-      } else if (index == 8) {
+      } else if (item.title == "分注井测试率") {
         // 分注井测试率
         this.$router.push({
           name: "SplitWellTest",
@@ -1417,7 +1417,7 @@ export default {
       //注水指标管理
       if (this.currentIndex == 0) {
         this.doInjectionIndicatorStat();
-      } else if (this.currentIndex == 5) {
+      } else if (this.currentIndex == 8) {
         //含水上升率
         this.doRateOfmoistureRate();
       } else if (this.currentIndex == 9) {

@@ -33,38 +33,43 @@
       <el-table
         id="tableData"
         :data="oilYearData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        :cell-style="{ padding: '6px' }"
         style="width: 100%"
         height="calc(100% - 130px)"
         :default-sort="{ prop: 'date', order: 'descending' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        :header-cell-style="{ padding: '0px 0' }"
       >
-        <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
-        <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
+        <el-table-column type="index" align="center" label="序号" width="80" :index="tableIndex"></el-table-column>
+        <el-table-column prop="theDate" header-align="center" align="left" :label="`时间\n(yyyy-mm-dd)`">
+        </el-table-column>
         <el-table-column
           prop="injectionDailyReal"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`实际日注入量\n(m³)`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="injectionDailyPlan"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`计划日注入量\n(m³)`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           property="injectionSumReal"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`实际年累注\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="injectionSumPlan"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`计划年累注\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>

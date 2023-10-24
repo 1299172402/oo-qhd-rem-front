@@ -37,7 +37,7 @@
       <el-table
         id="tableData"
         :data="tableData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }"

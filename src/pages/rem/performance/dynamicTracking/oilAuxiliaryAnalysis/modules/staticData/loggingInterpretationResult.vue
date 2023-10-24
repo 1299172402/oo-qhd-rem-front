@@ -3,11 +3,11 @@
     <page-panel-new style="height: calc(100% - 101px); margin-top:0;" show-btn>
         <el-table 
             id="tableData"
-            :data="tableData" :border="false" :row-style="{ height: '0px' }"
+            :data="tableData" border :row-style="{ height: '0px' }"
             header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
             style="width:100%; " height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-            <el-table-column type="index" label="序号" fixed></el-table-column>
+            <el-table-column type="index" label="序号" width="80" fixed></el-table-column>
             <el-table-column prop="wellName" label="井号" width="130" fixed></el-table-column>
             <el-table-column prop="layerName" label="层号" width="200" fixed></el-table-column>
             <el-table-column prop="topMd" :label="`顶界斜深\n (m)`"  width="120" :formatter="toPrecise2"></el-table-column>

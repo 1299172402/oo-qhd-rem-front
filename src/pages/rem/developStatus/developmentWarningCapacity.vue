@@ -32,6 +32,7 @@
           <el-table
             ref="table1"
             :data="tableData"
+            border
             highlight
             :row-class-name="tableRowClassName"
             height="calc(100% - 130px)"
@@ -109,7 +110,7 @@
               下载
             </el-button>
           </div>
-          <el-table ref="table2" :data="tableData" highlight height="calc(100% - 130px)">
+          <el-table ref="table2" :data="tableData" border highlight height="calc(100% - 130px)">
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
@@ -215,7 +216,7 @@
               </div>
             </div>
           </div>
-          <el-table ref="table3" :data="tableData" highlight height="calc(100% - 130px)">
+          <el-table ref="table3" :data="tableData" border highlight height="calc(100% - 130px)">
             <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
@@ -277,6 +278,7 @@
           <el-table
             ref="table4"
             :data="tableData"
+            border
             highlight
             :row-class-name="tableRowClassName"
             height="calc(100% - 130px)"
@@ -354,7 +356,7 @@
               下载
             </el-button>
           </div>
-          <el-table ref="table5" :data="tableData" highlight height="calc(100% - 130px)">
+          <el-table ref="table5" :data="tableData" border highlight height="calc(100% - 130px)">
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"> </el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
@@ -461,7 +463,7 @@
               </div>
             </div>
           </div>
-          <el-table ref="table6" :data="tableData" highlight height="calc(100% - 130px)">
+          <el-table ref="table6" :data="tableData" border highlight height="calc(100% - 130px)">
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>

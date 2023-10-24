@@ -9,14 +9,14 @@
     <div class="z-container">
       <div class="z-row">
         <div class="z-col">
-          <pagePanel headerTitle="示踪剂结果" style="height: 100%; width: 100%;margin-top: 0;" show-btn>
+          <pagePanel headerTitle="示踪剂结果" style="height: 100%; width: 100%; margin-top: 0" show-btn>
             <el-image :src="imageFirst" style="height: 100%; display: block; margin: 0 auto">
               <div slot="error"></div>
             </el-image>
           </pagePanel>
         </div>
         <div class="z-col">
-          <pagePanel headerTitle="示踪剂报告" style="height: 100%; width: 100%; margin-top: 0;" show-btn>
+          <pagePanel headerTitle="示踪剂报告" style="height: 100%; width: 100%; margin-top: 0" show-btn>
             <iframe
               :src="imageSecond ? imageSecond + '#toolbar=0' : ''"
               style="width: 100%; height: 100%"
@@ -27,12 +27,12 @@
       </div>
       <div class="z-row">
         <div class="z-col">
-          <pagePanel headerTitle="示踪剂信息" style="height: 100%; width: 100%; margin-top: 0;" show-btn>
+          <pagePanel headerTitle="示踪剂信息" style="height: 100%; width: 100%; margin-top: 0" show-btn>
             <!-- <el-image :src="imageThird"><div slot="error"></div></el-image> -->
             <el-table
               id="tableData"
               :data="tableData"
-              :border="false"
+              border
               :row-style="{ height: '0px' }"
               header-cell-class-name="table_header"
               :cell-style="{ padding: '6px', 'text-align': 'center' }"
@@ -41,7 +41,7 @@
               :default-sort="{ prop: 'date', order: 'descending' }"
               :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
             >
-              <el-table-column type="index" label="序号" width="100"></el-table-column>
+              <el-table-column type="index" label="序号" width="80"></el-table-column>
               <el-table-column prop="wellNo" label="井号"></el-table-column>
               <el-table-column prop="days" :label="`见剂时间\n(d)`"></el-table-column>
               <el-table-column prop="wellKm" :label="`井距\n(m)`"></el-table-column>
