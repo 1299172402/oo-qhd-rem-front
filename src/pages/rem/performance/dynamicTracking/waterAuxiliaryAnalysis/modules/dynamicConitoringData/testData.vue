@@ -5,11 +5,11 @@
       <el-table
         id="tableData"
         :data="tableData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }"
-        style="width: 100%; padding: 0 10px"
+        style="width: 100%"
         height="calc(100% - 10px)"
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
@@ -93,15 +93,15 @@ export default {
           this.tableData = [];
         }
       });
-    //   testReport(request).then((res) => {
-    //     if (res.data.code == 200) {
-    //       this.tableData = res.data.data.oilResults;
-    //       this.tableData1 = res.data.data.results;
-    //     } else {
-    //       this.tableData = [];
-    //       this.tableData1 = [];
-    //     }
-    //   });
+      //   testReport(request).then((res) => {
+      //     if (res.data.code == 200) {
+      //       this.tableData = res.data.data.oilResults;
+      //       this.tableData1 = res.data.data.results;
+      //     } else {
+      //       this.tableData = [];
+      //       this.tableData1 = [];
+      //     }
+      //   });
     },
     //下载
     doDownLoad() {
@@ -109,7 +109,7 @@ export default {
       if (this.wellName) {
         fileName = this.wellName + fileName;
       }
-    //   exportExcel("#tableData", fileName + "原油分析");
+      //   exportExcel("#tableData", fileName + "原油分析");
       exportExcel("#tableData", fileName + "采出水");
     },
   },

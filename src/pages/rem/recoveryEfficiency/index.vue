@@ -68,6 +68,7 @@
           <el-table
             id="table4"
             :data="wellPerformanceAnalysis"
+            border
             style="width: 100%"
             height="150px"
             class="doubleHeader"
@@ -76,7 +77,7 @@
             header-cell-class-name="table_header"
             :cell-style="{ padding: '6px', 'text-align': 'center' }"
           >
-            <el-table-column prop="name" label="油田(区块)" fixed></el-table-column>
+            <el-table-column prop="name" label="油田(区块)" min-width="160" fixed></el-table-column>
             <el-table-column label="储量状况">
               <el-table-column label-class-name="twoRowHeader">
                 <template #header>
@@ -228,8 +229,15 @@
                       >下载</el-button
                     >
                   </div>
-                  <el-table id="table1" highlight :data="sjtableDate" height="calc(100% - 55px)" class="doubleHeader">
-                    <el-table-column align="center" type="index" label="序号"></el-table-column>
+                  <el-table
+                    id="table1"
+                    highlight
+                    :data="sjtableDate"
+                    border
+                    height="calc(100% - 55px)"
+                    class="doubleHeader"
+                  >
+                    <el-table-column align="center" type="index" label="序号" width="80"></el-table-column>
                     <el-table-column
                       align="center"
                       prop="theDate"
@@ -397,10 +405,11 @@
                         id="table2"
                         highlight
                         :data="djtableDate"
+                        border
                         height="calc(100% - 55px)"
                         class="doubleHeader"
                       >
-                        <el-table-column align="center" type="index" label="序号"></el-table-column>
+                        <el-table-column align="center" type="index" label="序号" width="80"></el-table-column>
                         <el-table-column
                           align="center"
                           prop="theDate"
@@ -544,10 +553,11 @@
                         id="table3"
                         highlight
                         :data="tstableDate"
+                        border
                         height="calc(100% - 55px)"
                         class="doubleHeader"
                       >
-                        <el-table-column align="center" type="index" label="序号"></el-table-column>
+                        <el-table-column align="center" type="index" label="序号" width="80"></el-table-column>
                         <el-table-column
                           align="center"
                           prop="theDate"
@@ -778,7 +788,14 @@
                     >下载</el-button
                   >
                 </div>
-                <el-table id="table1" height="calc(100% - 55px)" :data="computingData" highlight class="doubleHeader">
+                <el-table
+                  id="table1"
+                  height="calc(100% - 55px)"
+                  border
+                  :data="computingData"
+                  highlight
+                  class="doubleHeader"
+                >
                   <el-table-column align="center" prop="formulaName" label="采收率计算方法"></el-table-column>
                   <el-table-column
                     align="center"
@@ -1530,10 +1547,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {

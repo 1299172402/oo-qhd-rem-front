@@ -61,7 +61,7 @@
       <Echart :chart-data="lineTable" height="100%" style="margin-bottom: 20px"></Echart>
     </pagePanelNew>
     <pagePanelNew style="height: 300px" class="z-main" show-btn>
-      <el-table :data="messageResult" highlight height="100%" style="width: 100%">
+      <el-table :data="messageResult" border highlight height="100%" style="width: 100%">
         <el-table-column prop="message" label="根据历史数据，拟合预测各生产数据后两个月的趋势"> </el-table-column>
       </el-table>
     </pagePanelNew>

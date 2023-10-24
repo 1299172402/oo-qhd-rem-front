@@ -13,6 +13,7 @@
                 highlight-current-row
                 height="calc(100% - 50px)"
                 id="tablecsxg"
+                border
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px', color: '' }"
                 header-cell-class-name="table_header"

@@ -16,6 +16,7 @@
                         highlight-current-row
                         height="100%"
                         ref="table"
+                        border
                         style="margin-top: 10px;margin: 0"
                         :row-style="{ height: '50px' }"
                         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"

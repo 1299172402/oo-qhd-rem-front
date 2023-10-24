@@ -28,33 +28,42 @@
       <el-table
         id="tableData"
         :data="tableData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        :cell-style="{ padding: '6px' }"
         style="width: 100%"
         height="calc(100% - 130px)"
         :default-sort="{ prop: 'date', order: 'descending' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        :header-cell-style="{ padding: '0px 0' }"
       >
-        <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
-        <el-table-column prop="prodDate" align="center" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
+        <el-table-column type="index" align="center" label="序号" width="80" :index="tableIndex"></el-table-column>
+        <el-table-column prop="prodDate" header-align="center" align="left" :label="`时间\n(yyyy-mm-dd)`">
+        </el-table-column>
         <el-table-column
           property="gasProdPlan"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`计划产气量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           property="gasProdDaily"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`产气量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
-        <el-table-column prop="oilEquivalent" align="center" :label="`油当量\n(m³/d)`"></el-table-column>
+        <el-table-column
+          prop="oilEquivalent"
+          header-align="center"
+          align="right"
+          :label="`油当量\n(m³/d)`"
+        ></el-table-column>
         <el-table-column
           prop="gasProdRollFocecast"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`滚动预测产气量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
@@ -152,13 +161,13 @@ export default {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
             fontSize: 14,
-            interval: function (index, val) {
-              if (val.substr(-2) == "01") {
-                return true;
-              } else {
-                return false;
-              }
-            },
+            // interval: function (index, val) {
+            //   if (val.substr(-2) == "01") {
+            //     return true;
+            //   } else {
+            //     return false;
+            //   }
+            // },
           },
           axisTick: {
             show: true,

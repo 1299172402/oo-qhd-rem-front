@@ -41,8 +41,15 @@
             >
               <el-row>
                 <span>水井指标变化排名</span>
-                <el-table id="tableData" style="margin-top: 10px" :data="tableDataWater" highlight height="550px">
-                  <el-table-column type="index" label="序号" width="60px" align="center"></el-table-column>
+                <el-table
+                  id="tableData"
+                  style="margin-top: 10px"
+                  border
+                  :data="tableDataWater"
+                  highlight
+                  height="550px"
+                >
+                  <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
                   <el-table-column prop="borepipeId" label="井号" min-width="120px" align="center"></el-table-column>
                   <el-table-column prop="injDaysMonthly" :label="`月注入天数\n(d)`" align="center"></el-table-column>
                   <el-table-column

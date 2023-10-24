@@ -1,205 +1,232 @@
 <!--相渗透率曲线-->
 <template>
-    <div style="height:calc(100% - 100px);">
-        <div class="z-search">
-            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable clearable @change="selectChange">
-                <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
-            </el-select>
-            <div v-if="uploadTime" style="margin-left: 20px;">上传时间：{{ uploadTime }}</div>
-        </div>
-        <div class="z-main">
-            <div class="z-left-view">
-                <page-panel-new style="height:100%;margin-top:0;" show-btn>
-                    <div style="overflow: auto;width: 100%; height: 100%; display: flex; justify-content: center;">  
-                        <el-image :src="src">
-                            <div slot="error"></div>
-                        </el-image>
-                    </div>
-                </page-panel-new>
-            </div>
-            <div class="z-right-view">
-                <page-panel-new style="height:100%;margin-top:0;" show-btn>
-                    <el-table 
-                        id="tableData"
-                        :data="tableData" :border="false" :row-style="{ height: '0px' }"
-                        header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                        style="width:100%;padding:0 10px;" height="" :default-sort="{ prop: 'date', order: 'descending' }"
-                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0'}">
-                        <el-table-column label="序号" type="index" align="center"></el-table-column>
-                        <el-table-column :label="`含水饱和度\n (%)`" prop="" align="center"></el-table-column>
-                        <el-table-column :label="`油相相对渗透率\n (mD)`" prop="" align="center"></el-table-column>
-                        <el-table-column :label="`水相相对渗透率\n (mD)`" prop="" align="center"></el-table-column>
-                    </el-table>
-                </page-panel-new>
-            </div>
-        </div>
+  <div style="height: calc(100% - 100px)">
+    <div class="z-search">
+      <el-select
+        v-model="selectPosition"
+        style="width: 220px"
+        placeholder="请选择"
+        filterable
+        clearable
+        @change="selectChange"
+      >
+        <el-option
+          v-for="(item, index) in position"
+          :key="index"
+          :label="item.layerName"
+          :value="item.fieldLayerId"
+        ></el-option>
+      </el-select>
+      <div v-if="uploadTime" style="margin-left: 20px">上传时间：{{ uploadTime }}</div>
     </div>
+    <div class="z-main">
+      <div class="z-left-view">
+        <page-panel-new style="height: 100%; margin-top: 0" show-btn>
+          <div style="overflow: auto; width: 100%; height: 100%; display: flex; justify-content: center">
+            <el-image :src="src">
+              <div slot="error"></div>
+            </el-image>
+          </div>
+        </page-panel-new>
+      </div>
+      <div class="z-right-view">
+        <page-panel-new style="height: 100%; margin-top: 0" show-btn>
+          <el-table
+            id="tableData"
+            :data="tableData"
+            border
+            :row-style="{ height: '0px' }"
+            header-cell-class-name="table_header"
+            :cell-style="{ padding: '6px', 'text-align': 'center' }"
+            style="width: 100%;"
+            height=""
+            :default-sort="{ prop: 'date', order: 'descending' }"
+            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+          >
+            <el-table-column label="序号" type="index" align="center" width="80"></el-table-column>
+            <el-table-column :label="`含水饱和度\n (%)`" prop="" align="center"></el-table-column>
+            <el-table-column :label="`油相相对渗透率\n (mD)`" prop="" align="center"></el-table-column>
+            <el-table-column :label="`水相相对渗透率\n (mD)`" prop="" align="center"></el-table-column>
+          </el-table>
+        </page-panel-new>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-    import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-    import {reservoirDataPhasePermeabilityCurve} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-    import {exportExcel} from "@/lib/exportExcel.js";
-    // miniIo
-    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
-    import {filePreview,downFile} from "@/components/upload/utils/file";
-    import FileSaver from "file-saver";
-    export default {
-        props: {
-            oilFieldId: {},
-            blockId: {}
-        },
-        data() {
-            return {
-                //mniIo
-                fileId:'',
-                filestrId:'',
-                src:'',
-                //层位数据源
-                position: [],//选中层位
-                selectPosition: '',
-                uploadTime: "", // 文件上传时间
-            };
-        },
-        async mounted() {
-            await this.doSearch();
-        },
-        methods: {
-            //获取层位接口
-            async fieldOilLayersApi(){
-                //初始化获取层段关系
-                await fieldOilLayers({
-                    oilFieldId: this.oilFieldId,
-                    fieldId: this.blockId,
-                    wellId: '',
-                }).then((res) => {
-                    if (res.data.code == 200) {
-                        //层段数据
-                        if (res.data.data) {
-                            this.position = res.data.data.fieldLayers;
-                            if (!this.selectPosition && this.position[0]) {
-                                if (this.blockId == 'YCFXDY8B643EDC9007F96F570600457D' || this.blockId == 'YCFXDY8B643EDC9007F96F570600456D') {
-                                    if (this.position.find((item) => {
-                                            return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'
-                                        })) {
-                                        this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
-                                    } else {
-                                        this.selectPosition = this.position[0].fieldLayerId;
-                                    }
-                                }else if (this.blockId == 'YCFXDY8B643EDC9007F96F570600458D') {
-                                    if (this.position.find((item) => {
-                                            return item.fieldLayerId == '87795A3E6BBC4469BC9AC5AE0BBE759C'
-                                        })) {
-                                        this.selectPosition = '87795A3E6BBC4469BC9AC5AE0BBE759C';
-                                    } else if (this.position.find((item) => {
-                                            return item.fieldLayerId == '02398139A19A4F62BEFAC658E870D487'
-                                        })) {
-                                        this.selectPosition = '02398139A19A4F62BEFAC658E870D487';
-                                    } else {
-                                        this.selectPosition = this.position[0].fieldLayerId;
-                                    }
-                                } else {
-                                    this.selectPosition = this.position[0].fieldLayerId;
-                                } 
-                                this.$emit('childPara', this.selectPosition);
-                            }
-                        } else {
-                            this.position = [];
-                        }
-                        this.$emit('childPara', this.selectPosition);
-                    }
-                });
-            },
-            //获取图片
-            async doSearch() {
-                await this.fieldOilLayersApi();
-                let params ={
-                    operationId:this.blockId+'-'+this.selectPosition,
-                    operationType:'BLOCKXSTLQX',
-                    readOne:'one' 
+import { fieldOilLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import { reservoirDataPhasePermeabilityCurve } from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
+import { exportExcel } from "@/lib/exportExcel.js";
+// miniIo
+import { queryRemUploadFileMinio } from "@/api/rem/remuploadfileminio";
+import { filePreview, downFile } from "@/components/upload/utils/file";
+import FileSaver from "file-saver";
+export default {
+  props: {
+    oilFieldId: {},
+    blockId: {},
+  },
+  data() {
+    return {
+      //mniIo
+      fileId: "",
+      filestrId: "",
+      src: "",
+      //层位数据源
+      position: [], //选中层位
+      selectPosition: "",
+      uploadTime: "", // 文件上传时间
+    };
+  },
+  async mounted() {
+    await this.doSearch();
+  },
+  methods: {
+    //获取层位接口
+    async fieldOilLayersApi() {
+      //初始化获取层段关系
+      await fieldOilLayers({
+        oilFieldId: this.oilFieldId,
+        fieldId: this.blockId,
+        wellId: "",
+      }).then((res) => {
+        if (res.data.code == 200) {
+          //层段数据
+          if (res.data.data) {
+            this.position = res.data.data.fieldLayers;
+            if (!this.selectPosition && this.position[0]) {
+              if (
+                this.blockId == "YCFXDY8B643EDC9007F96F570600457D" ||
+                this.blockId == "YCFXDY8B643EDC9007F96F570600456D"
+              ) {
+                if (
+                  this.position.find((item) => {
+                    return item.fieldLayerId == "263518079CED49AE8B6C9FE5CEBDD26A";
+                  })
+                ) {
+                  this.selectPosition = "263518079CED49AE8B6C9FE5CEBDD26A";
+                } else {
+                  this.selectPosition = this.position[0].fieldLayerId;
                 }
-                queryRemUploadFileMinio(params).then((res) => {
-                    if (res.data.code == 200) {
-                        if(res.data.data.length){
-                            this.fileId=res.data.data[0].fileId;
-                            this.filestrId=res.data.data[0].filestrId;
-                            // this.uploadTime=res.data.data[0].uploadTime || "";
-                            downFile(this.fileId).then((res)=>{
-                                this.src=window.URL.createObjectURL(res);
-                            })
-                        } else {
-                            this.fileId="";
-                            this.filestrId="";
-                            this.uploadTime="";
-                            this.src="";
-                        }
-                    }else {
-                        this.$message.error("文件查询接口异常!");
-                    }
-                });
-            },
-            //层位change
-            selectChange(e){
-                this.$emit('childPara', e);
-                this.doSearch();
-            },
-            //下载功能
-            doDownLoad() {
-                let fileName = '相渗透率曲线图';
-                let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
-                if (layerMess) {
-                    fileName= layerMess.layerName +'-'+fileName;
+              } else if (this.blockId == "YCFXDY8B643EDC9007F96F570600458D") {
+                if (
+                  this.position.find((item) => {
+                    return item.fieldLayerId == "87795A3E6BBC4469BC9AC5AE0BBE759C";
+                  })
+                ) {
+                  this.selectPosition = "87795A3E6BBC4469BC9AC5AE0BBE759C";
+                } else if (
+                  this.position.find((item) => {
+                    return item.fieldLayerId == "02398139A19A4F62BEFAC658E870D487";
+                  })
+                ) {
+                  this.selectPosition = "02398139A19A4F62BEFAC658E870D487";
+                } else {
+                  this.selectPosition = this.position[0].fieldLayerId;
                 }
-                //下载表格
-                exportExcel('#tableData',fileName);
-                if(!this.fileId) {
-                    this.$message.error('无可下载内容')
-                    return
-                }
-                let file_suffix=this.filestrId.split('.')[1];
-                downFile(this.id).then(res=>{
-                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
-                })
+              } else {
+                this.selectPosition = this.position[0].fieldLayerId;
+              }
+              this.$emit("childPara", this.selectPosition);
             }
+          } else {
+            this.position = [];
+          }
+          this.$emit("childPara", this.selectPosition);
         }
-    }
+      });
+    },
+    //获取图片
+    async doSearch() {
+      await this.fieldOilLayersApi();
+      let params = {
+        operationId: this.blockId + "-" + this.selectPosition,
+        operationType: "BLOCKXSTLQX",
+        readOne: "one",
+      };
+      queryRemUploadFileMinio(params).then((res) => {
+        if (res.data.code == 200) {
+          if (res.data.data.length) {
+            this.fileId = res.data.data[0].fileId;
+            this.filestrId = res.data.data[0].filestrId;
+            // this.uploadTime=res.data.data[0].uploadTime || "";
+            downFile(this.fileId).then((res) => {
+              this.src = window.URL.createObjectURL(res);
+            });
+          } else {
+            this.fileId = "";
+            this.filestrId = "";
+            this.uploadTime = "";
+            this.src = "";
+          }
+        } else {
+          this.$message.error("文件查询接口异常!");
+        }
+      });
+    },
+    //层位change
+    selectChange(e) {
+      this.$emit("childPara", e);
+      this.doSearch();
+    },
+    //下载功能
+    doDownLoad() {
+      let fileName = "相渗透率曲线图";
+      let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
+      if (layerMess) {
+        fileName = layerMess.layerName + "-" + fileName;
+      }
+      //下载表格
+      exportExcel("#tableData", fileName);
+      if (!this.fileId) {
+        this.$message.error("无可下载内容");
+        return;
+      }
+      let file_suffix = this.filestrId.split(".")[1];
+      downFile(this.id).then((res) => {
+        FileSaver.saveAs(res, `${fileName}.${file_suffix}`);
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-    .z-search{
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
+.z-search {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.z-main {
+  width: 100%;
+  height: calc(100% - 50px);
+  display: flex;
+  overflow: hidden;
+  .z-left-view {
+    width: 600px;
+    height: 100%;
+    overflow-y: scroll;
+    margin-right: 20px;
+    padding-right: 0px;
+    // border: 1px solid #ddd;
+    border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+  }
+  .z-right-view {
+    flex: 1;
+    width: 0;
+  }
+}
+#tableData {
+  ::v-deep .el-table__header-wrapper .cell {
+    height: auto;
+    line-height: 18px;
+    white-space: pre;
+  }
+  ::v-deep .cell:empty {
+    &::before {
+      content: "-";
     }
-    .z-main{
-        width: 100%;
-        height:calc(100% - 50px);
-        display: flex;
-        overflow: hidden;
-        .z-left-view{
-            width:600px;
-            height:100%;
-            overflow-y: scroll;
-            margin-right:20px;
-            padding-right:0px;
-            // border: 1px solid #ddd;
-            border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
-        }
-        .z-right-view{
-            flex:1;
-            width:0;
-        }
-    }
-    #tableData{
-        ::v-deep .el-table__header-wrapper .cell{
-            height: auto;
-            line-height: 18px;
-            white-space: pre;
-        }
-        ::v-deep .cell:empty{
-            &::before {
-                content: '-';
-            } 
-        }
-    } 
+  }
+}
 </style>

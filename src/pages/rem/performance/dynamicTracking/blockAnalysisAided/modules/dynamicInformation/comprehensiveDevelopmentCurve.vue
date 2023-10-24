@@ -705,15 +705,22 @@ export default {
             data: [],
           },
           {
-            type: "line",
+            type: "bar",
             name: "地层压降(MPa)",
-            /*symbol: "circle",
-                symbolSize: 4,*/
-            symbol: "none",
+            barWidth: 22,
             xAxisIndex: 7,
             yAxisIndex: 7,
             itemStyle: {
-              color: "rgba(138, 238, 50, 1)",
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "#00D9EA",
+                },
+                {
+                  offset: 1,
+                  color: "#0F65EA",
+                },
+              ]),
             },
             data: [],
           },

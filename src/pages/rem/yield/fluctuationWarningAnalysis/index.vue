@@ -247,13 +247,14 @@
                   <el-table
                     id="table1"
                     highlight
+                    border
                     :data="eventData"
                     style="width: 100%"
                     height="100%"
                     empty-text="当日无大事件"
                   >
-                    <el-table-column prop="eventType" label="事件类型" align="center" width="180"></el-table-column>
-                    <el-table-column prop="content" label="井号" align="center"></el-table-column>
+                    <el-table-column prop="eventType" label="事件类型" header-align="center" align="left" width="180"></el-table-column>
+                    <el-table-column prop="content" label="井号" header-align="center" align="left"></el-table-column>
                   </el-table>
                 </div>
               </pagePanel>

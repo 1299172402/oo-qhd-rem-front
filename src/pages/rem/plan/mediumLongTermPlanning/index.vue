@@ -4,13 +4,8 @@
     <header-search style="height: 80px">
       <div class="g-row-flex-V g-w100 g-h100">
         <span>油田：</span>
-        <el-select v-model="selectOilField"  placeholder="请选择">
-          <el-option
-            v-for="item in oilField"
-            :key="item.ogfId"
-            :label="item.ogfName"
-            :value="item.ogfId"
-          ></el-option>
+        <el-select v-model="selectOilField" placeholder="请选择">
+          <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
         </el-select>
         <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField"
           >搜索</el-button
@@ -27,38 +22,58 @@
         @click="doDownExcel('#tableData', `${oilFieldName || ''} 中长期计划表`)"
         >下载</el-button
       >
-      <el-table :data="tableData2" id="tableData" height="calc(100% - 40px)" highlight style="width: 100%">
-        <el-table-column prop="theYear" align="center" label="年份"></el-table-column>
+      <el-table :data="tableData2" id="tableData" height="calc(100% - 40px)" highlight border style="width: 100%">
+        <el-table-column prop="theYear" header-align="center" align="left" label="年份"></el-table-column>
         <el-table-column
           prop="baseProduct"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`基础产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
-        <el-table-column prop="newJustWellNum" align="center" :label="`新增调整井井数\n(口)`"></el-table-column>
+        <el-table-column
+          prop="newJustWellNum"
+          header-align="center"
+          align="right"
+          :label="`新增调整井井数\n(口)`"
+        ></el-table-column>
         <el-table-column
           prop="oldWellProduct"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`调整井滚动产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
-        <el-table-column prop="oilWellIncNum" align="center" :label="`油井增产措施井次\n(口)`"></el-table-column>
+        <el-table-column
+          prop="oilWellIncNum"
+          header-align="center"
+          align="right"
+          :label="`油井增产措施井次\n(口)`"
+        ></el-table-column>
         <el-table-column
           prop="measureProduct"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`措施产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
-        <el-table-column prop="chemicalWellNum" align="center" :label="`化学驱井次\n(口)`"></el-table-column>
+        <el-table-column
+          prop="chemicalWellNum"
+          header-align="center"
+          align="right"
+          :label="`化学驱井次\n(口)`"
+        ></el-table-column>
         <el-table-column
           prop="chemicalProduct"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`化学驱产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="productAll"
-          align="center"
+          header-align="center"
+          align="right"
           :label="`产量合计\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
@@ -272,10 +287,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       //获取油田信息

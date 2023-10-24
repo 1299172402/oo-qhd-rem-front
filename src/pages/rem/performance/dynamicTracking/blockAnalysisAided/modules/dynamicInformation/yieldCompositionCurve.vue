@@ -16,8 +16,8 @@
     <div class="row2">
       <div class="flex-1" style="margin-right: 20px">
         <pagePanel style="height: 100%; margin-top: 0" headerTitle="产量构成表" show-btn>
-          <el-table id="tableData1" highlight :data="tableDataStruct" height="100%">
-            <el-table-column type="index" label="序号" align="center"></el-table-column>
+          <el-table id="tableData1" highlight :data="tableDataStruct" border height="100%">
+            <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
             <el-table-column prop="theDate" :label="`时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="baseOutput" :label="`基础产量\n (m³)`" align="center"></el-table-column>
             <el-table-column prop="adjustWells" :label="`调整井\n (m³)`" align="center"></el-table-column>
@@ -28,8 +28,8 @@
       </div>
       <div class="flex-1">
         <pagePanel style="height: 100%; margin-top: 0" headerTitle="措施产量构成表" show-btn>
-          <el-table id="tableData2" highlight :data="tableDataProduct" height="100%">
-            <el-table-column type="index" label="序号" align="center"></el-table-column>
+          <el-table id="tableData2" highlight :data="tableDataProduct" border height="100%">
+            <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
             <el-table-column prop="theDate" :label="`时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="acidize" :label="`酸化\n (m³)`" align="center"></el-table-column>
             <el-table-column prop="crushing" :label="`压裂\n (m³)`" align="center"></el-table-column>
@@ -68,7 +68,7 @@ export default {
             end: 100, //滚动条结束位置
           },
         ],
-        grid: [{ x: "5%", y: "20%", width: "90%", height: "65%", containLabel: true }],
+        grid: [{ x: 60, y: 50, x2: 80, y2: 50 }],
         legend: {
           x: "center",
           bottom: 0,
@@ -84,8 +84,7 @@ export default {
         xAxis: {
           type: "category",
           boundaryGap: false,
-          name: "时间",
-          nameLocation: "center",
+          name: "日期 (日)",
           nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
           axisLabel: {
@@ -271,7 +270,7 @@ export default {
             end: 100, //滚动条结束位置
           },
         ],
-        grid: [{ x: "5%", y: "20%", width: "90%", height: "65%", containLabel: true }],
+        grid: [{ x: 60, y: 50, x2: 80, y2: 50 }],
         legend: {
           x: "center",
           bottom: 0,
@@ -287,8 +286,7 @@ export default {
         xAxis: {
           type: "category",
           boundaryGap: false,
-          name: "时间",
-          nameLocation: "center",
+          name: "日期 (日)",
           nameTextStyle: { color: "#8FA4CC" },
           nameGap: 25,
           axisLabel: {

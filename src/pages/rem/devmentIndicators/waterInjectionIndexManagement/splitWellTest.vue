@@ -67,14 +67,14 @@
             下载
           </el-button>
         </div>
-        <el-table id="fzjcsmx" :data="tableData" highlight height="calc(100% - 130px)">
+        <el-table id="fzjcsmx" :data="tableData" border highlight height="calc(100% - 130px)">
           <!-- :index="formatIndex"  -->
           <el-table-column
             label="序号"
             header-align="center"
             align="center"
             type="index"
-            width="60"
+            width="80"
             :index="formatIndex"
           ></el-table-column>
           <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>

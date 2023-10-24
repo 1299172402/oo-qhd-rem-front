@@ -152,7 +152,7 @@
           >
         </div>
         <div style="margin-top: 10px; height: calc(100% - 50px)">
-          <el-table id="indexscv" :data="tableData" highlight height="100%">
+          <el-table id="indexscv" :data="tableData" border highlight height="100%">
             <el-table-column prop="name" label="指标" align="center"></el-table-column>
             <el-table-column prop="real" label="实际值" align="center" :formatter="toPrecise2"></el-table-column>
             <el-table-column

@@ -47,17 +47,17 @@
             >下载</el-button
           >
         </div>
-        <el-table id="ysdcylbcsp" :data="tableData1" highlight height="calc(100% - 55px)">
+        <el-table id="ysdcylbcsp" :data="tableData1" border highlight height="calc(100% - 55px)">
           <el-table-column
             label="序号"
             header-align="center"
             align="center"
             type="index"
-            width="60"
+            width="80"
             fixed
           ></el-table-column>
-          <el-table-column prop="ofgName" label="油田" align="center" width="140" fixed></el-table-column>
-          <el-table-column prop="plantformName" label="平台" align="center" width="140" fixed></el-table-column>
+          <el-table-column prop="ofgName" label="油田" align="center" width="160" fixed></el-table-column>
+          <el-table-column prop="plantformName" label="平台" align="center" width="160" fixed></el-table-column>
           <el-table-column label="检测次数" align="center">
             <el-table-column prop="oilContent" :label="`含油量`" align="center" min-width="70"></el-table-column>
             <el-table-column prop="totalSs" :label="`悬浮物`" align="center" min-width="70"></el-table-column>
@@ -114,13 +114,13 @@
               >下载</el-button
             >
           </div>
-          <el-table id="zsszkzzb" :data="tableData2" highlight height="calc(100% - 55px)">
+          <el-table id="zsszkzzb" :data="tableData2" border highlight height="calc(100% - 55px)">
             <el-table-column
               label="序号"
               header-align="center"
               align="center"
               type="index"
-              width="60"
+              width="80"
             ></el-table-column>
             <el-table-column
               prop="oilContent"
@@ -354,10 +354,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.queryParams.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.queryParams.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.queryParams.companyId }).then((data) => {
@@ -524,7 +523,7 @@ export default {
 ::v-deep .el-table .cell:empty::before {
   content: "-";
 }
-
+::v-deep .el-table__fixed-header-wrapper,
 ::v-deep .el-table__header-wrapper {
   .cell {
     height: auto !important;

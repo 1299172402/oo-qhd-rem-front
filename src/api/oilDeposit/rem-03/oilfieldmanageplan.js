@@ -92,13 +92,13 @@ export function devWellChart(request) {
  * @param request
  * @returns {AxiosPromise}
  */
-export function dividingLayerQualityRate(request) {
+export function dividingLayerQualityRate(request, showLoading=false) {
   return Axios({
     url: `${baseUrl  }/oilFieldManagePlanController/dividingLayerQualityRate`,
     method: "post",
     data: request,
       headers: {
-          showLoading: false
+          showLoading: showLoading,
       }
   });
 }

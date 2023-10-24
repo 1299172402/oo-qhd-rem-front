@@ -31,39 +31,44 @@
         :data="
           runTimeData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)
         "
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        :cell-style="{ padding: '6px' }"
         style="width: 100%"
         height="calc(100% - 130px)"
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
-        <el-table-column type="index" align="center" label="序号"></el-table-column>
-        <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy-mm-dd)`"> </el-table-column>
+        <el-table-column type="index" align="center" label="序号" width="80"></el-table-column>
+        <el-table-column prop="theDate" header-align="center" align="left" :label="`时间\n(yyyy-mm-dd)`">
+        </el-table-column>
         <el-table-column
           prop="oilAudit"
-          align="center"
+          header-align="center"
+          align="right"
           :label="searchForm.selectUnitOfProduction == 'm' ? '考核日产\n(m³)' : '考核日产\n(t)'"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="oilReal"
-          align="center"
+          header-align="center"
+          align="right"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际日产\n(m³)' : '实际日产\n(t)'"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           property="sumPlan"
           prop="sumPlan"
-          align="center"
+          header-align="center"
+          align="right"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划年累产\n(10⁴m³)' : '计划年累产\n(10⁴t)'"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="sumReal"
-          align="center"
+          header-align="center"
+          align="right"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际年累产\n(10⁴m³)' : '实际年累产\n(10⁴t)'"
           :formatter="toPrecise4"
         ></el-table-column>
@@ -162,13 +167,13 @@ export default {
               color: "#8FA4CC",
               fontSize: 14,
               padding: [10, 0, 0, 0],
-              interval: function (index, val) {
-                if (val.substr(-2) == "01") {
-                  return true;
-                } else {
-                  return false;
-                }
-              },
+              // interval: function (index, val) {
+              //   if (val.substr(-2) == "01") {
+              //     return true;
+              //   } else {
+              //     return false;
+              //   }
+              // },
               // formatter:function(value, index){
               //     return value.substring(0,7);
               // }

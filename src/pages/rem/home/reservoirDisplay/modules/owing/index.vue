@@ -11,6 +11,7 @@
             :data="tableData"
             height="100%"
             id="tabledata"
+            border
             style="width: 100%"
         >
             <el-table-column prop="date" label="序号" align="center" width="50">

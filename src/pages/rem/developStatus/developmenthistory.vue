@@ -49,7 +49,7 @@
           >
         </div>
         <div style="padding-bottom: 5px; height: calc(100% - 55px)">
-          <el-table id="tableData" :data="tableData" highlight height="100%">
+          <el-table id="tableData" :data="tableData" highlight border height="100%">
             <el-table-column
               prop="phase"
               label="开发阶段"
@@ -297,10 +297,10 @@
             >
           </div>
         </div>
-        <el-table id="kfxz" :data="tableData2" highlight height="400px">
+        <el-table id="kfxz" :data="tableData2" border highlight height="400px">
           <el-table-column
             prop="date"
-            :label="`时间\n(yyyy-mm-dd)`"
+            :label="`时间\n(yyyy-mm)`"
             align="center"
             show-overflow-tooltip
             min-width="200"
@@ -414,7 +414,7 @@
             prop="cumOilProdYearly"
             :label="'截止当月年产油' + (currentUnit == 'm' ? '（m³)' : '（t)')"
             align="center"
-            min-width="140"
+            min-width="160"
             show-overflow-tooltip
             :formatter="toPrecise2"
           ></el-table-column>
@@ -2066,6 +2066,14 @@ export default {
     &::before {
       content: "-";
     }
+  }
+}
+::v-deep .el-table__fixed-header-wrapper,
+::v-deep .el-table__header-wrapper {
+  .cell {
+    height: auto !important;
+    line-height: 1.8 !important;
+    white-space: pre;
   }
 }
 </style>

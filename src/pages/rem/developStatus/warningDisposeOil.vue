@@ -35,9 +35,9 @@
             <page-panel-new :show-btn="true" title="QHD32-6油田指标预警关联分析" class="m1" style="margin-top: 20px">
               <el-row>
                 <span>油井指标变化排名</span>
-                <el-table id="tableData" :data="tableDataOil" highlight height="550px" style="margin-top: 10px">
-                  <el-table-column type="index" label="序号" align="center" min-width="80"></el-table-column>
-                  <el-table-column prop="borepipeId" label="井号" align="center" min-width="120"></el-table-column>
+                <el-table id="tableData" :data="tableDataOil" border highlight height="550px" style="margin-top: 10px">
+                  <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
+                  <el-table-column prop="borepipeId" label="井号" align="center" min-width="160"></el-table-column>
                   <el-table-column prop="yearMonth" :label="`生产时间\n(yyyy-mm-dd)`" align="center" min-width="130">
                     <template slot-scope="scope">
                       <span>{{ scope.row.yearMonth.substr(0, 7) }}</span>

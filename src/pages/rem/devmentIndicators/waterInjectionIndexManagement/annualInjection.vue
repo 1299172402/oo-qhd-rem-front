@@ -51,8 +51,8 @@
             >下载</el-button
           >
         </div>
-        <el-table id="ptnzrl" :data="tableData" highlight height="calc(100% - 55px)">
-          <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
+        <el-table id="ptnzrl" :data="tableData" border highlight height="calc(100% - 55px)">
+          <el-table-column label="序号" header-align="center" align="center" type="index" width="80"></el-table-column>
           <el-table-column prop="platform_name" label="平台" align="center"></el-table-column>
           <el-table-column
             prop="dailycount2"
