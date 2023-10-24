@@ -53,6 +53,7 @@
                 highlight-current-row
                 height="calc(100% - 50px)"
                 style="margin-top: 10px"
+                border
                 id="tabledata"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px' }"

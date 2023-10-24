@@ -17,7 +17,7 @@
                                 <el-option
                                     v-for="(item, index) in platforms"
                                     :key="index"
-                                    :label="item.platformName"
+                                    :label="item.platformCode"
                                     :value="item.platformId"
                                 >
                                 </el-option>
@@ -71,26 +71,26 @@
                                 <span v-else>-</span>
                             </template>              
                         </el-table-column>
-                        <el-table-column label="低产低效类别"  min-width="100px" prop="lowProdEffTypeCode"  align="left">
+                        <el-table-column label="低产低效类别"  min-width="70px" prop="lowProdEffTypeCode"  align="left">
                                 <template slot-scope="scope"  min-width="100px">
                                     <span v-if="scope.row.lowProdEffTypeCode !== null && scope.row.lowProdEffTypeCode !== ''">{{scope.row.lowProdEffTypeCode}}</span>
                                     <span v-else>-</span>
                                 </template>
                         </el-table-column>
                         <el-table-column label="生产情况"   align="center">
-                            <el-table-column :label="`日产油\n(m³)`" prop="dailyOil"   align="right">
+                            <el-table-column :label="`日产油\n(m³)`" min-width="60px" prop="dailyOil"   align="right">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.dailyOil !== null && scope.row.dailyOil !== ''">{{scope.row.dailyOil}}</span>
                                     <span v-else>-</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`日产气\n(m⁴)`" prop="dailyGas" align="right">
+                            <el-table-column :label="`日产气\n(m⁴)`" min-width="60px" prop="dailyGas" align="right">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.dailyGas !== null && scope.row.dailyGas !== ''">{{scope.row.dailyGas}}</span>
                                     <span v-else>-</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`含水\n(%)`" prop="waterCut"  align="right">
+                            <el-table-column :label="`含水\n(%)`" prop="waterCut" min-width="60px" align="right">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.waterCut !== null && scope.row.waterCut !== ''">{{scope.row.waterCut}}</span>
                                     <span v-else>-</span>
@@ -98,38 +98,38 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="低产低效原因" align="center">
-                            <el-table-column label="一级原因"   prop="shutdownTypeFirstClass" align="left">
+                            <el-table-column label="一级原因"  min-width="60px"  prop="shutdownTypeFirstClass" align="left">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.shutdownTypeFirstClass !== null && scope.row.shutdownTypeFirstClass !== ''">{{scope.row.shutdownTypeFirstClass}}</span>
                                     <span v-else>-</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column label="二级原因"  prop="shutdownTypeSecondClass"  align="left">
+                            <el-table-column label="二级原因" min-width="60px"  prop="shutdownTypeSecondClass"  align="left">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.shutdownTypeSecondClass !== null && scope.row.shutdownTypeSecondClass !== ''">{{scope.row.shutdownTypeSecondClass}}</span>
                                     <span v-else>-</span>
                                 </template>
                             </el-table-column>
                         </el-table-column>
-                        <el-table-column label="挖潜方向" prop="tappingDirection" align="left">
+                        <el-table-column label="挖潜方向" min-width="60px" prop="tappingDirection" align="left">
                             <template slot-scope="scope">
                                 <span v-if="scope.row.tappingDirection !== null && scope.row.tappingDirection !== ''">{{scope.row.tappingDirection}}</span>
                                 <span v-else>-</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="是否纳入当年计划" min-width="120px" prop="isPlan" align="left">
+                        <el-table-column label="是否纳入当年计划" min-width="80px" prop="isPlan" align="left">
                             <template slot-scope="scope">
                                 <span v-if="scope.row.isPlan !== null && scope.row.isPlan !== ''">{{scope.row.isPlan}}</span>
                                 <span v-else>-</span>
                             </template>
                         </el-table-column>
-                        <el-table-column :label="`计划日产油\n(m³)`" prop="planOil" align="right">
+                        <el-table-column :label="`计划日产油\n(m³)`" min-width="60px" prop="planOil" align="right">
                             <template slot-scope="scope">
                                 <span v-if="scope.row.planOil !== null && scope.row.planOil !== ''">{{scope.row.planOil}}</span>
                                 <span v-else>-</span>
                             </template>
                         </el-table-column>
-                        <el-table-column label="备注" prop="remark" show-overflow-tooltip align="left">
+                        <el-table-column label="备注" prop="remark" min-width="130px" show-overflow-tooltip align="left">
                             <template slot-scope="scope">
                                 <span v-if="scope.row.remark !== null && scope.row.remark !== ''">{{scope.row.remark}}</span>
                                 <span v-else>-</span>

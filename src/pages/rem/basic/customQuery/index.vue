@@ -223,6 +223,7 @@
                         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                         :data="queryData"
                         height="calc(100% - 30px)"
+                        border
                         header-cell-class-name="table_header"
                         :cell-style="{ padding: '6px', 'text-align': 'center' }"
                         style="margin: 20px 0; height: calc(100% - 125px)"
