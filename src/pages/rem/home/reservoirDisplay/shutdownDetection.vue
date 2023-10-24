@@ -99,6 +99,7 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
+                <el-table-column prop="wellName" align="center" type="index" width="50px" label="序号"></el-table-column>
                 <el-table-column prop="wellName"  min-width="60px" label="井号"></el-table-column>
                 <el-table-column prop="appendixValueName" min-width="60px" label="*关停分类"></el-table-column>
                 <el-table-column prop="reasonAppendixValueName" min-width="60px" label="*关停原因"></el-table-column>
