@@ -210,9 +210,9 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
-            formatter: function (val) {
-              return val + "年";
-            },
+            // formatter: function (val) {
+            //   return val + "年";
+            // },
           },
           axisTick: {
             show: true,
