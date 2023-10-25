@@ -59,8 +59,8 @@
         <pagePanelNew v-if="activeName == 'first'" style="height: auto">
             <el-row  :gutter="20" style="height:800px">
                 <el-col :span="6" style="height:100%">
-                    <pagePanel :headerTitle="title1" :title="title1" :show-btn="true"
-                               style="text-align: center;height:calc(100% - 10px)">
+                    <pagePanel headerTitle="单井月度配产计划表"  :show-btn="true"
+                               style="height:calc(100% - 10px)">
                         <el-button style="float: right;margin-top: 0px" type="primary" icon="el-icon-download" @click="doDownExcel()"
                         >下载
                         </el-button
@@ -381,8 +381,8 @@ export default {
         // 框框标题
         doSearch() {
             if (this.queryData.dateTime) {
-                this.title1 = this.queryData.dateTime + '月单井月度配产计划表'
-                this.title2 = this.queryData.dateTime + '月单井月度配注计划表'
+                this.title1 = '单井月度配产计划表'
+                this.title2 = '单井月度配注计划表'
             } else {
                 this.title1 = '单井月度配产计划表'
                 this.title2 = '单井月度配注计划表'
