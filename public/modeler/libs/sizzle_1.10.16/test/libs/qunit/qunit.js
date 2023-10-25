@@ -1,5 +1,5 @@
 /**
- * QUnit v1.12.0 - A JavaScript Unit Testing Framework
+ * QUnit  - A JavaScript Unit Testing Framework
  *
  * http://qunitjs.com
  *
@@ -159,7 +159,7 @@ Test.prototype = {
 		/**
 		 * Expose the current test environment.
 		 *
-		 * @deprecated since 1.12.0: Use QUnit.config.current.testEnvironment instead.
+		 * @deprecated since: Use QUnit.config.current.testEnvironment instead.
 		 */
 		QUnit.current_testEnvironment = this.testEnvironment;
 
@@ -661,20 +661,20 @@ assert = {
 };
 
 /**
- * @deprecated since 1.8.0
+ * @deprecated since
  * Kept assertion helpers in root for backwards compatibility.
  */
 extend( QUnit, assert );
 
 /**
- * @deprecated since 1.9.0
+ * @deprecated since
  * Kept root "raises()" for backwards compatibility.
  * (Note that we don't introduce assert.raises).
  */
 QUnit.raises = assert[ "throws" ];
 
 /**
- * @deprecated since 1.0.0, replaced with error pushes since 1.3.0
+ * @deprecated since, replaced with error pushes since
  * Kept to avoid TypeErrors for undefined methods.
  */
 QUnit.equals = function() {
@@ -1815,7 +1815,7 @@ QUnit.equiv = (function() {
  * (http://www.opensource.org/licenses/bsd-license.php) Date: 5/15/2008
  *
  * @projectDescription Advanced and extensible data dumping for Javascript.
- * @version 1.0.0
+ * @version
  * @author Ariel Flesler
  * @link {http://flesler.blogspot.com/2008/05/jsdump-pretty-dump-of-any-javascript.html}
  */

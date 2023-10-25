@@ -61,6 +61,7 @@
           trigger="click"
           :autoplay="false"
           :arrow="echartsLists.length > 1 ? 'always' : 'never'"
+          :indicator-position="echartsLists.length > 1 ? '' : 'none'"
         >
           <el-carousel-item v-for="(item, index) in echartsLists" :key="index">
             <div ref="targetElements" :data-index="index" /> <!-- 目标元素，当滚动到该位置时加载子组件 -->

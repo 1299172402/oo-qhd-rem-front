@@ -3,7 +3,7 @@
   <iframe
     v-postTheme="$store.state.setting.mode"
     class="iframe-view"
-    :src="$store.getters['permission/routerLink']"
+    :src="linkURL"
     frameborder="0"
   />
 </template>
@@ -11,19 +11,19 @@
 <script>
 
 export default {
-  data() {
-    return {
-      linkURL: sessionStorage.getItem("routerLink")
-    };
-  },
-  watch: {
-    "$store.state.permission.routerLink": {
-      handler() {},
-      deep: true,
-      immediate: true
+  computed: {
+    linkURL: function() {
+      try {
+        const link = this.$route.meta?.link || "";
+        // 如果有参数 access_token 则替换为实际 token，比如 http://xxx?access_token=$replaceToken$&type=3
+        const { access_token: replaceToken } = Object.fromEntries(new URLSearchParams(link.split("?")[1]).entries());
+        return replaceToken && link.replace(replaceToken, this.$store.getters["user/token"]) || link;
+      } catch (error) {
+        console.error(error);
+        return "";
+      }
     }
-  },
-  methods: {}
+  }
 };
 </script>
 

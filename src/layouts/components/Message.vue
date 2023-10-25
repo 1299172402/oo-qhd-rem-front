@@ -224,7 +224,7 @@ export default Vue.extend({
           // TODO: Maybe change back
           // 调接口
           popoverRingMessage().then(response => {
-            if (response.data.data.hasPopup === "1") {
+            if (response?.data?.data?.hasPopup === "1") {
               // 是否弹窗 0否 1是
               this.isNoticeVisible = true;
               if (response.data.data.hasSound === "1") {
@@ -339,8 +339,7 @@ export default Vue.extend({
         //   } else {
         //     this.tableData = [...this.tableData, ..._res];
         //   }
-        this.$store.commit("permission/setScrollLoading", false);
-        queryAlcAlarmByParam(currentParam).then(response => {
+        queryAlcAlarmByParam(currentParam, false).then(response => {
           const _res = JSON.parse(JSON.stringify(response.data.rows));
           if (firstPage) {
             this.queryParams.pageNum = 1;
