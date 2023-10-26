@@ -1,8 +1,10 @@
 import { postAction, getAction } from "@/api/common/manage";
 import dayjs from "dayjs";
 import { filterObj } from "../audit/utils";
+import ActivatedMixin from "@/components/mixins/ActivatedMixin.js";
 
 export default {
+  mixins: [ActivatedMixin],
   data() {
     return {
       format: {
@@ -69,9 +71,6 @@ export default {
     }
   },
   created() {
-    this.init();
-  },
-  activated() {
     this.init();
   },
   methods: {
@@ -274,6 +273,9 @@ export default {
           query: this.routerInfo?.view?.query
         });
       }
+    },
+    handlerActivated() {
+      this.init();
     }
   }
 };

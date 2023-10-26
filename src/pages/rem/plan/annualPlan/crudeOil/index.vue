@@ -41,19 +41,19 @@
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
         <el-table-column type="index" align="center" label="序号" width="80"></el-table-column>
-        <el-table-column prop="theDate" header-align="center" align="left" :label="`时间\n(yyyy-mm-dd)`">
+        <el-table-column prop="theDate" header-align="center" align="center" :label="`时间\n(yyyy-mm-dd)`">
         </el-table-column>
         <el-table-column
           prop="oilAudit"
           header-align="center"
-          align="right"
+          align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '考核日产\n(m³)' : '考核日产\n(t)'"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="oilReal"
           header-align="center"
-          align="right"
+          align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际日产\n(m³)' : '实际日产\n(t)'"
           :formatter="toPrecise2"
         ></el-table-column>
@@ -61,14 +61,14 @@
           property="sumPlan"
           prop="sumPlan"
           header-align="center"
-          align="right"
+          align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划年累产\n(10⁴m³)' : '计划年累产\n(10⁴t)'"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="sumReal"
           header-align="center"
-          align="right"
+          align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际年累产\n(10⁴m³)' : '实际年累产\n(10⁴t)'"
           :formatter="toPrecise4"
         ></el-table-column>

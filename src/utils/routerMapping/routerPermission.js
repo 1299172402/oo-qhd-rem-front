@@ -25,7 +25,6 @@ const GenerateRouter = {
   "MyThirdMenu2": () => import("@/pages/intelligentOilfield/myThirdMenu/index.vue"), // 三级菜单-2管理
 
   //   "Index":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
-  "CodeGeneration": () => import("@/pages/intelligentOilfield/codeGeneration/index.vue"),
 
   "HandleBusinessList": () => import("@/pages/common/handleBusinessList/index.vue"),
   "DoneBusinessList": () => import("@/pages/common/doneBusinessList/index.vue"),

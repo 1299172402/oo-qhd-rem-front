@@ -167,7 +167,7 @@
         <el-row>
           <el-col :span="11">
             <el-form-item label="用户账号" prop="userName">
-              <el-input v-model="form.userName" placeholder="请输入用户账号" :disabled="form.ehr === '0' ? false : keys.includes('userName')" />
+              <el-input v-model="form.userName" :disabled="true" placeholder="请输入用户账号" />
             </el-form-item>
           </el-col>
           <el-col :span="11">
@@ -482,7 +482,7 @@ export default Vue.extend({
             }
           });
         } else {
-          this.resizeObserver.disconnect();
+          this.resizeObserver?.disconnect();
         }
       },
       immediate: true

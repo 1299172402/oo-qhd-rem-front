@@ -33,20 +33,20 @@
         :header-cell-style="{ padding: '0px 0' }"
       >
         <el-table-column type="index" label="序号" :index="tableIndex" width="80" align="center"></el-table-column>
-        <el-table-column prop="prodDate" :label="`时间\n(yyyy-mm-dd)`" header-align="center" align="left">
+        <el-table-column prop="prodDate" :label="`时间\n(yyyy-mm-dd)`" header-align="center" align="center">
         </el-table-column>
         <el-table-column
           prop="oilprodReal"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际产量\n(m³)' : '实际产量\n(t)'"
           header-align="center"
-          align="right"
+          align="center"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="oilprodPlan"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划产量\n(m³)' : '计划产量\n(t)'"
           header-align="center"
-          align="right"
+          align="center"
           :formatter="toPrecise2"
         ></el-table-column>
         <!-- <el-table-column prop="oilprodRollForecast" :label="searchForm.selectUnitOfProduction == 'm' ? '滚动预测\n(10⁴m³)' : '滚动预测\n(10⁴t)'"></el-table-column> -->

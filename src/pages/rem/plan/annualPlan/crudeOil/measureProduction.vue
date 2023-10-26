@@ -33,31 +33,31 @@
         :header-cell-style="{ padding: '0px 0' }"
       >
         <el-table-column type="index" align="center" label="序号" width="80" :index="tableIndex"></el-table-column>
-        <el-table-column prop="prodDate" header-align="center" align="left" :label="`时间\n(yyyy-mm-dd)`">
+        <el-table-column prop="prodDate" header-align="center" align="center" :label="`时间\n(yyyy-mm-dd)`">
         </el-table-column>
         <el-table-column
           prop="measureWellNumReal"
           header-align="center"
-          align="right"
+          align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(次)' : '实际措施井次\n(次)'"
         ></el-table-column>
         <el-table-column
           prop="measureWellNumPlan"
           header-align="center"
-          align="right"
+          align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划措施井次\n(次)' : '计划措施井次\n(次)'"
         ></el-table-column>
         <el-table-column
           prop="oilprodReal"
           header-align="center"
-          align="right"
+          align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际产量\n(m³/d)' : '实际产量\n(t/d)'"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="oilprodPlan"
           header-align="center"
-          align="right"
+          align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划产量\n(m³/d)' : '计划产量\n(t/d)'"
           :formatter="toPrecise2"
         ></el-table-column>

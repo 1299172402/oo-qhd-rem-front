@@ -1,9 +1,9 @@
-/*! FileAPI 2.0.7 - BSD | git://github.com/mailru/FileAPI.git
+/*! FileAPI - BSD | git://github.com/mailru/FileAPI.git
  * FileAPI — a set of  javascript tools for working with files. Multiupload, drag'n'drop and chunked file upload. Images: crop, resize and auto orientation by EXIF.
  */
 
 /*
- * JavaScript Canvas to Blob 2.0.5
+ * JavaScript Canvas to Blob
  * https://github.com/blueimp/JavaScript-Canvas-to-Blob
  *
  * Copyright 2012, Sebastian Tschan
@@ -2287,7 +2287,7 @@
 })(FileAPI, document);
 
 /*
- * JavaScript Load Image iOS scaling fixes 1.0.3
+ * JavaScript Load Image iOS scaling fixes
  * https://github.com/blueimp/JavaScript-Load-Image
  *
  * Copyright 2013, Sebastian Tschan

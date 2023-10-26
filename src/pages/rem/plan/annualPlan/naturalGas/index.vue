@@ -38,32 +38,32 @@
         :header-cell-style="{ padding: '0px 0' }"
       >
         <el-table-column type="index" align="center" label="序号" width="80" :index="tableIndex"></el-table-column>
-        <el-table-column prop="prodDate" header-align="center" align="left" :label="`时间\n(yyyy-mm-dd)`">
+        <el-table-column prop="prodDate" header-align="center" align="center" :label="`时间\n(yyyy-mm-dd)`">
         </el-table-column>
         <el-table-column
           property="gasProdPlan"
           header-align="center"
-          align="right"
+          align="center"
           :label="`计划产气量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           property="gasProdDaily"
           header-align="center"
-          align="right"
+          align="center"
           :label="`产气量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="oilEquivalent"
           header-align="center"
-          align="right"
+          align="center"
           :label="`油当量\n(m³/d)`"
         ></el-table-column>
         <el-table-column
           prop="gasProdRollFocecast"
           header-align="center"
-          align="right"
+          align="center"
           :label="`滚动预测产气量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
