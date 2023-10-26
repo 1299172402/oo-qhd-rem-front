@@ -132,14 +132,14 @@ export default {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
             fontSize: 12,
-            interval: function (index, val) {
-              console.log("val", val.substr(-2));
-              if (val.substr(-2) == "01") {
-                return true;
-              } else {
-                return false;
-              }
-            },
+            // interval: function (index, val) {
+            //   console.log("val", val.substr(-2));
+            //   if (val.substr(-2) == "01") {
+            //     return true;
+            //   } else {
+            //     return false;
+            //   }
+            // },
             rotate: "45",
           },
           axisTick: {
@@ -283,13 +283,13 @@ export default {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
             fontSize: 14,
-            interval: function (index, val) {
-              if (val.substr(-2) == "01") {
-                return true;
-              } else {
-                return false;
-              }
-            },
+            // interval: function (index, val) {
+            //   if (val.substr(-2) == "01") {
+            //     return true;
+            //   } else {
+            //     return false;
+            //   }
+            // },
             // rotate: 20,
           },
           axisTick: {

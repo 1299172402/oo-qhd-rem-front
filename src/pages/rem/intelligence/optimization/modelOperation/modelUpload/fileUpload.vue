@@ -8,18 +8,18 @@
       :data="tableData"
       style="font-size: 14px;"
       :header-cell-style="headerClass">
-      <el-table-column prop="fileName" label="文件类型" min-width="50" align="center"></el-table-column>
-      <el-table-column prop="uploadedFileNum" min-width="45" label="已上传文件个数" align="center">
+      <el-table-column prop="fileName" label="文件类型" min-width="35" align="center"></el-table-column>
+      <el-table-column prop="uploadedFileNum" min-width="40" label="已上传文件个数" align="center">
         <template v-slot="scope">
           {{ scope.row.uploadedFileNum }}
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" align="center">
         <el-table-column align="right">
           <template v-slot="scope">
             <!-- 路由跳转  :limit="scope.row.limit+1" :limit="scope.row.limit"-->
-            <el-row style="border: none !important;">
-              <el-upload style="border: none !important;"
+<!--            <el-row style="border: none !important;">-->
+              <el-upload style="font-size: 14px"
                 ref="upload"
                 action=""
                 :multiple="true"
@@ -38,91 +38,76 @@
                   }
                 "
               >
-                <el-row type="flex" justify="space-around" style="border: 0px !important;">
-                  <el-button  size="mini" icon="el-icon-thumb" type="text" @click="choose(scope.$index,scope.row)">
-                    <span style="font-size:13px">选择</span>
+<!--                <el-row style="border: 0px !important;">-->
+                  <el-button icon="el-icon-thumb" type="text" style="color: white;" @click="choose(scope.$index,scope.row)">
+                    选择
                   </el-button>
-                <el-button size="mini" icon="el-icon-upload2" type="text" @click.stop="uploadFiles(scope.row,scope.$index)">
-                  <span style="font-size:13px;">上传</span>
+                <el-button icon="el-icon-upload2" type="text" style="color: white;" @click.stop="uploadFiles(scope.row,scope.$index)">
+                  上传
                 </el-button>
-                <el-button  size="mini" icon="el-icon-upload" type="text" @click.stop="updateFileType(scope.row, scope.$index)">
-                  <span style="font-size:13px">查看</span>
+                <el-button icon="el-icon-upload" type="text"  @click.stop="updateFileType(scope.row, scope.$index)">
+                  查看
                 </el-button>
-                </el-row>
+<!--                </el-row>-->
 
                 <!-- 查看已上传文件 -->
                 <el-row slot="tip">
-                  <el-dialog
+                  <el-dialog 
                     title="已上传优化文件"
-                    :close-on-click-modal="false"
+                    :close-on-click-modal="false" :show-close="false"
                     :visible.sync="uploadFileDialogVisible"
                     :modal="false"
-                    width="750px"
-                    footer="" >
+                    width="44%" style="margin-top: 150px;margin-left: 170px;"
+                  >
                     <el-table
                       :data="uploadFileList"
                       v-loading="fileDeleteLoading"
-                      element-loading-text="删除中"
+                      element-loading-text="删除中" 
                       element-loading-background="rgb(0, 40, 80, 0.6)"
-                      height="510px"
+                      height="480"
                       style="font-size: 14px"
+                      :row-style="{ height: '0px' }"
+                      :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
+                      header-cell-class-name="table_header"
                       :cell-style="cellFontStyle">
-                      <el-table-column prop="fileName" label="文件名称" width="400" align="center"></el-table-column>
-                      <el-table-column
+                      <el-table-column prop="fileName" min-width="100" label="文件名称" align="center"></el-table-column>
+                      <el-table-column min-width="40"
                         prop="isParseFlag"
                         label="文件状态"
-                        width="100"
                         align="center"
-                        v-if="isShowColumn"
-                      >
+                        v-if="isShowColumn">
                         <template v-slot="scope">
-                          <div
-                            :style="{
-                              color:
-                                scope.row.isParseFlag == 1 ? 'orange' : scope.row.isParseFlag == -1 ? 'red' : 'green',
-                            }"
-                          >
+                          <div :style="{
+                              color: scope.row.isParseFlag == 1 ? 'orange' : scope.row.isParseFlag == -1 ? 'red' : 'green', }" >
                             <span>{{
                               scope.row.isParseFlag == 1 ? "已解析" : scope.row.isParseFlag == 0 ? "未解析" : "解析错误"
                             }}</span>
                           </div>
                         </template>
                       </el-table-column>
-                      <el-table-column prop="operate" label="操作" align="center">
+                      <el-table-column prop="operate" label="操作" min-width="40" align="center">
                         <template v-slot="scope">
-                          <el-button
-                            style="
-                              background-color: transparent;
-                              color: rgba(109, 187, 230, 0.8);
-                      
-                            "
-                            size="mini"
+                          <el-button type="text" style="color: #f56c6c;"
                             icon="el-icon-delete"
-                            @click="deleteFile(scope.row)"
-                          >
-                            <span style="font-size: 14px">删除</span>
+                            @click="deleteFile(scope.row)">删除
                           </el-button>
                         </template>
                       </el-table-column>
                     </el-table>
-                    <el-row style="text-align: center; margin-top: -20px; float: right">
+                    <el-row style="text-align: center;line-height: 50px; float: right">
                       <el-button type="primary"
                         :disabled="exitShowButton"
                         @click="
-                          function () {
-                            uploadFileDialogVisible = false;
-                          }
-                        "
-                        size="small">退出查看</el-button
-                      >
+                            uploadFileDialogVisible = false;"
+                        size="small">退出查看</el-button>
                     </el-row>
                   </el-dialog>
                 </el-row>
               </el-upload>
-            </el-row>
+<!--            </el-row>-->
           </template>
         </el-table-column>
-        <el-table-column align="left" min-width="55">
+        <el-table-column align="left" min-width="65">
           <template v-slot="scope">
             <span slot="tip" class="el-upload__tip" style="font-size: 14px; color: #6dbbe6">允许上传“{{ scope.row.fileType }}”</span>
           </template>
@@ -347,10 +332,7 @@ export default {
         return "";
       }
     },
-    // //表格行样式
-    // tableCellStyle(){
-    //   return 'height:10px'
-    // },
+    
     //接收父组件的modelBasicId
     receiveId() {
       this.reId = this.modelBasicId;
@@ -478,30 +460,7 @@ export default {
       //debugger
       // var fileSumCount = this.fileList.length + this.fileCount.ffCount
       // console.log("fileSumCount",fileSumCount)
-
-      //当用户每次选择超过三个文件时提醒并清空，
-      //当用户上传文件总数不够时，
-      // if (index === 1) {
-      //   setTimeout(() => {
-      //     if ((this.fileList.length + this.fileCount.ffCount) > this.userFileCountF) {
-      //       //console.log("fileSumCount   if",fileSumCount)
-      //       this.$message.warning(`该类型限制上传 ${this.userFileCountF} 个文件`)
-      //       this.fileList = []
-      //     }
-      //     setTimeout(() => {
-      //       if (this.fileList.length > 3) {
-      //         this.$message.warning(`请每次上传 3 个文件`)
-      //         this.fileList = []
-      //       }
-      //     }, 1)
-      //     this.modelUploadChildF()
-      //     setTimeout(() => {
-      //       if (this.fileCount.ffCount != this.modelBasicInfo.fileNum) {
-      //         this.$message.warning(`需上传 ${this.userFileCountF} 个文件，已上传  ${this.fileCount.ffCount} 个文件`)
-      //       }
-      //     }, 1)
-      //   }, 1000)
-      // }
+        
       if (index === 1) {
         setTimeout(() => {
           if (this.fileList.length > 3) {
@@ -557,29 +516,7 @@ export default {
       }
       console.log("++++++++++", this.fileList.length + this.fileCount.ffCount);
       console.log("00", this.userFileCountF);
-      //console.log("upload", this.$refs.upload)
-      // if (index === 1) {
-      //   if (this.uploadFileCountF === 0) {
-      //     if (fileList.length > row.limit) {
-      //       row.limit = this.userFileCountF;
-      //       this.$message.warning(`该类型限制上传 ${row.limit} 个文件`)
-      //     } else {
-      //       this.handleChange(file, fileList)
-      //     }
-      //     this.modelUploadChildF()
-      //   } else {
-      //     let ll = this.uploadFileCountF + fileList.length;
-      //     if (ll > row.limit) {
-      //       this.$message.warning(`该类型限制上传 ${row.limit} 个文件`)
-      //     } else {
-      //       this.handleChange(file, fileList)
-      //     }
-      //   }
-
-      // } else if (index != 0 && index != 1) {
-      //   this.$message.warning(`该类型限制上传 ${row.limit} 个文件`)
-      // }
-
+        
       //判断文件类型上传
       if (index === 0) {
         for (let i = 0; i < this.fileList.length; i++) {
@@ -765,5 +702,15 @@ export default {
 <style lang="scss" scoped>
 .tablebody ::v-deep.el-table--border .el-table__cell {
     border-right:#012733 !important;
+}
+::v-deep .el-upload {
+    width: 93% !important;
+    margin-top: 0px !important;
+}
+::v-deep .el-upload--text {
+    border: 0px !important;
+}
+::v-deep .el-dialog__header{
+    text-align: left;
 }
 </style>

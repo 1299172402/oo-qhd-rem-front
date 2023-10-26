@@ -3566,7 +3566,7 @@ NAMESPACE_SVG = "http://www.w3.org/2000/svg/";
  * @classDescription This class wraps the manipulation of a SVG marker.
  * @namespace ORYX.Core.SVG
  * uses Inheritance (Clazz)
- * uses Prototype 1.5.0
+ * uses Prototype
  *
  */
 
@@ -3779,7 +3779,7 @@ NAMESPACE_SVG = "http://www.w3.org/2000/svg/";
  * @classDescription This class wraps the manipulation of a SVG basic shape or a path.
  * @namespace ORYX.Core.SVG
  * uses Inheritance (Clazz)
- * uses Prototype 1.5.0
+ * uses Prototype
  * uses PathParser by Kevin Lindsey (http://kevlindev.com/)
  * uses MinMaxPathHandler
  * uses EditPathHandler
@@ -6042,7 +6042,7 @@ if(!ORYX.Core.StencilSet) {ORYX.Core.StencilSet = {};}
 
 /**
  * Class Stencil
- * uses Prototpye 1.5.0
+ * uses Prototpye
  * uses Inheritance
  * 
  * This class represents one stencil of a stencil set.
@@ -6468,7 +6468,7 @@ if (!ORYX.Core.StencilSet) {
 
 /**
  * Class Property
- * uses Prototpye 1.5.0
+ * uses Prototpye
  * uses Inheritance
  */
 ORYX.Core.StencilSet.Property = Clazz.extend({
@@ -6943,7 +6943,7 @@ if(!ORYX.Core.StencilSet) {ORYX.Core.StencilSet = {};}
 
 /**
  * Class Stencil
- * uses Prototpye 1.5.0
+ * uses Prototpye
  * uses Inheritance
  */
 ORYX.Core.StencilSet.PropertyItem = Clazz.extend({
@@ -7055,7 +7055,7 @@ if(!ORYX.Core.StencilSet) {ORYX.Core.StencilSet = {};}
 
 /**
  * Class Stencil
- * uses Prototpye 1.5.0
+ * uses Prototpye
  * uses Inheritance
  */
 ORYX.Core.StencilSet.ComplexPropertyItem = Clazz.extend({
@@ -7202,7 +7202,7 @@ if(!ORYX.Core) {ORYX.Core = {};}
 if(!ORYX.Core.StencilSet) {ORYX.Core.StencilSet = {};}
 
 /**
- * Class Rules uses Prototpye 1.5.0 uses Inheritance
+ * Class Rules uses Prototpye uses Inheritance
  * 
  * This class implements the API to check the stencil sets' rules.
  */
@@ -8958,7 +8958,7 @@ if(!ORYX.Core.StencilSet) {ORYX.Core.StencilSet = {};}
 
 /**
  * Class StencilSets
- * uses Prototpye 1.5.0
+ * uses Prototpye
  * uses Inheritance
  *
  * Singleton

@@ -48,9 +48,9 @@
             下载
           </el-button>
         </div>
-        <el-table id="zhjfzlmx" :data="tableData" highlight height="calc(100% - 55px)">
+        <el-table id="zhjfzlmx" :data="tableData" border highlight height="calc(100% - 55px)">
           <!-- :index="formatIndex"  -->
-          <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
+          <el-table-column label="序号" header-align="center" align="center" type="index" width="80"></el-table-column>
           <el-table-column prop="platFormName" label="平台" align="center"></el-table-column>
           <el-table-column
             prop="null"
@@ -289,10 +289,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.queryParams.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
-              : undefined;
+          this.queryParams.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.queryParams.companyId }).then((data) => {

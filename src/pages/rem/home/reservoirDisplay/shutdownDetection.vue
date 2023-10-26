@@ -99,29 +99,30 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="wellName"  label="井号"></el-table-column>
-                <el-table-column prop="appendixValueName" label="*关停分类"></el-table-column>
-                <el-table-column prop="reasonAppendixValueName" label="*关停原因"></el-table-column>
-                <el-table-column prop="planAppendixValueName" label="*计划属性"></el-table-column>
-                <el-table-column prop="beginDate" sortable min-width="90px" :label="`*关停开始时间\n(yyyy/mm/dd)`">
+                <el-table-column prop="wellName" align="center" type="index" width="50px" label="序号"></el-table-column>
+                <el-table-column prop="wellName"  min-width="60px" label="井号"></el-table-column>
+                <el-table-column prop="appendixValueName" min-width="60px" label="*关停分类"></el-table-column>
+                <el-table-column prop="reasonAppendixValueName" min-width="60px" label="*关停原因"></el-table-column>
+                <el-table-column prop="planAppendixValueName" min-width="40px" label="*计划属性"></el-table-column>
+                <el-table-column prop="beginDate" sortable min-width="60px" :label="`*关停开始时间\n(yyyy-mm-dd)`">
                     <template slot-scope="scope">
                         <span v-if="scope.row.beginDate">{{scope.row.beginDate.substring(0,10)}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="endDate" sortable min-width="90px" :label="`*关停结束时间\n(yyyy/mm/dd)`">
+                <el-table-column prop="endDate" sortable min-width="60px" :label="`*关停结束时间\n(yyyy-mm-dd)`">
                     <template slot-scope="scope">
                         <span v-if="scope.row.endDate">{{scope.row.endDate.substring(0,10)}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="impactProdution" align="right" :label="`影响产量\n(m³)`">
+                <el-table-column prop="impactProdution" min-width="40px" align="right" :label="`影响产量\n(m³)`">
                     <template slot-scope="scope">
                       <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution).toFixed(2)}}</span>  
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="remark" show-overflow-tooltip label="备注"></el-table-column>
+                <el-table-column prop="remark" min-width="130px" show-overflow-tooltip label="备注"></el-table-column>
             </el-table>
             <pagination
                 v-show="total > 0"
@@ -235,7 +236,7 @@ export default {
                 searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             }
             await userListByUserNames(params).then((res) => {
-                this.ogfId = (res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]) ? res.data.data[0].tenantInfos[0]?.deptId : undefined;
+                this.ogfId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
             })
         },
         //油田

@@ -33,37 +33,42 @@
       <el-table
         id="tableData"
         :data="oilYearData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        :cell-style="{ padding: '6px' }"
         style="width: 100%"
         height="calc(100% - 130px)"
         :default-sort="{ prop: 'date', order: 'descending' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        :header-cell-style="{ padding: '0px 0' }"
       >
-        <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
-        <el-table-column prop="theDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+        <el-table-column type="index" align="center" label="序号" width="80" :index="tableIndex"></el-table-column>
+        <el-table-column prop="theDate" header-align="center" align="center" :label="`时间\n(yyyy-mm-dd)`">
+        </el-table-column>
         <el-table-column
           prop="injectionDailyReal"
+          header-align="center"
           align="center"
           :label="`实际日注入量\n(m³)`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="injectionDailyPlan"
+          header-align="center"
           align="center"
           :label="`计划日注入量\n(m³)`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           property="injectionSumReal"
+          header-align="center"
           align="center"
           :label="`实际年累注\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="injectionSumPlan"
+          header-align="center"
           align="center"
           :label="`计划年累注\n(10⁴m³)`"
           :formatter="toPrecise4"
@@ -79,6 +84,7 @@ import Echart from "@/components/tools/Echarts/index.vue";
 import { searchInjectionChart, searchInjectionTable } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { dowmInjectionTable } from "@/api/oilDeposit/rem-04/plan.js";
 import FileSaver from "file-saver";
+
 export default {
   components: {
     Echart,
@@ -159,13 +165,13 @@ export default {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
             fontSize: 14,
-            interval: function (index, val) {
-              if (val.substr(-2) == "01") {
-                return true;
-              } else {
-                return false;
-              }
-            },
+            // interval: function (index, val, arr) {
+            //   if (val.substr(-2) == "01") {
+            //     return true;
+            //   } else {
+            //     return false;
+            //   }
+            // },
           },
           axisTick: {
             show: true,
@@ -290,6 +296,41 @@ export default {
           this.OilYearLineChart.legend.data = legendData;
           this.OilYearLineChart.series = seriesData;
           this.OilYearLineChart.xAxis.data = xData;
+          // let arr = xData.filter((item) => item.substr(-2) == "01");
+          // let CXArry = [];
+          // if (arr.length > 10) {
+          //   let tempInt = parseInt(arr.length % 100);
+          //   // 偶数
+          //   if (tempInt % 2 === 0) {
+          //     let rresult = arr.slice(tempInt / 2 - 1, arr.length - tempInt / 2 - 1);
+          //     let num = (arr.length - tempInt) / 10;
+          //     for (let i = 0; i < rresult.length; i += num) CXArry.push(arr[tempInt / 2 + i]);
+          //   }
+          //   //奇数
+          //   else {
+          //     let rresult = arr.slice(tempInt - 1 / 2 - 1, arr.length - (tempInt - 1) / 2);
+          //     let num = (arr.length - tempInt) / 10;
+          //     for (let i = 0; i < rresult.length; i += num) CXArry.push(arr[(tempInt - 1) / 2 + i]);
+          //   }
+          //   CXArry.unshift(arr[0]);
+          //   CXArry.push(arr[arr.length - 1]);
+          //   console.log(CXArry);
+          // }
+          // this.OilYearLineChart.xAxis.axisLabel.interval = function (index, val) {
+          //   if (CXArry.length > 1) {
+          //     if (CXArry.includes(val)) {
+          //       return true;
+          //     } else {
+          //       return false;
+          //     }
+          //   } else {
+          //     if (val.substr(-2) == "01") {
+          //       return true;
+          //     } else {
+          //       return false;
+          //     }
+          //   }
+          // };
         } else {
           this.OilYearLineChart.legend.data = legendData;
           this.OilYearLineChart.series = seriesData;

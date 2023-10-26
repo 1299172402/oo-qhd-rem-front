@@ -32,15 +32,16 @@
           <el-table
             ref="table1"
             :data="tableData"
+            border
             highlight
             :row-class-name="tableRowClassName"
             height="calc(100% - 130px)"
           >
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -67,13 +68,14 @@
                 <el-button
                   v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
                   type="text"
+                  class="chicked"
                   size="small"
                   @click="warningDispose(scope.row)"
                 >
-                  <span style="color: #ffffff">处理</span>
+                  处理
                 </el-button>
-                <el-button type="text" size="small" @click="warningDispose(scope.row)">
-                  <span style="color: #ffffff">查看</span>
+                <el-button type="text" class="chicked" size="small" @click="warningDispose(scope.row)">
+                  查看
                 </el-button>
               </template>
             </el-table-column>
@@ -108,12 +110,12 @@
               下载
             </el-button>
           </div>
-          <el-table ref="table2" :data="tableData" highlight height="calc(100% - 130px)">
+          <el-table ref="table2" :data="tableData" border highlight height="calc(100% - 130px)">
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -145,13 +147,14 @@
                 <el-button
                   v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
                   type="text"
+                  class="chicked"
                   size="small"
                   @click="warningDispose(scope.row)"
                 >
-                  <span style="color: #ffffff">处理</span>
+                  处理
                 </el-button>
-                <el-button type="text" size="small" @click="warningDispose(scope.row)">
-                  <span style="color: #ffffff">查看</span>
+                <el-button type="text" class="chicked" size="small" @click="warningDispose(scope.row)">
+                  查看
                 </el-button>
               </template>
             </el-table-column>
@@ -213,12 +216,12 @@
               </div>
             </div>
           </div>
-          <el-table ref="table3" :data="tableData" highlight height="calc(100% - 130px)">
+          <el-table ref="table3" :data="tableData" border highlight height="calc(100% - 130px)">
             <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -233,11 +236,11 @@
             <el-table-column prop="result" label="处置结果" align="center">
               <template slot-scope="scope">
                 <div v-if="scope.row.result == null || scope.row.result == ''">
-                  <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">关闭</span>
+                  <el-button type="text" class="chicked" @click="warningDispose(scope.row)">关闭</el-button>
                 </div>
-                <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">{{
+                <el-button type="text" class="chicked" @click="warningDispose(scope.row)">{{
                   scope.row.result
-                }}</span>
+                }}</el-button>
               </template>
             </el-table-column>
             <el-table-column prop="handler" label="处理人" align="center">
@@ -275,15 +278,16 @@
           <el-table
             ref="table4"
             :data="tableData"
+            border
             highlight
             :row-class-name="tableRowClassName"
             height="calc(100% - 130px)"
           >
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -310,13 +314,14 @@
                 <el-button
                   v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
                   type="text"
+                  class="chicked"
                   size="small"
                   @click="warningDispose(scope.row)"
                 >
-                  <span style="color: #ffffff">处理</span>
+                  处理
                 </el-button>
-                <el-button type="text" size="small" @click="warningDispose(scope.row)">
-                  <span style="color: #ffffff">查看</span>
+                <el-button type="text" class="chicked" size="small" @click="warningDispose(scope.row)">
+                  查看
                 </el-button>
               </template>
             </el-table-column>
@@ -351,12 +356,12 @@
               下载
             </el-button>
           </div>
-          <el-table ref="table5" :data="tableData" highlight height="calc(100% - 130px)">
+          <el-table ref="table5" :data="tableData" border highlight height="calc(100% - 130px)">
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"> </el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"> </el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -388,13 +393,14 @@
                 <el-button
                   v-if="scope.row.disposalStatus == '0' || scope.row.disposalStatus == '1'"
                   type="text"
+                  class="chicked"
                   size="small"
                   @click="warningDispose(scope.row)"
                 >
-                  <span style="color: #ffffff">处理</span>
+                  处理
                 </el-button>
-                <el-button type="text" size="small" @click="warningDispose(scope.row)">
-                  <span style="color: #ffffff">查看</span>
+                <el-button type="text" class="chicked" size="small" @click="warningDispose(scope.row)">
+                  查看
                 </el-button>
               </template>
             </el-table-column>
@@ -457,12 +463,12 @@
               </div>
             </div>
           </div>
-          <el-table ref="table6" :data="tableData" highlight height="calc(100% - 130px)">
+          <el-table ref="table6" :data="tableData" border highlight height="calc(100% - 130px)">
             <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
-            <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
-            <el-table-column prop="warningDesc" label="预警描述" align="center">
+            <el-table-column prop="warningDesc" label="预警描述" min-width="250" align="center">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.warningDesc" placement="top">
                   <div
@@ -477,11 +483,11 @@
             <el-table-column prop="result" label="处置结果" align="center">
               <template slot-scope="scope">
                 <div v-if="scope.row.result == null || scope.row.result == ''">
-                  <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">关闭</span>
+                  <el-button type="text" class="chicked" @click="warningDispose(scope.row)">关闭</el-button>
                 </div>
-                <span class="hrefSpan" style="cursor: pointer" href="#" @click="warningDispose(scope.row)">{{
+                <el-button type="text" class="chicked" @click="warningDispose(scope.row)">{{
                   scope.row.result
-                }}</span>
+                }}</el-button>
               </template>
             </el-table-column>
             <el-table-column prop="handler" label="处理人" align="center">
@@ -886,6 +892,8 @@ export default {
             warningCode: row.warningCode,
             oilfieldId: this.oilFieldId,
             ycglKfyj: this.ycglKfyj,
+            fieldId: row.fieldId,
+            radioValue: this.radioValue,
           },
         });
       } else if (row.warningCode == "9") {
@@ -900,6 +908,8 @@ export default {
             warningCode: row.warningCode,
             oilfieldId: this.oilFieldId,
             ycglKfyj: this.ycglKfyj,
+            fieldId: row.fieldId,
+            radioValue: this.radioValue,
           },
         });
       } else if (row.warningCode == "11") {
@@ -914,6 +924,8 @@ export default {
             warningCode: row.warningCode,
             oilfieldId: this.oilFieldId,
             ycglKfyj: this.ycglKfyj,
+            fieldId: row.fieldId,
+            radioValue: this.radioValue,
           },
         });
       } else {
@@ -927,6 +939,8 @@ export default {
             warningCode: row.warningCode,
             oilfieldId: this.oilFieldId,
             ycglKfyj: this.ycglKfyj,
+            fieldId: row.fieldId,
+            radioValue: this.radioValue,
           },
         });
       }

@@ -9,7 +9,7 @@
             <el-table-column prop="oilField" label="油田" align="center" min-width="180" fixed></el-table-column>
             
             <el-table-column prop="jkptmc" label="井口平台名称" align="center" min-width="160"></el-table-column>
-            <el-table-column prop="pttcrq" :label="`平台投产日期\n(yyyy-dd-mm)`" align="center" min-width="130"></el-table-column>
+            <el-table-column prop="pttcrq" :label="`平台投产日期\n(yyyy-mm-dd)`" align="center" min-width="130"></el-table-column>
             <el-table-column label="平台设计寿命" align="center">
                 <el-table-column prop="ptsjsm" :label="`(年)`" align="center" min-width="120"></el-table-column>
             </el-table-column>

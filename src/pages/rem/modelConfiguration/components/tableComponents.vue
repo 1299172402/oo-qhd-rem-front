@@ -11,7 +11,7 @@
             <el-button type="primary" @click="addTableRow">新增</el-button>
         </div>
         <div class="z-table">
-            <el-table width="100%" height="100%" :row-style="{ height: '0px' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" :cell-style="{ padding: '6px', 'text-align': 'center' }">
+            <el-table width="100%" height="100%" :row-style="{ height: '0px' }" border :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }" :data="tableData" :cell-style="{ padding: '6px', 'text-align': 'center' }">
                 <el-table-column prop="modelName" label="模型名称"  width="250">
                     <template slot-scope="scope">
                         <div>

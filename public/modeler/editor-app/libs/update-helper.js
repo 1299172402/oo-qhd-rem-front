@@ -1,6 +1,6 @@
 /* Update Helper (c) 2008-2009 Tobie Langel
  *
- * Requires Prototype >= 1.6.0
+ * Requires Prototype >=
  *
  * Update Helper is distributable under the same terms as Prototype
  * (MIT-style license). For details, see the Prototype web site:

@@ -152,7 +152,7 @@
                 </div>
               </el-col>
               <el-col :span="9">
-                <Echart :chart-data="option" height="100%" width="100%"></Echart>
+                <Echart :chart-data="item.option" height="100%" width="100%"></Echart>
               </el-col>
             </el-row>
           </pagePanel>
@@ -196,7 +196,7 @@
             </div>
           </div>
         </div>
-        <el-table id="indexscv" :data="tableData" :key="Math.random()" highlight height="calc(100% - 55px)">
+        <el-table id="indexscv" :data="tableData" border :key="Math.random()" highlight height="calc(100% - 55px)">
           <el-table-column prop="name" label="指标" align="center"></el-table-column>
           <el-table-column prop="real" label="实际值" align="center" :formatter="formatterNumber"></el-table-column>
           <el-table-column prop="chain" label="环比 (上年/上月)" align="center">
@@ -283,7 +283,7 @@
           </el-table-column>
         </el-table>
       </pagePanel>
-      <pagePanel headerTitle="含水上升率" v-if="currentIndex == 5" style="height: 500px" show-btn>
+      <pagePanel headerTitle="含水上升率" v-if="currentIndex == 8" style="height: 500px" show-btn>
         <div class="g-row-flex-V" style="justify-content: space-between; margin-bottom: 20px">
           <div class="g-row-flex-V" style="flex-wrap: wrap">
             <span>油藏分析单元：</span>
@@ -367,7 +367,7 @@ export default {
       queryParams: {
         companyId: "715AD1CD60484BB59E737CD18A9DE44A", // 作业公司
         oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 油田
-        targetOilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 对标油田
+        targetOilFieldId: "", // 对标油田
         platFormId: "", // 平台
         fileId: "", // 区块id
         layerId: "", // 层系id
@@ -384,9 +384,7 @@ export default {
       pageSize: 10,
       //指标数据
       zbData: [
-        {
-          title: "注水指标总览",
-        },
+        { title: "注水指标总览" },
         {
           title: "年注入量",
           sz: "",
@@ -394,6 +392,64 @@ export default {
           tb: "",
           kh: "",
           dw: "10⁴m³",
+          option: {
+            title: {
+              text: "注水数据",
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 16,
+              },
+              top: 0,
+              left: "center",
+            },
+            grid: {
+              x: 0,
+              y: 30,
+              x2: 0,
+              y2: 20,
+            },
+            xAxis: {
+              type: "category",
+              data: [
+                "2020/01",
+                "2020/02",
+                "2020/03",
+                "2020/04",
+                "2020/05",
+                "2020/06",
+                "2020/07",
+                "2020/08",
+                "2020/09",
+                "2020/10",
+              ],
+              show: false,
+            },
+            yAxis: {
+              type: "value",
+              show: false,
+            },
+            series: [
+              {
+                data: [3, 5, 3, 8, 7, 3, 8, 10, 9, 6],
+                type: "line",
+                showSymbol: false,
+                smooth: true,
+                color: "#3375EC",
+                areaStyle: {
+                  color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#23529F",
+                    },
+                    {
+                      offset: 1,
+                      color: "#012D4F",
+                    },
+                  ]),
+                },
+              },
+            ],
+          },
         },
         {
           title: "地层压力保持水平",
@@ -402,6 +458,64 @@ export default {
           tb: "",
           kh: "",
           dw: "%",
+          option: {
+            title: {
+              text: "注够水",
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 16,
+              },
+              top: 0,
+              left: "center",
+            },
+            grid: {
+              x: 0,
+              y: 30,
+              x2: 0,
+              y2: 20,
+            },
+            xAxis: {
+              type: "category",
+              data: [
+                "2020/01",
+                "2020/02",
+                "2020/03",
+                "2020/04",
+                "2020/05",
+                "2020/06",
+                "2020/07",
+                "2020/08",
+                "2020/09",
+                "2020/10",
+              ],
+              show: false,
+            },
+            yAxis: {
+              type: "value",
+              show: false,
+            },
+            series: [
+              {
+                data: [3, 5, 3, 8, 7, 3, 8, 10, 9, 6],
+                type: "line",
+                showSymbol: false,
+                smooth: true,
+                color: "#3375EC",
+                areaStyle: {
+                  color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#23529F",
+                    },
+                    {
+                      offset: 1,
+                      color: "#012D4F",
+                    },
+                  ]),
+                },
+              },
+            ],
+          },
         },
         {
           title: "注水水质达标率",
@@ -410,6 +524,64 @@ export default {
           tb: "",
           kh: "",
           dw: "%",
+          option: {
+            title: {
+              text: "注好水",
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 16,
+              },
+              top: 0,
+              left: "center",
+            },
+            grid: {
+              x: 0,
+              y: 30,
+              x2: 0,
+              y2: 20,
+            },
+            xAxis: {
+              type: "category",
+              data: [
+                "2020/01",
+                "2020/02",
+                "2020/03",
+                "2020/04",
+                "2020/05",
+                "2020/06",
+                "2020/07",
+                "2020/08",
+                "2020/09",
+                "2020/10",
+              ],
+              show: false,
+            },
+            yAxis: {
+              type: "value",
+              show: false,
+            },
+            series: [
+              {
+                data: [3, 5, 3, 8, 7, 3, 8, 10, 9, 6],
+                type: "line",
+                showSymbol: false,
+                smooth: true,
+                color: "#3375EC",
+                areaStyle: {
+                  color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#23529F",
+                    },
+                    {
+                      offset: 1,
+                      color: "#012D4F",
+                    },
+                  ]),
+                },
+              },
+            ],
+          },
         },
         {
           title: "分注井层段合格率",
@@ -418,6 +590,262 @@ export default {
           tb: "",
           kh: "",
           dw: "%",
+          option: {
+            title: {
+              text: "精细注水",
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 16,
+              },
+              top: 0,
+              left: "center",
+            },
+            grid: {
+              x: 0,
+              y: 30,
+              x2: 0,
+              y2: 20,
+            },
+            xAxis: {
+              type: "category",
+              data: [
+                "2020/01",
+                "2020/02",
+                "2020/03",
+                "2020/04",
+                "2020/05",
+                "2020/06",
+                "2020/07",
+                "2020/08",
+                "2020/09",
+                "2020/10",
+              ],
+              show: false,
+            },
+            yAxis: {
+              type: "value",
+              show: false,
+            },
+            series: [
+              {
+                data: [3, 5, 3, 8, 7, 3, 8, 10, 9, 6],
+                type: "line",
+                showSymbol: false,
+                smooth: true,
+                color: "#3375EC",
+                areaStyle: {
+                  color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#23529F",
+                    },
+                    {
+                      offset: 1,
+                      color: "#012D4F",
+                    },
+                  ]),
+                },
+              },
+            ],
+          },
+        },
+        {
+          title: "注水井分注率",
+          sz: "",
+          hb: "",
+          tb: "",
+          kh: "",
+          dw: "%",
+          option: {
+            title: {
+              text: "精细注水",
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 16,
+              },
+              top: 0,
+              left: "center",
+            },
+            grid: {
+              x: 0,
+              y: 30,
+              x2: 0,
+              y2: 20,
+            },
+            xAxis: {
+              type: "category",
+              data: [
+                "2020/01",
+                "2020/02",
+                "2020/03",
+                "2020/04",
+                "2020/05",
+                "2020/06",
+                "2020/07",
+                "2020/08",
+                "2020/09",
+                "2020/10",
+              ],
+              show: false,
+            },
+            yAxis: {
+              type: "value",
+              show: false,
+            },
+            series: [
+              {
+                data: [3, 5, 3, 8, 7, 3, 8, 10, 9, 6],
+                type: "line",
+                showSymbol: false,
+                smooth: true,
+                color: "#3375EC",
+                areaStyle: {
+                  color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#23529F",
+                    },
+                    {
+                      offset: 1,
+                      color: "#012D4F",
+                    },
+                  ]),
+                },
+              },
+            ],
+          },
+        },
+        {
+          title: "动态监测完成率",
+          sz: "",
+          hb: "",
+          tb: "",
+          kh: "",
+          dw: "%",
+          option: {
+            title: {
+              text: "精细注水",
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 16,
+              },
+              top: 0,
+              left: "center",
+            },
+            grid: {
+              x: 0,
+              y: 30,
+              x2: 0,
+              y2: 20,
+            },
+            xAxis: {
+              type: "category",
+              data: [
+                "2020/01",
+                "2020/02",
+                "2020/03",
+                "2020/04",
+                "2020/05",
+                "2020/06",
+                "2020/07",
+                "2020/08",
+                "2020/09",
+                "2020/10",
+              ],
+              show: false,
+            },
+            yAxis: {
+              type: "value",
+              show: false,
+            },
+            series: [
+              {
+                data: [3, 5, 3, 8, 7, 3, 8, 10, 9, 6],
+                type: "line",
+                showSymbol: false,
+                smooth: true,
+                color: "#3375EC",
+                areaStyle: {
+                  color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#23529F",
+                    },
+                    {
+                      offset: 1,
+                      color: "#012D4F",
+                    },
+                  ]),
+                },
+              },
+            ],
+          },
+        },
+        {
+          title: "分注井测试率",
+          sz: "",
+          hb: "",
+          tb: "",
+          kh: "",
+          dw: "%",
+          option: {
+            title: {
+              text: "精细注水",
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 16,
+              },
+              top: 0,
+              left: "center",
+            },
+            grid: {
+              x: 0,
+              y: 30,
+              x2: 0,
+              y2: 20,
+            },
+            xAxis: {
+              type: "category",
+              data: [
+                "2020/01",
+                "2020/02",
+                "2020/03",
+                "2020/04",
+                "2020/05",
+                "2020/06",
+                "2020/07",
+                "2020/08",
+                "2020/09",
+                "2020/10",
+              ],
+              show: false,
+            },
+            yAxis: {
+              type: "value",
+              show: false,
+            },
+            series: [
+              {
+                data: [3, 5, 3, 8, 7, 3, 8, 10, 9, 6],
+                type: "line",
+                showSymbol: false,
+                smooth: true,
+                color: "#3375EC",
+                areaStyle: {
+                  color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#23529F",
+                    },
+                    {
+                      offset: 1,
+                      color: "#012D4F",
+                    },
+                  ]),
+                },
+              },
+            ],
+          },
         },
         {
           title: "含水上升率",
@@ -427,30 +855,64 @@ export default {
           kh: "",
           dw: "%",
           chainType: "(月)",
-        },
-        {
-          title: "注水井分注率",
-          sz: "",
-          hb: "",
-          tb: "",
-          kh: "",
-          dw: "%",
-        },
-        {
-          title: "动态监测完成率",
-          sz: "",
-          hb: "",
-          tb: "",
-          kh: "",
-          dw: "%",
-        },
-        {
-          title: "分注井测试率",
-          sz: "",
-          hb: "",
-          tb: "",
-          kh: "",
-          dw: "%",
+          option: {
+            title: {
+              text: "稳油控水",
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 16,
+              },
+              top: 0,
+              left: "center",
+            },
+            grid: {
+              x: 0,
+              y: 30,
+              x2: 0,
+              y2: 20,
+            },
+            xAxis: {
+              type: "category",
+              data: [
+                "2020/01",
+                "2020/02",
+                "2020/03",
+                "2020/04",
+                "2020/05",
+                "2020/06",
+                "2020/07",
+                "2020/08",
+                "2020/09",
+                "2020/10",
+              ],
+              show: false,
+            },
+            yAxis: {
+              type: "value",
+              show: false,
+            },
+            series: [
+              {
+                data: [3, 5, 3, 8, 7, 3, 8, 10, 9, 6],
+                type: "line",
+                showSymbol: false,
+                smooth: true,
+                color: "#3375EC",
+                areaStyle: {
+                  color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#23529F",
+                    },
+                    {
+                      offset: 1,
+                      color: "#012D4F",
+                    },
+                  ]),
+                },
+              },
+            ],
+          },
         },
         {
           title: "自然递减率",
@@ -460,6 +922,64 @@ export default {
           kh: "",
           dw: "%",
           chainType: "(月)",
+          option: {
+            title: {
+              text: "稳油控水",
+              textStyle: {
+                color: "#8FA4CC",
+                fontSize: 16,
+              },
+              top: 0,
+              left: "center",
+            },
+            grid: {
+              x: 0,
+              y: 30,
+              x2: 0,
+              y2: 20,
+            },
+            xAxis: {
+              type: "category",
+              data: [
+                "2020/01",
+                "2020/02",
+                "2020/03",
+                "2020/04",
+                "2020/05",
+                "2020/06",
+                "2020/07",
+                "2020/08",
+                "2020/09",
+                "2020/10",
+              ],
+              show: false,
+            },
+            yAxis: {
+              type: "value",
+              show: false,
+            },
+            series: [
+              {
+                data: [3, 5, 3, 8, 7, 3, 8, 10, 9, 6],
+                type: "line",
+                showSymbol: false,
+                smooth: true,
+                color: "#3375EC",
+                areaStyle: {
+                  color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    {
+                      offset: 0,
+                      color: "#23529F",
+                    },
+                    {
+                      offset: 1,
+                      color: "#012D4F",
+                    },
+                  ]),
+                },
+              },
+            ],
+          },
         },
       ],
       //油田列表
@@ -477,56 +997,6 @@ export default {
           label: "中含水期",
         },
       ],
-      //默认曲线
-      option: {
-        grid: {
-          x: 0,
-          y: 20,
-          x2: 0,
-          y2: 20,
-        },
-        xAxis: {
-          type: "category",
-          data: [
-            "2020/01",
-            "2020/02",
-            "2020/03",
-            "2020/04",
-            "2020/05",
-            "2020/06",
-            "2020/07",
-            "2020/08",
-            "2020/09",
-            "2020/10",
-          ],
-          show: false,
-        },
-        yAxis: {
-          type: "value",
-          show: false,
-        },
-        series: [
-          {
-            data: [3, 5, 3, 8, 7, 3, 8, 10, 9, 6],
-            type: "line",
-            showSymbol: false,
-            smooth: true,
-            color: "#3375EC",
-            areaStyle: {
-              color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "#23529F",
-                },
-                {
-                  offset: 1,
-                  color: "#012D4F",
-                },
-              ]),
-            },
-          },
-        ],
-      },
       //含水上升率
       rateOfWaterCutRise: {
         dataZoom: [
@@ -590,9 +1060,9 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
-            formatter: function (val) {
-              return Number(val) + "月";
-            },
+            // formatter: function (val) {
+            //   return Number(val) + "月";
+            // },
           },
            axisTick: {
               show: true,
@@ -711,9 +1181,9 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
-            formatter: function (val) {
-              return Number(val) + "月";
-            },
+            // formatter: function (val) {
+            //   return Number(val) + "月";
+            // },
           },
            axisTick: {
               show: true,
@@ -802,43 +1272,43 @@ export default {
     cardClick(item, index) {
       this.queryParams.platFormId = "";
       // this.queryParams.year = "";
-      if (index == 1) {
+      if (item.title == "年注入量") {
         // 年注入量
         this.$router.push({
           name: "AnnualInjection",
           query: {},
         });
-      } else if (index == 2) {
+      } else if (item.title == "地层压力保持水平") {
         // 地层压力保持水平
         this.$router.push({
           name: "StratumPressure",
           query: {},
         });
-      } else if (index == 3) {
+      } else if (item.title == "注水水质达标率") {
         // 注水水质达标率
         this.$router.push({
           name: "WaterQuality",
           query: {},
         });
-      } else if (index == 4) {
+      } else if (item.title == "分注井层段合格率") {
         // 分注井层段合格率
         this.$router.push({
           name: "SplitHole",
           query: {},
         });
-      } else if (index == 6) {
+      } else if (item.title == "注水井分注率") {
         // 注水井分注率
         this.$router.push({
           name: "WaterInjectionWell",
           query: {},
         });
-      } else if (index == 7) {
+      } else if (item.title == "动态监测完成率") {
         // 动态监测完成率
         this.$router.push({
           name: "DynamicMonitoring",
           query: {},
         });
-      } else if (index == 8) {
+      } else if (item.title == "分注井测试率") {
         // 分注井测试率
         this.$router.push({
           name: "SplitWellTest",
@@ -860,8 +1330,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.queryParams.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });
@@ -877,7 +1347,7 @@ export default {
         }
       });
       //对标油田默认qhd3-26油田
-      this.queryParams.targetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+      // this.queryParams.targetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       this.getFetchFields();
       //下面初始化调用各个接口 因为默认的全部平台和全部区块为 油田id 所以这样的区块平台默认写为油田id
       this.doInjectionIndicatorStat();
@@ -947,7 +1417,7 @@ export default {
       //注水指标管理
       if (this.currentIndex == 0) {
         this.doInjectionIndicatorStat();
-      } else if (this.currentIndex == 5) {
+      } else if (this.currentIndex == 8) {
         //含水上升率
         this.doRateOfmoistureRate();
       } else if (this.currentIndex == 9) {

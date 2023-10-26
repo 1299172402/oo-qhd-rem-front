@@ -14,7 +14,7 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData0', '产量分析报告-数据一')">下载</el-button>
                                 </div>
-                                <el-table id="tableData0" header-cell-class-name="table_header"  :data="tableDataPtOne" highlight height="calc(100% - 55px)">
+                                <el-table id="tableData0" header-cell-class-name="table_header" border :data="tableDataPtOne" highlight height="calc(100% - 55px)">
                                     <el-table-column prop="platformName" label="平台" align="center" min-width="140" fixed></el-table-column>
                                     <el-table-column prop="dayOutput" :label="'当日\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="140">
                                         <template slot-scope="{ row }">
@@ -60,7 +60,7 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#tableData1', '产量分析报告-数据二')">下载</el-button>
                                 </div>
-                                <el-table id="tableData1" header-cell-class-name="table_header"  :data="tableDataPtTwo" highlight height="calc(100% - 55px)">
+                                <el-table id="tableData1" header-cell-class-name="table_header" border :data="tableDataPtTwo" highlight height="calc(100% - 55px)">
                                     <el-table-column prop="platformName" label="平台" align="center" min-width="140" fixed></el-table-column>
                                     <el-table-column prop="dayOutput" :label="'当日\n'+(unitType=='m'?'(m³)':'(t)')" align="center" min-width="140">
                                         <template slot-scope="{ row }">
@@ -111,7 +111,7 @@
                                 <el-table 
                                     id="tableData"
                                     :data="tableDataThree" 
-                                    :border="false"
+                                    border
                                     :row-style="{ height: '0px' }" 
                                     header-cell-class-name="table_header" 
                                     :cell-style="{ padding: '6px', 'text-align': 'center' }"
@@ -119,8 +119,8 @@
                                     height="calc(100% - 55px)" 
                                     :default-sort="{ prop: 'date', order: 'descending' }" 
                                     :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                                    <el-table-column prop="wellNo" label="井号" width="120" fixed></el-table-column>
-                                    <el-table-column prop="prodDate" :label="`日期\n(yyyy/mm/dd)`" width="140"></el-table-column>
+                                    <el-table-column prop="wellNo" label="井号" width="160" fixed></el-table-column>
+                                    <el-table-column prop="prodDate" :label="`日期\n(yyyy-mm-dd)`" width="140"></el-table-column>
                                     <el-table-column prop="prodDuration" :label="`生产时间\n(h)`" width=""></el-table-column>
                                     <el-table-column prop="fluidProdDaily" :label="`日产液\n(m³)`" width="" :formatter="toPrecise2"></el-table-column>
                                     <el-table-column prop="gasProdDaily" :label="`日产气\n(10⁴/m³)`" width="130" :formatter="toPrecise4"></el-table-column>
@@ -157,7 +157,7 @@
                                 <div style="display: flex; justify-content: flex-end;">
                                     <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownExcel('#table4', '产量分析报告-数据四')">下载</el-button>
                                 </div>
-                                <el-table id="table4" :data="eventData" highlight height="calc(100% - 55px)" empty-text="当日无大事件">
+                                <el-table id="table4" :data="eventData" border highlight height="calc(100% - 55px)" empty-text="当日无大事件">
                                     <el-table-column prop="eventType" label="事件类型" align="center" width="180"></el-table-column>
                                     <el-table-column prop="wellNum" label="井数" align="center" width="160"></el-table-column>
                                     <el-table-column prop="content" align="center" label="井名"></el-table-column>

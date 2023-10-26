@@ -73,7 +73,7 @@
                 <el-table
                   id="table2"
                   :data="tabTableData"
-                  :border="false"
+                  border
                   :row-style="{ height: '0px' }"
                   header-cell-class-name="table_header"
                   :cell-style="{ padding: '6px', 'text-align': 'center' }"
@@ -84,14 +84,14 @@
                   <el-table-column type="index" label="序号" width="80" fixed></el-table-column>
                   <el-table-column prop="wellNo" label="井号" min-width="160" fixed> </el-table-column>
                   <el-table-column label="当日生产情况">
-                    <el-table-column prop="proTime" :label="`生产时间\n(yyyy/mm/dd)`" min-width="140"></el-table-column>
+                    <el-table-column prop="proTime" :label="`生产时间\n(yyyy-mm-dd)`" min-width="140"></el-table-column>
                     <el-table-column prop="liquidDaily" :label="`日产液量\n(m³)`" min-width="100"></el-table-column>
                     <el-table-column prop="oilDaily" :label="`日产油量\n(m³)`" min-width="100"></el-table-column>
                     <el-table-column prop="waterCut" :label="`含水率\n(%)`" min-width="100"></el-table-column>
                     <el-table-column prop="pumpPressure" :label="`泵入口压力\n(MPa)`" min-width="110"></el-table-column>
                   </el-table-column>
                   <el-table-column label="昨日生产情况">
-                    <el-table-column prop="proTimeYesterday" :label="`生产时间\n(yyyy/mm/dd)`" min-width="140"></el-table-column>
+                    <el-table-column prop="proTimeYesterday" :label="`生产时间\n(yyyy-mm-dd)`" min-width="140"></el-table-column>
                     <el-table-column prop="liquidDailyYesterday" :label="`日产液量\n(m³)`" min-width="100"></el-table-column>
                     <el-table-column prop="oilDailyYesterday" :label="`日产油量\n(m³)`" min-width="100"></el-table-column>
                     <el-table-column prop="waterCutYesterday" :label="`含水率\n(%)`" min-width="100"></el-table-column>

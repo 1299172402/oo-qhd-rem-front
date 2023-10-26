@@ -23,25 +23,30 @@
       <el-table
         id="tableData"
         :data="tableData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        :cell-style="{ padding: '6px' }"
         style="width: 100%"
         height="calc(100% - 130px)"
         :default-sort="{ prop: 'date', order: 'descending' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        :header-cell-style="{ padding: '0px 0' }"
       >
-        <el-table-column type="index" label="序号" :index="tableIndex"></el-table-column>
-        <el-table-column prop="prodDate" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+        <el-table-column type="index" label="序号" :index="tableIndex" width="80" align="center"></el-table-column>
+        <el-table-column prop="prodDate" :label="`时间\n(yyyy-mm-dd)`" header-align="center" align="center">
+        </el-table-column>
         <el-table-column
           prop="oilprodReal"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际产量\n(m³)' : '实际产量\n(t)'"
+          header-align="center"
+          align="center"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="oilprodPlan"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划产量\n(m³)' : '计划产量\n(t)'"
+          header-align="center"
+          align="center"
           :formatter="toPrecise2"
         ></el-table-column>
         <!-- <el-table-column prop="oilprodRollForecast" :label="searchForm.selectUnitOfProduction == 'm' ? '滚动预测\n(10⁴m³)' : '滚动预测\n(10⁴t)'"></el-table-column> -->
@@ -142,13 +147,13 @@ export default {
               color: "#8FA4CC",
               padding: [10, 0, 0, 0],
               fontSize: 14,
-              interval: function (index, val) {
-                if (val.substr(-2) == "01") {
-                  return true;
-                } else {
-                  return false;
-                }
-              },
+              // interval: function (index, val) {
+              //   if (val.substr(-2) == "01") {
+              //     return true;
+              //   } else {
+              //     return false;
+              //   }
+              // },
             },
             axisTick: {
               show: true,

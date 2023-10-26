@@ -276,7 +276,7 @@
                 </el-row>
               </div>
             </div>
-            <div style="flex: 1; min-height: 380px">
+            <div style="flex: 1; min-height: 680px">
               <pagePanel headerTitle="水井动态分析详情列表" style="margin-top: 0; height: 100%">
                 <div style="display: flex; justify-content: flex-end">
                   <el-button
@@ -533,11 +533,15 @@
         </headerSearch>
         <div class="app-container3">
           <div class="leftBox">
-            <img src="@/assets/rem/performance/bg.gif" alt="" class="img1" />
+            <!-- <img src="@/assets/rem/performance/bg.gif" alt="" class="img1" />
             <img src="@/assets/rem/performance/jing-small.png" alt="" class="img2" />
             <img src="@/assets/rem/performance/shui-donghua.gif" alt="" class="img3" />
             <img src="@/assets/rem/performance/di.png" alt="" class="img4" />
-            <img src="@/assets/rem/performance/01zhu.gif" alt="" class="img5" />
+            <img src="@/assets/rem/performance/01zhu.gif" alt="" class="img5" /> 
+            <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
+            <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
+            -->
+            <img src="@/assets/rem/performance/shuijing.gif" alt="" class="speed" />
             <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
             <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
           </div>
@@ -1260,8 +1264,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });
@@ -2975,9 +2979,13 @@ export default {
         border-radius: 5px;
       }
       .leftBox {
-        width: 563px;
-        height: 968px;
+        width: 460px;
+        height: 1208px;
         position: relative;
+        .speed {
+          width: 100%;
+          height: 100%;
+        }
         .img1 {
           width: 100%;
           height: 100%;

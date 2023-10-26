@@ -45,62 +45,63 @@
       </div>
       <el-button icon="el-icon-download" type="primary" @click="doDownExcel('#table1', '单井产量预测')">下载</el-button>
     </div>
-    <el-table :key="Math.random()" id="table1" :data="tableData" height="calc(100% - 58px - 55px)">
-      <el-table-column type="index" width="60" fixed></el-table-column>
+    <el-table :key="Math.random()" id="table1" :data="tableData" border height="calc(100% - 58px - 55px)">
+      <el-table-column type="index" width="80" align="center" fixed></el-table-column>
       <el-table-column align="left" label="当前作业井名" prop="wellNo" width="150" fixed></el-table-column>
       <el-table-column align="center" label="当前作业措施" prop="measureTypeName" width="150"></el-table-column>
       <el-table-column align="center" label="产品类型" prop="productTypeName" width="100"></el-table-column>
-      <el-table-column align="center" :label="`措施见效日期\n(yyyy/mm/dd)`" prop="measureSeffectDate" width="160">
+      <el-table-column align="center" :label="`措施见效日期\n(yyyy-mm-dd)`" prop="measureSeffectDate" width="200">
         <template slot-scope="scope">
           <el-date-picker
             v-model="scope.row.measureSeffectDate"
             type="date"
             format="yyyy-MM-dd"
+            style="width: 160PX;"
             value-format="yyyy-MM-dd"
           ></el-date-picker>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="`日增油/日产油\n(m³)`" prop="" width="160">
+      <el-table-column align="center" :label="`日增油/日产油\n(m³)`" prop="" width="200">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.dailyAllocatingBase"
             :precision="4"
             size="medium"
-            style="width: 150px"
+            style="width: 160px"
             controls-position="right"
           ></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="`月递减率\n(%)`" prop="" width="160">
+      <el-table-column align="center" :label="`月递减率\n(%)`" prop="" width="200">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.decreaseRate"
             :precision="4"
             size="medium"
-            style="width: 150px"
+            style="width: 160px"
             controls-position="right"
           ></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="`月时率\n(%)`" prop="" width="160">
+      <el-table-column align="center" :label="`月时率\n(%)`" prop="" width="200">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.timeEfficieincy"
             :precision="4"
             size="medium"
-            style="width: 150px"
+            style="width: 160px"
             controls-position="right"
           ></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="`见效天数\n(m³/d)`" prop="effectDays" width="100"></el-table-column>
-      <el-table-column align="center" :label="`单井年配产量\n(m³)`" prop="dailyAllocating" width="160">
+      <el-table-column align="center" :label="`见效天数\n(d)`" prop="effectDays" width="100"></el-table-column>
+      <el-table-column align="center" :label="`单井年配产量\n(m³)`" prop="dailyAllocating" width="200">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.yearAllocating"
             :precision="4"
             size="medium"
-            style="width: 150px"
+            style="width: 160px"
             controls-position="right"
           ></el-input-number>
         </template>
@@ -208,8 +209,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.conditions.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });
@@ -335,5 +336,8 @@ export default {
   height: auto !important;
   line-height: 18px !important;
   white-space: pre;
+}
+::v-deep .el-table__fixed-right {
+  z-index: 2;
 }
 </style>

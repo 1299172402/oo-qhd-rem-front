@@ -59,8 +59,8 @@
         <pagePanelNew v-if="activeName == 'first'" style="height: auto">
             <el-row  :gutter="20" style="height:800px">
                 <el-col :span="6" style="height:100%">
-                    <pagePanel :headerTitle="title1" :title="title1" :show-btn="true"
-                               style="text-align: center;height:calc(100% - 10px)">
+                    <pagePanel headerTitle="单井月度配产计划表"  :show-btn="true"
+                               style="height:calc(100% - 10px)">
                         <el-button style="float: right;margin-top: 0px" type="primary" icon="el-icon-download" @click="doDownExcel()"
                         >下载
                         </el-button
@@ -224,9 +224,9 @@
             <!--  模型运算  -->
            
         </pagePanelNew>
-        <pagePanelNew v-else style="height: 100%">
-        <modelOperation ref="modelOpreation" style="height: 100%"></modelOperation>
-        </pagePanelNew>
+        
+        <modelOperation v-else ref="modelOpreation" style="height: 100%"></modelOperation>
+        
         
     </div>
 </template>
@@ -372,7 +372,7 @@ export default {
         },
         // table表格单位换行
         renderheader(h, {column, $index}) {
-            return h('span', {}, [
+            return h('span', {}, [     
                 h('span', {}, column.label.split('?')[0]),
                 h('br'),
                 h('span', {}, column.label.split('?')[1])
@@ -381,8 +381,8 @@ export default {
         // 框框标题
         doSearch() {
             if (this.queryData.dateTime) {
-                this.title1 = this.queryData.dateTime + '月单井月度配产计划表'
-                this.title2 = this.queryData.dateTime + '月单井月度配注计划表'
+                this.title1 = '单井月度配产计划表'
+                this.title2 = '单井月度配注计划表'
             } else {
                 this.title1 = '单井月度配产计划表'
                 this.title2 = '单井月度配注计划表'
@@ -534,17 +534,9 @@ export default {
   
     mounted() {
         //智能配注调用子组件方法
-        this.$nextTick(()=>{
-            this.$refs.modelOpreation.getCaseByMax()
-        })
-        this.$nextTick(()=>{
-            setTimeout(()=>{
-                window.addEventListener('resize',this.setWidth);
-            },1000)
-        })
-        this.$once('hook:beforeDestroy',()=>{
-            window.removeEventListener('resize',this.setWidth)
-        })
+        // this.$nextTick(()=>{
+        //     this.$refs.modelOpreation.getCaseByMax()
+        // })
         if(this.$route.query.link == 'rem'){
             this.activeName = 'second'
             this.setWidth()

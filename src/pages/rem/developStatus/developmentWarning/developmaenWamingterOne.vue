@@ -4,7 +4,7 @@
     <pagePanelNew style="height: 100%; margin-top: 0px">
       <el-table id="tableData" :data="tableData" highlight style="margin-top: 10px">
         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
-        <el-table-column prop="theDate" :label="`预警时间\n(yyyy/mm/dd)`" align="center"></el-table-column>
+        <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
         <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
         <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
         <el-table-column prop="warningDesc" label="预警描述" align="center"></el-table-column>

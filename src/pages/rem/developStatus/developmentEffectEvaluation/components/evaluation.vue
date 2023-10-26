@@ -78,8 +78,8 @@
               >下载</el-button
             >
           </div>
-          <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)">
-            <el-table-column prop="indicatorName" label="指标" min-width="120" align="center"></el-table-column>
+          <el-table id="table1" :data="tableData" border highlight height="calc(100% - 55px)">
+            <el-table-column prop="indicatorName" label="指标" min-width="170" align="center"></el-table-column>
             <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
             <el-table-column
               prop="lastPhaseValue"
@@ -626,14 +626,14 @@ export default {
       },
       //地层压力保持水平
       totalFormationPressureDrop: {
-        dataZoom: [
-          {
-            type: "inside",
-            xAxisIndex: [0],
-            start: 0, //滚动条开始位置（共100等份）
-            end: 100, //滚动条结束位置
-          },
-        ],
+        // dataZoom: [
+        //   {
+        //     type: "inside",
+        //     xAxisIndex: [0],
+        //     start: 0, //滚动条开始位置（共100等份）
+        //     end: 100, //滚动条结束位置
+        //   },
+        // ],
         grid: {
           top: 50,
           right: 120,
@@ -668,6 +668,11 @@ export default {
           },
         },
         xAxis: {
+          name: "日期 (年)",
+          nameGap: 30, 
+          nameTextStyle: {
+            color: "#8FA4CC",
+          },
           type: "category",
           axisLabel: {
             color: "#8FA4CC",
@@ -746,6 +751,7 @@ export default {
                 },
               ],
               label: {
+                show: false,
                 color: "#8FA4CC",
               },
               lineStyle: {

@@ -1,350 +1,430 @@
 <!-- 添加模型配置 -->
 <template>
-    <div class="app-container">
-        <pagePanelNew class="pagePanelNew" style="margin-top:0;">
-            <el-tabs class="g-pageHeader" v-model="selectType" topline @tab-click="tabsChange">
-                <el-tab-pane v-for="(item, index) in typeList" :key="index" :label="item.name" :name="item.name"></el-tab-pane>
-            </el-tabs>
-            <div class='container'>
-                <div class="search" v-if="selectType!='通用配置'">
-                    <span>油田：</span>
-                    <el-select v-model="searchForm.ogfId" disabled style="width:200px;margin-right:15px;">
-                        <el-option v-for="(item,index) in ogfSelectList" :key="index" :label="item.label" :value="item.id"></el-option>
-                    </el-select>
-                    <span>区块：</span>
-                    <el-select v-model="searchForm.blockId" @change="blockChange" style="width:200px;margin-right:15px;">
-                        <el-option v-for="(item,index) in blockSelectList" :key="index" :label="item.label" :value="item.id"></el-option>
-                    </el-select>
-                    <span v-if="selectType=='按井型配置'||selectType=='按井配置'">井型：</span>
-                    <el-select v-if="selectType=='按井型配置'||selectType=='按井配置'" v-model="searchForm.wellType" @change="wellTypeChange" style="width:150px;margin-right:15px;">
-                        <el-option v-for="(item,index) in wellTypeSelectList" :key="index" :label="item.label" :value="item.id"></el-option>
-                    </el-select>
-                    <span v-if="selectType=='按井配置'">井号：</span>
-                    <el-select v-if="selectType=='按井配置'" v-model="searchForm.wellId" @change="wellIdChange" style="width:150px;margin-right:15px;">
-                        <el-option v-for="(item,index) in wellSelectList" :key="index" :label="item.label" :value="item.id"></el-option>
-                    </el-select>
-                    <el-button type="primary" icon="el-icon-search" @click="getPageBySelectTypeApi">搜索</el-button>
-                    <el-button type="primary" style="margin-left:15px!important;" @click="addTable">新增</el-button>
-                </div>
-                <div class="childComponents" :style="{height:selectType=='通用配置'? '100%' : 'calc(100% - 50px)' }" v-if='modeSelectList.length'>
-                    <tableComponents :selectType="selectType" :searchForm="searchForm" :modeSelectList="modeSelectList" v-if="selectType=='通用配置'"></tableComponents>
-                    
-                    <div class="tableHeight" v-if="selectType=='按区块配置'" >
-                        <div class="block-view" v-for="(item,index) in tableList" :key="index">
-                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:500px;"></tableComponents>
-                        </div>
-                    </div>
-                    
-                    <div class="tableHeight" v-if="selectType=='按井型配置'" >
-                        <div class="block-view" v-for="(item,index) in tableList" :key="index">
-                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:500px;"></tableComponents>
-                        </div>
-                    </div>
-                    
-                    <div class="tableHeight" v-if="selectType=='按井配置'" >
-                        <div class="block-view" v-for="(item,index) in tableList" :key="index">
-                            <tableComponents :ref="'tableComponents'+index" :selectType="selectType" :searchForm="item" :modeSelectList="modeSelectList" style="height:500px;"></tableComponents>
-                        </div>
-                    </div>
-                    
-                    <pagination v-if="page.total&&selectType!='通用配置'" :pageSizes="[5, 10, 15]" :total="page.total" :page.sync="page.currentPage" :limit.sync="page.pageSize" @pagination="pagination" />
-                </div>
+  <div class="app-container">
+    <pagePanelNew class="pagePanelNew" style="margin-top: 0">
+      <el-tabs class="g-pageHeader" v-model="selectType" topline @tab-click="tabsChange">
+        <el-tab-pane v-for="(item, index) in typeList" :key="index" :label="item.name" :name="item.name"></el-tab-pane>
+      </el-tabs>
+      <div class="container">
+        <div class="search" v-if="selectType != '通用配置'">
+          <span>油田：</span>
+          <el-select v-model="searchForm.ogfId" disabled style="width: 200px; margin-right: 15px">
+            <el-option
+              v-for="(item, index) in ogfSelectList"
+              :key="index"
+              :label="item.label"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+          <span>区块：</span>
+          <el-select v-model="searchForm.blockId" @change="blockChange" style="width: 200px; margin-right: 15px">
+            <el-option
+              v-for="(item, index) in blockSelectList"
+              :key="index"
+              :label="item.label"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+          <span v-if="selectType == '按井型配置' || selectType == '按井配置'">井型：</span>
+          <el-select
+            v-if="selectType == '按井型配置' || selectType == '按井配置'"
+            v-model="searchForm.wellType"
+            @change="wellTypeChange"
+            style="width: 150px; margin-right: 15px"
+          >
+            <el-option
+              v-for="(item, index) in wellTypeSelectList"
+              :key="index"
+              :label="item.label"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+          <span v-if="selectType == '按井配置'">井号：</span>
+          <el-select
+            v-if="selectType == '按井配置'"
+            v-model="searchForm.wellId"
+            @change="wellIdChange"
+            style="width: 150px; margin-right: 15px"
+          >
+            <el-option
+              v-for="(item, index) in wellSelectList"
+              :key="index"
+              :label="item.label"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+          <el-button type="primary" icon="el-icon-search" @click="getPageBySelectTypeApi">搜索</el-button>
+          <el-button type="primary" style="margin-left: 15px !important" @click="addTable">新增</el-button>
+        </div>
+        <div
+          class="childComponents"
+          :style="{ height: selectType == '通用配置' ? '100%' : 'calc(100% - 50px)' }"
+          v-if="modeSelectList.length"
+        >
+          <tableComponents
+            :selectType="selectType"
+            :searchForm="searchForm"
+            :modeSelectList="modeSelectList"
+            v-if="selectType == '通用配置'"
+          ></tableComponents>
+
+          <div class="tableHeight" v-if="selectType == '按区块配置'">
+            <div class="block-view" v-for="(item, index) in tableList" :key="index">
+              <tableComponents
+                :ref="'tableComponents' + index"
+                :selectType="selectType"
+                :searchForm="item"
+                :modeSelectList="modeSelectList"
+                style="height: 500px"
+              ></tableComponents>
             </div>
-        </pagePanelNew>
-    </div>
+          </div>
+
+          <div class="tableHeight" v-if="selectType == '按井型配置'">
+            <div class="block-view" v-for="(item, index) in tableList" :key="index">
+              <tableComponents
+                :ref="'tableComponents' + index"
+                :selectType="selectType"
+                :searchForm="item"
+                :modeSelectList="modeSelectList"
+                style="height: 500px"
+              ></tableComponents>
+            </div>
+          </div>
+
+          <div class="tableHeight" v-if="selectType == '按井配置'">
+            <div class="block-view" v-for="(item, index) in tableList" :key="index">
+              <tableComponents
+                :ref="'tableComponents' + index"
+                :selectType="selectType"
+                :searchForm="item"
+                :modeSelectList="modeSelectList"
+                style="height: 500px"
+              ></tableComponents>
+            </div>
+          </div>
+
+          <pagination
+            v-if="page.total && selectType != '通用配置'"
+            :pageSizes="[5, 10, 15]"
+            :total="page.total"
+            :page.sync="page.currentPage"
+            :limit.sync="page.pageSize"
+            @pagination="pagination"
+          />
+        </div>
+      </div>
+    </pagePanelNew>
+  </div>
 </template>
 
 <script>
-    import {getAllModelName,} from '@/api/modelConfiguration/config/modelConfigAPI.js';
-    import {getOgfList,getBlockList,getProdDailyTable,getWellList,getWell,addGeneralConfig,getPageBySelectType} from '@/api/oilDeposit/rem-04/modelConfiguration.js';
-    import tableComponents from  './components/tableComponents.vue'
-    export default {
-        name:'modelOperate',
-        components:{tableComponents},
-        data() {
-            return {
-                selectLoading:true,
-                typeList: [
-                    {name: "通用配置",},
-                    {name: "按区块配置",},
-                    {name: "按井型配置",},
-                    {name: "按井配置",},
-                ],
-                selectType:'通用配置',
-                ogfSelectList:[],
-                blockSelectList:[],
-                wellTypeSelectList:[],
-                wellSelectList:[],
-                modeSelectList: [],
-                searchForm: {
-                    ogfId:'',
-                    ogfName:'',
-                    blockId:'',
-                    blockName:'',
-                    wellType:'',
-                    wellTypeName:'',
-                    wellId :'',
-                    wellName:'',
-                },
-                tableList:[],
-                page: {
-                    total: 0, // 总页数
-                    currentPage: 1, // 当前页数
-                    pageSize:5 // 每页显示多少条
-                },
-            }
-        },
-        async created() {
-            await this.getOgfListApi();
-            await this.getBlockList();
-            this.getProdDailyTableApi();
-            await this.getWellListApi();
-            this.getAllModelName();
-        },
-        methods: {
-            //获取油田下拉框数据源
-            async getOgfListApi(){
-                try{
-                    await getOgfList().then(res=>{
-                        if(res.data.code==200){
-                            let data=res.data.data;
-                            this.ogfSelectList=res.data.data;
-                            if(data.length){
-                                for(let i=0;i<data.length;i++){
-                                    if(data[i].label=='秦皇岛32-6油田'){
-                                        this.searchForm.ogfId=data[i].id;
-                                        this.searchForm.ogfName=data[i].label;
-                                    }
-                                }
-                            }
-                        }
-                    })
-                }catch(err){
-                    console.log(err);
-                }
-            },
-            //根据油田id-获取区块数据源
-            async getBlockList(){
-                try{
-                    await getBlockList(this.searchForm).then(res=>{
-                        if(res.data.code==200){
-                            this.blockSelectList=res.data.data;
-                            this.blockSelectList.unshift({label:'全部',id:''})
-                        }
-                    })
-                }catch(err){
-                    console.log(err);
-                }
-            },
-            blockChange(){
-                this.searchForm.wellType ="";
-                this.searchForm.wellId ="";
-                for(let i=0;i<this.blockSelectList.length;i++){
-                    if(this.searchForm.blockId==this.blockSelectList[i].id){
-                        this.searchForm.blockName=this.blockSelectList[i].label;
-                    }
-                }
-            },
-            //获取井型数据
-            async getProdDailyTableApi(){
-                try{
-                    await getProdDailyTable(this.searchForm).then(res=>{
-                        if(res.data.code==200){
-                            this.wellTypeSelectList=res.data.data;
-                        }
-                    })
-                } catch(err){
-                    console.log(err);
-                }
-            },
-            wellTypeChange(){
-                this.searchForm.wellId ="";
-                for(let i=0;i<this.wellTypeSelectList.length;i++){
-                    if(this.searchForm.wellType==this.wellTypeSelectList[i].id){
-                        this.searchForm.wellTypeName=this.wellTypeSelectList[i].label;
-                    }
-                }
-            },
-            //获取井号数据源
-            getWellListApi(){
-                try{
-                    getWellList(this.searchForm).then(res=>{
-                        if(res.data.code==200){
-                            this.wellSelectList=res.data.data;
-                        }
-                    })
-                }catch(err){
-                    console.log(err);
-                }
-            },
-            //根据井号id-获取上级井型，区块，油田
-            wellIdChange(){
-                for(let i=0;i<this.wellSelectList.length;i++){
-                    if(this.searchForm.wellId==this.wellSelectList[i].id){
-                        this.searchForm.wellName=this.wellSelectList[i].label;
-                        break;
-                    }
-                }
-                getWell({wellId:this.searchForm.wellId}).then(res=>{
-                    if(res.data.code==200){
-                        let data=res.data.data;
-                        this.searchForm.blockId=data.blockId;
-                        this.searchForm.wellType=data.wellType;
-                        console.log('this.searchForm',this.searchForm)
-                    }
-                })
-            },
-            //获取所有的模型名称
-            getAllModelName() {
-                getAllModelName().then(response => {
-                    if (response.data.code ==200) {
-                        this.modeSelectList = response.data.data;
-                    } else {
-                        this.$message.error(response.data.msg);
-                    }
-                })
-            },
-            //切换tabs
-            tabsChange(){
-                this.selectLoading=false;
-                this.$nextTick(()=>{
-                    this.selectLoading=true;
-                })
-                this.searchForm.blockId='';
-                this.searchForm.blockName='';
-                this.searchForm.wellType='';
-                this.searchForm.wellId ='';
-                this.searchForm.wellName='';
-                if(this.selectType!='通用配置'){
-                    this.getPageBySelectTypeApi();
-                }
-            },
-            //获取大分页接口
-            async getPageBySelectTypeApi(){
-                try{
-                    let selectType=this.selectType.includes('按')?this.selectType.substring(1):this.selectType;
-                    await getPageBySelectType({selectType,...this.searchForm,size:this.page.pageSize,current:this.page.currentPage}).then(res=>{
-                        if(res.data.code==200){
-                            this.tableList=res.data.data.records;
-                            this.page.total=res.data.data.total;
-                        }else{
-                            this.tableList=[];
-                        }
-                    })
-                    console.log('大分页接口请求完毕');
-                    await this.$nextTick();
-                    for(let i=0;i<this.tableList.length;i++){
-                        let el=this.tableList[i];
-                        let searchForm={...el,selectType};
-                        await this.$refs['tableComponents'+i][0].queryTableDate(searchForm);
-                        console.log(`列表${i}接口请求完毕`)
-                    }
-                } catch(err){
-                    console.log(err);
-                }
-            },
-            //切换分页
-            pagination(e) {
-                this.page.currentPage = e.page;
-                this.page.pageSize = e.limit;
-                this.getPageBySelectTypeApi();
-            },
-            //新增
-            async addTable(){
-                if(this.selectType=='按区块配置'){
-                    if(!this.searchForm.blockId){
-                        this.$message.warning('请选择区块！');
-                        return false;
-                    }
-                }else if(this.selectType=='按井型配置'){
-                    if(!this.searchForm.blockId){
-                        this.$message.warning('请选择区块！');
-                        return false;
-                    }else if(!this.searchForm.wellType){
-                        this.$message.warning('请选择井型！');
-                        return false;
-                    }
-                }else if(this.selectType=='按井配置'){
-                    if(!this.searchForm.blockId){
-                        this.$message.warning('请选择区块！');
-                        return false;
-                    }else if(!this.searchForm.wellType){
-                        this.$message.warning('请选择井型！');
-                        return false;
-                    }else if(!this.searchForm.wellId){
-                        this.$message.warning('请选择井！');
-                        return false;
-                    }
-                }
-                console.log('开始请求大分页接口');
-                await this.getPageBySelectTypeApi();
-                console.log(2)
-                let selectType=this.selectType.includes('按')?this.selectType.substring(1):this.selectType;
-                this.$nextTick(()=>{
-                    let isExist=false;//新增数据时，是否存在该分类，默认不存在。
-                    if(this.tableList.length){
-                        let el=this.tableList[0];
-                        if(this.selectType=='按区块配置'&&this.searchForm.blockId==el.blockId){
-                            isExist=true;
-                        }else if(this.selectType=='按井型配置'&&this.searchForm.blockId==el.blockId&&this.searchForm.wellType==el.wellType){
-                            isExist=true;
-                        }else if(this.selectType=='按井配置'&&this.searchForm.blockId==el.blockId&&this.searchForm.wellType==el.wellType&&this.searchForm.wellId==el.wellId){
-                            isExist=true;
-                        }
-                    }
-                    if(isExist){
-                        this.$refs['tableComponents0'][0].addTableRow();
-                    }else{
-                        this.tableList.unshift({
-                            ogfId: this.searchForm.ogfId,
-                            ogfName: this.searchForm.ogfName,
-                            blockId:this.searchForm.blockId,
-                            blockName:this.searchForm.blockName,
-                            wellType:this.searchForm.wellType,
-                            wellTypeName:this.searchForm.wellTypeName,
-                            wellId: this.searchForm.wellId,
-                            wellName: this.searchForm.wellName
-                        })
-                        this.$nextTick(()=>{
-                            this.$refs['tableComponents0'][0].addTableRow(); 
-                        })
-                    }
-                })
-            }
-        },
+import { getAllModelName } from "@/api/modelConfiguration/config/modelConfigAPI.js";
+import {
+  getOgfList,
+  getBlockList,
+  getProdDailyTable,
+  getWellList,
+  getWell,
+  addGeneralConfig,
+  getPageBySelectType,
+} from "@/api/oilDeposit/rem-04/modelConfiguration.js";
+import tableComponents from "./components/tableComponents.vue";
+export default {
+  name: "modelOperate",
+  components: { tableComponents },
+  data() {
+    return {
+      selectLoading: true,
+      typeList: [{ name: "通用配置" }, { name: "按区块配置" }, { name: "按井型配置" }, { name: "按井配置" }],
+      selectType: "通用配置",
+      ogfSelectList: [],
+      blockSelectList: [],
+      wellTypeSelectList: [],
+      wellSelectList: [],
+      modeSelectList: [],
+      searchForm: {
+        ogfId: "",
+        ogfName: "",
+        blockId: "",
+        blockName: "",
+        wellType: "",
+        wellTypeName: "",
+        wellId: "",
+        wellName: "",
+      },
+      tableList: [],
+      page: {
+        total: 0, // 总页数
+        currentPage: 1, // 当前页数
+        pageSize: 5, // 每页显示多少条
+      },
     };
+  },
+  async created() {
+    await this.getOgfListApi();
+    await this.getBlockList();
+    this.getProdDailyTableApi();
+    await this.getWellListApi();
+    this.getAllModelName();
+  },
+  methods: {
+    //获取油田下拉框数据源
+    async getOgfListApi() {
+      try {
+        await getOgfList().then((res) => {
+          if (res.data.code == 200) {
+            let data = res.data.data;
+            this.ogfSelectList = res.data.data;
+            if (data.length) {
+              for (let i = 0; i < data.length; i++) {
+                if (data[i].label == "秦皇岛32-6油田") {
+                  this.searchForm.ogfId = data[i].id;
+                  this.searchForm.ogfName = data[i].label;
+                }
+              }
+            }
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    //根据油田id-获取区块数据源
+    async getBlockList() {
+      try {
+        await getBlockList(this.searchForm).then((res) => {
+          if (res.data.code == 200) {
+            this.blockSelectList = res.data.data;
+            this.blockSelectList.unshift({ label: "全部", id: "" });
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    blockChange() {
+      this.searchForm.wellType = "";
+      this.searchForm.wellId = "";
+      for (let i = 0; i < this.blockSelectList.length; i++) {
+        if (this.searchForm.blockId == this.blockSelectList[i].id) {
+          this.searchForm.blockName = this.blockSelectList[i].label;
+        }
+      }
+    },
+    //获取井型数据
+    async getProdDailyTableApi() {
+      try {
+        await getProdDailyTable(this.searchForm).then((res) => {
+          if (res.data.code == 200) {
+            this.wellTypeSelectList = res.data.data;
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    wellTypeChange() {
+      this.searchForm.wellId = "";
+      for (let i = 0; i < this.wellTypeSelectList.length; i++) {
+        if (this.searchForm.wellType == this.wellTypeSelectList[i].id) {
+          this.searchForm.wellTypeName = this.wellTypeSelectList[i].label;
+        }
+      }
+    },
+    //获取井号数据源
+    getWellListApi() {
+      try {
+        getWellList(this.searchForm).then((res) => {
+          if (res.data.code == 200) {
+            this.wellSelectList = res.data.data;
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    //根据井号id-获取上级井型，区块，油田
+    wellIdChange() {
+      for (let i = 0; i < this.wellSelectList.length; i++) {
+        if (this.searchForm.wellId == this.wellSelectList[i].id) {
+          this.searchForm.wellName = this.wellSelectList[i].label;
+          break;
+        }
+      }
+      getWell({ wellId: this.searchForm.wellId }).then((res) => {
+        if (res.data.code == 200) {
+          let data = res.data.data;
+          this.searchForm.blockId = data.blockId;
+          this.searchForm.wellType = data.wellType;
+          console.log("this.searchForm", this.searchForm);
+        }
+      });
+    },
+    //获取所有的模型名称
+    getAllModelName() {
+      getAllModelName().then((response) => {
+        if (response.data.code == 200) {
+          this.modeSelectList = response.data.data;
+        } else {
+          this.$message.error(response.data.msg);
+        }
+      });
+    },
+    //切换tabs
+    tabsChange() {
+      this.selectLoading = false;
+      this.$nextTick(() => {
+        this.selectLoading = true;
+      });
+      this.searchForm.blockId = "";
+      this.searchForm.blockName = "";
+      this.searchForm.wellType = "";
+      this.searchForm.wellId = "";
+      this.searchForm.wellName = "";
+      if (this.selectType != "通用配置") {
+        this.getPageBySelectTypeApi();
+      }
+    },
+    //获取大分页接口
+    async getPageBySelectTypeApi() {
+      try {
+        let selectType = this.selectType.includes("按") ? this.selectType.substring(1) : this.selectType;
+        await getPageBySelectType({
+          selectType,
+          ...this.searchForm,
+          size: this.page.pageSize,
+          current: this.page.currentPage,
+        }).then((res) => {
+          if (res.data.code == 200) {
+            this.tableList = res.data.data.records;
+            this.page.total = res.data.data.total;
+          } else {
+            this.tableList = [];
+          }
+        });
+        console.log("大分页接口请求完毕");
+        await this.$nextTick();
+        for (let i = 0; i < this.tableList.length; i++) {
+          let el = this.tableList[i];
+          let searchForm = { ...el, selectType };
+          await this.$refs["tableComponents" + i][0].queryTableDate(searchForm);
+          console.log(`列表${i}接口请求完毕`);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    //切换分页
+    pagination(e) {
+      this.page.currentPage = e.page;
+      this.page.pageSize = e.limit;
+      this.getPageBySelectTypeApi();
+    },
+    //新增
+    async addTable() {
+      if (this.selectType == "按区块配置") {
+        if (!this.searchForm.blockId) {
+          this.$message.warning("请选择区块！");
+          return false;
+        }
+      } else if (this.selectType == "按井型配置") {
+        if (!this.searchForm.blockId) {
+          this.$message.warning("请选择区块！");
+          return false;
+        } else if (!this.searchForm.wellType) {
+          this.$message.warning("请选择井型！");
+          return false;
+        }
+      } else if (this.selectType == "按井配置") {
+        if (!this.searchForm.blockId) {
+          this.$message.warning("请选择区块！");
+          return false;
+        } else if (!this.searchForm.wellType) {
+          this.$message.warning("请选择井型！");
+          return false;
+        } else if (!this.searchForm.wellId) {
+          this.$message.warning("请选择井！");
+          return false;
+        }
+      }
+      console.log("开始请求大分页接口");
+      await this.getPageBySelectTypeApi();
+      console.log(2);
+      let selectType = this.selectType.includes("按") ? this.selectType.substring(1) : this.selectType;
+      this.$nextTick(() => {
+        let isExist = false; //新增数据时，是否存在该分类，默认不存在。
+        if (this.tableList.length) {
+          let el = this.tableList[0];
+          if (this.selectType == "按区块配置" && this.searchForm.blockId == el.blockId) {
+            isExist = true;
+          } else if (
+            this.selectType == "按井型配置" &&
+            this.searchForm.blockId == el.blockId &&
+            this.searchForm.wellType == el.wellType
+          ) {
+            isExist = true;
+          } else if (
+            this.selectType == "按井配置" &&
+            this.searchForm.blockId == el.blockId &&
+            this.searchForm.wellType == el.wellType &&
+            this.searchForm.wellId == el.wellId
+          ) {
+            isExist = true;
+          }
+        }
+        if (isExist) {
+          this.$refs["tableComponents0"][0].addTableRow();
+        } else {
+          this.tableList.unshift({
+            ogfId: this.searchForm.ogfId,
+            ogfName: this.searchForm.ogfName,
+            blockId: this.searchForm.blockId,
+            blockName: this.searchForm.blockName,
+            wellType: this.searchForm.wellType,
+            wellTypeName: this.searchForm.wellTypeName,
+            wellId: this.searchForm.wellId,
+            wellName: this.searchForm.wellName,
+          });
+          this.$nextTick(() => {
+            this.$refs["tableComponents0"][0].addTableRow();
+          });
+        }
+      });
+    },
+  },
+};
 </script>
 
 <style scoped="scoped" lang="scss">
-    .app-container{
-        height:100%;
-        .pagePanelNew{
-            height:100%;
-            .g-pageHeader{
-                height:50px;
-            }
-            .container{
-                // padding:0 10px;
-                height:calc(100% - 50px);
-                .search{
-                    height:50px;
-                }
-                .childComponents{
-                    height:calc(100% - 50px);
-                    overflow-y: scroll;
-                    overflow-x: hidden;
-                    .tableHeight{
-                        height:calc(100% - 50px);
-                        padding-right:20px;
-                        overflow-y: scroll;
-                        overflow-x: hidden;
-                        .block-view{
-                            height: 500px;
-                            
-                        }
-                    }
-                }
-            }
-        }
+.app-container {
+  height: 100%;
+  .pagePanelNew {
+    height: 100%;
+    .g-pageHeader {
+      height: 50px;
     }
+    .container {
+      // padding:0 10px;
+      height: calc(100% - 50px);
+      .search {
+        height: 50px;
+      }
+      .childComponents {
+        height: calc(100% - 50px);
+        overflow-y: scroll;
+        overflow-x: hidden;
+        .tableHeight {
+          height: calc(100% - 50px);
+          padding-right: 20px;
+          overflow-y: scroll;
+          overflow-x: hidden;
+          .block-view {
+            height: 500px;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

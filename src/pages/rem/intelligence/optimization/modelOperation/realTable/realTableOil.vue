@@ -66,11 +66,7 @@
             </el-row>
           </template>
         </el-table-column>
-
       </el-table>
-
-<!--    <el-row style="float: right;margin-right: 15px">-->
-    <div class="page">
     <el-pagination
           small
         background
@@ -81,7 +77,7 @@
         :page-size="100"
         style="text-align: center;">
       </el-pagination>
-    </div>
+
 <!--    </el-row>-->
   </div>
 </template>
@@ -110,9 +106,6 @@ export default {
 
     }
   },
-  mounted(){
-
-  },
   methods: {
     renderHeader(h, { column }) {
       return h("span", {}, [
@@ -139,24 +132,9 @@ export default {
       this.pageLoading = true
       GetFactSchedule(param).then(res => {
         this.prodRealList = res.result.prodList
-        console.log("222222"+res)
-
         this.pageLoading=false;
-        console.log("loading",this.pageLoading)
-
-        //this.schDownLoading = false
       })
-
-
     },
-    //表格表头样式
-    headerClass() {
-      return 'background-color:transparent!important;' +
-          'color:white;' +
-          'font-size:16px' +
-          'text-align:center!important'
-    },
-    //获取实际制度数据
     //获取实际制度数据
     DownloadTable() {
       this.prodRealList=[]

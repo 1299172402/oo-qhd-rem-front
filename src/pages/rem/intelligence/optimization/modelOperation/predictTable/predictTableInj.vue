@@ -1,46 +1,46 @@
 <template>
   <div class="stytable">
-    <el-table ref="multipleTable" :data="this.$attrs.chooseAllData" height="541"
-              :header-cell-style="headerClass" stripe
+    <el-table ref="multipleTable" :data="this.$attrs.chooseAllData" height="690"
+              stripe
               @click="clearFilter" @selection-change="handleSelectionChange">
-      <el-table-column align="center" type="selection" width="30"> </el-table-column>
-      <el-table-column type="index" label="序号" align="center" />
-      <el-table-column prop="name" label="模型井名" align="center">
+      <el-table-column align="center" type="selection" min-width="15"> </el-table-column>
+      <el-table-column type="index" label="序号" align="center"min-width="10" />
+      <el-table-column prop="name" label="模型井名" align="center" min-width="50">
         <template slot-scope="scope">
           <span >{{scope.row.wellName}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="injType" label="注入类型" align="center">
+      <el-table-column prop="injType" label="注入类型" align="center" min-width="45">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.injType" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.injType}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="开关井状态" align="center" >
+      <el-table-column prop="status" label="开关井//状态" :render-header="renderHeader" align="center" min-width="40">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.status" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.status}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="ctrlMode" label="控制模式" align="center">
+      <el-table-column prop="ctrlMode" label="控制模式" align="center" min-width="40">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.ctrlMode" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.ctrlMode}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="defaultValue" label="默认参数" align="center">
+      <el-table-column prop="defaultValue" label="默认参数" align="center" min-width="40">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.defaultValue" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.defaultValue}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="maxInj" label="注入量" align="center">
+      <el-table-column prop="maxInj" label="注入量" align="center" min-width="30">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.maxInj" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.maxInj}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="tstep" label="时间步" align="center"
+      <el-table-column prop="tstep" label="时间步" align="center" min-width="40"
                        :filters="filterList"
                        :filter-multiple="false"
                        :filter-method="filterHandler">
@@ -102,6 +102,14 @@ export default {
 
   },
   methods: {
+      //单位换行
+      renderHeader(h, { column }) {
+          return h("span", {}, [
+              h("span", {}, column.label.split("//")[0]),
+              h("br"),
+              h("span", {}, column.label.split("//")[1]),
+          ])
+      },
     hh(){
       for (let index = 0; index <this.$attrs.tStep.length; index++) {
         this.filterList.push({text:this.$attrs.tStep[index],value:this.$attrs.tStep[index]})
@@ -114,7 +122,6 @@ export default {
       console.log(this.multipleSelection)
 
     },
-
     filterHandler(value, row, column) {
       const property = column['property'];
       return row[property] === value;
@@ -122,13 +129,6 @@ export default {
     },
     clearFilter() {
       this.$refs.multipleTable.clearFilter();
-    },
-    //表格表头样式
-    headerClass() {
-      return 'background-color:transparent!important;' +
-          'color:white;' +
-          'font-size:16px' +
-          'text-align:center!important'
     },
     // 切换选中
     toggleSelection(rows) {
@@ -227,34 +227,6 @@ export default {
     transData() {
       this.prodListTable2 = this.$attrs.chooseAllData
       this.prodListTable4 = this.multipleSelection;
-    },
-    submit() {
-      // if (this.multipleSelection.length < 1) {
-      //   this.$message({
-      //     message: "请至少选择一条数据！",
-      //     type: "warning",
-      //     duration: 3 * 1000,
-      //   });
-      // } else {
-      // this.handleQuery();
-      console.log("pt", this.$attrs.chooseAllData)
-      // updateValue(this.submitData)
-      //     .then((res) => {
-      //       if (res.date.code === 0) {
-      //         this.$message({
-      //           message: "数据修改成功",
-      //           type: "success",
-      //           duration: 5 * 1000,
-      //         });
-      //         this.submitData = [];
-      //       }
-      //     })
-      //     .catch((error) => {
-      //       console.log(error);
-      //     });
-      // 清除所有选中
-      //this.$refs.multipleTable.clearSelection();
-      // }
     },
   }
 }

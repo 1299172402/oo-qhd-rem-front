@@ -399,11 +399,11 @@
                       min-width="120"
                       :key="index"
                       :prop="item.code"
-                      :label="item.name"
+                      :label="`${item.name}\n${item.unit}`"
                       align="center"
                       width="180px"
                     >
-                      <template #header>
+                      <template #header v-if="item.code == 'yjgk' || item.code == 'gpgx'">
                         <div v-if="item.isTwoHeader">
                           <span>{{ item.name }}</span>
                           <br />
@@ -413,7 +413,10 @@
                           <span>{{ item.name }}</span>
                         </div>
                       </template>
-                      <template slot-scope="scope">
+                      <template
+                        slot-scope="scope"
+                        v-if="scope.row[item.code] == null || item.code == 'yjgk' || item.code == 'gpgx'"
+                      >
                         <span class="1" v-if="scope.row[item.code] == null"></span>
                         <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{
                           scope.row[item.code].showLabel ? scope.row[item.code].showLabel : "-"
@@ -427,15 +430,15 @@
                                     ? parseFloat(scope.row[item.code].average).toFixed(2)
                                     : ""
                                 } /`
-                              : ""
+                              : "-"
                           }}
-                          {{ replaceStr(scope.row[item.code].showLabel) }}
+                          {{ replaceStr(scope.row[item.code].showLabel) || "-" }}
                           {{
                             scope.row[item.code].value
                               ? parseFloat(scope.row[item.code].value).toFixed(2)
                               : !replaceStr(scope.row[item.code].showLabel)
                               ? "-"
-                              : ""
+                              : "-"
                           }}
                           <img
                             src="@/assets/rem/yieId/upTriangle.png"
@@ -448,6 +451,54 @@
                             style="width: 20px; height: 20px"
                           />
                         </span>
+                      </template>
+                      <template v-if="item.code != 'yjgk' || item.code != 'gpgx'">
+                        <el-table-column min-width="100" label="区块均值" align="center">
+                          <template slot-scope="scope">
+                            <span style="display: flex; align-items: center; justify-content: center">
+                              {{
+                                scope.row[item.code].average
+                                  ? `${
+                                      !isNaN(parseFloat(scope.row[item.code].average)) &&
+                                      typeof parseFloat(scope.row[item.code].average) === "number"
+                                        ? parseFloat(scope.row[item.code].average).toFixed(2)
+                                        : "-"
+                                    }`
+                                  : "-"
+                              }}
+                            </span>
+                          </template>
+                        </el-table-column>
+                        <el-table-column min-width="100" label="本井值" align="center">
+                          <template slot-scope="scope">
+                            <span style="display: flex; align-items: center; justify-content: center">
+                              {{
+                                scope.row[item.code].value
+                                  ? parseFloat(scope.row[item.code].value).toFixed(2)
+                                  : !replaceStr(scope.row[item.code].showLabel)
+                                  ? "-"
+                                  : "-"
+                              }}
+                            </span>
+                          </template>
+                        </el-table-column>
+                        <el-table-column min-width="100" label="评价结论" align="center">
+                          <template slot-scope="scope">
+                            <span style="display: flex; align-items: center; justify-content: center">
+                              {{ replaceStr(scope.row[item.code].showLabel) || "-" }}
+                              <img
+                                src="@/assets/rem/yieId/upTriangle.png"
+                                v-if="replaceStr(scope.row[item.code].showLabel) == '偏高'"
+                                style="width: 20px; height: 20px"
+                              />
+                              <img
+                                src="@/assets/rem/yieId/downTriangle.png"
+                                v-if="replaceStr(scope.row[item.code].showLabel) == '偏低'"
+                                style="width: 20px; height: 20px"
+                              />
+                            </span>
+                          </template>
+                        </el-table-column>
                       </template>
                     </el-table-column>
                   </el-table-column>
@@ -487,7 +538,7 @@
                         <div>
                           <span>评价日期</span>
                           <br />
-                          <span>(yyyy/mm/dd)</span>
+                          <span>(yyyy-mm-dd)</span>
                         </div>
                       </template>
                       <template slot-scope="scope">
@@ -597,11 +648,15 @@
         </headerSearch>
         <div class="app-container3">
           <div class="leftBox">
-            <img src="@/assets/rem/performance/bg.gif" alt="" class="img1" />
+            <!-- <img src="@/assets/rem/performance/bg.gif" alt="" class="img1" />
             <img src="@/assets/rem/performance/jing-small.png" alt="" class="img2" />
             <img src="@/assets/rem/performance/shui-donghua.gif" alt="" class="img3" />
             <img src="@/assets/rem/performance/di.png" alt="" class="img4" />
-            <img src="@/assets/rem/performance/01cai.gif" alt="" class="img5" />
+            <img src="@/assets/rem/performance/01cai.gif" alt="" class="img5" /> 
+            <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
+            <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
+            -->
+            <img src="@/assets/rem/performance/youjing.gif" alt="" class="speed" />
             <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
             <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
           </div>
@@ -1318,11 +1373,11 @@
                       min-width="100"
                       :key="index"
                       :prop="item.code"
-                      :label="item.name"
+                      :label="`${item.name}\n${item.unit}`"
                       align="center"
                       width="260px"
                     >
-                      <template #header>
+                      <template #header v-if="item.code == 'yjgk' || item.code == 'gpgx'">
                         <div v-if="item.isTwoHeader">
                           <span>{{ item.name }}</span>
                           <br />
@@ -1332,7 +1387,10 @@
                           <span>{{ item.name }}</span>
                         </div>
                       </template>
-                      <template slot-scope="scope">
+                      <template
+                        slot-scope="scope"
+                        v-if="scope.row[item.code] == null || item.code == 'yjgk' || item.code == 'gpgx'"
+                      >
                         <span class="1" v-if="scope.row[item.code] == null"></span>
                         <span class="2" v-else-if="item.code == 'yjgk' || item.code == 'gpgx'">{{
                           scope.row[item.code].showLabel ? scope.row[item.code].showLabel : "-"
@@ -1346,15 +1404,15 @@
                                     ? parseFloat(scope.row[item.code].average).toFixed(2)
                                     : ""
                                 } /`
-                              : ""
+                              : "-"
                           }}
-                          {{ replaceStr(scope.row[item.code].showLabel) }}
+                          {{ replaceStr(scope.row[item.code].showLabel) || "-" }}
                           {{
                             scope.row[item.code].value
                               ? parseFloat(scope.row[item.code].value).toFixed(2)
                               : !replaceStr(scope.row[item.code].showLabel)
                               ? "-"
-                              : ""
+                              : "-"
                           }}
                           <img
                             src="@/assets/rem/yieId/upTriangle.png"
@@ -1367,6 +1425,54 @@
                             style="width: 20px; height: 20px"
                           />
                         </span>
+                      </template>
+                      <template v-if="item.code != 'yjgk' || item.code != 'gpgx'">
+                        <el-table-column min-width="100" label="区块均值" align="center">
+                          <template slot-scope="scope">
+                            <span style="display: flex; align-items: center; justify-content: center">
+                              {{
+                                scope.row[item.code].average
+                                  ? `${
+                                      !isNaN(parseFloat(scope.row[item.code].average)) &&
+                                      typeof parseFloat(scope.row[item.code].average) === "number"
+                                        ? parseFloat(scope.row[item.code].average).toFixed(2)
+                                        : "-"
+                                    }`
+                                  : "-"
+                              }}
+                            </span>
+                          </template>
+                        </el-table-column>
+                        <el-table-column min-width="100" label="本井值" align="center">
+                          <template slot-scope="scope">
+                            <span style="display: flex; align-items: center; justify-content: center">
+                              {{
+                                scope.row[item.code].value
+                                  ? parseFloat(scope.row[item.code].value).toFixed(2)
+                                  : !replaceStr(scope.row[item.code].showLabel)
+                                  ? "-"
+                                  : "-"
+                              }}
+                            </span>
+                          </template>
+                        </el-table-column>
+                        <el-table-column min-width="100" label="评价结论" align="center">
+                          <template slot-scope="scope">
+                            <span style="display: flex; align-items: center; justify-content: center">
+                              {{ replaceStr(scope.row[item.code].showLabel) || "-" }}
+                              <img
+                                src="@/assets/rem/yieId/upTriangle.png"
+                                v-if="replaceStr(scope.row[item.code].showLabel) == '偏高'"
+                                style="width: 20px; height: 20px"
+                              />
+                              <img
+                                src="@/assets/rem/yieId/downTriangle.png"
+                                v-if="replaceStr(scope.row[item.code].showLabel) == '偏低'"
+                                style="width: 20px; height: 20px"
+                              />
+                            </span>
+                          </template>
+                        </el-table-column>
                       </template>
                     </el-table-column>
                   </el-table-column>
@@ -1407,7 +1513,7 @@
                         <div>
                           <span>评价日期</span>
                           <br />
-                          <span>(yyyy/mm/dd)</span>
+                          <span>(yyyy-mm-dd)</span>
                         </div>
                       </template>
                       <template slot-scope="scope">
@@ -1724,10 +1830,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -2725,12 +2830,16 @@ export default {
         border-radius: 5px;
       }
       .leftBox {
-        width: 563px;
+        width: 460px;
         height: 1240px;
         // position: relative;
         position: absolute;
         left: 0;
         top: 0;
+        .speed {
+          width: 100%;
+          height: 100%;
+        }
         .img1 {
           width: 100%;
           height: 100%;
@@ -3406,9 +3515,10 @@ export default {
 ::v-deep .el-table__fixed-header-wrapper .cell,
 ::v-deep .el-table__header-wrapper .cell {
   height: auto !important;
-  line-height: 30px !important;
+  line-height: 1.5 !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
+  white-space: pre !important;
 }
 </style>

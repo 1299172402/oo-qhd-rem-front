@@ -3,7 +3,7 @@
  */
 import Axios from '@/utils/request'
 import request from "@/utils/request";
-const baseUrl = process.env.NODE_ENV == "production" ? "/model/config" : "/model/config"
+const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
 export function getAllModelName(){
     return Axios({

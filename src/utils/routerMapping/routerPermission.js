@@ -25,7 +25,6 @@ const GenerateRouter = {
   "MyThirdMenu2": () => import("@/pages/intelligentOilfield/myThirdMenu/index.vue"), // 三级菜单-2管理
 
   //   "Index":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
-  "CodeGeneration": () => import("@/pages/intelligentOilfield/codeGeneration/index.vue"),
 
   "HandleBusinessList": () => import("@/pages/common/handleBusinessList/index.vue"),
   "DoneBusinessList": () => import("@/pages/common/doneBusinessList/index.vue"),
@@ -115,8 +114,11 @@ const GenerateRouter = {
   "ProductionOperationAnalysisReport": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/productionOperationAnalysisReport.vue"),
   "AnalysisAbnormal": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/analysisAbnormal.vue"),
   "StatisticalTableProduction": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/statisticalTableProduction.vue"),
-  "ProductionSituationPrediction": () => import("@/pages/rem/yield/productionSituationPrediction/index.vue"),
-
+  "ProductionSituationPrediction": () => import("@/pages/rem/yield/productionSituationPrediction/index.vue"), 
+   "ModelMain": () => import("@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue"),
+   "ModelManager": () => import("@/pages/rem/intelligence/optimization/modelOperation/modelManager.vue"),
+    
+  // 
   // "": () => import(""),
   // "": () => import(""),
   // "": () => import(""),

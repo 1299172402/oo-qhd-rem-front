@@ -16,7 +16,16 @@
           </el-select>
         </div>
         <div style="margin: 10px 20px 10px 0px">
-          开始与结束日期：
+          年度：
+          <el-date-picker
+            v-model="queryParams.beginDate"
+            type="year"
+            placeholder="选择年"
+            value-format="yyyy"
+            style="width: 160px"
+            @change="createChange"
+          ></el-date-picker>
+          <!-- 日期：
           <el-date-picker
             v-model="queryParams.dates"
             type="daterange"
@@ -27,7 +36,7 @@
             unlink-panels
             @change="createChange"
           >
-          </el-date-picker>
+          </el-date-picker> -->
         </div>
         <div style="margin: 10px 20px 10px 0px">
           <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
@@ -81,24 +90,30 @@
                 下载
               </el-button>
             </div>
-            <el-table id="fzjcdhglmx" :data="tableData1" highlight height="calc(100% - 55px)">
+            <el-table id="fzjcdhglmx" :data="tableData1" border highlight height="calc(100% - 55px)">
               <!-- :index="formatIndex"  -->
               <el-table-column
                 label="序号"
                 header-align="center"
                 align="center"
                 type="index"
-                width="60"
+                width="80"
               ></el-table-column>
-              <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>
-              <el-table-column prop="wellNo" label="注水井号" align="center"></el-table-column>
-              <el-table-column prop="layerName" label="层段号" align="center"></el-table-column>
-              <el-table-column prop="statisticsDate" :label="`年月\n(yyy/mm/dd)`" align="center"></el-table-column>
+              <el-table-column prop="ogfName" label="油田" align="center" min-width="140"></el-table-column>
+              <el-table-column prop="wellNo" label="注水井号" align="center" min-width="160"></el-table-column>
+              <el-table-column prop="layerName" label="层段号" align="center" min-width="220"></el-table-column>
+              <el-table-column
+                prop="statisticsDate"
+                :label="`年月日\n(yyy-mm-dd)`"
+                align="center"
+                min-width="120"
+              ></el-table-column>
               <el-table-column
                 prop="isUnqualified"
                 label="是否合格"
                 :formatter="formatterBoolean1"
                 align="center"
+                min-width="100"
               ></el-table-column>
             </el-table>
           </pagePanel>
@@ -124,16 +139,16 @@
                 下载
               </el-button>
             </div>
-            <el-table id="djcdhgmx" :data="tableData2" highlight height="calc(100% - 55px)">
+            <el-table id="djcdhgmx" :data="tableData2" border highlight height="calc(100% - 55px)">
               <!-- :index="formatIndex"  -->
               <el-table-column
                 label="序号"
                 header-align="center"
                 align="center"
                 type="index"
-                width="60"
+                width="80"
               ></el-table-column>
-              <el-table-column prop="wellNo" label="井号" align="center"></el-table-column>
+              <el-table-column prop="wellNo" label="井号" align="center" min-width="160"></el-table-column>
               <el-table-column
                 prop="isSplit"
                 label="是否分注"
@@ -175,9 +190,9 @@ export default {
         companyId: "715AD1CD60484BB59E737CD18A9DE44A", // 作业公司
         oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 油田
         platFormId: "", // 平台
-        dates: [dayjs().format("YYYY-01-01"), dayjs().subtract(1, "day").format("YYYY-MM-DD")], // 时间范围集合
-        beginDate: dayjs().format("YYYY-01-01"), // 开始时间
-        endDate: dayjs().subtract(1, "day").format("YYYY-MM-DD"), // 结束时间
+        // dates: [dayjs().format("YYYY-01-01"), dayjs().subtract(1, "day").format("YYYY-MM-DD")], // 时间范围集合
+        beginDate: dayjs().format("YYYY"), // 开始时间
+        // endDate: dayjs().subtract(1, "day").format("YYYY-MM-DD"), // 结束时间
         month: dayjs().subtract(1, "day").format("YYYY-MM"), // 分注井层段合格率明细 日期选择
         date: dayjs().subtract(1, "day").format("YYYY-MM-DD"), // 单井层段合格明细 日期选择
         isDesc: 1,
@@ -340,10 +355,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.queryParams.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
-              : undefined;
+          this.queryParams.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.queryParams.companyId }).then((data) => {
@@ -380,20 +394,20 @@ export default {
     },
     //时间范围切换
     createChange(dates) {
-      if (dates && dates.length == 2) {
-        this.queryParams.beginDate = dates[0];
-        this.queryParams.endDate = dates[1];
-        if (dayjs(dates[1]).format("YYYY-MM") === dayjs().format("YYYY-MM")) {
-          this.queryParams.month = dayjs().format("YYYY-MM");
-          this.queryParams.date = dayjs().format("YYYY-MM-DD");
-        } else {
-          this.queryParams.month = dayjs(dates[1]).endOf("month").format("YYYY-MM");
-          this.queryParams.date = dayjs(dates[1]).endOf("month").format("YYYY-MM-DD");
-        }
+      // if (dates && dates.length == 2) {
+      // this.queryParams.beginDate = dates[0];
+      // this.queryParams.endDate = dates[1];
+      if (dayjs(this.queryParams.beginDate).format("YYYY") === dayjs().format("YYYY")) {
+        this.queryParams.month = dayjs().format("YYYY-MM");
+        this.queryParams.date = dayjs().format("YYYY-MM-DD");
       } else {
-        this.queryParams.beginDate = "";
-        this.queryParams.endDate = "";
+        this.queryParams.month = dayjs(this.queryParams.beginDate).endOf("month").format("YYYY-MM");
+        this.queryParams.date = dayjs(this.queryParams.beginDate).endOf("month").format("YYYY-MM-DD");
       }
+      // } else {
+      //   this.queryParams.beginDate = "";
+      //   this.queryParams.endDate = "";
+      // }
     },
     //查询
     doSearch() {
@@ -404,7 +418,7 @@ export default {
     doDividingLayerQualityRate() {
       this.oilFieldName =
         this.oilFieldList.filter((item) => item.ogfId === this.queryParams.oilFieldId)[0].ogfName || "";
-      dividingLayerQualityRate(this.queryParams).then((res) => {
+      dividingLayerQualityRate(this.queryParams,true).then((res) => {
         if (res?.data?.code == 200) {
           let legendData = [];
           let seriesData = [];
@@ -444,11 +458,7 @@ export default {
           this.sectionPassRate.legend.data = legendData;
           this.sectionPassRate.series = seriesData;
           this.sectionPassRate.title.text = `${this.oilFieldName || ""}${
-            this.queryParams.beginDate && this.queryParams.endDate
-              ? dayjs(this.queryParams.beginDate).format("YYYY-MM-DD") +
-                "至" +
-                dayjs(this.queryParams.endDate).format("YYYY-MM-DD")
-              : ""
+            this.queryParams.beginDate ? this.queryParams.beginDate + "年" : ""
           }分注井层段合格率`;
         }
       });

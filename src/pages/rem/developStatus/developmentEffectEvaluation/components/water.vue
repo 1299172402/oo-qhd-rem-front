@@ -31,7 +31,7 @@
               >下载</el-button
             >
           </div>
-          <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)">
+          <el-table id="table1" :data="tableData" border highlight height="calc(100% - 55px)">
             <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
             <el-table-column prop="evaluationResult" label="评价结果" align="center" :formatter="toPrecise">
               <!-- <template slot-scope="scope">

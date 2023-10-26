@@ -327,6 +327,7 @@ export default {
     // 上传失败
     handleUploadError() {
       this.$modal.msgError("上传图片失败，请重试");
+      this.number -= 1;
       this.$modal.closeLoading();
     },
     /**

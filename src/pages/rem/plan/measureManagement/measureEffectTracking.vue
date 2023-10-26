@@ -47,7 +47,7 @@
         </div>
         <div style="margin-right: 15px">
           <span>措施事件：</span>
-          <el-select v-model="measuresType" class="f2">
+          <el-select v-model="measuresType" class="f2" disabled>
             <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name" :value="item.code">
             </el-option>
           </el-select>
@@ -67,23 +67,26 @@
       </div>
     </headerSearch>
     <div style="height: auto; padding-top: 0; margin-bottom: 14px" class="svg">
-      <el-table v-show="type == 0" highlight :data="oilWellTableData" style="width: 100%">
-        <el-table-column type="index" align="center" width="50" label="序号"></el-table-column>
-        <el-table-column prop="wellName" align="center" label="井号" width="160"></el-table-column>
+      <el-table v-show="type == 0" highlight :data="oilWellTableData" border style="width: 100%">
+        <el-table-column type="index" align="center" width="80" label="序号"></el-table-column>
+        <el-table-column prop="wellName" header-align="center" align="center" label="井号" width="160"></el-table-column>
         <el-table-column
           prop="beginDate"
+          header-align="center"
           align="center"
-          :label="`措施开始日期\n(yyyy/mm/dd)`"
+          :label="`措施开始日期\n(yyyy-mm-dd)`"
           width="140"
         ></el-table-column>
         <el-table-column
           prop="endDate"
+          header-align="center"
           align="center"
-          :label="`措施结束日期\n(yyyy/mm/dd)`"
+          :label="`措施结束日期\n(yyyy-mm-dd)`"
           width="140"
         ></el-table-column>
         <el-table-column align="center" label="措施前生产情况">
           <el-table-column
+            header-align="center"
             align="center"
             :label="`日产液\n(m³)`"
             width="80"
@@ -93,6 +96,7 @@
           <el-table-column align="center" :label="`日产油\n(m³)`" width="80" prop="bmOilDaily" :formatter="toPrecise2">
           </el-table-column>
           <el-table-column
+            header-align="center"
             align="center"
             :label="`含水率\n(%)`"
             width="80"
@@ -102,6 +106,7 @@
         </el-table-column>
         <el-table-column align="center" label="措施效果">
           <el-table-column
+            header-align="center"
             align="center"
             :label="`当日日增油\n(m³)`"
             width="110"
@@ -109,15 +114,23 @@
             :formatter="toPrecise2"
           ></el-table-column>
           <el-table-column
+            header-align="center"
             align="center"
             :label="`累增油\n(m³)`"
             width="85"
             prop="sumOilDaily"
             :formatter="toPrecise2"
           ></el-table-column>
-          <el-table-column prop="days" align="center" :label="`增产有效期\n(d)`" width="100"></el-table-column>
+          <el-table-column
+            prop="days"
+            header-align="center"
+            align="center"
+            :label="`增产有效期\n(d)`"
+            width="100"
+          ></el-table-column>
           <el-table-column
             prop="geoDesignOilDaily"
+            header-align="center"
             align="center"
             :label="`地质设计日增油\n(m³)`"
             width="130"
@@ -125,6 +138,7 @@
           ></el-table-column>
           <el-table-column
             prop="avgOilDaily"
+            header-align="center"
             align="center"
             :label="`平均日增油\n(m³)`"
             width="100"
@@ -132,13 +146,14 @@
           ></el-table-column>
           <el-table-column
             prop=""
+            header-align="center"
             align="center"
             :label="`滚动预测日增油\n(m³)`"
             width="140"
             :formatter="toPrecise2"
           ></el-table-column>
         </el-table-column>
-        <el-table-column label="地质设计" align="center">
+        <el-table-column label="地质设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.geoDesg" class="chicked">
               <el-button
@@ -151,7 +166,7 @@
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column label="工艺设计" align="center">
+        <el-table-column label="工艺设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.oprgProcDesg" class="chicked">
               <el-button
@@ -164,7 +179,7 @@
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column label="施工设计" align="center">
+        <el-table-column label="施工设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.oprgDesg" class="chicked">
               <el-button
@@ -180,39 +195,61 @@
       </el-table>
       <el-table v-show="type == 1" highlight :data="waterWellTableData" style="width: 100%">
         <el-table-column type="index" align="center" width="60" label="序号"></el-table-column>
-        <el-table-column prop="wellNo" align="center" label="井号" width="160"></el-table-column>
+        <el-table-column prop="wellNo" header-align="center" align="center" label="井号" width="160"></el-table-column>
         <el-table-column
           prop="beginDate"
+          header-align="center"
           align="center"
-          :label="`措施开始日期\n(yyyy/mm/dd)`"
+          :label="`措施开始日期\n(yyyy-mm-dd)`"
           min-width="110px"
         ></el-table-column>
         <el-table-column
           prop="endDate"
+          header-align="center"
           align="center"
-          :label="`措施结束日期\n(yyyy/mm/dd)`"
+          :label="`措施结束日期\n(yyyy-mm-dd)`"
           min-width="110px"
         ></el-table-column>
         <el-table-column align="center" label="措施前注入情况" min-width="100">
-          <el-table-column align="center" :label="`日注水量\n(m³)`" min-width="100" prop="bmInjWater"></el-table-column>
+          <el-table-column
+            header-align="center"
+            align="center"
+            :label="`日注水量\n(m³)`"
+            min-width="100"
+            prop="bmInjWater"
+          ></el-table-column>
         </el-table-column>
         <el-table-column align="center" label="措施效果">
           <el-table-column
             prop="injDaily"
+            header-align="center"
             align="center"
             :label="`当日日增注\n( m³)`"
             min-width="100"
           ></el-table-column>
-          <el-table-column align="center" :label="`累增注\n(m³)`" min-width="100" prop="sumInjDaily"></el-table-column>
-          <el-table-column align="center" :label="`增注有效期\n(d)`" min-width="100" prop="days"></el-table-column>
           <el-table-column
+            header-align="center"
+            align="center"
+            :label="`累增注\n(m³)`"
+            min-width="100"
+            prop="sumInjDaily"
+          ></el-table-column>
+          <el-table-column
+            header-align="center"
+            align="center"
+            :label="`增注有效期\n(d)`"
+            min-width="100"
+            prop="days"
+          ></el-table-column>
+          <el-table-column
+            header-align="center"
             align="center"
             :label="`地质设计日配注\n(m³)`"
             min-width="120"
             prop="geoDesignInjDaily"
           ></el-table-column>
         </el-table-column>
-        <el-table-column label="地质设计" align="center">
+        <el-table-column label="地质设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.geoDesg" class="chicked">
               <el-button
@@ -225,7 +262,7 @@
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column label="工艺设计" align="center">
+        <el-table-column label="工艺设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.oprgProcDesg" class="chicked">
               <el-button
@@ -238,7 +275,7 @@
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column label="施工设计" align="center">
+        <el-table-column label="施工设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.oprgDesg" class="chicked">
               <el-button
@@ -352,18 +389,36 @@
               <el-table
                 id="table2"
                 :data="chemicalTableData"
+                border
                 highlight
                 style="width: 100%"
                 height="calc(100% - 55px)"
                 :row-style="{ height: '0px' }"
-                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                :header-cell-style="{ padding: '0px 0' }"
                 header-cell-class-name="table_header"
-                :cell-style="{ padding: '2px', 'text-align': 'center' }"
+                :cell-style="{ padding: '2px' }"
               >
-                <el-table-column label="序号" type="index"></el-table-column>
-                <el-table-column :label="`日期\n(yyyy/mm/dd)`" prop="dateTime"></el-table-column>
-                <el-table-column :label="`含水\n(%)`" prop="wtr" :formatter="toPrecise2"></el-table-column>
-                <el-table-column :label="`含砂\n(%)`" prop="sand" :formatter="toPrecise2"></el-table-column>
+                <el-table-column label="序号" width="80" align="center" type="index"></el-table-column>
+                <el-table-column
+                  :label="`日期\n(yyyy-mm-dd)`"
+                  header-align="center"
+                  align="center"
+                  prop="dateTime"
+                ></el-table-column>
+                <el-table-column
+                  :label="`含水\n(%)`"
+                  prop="wtr"
+                  header-align="center"
+                  align="center"
+                  :formatter="toPrecise2"
+                ></el-table-column>
+                <el-table-column
+                  :label="`含砂\n(%)`"
+                  prop="sand"
+                  header-align="center"
+                  align="center"
+                  :formatter="toPrecise2"
+                ></el-table-column>
                 <!-- <el-table-column label="备注" prop="remark"></el-table-column> -->
               </el-table>
             </div>
@@ -383,18 +438,48 @@
               <el-table
                 ref="table3"
                 :data="getWorkProgressData"
+                border
                 highlight
                 height="calc( 100% - 130px)"
                 :row-style="{ height: '0px' }"
-                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                :header-cell-style="{ padding: '0px 0' }"
                 header-cell-class-name="table_header"
-                :cell-style="{ padding: '2px', 'text-align': 'center' }"
+                :cell-style="{ padding: '2px' }"
               >
-                <el-table-column :label="`日期\n(yyyy/mm/dd)`" prop="dateTime" width="180"></el-table-column>
-                <el-table-column label="井号" prop="wellNo" width="180"></el-table-column>
-                <el-table-column :label="`开始时间\n(yyyy/mm/dd)`" prop="beginTime" width="250"></el-table-column>
-                <el-table-column :label="`预计结束时间\n(yyyy/mm/dd)`" prop="endTime" width="250"></el-table-column>
-                <el-table-column label="当前作业内容" prop="workContent"></el-table-column>
+                <el-table-column
+                  :label="`日期\n(yyyy-mm-dd)`"
+                  prop="dateTime"
+                  width="180"
+                  header-align="center"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  label="井号"
+                  prop="wellNo"
+                  width="180"
+                  header-align="center"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  :label="`开始时间\n(yyyy-mm-dd)`"
+                  prop="beginTime"
+                  width="250"
+                  header-align="center"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  :label="`预计结束时间\n(yyyy-mm-dd)`"
+                  prop="endTime"
+                  width="250"
+                  header-align="center"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  label="当前作业内容"
+                  prop="workContent"
+                  header-align="center"
+                  align="center"
+                ></el-table-column>
               </el-table>
               <pagination
                 v-show="pageTotal2 > 0"
@@ -2075,10 +2160,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {

@@ -1,4 +1,4 @@
-/*  Prototype JavaScript framework, version 1.7.3
+/*  Prototype JavaScript framework, version
  *  (c) 2005-2010 Sam Stephenson
  *
  *  Prototype is freely distributable under the terms of an MIT-style license.
@@ -4533,7 +4533,7 @@ Prototype._original_property = window.Sizzle;
 })();
 
 /*!
- * Sizzle CSS Selector Engine v1.10.18
+ * Sizzle CSS Selector Engine 
  * http://sizzlejs.com/
  *
  * Copyright 2013 jQuery Foundation, Inc. and other contributors

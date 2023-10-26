@@ -4,7 +4,7 @@
  * @Date: 2023-06-05
  */
 import Axios from '@/utils/request';
-const baseUrl = process.env.NODE_ENV == 'production' ? '/model/config' : '/model/config';
+const baseUrl = process.env.NODE_ENV == 'production' ? '/rem/api' : '/rem/api';
 
 //根据油田数据源
 export function getOgfList() {

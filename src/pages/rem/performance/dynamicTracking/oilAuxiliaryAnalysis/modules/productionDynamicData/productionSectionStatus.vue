@@ -1,76 +1,84 @@
 <!-- 生产段状态 -->
 <template>
-    <page-panel-new style="height:calc(100% - 101px);" show-btn>
-        <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header"
-            :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;"
-            height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
-            :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-            <el-table-column type="index" label="序号"></el-table-column> 
-            <el-table-column prop="wellNo" label="井号"></el-table-column>
-            <el-table-column prop="productionIntervalNo" label="生产段"></el-table-column>
-            <el-table-column prop="openOrClose" label="变更状态"></el-table-column>
-            <el-table-column prop="startDate" :label="`变更时间\n(yyyy/mm/dd)`"></el-table-column>
-        </el-table>
-    </page-panel-new>
+  <page-panel-new style="height: calc(100% - 101px)" show-btn>
+    <el-table
+      id="tableData"
+      :data="tableData"
+      border
+      :row-style="{ height: '0px' }"
+      header-cell-class-name="table_header"
+      :cell-style="{ padding: '6px', 'text-align': 'center' }"
+      style="width: 100%"
+      height="100%"
+      :default-sort="{ prop: 'date', order: 'descending' }"
+      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+    >
+      <el-table-column type="index" label="序号" width="80"></el-table-column>
+      <el-table-column prop="wellNo" label="井号" min-width="160"></el-table-column>
+      <el-table-column prop="productionIntervalNo" label="生产段" min-width="240"></el-table-column>
+      <el-table-column prop="openOrClose" label="变更状态" min-width="200"></el-table-column>
+      <el-table-column prop="startDate" :label="`变更时间\n(yyyy-mm-dd)`" min-width="200"></el-table-column>
+    </el-table>
+  </page-panel-new>
 </template>
 
 <script>
-    import { getProductionStatus } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
-    import {exportExcel} from "@/lib/exportExcel.js";
-    export default {
-        props: {
-            //选择油田
-            oilFeildId: '',
-            //选择平台
-            platform: '',
-            //选择井号
-            wellId: '',
-        },
-        data() {
-            return {
-                tableData: [],
-            }
-        },
-        created() {
-            this.doSearch();
-        },
-        methods: {
-            //列表数据
-            doSearch() {
-                let request = {
-                    ogfId: this.oilFeildId,
-                    platformId: this.platform,
-                    wellId: this.wellId,
-                };
-                getProductionStatus(request).then((res) => {
-                    if (res.data.code == 200) {
-                        this.tableData = res.data.data;
-                    }
-                });
-            },
-            //下载
-            doDownLoad() {
-                let fileName = '生产段状态';
-                if (this.wellName) {
-                    fileName = this.wellName + fileName;
-                }
-                exportExcel('#tableData',fileName);
-            }
+import { getProductionStatus } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
+import { exportExcel } from "@/lib/exportExcel.js";
+export default {
+  props: {
+    //选择油田
+    oilFeildId: "",
+    //选择平台
+    platform: "",
+    //选择井号
+    wellId: "",
+  },
+  data() {
+    return {
+      tableData: [],
+    };
+  },
+  created() {
+    this.doSearch();
+  },
+  methods: {
+    //列表数据
+    doSearch() {
+      let request = {
+        ogfId: this.oilFeildId,
+        platformId: this.platform,
+        wellId: this.wellId,
+      };
+      getProductionStatus(request).then((res) => {
+        if (res.data.code == 200) {
+          this.tableData = res.data.data;
         }
-    }
+      });
+    },
+    //下载
+    doDownLoad() {
+      let fileName = "生产段状态";
+      if (this.wellName) {
+        fileName = this.wellName + fileName;
+      }
+      exportExcel("#tableData", fileName);
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
-    #tableData{
-        ::v-deep .el-table__header-wrapper .cell{
-            height: auto;
-            line-height: 20px;
-            white-space: pre;
-        }
-        ::v-deep .cell:empty{
-            &::before {
-                content: '-';
-            } 
-        }
-    } 
+#tableData {
+  ::v-deep .el-table__header-wrapper .cell {
+    height: auto;
+    line-height: 20px;
+    white-space: pre;
+  }
+  ::v-deep .cell:empty {
+    &::before {
+      content: "-";
+    }
+  }
+}
 </style>

@@ -87,6 +87,7 @@
           <el-table
             width="100%"
             height="100%"
+            border
             :row-style="{ height: '0px' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
             :data="tableData"
@@ -451,8 +452,8 @@ export default {
         await userListByUserNames(params).then((res) => {
           if (res.data.code == 200) {
             this.searchForm.companyId =
-              res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-                ? res.data.data[0].tenantInfos[0]?.deptId
+              res.data.data[0]?.currentTenantBindOrgId
+                ? res.data.data[0].currentTenantBindOrgId
                 : undefined;
           }
         });
@@ -593,27 +594,6 @@ export default {
         .catch(() => {
           this.tableLoading = false;
         });
-      let data = {
-        configurationModelName: "",
-        configurationModelCode: "ZSQDPJ",
-      };
-      queryModelConfigurationByCode(data).then((res) => {
-        res.data.data.map((n) => {
-          let obj = {
-            modelName: n.configurationModelName,
-            configId: n.configurationModelItemCode,
-            configDescribe: n.configurationModelItemName,
-            configValue: n.configurationModelParam,
-            configUnit: n.configurationModelParamUnit,
-            contrastMode: n.configurationModelParamType,
-            selectType: n.configurationModelType,
-            modelId: n.configurationModelId,
-            configurationModelCode: n.configurationModelCode,
-            id: 0,
-          };
-          this.tableData.push(obj);
-        });
-      });
     },
     //切换分页
     pagination(e) {

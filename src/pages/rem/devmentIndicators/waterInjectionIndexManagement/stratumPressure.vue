@@ -74,8 +74,8 @@
             >下载</el-button
           >
         </div>
-        <el-table id="ysdcylbcsp" :data="tableData1" highlight height="calc(100% - 55px)">
-          <el-table-column label="序号" header-align="center" align="center" type="index" width="60"></el-table-column>
+        <el-table id="ysdcylbcsp" :data="tableData1" border highlight height="calc(100% - 55px)">
+          <el-table-column label="序号" header-align="center" align="center" type="index" width="80"></el-table-column>
           <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
           <el-table-column prop="layerName" label="层位/油组" align="center"></el-table-column>
           <el-table-column label="原始参数" align="center">
@@ -136,18 +136,18 @@
               >下载</el-button
             >
           </div>
-          <el-table id="djjymx" :data="tableData2" highlight height="calc(100% - 55px)">
+          <el-table id="djjymx" :data="tableData2" border highlight height="calc(100% - 55px)">
             <el-table-column
               label="序号"
               header-align="center"
               align="center"
               type="index"
-              width="60"
+              width="80"
             ></el-table-column>
             <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
             <el-table-column prop="layerName" label="层位/油组" align="center"></el-table-column>
             <el-table-column prop="wellNo" label="井号" align="center"></el-table-column>
-            <el-table-column prop="measureTime" :label="`测试日期\n(yyyy/mm/dd)`" align="center"></el-table-column>
+            <el-table-column prop="measureTime" :label="`测试日期\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column
               prop="basalLevelStaticPress"
               :label="`基准面压力\n(MPa)`"
@@ -364,8 +364,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.queryParams.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });

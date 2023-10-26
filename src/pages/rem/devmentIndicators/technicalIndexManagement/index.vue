@@ -152,7 +152,7 @@
           >
         </div>
         <div style="margin-top: 10px; height: calc(100% - 50px)">
-          <el-table id="indexscv" :data="tableData" highlight height="100%">
+          <el-table id="indexscv" :data="tableData" border highlight height="100%">
             <el-table-column prop="name" label="指标" align="center"></el-table-column>
             <el-table-column prop="real" label="实际值" align="center" :formatter="toPrecise2"></el-table-column>
             <el-table-column
@@ -273,7 +273,7 @@ export default {
     //过滤规则 保留两位小数
     numberFormat(val) {
       if (val) {
-        return parseFloat(Number(val).toFixed(2));
+        return parseFloat(val).toFixed(2);
       } else {
         return 0;
       }
@@ -793,7 +793,7 @@ export default {
         },
         yAxis: [
           {
-            name: "采油速度(%)",
+            name: "可采储量采油速度(%)",
             nameLocation: "middle",
             nameGap: 70,
             nameTextStyle: {
@@ -892,9 +892,9 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
-            formatter: function (val) {
-              return Number(val) + "月";
-            },
+            // formatter: function (val) {
+            //   return Number(val) + "月";
+            // },
           },
           axisTick: {
             show: true,
@@ -1016,9 +1016,9 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
-            formatter: function (val) {
-              return Number(val) + "月";
-            },
+            // formatter: function (val) {
+            //   return Number(val) + "月";
+            // },
           },
           axisTick: {
             show: true,
@@ -1393,9 +1393,9 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
-            formatter: function (val) {
-              return Number(val) + "月";
-            },
+            // formatter: function (val) {
+            //   return Number(val) + "月";
+            // },
           },
           axisTick: {
             show: true,
@@ -1496,8 +1496,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });
@@ -1515,7 +1515,7 @@ export default {
       //默认qhd3-26油田
       // this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       //对标油田默认qhd3-26油田
-      this.selectTargetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+      // this.selectTargetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       let requestField = {
         oilFieldId: this.selectOilFieldId,
       };

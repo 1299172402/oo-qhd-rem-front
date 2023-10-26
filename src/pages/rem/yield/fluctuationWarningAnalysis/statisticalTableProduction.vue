@@ -70,6 +70,7 @@
         </div>
         <div style="margin-right: 15px; margin-bottom: 10px">
           <el-button type="primary" icon="el-icon-search" @click="getWellOutputWaveTable(true)">搜索</el-button>
+          <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
         </div>
       </div>
     </headerSearch>
@@ -86,7 +87,7 @@
             margin-left: 0;
           "
         >
-          <span>{{searchForm.ogfName}}单井产量变化</span>
+          <span>{{ searchForm.ogfName }}单井产量变化</span>
           <div>
             <el-button type="primary" style="height: 30px" @click="doDownIndex">下载</el-button>
             <el-button type="primary" style="height: 30px" @click="goBack">返回</el-button>
@@ -96,7 +97,7 @@
           <el-table
             id="tableData"
             :data="tableData"
-            :border="false"
+            border
             :row-style="{ height: '0px' }"
             header-cell-class-name="table_header"
             :cell-style="{ padding: '6px', 'text-align': 'center' }"
@@ -534,6 +535,17 @@ export default {
     await this.initData();
   },
   methods: {
+    //重置
+    resetting() {
+      this.$nextTick(() => {
+        Object.assign(this.$data, this.$options.data());
+        //初始化时间段
+        // this.selectDate = [new Date().addDays(-30).format("yyyy-MM-dd"), new Date().addDays(-1).format("yyyy-MM-dd")];
+        //初始化筛选设置
+        // this.setParaValue = "2";
+        this.initData();
+      });
+    },
     //页面初始化信息
     async initData() {
       let params = {
@@ -541,10 +553,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.searchForm.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
-              : undefined;
+          this.searchForm.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.searchForm.companyId }).then((data) => {
@@ -601,7 +612,7 @@ export default {
     },
     //产量波动统计表
     getWellOutputWaveTable(isWellIdsNull) {
-      this.searchForm.ogfName = this.oilFields.filter(item => item.ogfId === this.searchForm.ogfId)[0].ogfName || "";
+      this.searchForm.ogfName = this.oilFields.filter((item) => item.ogfId === this.searchForm.ogfId)[0].ogfName || "";
       if (this.searchForm.wellId || isWellIdsNull) {
         this.searchForm.wellIds = [];
       }

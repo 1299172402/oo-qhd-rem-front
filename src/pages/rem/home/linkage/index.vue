@@ -246,14 +246,14 @@ export default {
                             name: '年度产量运行预警',
                             warningShowFlag: false,
                             alarmPageCode: 'QOIWTT', alarmTime: "",
-                            url: `https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=linkage`
+                            url: `https://rem.${this.baseUrl}/#/developStatus/developmentWarningCapacity?name=Linkage`
                         }
                     ],
                     boxBottomContent: [
                         [{
                             name: '年度产量趋势预测',
                             warningShowFlag: false, alarmTime: "",
-                            url: `https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?name=linkage`
+                            url: `https://rem.${this.baseUrl}/#/modelConfiguration/modelconfig?name=Linkage`
                         }]
                     ],
                     boxStyle: {

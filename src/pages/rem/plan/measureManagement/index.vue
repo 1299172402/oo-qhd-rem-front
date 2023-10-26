@@ -158,16 +158,17 @@
               :data="
                 tableData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)
               "
+              border
               height="calc(100% - 44px)"
               :row-style="{ height: '0px' }"
-              :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+              :header-cell-style="{  padding: '0px 0' }"
               header-cell-class-name="table_header"
-              :cell-style="{ padding: '2px', 'text-align': 'center' }"
+              :cell-style="{ padding: '2px'}"
               style="width: 100%; overflow-x: hidden"
             >
-              <el-table-column prop="wellNo" label="井号" width="140" sortable></el-table-column>
-              <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
-              <el-table-column prop="measureName3" :label="`措施作业天数\n(计划/实际)\n(d)`" width="110">
+              <el-table-column prop="wellNo" label="井号" width="140" header-align="center" align="center" sortable></el-table-column>
+              <el-table-column prop="measureName" label="作业类型" width="80" header-align="center" align="center"></el-table-column>
+              <el-table-column prop="measureName3" :label="`措施作业天数\n(计划/实际)\n(d)`" width="110" header-align="center" align="center">
                 <template slot-scope="scope">
                   <span v-if="scope.row.planMeasuresDayNum || scope.row.realityMeasuresDayNum">
                     {{ scope.row.planMeasuresDayNum ? scope.row.planMeasuresDayNum : 0 }}/{{
@@ -176,8 +177,8 @@
                   </span>
                 </template>
               </el-table-column>
-              <el-table-column prop="status" :label="`措施是否\n达标`" width="80"></el-table-column>
-              <el-table-column label="类别" width="100">
+              <el-table-column prop="status" :label="`措施是否\n达标`" width="80" header-align="center" align="center"></el-table-column>
+              <el-table-column label="类别" width="100" header-align="center" align="center">
                 <template slot-scope="scope">
                   <div style="line-height: 18px" v-if="measureVersion == '002003'">分公司考核 <br />实际</div>
                   <div style="line-height: 18px" v-else-if="measureVersion == '001'">分公司奋斗 <br />实际</div>
@@ -546,8 +547,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });

@@ -13,7 +13,7 @@
 <!--                            </el-select>-->
 <!--                        </el-form-item>-->
                         <el-form-item label="油田:">
-                            <el-select v-model="queryData.ogfId" disabled style="width: 160px">
+                            <el-select v-model="queryData.ogfId"  style="width: 160px" @change="choicepla">
                                 <el-option v-for="(item, index) in oilFields" :key="index" :label="item.ogfName"
                                            :value="item.ogfId">
                                 </el-option>
@@ -26,7 +26,7 @@
                                     clearable
                                     v-for="(item, index) in platforms"
                                     :key="index"
-                                    :label="item.platformName"
+                                    :label="item.platformCode"
                                     :value="item.platformId"
                                 >
                                 </el-option>
@@ -73,7 +73,7 @@
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
-                            <el-button class="commonBtn" icon="el-icon-refresh"> 重置</el-button>
+                            <el-button class="commonBtn" @click="result" icon="el-icon-refresh"> 重置</el-button>
                         </el-form-item>
 
                         <el-form-item style="float: right">
@@ -339,7 +339,7 @@ import {
     queryOperatorsCheckFieldListsDetail,
     queryListOfOilfieldQueryPlatformsDetail,
     queryOperatingCompanyDetail,
-    queryPlatformQueryWellListDetail,
+    queryPlatformQueryWellListDetail, userListByUserNames, QueryPlatformDetail
 } from "@/api/rem/marster.js";
 import * as echarts from "echarts/core";
 import {queryWaterInjIntensityAttributeAnalysis} from "@/api/rem/waterinjintensityattributeanalysis.js"
@@ -1371,18 +1371,25 @@ export default {
         toFixed,
         //获取查询条件中下拉列表的值
         async getData() {
-            await queryOperatingCompanyDetail({}).then((res) => {
-                this.zygsSelect = res.data.data;
-            });
-            await queryOperatorsCheckFieldListsDetail({orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then((res) => {
+            let params = {
+                searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+            }
+            await userListByUserNames(params).then((res)=>{
+                this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;  
+            })
+            await queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then((res) => {
                 if (res.data.code == 200) {
                     this.oilFields = res.data.data;
                     if (this.oilFields.length == 0) {
                         this.oilField = "";
                     } else {
-                        this.oilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+                        if(this.queryData.orgId=='715AD1CD60484BB59E737CD18A9DE44A'){
+                            this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
+                        }else{
+                            this.queryData.ogfId = this.oilFields[0].ogfId
+                        }
                     }
-                    this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+                    this.selectOilField = this.queryData.ogfId;
                     const requestPlat = {
                         ogfId: this.selectOilField,
                     };
@@ -1433,8 +1440,30 @@ export default {
         returnRouter() {
             this.$router.go(-1);
         },
+        choicepla(val){
+            this.queryData.assetCode = ''
+            QueryPlatformDetail({ogfId: val}).then(res => {
+                this.platforms = res.data.data
+            })
+        },
         doSearch() {
             this.getFormData()
+        },
+        result(){
+            if(this.queryData.orgId=='715AD1CD60484BB59E737CD18A9DE44A'){
+                this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
+            }else{
+                this.queryData.ogfId = this.oilFields[0].ogfId
+            }
+            this.choicepla(this.queryData.ogfId)
+            
+            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+                this.wellList = res.data.data;
+                    this.queryData.well = ''
+            });
+            if(this.link == 4){
+                this.queryData.month = this.$route.query.currentDate
+            }
         },
         decreaseMonth(dateStr) {
             const date = new Date(dateStr);

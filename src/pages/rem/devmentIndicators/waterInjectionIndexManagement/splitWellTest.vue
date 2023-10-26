@@ -67,14 +67,14 @@
             下载
           </el-button>
         </div>
-        <el-table id="fzjcsmx" :data="tableData" highlight height="calc(100% - 130px)">
+        <el-table id="fzjcsmx" :data="tableData" border highlight height="calc(100% - 130px)">
           <!-- :index="formatIndex"  -->
           <el-table-column
             label="序号"
             header-align="center"
             align="center"
             type="index"
-            width="60"
+            width="80"
             :index="formatIndex"
           ></el-table-column>
           <el-table-column prop="ogfName" label="油田" align="center"></el-table-column>
@@ -82,7 +82,7 @@
           <el-table-column prop="injSeparateTypeName" label="分注类型" align="center"></el-table-column>
           <el-table-column
             prop="prodDate"
-            :label="`调配日期\n(yyyy/mm/dd)`"
+            :label="`调配日期\n(yyyy-mm-dd)`"
             :formatter="formatTime"
             align="center"
           ></el-table-column>
@@ -210,9 +210,9 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
-            formatter: function (val) {
-              return val + "年";
-            },
+            // formatter: function (val) {
+            //   return val + "年";
+            // },
           },
           axisTick: {
             show: true,
@@ -300,8 +300,8 @@ export default {
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
           this.queryParams.companyId =
-            res.data.data[0] && res.data.data[0]?.tenantInfos && res.data.data[0]?.tenantInfos[0]
-              ? res.data.data[0].tenantInfos[0]?.deptId
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
               : undefined;
         }
       });

@@ -1,5 +1,5 @@
 /*!
- * jQuery JavaScript Library v1.10.2
+ * jQuery JavaScript Library 
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -1000,7 +1000,7 @@ function isArraylike( obj ) {
 // All jQuery objects should point back to these
 rootjQuery = jQuery(document);
 /*!
- * Sizzle CSS Selector Engine v1.10.2
+ * Sizzle CSS Selector Engine 
  * http://sizzlejs.com/
  *
  * Copyright 2013 jQuery Foundation, Inc. and other contributors

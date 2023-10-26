@@ -21,7 +21,7 @@
         </pagePanel>
       </div>
       <div class="row" style="margin-right: 20px">
-        <pagePanel headerTitle="产量标定法总递减" style="height: 380px; margin-top: 0" show-btn>
+        <pagePanel headerTitle="总递减率 (产量标定法)" style="height: 380px; margin-top: 0" show-btn>
           <Echart :chart-data="yieldCalibrationMethod" style="height: 100%"></Echart>
         </pagePanel>
       </div>
@@ -38,7 +38,7 @@
               >下载</el-button
             >
           </div>
-          <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)">
+          <el-table id="table1" :data="tableData" border highlight height="calc(100% - 55px)">
             <el-table-column prop="indicatorName" label="指标" min-width="140" align="center"></el-table-column>
             <el-table-column
               prop="evaluationResult"
@@ -388,7 +388,7 @@ export default {
           },
         ],
       },
-      //产量标定法总递减
+      //总递减率 (产量标定法)
       yieldCalibrationMethod: {
         grid: [{ x: "80", y: "50", x2: "100", y2: "50" }],
         dataZoom: [
@@ -409,7 +409,7 @@ export default {
           show: true,
           feature: {
             saveAsImage: {
-              name: "产量标定法总递减",
+              name: "总递减率 (产量标定法)",
               pixelRatio: 15,
               //值越大分辨率越高,下载的图片越清晰
               backgroundColor: "#022644",
@@ -440,7 +440,7 @@ export default {
           },
         },
         yAxis: {
-          name: "产量标定法总递减 (%)",
+          name: "总递减率 (产量标定法) (%)",
           nameLocation: "center",
           nameTextStyle: {
             color: "#8FA4CC",
@@ -604,7 +604,7 @@ export default {
         }
       });
     },
-    //产量标定法总递减
+    //总递减率 (产量标定法)
     getTargetChart(oilFieldId, fieldId) {
       let request = {
         oilFieldId: oilFieldId,

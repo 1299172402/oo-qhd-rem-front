@@ -28,35 +28,40 @@
       <el-table
         id="tableData"
         :data="tableData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        :cell-style="{ padding: '6px' }"
         style="width: 100%"
         height="calc(100% - 130px)"
         :default-sort="{ prop: 'date', order: 'descending' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        :header-cell-style="{ padding: '0px 0' }"
       >
-        <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
-        <el-table-column prop="prodDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+        <el-table-column type="index" align="center" label="序号" width="80" :index="tableIndex"></el-table-column>
+        <el-table-column prop="prodDate" header-align="center" align="center" :label="`时间\n(yyyy-mm-dd)`">
+        </el-table-column>
         <el-table-column
           prop="measureWellNumReal"
+          header-align="center"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(次)' : '实际措施井次\n(次)'"
         ></el-table-column>
         <el-table-column
           prop="measureWellNumPlan"
+          header-align="center"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划措施井次\n(次)' : '计划措施井次\n(次)'"
         ></el-table-column>
         <el-table-column
           prop="oilprodReal"
+          header-align="center"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际月产油量\n(m³/d)' : '实际月产油量\n(t/d)'"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="oilprodPlan"
+          header-align="center"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划月产油量\n(m³/d)' : '计划月产油量\n(t/d)'"
           :formatter="toPrecise2"
@@ -156,13 +161,13 @@ export default {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
             fontSize: 14,
-            interval: function (index, val) {
-              if (val.substr(-2) == "01") {
-                return true;
-              } else {
-                return false;
-              }
-            },
+            // interval: function (index, val) {
+            //   if (val.substr(-2) == "01") {
+            //     return true;
+            //   } else {
+            //     return false;
+            //   }
+            // },
             // rotate: 20,
           },
           axisTick: {

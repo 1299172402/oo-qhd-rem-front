@@ -3,7 +3,7 @@
 <pagePanel headerTitle="井斜数据" style="height: 600px;" show-btn>
     <el-table
         id="tableData"
-        :data="tableData" :border="false" :row-style="{ height: '0px' }"
+        :data="tableData" border :row-style="{ height: '0px' }"
         header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
         style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">

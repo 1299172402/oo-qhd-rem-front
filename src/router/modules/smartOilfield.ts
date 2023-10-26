@@ -54,22 +54,6 @@ export default [
     ]
   },
   {
-    path: "/codeGeneration",
-    name: "codeGeneration",
-    component: Layout,
-    hidden: true,
-    redirect: "/codeGeneration/editTable",
-    meta: { title: "修改生成配置", icon: "", single: true },
-    children: [
-      {
-        path: "editTable",
-        name: "editTable",
-        component: () => import("@/pages/intelligentOilfield/codeGeneration/components/editTable.vue"),
-        meta: { title: "修改生成配置" }
-      }
-    ]
-  },
-  {
     path: "/dictManagement/dict-data",
     component: Layout,
     hidden: true,
