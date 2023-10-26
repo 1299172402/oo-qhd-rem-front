@@ -23,57 +23,57 @@
         >下载</el-button
       >
       <el-table :data="tableData2" id="tableData" height="calc(100% - 40px)" highlight border style="width: 100%">
-        <el-table-column prop="theYear" header-align="center" align="left" label="年份"></el-table-column>
+        <el-table-column prop="theYear" header-align="center" align="center" label="年份"></el-table-column>
         <el-table-column
           prop="baseProduct"
           header-align="center"
-          align="right"
+          align="center"
           :label="`基础产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="newJustWellNum"
           header-align="center"
-          align="right"
+          align="center"
           :label="`新增调整井井数\n(口)`"
         ></el-table-column>
         <el-table-column
           prop="oldWellProduct"
           header-align="center"
-          align="right"
+          align="center"
           :label="`调整井滚动产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="oilWellIncNum"
           header-align="center"
-          align="right"
+          align="center"
           :label="`油井增产措施井次\n(口)`"
         ></el-table-column>
         <el-table-column
           prop="measureProduct"
           header-align="center"
-          align="right"
+          align="center"
           :label="`措施产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="chemicalWellNum"
           header-align="center"
-          align="right"
+          align="center"
           :label="`化学驱井次\n(口)`"
         ></el-table-column>
         <el-table-column
           prop="chemicalProduct"
           header-align="center"
-          align="right"
+          align="center"
           :label="`化学驱产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="productAll"
           header-align="center"
-          align="right"
+          align="center"
           :label="`产量合计\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>

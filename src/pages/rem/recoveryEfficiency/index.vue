@@ -424,7 +424,7 @@
                             </div>
                           </template>
                         </el-table-column>
-                        <el-table-column align="center" prop="x" label="x" :formatter="toPrecise4"></el-table-column>
+                        <!-- <el-table-column align="center" prop="x" label="x" :formatter="toPrecise4"></el-table-column> -->
                         <el-table-column
                           align="center"
                           prop="y"
@@ -433,7 +433,7 @@
                         >
                           <template slot="header">
                             <div>
-                              <span>y</span>
+                              <span>日产油量</span>
                               <br />
                               <span>(10⁴m³)</span>
                             </div>
