@@ -11,11 +11,11 @@ export default {
               taskId: result.firstTaskId,
               businessKey: id,
               processInstanceId
-            } })
+            }});
           } else {
             this.$message.warning("找不到审批任务");
           }
-        })
+        });
     }
   }
-}
+};

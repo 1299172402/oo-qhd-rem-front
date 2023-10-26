@@ -1,27 +1,32 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 
 export function getList(query) {
   return request({
-    url: '/system/instationmail/list',
-    method: 'get',
+    url: "/system/instationmail/list",
+    method: "get",
     params: query
-  })
+  });
+}
+
+export function getByTenantId(query) {
+  return request({
+    url: "/system/instationmail/getByTenantId",
+    method: "get",
+    params: query
+  });
 }
 
 export function updateAllStatus(userId) {
   return request({
     url: `/system/instationmail/updateAllStatus/${userId}`,
-    method: 'get',
-  })
+    method: "get"
+  });
 }
 
 export function updateOneStatus(data) {
   return request({
-    url: `/system/instationmail/updateOneStatus`,
-    method: 'post',
+    url: "/system/instationmail/updateOneStatus",
+    method: "post",
     data
-  })
+  });
 }
-
-
-

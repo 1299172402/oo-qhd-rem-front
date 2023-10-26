@@ -4,9 +4,8 @@
       v-if="label"
       v-bind="btn"
       :icon="btnIcon"
-      :type="btnType"
-      plain
-      @click="visible = true; $emit('open')"
+      :type="btn.type || btnType"
+      @click="visible = true;"
     >
       {{ label }}
     </el-button>

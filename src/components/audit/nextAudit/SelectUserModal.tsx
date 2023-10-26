@@ -1,10 +1,9 @@
 import Vue from "vue";
 import { mapGetters } from "vuex";
-import { getAction } from "@/api/common/manage";
 import DeptTree from "./DeptTree";
 import OpenClose from "./OpenClose";
 import UserTable from "./UserTable";
-import "./style/SelectUserModalStyle.less"
+import "./style/SelectUserModalStyle.less";
 
 const allLoading = {
   dept: true,
@@ -31,7 +30,7 @@ export default Vue.extend({
     },
     title: {
       type: String,
-      default: "选择用户"
+      default: undefined
     },
     modalWidth: {
       type: Number,
@@ -102,7 +101,6 @@ export default Vue.extend({
       depts: [],
       myRoleCode: this.roleCode,
       dataMap: {},
-      loading: true,
       selectedDepts: [],
       initData: [],
       startSearchUser: false,
@@ -126,8 +124,8 @@ export default Vue.extend({
           width: 80,
           key: "action",
           cell: (h, { row, index }) => <a onClick={() => {
-            (this as any).handleDelete(row, index)
-          }}>删除</a>,
+            (this as any).handleDelete(row, index);
+          }}>删除</a>
         }
       ],
       userMutiple: this.multiple,
@@ -182,7 +180,8 @@ export default Vue.extend({
           }
           let deptId = "";
           if (val.applyScope) {
-            deptId = val.applyScope;
+            // applyScope 等于 ALL 则说明为全部可适用
+            deptId = val.applyScope !== "ALL" ? val.applyScope : "";
           } else if (val.relativePerson === "Login") {
             // 默认选中当前登录人的部门
             deptId = this.userInfo.deptId;
@@ -234,7 +233,7 @@ export default Vue.extend({
         dataIndex: "departName",
         width: 120,
         key: "departName",
-        customRender: (t) => {
+        customRender: t => {
           if (this.isCosponsor) {
             return t.includes("|") ? t.split("|")[0].slice(0, -1) : t;
           }
@@ -249,7 +248,7 @@ export default Vue.extend({
      */
     setStartSearchUser() {
       (this as any).startSearchUser = {
-        roleCode: (this as any).myRoleCode
+        roleKey: (this as any).myRoleCode
       };
     },
     /**
@@ -257,18 +256,12 @@ export default Vue.extend({
      */
     handleDataOk() {
       allLoading.dept = false;
-      (this as any).loading = !(!allLoading.user && !allLoading.dept);
     },
     /**
      * 同步用户组件传出的loading状态，需要判断部门组件与用户组件都加载完成loading才为false
      */
     handleUserTableLoading(val) {
       allLoading.user = val;
-      if (!(this as any).showDept) {
-        (this as any).loading = val;
-      } else {
-        (this as any).loading = !(!allLoading.user && !allLoading.dept);
-      }
     },
     /**
      * 关闭当前弹窗
@@ -328,8 +321,8 @@ export default Vue.extend({
      * 自定义输入框失焦，将输入的值插入到自定义用户数组中，并隐藏输入框显示自定义按钮
      */
     handleInputConfirm() {
-      const {inputValue} = (this as any);
-      let {customtags} = (this as any);
+      const { inputValue } = (this as any);
+      let { customtags } = (this as any);
       if (inputValue && customtags.indexOf(inputValue) === -1) {
         customtags = [...customtags, inputValue];
       }
@@ -375,8 +368,8 @@ export default Vue.extend({
   render() {
     const treeContainerCls = [
       `${perfixCls}__container__left`,
-      {opening: this.defaultIsOpenDept, closing: !this.defaultIsOpenDept}
-    ]
+      { opening: this.defaultIsOpenDept, closing: !this.defaultIsOpenDept }
+    ];
 
     let inputOrtagEl = null;
     if (this.inputVisible) {
@@ -389,7 +382,7 @@ export default Vue.extend({
         onChange={this.handleInputChange}
         onBlur={this.handleInputConfirm}
         onKeydow={this.handleInputConfirm}
-      />
+      />;
     } else if (this.multiple || (this.selectedUsers.length + this.customtags.length === 0)) {
       inputOrtagEl = (<t-tag
         style="background: #fff; borderstyle: dashed"
@@ -397,7 +390,7 @@ export default Vue.extend({
       >
         <t-icon name="add" /> 自定义
       </t-tag>
-      )
+      );
     }
 
     return (
@@ -412,75 +405,73 @@ export default Vue.extend({
         class={perfixCls}
         closeOnOverlayClick={false}
       >
-        <t-loading loading={this.loading} class={`${perfixCls}__spin`}>
-          <div class={`${perfixCls}__container`}>
-            {
-              this.showTree ? 
-                <div class={treeContainerCls}>
-                  <DeptTree 
-                    showTag={true}
-                    depts={this.depts}
-                    swOrganType={this.swOrganType}
-                    multiple={this.deptMultiple}
-                    onOk={this.handleDataOk}
-                    onChange={this.handleDeptCheckChange}
-                  />
-                  <OpenClose
-                    style={`display: ${!this.loading ? "inline-block" : "none"}`}
-                    iconClass={{toLeft: "chevron-left-double", toRight: "chevron-right-double"}}
-                    defaultIsOpen={this.defaultIsOpenDept}
-                    marginLeft={{left: ["calc(50% - 25px)", "0"]}}
-                    onClick={val => { this.defaultIsOpenDept = val}}
-                  />
+        <div class={`${perfixCls}__container`}>
+          {
+            this.showTree
+              ? <div class={treeContainerCls}>
+                <DeptTree
+                  showTag={true}
+                  depts={this.depts}
+                  swOrganType={this.swOrganType}
+                  multiple={this.deptMultiple}
+                  onOk={this.handleDataOk}
+                  onChange={this.handleDeptCheckChange}
+                />
+                <OpenClose
+                  style={"display: \"inline-block\""}
+                  iconClass={{ toLeft: "chevron-left-double", toRight: "chevron-right-double" }}
+                  defaultIsOpen={this.defaultIsOpenDept}
+                  marginLeft={{ left: ["calc(50% - 25px)", "0"] }}
+                  onClick={val => { this.defaultIsOpenDept = val; }}
+                />
+              </div> : null
+          }
+          <div class={`${perfixCls}__container__center`}>
+            <UserTable
+              ref="userTable"
+              showRoleSelect={this.showTree}
+              setDefault={this.setDefault}
+              deleteId={this.deleteId}
+              initData={this.initData}
+              needDeptBeforeChoose={this.needDeptBeforeChoose}
+              params={this.userTableQueryParams}
+              multiple={this.userMutiple}
+              startSearch={this.startSearchUser}
+              onLoading={this.handleUserTableLoading}
+              onChange={this.handleSelectedUserChange}
+              {...this.$attrs}
+            />
+          </div>
+          <div class={`${perfixCls}_container__right`} style={this.rightWidth}>
+            <div class={`${perfixCls}__container__right__right-label`} readOnly >已选用户</div>
+            <div class={`${perfixCls}__container__right__right-table-container`}>
+              <t-table
+                columns={this.columns}
+                data={this.selectedUsers}
+                class={`${perfixCls}__container__right-table`}
+                pagination={null}
+                size="medium"
+                bordered
+                rowKey="userId"
+                style="margin-bottom: 10px"
+              >
+              </t-table>
+              {
+                this.allowAdd ? <div class="custom-div">
+                  {
+                    this.customtags.map((item, index) => (
+                      <t-tag key={`tag_${index}`} closable={true} onClose={() => { this.customtags = this.customtags.filter(v => v !== item); }}>
+                        {item}
+                      </t-tag>
+                    ))
+                  }
+                  {inputOrtagEl}
                 </div> : null
-            }
-            <div class={`${perfixCls}__container__center`}>
-              <UserTable
-                ref="userTable"
-                showRoleSelect={this.showTree}
-                setDefault={this.setDefault}
-                deleteId={this.deleteId}
-                initData={this.initData}
-                needDeptBeforeChoose={this.needDeptBeforeChoose}
-                params={this.userTableQueryParams}
-                multiple={this.userMutiple}
-                startSearch={this.startSearchUser}
-                onLoading={this.handleUserTableLoading}
-                onChange={this.handleSelectedUserChange}
-                {...this.$attrs}
-              />
-            </div>
-            <div class={`${perfixCls}_container__right`} style={this.rightWidth}>
-              <div class={`${perfixCls}__container__right__right-label`} readOnly >已选用户</div>
-              <div class={`${perfixCls}__container__right__right-table-container`}>
-                <t-table
-                  columns={this.columns}
-                  data={this.selectedUsers}
-                  class={`${perfixCls}__container__right-table`}
-                  pagination={null}
-                  size="medium"
-                  bordered
-                  rowKey="userId"
-                  style="margin-bottom: 10px"
-                >
-                </t-table>
-                {
-                  this.allowAdd ? <div class="custom-div">
-                    {
-                      this.customtags.map((item, index) => (
-                        <t-tag key={`tag_${index}`} closable={true} onClose={() => { this.customtags = this.customtags.filter((v) => v !== item)}}>
-                          {item}
-                        </t-tag>
-                      ))
-                    }
-                    {inputOrtagEl}
-                  </div> : null
-                }
-              </div>
+              }
             </div>
           </div>
-        </t-loading>
+        </div>
       </t-dialog>
-    )
+    );
   }
 });

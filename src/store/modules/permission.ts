@@ -1,10 +1,10 @@
-import { resetRouter, asyncRouterList } from '@/router';
-import axios from '@/utils/request';
-import Layout from '@/layouts/index.vue';
-import ParentView from '@/layouts/blank.vue';
-import router from '@/router/index';
+import { resetRouter, asyncRouterList } from "@/router";
+import axios from "@/utils/request";
+import Layout from "@/layouts/index.vue";
+import ParentView from "@/layouts/blank.vue";
+import router from "@/router/index";
 // import GenerateRouter from '@/utils/routerMapping/routerPermission'; // 路由映射文件
-import InnerLink from '@/pages/intelligentOilfield/iframePage/index.vue'
+import InnerLink from "@/pages/intelligentOilfield/iframePage/index.vue";
 import proxy from "@/config/host";
 
 const env = import.meta.env.MODE || "development";
@@ -76,9 +76,16 @@ const env = import.meta.env.MODE || "development";
 //   return children
 // }
 const state = {
-  whiteListRouters: ['/login'],
+  whiteListRouters: ["/login", "/appCallback"],
   routers: [],
-  routerLink: '', // 增加路由链接
+  routerLink: "", // 增加路由链接
+  defaultTo: null,
+  // 滚动页面请求接口是否加loading
+  scrollLoading: true,
+  // 去掉loading的白名单
+  whiteListLoading: ["/system/pageConfig/saveOrUpdatePageConfig", "/auth/checkAndRefreshToken", "/system/SysMenuAccess/add", "system/rang/queryCurrent", "/system/monitor/links", "/system/app/saveAppUserRelation"],
+  // 报错白名单[主要是报警信息接口的报错处理]
+  whiteListError: ["system/rang/queryCurrent", "/gem001b/alarmCountMonthlyStatistics", "/gem001b/queryLevelSelectOptionList", "/gem001b/getAlcSourceList", "/system/instationmail/getByTenantId"]
 };
 // 遍历后台传来的路由字符串，转换为组件对象
 function filterAsyncRouter(asyncRouterMap, type = false) {
@@ -88,52 +95,61 @@ function filterAsyncRouter(asyncRouterMap, type = false) {
     // }
 
     // 批量引入@/utils/routerMapping下所有js文件
-    const myFiles = import.meta.globEager(`../../utils/routerMapping/*.js`);
-    let modules = {}
+    const myFiles = import.meta.globEager("../../utils/routerMapping/*.js");
+    let modules = {};
     Object.keys(myFiles).forEach(el => {
-      modules={...modules, ...myFiles[el].default}
+      modules = { ...modules, ...myFiles[el].default };
     });
 
     if (route.component) {
       //   Layout ParentView 组件特殊处理
-      if (route.component === 'Layout') {
-        route.component = Layout
-      } else if (route.component === 'ParentView') {
-        route.component = ParentView
-      } 
-      else {
-        route.component = modules[route.name]
+      if (route.component === "Layout") {
+        route.component = Layout;
+      } else if (route.component === "ParentView") {
+        route.component = ParentView;
+      } else {
+        route.component = modules[route.name];
         // route.component = GenerateRouter[route.name]
       }
       // 链接走这里
-      if(route.meta.link) {
-        route.component = InnerLink
-        state.routerLink = route.meta?.link
+      if (route.meta.link) {
+        route.component = InnerLink;
+        state.routerLink = route.meta?.link;
       }
     }
-    if (route.children != null && route.children && route.children.length) {
-      route.children = filterAsyncRouter(route.children, type)
+    if (route.children !== null && route.children && route.children.length) {
+      route.children = filterAsyncRouter(route.children, type);
     } else {
-      delete route.children
-      delete route.redirect
+      delete route.children;
+      delete route.redirect;
     }
-    return true
-  })
+    return true;
+  });
 }
 
 const mutations = {
   setRouters: (state, routers) => {
-    state.routers = routers;
+    state.routers = JSON.parse(JSON.stringify(routers));
   },
   setRouterLink: (state, routerLink) => {
     state.routerLink = routerLink;
   },
+  setDefaultTo: (state, defaultTo) => {
+    state.defaultTo = defaultTo;
+  },
+  setScrollLoading: (state, scrollLoading) => {
+    state.scrollLoading = scrollLoading;
+  }
 };
 
 const getters = {
-  routers: (state) => state.routers,
-  whiteListRouters: (state) => state.whiteListRouters,
-  routerLink: (state) => state.routerLink,
+  routers: state => state.routers,
+  whiteListRouters: state => state.whiteListRouters,
+  routerLink: state => state.routerLink,
+  defaultTo: state => state.defaultTo,
+  whiteListLoading: state => state.whiteListLoading,
+  whiteListError: state => state.whiteListError,
+  scrollLoading: state => state.scrollLoading
 };
 const actions = {
   async initRoutes({ commit }) {
@@ -146,15 +162,19 @@ const actions = {
     //   // 可见部分筛选路由
     //   accessedRouters = filterPermissionsRouters(asyncRouterList, roles);
     // }
-    
-    // commit('setRouters', asyncRouterList);
-    const {appId} = proxy[env];
-    await axios
-      .get(`system/menu/getRouters${appId ? `?appId=${appId}` : ""}`).then(res => {
-        if (res.data.code === 200) {
-          const sidebarRoutes = filterAsyncRouter(res.data.data)
 
-          console.log('获取菜单路由 ===', sidebarRoutes)
+    // commit('setRouters', asyncRouterList);
+    const { appId } = proxy[env];
+    await axios
+      .get(`system/menu/getRouters${appId !== "$system$" ? `?appId=${appId}` : ""}`).then(res => {
+        if (res.data.code === 200) {
+          const data = res.data.data.map(item => {
+            if (item.path === "/" && item.children.length) {
+              item.meta = item.children[0].meta;
+            }
+            return item;
+          });
+          const sidebarRoutes = filterAsyncRouter(data);
           // single:true代表只有一级路由；分割菜单的时候需要redirect到菜单默认项
           const mapList = sidebarRoutes.map(item => ({
             ...item,
@@ -162,24 +182,21 @@ const actions = {
               ...item.meta,
               single: item.children ? (item.children[0].meta.title === item.meta.title) : false
             },
-            redirect: item.children ? `${item.path  }/${  item.children[0].path}` : 'noRedirect'
-          }))
+            redirect: item.children ? `${item.path}/${item.children[0].path}` : "noRedirect"
+          }));
+          mapList.push({ "path": "*", "redirect": "/pageInfo/error", "hidden": true });
           // 本地路由+动态路由整合
-          const concatRouters = asyncRouterList.concat(mapList)
-          commit('setRouters', concatRouters);
-          console.log('整合路由结果======', concatRouters);
-
+          const concatRouters = asyncRouterList.concat(mapList);
+          commit("setRouters", concatRouters);
           router.addRoutes(concatRouters);
         }
-      }).catch(error => {
-        console.log(error);
-      })
+      });
   },
   async restore({ commit }) {
     // remove routers
     resetRouter();
-    commit('setRouters', []);
-  },
+    commit("setRouters", []);
+  }
 };
 
 export default {
@@ -187,5 +204,5 @@ export default {
   state,
   mutations,
   actions,
-  getters,
+  getters
 };

@@ -1,6 +1,6 @@
 import Axios from '@/utils/request'
 
-const baseUrl = process.env.NODE_ENV == "production" ? "/ipm02/api" : "/ipm02/api"
+const baseUrl = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 
 export function getAllWaterInjectivity(data) {
   return Axios({
@@ -102,6 +102,19 @@ export function getWotPerfInterval(data) {
 export function getWellTrajectory(data){
   return Axios({
     url: `${baseUrl}/injectSingleWellIpm/getWellTrajectory`,
+    method: "post",
+    data
+  })
+}
+/**
+ * hwh
+ * 查询分析化验信息
+ * @param data
+ * @returns {requestPromise}
+ */
+export function getWellAssay(data){
+  return Axios({
+    url: `${baseUrl}/injectSingleWellIpm/getWellAssay`,
     method: "post",
     data
   })

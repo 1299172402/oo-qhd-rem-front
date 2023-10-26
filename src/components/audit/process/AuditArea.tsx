@@ -8,7 +8,7 @@ import { ActionMap } from "@/components/audit/process/auditComp/AuditPanel";
 const actionMap = new Map<keyof ActionMap, string>();
 acceptActionsOptions.forEach(item => {
   actionMap.set(item.value, item.text);
-})
+});
 
 export default Vue.extend({
   name: "AuditActionArea",
@@ -19,6 +19,10 @@ export default Vue.extend({
       default: () => ({})
     },
     cancelFn: {
+      type: Function,
+      default: () => ({})
+    },
+    returnFn: {
       type: Function,
       default: () => ({})
     },
@@ -38,19 +42,14 @@ export default Vue.extend({
         businessType: "",
         isView: false
       }
-    }
+    };
   },
   computed: {
     showEditDataBtn() {
       return (this.model.extendProperties || []).find(v => v.key === "editData" && v.value === "true");
-    }  
+    }
   },
   methods: {
-    handleReturn() {
-      this.$nextTick(() => {
-        this.$router.go(-1)
-      }) 
-    },
     renderAuditComponent(props: ActionAreaProps): void {
       const { isView, businessType } = props;
       this.auditProps.isView = isView;
@@ -77,12 +76,12 @@ export default Vue.extend({
         </span>
         <t-radio-group default-value="1" onChange={(value: keyof ActionMap) => this.$emit("actionChange", value)}>
           {
-            this.auditContext.acceptActions.map((val) => <t-radio value={val}>{actionMap.get(val)}</t-radio>)
+            this.auditContext.acceptActions.map(val => <t-radio value={val}>{actionMap.get(val)}</t-radio>)
           }
         </t-radio-group>
       </span>
-    )
-    const auditText = this.auditContext.isView ? "查看审批流" : null
+    );
+    const auditText = this.auditContext.isView ? "查看审批流" : null;
     const defaultFooter = [
       this.actionOutside && this.isAudit ? currentNodeEl : <div />,
       <div class="audit-action-btns">
@@ -106,7 +105,7 @@ export default Vue.extend({
           this.auditContext.isView ? <span>{ this.$slots.viewData }</span> : null
         }
         {
-          this.auditContext.isAudit ? <span>{ this.$slots.auditData && this.$slots.auditData({ item: this.model}) }</span> : null
+          this.auditContext.isAudit ? <span>{ this.$slots.auditData && this.$slots.auditData({ item: this.model }) }</span> : null
         }
       </div>
     ];
@@ -120,14 +119,14 @@ export default Vue.extend({
           dataSource={this.model}
           businessType={this.auditProps.businessType}
           isView={this.auditProps.isView}
-          successCallback={this.handleReturn}
+          successCallback={this.returnFn}
           onClose={() => {
             this.$nextTick(() => {
-              this.visible = false
-            })
+              this.visible = false;
+            });
           }}
         />
       </div>
-    )
+    );
   }
-})
+});

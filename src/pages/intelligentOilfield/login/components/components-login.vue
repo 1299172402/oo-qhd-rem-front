@@ -98,95 +98,128 @@
         </t-form>
       </div>
     </div>-->
-    <div class="headerDiv">智能油田管理系统</div>
+    <!-- TODO: Maybe change back -->
+    <!-- <div class="headerDiv">
+      智能油田管理系统
+    </div> -->
+    <div class="tabline" />
     <div class="loginInput">
-      <t-form ref="form" class="formDiv" :data="formData" :rules="FORM_RULES" label-width="0" @validate="onValidate">
-        <t-tabs 
-          :value="tabValue" 
-          @change="(newValue) => (tabValue = newValue)">
-          <t-tab-panel value="corp" label="内部人员登录" class="neibuLogin">
+      <t-form
+        ref="form"
+        class="formDiv"
+        :data="formData"
+        :rules="FORM_RULES"
+        label-width="0"
+        @validate="onValidate"
+      >
+        <t-tabs theme="card" :value="tabValue" @change="(newValue) => (tabValue = newValue)">
+          <t-tab-panel
+            value="corp"
+            label="集团用户"
+            class="neibuLogin"
+            :style="{ padding: tabValue === 'password' ? '50px 35px 20px' : '0px' }"
+          >
             <components-company-login />
           </t-tab-panel>
-          <t-tab-panel value="password" label="外部人员登录">
-            <template>
-              <t-form-item name="username" style="margin-bottom: 7%">
-                <div class="textDiv">用户名</div>
-                <div class="borderDiv">|</div>
-                <el-input
-                  class="loginInput"
-                  v-model="formData.username"
-                  placeholder="请输入用户名/手机号"
-                  style="width: 100%"
-                >
-                </el-input>
-                <div class="bottomBorderDiv"></div>
-              </t-form-item>
-
-              <t-form-item name="password" style="margin-bottom: 6%">
-                <div class="textDiv">密 码</div>
-                <div class="borderDiv">|</div>
-                <el-input
-                  class="loginInput"
-                  v-model="formData.password"
-                  placeholder="请输入密码"
-                  style="width: 100%"
-                  show-password
-                >
-                </el-input>
-                <div class="bottomBorderDiv"></div>
-              </t-form-item>
-
-              <t-form-item name="yzm">
-                <div class="textDiv">验证码</div>
-                <div class="borderDiv">|</div>
-                <el-input
-                  class="loginInput"
-                  v-model="formData.code"
-                  auto-complete="off"
-                  placeholder="验证码"
-                  style="width: 63%"
-                >
-                </el-input>
-                <div class="bottomBorderDiv" style="width: 68%"></div>
-                <div class="login-code">
-                  <img :src="codeUrl" @click="getCode" class="login-code-img" style="height: 38px; width: 100%" />
-                </div>
-              </t-form-item>
-              <div class="pwdDiv">
-                <div class="check-container remember-pwd checkBox">
-                  <t-checkbox>自动登录</t-checkbox>
-                  <t-checkbox v-model="formData.rememberMe">记住密码</t-checkbox>
-                </div>
+          <t-tab-panel value="password" label="系统用户" style="padding: 50px 35px 20px;">
+            <t-form-item name="username">
+              <div class="textDiv">
+                用户名
               </div>
-            </template>
+              <el-input
+                v-model="formData.username"
+                class="loginInput"
+                placeholder="请输入用户名/手机号"
+                style="width: 100%;"
+              />
+              <div class="bottomBorderDiv" />
+            </t-form-item>
+
+            <t-form-item name="password">
+              <div class="textDiv">
+                密码
+              </div>
+              <el-input
+                v-model="formData.password"
+                class="loginInput"
+                placeholder="请输入密码"
+                style="width: 100%;"
+                show-password
+              />
+              <div class="bottomBorderDiv" />
+            </t-form-item>
+
+            <t-form-item name="code">
+              <div class="textDiv">
+                验证码
+              </div>
+              <el-input
+                v-model="formData.code"
+                class="loginInput"
+                auto-complete="off"
+                placeholder="验证码"
+                style="width: 63%;"
+              />
+              <div class="bottomBorderDiv" style="width: 68%;" />
+              <div class="login-code">
+                <img
+                  :src="codeUrl"
+                  class="login-code-img"
+                  style="height: 38px; width: 100%;"
+                  @click="getCode"
+                >
+              </div>
+            </t-form-item>
+            <!-- TODO: Maybe change back -->
+            <!-- <div class="pwdDiv">
+              <div class="check-container remember-pwd checkBox">
+                <t-checkbox>自动登录</t-checkbox>
+                <t-checkbox v-model="formData.rememberMe">
+                  记住密码
+                </t-checkbox>
+              </div>
+            </div> -->
           </t-tab-panel>
         </t-tabs>
         <div class="loginBtn">
-          <t-form-item class="btn-container" v-if="tabValue === 'password'" style="margin-top: 5%">
-            <t-button block size="large" type="submit" @click="loginSys('登录')"> 登录 </t-button>
+          <t-form-item v-if="tabValue === 'password'" class="btn-container">
+            <t-button
+              style="height: 49px; margin: 0 32px; border-radius: 4px; font-size: 18px; width: 350px;"
+              block
+              size="large"
+              type="submit"
+              @click="loginSys('登录')"
+            >
+              登录
+            </t-button>
           </t-form-item>
         </div>
       </t-form>
     </div>
-    <div class="erweima">
+    <!-- TODO: Maybe change back -->
+    <!-- <div class="erweima">
       <div class="erweiDisplay">
-        <div class="erweimaBg"></div>
-        <div class="erweiText">陆地移动端下载</div>
+        <div class="erweimaBg" />
+        <div class="erweiText">
+          陆地移动端下载
+        </div>
       </div>
       <div class="erweiDisplay">
-        <div class="erweimaBg"></div>
-        <div class="erweiText">海上移动端下载</div>
+        <div class="erweimaBg" />
+        <div class="erweiText">
+          海上移动端下载
+        </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 // import QrcodeVue from 'qrcode.vue';
 // import { UserIcon, LockOnIcon, BrowseOffIcon, BrowseIcon } from 'tdesign-icons-vue';
-import { getCodeImg } from '@/api/intelligentOilfield/login';
-import { decrypt } from '@/utils/jsencrypt';
-import Cookies from 'js-cookie';
+import { getCodeImg } from "@/api/intelligentOilfield/login";
+import { decrypt } from "@/utils/jsencrypt";
+import Cookies from "js-cookie";
 import proxy from "@/config/host";
 import ComponentsCompanyLogin from "./components-companylogin.vue";
 
@@ -203,14 +236,14 @@ const env = import.meta.env.MODE;
 // };
 
 const FORM_RULES = {
-  phone: [{ required: true, message: '手机号必填', type: 'error' }],
-  username: [{ required: true, message: '账号必填', type: 'error' }],
-  password: [{ required: true, message: '密码必填', type: 'error' }],
-  verifyCode: [{ required: true, message: '验证码必填', type: 'error' }],
+  phone: [{ required: true, message: "手机号必填", type: "error" }],
+  username: [{ required: true, message: "账号必填", type: "error" }],
+  password: [{ required: true, message: "密码必填", type: "error" }],
+  code: [{ required: true, message: "验证码必填", type: "error" }]
 };
 /** 高级详情 */
 export default Vue.extend({
-  name: 'Login',
+  name: "Login",
   components: {
     // QrcodeVue,
     // UserIcon,
@@ -225,30 +258,31 @@ export default Vue.extend({
     return {
       tabValue: loginType[0] === "password" ? "password" : "corp",
       tabList: [
-        { name: '业务门户', isChecked: true },
-        { name: '管理后台', isChecked: false },
+        { name: "业务门户", isChecked: true },
+        { name: "管理后台", isChecked: false }
       ],
-      currentTab: '业务门户',
+      currentTab: "业务门户",
       FORM_RULES,
-      type: 'password',
+      type: "password",
       //   formData: { ...INITIAL_DATA },
       formData: {
-        phone: '',
-        username: '',
-        password: '',
-        verifyCode: '',
+        phone: "",
+        username: "",
+        password: "",
+        verifyCode: "",
         checked: false,
-        code: '',
-        uuid: '',
-        rememberMe: false, // 记住密码
+        code: "",
+        uuid: "",
+        rememberMe: false // 记住密码
       },
       showPsw: false,
       countDown: 0,
       intervalTimer: null,
-      codeUrl: '',
+      codeUrl: "",
       // 验证码开关
       captchaOnOff: true,
-      loginType: '集团登录',
+      loginType: "集团登录",
+      currentTheme: "light"
     };
   },
   created() {
@@ -260,14 +294,14 @@ export default Vue.extend({
   },
   methods: {
     switchTab(item) {
-      this.tabList.forEach((el) => {
+      this.tabList.forEach(el => {
         el.isChecked = false;
       });
       item.isChecked = true;
       this.currentTab = item.name;
     },
     async onValidate({ validateResult }) {
-      if (validateResult) {
+      if (validateResult && typeof validateResult === "boolean") {
         await this.onSubmit(this.loginType);
       }
     },
@@ -275,8 +309,8 @@ export default Vue.extend({
       this.loginType = type;
     },
     getCode() {
-      getCodeImg().then((res) => {
-        this.captchaOnOff = res.data.captchaOnOff === undefined ? true : res.data.captchaOnOff;
+      getCodeImg().then(res => {
+        this.captchaOnOff = !res.data.captchaOnOff ? true : res.data.captchaOnOff;
         if (this.captchaOnOff) {
           this.codeUrl = `data:image/gif;base64,${res.data.img}`;
           this.formData.uuid = res.data.uuid;
@@ -297,13 +331,13 @@ export default Vue.extend({
       //   });
     },
     getCookie() {
-      const username = Cookies.get('username');
-      const password = Cookies.get('password');
-      const rememberMe = Cookies.get('rememberMe');
+      const username = Cookies.get("username");
+      const password = Cookies.get("password");
+      const rememberMe = Cookies.get("rememberMe");
       this.formData = {
-        username: username === undefined ? this.formData.username : username,
-        password: password === undefined ? this.formData.password : decrypt(password),
-        rememberMe: rememberMe === undefined ? false : Boolean(rememberMe),
+        username: !username ? this.formData.username : username,
+        password: !password ? this.formData.password : decrypt(password),
+        rememberMe: !rememberMe ? false : Boolean(rememberMe)
       };
     },
     switchType(val) {
@@ -312,20 +346,16 @@ export default Vue.extend({
     },
     async onSubmit(type) {
       //   if (validateResult === true) {
-    //   await this.$store.dispatch('user/login', this.formData);
-      this.checkUrl()
-      if(type === '登录') {
+      //   await this.$store.dispatch('user/login', this.formData);
+      this.checkUrl();
+      if (type === "登录") {
         this.$store
-          .dispatch('user/login', this.formData)
-          .then(() => {
+          .dispatch("user/login", this.formData)
+          .catch(() => {
             this.getCode();
-
-          }).catch((err) => {
-            this.getCode();
-            console.log(err);
           });
       }
-      
+
       //   this.$store
       //     .dispatch('user/login', this.formData)
       //     .then(() => {
@@ -351,7 +381,7 @@ export default Vue.extend({
       //             console.log('后台，有门户+后台的权限');
       //             this.$router.push('/homePage/index');
       //           }
-              
+
       //           this.$store.dispatch('permission/initRoutes', this.$store.getters['user/roles']);
       //         })
       //         .catch((err) => {
@@ -363,7 +393,6 @@ export default Vue.extend({
       //       this.getCode();
       //       console.log(err);
       //     });
-  
 
       //   if (this.currentTab === '业务门户') {
       //     sessionStorage.setItem('isGroupLogin', 'true');
@@ -379,13 +408,8 @@ export default Vue.extend({
      * 检查url是否包含srid参数，如果有，将其作为登录接口参数
      */
     checkUrl() {
-      const urlStr = window.location.hash.split("?")[1];
-      if (urlStr) {
-        const urlSearchParams = new URLSearchParams(urlStr);
-        const result = Object.fromEntries(urlSearchParams.entries());
-        if (result.srid) {
-          this.$set(this.formData, "srid", result.srid);
-        }
+      if (this.$route.query && this.$route.query.srid) {
+        this.$set(this.formData, "srid", this.$route.query.srid);
       }
     },
     handleCounter() {
@@ -398,8 +422,8 @@ export default Vue.extend({
           this.countDown = 0;
         }
       }, 1000);
-    },
-  },
+    }
+  }
 });
 </script>
 <style scoped lang="scss">
@@ -449,19 +473,26 @@ export default Vue.extend({
 // }
 .loginDiv {
   width: 100%;
-  height: 100%;
-  padding: 5px 40px;
-  background: white;
-  border-radius: 4px;
+  height: auto;
   display: flex;
   flex-direction: column;
+  position: relative;
+
+  .tabline {
+    width: 100%;
+    height: 0px;
+    background: #d8d8d8;
+    position: absolute;
+    left: 0;
+    top: 60px;
+  }
 
   .headerDiv {
     height: 15%;
     font-size: 22px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 700;
-    color: #0061a7;
+    color: #0075e9;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -472,17 +503,34 @@ export default Vue.extend({
       height: 100%;
 
       .textDiv {
-        font-size: 16px;
-        font-family: PingFangSC-Regular, PingFang SC;
+        font-size: 14px;
+        font-family: "STHeiti", "Microsoft YaHei", "宋体", "arial";
         font-weight: 400;
-        color: #303133;
-        margin-right: 10px;
-        width: 70px;
+        color: #566570;
+        margin-right: 0px;
+        width: 4em;
+        padding-left: 9px;
+        text-align: justify;
+        text-align-last: justify;
+        text-justify: distribute-all-lines;
+        position: relative;
+        &::after  {
+          content: "|";
+          display: inline-block;
+          position: absolute;
+          right: -1em;
+          top: -0.5px;
+        }
+      }
+
+      .loginInput.el-input {
+        flex: 1;
+        margin-left: 2em;
       }
       .borderDiv {
         width: 1px;
         height: 20px;
-        color: #aeaeae;
+        color: #566570;
         margin-right: 10px;
       }
       .bottomBorderDiv {
@@ -493,6 +541,9 @@ export default Vue.extend({
       }
       .login-code {
         width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
       }
       .pwdDiv {
         height: 8%;
@@ -501,10 +552,6 @@ export default Vue.extend({
           display: flex;
           justify-content: space-between;
         }
-      }
-      .loginBtn {
-        height: 15%;
-        margin-top: 7%;
       }
     }
   }
@@ -521,7 +568,7 @@ export default Vue.extend({
     align-items: center;
   }
   .erweimaBg {
-    background-image: url('@/assets/qr-code.png');
+    background-image: url("@/assets/qr-code.png");
     width: 64px;
     height: 64px;
     margin-bottom: 2%;
@@ -532,42 +579,104 @@ export default Vue.extend({
     font-weight: 400;
     color: #909399;
   }
+
+  .t-tabs {
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.9);
+    border-radius: 4px;
+  }
+
   .t-tabs__nav-wrap {
     flex: 1;
     padding-bottom: 20px;
-    border-bottom: 1px solid #D8D8D8;
+    border-bottom: 1px solid #d8d8d8;
   }
+
+  ::v-deep .el-input__inner {
+    padding: 2px 8px;
+  }
+
   ::v-deep .t-tabs__header {
-    margin-bottom: 18px;
+    background: #0075e9;
+    color: #fff;
   }
-  ::v-deep .t-is-smooth {
-    transform: translate(20px, 0px) !important;
-  }
+
   ::v-deep .t-tabs__nav-item-text-wrapper {
-    font-size: 17px;
+    font-size: 16px;
+  }
+
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item:not(:first-of-type) {
+    border-left: 0px;
+  }
+
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item {
+    border-bottom: 0px;
+    padding: 0 12px;
+  }
+
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item:last-of-type {
+    border-right: 0px;
+  }
+
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item:hover {
+    color: unset !important;
+    background-color: unset !important;
+  }
+  ::v-deep .t-tabs__nav-item {
+    height: 60px !important;
+    line-height: 60px !important;
+    color: unset;
+  }
+
+  ::v-deep .t-tabs__nav-item-wrapper {
+    background-color: #fff !important;
+  }
+
+  ::v-deep .t-tabs__bar {
+    color: #0060a6 !important;
+    background: #0060a6 !important;
+  }
+  ::v-deep .t-tabs__nav-container.t-is-top::after {
+    content: none;
+  }
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item.t-is-active:hover {
+    background: #fff !important;
+  }
+
+  ::v-deep .t-tabs__nav--card.t-tabs__nav-item.t-is-active {
+    color: #0075e9 !important;
+    background: #fff !important;
+  }
+
+  ::v-deep .t-button {
+    background: #0075e9 !important;
   }
 }
 </style>
 <style scoped>
 .loginInput >>> .el-input__inner {
   border: 1px solid transparent !important;
-  color: var(--onlyLightBlueColor) !important;
+  color: #696969 !important;
 }
+
 .loginInput >>> .t-checkbox__input {
-  border: 1px solid #0061a7 !important;
+  border: 1px solid #0075e9 !important;
   background-color: #fff;
 }
+
 .loginInput >>> .t-checkbox.t-is-checked .t-checkbox__input {
-  background-color: #0061a7 !important;
+  background-color: #0075e9 !important;
 }
+
 .loginInput >>> .t-checkbox__label {
   font-size: 12px;
-  font-family: PingFangSC-Regular, PingFang SC;
+  font-family: PingFangSC-Regular, "PingFang SC";
   font-weight: 400;
   color: #606266;
 }
+
 .loginBtn >>> .t-button {
-  background: #0061a7;
+  background: #0075e9;
   border-radius: 6px;
 }
 </style>

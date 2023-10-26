@@ -1,0 +1,32 @@
+.btn_pointer{
+    position:relative;
+    overflow: visible;
+}
+.btn_pointer .l-btn-left{
+    z-index:1;
+    overflow: visible;
+}
+.btn_pointer .l-btn-text{
+    padding:0;
+    white-space:nowrap;
+    word-break:keep-all;
+}
+.btn_pointer .l-btn-text>i{
+    display: block;
+    width:12px;
+    height:6px;
+    position:absolute;
+    bottom:-6px;
+    left:50%;
+    margin-left:-6px;
+    z-index: 100000;
+}
+.btn_pointer.selected .l-btn-text>i{
+    background: url(images/btn_pointer_icon.png) no-repeat 0 0;
+}
+.btn_pointer.selected{
+    background: #ff8800;
+}
+.btn_pointer.selected .l-btn-text{
+    color:#fff;
+}

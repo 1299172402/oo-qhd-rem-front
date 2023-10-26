@@ -1,13 +1,18 @@
-@import './variables.less';
-@import './font-family.less';
+/* stylelint-disable */
+@import "./variables.less";
+@import "./font-family.less";
 
 // layout rewrite
-
 .t-layout__sider {
   width: fit-content;
+  background: linear-gradient(180deg, rgba(0,79,136,0.56) 0%, rgba(0,61,105,0.57) 22%, rgba(1,42,71,0.47) 61%, rgba(0,72,122,0.33) 100%) linear-gradient(270deg, #51BEFF 0%, rgba(0,159,255,0.45) 1%, rgba(0,132,211,0.41) 4%, rgba(0,0,0,0) 100%) !important;
+  -webkit-transition: all 0s;
+   transition: all 0s;
 }
+
 .t-layout__header {
     height: auto;
+    background: linear-gradient(360deg, #51BEFF 0%, rgba(0,159,255,0.45) 1%, rgba(0,132,211,0.41) 4%, rgba(0,126,201,0.4) 9%, rgba(0,0,0,0) 100%);
   }
   
 .t-layout.t-layout--with-sider {
@@ -16,32 +21,35 @@
     min-width: 760px;
   }
 }
-
 .t-layout.t-layout--with-sider {
   > .t-layout__content {
     flex: 1;
     min-width: 760px;
   }
 }
-
 .t-menu--dark .t-menu__operations .t-icon {
   color: rgba(255, 255, 255, 0.55);
+
   &:hover {
     cursor: pointer;
   }
 }
+
 .t-default-menu.t-menu--dark {
   background: var(--right-light);
 }
 // 左侧菜单栏样式
 .t-default-menu .t-menu__item {
-    padding: 0 10px 0 14px;
-    height: 39px;
-    line-height: 39px;
+  padding: 0 10px 0 14px;
+  height: 39px;
+  line-height: 39px;
+  transition: background-color 0s cubic-bezier(0.38, 0, 0.24, 1), padding 0s cubic-bezier(0.38, 0, 0.24, 1);
 }
+
 .t-default-menu:not(.t-menu--dark) .t-menu__item.t-is-active:not(.t-is-opened) {
   background-color: var(--td-brand-color-1);
   color: var(--td-brand-color);
+
   .t-icon {
     color: var(--td-brand-color);
   }
@@ -75,7 +83,7 @@
   }
 
   &-layout {
-    height: calc(100vh - 64px);
+    height: calc(100vh - 60px);
     overflow-y: scroll;
 
     &-tabs-nav {
@@ -128,10 +136,10 @@
     min-height: 100%;
 
     &-mix {
-      top: 64px;
+      top: 60px;
 
       &-fixed {
-        top: 64px;
+        top: 60px;
         z-index: 0;
       }
     }
@@ -150,6 +158,7 @@
       align-items: center;
       justify-content: center;
       width: 100%;
+
       &:hover {
         cursor: pointer;
       }
@@ -204,10 +213,20 @@
   color: var(--td-text-color-primary);
   opacity: 0.4;
 }
+
 .t-layout__content{
   height: calc(100% - 142px);
-//   background: url(@/assets/bodybg.png) repeat left top !important;
+  //   background: url(@/assets/bodybg.png) repeat left top !important;
 }
+
 .tdesign-starter-content-layout {
-    padding: var(--paddingNum);
+  padding: var(--padding-num);
 }
+
+.searchHeader .buttonArea{
+  margin-left: 20px;
+}
+.page-panel-height{
+  height: calc(100% - 139px)!important;
+}
+/* stylelint-enable */

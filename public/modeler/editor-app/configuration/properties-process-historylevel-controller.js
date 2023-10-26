@@ -13,12 +13,12 @@
 
 angular.module('flowableModeler').controller('FlowableProcessHistoryLevelCtrl', [ '$scope', function($scope) {
 
-  if ($scope.property.value == undefined && $scope.property.value == null)
-  {
+    if ($scope.property.value == undefined && $scope.property.value == null)
+    {
     	$scope.property.value = 'None';
-  }
+    }
         
-  $scope.historyLevelChanged = function() {
+    $scope.historyLevelChanged = function() {
     	$scope.updatePropertyInModel($scope.property);
-  };
+    };
 }]);

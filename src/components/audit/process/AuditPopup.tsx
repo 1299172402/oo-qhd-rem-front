@@ -2,24 +2,24 @@ import Vue from "vue";
 import AuditPanel from "@/components/audit/process/auditComp/AuditPanel";
 import AuditMapPanel from "@/components/audit/process/auditComp/AuditMapPanel";
 import AuditFlowPanel from "@/components/audit/process/auditComp/AuditFlowPanel";
-import "./styles/AuditPopupStyle.less"
-import { 
+import "./styles/AuditPopupStyle.less";
+import {
   diagram,
   commentList
 } from "@/components/audit/process/api/audit";
 import { actionApi } from "@/components/audit/process/auditSave/ActionApi";
 import ActionType from "@/components/audit/process/auditSave/ActionType";
-import { getValidateFormResult } from "@/components/audit/utils";
 import { postAction } from "@/api/common/manage";
+import { differentTypeRequire } from "@/components/audit/process/constant/rules";
 
 export default Vue.extend({
   name: "AuditPopup",
-  inject: ["auditContext"],
   components: {
     AuditPanel,
     AuditMapPanel,
     AuditFlowPanel
   },
+  inject: ["auditContext"],
   props: {
     dataSource: {
       type: Object,
@@ -61,7 +61,6 @@ export default Vue.extend({
       showModal: false,
       needSignature: false, // variable which determines whether to open the signature process
       visible: false,
-      loading: false,
       info: {},
       diagram: "",
       commentList: [],
@@ -104,7 +103,6 @@ export default Vue.extend({
     async initData() {
       // open
       this.visible = true;
-      this.loading = true;
       // load base data
       await this.loadComment();
       await this.loadDiagram();
@@ -121,11 +119,9 @@ export default Vue.extend({
         this.info.acceptActions.push(this.defaultAction);
       }
       if (!this.isView) {
-        const {action} = this.$refs.auditInfo.auditDataReduction;
+        const { action } = this.$refs.auditInfo.auditDataReduction;
         await this.getDocs(action);
       }
-      // close the loading
-      this.loading = false;
     },
     signatureMoalClose() {
       this.closeModel();
@@ -142,7 +138,7 @@ export default Vue.extend({
         item.attachmentsArray = (item.attachments && item.attachments.split("|")) || [];
         item.up = false;
       });
-      this.commentList = list || [];
+      this.commentList = list.reverse() || [];
     },
     async nextNodeInfo() {
       const { data } = await actionApi(ActionType.Model, this.businessType, this.dataSource) as any;
@@ -151,20 +147,21 @@ export default Vue.extend({
     async submit() {
       const _this = this as any;
       let interrupt = false;
-      _this.loading = true;
-      if (await getValidateFormResult(this.$refs.auditInfo, "form") !== true) {
+      const { dataReturned, action } = _this.$refs.auditInfo.auditDataReduction;
+      const fields = differentTypeRequire[action];
+      // 不同的操作进行不同的校验
+      const validateRes = fields ? await this.$refs.auditInfo.$refs.form.validate({ fields }) : await this.$refs.auditInfo.$refs.form.validate();
+      if (validateRes !== true) {
         _this.$message.warning("请将必填项填写完整");
-        _this.loading = false;
         return;
       }
-      const { dataReturned, action } = _this.$refs.auditInfo.auditDataReduction;
+
       const _data = { ..._this.dataSource, procInstId: this.auditContext._processInstanceId };
       const data = Object.assign(_data, dataReturned);
 
       await this.saveData(data)
         .catch(() => {
           interrupt = true;
-          this.loading = false;
         });
       // if (interrupt) return;
       // await this.getDocs(action).then((v) => {
@@ -181,10 +178,11 @@ export default Vue.extend({
          */
     closeModel() {
       this.visible = false;
+      this.$refs.auditInfo.$refs.form.reset();
       this.$emit("close", false);
       this.$nextTick(() => {
         this.tabIndex = "1";
-      })
+      });
     },
     /**
          * part logic of top submit method
@@ -203,13 +201,8 @@ export default Vue.extend({
           .catch(() => {
             this.errorCallback();
             this.closeModel();
-          })
-          .finally(() => {
-            this.loading = false;
           });
-      } 
-      this.loading = false;
-            
+      }
     },
     // ------------------------------------------signature------------------------------------------
     /**
@@ -219,9 +212,8 @@ export default Vue.extend({
     async saveData(data) {
       if (this.dataSource.extendProperties.find(v => v.key === "signatureKey") && !this.signed) {
         return actionApi(ActionType.SAVEDATA, this.businessType, data);
-      } 
+      }
       // 没有签章key，不需要预存saveData
-            
     },
     /**
          * prepare docs and calculate the needSignature
@@ -250,15 +242,12 @@ export default Vue.extend({
           if (process.env.NODE_ENV === "production" && window.location.host === "114.115.233.54:20042") {
             // 114测试环境下跳过盖章
             this.needSignature = false;
-                        
           } else if (this.fileList.length !== 0 && (typeof this.fileList.find(v => v.status === "0") !== "undefined")) {
             this.needSignature = true;
             // 找到签章key，需要进行签章，调整弹窗前置条件为true
-                        
           } else {
             this.needSignature = false;
             // 某些特殊情况，会进入这个判断分支，但返回为空数组，仍为后端设计的不期望进行签章的情况
-                        
           }
         }).then(() => {
           if (action === "completeTask" && this.needSignature && !this.signed) {
@@ -287,16 +276,14 @@ export default Vue.extend({
             actionApi(ActionType.GETDOC, this.businessType, params).then(v => {
               this.fileList = v.result;
               // Pretreatment
-              this.fileList = this.fileList.sort((a, b) => a.status > b.status );
+              this.fileList = this.fileList.sort((a, b) => a.status > b.status);
               // user can not do a signature ,when fileList is an empty array or array without a single unsigned file
               if (this.fileList.length !== 0 && (typeof this.fileList.find(v => v.status === "0") !== "undefined")) {
                 this.needSignature = true;
                 // 找到签章key，需要进行签章，调整弹窗前置条件为true
-                                
               } else {
                 this.needSignature = false;
                 // 某些特殊情况，会进入这个判断分支，但返回为空数组，仍为后端设计的不期望进行签章的情况
-                                
               }
             });
           });
@@ -309,7 +296,7 @@ export default Vue.extend({
          */
     getDocList(params) {
       return postAction(this.prepareUrl, params)
-        .then(res => res.result);
+        .then(res => res.data);
     },
     /**
          * callBack function of signatureModal close
@@ -323,8 +310,6 @@ export default Vue.extend({
       this.signatureVisible = false;
       // record the signature status
       this.needSignature = false;
-      // finishing the loading status
-      this.loading = false;
     },
     /**
          * complete
@@ -336,43 +321,39 @@ export default Vue.extend({
   },
   render() {
     const AuditContent = (
-      <t-tabs value={this.tabIndex} class={"audit-popup-tabs"} onChange={val => { this.tabIndex = val}}>
+      <t-tabs class="audit-content" value={this.tabIndex} onChange={val => { this.tabIndex = val; }}>
         <t-tab-panel value="1" label="审批" destroyOnHide={false}>
           <AuditPanel ref={"auditInfo"} dataSource={this.info}/>
         </t-tab-panel>
-        <t-tab-panel value="2" label="审批流信息">
-          <AuditFlowPanel dataSource={this.commentList} />
-        </t-tab-panel>
-        <t-tab-panel value="3" label="审批地图">
-          <AuditMapPanel procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
+        <t-tab-panel style={"display: flex"} value="2" label="审批信息">
+          <AuditFlowPanel style={"flex: 1"} dataSource={this.commentList} />
+          <t-divider style={"min-height: 568px"} layout="vertical" />
+          <AuditMapPanel style={"flex: 2; min-height: 568px"} procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
         </t-tab-panel>
       </t-tabs>
     );
-    const ViewContent =  (
-      <t-tabs value={this.tabIndex} className={"audit-popup-tabs"} onChange={val => { this.tabIndex = val }}>
-        <t-tab-panel value="1" label="审批流信息">
-          <AuditFlowPanel dataSource={this.commentList} />
-        </t-tab-panel>
-        <t-tab-panel value="2" label="审批地图">
-          <AuditMapPanel procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
+    const ViewContent = (
+      <t-tabs class="audit-content" value={this.tabIndex} onChange={val => { this.tabIndex = val; }}>
+        <t-tab-panel style={"display: flex"} value="1" label="审批信息">
+          <AuditFlowPanel style={"flex: 1"} dataSource={this.commentList} />
+          <t-divider style={"min-height: 568px"} layout="vertical" />
+          <AuditMapPanel style={"flex: 2; min-height: 568px"} procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
         </t-tab-panel>
       </t-tabs>
-    )
+    );
     return (
       <t-dialog
-        width={"70%"}
+        width={"80%"}
         placement={"center"}
         visible={this.visible}
         onClose={this.closeModel}
         onConfirm={this.submit}
         footer={!this.isView}
       >
-        <t-loading loading={this.loading}>
-          <div style={"min-height: 600px"}>
-            { this.isView ? ViewContent : AuditContent }
-          </div>
-        </t-loading>
+        <div style={"min-height: 600px"}>
+          { this.isView ? ViewContent : AuditContent }
+        </div>
       </t-dialog>
-    )
+    );
   }
-})
+});

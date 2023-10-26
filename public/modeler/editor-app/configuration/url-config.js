@@ -14,23 +14,23 @@ var FLOWABLE = FLOWABLE || {};
 
 FLOWABLE.URL = {
 
-  getModel(modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/editor/json?version=${  Date.now()}`;
-  },
+    getModel: function(modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/editor/json?version=' + Date.now();
+    },
 
-  getStencilSet() {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/stencil-sets/editor-new?version=${  Date.now()}`;
-  },
+    getStencilSet: function() {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/stencil-sets/editor-new?version=' + Date.now();
+    },
     
-  getCmmnStencilSet() {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/stencil-sets/cmmneditor?version=${  Date.now()}`;
-  },
+    getCmmnStencilSet: function() {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/stencil-sets/cmmneditor?version=' + Date.now();
+    },
 
-  putModel(modelId) {
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/models/${  modelId  }/editor/json`;
-  },
+    putModel: function(modelId) {
+        return FLOWABLE.CONFIG.contextRoot + '/app/rest/models/' + modelId + '/editor/json';
+    },
     
-  validateModel(){
-    return `${FLOWABLE.CONFIG.contextRoot  }/app/rest/model/validate`;
-  }
+    validateModel: function(){
+		return FLOWABLE.CONFIG.contextRoot + '/app/rest/model/validate';
+    }
 };

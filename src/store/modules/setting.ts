@@ -1,13 +1,13 @@
 /* eslint-disable no-param-reassign */
-import STYLE_CONFIG from '@/config/style';
-import { COLOR_TOKEN, ColorSeries, ColorToken, LIGHT_CHART_COLORS, DARK_CHART_COLORS } from '@/config/color';
+import STYLE_CONFIG from "@/config/style";
+import { COLOR_TOKEN, ColorSeries, ColorToken, LIGHT_CHART_COLORS, DARK_CHART_COLORS } from "@/config/color";
 
 // 定义的state初始值
 const state = {
   ...STYLE_CONFIG,
   showSettingPanel: false,
   colorList: COLOR_TOKEN,
-  chartColors: LIGHT_CHART_COLORS,
+  chartColors: LIGHT_CHART_COLORS
 };
 
 type IInitStateType = typeof state;
@@ -34,6 +34,7 @@ const mutations = {
     state.backgroundTheme = payload.backgroundTheme;
     state.brandTheme = payload.brandTheme;
     state.isUseTabsRouter = payload.isUseTabsRouter;
+    state.isUseMenu = payload.isUseMenu;
   },
   toggleSidebarCompact(state: IStateType) {
     state.isSidebarCompact = !state.isSidebarCompact;
@@ -52,55 +53,55 @@ const mutations = {
   },
   changeChartColor(state: IStateType, payload: ColorToken) {
     state.chartColors = { ...payload };
-  },
+  }
 };
 
 const getters = {
   showHeader: (state: IStateType) => state.showHeader,
-  showSidebar: (state: IStateType) => state.layout !== 'top',
-  showSidebarLogo: (state: IStateType) => state.layout === 'side',
-  showHeaderLogo: (state: IStateType) => state.layout !== 'side',
+  showSidebar: (state: IStateType) => state.layout !== "top",
+  showSidebarLogo: (state: IStateType) => state.layout === "side",
+  showHeaderLogo: (state: IStateType) => state.layout !== "side",
   showFooter: (state: IStateType) => state.showFooter,
   isUseTabsRouter: (state: IStateType) => state.isUseTabsRouter,
   mode: (state: IStateType) => {
-    if (state.mode === 'auto') {
-      const media = window.matchMedia('(prefers-color-scheme:dark)');
+    if (state.mode === "auto") {
+      const media = window.matchMedia("(prefers-color-scheme:dark)");
       if (media.matches) {
-        return 'dark';
+        return "dark";
       }
-      return 'light';
+      return "light";
     }
     return state.mode;
-  },
+  }
 };
 
 const actions = {
   changeTheme({ commit, dispatch }, payload: IStateType) {
-    dispatch('changeMode', payload);
-    dispatch('changeBrandTheme', payload);
-    commit('update', payload);
+    dispatch("changeMode", payload);
+    dispatch("changeBrandTheme", payload);
+    commit("update", payload);
   },
   changeMode({ commit }, payload: IStateType) {
     let theme = payload.mode;
-    if (payload.mode === 'auto') {
-      const media = window.matchMedia('(prefers-color-scheme:dark)');
+    if (payload.mode === "auto") {
+      const media = window.matchMedia("(prefers-color-scheme:dark)");
       if (media.matches) {
-        theme = 'dark';
+        theme = "dark";
       } else {
-        theme = 'light';
+        theme = "light";
       }
     }
-    const isDarkMode = theme === 'dark';
+    const isDarkMode = theme === "dark";
 
-    document.documentElement.setAttribute('theme-mode', isDarkMode ? 'dark' : '');
+    document.documentElement.setAttribute("theme-mode", isDarkMode ? "dark" : "");
 
-    commit('changeChartColor', isDarkMode ? DARK_CHART_COLORS : LIGHT_CHART_COLORS);
+    commit("changeChartColor", isDarkMode ? DARK_CHART_COLORS : LIGHT_CHART_COLORS);
   },
   changeBrandTheme(_: { state: IStateType }, payload: IStateType) {
     const { brandTheme } = payload;
 
-    document.documentElement.setAttribute('theme-color', brandTheme);
-  },
+    document.documentElement.setAttribute("theme-color", brandTheme);
+  }
 };
 
 export default {
@@ -108,5 +109,5 @@ export default {
   state,
   mutations,
   actions,
-  getters,
+  getters
 };

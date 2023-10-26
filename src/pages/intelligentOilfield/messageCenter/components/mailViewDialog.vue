@@ -29,7 +29,7 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button icon="el-icon-close" class="cancel-btn" @click="close">
+      <el-button class="commonBtn" @click="close">
         取消
       </el-button>
     </div>
@@ -57,9 +57,9 @@ export default {
     /** 数据回显 */
     bindModel(messageId) {
       if (messageId) {
-        getMailData(messageId).then((res) => {
-          if (res.status === 200) {
-            this.form = res.data;
+        getMailData(messageId).then(res => {
+          if (res) {
+            this.form = res;
           }
         });
       }

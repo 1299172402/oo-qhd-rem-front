@@ -1,0 +1,580 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="msbAddPoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbaddpoint.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbAreaSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbareaselect.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbChatRoomButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbchatroombutton.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbClipLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbclipline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbColorButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbcolorbutton.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbCurvePLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbcurvepline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbCutPoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbcutpoint.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdelete.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDeleteManyPoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdeletemanypoint.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDeletePoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdeletepoint.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDeleteSplitPoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdeletesplitpoint.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawArc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawarc.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawarrow.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawBorder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawborder.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawBreakDotLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawbreakdotlink.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawCircle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawcircle.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawCnoLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawcnoline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawCross" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawcross.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawCurveSign" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawcurvesign.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawCurveTFill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawcurvetfill.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawDot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawdot.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawEllipse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawellipse.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawFillArea" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawfillarea.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawFoulLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawfoulline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawFramSectionLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawframsectionline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawFramSectionPLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawframsectionpline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawIsolineFill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawisolinefill.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawLegend" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawlegend.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawLgColor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawlgcolor.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawLgLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawlgline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawlink.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawLink1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawlink1.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawLinkT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawlinkt.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawLinkWell" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawlinkwell.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawOilLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawoilline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPBreakline" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawpbreakline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPentacle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawpentacle.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawpic.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPIE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawpie.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPinchout" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawpinchout.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawpline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPolyBezier" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawpolybezier.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPolygon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawpolygon.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawRect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawrect.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawRectSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawrectselect.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawScale" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawscale.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawSText" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawstext.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawtable.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawText" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawtext.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawTriangle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawtriangle.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawTubeRect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawtuberect.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawUnConformable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawunconformable.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawWell" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawwell.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawWellSymbol" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawwellsymbol.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbHandObj" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbhandobj.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbHCross" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbhcross.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbLinkLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msblinkline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbMapMove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbmapmove.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbMove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbmove.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbObjMove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbobjmove.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbRectSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbrectselect.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbRectSelectLog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbrectselectlog.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionBreakLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsectionbreakline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsectionlink.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionWellAbsentSeg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsectionwellabsentseg.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionWellLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsectionwelllink.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbselect.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizebottom.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeBottomLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizebottomleft.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeBottomRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizebottomright.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizeleft.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeLr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizelr.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizeright.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeTb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizetb.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizetop.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeTopLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizetopleft.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeTopRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizetopright.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSplitLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsplitline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbZoomIn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbzoomin.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbZoomOut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbzoomout.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionTubeCross" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>SectionTubeCross.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawLineArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDrawLineArrow.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawSeismicLineX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawseismiclinex.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawSeismicLineY" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawseismicliney.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawSeismicPline" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawseismicpline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawBreakLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawbreakline.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionSeismicLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsectionseismicline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawOutLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDrawOutLine.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPicture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDrawPicture.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbCurveCross" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbcurvecross.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbCurveDecrease" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbcurvedecrease.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbCurveSecond" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbcurvesecond.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawSedFill" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDrawSedFill.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawWellLinkLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDrawWellLinkLine.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbWellPos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbWellPos.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbAddWellGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbAddWellGrid.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbAddWellLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbAddWellLine.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDragWell" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDragWell.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDeleteWellGrid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDeleteWellGrid.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSelectTracePoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbSelectTracePoint.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbCurveRightAngle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbcurverightangle.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionStartification" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbSectionStartification.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionCurveJoin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbSectionCurveJoin.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbCurveExplain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbcurveexplain.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionWellDot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsectionwelldot.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsize.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeMoveDot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizemovedot.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbGetDistance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbGetDistance.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawIsoLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDrawIsoLine.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbConcentric" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbconcentric.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionNoConform" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbSectionNoConform.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbVectorSelectDot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbVectorSelectDot.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbAddNewWellGroup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbAddNewWellGroup.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbHazopLinkLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbhazoplinkline.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawWellABTrace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDrawWellABTrace.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbJoinLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbJoinLine.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbChartDecrease" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbchartdecrease.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbChartExplain" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbchartexplain.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbChartLineFitting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbchartlinefitting.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbChartTubeCross" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbcharttubecross.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbChartTubeTextHint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbcharttubetexthint.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbChartArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbchartarrow.cur;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawProjectionLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDrawProjectionLine.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbPLineDistance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbplinedistance.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionSeismicDrawDWell" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsectionseismicdrawdwell.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbZoomInAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbzoominall.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbZoomOutAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbzoomoutall.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDragFrameWell" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdragframewell.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawMarkLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawmarkline.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPenLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawpenline.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawBrushLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawbrushline.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawBreakPLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawbreakpline.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDeletePointEraser" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdeletepointeraser.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbMapSelect" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbMapSelect.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawSingleLineArrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawsinglelinearrow.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawFaicesLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawfaicesline.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawDrawLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawdrawlink.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSectionDrawLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsectiondrawlink.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbHSCLinkLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbhsclinkline.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbFrameConcentric" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbframeconcentric.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawDiamond" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbDrawDiamond.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbModelLinkLine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbmodellinkline.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbRotate3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbrotate3d.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbZoomIn3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbzoomin3d.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbZoomOut3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbzoomout3d.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawPLine3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawpline3d.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbHandObj3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbhandobj3d.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSize3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsize3d.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbSizeMoveDot3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbsizemovedot3d.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawRect3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawrect3d.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbDrawIncisePLine3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbdrawincisepline3d.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="msbRectZoomOut3D" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>msbrectzoomout3d.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

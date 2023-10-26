@@ -1,0 +1,33 @@
+{{#if moduleName}}
+import request from "@/api/{{moduleName}}";
+{{else}}
+{{!-- import request from "@/utils/httpd"; --}}
+{{!-- import Axios from "@/axios"; --}}
+import request from '@/utils/request'
+{{/if}}
+{{!-- baseUrl --}}
+{{!-- {{#if baseUrl}} --}}
+const baseUrl = process.env.NODE_ENV == "production" ? "{{baseUrl}}" : "{{devBaseUrl}}"
+{{!-- {{/if}} --}}
+
+{{#each data}}
+{{!-- 安全模块用这个 --}}
+export function {{function}}({{#if (isPost method)}}data{{else}}{{#if args}}{ {{#each args}}{{#if @first}}{{name}}{{else}}, {{name}}{{/if}}{{/each}} } = {}{{/if}}{{/if}}) {
+{{!-- 其他模块用这个 --}}
+{{!-- export function {{function}}({{#if args}}{{#each args}}{{#if @first}}{{name}}{{else}}, {{name}}{{/if}}{{/each}}{{/if}}) { --}}
+{{!-- return request({ --}}
+  return request({
+    url: `${baseUrl}{{{url}}}{{#if (isPost method)}}{{else}}{{#if queryParams}}?{{#each queryParams}}{{#if @first}}{{name}}=${ {{name}} || "" }{{else}}&{{name}}=${ {{name}} || "" }{{/if}}{{/each}}{{/if}}{{/if}}`,
+    method: "{{method}}",
+    {{#if (isPost method)}}
+    data
+    {{else}}
+      {{#if bodyParams}}
+        {{#each bodyParams}}
+          {{#if @first}}data: {{name}},{{/if}}
+        {{/each}}
+      {{/if}}
+    {{/if}}
+  });
+}
+{{/each}}

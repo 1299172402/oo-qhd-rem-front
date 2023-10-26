@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 8</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="56" height="56" rx="8"></rect>
+        <filter x="-10.7%" y="-10.7%" width="121.4%" height="121.4%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.564705882   0 0 0 0 0.576470588   0 0 0 0 0.6  0 0 0 0.3 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="门户首页-办公模式4" transform="translate(-1456.000000, -178.000000)">
+            <g id="编组-8" transform="translate(1460.000000, 182.000000)">
+                <g id="矩形备份-8">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <rect stroke="#51A1FF" stroke-width="2" stroke-linejoin="square" fill="#FFFFFF" fill-rule="evenodd" x="1" y="1" width="54" height="54" rx="8"></rect>
+                </g>
+                <path d="M8,25 L8,14 C8,10.6862915 10.6862915,8 14,8 L25,8 L25,8 M31,8 L42,8 C45.3137085,8 48,10.6862915 48,14 L48,25 L48,25 M48,31 L48,42 C48,45.3137085 45.3137085,48 42,48 L31,48 L31,48 M25,48 L14,48 C10.6862915,48 8,45.3137085 8,42 L8,31 L8,31" id="形状" stroke="#51A1FF" stroke-width="2" stroke-linecap="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

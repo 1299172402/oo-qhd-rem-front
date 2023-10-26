@@ -11,7 +11,7 @@
  * limitations under the License.
  */
 
-
+'use strict';
 
 FLOWABLE.HEADER_CONFIG.showAppTitle = false;
 FLOWABLE.HEADER_CONFIG.showHeaderMenu = false;

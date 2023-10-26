@@ -12,139 +12,139 @@
  */
 angular.module('flowableModeler')
   .controller('CaseModelCtrl', ['$rootScope', '$scope', '$translate', '$http', '$location', '$routeParams','$modal', '$popover', '$timeout', 'appResourceRoot', 'ResourceService',
-    function ($rootScope, $scope, $translate, $http, $location, $routeParams, $modal, $popover, $timeout, appResourceRoot, ResourceService) {
+                              function ($rootScope, $scope, $translate, $http, $location, $routeParams, $modal, $popover, $timeout, appResourceRoot, ResourceService) {
 
-      // Main page (needed for visual indicator of current page)
-      $rootScope.setMainPageById('casemodels');
+    // Main page (needed for visual indicator of current page)
+    $rootScope.setMainPageById('casemodels');
 
-      // Initialize model
-      $scope.model = {
+    // Initialize model
+    $scope.model = {
         // Store the main model id, this points to the current version of a model,
         // even when we're showing history
         latestModelId: $routeParams.modelId
-      };
+    };
     
-      $scope.loadCaseModel = function() {
-        let url;
-        if ($routeParams.modelHistoryId) {
-          url = FLOWABLE.APP_URL.getModelHistoryUrl($routeParams.modelId, $routeParams.modelHistoryId);
-        } else {
-          url = FLOWABLE.APP_URL.getModelUrl($routeParams.modelId);
-        }
+    $scope.loadCaseModel = function() {
+      var url;
+      if ($routeParams.modelHistoryId) {
+        url = FLOWABLE.APP_URL.getModelHistoryUrl($routeParams.modelId, $routeParams.modelHistoryId);
+      } else {
+        url = FLOWABLE.APP_URL.getModelUrl($routeParams.modelId);
+      }
       
-        $http({method: 'GET', url}).
-          success((data, status, headers, config) => {
-            $scope.model.caseModel = data;
+      $http({method: 'GET', url: url}).
+        success(function(data, status, headers, config) {
+          $scope.model.caseModel = data;
           
-            $scope.loadVersions();
+          $scope.loadVersions();
 
-            $scope.model.cmmnDownloadUrl = FLOWABLE.APP_URL.getCmmnModelDownloadUrl($routeParams.modelId, $routeParams.modelHistoryId);
+          $scope.model.cmmnDownloadUrl = FLOWABLE.APP_URL.getCmmnModelDownloadUrl($routeParams.modelId, $routeParams.modelHistoryId);
 
 
-    	  $rootScope.$on('$routeChangeStart', (event, next, current) => {
+    	  $rootScope.$on('$routeChangeStart', function(event, next, current) {
     		  jQuery('.qtip').qtip('destroy', true);
     	  });
     	  
-            $timeout(() => {
-              jQuery("#cmmnModel").attr('data-model-id', $routeParams.modelId);
-              jQuery("#cmmnModel").attr('data-model-type', 'design');
+          $timeout(function() {
+            jQuery("#cmmnModel").attr('data-model-id', $routeParams.modelId);
+            jQuery("#cmmnModel").attr('data-model-type', 'design');
             
-              // in case we want to show a historic model, include additional attribute on the div
-              if(!$scope.model.caseModel.latestVersion) {
-                jQuery("#cmmnModel").attr('data-history-id', $routeParams.modelHistoryId);
-              }
+            // in case we want to show a historic model, include additional attribute on the div
+            if(!$scope.model.caseModel.latestVersion) {
+              jQuery("#cmmnModel").attr('data-history-id', $routeParams.modelHistoryId);
+            }
 
-              const viewerUrl = `${appResourceRoot  }display-cmmn/displaymodel.html?version=${  Date.now()}`;
+            var viewerUrl = appResourceRoot + "display-cmmn/displaymodel.html?version=" + Date.now();
 
-              // If Flowable has been deployed inside an AMD environment Raphael will fail to register
-              // itself globally until displaymodel.js (which depends ona global Raphael variable) is running,
-              // therefore remove AMD's define method until we have loaded in Raphael and displaymodel.js
-              // and assume/hope its not used during.
-              const amdDefine = window.define;
-              window.define = undefined;
-              ResourceService.loadFromHtml(viewerUrl, ()=> {
+            // If Flowable has been deployed inside an AMD environment Raphael will fail to register
+            // itself globally until displaymodel.js (which depends ona global Raphael variable) is running,
+            // therefore remove AMD's define method until we have loaded in Raphael and displaymodel.js
+            // and assume/hope its not used during.
+            var amdDefine = window.define;
+            window.define = undefined;
+            ResourceService.loadFromHtml(viewerUrl, function(){
                 // Restore AMD's define method again
                 window.define = amdDefine;
-              });
             });
-
-          }).error((data, status, headers, config) => {
-            $scope.returnToList();
           });
-      };
+
+        }).error(function(data, status, headers, config) {
+          $scope.returnToList();
+        });
+    };
     
-      $scope.useAsNewVersion = function() {
+    $scope.useAsNewVersion = function() {
         _internalCreateModal({
     		template: 'views/popup/model-use-as-new-version.html',
     		scope: $scope
     	}, $modal, $scope);
-      };
+    };
     
-      $scope.loadVersions = function() {
+    $scope.loadVersions = function() {
       
-        const params = {
-          includeLatestVersion: !$scope.model.caseModel.latestVersion  
-        };
-      
-        $http({method: 'GET', url: FLOWABLE.APP_URL.getModelHistoriesUrl($scope.model.latestModelId), params}).
-          success((data, status, headers, config) => {
-            if ($scope.model.caseModel.latestVersion) {
-              if (!data.data) {
-                data.data = [];
-              }
-              data.data.unshift($scope.model.caseModel);
-            }
-        
-            $scope.model.versions = data;
-          });
+      var params = {
+        includeLatestVersion: !$scope.model.caseModel.latestVersion  
       };
-    
-      $scope.showVersion = function(version) {
-        if(version) {
-          if(version.latestVersion) {
-            $location.path(`/casemodels/${   $scope.model.latestModelId}`);
-          } else{
-          // Show latest version, no history-suffix needed in URL
-            $location.path(`/casemodels/${   $scope.model.latestModelId  }/history/${  version.id}`);
+      
+      $http({method: 'GET', url: FLOWABLE.APP_URL.getModelHistoriesUrl($scope.model.latestModelId), params: params}).
+      success(function(data, status, headers, config) {
+        if ($scope.model.caseModel.latestVersion) {
+          if (!data.data) {
+            data.data = [];
           }
+          data.data.unshift($scope.model.caseModel);
         }
-      };
+        
+        $scope.model.versions = data;
+      });
+    };
     
-      $scope.returnToList = function() {
+    $scope.showVersion = function(version) {
+      if(version) {
+        if(version.latestVersion) {
+            $location.path("/casemodels/" +  $scope.model.latestModelId);
+        } else{
+          // Show latest version, no history-suffix needed in URL
+          $location.path("/casemodels/" +  $scope.model.latestModelId + "/history/" + version.id);
+        }
+      }
+    };
+    
+    $scope.returnToList = function() {
         $location.path("/casemodels/");
-      };
+    };
     
-      $scope.editCaseModel = function() {
+    $scope.editCaseModel = function() {
         _internalCreateModal({
     		template: 'views/popup/model-edit.html',
 	        scope: $scope
     	}, $modal, $scope);
-      };
+    };
 
-      $scope.duplicateCaseModel = function() {
-        const modalInstance = _internalCreateModal({
-          template: `views/popup/casemodel-duplicate.html?version=${  Date.now()}`
-        }, $modal, $scope);
+    $scope.duplicateCaseModel = function() {
+      var modalInstance = _internalCreateModal({
+        template: 'views/popup/casemodel-duplicate.html?version=' + Date.now()
+      }, $modal, $scope);
 
-        modalInstance.$scope.originalModel = $scope.model;
-      };
+      modalInstance.$scope.originalModel = $scope.model;
+    };
 
-      $scope.deleteCaseModel = function() {
+    $scope.deleteCaseModel = function() {
         _internalCreateModal({
     		template: 'views/popup/model-delete.html',
     		scope: $scope
     	}, $modal, $scope);
-      };
+    };
     
-      $scope.openEditor = function() {
-        if ($scope.model.caseModel) {
-          $location.path(`/editor/${  $scope.model.caseModel.id}`);
-        }
-      };
+    $scope.openEditor = function() {
+      if ($scope.model.caseModel) {
+        $location.path("/editor/" + $scope.model.caseModel.id);
+      }
+    };
       
-      $scope.toggleHistory = function($event) {
+    $scope.toggleHistory = function($event) {
         if(!$scope.historyState) {
-          const state = {};
+          var state = {};
           $scope.historyState = state;
           
           // Create popover
@@ -156,7 +156,7 @@ angular.module('flowableModeler')
             container: 'body'
           });
           
-          const destroy = function() {
+          var destroy = function() {
             state.popover.destroy();
             delete $scope.historyState;
           }
@@ -165,7 +165,7 @@ angular.module('flowableModeler')
           state.popover.$scope.$on('tooltip.hide', destroy);
           $scope.$on('$destroy', destroy);
         }
-      };
+    };
     
-      $scope.loadCaseModel();
-    }]);
+    $scope.loadCaseModel();
+}]);

@@ -1,9 +1,16 @@
 import Axios from '@/utils/request'
 
-const baseUrl = process.env.NODE_ENV == "production" ? "/ipm03/api" : "/ipm03/api"
+const baseUrl = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 export function getOgfInfo(orgId) {
   return Axios({
     url: `${baseUrl}/baseData/getOgfInfo?orgId=${orgId}`,
+    method: "get",
+  });
+}
+//根据井号或井组号查出是水井还是油井还是井组 
+export function getBorepipeType(wellNo) {
+  return Axios({
+    url: `${baseUrl}/baseData/getBorepipeType?wellNo=${wellNo}`,
     method: "get",
   });
 }

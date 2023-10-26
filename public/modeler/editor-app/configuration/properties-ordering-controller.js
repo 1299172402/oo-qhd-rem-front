@@ -17,12 +17,12 @@
 
 angular.module('flowableModeler').controller('FlowableOrderingCtrl', [ '$scope', function($scope) {
 
-  if ($scope.property.value == undefined && $scope.property.value == null)
-  {
+    if ($scope.property.value == undefined && $scope.property.value == null)
+    {
     	$scope.property.value = 'Parallel';
-  }
+    }
         
-  $scope.orderingChanged = function() {
+    $scope.orderingChanged = function() {
     	$scope.updatePropertyInModel($scope.property);
-  };
+    };
 }]);

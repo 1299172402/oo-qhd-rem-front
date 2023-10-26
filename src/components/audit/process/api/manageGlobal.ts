@@ -9,7 +9,7 @@ const core = () => {
   };
 };
 
-export function postAction (url, parameter) {
+export function postAction(url, parameter) {
   return axios({
     headers: core(),
     url,
@@ -18,7 +18,7 @@ export function postAction (url, parameter) {
   });
 }
 
-export function getAction (url, parameter, other) {
+export function getAction(url, parameter, other) {
   return axios({
     headers: core(),
     url,

@@ -1,67 +1,71 @@
 <template>
-  <div class="result-container">
-    <div class="result-bg-img">
-      <component :is="dynamicComponent"></component>
+  <div class="result-container" style="background: #fff;">
+    <div class="result-bg-img" style="color: #409eff;">
+      <component :is="dynamicComponent" />
     </div>
-    <div class="result-title">{{ title }}</div>
-    <div class="result-tip">{{ tip }}</div>
+    <div class="result-title" style="color: #000;">
+      {{ title }}
+    </div>
+    <div class="result-tip" style="color: #000; font-size: 18px;">
+      {{ tip }}
+    </div>
     <slot />
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue';
+import Vue from "vue";
 
-import Result403Icon from '@/assets/assets-result-403.svg';
-import Result404Icon from '@/assets/assets-result-404.svg';
-import Result500Icon from '@/assets/assets-result-500.svg';
-import ResultIeIcon from '@/assets/assets-result-ie.svg';
-import ResultWifiIcon from '@/assets/assets-result-wifi.svg';
-import ResultMaintenanceIcon from '@/assets/assets-result-maintenance.svg';
+import Result403Icon from "@/assets/assets-result-403.svg";
+import Result404Icon from "@/assets/assets-result-404.svg";
+import Result500Icon from "@/assets/assets-result-500.svg";
+import ResultIeIcon from "@/assets/assets-result-ie.svg";
+import ResultWifiIcon from "@/assets/assets-result-wifi.svg";
+import ResultMaintenanceIcon from "@/assets/assets-result-maintenance.svg";
 
 export default Vue.extend({
-  name: 'Result',
+  name: "Result",
   props: {
     bgUrl: {
       type: String,
-      default: '',
+      default: ""
     },
     title: {
       type: String,
-      default: '',
+      default: ""
     },
     tip: {
       type: String,
-      default: '',
+      default: ""
     },
     type: {
       type: String,
-      default: '',
-    },
+      default: ""
+    }
   },
   computed: {
     dynamicComponent() {
       switch (this.type) {
-      case '403':
-        return Result403Icon;
-      case '404':
-        return Result404Icon;
-      case '500':
-        return Result500Icon;
-      case 'ie':
-        return ResultIeIcon;
-      case 'wifi':
-        return ResultWifiIcon;
-      case 'maintenance':
-        return ResultMaintenanceIcon;
-      default:
-        return Result403Icon;
+        case "403":
+          return Result403Icon;
+        case "404":
+          return Result404Icon;
+        case "500":
+          return Result500Icon;
+        case "ie":
+          return ResultIeIcon;
+        case "wifi":
+          return ResultWifiIcon;
+        case "maintenance":
+          return ResultMaintenanceIcon;
+        default:
+          return Result403Icon;
       }
-    },
-  },
+    }
+  }
 });
 </script>
 <style lang="less" scoped>
-@import '@/style/variables';
+@import "@/style/variables";
 
 .result {
   &-link {

@@ -1,65 +1,80 @@
 .select-user-modal {
-    .t-dialog__body {
-      overflow: unset;
-      min-height: 655px;
+  .t-dialog__body {
+    overflow: unset;
+    min-height: 655px;
+  }
+
+  &__spin {
+    height: 100%;
+  }
+
+  &__container {
+    height: 100%;
+    display: flex;
+
+    &__left {
+      width: 0;
+      position: relative;
+      transition: all 0.5s;
+      min-height: 623px;
+
+      &.opening {
+        width: 300px;
+      }
+
+      &.closing {
+        .dept-tree-container {
+          opacity: 0;
+        }
+      }
+
+      /deep/ .dept-tree-container {
+        opacity: 1;
+        height: 100%;
+      }
     }
-    &__spin {
-        height: 100%;
-      }
-      &__container {
-        height: 100%;
+
+    &__center {
+      flex: 1;
+      margin: 0 16px;
+
+      &__center-serach {
         display: flex;
-        &__left {
-          width:0;
-          position: relative;
-          transition: all 0.5s;
-          min-height: 623px;
-          &.opening {
-            width: 300px;
-          }
-          &.closing {
-            .dept-tree-container {
-              opacity: 0;
-            }
-          }
-          /deep/ .dept-tree-container {
-            opacity: 1;
-            height: 100%;
-          }
-        }
-        &__center {
+
+        > span,
+        > div {
           flex: 1;
-          margin: 0 16px;
-          &__center-serach {
-            display: flex;
-            > span, > div {
-              flex: 1;
-              margin-right: 8px;
-            }
-          }
-      
-        }
-        &__right {
-          width: 200px;
-          &__right-label {
-            margin-bottom: 8px;
-            border: none;
-            &:focus {
-              box-shadow: none;
-            }
-          }
-          &__right-table-container {
-            margin-bottom: 10px;
-            height: calc(100% - 41px);
-            display: flex;
-            flex-direction: column;
-            .custom-div {
-              flex: 1;
-            }
-            &__right-table {
-              overflow: auto;
-            }
-          }
+          margin-right: 8px;
         }
       }
+    }
+
+    &__right {
+      width: 200px;
+
+      &__right-label {
+        margin-bottom: 8px;
+        border: none;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      &__right-table-container {
+        margin-bottom: 10px;
+        height: calc(100% - 41px);
+        display: flex;
+        flex-direction: column;
+
+        .custom-div {
+          flex: 1;
+        }
+
+        &__right-table {
+          overflow: auto;
+        }
+      }
+    }
+  }
 }

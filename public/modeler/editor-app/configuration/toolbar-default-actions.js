@@ -10,333 +10,332 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
+'use strict';
 
 var FLOWABLE = FLOWABLE || {};
 FLOWABLE.TOOLBAR = {
-  ACTIONS: {
+    ACTIONS: {
     	
-    saveModel (services) {
+        saveModel: function (services) {
 
-      _internalCreateModal({
-        backdrop: true,
-        keyboard: true,
-        template: `editor-app/popups/save-model.html?version=${  Date.now()}`,
-        scope: services.$scope
-      }, services.$modal, services.$scope);
-    },
+            _internalCreateModal({
+                backdrop: true,
+                keyboard: true,
+                template: 'editor-app/popups/save-model.html?version=' + Date.now(),
+                scope: services.$scope
+            }, services.$modal, services.$scope);
+        },
         
-    validate(services) {
+        validate: function(services) {
         	
         	_internalCreateModal({
-        backdrop: true,
-        keyboard: true,
-        template: `editor-app/popups/validate-model.html?version=${  Date.now()}`,
-        scope: services.$scope
-      }, services.$modal, services.$scope);
-    },
+                backdrop: true,
+                keyboard: true,
+                template: 'editor-app/popups/validate-model.html?version=' + Date.now(),
+                scope: services.$scope
+            }, services.$modal, services.$scope);
+		},
 
-    undo (services) {
+        undo: function (services) {
 
-      // Get the last commands
-      const lastCommands = services.$scope.undoStack.pop();
+            // Get the last commands
+            var lastCommands = services.$scope.undoStack.pop();
 
-      if (lastCommands) {
-        // Add the commands to the redo stack
-        services.$scope.redoStack.push(lastCommands);
+            if (lastCommands) {
+                // Add the commands to the redo stack
+                services.$scope.redoStack.push(lastCommands);
 
-        // Force refresh of selection, might be that the undo command
-        // impacts properties in the selected item
-        if (services.$rootScope && services.$rootScope.forceSelectionRefresh) 
-        {
+                // Force refresh of selection, might be that the undo command
+                // impacts properties in the selected item
+                if (services.$rootScope && services.$rootScope.forceSelectionRefresh) 
+                {
                 	services.$rootScope.forceSelectionRefresh = true;
-        }
+                }
                 
-        // Rollback every command
-        for (var i = lastCommands.length - 1; i >= 0; --i) {
-          lastCommands[i].rollback();
-        }
+                // Rollback every command
+                for (var i = lastCommands.length - 1; i >= 0; --i) {
+                    lastCommands[i].rollback();
+                }
                 
-        // Update and refresh the canvas
-        services.editorManager.handleEvents({
-          type: ORYX.CONFIG.EVENT_UNDO_ROLLBACK,
-          commands: lastCommands
-        });
+                // Update and refresh the canvas
+                services.editorManager.handleEvents({
+                    type: ORYX.CONFIG.EVENT_UNDO_ROLLBACK,
+                    commands: lastCommands
+                });
                 
-        // Update
-        services.editorManager.getCanvas().update();
-        services.editorManager.updateSelection();
-      }
+                // Update
+                services.editorManager.getCanvas().update();
+                services.editorManager.updateSelection();
+            }
             
-      let toggleUndo = false;
-      if (services.$scope.undoStack.length == 0)
-      {
+            var toggleUndo = false;
+            if (services.$scope.undoStack.length == 0)
+            {
             	toggleUndo = true;
-      }
+            }
             
-      let toggleRedo = false;
-      if (services.$scope.redoStack.length > 0)
-      {
+            var toggleRedo = false;
+            if (services.$scope.redoStack.length > 0)
+            {
             	toggleRedo = true;
-      }
+            }
 
-      if (toggleUndo || toggleRedo) {
-        for (var i = 0; i < services.$scope.items.length; i++) {
-          var item = services.$scope.items[i];
-          if (toggleUndo && item.action === 'FLOWABLE.TOOLBAR.ACTIONS.undo') {
-            services.$scope.safeApply(() => {
-              item.enabled = false;
-            });
-          }
-          else if (toggleRedo && item.action === 'FLOWABLE.TOOLBAR.ACTIONS.redo') {
-            services.$scope.safeApply(() => {
-              item.enabled = true;
-            });
-          }
-        }
-      }
-    },
+            if (toggleUndo || toggleRedo) {
+                for (var i = 0; i < services.$scope.items.length; i++) {
+                    var item = services.$scope.items[i];
+                    if (toggleUndo && item.action === 'FLOWABLE.TOOLBAR.ACTIONS.undo') {
+                        services.$scope.safeApply(function () {
+                            item.enabled = false;
+                        });
+                    }
+                    else if (toggleRedo && item.action === 'FLOWABLE.TOOLBAR.ACTIONS.redo') {
+                        services.$scope.safeApply(function () {
+                            item.enabled = true;
+                        });
+                    }
+                }
+            }
+        },
 
-    redo (services) {
+        redo: function (services) {
 
-      // Get the last commands from the redo stack
-      const lastCommands = services.$scope.redoStack.pop();
+            // Get the last commands from the redo stack
+            var lastCommands = services.$scope.redoStack.pop();
 
-      if (lastCommands) {
-        // Add this commands to the undo stack
-        services.$scope.undoStack.push(lastCommands);
+            if (lastCommands) {
+                // Add this commands to the undo stack
+                services.$scope.undoStack.push(lastCommands);
                 
-        // Force refresh of selection, might be that the redo command
-        // impacts properties in the selected item
-        if (services.$rootScope && services.$rootScope.forceSelectionRefresh) 
-        {
+                // Force refresh of selection, might be that the redo command
+                // impacts properties in the selected item
+                if (services.$rootScope && services.$rootScope.forceSelectionRefresh) 
+                {
                 	services.$rootScope.forceSelectionRefresh = true;
-        }
+                }
 
-        // Execute those commands
-        lastCommands.each((command) => {
-          command.execute();
-        });
+                // Execute those commands
+                lastCommands.each(function (command) {
+                    command.execute();
+                });
 
-        // Update and refresh the canvas
-        services.editorManager.handleEvents({
-          type: ORYX.CONFIG.EVENT_UNDO_EXECUTE,
-          commands: lastCommands
-        });
+                // Update and refresh the canvas
+                services.editorManager.handleEvents({
+                    type: ORYX.CONFIG.EVENT_UNDO_EXECUTE,
+                    commands: lastCommands
+                });
 
-        // Update
-        services.editorManager.getCanvas().update();
-        services.editorManager.updateSelection();
-      }
+                // Update
+                services.editorManager.getCanvas().update();
+                services.editorManager.updateSelection();
+            }
 
-      let toggleUndo = false;
-      if (services.$scope.undoStack.length > 0) {
-        toggleUndo = true;
-      }
+            var toggleUndo = false;
+            if (services.$scope.undoStack.length > 0) {
+                toggleUndo = true;
+            }
 
-      let toggleRedo = false;
-      if (services.$scope.redoStack.length == 0) {
-        toggleRedo = true;
-      }
+            var toggleRedo = false;
+            if (services.$scope.redoStack.length == 0) {
+                toggleRedo = true;
+            }
 
-      if (toggleUndo || toggleRedo) {
-        for (let i = 0; i < services.$scope.items.length; i++) {
-          var item = services.$scope.items[i];
-          if (toggleUndo && item.action === 'FLOWABLE.TOOLBAR.ACTIONS.undo') {
-            services.$scope.safeApply(() => {
-              item.enabled = true;
-            });
-          }
-          else if (toggleRedo && item.action === 'FLOWABLE.TOOLBAR.ACTIONS.redo') {
-            services.$scope.safeApply(() => {
-              item.enabled = false;
-            });
-          }
-        }
-      }
-    },
+            if (toggleUndo || toggleRedo) {
+                for (var i = 0; i < services.$scope.items.length; i++) {
+                    var item = services.$scope.items[i];
+                    if (toggleUndo && item.action === 'FLOWABLE.TOOLBAR.ACTIONS.undo') {
+                        services.$scope.safeApply(function () {
+                            item.enabled = true;
+                        });
+                    }
+                    else if (toggleRedo && item.action === 'FLOWABLE.TOOLBAR.ACTIONS.redo') {
+                        services.$scope.safeApply(function () {
+                            item.enabled = false;
+                        });
+                    }
+                }
+            }
+        },
 
-    cut (services) {
-      FLOWABLE.TOOLBAR.ACTIONS._getOryxEditPlugin(services).editCut();
-      for (let i = 0; i < services.$scope.items.length; i++) {
-        var item = services.$scope.items[i];
-        if (item.action === 'FLOWABLE.TOOLBAR.ACTIONS.paste') {
-          services.$scope.safeApply(() => {
-            item.enabled = true;
-          });
-        }
-      }
-    },
+        cut: function (services) {
+            FLOWABLE.TOOLBAR.ACTIONS._getOryxEditPlugin(services).editCut();
+            for (var i = 0; i < services.$scope.items.length; i++) {
+                var item = services.$scope.items[i];
+                if (item.action === 'FLOWABLE.TOOLBAR.ACTIONS.paste') {
+                    services.$scope.safeApply(function () {
+                        item.enabled = true;
+                    });
+                }
+            }
+        },
 
-    copy (services) {
-      FLOWABLE.TOOLBAR.ACTIONS._getOryxEditPlugin(services).editCopy();
-      for (let i = 0; i < services.$scope.items.length; i++) {
-        var item = services.$scope.items[i];
-        if (item.action === 'FLOWABLE.TOOLBAR.ACTIONS.paste') {
-          services.$scope.safeApply(() => {
-            item.enabled = true;
-          });
-        }
-      }
-    },
+        copy: function (services) {
+            FLOWABLE.TOOLBAR.ACTIONS._getOryxEditPlugin(services).editCopy();
+            for (var i = 0; i < services.$scope.items.length; i++) {
+                var item = services.$scope.items[i];
+                if (item.action === 'FLOWABLE.TOOLBAR.ACTIONS.paste') {
+                    services.$scope.safeApply(function () {
+                        item.enabled = true;
+                    });
+                }
+            }
+        },
 
-    paste (services) {
-      FLOWABLE.TOOLBAR.ACTIONS._getOryxEditPlugin(services).editPaste();
-    },
+        paste: function (services) {
+            FLOWABLE.TOOLBAR.ACTIONS._getOryxEditPlugin(services).editPaste();
+        },
 
-    deleteItem (services) {
-      FLOWABLE.TOOLBAR.ACTIONS._getOryxEditPlugin(services).editDelete();
-    },
+        deleteItem: function (services) {
+            FLOWABLE.TOOLBAR.ACTIONS._getOryxEditPlugin(services).editDelete();
+        },
 
-    addBendPoint (services) {
+        addBendPoint: function (services) {
 
-      // Show the tutorial the first time
-      FLOWABLE_EDITOR_TOUR.sequenceFlowBendpoint(services.$scope, services.$translate, services.$q, true);
+            // Show the tutorial the first time
+            FLOWABLE_EDITOR_TOUR.sequenceFlowBendpoint(services.$scope, services.$translate, services.$q, true);
 
-      const dockerPlugin = FLOWABLE.TOOLBAR.ACTIONS._getOryxDockerPlugin(services);
+            var dockerPlugin = FLOWABLE.TOOLBAR.ACTIONS._getOryxDockerPlugin(services);
 
-      const enableAdd = !dockerPlugin.enabledAdd();
-      dockerPlugin.setEnableAdd(enableAdd);
-      if (enableAdd)
-      {
+            var enableAdd = !dockerPlugin.enabledAdd();
+            dockerPlugin.setEnableAdd(enableAdd);
+            if (enableAdd)
+            {
             	dockerPlugin.setEnableRemove(false);
             	document.body.style.cursor = 'pointer';
-      }
-      else
-      {
+            }
+            else
+            {
             	document.body.style.cursor = 'default';
-      }
-    },
+            }
+        },
 
-    removeBendPoint (services) {
+        removeBendPoint: function (services) {
 
-      // Show the tutorial the first time
-      FLOWABLE_EDITOR_TOUR.sequenceFlowBendpoint(services.$scope, services.$translate, services.$q, true);
+            // Show the tutorial the first time
+            FLOWABLE_EDITOR_TOUR.sequenceFlowBendpoint(services.$scope, services.$translate, services.$q, true);
 
-      const dockerPlugin = FLOWABLE.TOOLBAR.ACTIONS._getOryxDockerPlugin(services);
+            var dockerPlugin = FLOWABLE.TOOLBAR.ACTIONS._getOryxDockerPlugin(services);
 
-      const enableRemove = !dockerPlugin.enabledRemove();
-      dockerPlugin.setEnableRemove(enableRemove);
-      if (enableRemove)
-      {
+            var enableRemove = !dockerPlugin.enabledRemove();
+            dockerPlugin.setEnableRemove(enableRemove);
+            if (enableRemove)
+            {
             	dockerPlugin.setEnableAdd(false);
             	document.body.style.cursor = 'pointer';
-      }
-      else
-      {
+            }
+            else
+            {
             	document.body.style.cursor = 'default';
-      }
-    },
+            }
+        },
 
-    /**
+        /**
          * Helper method: fetches the Oryx Edit plugin from the provided scope,
          * if not on the scope, it is created and put on the scope for further use.
          *
          * It's important to reuse the same EditPlugin while the same scope is active,
          * as the clipboard is stored for the whole lifetime of the scope.
          */
-    _getOryxEditPlugin (services) {
-        	const {$scope} = services;
-      const {editorManager} = services;
-      if ($scope.oryxEditPlugin === undefined || $scope.oryxEditPlugin === null) {
-        $scope.oryxEditPlugin = new ORYX.Plugins.Edit(editorManager.getEditor());
-      }
-      return $scope.oryxEditPlugin;
-    },
+        _getOryxEditPlugin: function (services) {
+        	var $scope = services.$scope;
+			var editorManager = services.editorManager;
+            if ($scope.oryxEditPlugin === undefined || $scope.oryxEditPlugin === null) {
+                $scope.oryxEditPlugin = new ORYX.Plugins.Edit(editorManager.getEditor());
+            }
+            return $scope.oryxEditPlugin;
+        },
 
-    zoomIn (services) {
-      FLOWABLE.TOOLBAR.ACTIONS._getOryxViewPlugin(services).zoom([1.0 + ORYX.CONFIG.ZOOM_OFFSET]);
-    },
+        zoomIn: function (services) {
+            FLOWABLE.TOOLBAR.ACTIONS._getOryxViewPlugin(services).zoom([1.0 + ORYX.CONFIG.ZOOM_OFFSET]);
+        },
 
-    zoomOut (services) {
-      FLOWABLE.TOOLBAR.ACTIONS._getOryxViewPlugin(services).zoom([1.0 - ORYX.CONFIG.ZOOM_OFFSET]);
-    },
+        zoomOut: function (services) {
+            FLOWABLE.TOOLBAR.ACTIONS._getOryxViewPlugin(services).zoom([1.0 - ORYX.CONFIG.ZOOM_OFFSET]);
+        },
         
-    zoomActual (services) {
-      FLOWABLE.TOOLBAR.ACTIONS._getOryxViewPlugin(services).setAFixZoomLevel(1);
-    },
+        zoomActual: function (services) {
+            FLOWABLE.TOOLBAR.ACTIONS._getOryxViewPlugin(services).setAFixZoomLevel(1);
+        },
         
-    zoomFit (services) {
+        zoomFit: function (services) {
         	FLOWABLE.TOOLBAR.ACTIONS._getOryxViewPlugin(services).zoomFitToModel();
-    },
+        },
         
-    alignVertical (services) {
+        alignVertical: function (services) {
         	FLOWABLE.TOOLBAR.ACTIONS._getOryxArrangmentPlugin(services).alignShapes([ORYX.CONFIG.EDITOR_ALIGN_CENTER]);
-    },
+        },
         
-    alignHorizontal (services) {
+        alignHorizontal: function (services) {
         	FLOWABLE.TOOLBAR.ACTIONS._getOryxArrangmentPlugin(services).alignShapes([ORYX.CONFIG.EDITOR_ALIGN_MIDDLE]);
-    },
+        },
         
-    sameSize (services) {
+        sameSize: function (services) {
         	FLOWABLE.TOOLBAR.ACTIONS._getOryxArrangmentPlugin(services).alignShapes([ORYX.CONFIG.EDITOR_ALIGN_SIZE]);
-    },
+        },
 
-    help (services) {
-      FLOWABLE_EDITOR_TOUR.gettingStarted(services.$scope, services.$translate, services.$q);
-    },
+        help: function (services) {
+            FLOWABLE_EDITOR_TOUR.gettingStarted(services.$scope, services.$translate, services.$q);
+        },
         
-    /**
+        /**
          * Helper method: fetches the Oryx View plugin from the provided scope,
          * if not on the scope, it is created and put on the scope for further use.
          */
-    _getOryxViewPlugin (services) {
-        	const {$scope} = services;
-      const {editorManager} = services;
-      if ($scope.oryxViewPlugin === undefined || $scope.oryxViewPlugin === null) {
-        $scope.oryxViewPlugin = new ORYX.Plugins.View(editorManager.getEditor());
-      }
-      return $scope.oryxViewPlugin;
-    },
+        _getOryxViewPlugin: function (services) {
+        	var $scope = services.$scope;
+			var editorManager = services.editorManager;
+            if ($scope.oryxViewPlugin === undefined || $scope.oryxViewPlugin === null) {
+                $scope.oryxViewPlugin = new ORYX.Plugins.View(editorManager.getEditor());
+            }
+            return $scope.oryxViewPlugin;
+        },
         
-    _getOryxArrangmentPlugin (services) {
-        	const {$scope} = services;
-      const {editorManager} = services;
-      if ($scope.oryxArrangmentPlugin === undefined || $scope.oryxArrangmentPlugin === null) {
-        $scope.oryxArrangmentPlugin = new ORYX.Plugins.Arrangement(editorManager.getEditor());
-      }
-      return $scope.oryxArrangmentPlugin;
-    },
+        _getOryxArrangmentPlugin: function (services) {
+        	var $scope = services.$scope;
+			var editorManager = services.editorManager;
+            if ($scope.oryxArrangmentPlugin === undefined || $scope.oryxArrangmentPlugin === null) {
+                $scope.oryxArrangmentPlugin = new ORYX.Plugins.Arrangement(editorManager.getEditor());
+            }
+            return $scope.oryxArrangmentPlugin;
+        },
 
-    _getOryxDockerPlugin (services) {
-        	const {$scope} = services;
-      const {editorManager} = services;
-      if ($scope.oryxDockerPlugin === undefined || $scope.oryxDockerPlugin === null) {
-        $scope.oryxDockerPlugin = new ORYX.Plugins.AddDocker(editorManager.getEditor());
-      }
-      return $scope.oryxDockerPlugin;
+        _getOryxDockerPlugin: function (services) {
+        	var $scope = services.$scope;
+			var editorManager = services.editorManager;
+            if ($scope.oryxDockerPlugin === undefined || $scope.oryxDockerPlugin === null) {
+                $scope.oryxDockerPlugin = new ORYX.Plugins.AddDocker(editorManager.getEditor());
+            }
+            return $scope.oryxDockerPlugin;
+        }
     }
-  }
 };
 
 /** Custom controller for the save dialog */
 angular.module('flowableModeler').controller('SaveModelCtrl', [ '$rootScope', '$scope', '$http', '$route', '$location', 'editorManager',
-  function ($rootScope, $scope, $http, $route, $location, editorManager) {
+    function ($rootScope, $scope, $http, $route, $location, editorManager) {
 
-    if (editorManager.getCurrentModelId() != editorManager.getModelId()) {
-      editorManager.edit(editorManager.getModelId());
-    }
+	if (editorManager.getCurrentModelId() != editorManager.getModelId()) {
+		editorManager.edit(editorManager.getModelId());
+	}
 	
-    const modelMetaData = editorManager.getBaseModelData();
+    var modelMetaData = editorManager.getBaseModelData();
 
-    let description = '';
+    var description = '';
     if (modelMetaData.description) {
     	description = modelMetaData.description;
     }
     
-    const saveDialog = { 
+    var saveDialog = { 
     	'name' : modelMetaData.name,
     	'key' : modelMetaData.key,
-      'description' : description,
-      'newVersion' : false,
-      'comment' : ''
+        'description' : description,
+        'newVersion' : false,
+        'comment' : ''
     };
     
     $scope.saveDialog = saveDialog;
     
     $scope.status = {
-      loading: false
+        loading: false
     };
 
     $scope.close = function () {
@@ -344,209 +343,211 @@ angular.module('flowableModeler').controller('SaveModelCtrl', [ '$rootScope', '$
     };
 
     $scope.saveAndClose = function () {
-    	$scope.save(() => {
-        // 改为关闭窗口
+    	$scope.save(function() {
+            // 改为关闭窗口
     	    // if (editorManager.getStencilData()) {
-        //     var stencilNameSpace = editorManager.getStencilData().namespace;
-        //     if (stencilNameSpace !== undefined && stencilNameSpace !== null && stencilNameSpace.indexOf('cmmn1.1') !== -1) {
-        //         $location.path("/casemodels");
-        //     	return;
-        // 	}
+            //     var stencilNameSpace = editorManager.getStencilData().namespace;
+            //     if (stencilNameSpace !== undefined && stencilNameSpace !== null && stencilNameSpace.indexOf('cmmn1.1') !== -1) {
+            //         $location.path("/casemodels");
+            //     	return;
+            // 	}
         	// }
         	// $location.path('/processes');
 
-        if(typeof(parent.layer) !== 'undefined'){
-          parent.layer.confirm('数据已经保存，确定要关闭编辑器吗？', {
-            btn: ['确定','取消'] // 按钮
-          }, ()=> {
-            parent.layer.closeAll();
-          }, ()=> {
+            if(typeof(parent.layer) != 'undefined'){
+                parent.layer.confirm('数据已经保存，确定要关闭编辑器吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                    parent.layer.closeAll();
+                }, function(){
 
-          });
+                });
 
-        }else if (window.confirm('数据已经保存，确定要关闭编辑器吗？')) {
-          window.top.postMessage({
-            closeDialog: true
-          }, "*");
-        }
+            }else {
+                if (window.confirm('数据已经保存，确定要关闭编辑器吗？')) {
+                    window.top.postMessage({
+                        closeDialog: true
+                    }, "*");
+                }
+            }
     	});
     };
     
     $scope.save = function (successCallback) {
 
-      if (!$scope.saveDialog.name || $scope.saveDialog.name.length == 0 ||
+        if (!$scope.saveDialog.name || $scope.saveDialog.name.length == 0 ||
         	!$scope.saveDialog.key || $scope.saveDialog.key.length == 0) {
         	
-        return;
-      }
-
-      // Indicator spinner image
-      $scope.status = {
-        	loading: true
-      };
-        
-      modelMetaData.name = $scope.saveDialog.name;
-      modelMetaData.key = $scope.saveDialog.key;
-      modelMetaData.description = $scope.saveDialog.description;
-
-      const json = editorManager.getModel();
-
-      const params = {
-        modeltype: modelMetaData.model.modelType,
-        json_xml: JSON.stringify(json),
-        name: $scope.saveDialog.name,
-        key: $scope.saveDialog.key,
-        description: $scope.saveDialog.description,
-        newversion: $scope.saveDialog.newVersion,
-        comment: $scope.saveDialog.comment,
-        lastUpdated: modelMetaData.lastUpdated
-      };
-
-      if ($scope.error && $scope.error.isConflict) {
-        params.conflictResolveAction = $scope.error.conflictResolveAction;
-        if ($scope.error.conflictResolveAction === 'saveAs') {
-          params.saveAs = $scope.error.saveAs;
+            return;
         }
-      }
 
-      // Update
-      $http({    method: 'POST',
-        data: params,
-        ignoreErrors: true,
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          "Authorization": localStorage.getItem("current_user_token"),
-          'FtId': FLOWABLE.CONFIG.FtId
-        },
-        transformRequest (obj) {
-          const str = [];
-          for (const p in obj) {
-            str.push(`${encodeURIComponent(p)  }=${  encodeURIComponent(obj[p])}`);
-          }
-          return str.join("&");
-        },
-        url: FLOWABLE.URL.putModel(modelMetaData.modelId)})
+        // Indicator spinner image
+        $scope.status = {
+        	loading: true
+        };
+        
+        modelMetaData.name = $scope.saveDialog.name;
+        modelMetaData.key = $scope.saveDialog.key;
+        modelMetaData.description = $scope.saveDialog.description;
 
-        .success((data, status, headers, config) => {
-          editorManager.handleEvents({
-            type: ORYX.CONFIG.EVENT_SAVED
-          });
-          $scope.modelData.name = $scope.saveDialog.name;
-          $scope.modelData.key = $scope.saveDialog.key;
-          $scope.modelData.lastUpdated = data.lastUpdated;
+        var json = editorManager.getModel();
+
+        var params = {
+            modeltype: modelMetaData.model.modelType,
+            json_xml: JSON.stringify(json),
+            name: $scope.saveDialog.name,
+            key: $scope.saveDialog.key,
+            description: $scope.saveDialog.description,
+            newversion: $scope.saveDialog.newVersion,
+            comment: $scope.saveDialog.comment,
+            lastUpdated: modelMetaData.lastUpdated
+        };
+
+        if ($scope.error && $scope.error.isConflict) {
+            params.conflictResolveAction = $scope.error.conflictResolveAction;
+            if ($scope.error.conflictResolveAction === 'saveAs') {
+                params.saveAs = $scope.error.saveAs;
+            }
+        }
+
+        // Update
+        $http({    method: 'POST',
+            data: params,
+            ignoreErrors: true,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                "Authorization": localStorage.getItem("current_user_token"),
+                'FtId': FLOWABLE.CONFIG.FtId
+            },
+            transformRequest: function (obj) {
+                var str = [];
+                for (var p in obj) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+                return str.join("&");
+            },
+            url: FLOWABLE.URL.putModel(modelMetaData.modelId)})
+
+            .success(function (data, status, headers, config) {
+                editorManager.handleEvents({
+                    type: ORYX.CONFIG.EVENT_SAVED
+                });
+                $scope.modelData.name = $scope.saveDialog.name;
+                $scope.modelData.key = $scope.saveDialog.key;
+                $scope.modelData.lastUpdated = data.lastUpdated;
                 
-          $scope.status.loading = false;
-          $scope.$hide();
+                $scope.status.loading = false;
+                $scope.$hide();
 
-          // Fire event to all who is listening
-          const saveEvent = {
-            type: FLOWABLE.eventBus.EVENT_TYPE_MODEL_SAVED,
-            model: params,
-            modelId: modelMetaData.modelId,
+                // Fire event to all who is listening
+                var saveEvent = {
+                    type: FLOWABLE.eventBus.EVENT_TYPE_MODEL_SAVED,
+                    model: params,
+                    modelId: modelMetaData.modelId,
 		            eventType: 'update-model'
-          };
-          FLOWABLE.eventBus.dispatch(FLOWABLE.eventBus.EVENT_TYPE_MODEL_SAVED, saveEvent);
+                };
+                FLOWABLE.eventBus.dispatch(FLOWABLE.eventBus.EVENT_TYPE_MODEL_SAVED, saveEvent);
 
-          // Reset state
-          $scope.error = undefined;
-          $scope.status.loading = false;
+                // Reset state
+                $scope.error = undefined;
+                $scope.status.loading = false;
 
-          // Execute any callback
-          if (successCallback) {
-            successCallback();
-          }
+                // Execute any callback
+                if (successCallback) {
+                    successCallback();
+                }
 
-        })
-        .error((data, status, headers, config) => {
-          if (status == 409) {
+            })
+            .error(function (data, status, headers, config) {
+                if (status == 409) {
                 	$scope.error = {};
-            $scope.error.isConflict = true;
-            $scope.error.userFullName = data.customData.userFullName;
-            $scope.error.isNewVersionAllowed = data.customData.newVersionAllowed;
-            $scope.error.saveAs = `${modelMetaData.name  }_2`;
-          } else {
+                    $scope.error.isConflict = true;
+                    $scope.error.userFullName = data.customData.userFullName;
+                    $scope.error.isNewVersionAllowed = data.customData.newVersionAllowed;
+                    $scope.error.saveAs = modelMetaData.name + "_2";
+                } else {
                 	$scope.error = undefined;
-            $scope.saveDialog.errorMessage = data.message;
-          }
-          $scope.status.loading = false;
-        });
+                    $scope.saveDialog.errorMessage = data.message;
+                }
+                $scope.status.loading = false;
+            });
     };
 
     $scope.isOkButtonDisabled = function() {
-      if ($scope.status.loading) {
-        return false;
-      } if ($scope.error && $scope.error.conflictResolveAction) {
-        if ($scope.error.conflictResolveAction === 'saveAs') {
-          return !$scope.error.saveAs || $scope.error.saveAs.length == 0;
-        } 
-        return false;
-            
-      }
-      return true;
+        if ($scope.status.loading) {
+            return false;
+        } else if ($scope.error && $scope.error.conflictResolveAction) {
+            if ($scope.error.conflictResolveAction === 'saveAs') {
+                return !$scope.error.saveAs || $scope.error.saveAs.length == 0;
+            } else {
+                return false;
+            }
+        }
+        return true;
     };
 
     $scope.okClicked = function() {
-      if ($scope.error) {
-        if ($scope.error.conflictResolveAction === 'discardChanges') {
-          $scope.close();
-          $route.reload();
-        } else if ($scope.error.conflictResolveAction === 'overwrite'
+        if ($scope.error) {
+            if ($scope.error.conflictResolveAction === 'discardChanges') {
+                $scope.close();
+                $route.reload();
+            } else if ($scope.error.conflictResolveAction === 'overwrite'
                 || $scope.error.conflictResolveAction === 'newVersion') {
-          $scope.save();
-        } else if($scope.error.conflictResolveAction === 'saveAs') {
-          $scope.save(() => {
-            $rootScope.ignoreChanges = true;  // Otherwise will get pop up that changes are not saved.
-            if (editorManager.getStencilData()) {
-              const stencilNameSpace = editorManager.getStencilData().namespace;
-              if (stencilNameSpace !== undefined && stencilNameSpace !== null && stencilNameSpace.indexOf('cmmn1.1') !== -1) {
-                $location.path("/casemodels");
-                return;
-              }
-            }
-            $location.path('/processes');
+                $scope.save();
+            } else if($scope.error.conflictResolveAction === 'saveAs') {
+                $scope.save(function() {
+                    $rootScope.ignoreChanges = true;  // Otherwise will get pop up that changes are not saved.
+                    if (editorManager.getStencilData()) {
+                        var stencilNameSpace = editorManager.getStencilData().namespace;
+                        if (stencilNameSpace !== undefined && stencilNameSpace !== null && stencilNameSpace.indexOf('cmmn1.1') !== -1) {
+                            $location.path("/casemodels");
+                            return;
+                        }
+                    }
+                    $location.path('/processes');
             	});
+            }
         }
-      }
     };
 
-  }]);
+}]);
 
 angular.module('flowableModeler').controller('ValidateModelCtrl',['$scope', '$http', 'editorManager',
-  function ($scope, $http, editorManager) {
+    function ($scope, $http, editorManager) {
     
-    const editor = editorManager.getEditor();
-    const model = editorManager.getModel();
+        var editor = editorManager.getEditor();
+        var model = editorManager.getModel();
         
-    $scope.status = {
-      loading: true
-    };
+        $scope.status = {
+            loading: true
+        };
 
-    $scope.model = {
+        $scope.model = {
         	errors: []
-    };
+        };
         
-    $scope.errorGrid = {
-      data: $scope.model.errors,
-      headerRowHeight: 28,
+        $scope.errorGrid = {
+            data: $scope.model.errors,
+            headerRowHeight: 28,
         	enableRowSelection: true,
         	enableRowHeaderSelection: false,
         	multiSelect: false,
         	modifierKeysToMultiSelect: false,
         	enableHorizontalScrollbar: 0,
-      enableColumnMenus: false,
-      enableSorting: false,
-      columnDefs: [
-        {field: 'activityName', displayName: 'Name', width:125},
-        {field: 'defaultDescription', displayName: 'Description'},
-        {field: 'warning', displayName: 'Critical', cellTemplate:'editor-app/configuration/properties/errorgrid-critical.html', width: 100}
-      ]
-    };
+			enableColumnMenus: false,
+			enableSorting: false,
+            columnDefs: [
+                {field: 'activityName', displayName: 'Name', width:125},
+                {field: 'defaultDescription', displayName: 'Description'},
+                {field: 'warning', displayName: 'Critical', cellTemplate:'editor-app/configuration/properties/errorgrid-critical.html', width: 100}
+            ]
+        };
         
-    $scope.errorGrid.onRegisterApi = function(gridApi) {
-	        // set gridApi on scope
+        $scope.errorGrid.onRegisterApi = function(gridApi) {
+	        //set gridApi on scope
 	        $scope.gridApi = gridApi;
-	        gridApi.selection.on.rowSelectionChanged($scope, (row) => {
+	        gridApi.selection.on.rowSelectionChanged($scope, function(row) {
 	            if (row.isSelected) {
 	                editorManager.navigateTo(row.entity.activityId);
             		$scope.$hide();
@@ -554,25 +555,25 @@ angular.module('flowableModeler').controller('ValidateModelCtrl',['$scope', '$ht
 	        });
 	    };
 
-    $http({
-      url: FLOWABLE.URL.validateModel(),
-      method: 'POST',
-      cache: false,
-      headers: {
-        "Content-Type":"application/json;charset=utf-8",
-        "Authorization": localStorage.getItem("current_user_token"),
-        'FtId': FLOWABLE.CONFIG.FtId
-      },
-      data: model
+        $http({
+            url: FLOWABLE.URL.validateModel(),
+            method: 'POST',
+            cache: false,
+            headers: {
+                "Content-Type":"application/json;charset=utf-8",
+                "Authorization": localStorage.getItem("current_user_token"),
+                'FtId': FLOWABLE.CONFIG.FtId
+            },
+            data: model
             
-    }).then((response)=> {
+        }).then(function(response){
         	$scope.status.loading = false;
-      response.data.forEach((row) => {
-        $scope.model.errors.push(row);
-      });
+            response.data.forEach(function (row) {
+                $scope.model.errors.push(row);
+            });
             
-    },(response)=> {
-      console.log(response);
-    });
-  }
+        },function(response){
+            console.log(response);
+        });
+    }
 ]);

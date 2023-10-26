@@ -12,7 +12,7 @@ export const getByIdMixin = {
   },
   watch: {
     modelId: {
-      handler(val) {
+      handler: function(val) {
         if (val) {
           this.visible = true;
           this.getModel(val);
@@ -22,17 +22,17 @@ export const getByIdMixin = {
     }
   },
   methods: {
-    getModel(id) {
+    getModel: function(id) {
       this.loading = true;
       return this.fn.findById(id)
-        .then((v) => {
+        .then(v => {
           this.model = this.getFindModel(v);
         })
         .finally(() => {
           this.loading = false;
         });
     },
-    getFindModel(re) {
+    getFindModel: function(re) {
       return re.data;
     }
   }
@@ -49,13 +49,13 @@ export const dialogAutoCreateMixin = {
     /**
      * 点击提交按钮，触发表单校验
      */
-    toValidate(ref = this.refName) {
+    toValidate: function(ref = this.refName) {
       return this.$refs[ref].validate();
     },
     /**
      * 表单校验成功之后，保存数据
      */
-    handleOk() {
+    handleOk: function() {
       this.loading = true;
       this.fn.save(this.getSaveModel())
         .then(() => {
@@ -70,13 +70,13 @@ export const dialogAutoCreateMixin = {
     /**
      * 保存的对象处理
      */
-    getSaveModel() {
+    getSaveModel: function() {
       return this.model;
     },
     /**
      * 弹窗关闭之后，清空校验，清空数据
      */
-    onClosed() {
+    onClosed: function() {
       this.model = { ...this.modelSchema };
       this.$nextTick(() => {
         this.$refs[this.refName].clearValidate();

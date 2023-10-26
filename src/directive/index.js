@@ -1,15 +1,17 @@
-import hasRole from './permission/hasRole'
-import hasPermi from './permission/hasPermi' 
+import hasRole from "./permission/hasRole";
+import hasPermi from "./permission/hasPermi";
+import postTheme from "./postTheme";
 
 const install = function permiFun(Vue) {
-  Vue.directive('hasRole', hasRole)
-  Vue.directive('hasPermi', hasPermi)
-}
+  Vue.directive("hasRole", hasRole);
+  Vue.directive("hasPermi", hasPermi);
+  Vue.directive("postTheme", postTheme);
+};
 
 if (window.Vue) {
-  window.hasRole = hasRole
-  window.hasPermi = hasPermi
+  window.hasRole = hasRole;
+  window.hasPermi = hasPermi;
   Vue.use(install); // eslint-disable-line
 }
 
-export default install
+export default install;

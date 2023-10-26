@@ -2,7 +2,6 @@ import Vue from "vue";
 import { queryAuditorDeptTree, queryUserBydept } from "./api/api";
 import SelectAuditorByDepModalForAudit from "./SelectAuditorByDepModalForAudit";
 
-
 /**
    * 业务逻辑策略模式
    * @type {{auditNeedDefault(): (Promise<void>|undefined)}}
@@ -20,13 +19,12 @@ const stragegyMap = {
           unlimit: false
         };
         return queryAuditorDeptTree(params)
-          .then((res) => {
+          .then(res => {
             if (res.data.code === 200 && res.data.rows?.length > 0) {
               const item = res.result[0];
               return { orgCode: item.orgCode, id: [item.id].toString() };
-            } 
+            }
             return [];
-              
           }).then(selectedRow => {
             const { orgCode, id } = selectedRow;
             const queryUserByDeptParams = {
@@ -35,18 +33,18 @@ const stragegyMap = {
               orgCode,
               pageNo: 1,
               pageSize: 10
-            }
+            };
             queryUserBydept(queryUserByDeptParams)
-              .then((result) => {
+              .then(result => {
                 if (result.data.code === 200) {
                   const { rows } = result.data;
                   if (rows && rows.length > 0) {
-                    this.selectOK(rows, rows[0].userId)
+                    this.selectOK(rows, rows[0].userId);
                   }
                   return rows;
                 }
-              })
-          })
+              });
+          });
       }
     };
     if (this.queryParams.actId) {
@@ -57,20 +55,24 @@ const stragegyMap = {
           setDefault();
           unWatch();
         }
-      })
+      });
     }
   }
 };
 
 export default Vue.extend({
   name: "SelectAuditorByDept",
-  components: {SelectAuditorByDepModalForAudit},
+  components: { SelectAuditorByDepModalForAudit },
   inject: {
     // 用于接收父组件的属性
     handMeDown: {
       from: "handMeDown",
       default: () => ({})
     }
+  },
+  model: {
+    prop: "value",
+    event: "change"
   },
   props: {
     modalWidth: {
@@ -80,6 +82,7 @@ export default Vue.extend({
     },
     value: {
       type: String,
+      default: "",
       required: false
     },
     disabled: {
@@ -98,7 +101,7 @@ export default Vue.extend({
     },
     selectUsers: {
       type: String,
-      default: "",
+      default: ""
     }
   },
   data() {
@@ -107,31 +110,27 @@ export default Vue.extend({
       userIds: "",
       userNames: "",
       userInfos: []
-    }
-  },
-  mounted() {
-    this.userIds = this.value;
-    if (this.handMeDown?.field) stragegyMap[this.handMeDown?.field].apply(this); // 默认选择下一节点审批人逻辑
+    };
   },
   watch: {
     value(val) {
-      this.userIds = val
+      this.userIds = val;
     },
     visible: {
       handler() {
         if (this.visible === true) {
           this.onSearchDepUser();
         }
-      },
+      }
     }
   },
-  model: {
-    prop: 'value',
-    event: 'change'
+  mounted() {
+    this.userIds = this.value;
+    if (this.handMeDown?.field) stragegyMap[this.handMeDown?.field].apply(this); // 默认选择下一节点审批人逻辑
   },
   methods: {
     initComp(userNames) {
-      this.userNames = userNames
+      this.userNames = userNames;
     },
     onSearchDepUser() {
       // 传值进入选择组件
@@ -155,20 +154,20 @@ export default Vue.extend({
     },
     selectOK(rows, idstr, needClose = true) {
       if (!rows) {
-        this.userNames = ''
-        this.userIds = ''
+        this.userNames = "";
+        this.userIds = "";
       } else {
-        let temp = ''
+        let temp = "";
         rows.forEach(item => {
-          temp += `,${item.realname}`
+          temp += `,${item.realname}`;
           if (!this.userInfos.find(v => v.userId === item.userId)) {
-            this.userInfos.push(item)
+            this.userInfos.push(item);
           }
         });
-        this.userNames = temp.substring(1)
-        this.userIds = idstr
+        this.userNames = temp.substring(1);
+        this.userIds = idstr;
       }
-      this.$emit("change", rows, this.queryParams.actId, idstr)
+      this.$emit("change", rows, this.queryParams.actId, idstr);
       if (needClose) {
         this.visible = false;
       }
@@ -177,15 +176,16 @@ export default Vue.extend({
      * 删掉人员
      */
     handleChange() {
-      this.selectOK([], "", false)
+      this.selectOK([], "", false);
     }
   },
   render() {
     return (
       <div>
-        <t-popup 
+        <t-popup
           visible={this.visible}
-          on-visible-change={(val) => { this.visible = val }} 
+          trigger="click"
+          on-visible-change={val => { this.visible = val; }}
           content={() =>
             <SelectAuditorByDepModalForAudit
               {...this.$attrs}
@@ -213,6 +213,6 @@ export default Vue.extend({
           </t-select>
         </t-popup>
       </div>
-    )
+    );
   }
-})
+});

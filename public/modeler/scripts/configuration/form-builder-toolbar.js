@@ -10,25 +10,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+'use strict';
 
-
-
-const FORM_TOOLBAR_CONFIG = {
-  "items" : [
-    {
-      "type" : "button",
-      "title" : "FORM_TOOLBAR.ACTION.SAVE",
-      "cssClass" : "editor-icon editor-icon-save",
-      "action" : "FORM_TOOLBAR.ACTIONS.saveModel"
-    }
-  ],
+var FORM_TOOLBAR_CONFIG = {
+    "items" : [
+        {
+            "type" : "button",
+            "title" : "FORM_TOOLBAR.ACTION.SAVE",
+            "cssClass" : "editor-icon editor-icon-save",
+            "action" : "FORM_TOOLBAR.ACTIONS.saveModel"
+        }
+    ],
     
-  "secondaryItems" : [
-    {
+    "secondaryItems" : [
+		{
 		    "type" : "button",
 		    "title" : "Close",
 		    "cssClass" : "glyphicon glyphicon-remove",
 		    "action" : "FORM_TOOLBAR.ACTIONS.closeEditor"
-    }
-  ]
+		}
+    ]
 };

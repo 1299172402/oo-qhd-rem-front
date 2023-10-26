@@ -11,7 +11,7 @@
         <el-input v-model="form.title" readonly />
       </el-form-item>
       <el-form-item label="发送方：">
-        <el-input v-model="form.senderKey" readonly />
+        <el-input v-model="messageTypelabel[form.messageType]" readonly />
       </el-form-item>
       <el-form-item label="接收方：">
         <el-input v-model="form.recipients" readonly />
@@ -27,7 +27,7 @@
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button icon="el-icon-close" class="cancel-btn" @click="close">
+      <el-button class="commonBtn" @click="close">
         取消
       </el-button>
     </div>
@@ -39,6 +39,7 @@ import { getLogData } from "@/api/intelligentOilfield/messaging";
 
 export default {
   name: "LoggingView",
+  dicts: ["sys_message_type"],
   data() {
     return {
       form: {
@@ -49,14 +50,20 @@ export default {
         createdTime: "",
         status: ""
       },
-      visible: false
+      visible: false,
+      messageTypelabel: {}
     };
+  },
+  created() {
+    this.$on("dictReady", () => {
+      this.messageTypelabel = this.dict.label.sys_message_type;
+    });
   },
   methods: {
     /** 数据回显 */
     bindModel(messageId) {
       if (messageId) {
-        getLogData(messageId).then((data) => {
+        getLogData(messageId).then(data => {
           this.form = data;
         });
       }

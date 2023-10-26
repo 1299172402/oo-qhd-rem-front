@@ -1,33 +1,36 @@
 <template>
   <transition name="fade" mode="out-in">
-    <keep-alive :include="this.aliveViews">
-      <router-view v-if="!this.isRefreshing" :key="$route.path"/>
+    <keep-alive :include="[...aliveViews,'blank']">
+      <router-view v-if="!isRefreshing" :key="$route.path" />
     </keep-alive>
   </transition>
 </template>
 <script lang="ts">
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   computed: {
     ...mapGetters({
-      tabRouterList: 'tabRouter/tabRouterList',
-      isRefreshing: 'tabRouter/isRefreshing',
-      isUseTabsRouter: 'setting/isUseTabsRouter',
+      tabRouterList: "tabRouter/tabRouterList",
+      isRefreshing: "tabRouter/isRefreshing",
+      isUseTabsRouter: "setting/isUseTabsRouter"
     }),
     aliveViews() {
-      return this.tabRouterList?.filter((route) => route.isAlive).map((route) => route.name);
-    },
-  },
+        console.log(this.isRefreshing,999)
+      console.log(this.tabRouterList?.filter(route => route.isAlive).map(route => route.name),888)
+      return this.tabRouterList?.filter(route => route.isAlive).map(route => route.name);
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
-@import '@/style/variables';
+@import "@/style/variables";
 
 .fade-leave-active,
 .fade-enter-active {
   transition: opacity @anim-duration-slow @anim-time-fn-easing;
 }
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;

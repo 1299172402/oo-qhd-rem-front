@@ -1,0 +1,10 @@
+{{#each refs}}{{#if (isDiffRef this ../name)}}import { {{this}} } from "./{{lowerCase this}}";
+
+{{/if}}{{/each~}}
+export interface {{name}} {
+  [key: string]: string | number | boolean | number[] | string[] | boolean[]{{#each refs}} | {{this}}{{/each}}{{#each refs}} | {{this}}[]{{/each}};
+  {{#each properties}}
+
+  {{@key}}: {{this}};
+  {{/each}}
+}

@@ -6,8 +6,8 @@
 export function getAttributeByName(obj, name) {
   if (obj.currentStyle) {
     return obj.currentStyle[name];
-  } 
+  }
   return getComputedStyle(obj, null)[name];
 }
 
-export default {}
+export default {};

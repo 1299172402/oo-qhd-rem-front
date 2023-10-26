@@ -6,23 +6,24 @@
       label="选择应用"
       btn-type="primary"
       dialog-title="选择应用"
-      @closed="visible=false"
+      :append-to-body="true"
+      @closed="handleClosed"
       @ok="handleApplication"
-      @open="handleOpen"
+      @open="searchQuery"
     >
       <el-form
         ref="queryForm"
         :model="queryParams"
         :inline="true"
       >
-        <el-form-item label="应用类型：" prop="appType">
+        <el-form-item label="应用分类：" prop="apply">
           <el-select
-            v-model="queryParams.appType"
-            placeholder="请选择应用类型"
+            v-model="queryParams.apply"
+            placeholder="请选择应用分类"
             clearable
           >
             <el-option
-              v-for="dict in dict.type.sys_app_category"
+              v-for="dict in dict.type.sys_app_applyCenter"
               :key="dict.value"
               :label="dict.label"
               :value="dict.value"
@@ -53,14 +54,23 @@
       </el-form>
       <el-table
         ref="table"
+        class="dialog-table"
         :data="dataSource"
         :row-key="getRowKey"
         @selection-change="handleSelectionChange"
+        @cell-click="handleSelectCell"
       >
         <el-table-column
+          v-if="multiple"
           :reserve-selection="true"
           type="selection"
           width="55"
+          align="center"
+        />
+        <el-table-column
+          type="index"
+          :index="indexMethod"
+          label="序号"
           align="center"
         />
         <el-table-column
@@ -72,8 +82,8 @@
           align="center"
         >
           <template slot-scope="scope">
-            <span v-if="item.props === 'appType'">
-              <dict-tag :options="dict.type.sys_app_category" :value="scope.row.appType" list-class="default" />
+            <span v-if="item.props === 'apply'">
+              <dict-tag :options="dict.type.sys_app_applyCenter" :value="scope.row.apply" list-class="default" />
             </span>
             <span v-else-if="item.props === 'supportTerminal'">
               <span> {{ scope.row.isPc === 1 ? "PC" : "" }} </span>
@@ -88,7 +98,7 @@
       </el-table>
       <pagination
         :total="ipagination.total"
-        :page.sync="ipagination.pageNum"
+        :page.sync="ipagination.current"
         :limit.sync="ipagination.pageSize"
         @pagination="handlePage"
       />
@@ -104,7 +114,7 @@ import { listApp } from "@/api/intelligentOilfield/system/app";
 
 export default {
   name: "ChooseTenant",
-  dicts: ["sys_app_category"],
+  dicts: ["sys_app_applyCenter"],
   components: {
     CommonDialog
   },
@@ -113,13 +123,16 @@ export default {
     tableData: {
       type: Array,
       default: () => ([])
+    },
+    multiple: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     const columns = [
-      { props: "appId", label: "应用编号" },
       { props: "appName", label: "应用名称" },
-      { props: "appType", label: "应用类型" },
+      { props: "apply", label: "应用分类" },
       { props: "supportTerminal", label: "支持终端" }
     ];
     return {
@@ -128,34 +141,46 @@ export default {
         list: listApp
       },
       queryParams: {
-        appType: "",
+        apply: "",
         appName: ""
       },
       columns,
-      appIds: []
+      defaultLoad: false
     };
   },
+  computed: {
+    dataChange() {
+      const { dataSource, tableData } = this;
+      return { dataSource, appIds: tableData.map(item => item.appId) };
+    }
+  },
+  watch: {
+    dataChange: {
+      handler(val) {
+        if (val.dataSource.length && val.appIds.length) {
+          this.$nextTick(() => {
+            val.dataSource.forEach(row => {
+              if (val.appIds.indexOf(row.appId) >= 0) {
+                this.$refs.table?.toggleRowSelection(row, true);
+              } else {
+                this.$refs.table?.toggleRowSelection(row, false);
+              }
+            });
+          });
+        }
+      },
+      immediate: true
+    }
+  },
   methods: {
-    /**
-     * 弹窗打开操作
-     */
-    handleOpen() {
-      this.$nextTick(() => {
-        this.getAppIds();
-        this.dataSource.forEach((row) => {
-          if (this.appIds.indexOf(row.appId) >= 0) {
-            this.$refs.table.toggleRowSelection(row, true);
-          } else {
-            this.$refs.table.toggleRowSelection(row, false);
-          }
-        });
-      });
+    indexMethod(index) {
+      return index + 1 + (this.ipagination.current - 1) * this.ipagination.pageSize;
     },
-    /**
-     * 获取已选appId集合
-     */
-    getAppIds() {
-      this.appIds = this.tableData.map((item) => item.appId);
+    handleSelectCell(data) {
+      if (!this.multiple) {
+        this.$emit("on-select-app", data);
+        this.visible = false;
+      }
     },
     /**
      * 选择租户
@@ -175,6 +200,10 @@ export default {
      */
     getRowKey(row) {
       return row.appId;
+    },
+    handleClosed() {
+      this.queryParams = {};
+      this.visible = false;
     }
   }
 };

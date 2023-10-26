@@ -17,37 +17,37 @@
 
 angular.module('flowableModeler').controller('FlowableConditionExpressionCtrl', [ '$scope', '$modal', function($scope, $modal) {
 
-  // Config for the modal window
-  const opts = {
-    template: `editor-app/configuration/properties/condition-expression-popup.html?version=${  Date.now()}`,
-    scope: $scope
-  };
+    // Config for the modal window
+    var opts = {
+        template: 'editor-app/configuration/properties/condition-expression-popup.html?version=' + Date.now(),
+        scope: $scope
+    };
 
-  // Open the dialog
-  _internalCreateModal(opts, $modal, $scope);
+    // Open the dialog
+    _internalCreateModal(opts, $modal, $scope);
 }]);
 
 angular.module('flowableModeler').controller('FlowableConditionExpressionPopupCtrl',
-  [ '$rootScope', '$scope', '$translate', 'FormBuilderService', function($rootScope, $scope, $translate, FormBuilderService) {
+    [ '$rootScope', '$scope', '$translate', 'FormBuilderService', function($rootScope, $scope, $translate, FormBuilderService) {
     	
     // Put json representing assignment on scope
     if ($scope.property.value !== undefined && $scope.property.value !== null
         && $scope.property.value.expression !== undefined
         && $scope.property.value.expression !== null) {
 
-      $scope.expression = $scope.property.value.expression;
+        $scope.expression = $scope.property.value.expression;
 
     } else if ($scope.property.value !== undefined && $scope.property.value !== null) {
-      $scope.expression = {type: 'static', staticValue: $scope.property.value};
+        $scope.expression = {type: 'static', staticValue: $scope.property.value};
         
     } else {
-      $scope.expression = {};
+        $scope.expression = {};
     }
 
     $scope.save = function() {
-      $scope.property.value = {expression: $scope.expression};
-      $scope.updatePropertyInModel($scope.property);
-      $scope.close();
+        $scope.property.value = {expression: $scope.expression};
+        $scope.updatePropertyInModel($scope.property);
+        $scope.close();
     };
 
     // Close button handler
@@ -56,4 +56,4 @@ angular.module('flowableModeler').controller('FlowableConditionExpressionPopupCt
     	$scope.$hide();
     };
 
-  }]);
+}]);

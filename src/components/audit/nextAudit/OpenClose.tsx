@@ -1,5 +1,5 @@
 import Vue from "vue";
-import "./style/OpenCloseStyle.less"
+import "./style/OpenCloseStyle.less";
 
 // 默认参数
 const defaultSetting = {
@@ -128,7 +128,7 @@ export default Vue.extend({
     myIconStyle() {
       return {
         "height": this.backgroundStyle.height || defaultSetting.backgroundStyle.height,
-        "transform": "translateX(11px)"
+        "transform": "translateX(1px)"
       };
     },
     myIconClass() {
@@ -149,17 +149,17 @@ export default Vue.extend({
         style={this.myStyle}
         class="zm-open-close"
         title={this.isOpen ? this.title[0] : this.title[1]}
-        onMouseenter={() => { this.isHover = true}}
-        onMouseleave={() => { this.isHover = false}}
+        onMouseenter={() => { this.isHover = true; }}
+        onMouseleave={() => { this.isHover = false; }}
         onClick={this.handleClick}
       >
-        <span> 
+        <span>
           <t-icon name={this.isOpen ? this.myIconClass[0] : this.myIconClass[1]} style={this.myIconStyle} />
         </span>
         {
           this.$slots.default ? this.$slots.default : null
         }
       </span>
-    )
+    );
   }
-})  
+});

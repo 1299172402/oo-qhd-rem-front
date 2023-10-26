@@ -9,7 +9,7 @@ interface DataReturned {
     nextActId?: string,
 }
 
-const prefixCls = "select-next-audit"
+const prefixCls = "select-next-audit";
 export default Vue.extend({
   name: "SelectNextAudit",
   components: {
@@ -54,9 +54,8 @@ export default Vue.extend({
         return "DefaultNextAudit";
       } if (this.nextAuditInfo.actId !== "end" && this.nextAuditInfo.selectNextAuditSetting !== null) {
         return "AssignNextAudit";
-      } 
+      }
       return "None";
-            
     },
     selectNextAuditSetting() {
       return this.dataSource.nextActivities.find(i => i.actId === this.nextAuditInfo.actId)?.selectNextAuditSetting;
@@ -141,7 +140,7 @@ export default Vue.extend({
           ...first,
           userId: first.userName,
           userRealName: first.nickName
-        }
+        };
         this.auditIdString = idstr;
         this.auditorDataReduction();
       }
@@ -290,11 +289,11 @@ export default Vue.extend({
 
   render() {
     const createSelectAuditEl = (node, index) => {
-      if(node.assignResources) {
+      if (node.assignResources) {
         return (
           <t-select
             placeholder="请选择审批人"
-            onChange={(e) => this.handleParallelNodeUserChange(e, index)}
+            onChange={e => this.handleParallelNodeUserChange(e, index)}
           >
             {
               this.node.assignResources.map(item => (
@@ -307,7 +306,7 @@ export default Vue.extend({
               ))
             }
           </t-select>
-        )
+        );
       }
       if (node.selectNextAuditSetting) {
         return (
@@ -318,17 +317,17 @@ export default Vue.extend({
             value-prop="id"
             options={node.assignResources}
             muti={false}
-            onChange={(e) => {this.handleParallelNodeModelSelectAuditorOk(e, index)}}
+            onChange={e => { this.handleParallelNodeModelSelectAuditorOk(e, index); }}
           ></SelectAuditorByDept>
-        )
-      } 
-      return null
-    }
+        );
+      }
+      return null;
+    };
 
     return <div class={`${prefixCls}-container`}>
       {
-        this.isParallelNode && this.parallelNodeModel ? 
-          (
+        this.isParallelNode && this.parallelNodeModel
+          ? (
             <div class={`${prefixCls}-parallel-node-container`}>
               {
                 this.dataSource.nextActivities.map((node, index) => (
@@ -336,7 +335,7 @@ export default Vue.extend({
                     <div class={`${prefixCls}-parallel-node__item-name text-overflow-hidden`} title={node.actName}>
                       {node.actName}
                     </div>
-                    <div class={[`${prefixCls}-parallel-node__item-user`, {'hide-red-border': this.parallelNodeModel[index].users.userId}]}>
+                    <div class={[`${prefixCls}-parallel-node__item-user`, { "hide-red-border": this.parallelNodeModel[index].users.userId }]}>
                       {createSelectAuditEl(node, index)}
                     </div>
                   </div>
@@ -366,7 +365,7 @@ export default Vue.extend({
               value={this.selectAuditUser.userId}
               show-search
               filterOption={this.filterOption}
-              onChange={($event) => this.assignAuditorOk($event, this.nextAuditInfo.assignResources)}
+              onChange={$event => this.assignAuditorOk($event, this.nextAuditInfo.assignResources)}
             >
               {
                 this.nextAuditInfo.assignResources?.map(item => <t-option key={item.id} label={item.name} value={item.id} />)
@@ -375,6 +374,6 @@ export default Vue.extend({
           </div> : null
         }
       </div>
-    </div>
+    </div>;
   }
-})
+});

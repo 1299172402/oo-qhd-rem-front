@@ -1,0 +1,2670 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API 描述",
+    "version": "1.0",
+    "title": "Spring Boot 使用 Swagger2 构建RESTful API"
+  },
+  "host": "localhost:9090",
+  "basePath": "/",
+  "tags": [
+    { "name": "管道管理", "description": "Pipeline Controller" },
+    { "name": "海况数据管理", "description": "Geo Sea Controller" },
+    { "name": "土壤数据管理", "description": "Geo Soil Controller" },
+    { "name": "终端管理", "description": "End Termination Controller" },
+    { "name": "所属管理", "description": "Owner Controller" },
+    {
+      "name": "锚固件数据管理",
+      "description": "Construction Bulkhead Controller"
+    },
+    {
+      "name": "牺牲阳极数据管理",
+      "description": "Construction Anode Controller"
+    },
+    {
+      "name": "弯管弯头数据管理",
+      "description": "Construction Bend Controller"
+    },
+    { "name": "三通数据管理", "description": "Construction Tee Controller" },
+    { "name": "设计数据管理", "description": "Design Controller" },
+    { "name": "材料管理", "description": "Material Controller" },
+    {
+      "name": "绝缘法兰数据管理",
+      "description": "Construction Flange Controller"
+    },
+    {
+      "name": "焊缝补口数据管理",
+      "description": "Construction Weld Controller"
+    },
+    { "name": "管单元数据", "description": "Construction Linepipe Controller" },
+    { "name": "涂层数据管理", "description": "Construction Coating Controller" }
+  ],
+  "paths": {
+    "/api/offshorepipeline/constructionanode": {
+      "get": {
+        "tags": ["牺牲阳极数据管理"],
+        "summary": "获取牺牲阳极数据",
+        "description": "根据id或者pipelineId查询牺牲阳极数据",
+        "operationId": "getConstructionAnodeUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ConstructionAnodeDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["牺牲阳极数据管理"],
+        "summary": "添加牺牲阳极数据",
+        "description": "添加牺牲阳极数据",
+        "operationId": "addConstructionAnodeUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionAnodeDTO",
+            "description": "constructionAnodeDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionAnodeDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["牺牲阳极数据管理"],
+        "summary": "修改牺牲阳极数据",
+        "description": "修改牺牲阳极数据",
+        "operationId": "updateConstructionAnodeUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionAnodeDTO",
+            "description": "constructionAnodeDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionAnodeDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["牺牲阳极数据管理"],
+        "summary": "删除牺牲阳极数据",
+        "description": "传入id或pipelineId删除牺牲阳极",
+        "operationId": "removeConstructionAnodeUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/constructionbend": {
+      "get": {
+        "tags": ["弯管弯头数据管理"],
+        "summary": "获取弯管弯头数据",
+        "description": "根据id或者pipelineId查询弯管弯头数据",
+        "operationId": "getConstructionBendUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ConstructionBendDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["弯管弯头数据管理"],
+        "summary": "添加弯管弯头数据",
+        "description": "添加弯管弯头数据",
+        "operationId": "addConstructionBendUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionBendDTO",
+            "description": "constructionBendDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionBendDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["弯管弯头数据管理"],
+        "summary": "修改弯管弯头数据",
+        "description": "修改弯管弯头数据",
+        "operationId": "updateConstructionBendUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionBendDTO",
+            "description": "constructionBendDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionBendDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["弯管弯头数据管理"],
+        "summary": "删除弯管弯头数据",
+        "description": "传入id或pipelineId删除弯管弯头",
+        "operationId": "removeConstructionBendUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/constructionbulkhead": {
+      "get": {
+        "tags": ["锚固件数据管理"],
+        "summary": "获取锚固件数据",
+        "description": "根据id或者pipelineId查询锚固件数据",
+        "operationId": "getConstructionBulkheadUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ConstructionBulkheadDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["锚固件数据管理"],
+        "summary": "添加锚固件数据",
+        "description": "添加锚固件数据",
+        "operationId": "addConstructionBulkheadUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionBulkheadDTO",
+            "description": "constructionBulkheadDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionBulkheadDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["锚固件数据管理"],
+        "summary": "修改锚固件数据",
+        "description": "修改锚固件数据",
+        "operationId": "updateConstructionBulkheadUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionBulkheadDTO",
+            "description": "constructionBulkheadDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionBulkheadDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["锚固件数据管理"],
+        "summary": "删除锚固件数据",
+        "description": "传入id或pipelineId删除锚固件",
+        "operationId": "removeConstructionBulkheadUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/constructioncoating": {
+      "get": {
+        "tags": ["涂层数据管理"],
+        "summary": "获取涂层数据",
+        "description": "根据id或者pipelineId查询涂层数据",
+        "operationId": "getConstructionCoatingUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ConstructionCoatingDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["涂层数据管理"],
+        "summary": "添加涂层数据",
+        "description": "添加涂层数据",
+        "operationId": "addConstructionCoatingUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionCoatingDTO",
+            "description": "constructionCoatingDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionCoatingDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["涂层数据管理"],
+        "summary": "修改涂层数据",
+        "description": "修改涂层数据",
+        "operationId": "updateConstructionCoatingUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionCoatingDTO",
+            "description": "constructionCoatingDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionCoatingDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["涂层数据管理"],
+        "summary": "删除涂层数据",
+        "description": "传入id或pipelineId删除涂层",
+        "operationId": "removeConstructionCoatingUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/constructioncoating/type": {
+      "get": {
+        "tags": ["涂层数据管理"],
+        "summary": "获取涂层类型",
+        "description": "获取涂层类型列表",
+        "operationId": "getConstructionCoatingTypesUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/SelectOption" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/constructionflange": {
+      "get": {
+        "tags": ["绝缘法兰数据管理"],
+        "summary": "获取绝缘法兰数据",
+        "description": "根据id或者pipelineId查询绝缘法兰数据",
+        "operationId": "getConstructionFlangeUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ConstructionFlangeDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["绝缘法兰数据管理"],
+        "summary": "添加绝缘法兰数据",
+        "description": "添加绝缘法兰数据",
+        "operationId": "addConstructionFlangeUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionFlangeDTO",
+            "description": "constructionFlangeDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionFlangeDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["绝缘法兰数据管理"],
+        "summary": "修改绝缘法兰数据",
+        "description": "修改绝缘法兰数据",
+        "operationId": "updateConstructionFlangeUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionFlangeDTO",
+            "description": "constructionFlangeDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionFlangeDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["绝缘法兰数据管理"],
+        "summary": "删除绝缘法兰数据",
+        "description": "传入id或pipelineId删除绝缘法兰",
+        "operationId": "removeConstructionFlangeUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/constructionlinepipe": {
+      "get": {
+        "tags": ["管单元数据"],
+        "summary": "获取管单元数据",
+        "description": "根据id或者pipelineId查询管单元数据",
+        "operationId": "getConstructionLinepipeUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ConstructionLinepipeDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["管单元数据"],
+        "summary": "添加管单元数据",
+        "description": "添加管单元数据",
+        "operationId": "addConstructionLinepipeUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionLinepipeDTO",
+            "description": "constructionLinepipeDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionLinepipeDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["管单元数据"],
+        "summary": "修改管单元数据",
+        "description": "修改管单元数据",
+        "operationId": "updateConstructionLinepipeUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionLinepipeDTO",
+            "description": "constructionLinepipeDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionLinepipeDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["管单元数据"],
+        "summary": "删除管单元数据",
+        "description": "传入id或pipelineId删除管单元",
+        "operationId": "removeConstructionLinepipeUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/constructiontee": {
+      "get": {
+        "tags": ["三通数据管理"],
+        "summary": "获取三通数据",
+        "description": "根据id或者pipelineId查询三通数据",
+        "operationId": "getConstructionTeeUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ConstructionTeeDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["三通数据管理"],
+        "summary": "添加三通数据",
+        "description": "添加三通数据",
+        "operationId": "addConstructionTeeUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionTeeDTO",
+            "description": "constructionTeeDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionTeeDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["三通数据管理"],
+        "summary": "修改三通数据",
+        "description": "修改三通数据",
+        "operationId": "updateConstructionTeeUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionTeeDTO",
+            "description": "constructionTeeDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionTeeDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["三通数据管理"],
+        "summary": "删除三通数据",
+        "description": "传入id或pipelineId删除三通",
+        "operationId": "removeConstructionTeeUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/constructionweld": {
+      "get": {
+        "tags": ["焊缝补口数据管理"],
+        "summary": "获取焊缝补口数据",
+        "description": "根据id或者pipelineId查询焊缝补口数据",
+        "operationId": "getConstructionWeldUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/ConstructionWeldDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["焊缝补口数据管理"],
+        "summary": "添加焊缝补口数据",
+        "description": "添加焊缝补口数据",
+        "operationId": "addConstructionWeldUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionWeldDTO",
+            "description": "constructionWeldDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionWeldDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["焊缝补口数据管理"],
+        "summary": "修改焊缝补口数据",
+        "description": "修改焊缝补口数据",
+        "operationId": "updateConstructionWeldUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "constructionWeldDTO",
+            "description": "constructionWeldDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ConstructionWeldDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["焊缝补口数据管理"],
+        "summary": "删除焊缝补口数据",
+        "description": "传入id或pipelineId删除焊缝补口",
+        "operationId": "removeConstructionWeldUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/design": {
+      "get": {
+        "tags": ["设计数据管理"],
+        "summary": "获取设计数据",
+        "description": "根据id或者pipelineId查询设计数据",
+        "operationId": "getDesignUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/DesignDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["设计数据管理"],
+        "summary": "添加设计数据",
+        "description": "添加设计数据",
+        "operationId": "addDesignUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "designDTO",
+            "description": "designDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/DesignDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["设计数据管理"],
+        "summary": "修改设计数据",
+        "description": "修改设计数据",
+        "operationId": "updateDesignUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "designDTO",
+            "description": "designDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/DesignDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["设计数据管理"],
+        "summary": "删除设计数据",
+        "description": "传入id或pipelineId删除设计",
+        "operationId": "removeDesignUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/endtermination": {
+      "get": {
+        "tags": ["终端管理"],
+        "summary": "获取终端列表",
+        "description": "获得所有终端列表",
+        "operationId": "getAllEndTerminationsUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/EndTerminationDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["终端管理"],
+        "summary": "增加终端",
+        "description": "增加终端",
+        "operationId": "addEndTerminationUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/EndTerminationDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["终端管理"],
+        "summary": "更新终端",
+        "description": "按照id更新终端",
+        "operationId": "updateEndTerminationUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/EndTerminationDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/endtermination/options": {
+      "get": {
+        "tags": ["终端管理"],
+        "summary": "获取终端options列表",
+        "description": "获得所有终端下拉列表",
+        "operationId": "getSelectOptionsUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/SelectOption" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/endtermination/{id}": {
+      "get": {
+        "tags": ["终端管理"],
+        "summary": "获取终端",
+        "description": "按照id获取终端",
+        "operationId": "getEndTerminationByIdUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/EndTerminationDTO" }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["终端管理"],
+        "summary": "移除终端",
+        "description": "按照id移除终端",
+        "operationId": "removeEndTerminationByIdUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/geosea": {
+      "get": {
+        "tags": ["海况数据管理"],
+        "summary": "获取海况数据",
+        "description": "有条件则传入条件{id}or{pipelineid}没有条件则不用传",
+        "operationId": "getGeoSeaUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/GeoSeaDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["海况数据管理"],
+        "summary": "新增海况数据",
+        "description": "新增海况数据",
+        "operationId": "addGeoSeaUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "geoSeaDTO",
+            "description": "geoSeaDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/GeoSeaDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["海况数据管理"],
+        "summary": "更新海况数据",
+        "description": "更新海况数据",
+        "operationId": "updateGeoSeaUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "geoSeaDTO",
+            "description": "geoSeaDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/GeoSeaDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/geosea/{id}": {
+      "delete": {
+        "tags": ["海况数据管理"],
+        "summary": "删除海况数据",
+        "description": "删除海况数据",
+        "operationId": "removeGeoSeaUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/geosoil": {
+      "get": {
+        "tags": ["土壤数据管理"],
+        "summary": "获取土壤数据",
+        "description": "有条件则传入条件{id}or{pipelineid}没有条件则不用传",
+        "operationId": "getGeoSeaUsingGET_1",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/GeoSoilDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["土壤数据管理"],
+        "summary": "新增土壤数据",
+        "description": "新增土壤数据",
+        "operationId": "addGeoSoilUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "geoSoilDTO",
+            "description": "geoSoilDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/GeoSoilDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["土壤数据管理"],
+        "summary": "更新土壤数据",
+        "description": "更新土壤数据",
+        "operationId": "updateGeoSoilUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "geoSoilDTO",
+            "description": "geoSoilDTO",
+            "required": true,
+            "schema": { "$ref": "#/definitions/GeoSoilDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/geosoil/{id}": {
+      "delete": {
+        "tags": ["土壤数据管理"],
+        "summary": "删除土壤数据",
+        "description": "删除土壤数据",
+        "operationId": "removeGeoSoilUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/material": {
+      "get": {
+        "tags": ["材料管理"],
+        "summary": "获取材料列表",
+        "description": "获得所有材料列表",
+        "operationId": "getAllMaterialsUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/MaterialDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["材料管理"],
+        "summary": "增加材料",
+        "description": "增加材料",
+        "operationId": "addMaterialUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/MaterialDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["材料管理"],
+        "summary": "更新材料",
+        "description": "按照id更新材料",
+        "operationId": "updateMaterialUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/MaterialDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/material/options": {
+      "get": {
+        "tags": ["材料管理"],
+        "summary": "获取材料options列表",
+        "description": "获得所有材料下拉列表",
+        "operationId": "getSelectOptionsUsingGET_1",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/SelectOption" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/material/{id}": {
+      "get": {
+        "tags": ["材料管理"],
+        "summary": "获取材料",
+        "description": "按照id获取材料",
+        "operationId": "getMaterialByIdUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/MaterialDTO" }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["材料管理"],
+        "summary": "移除材料",
+        "description": "按照id移除材料",
+        "operationId": "removeMaterialByIdUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/owner": {
+      "get": {
+        "tags": ["所属管理"],
+        "summary": "获取所属信息列表",
+        "description": "获得所有所属信息列表",
+        "operationId": "getAllOwnersUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/OwnerDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["所属管理"],
+        "summary": "增加所属信息",
+        "description": "增加所属信息",
+        "operationId": "addOwnerUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/OwnerDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["所属管理"],
+        "summary": "更新所属信息",
+        "description": "按照id更新所属信息",
+        "operationId": "updateOwnerUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/OwnerDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/owner/trees": {
+      "get": {
+        "tags": ["所属管理"],
+        "summary": "获取所属信息列表",
+        "description": "获得所有所属信息列表",
+        "operationId": "getOwnerTreesUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/OwnerDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/owner/{id}": {
+      "get": {
+        "tags": ["所属管理"],
+        "summary": "获取所属信息",
+        "description": "按照id获取所属信息",
+        "operationId": "getOwnerByIdUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/OwnerDTO" }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["所属管理"],
+        "summary": "移除所属信息",
+        "description": "按照id移除所属信息",
+        "operationId": "removeOwnerByIdUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    },
+    "/api/offshorepipeline/pipeline": {
+      "get": {
+        "tags": ["管道管理"],
+        "summary": "获取管道列表",
+        "description": "获得所有管道列表",
+        "operationId": "getAllPipelinesUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/PipelineDTO" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "post": {
+        "tags": ["管道管理"],
+        "summary": "增加管道",
+        "description": "增加管道",
+        "operationId": "addPipelineUsingPOST",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/PipelineDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "put": {
+        "tags": ["管道管理"],
+        "summary": "更新管道",
+        "description": "按照id更新管道",
+        "operationId": "updatePipelineUsingPUT",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "dto",
+            "description": "dto",
+            "required": true,
+            "schema": { "$ref": "#/definitions/PipelineDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "201": { "description": "Created" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/pipeline/innerouter": {
+      "get": {
+        "tags": ["管道管理"],
+        "summary": "获得管道/套管",
+        "description": "获得管道/套管",
+        "operationId": "getInnerOuterUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/pipeline/piggable": {
+      "get": {
+        "tags": ["管道管理"],
+        "summary": "获得管道是否通球",
+        "description": "获得管道是否通球",
+        "operationId": "getPipelinePiggableUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/SelectOption" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/pipeline/safetyclasses": {
+      "get": {
+        "tags": ["管道管理"],
+        "summary": "获得管道安全等级",
+        "description": "获得管道安全等级",
+        "operationId": "getPipelineSafetyClassesUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/SelectOption" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/pipeline/status": {
+      "get": {
+        "tags": ["管道管理"],
+        "summary": "获得管道状态",
+        "description": "获得管道状态",
+        "operationId": "getPipelineStatusUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/SelectOption" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/pipeline/types": {
+      "get": {
+        "tags": ["管道管理"],
+        "summary": "获得管道类型列表",
+        "description": "获得管道类型列表",
+        "operationId": "getPipelineTypesUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/SelectOption" }
+            }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      }
+    },
+    "/api/offshorepipeline/pipeline/{id}": {
+      "get": {
+        "tags": ["管道管理"],
+        "summary": "获取管道",
+        "description": "按照id获取管道",
+        "operationId": "getPipelineByIdUsingGET",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/PipelineDTO" }
+          },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" },
+          "404": { "description": "Not Found" }
+        }
+      },
+      "delete": {
+        "tags": ["管道管理"],
+        "summary": "移除管道",
+        "description": "按照id移除管道",
+        "operationId": "removePipelineByIdUsingDELETE",
+        "consumes": ["application/json"],
+        "produces": ["*/*"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK", "schema": { "type": "object" } },
+          "401": { "description": "Unauthorized" },
+          "204": { "description": "No Content" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ConstructionAnodeDTO": {
+      "type": "object",
+      "properties": {
+        "anodeModel": { "type": "string", "description": "型号" },
+        "anodeType": { "type": "string", "description": "阳极类型" },
+        "createTime": { "type": "string", "format": "date-time" },
+        "id": { "type": "string" },
+        "kp": {
+          "type": "integer",
+          "format": "int64",
+          "description": "阳极里程"
+        },
+        "material": { "type": "string", "description": "材料" },
+        "number": { "type": "string", "description": "阳极编号" },
+        "pipelineId": { "type": "string", "description": "管道编号" },
+        "singleAnodeWeight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "单只重量"
+        },
+        "updateTime": { "type": "string", "format": "date-time" }
+      }
+    },
+    "GeoSeaDTO": {
+      "type": "object",
+      "properties": {
+        "ambientTemperature": {
+          "type": "integer",
+          "format": "int64",
+          "description": "环境温度"
+        },
+        "centuryCurrentVelocity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "100年参考流速"
+        },
+        "centurySignificantWaveHeight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "100年有义波高"
+        },
+        "centuryWavePeakPeriod": {
+          "type": "integer",
+          "format": "int64",
+          "description": "100年波峰周期"
+        },
+        "createTime": { "type": "string", "format": "date-time" },
+        "id": { "type": "string" },
+        "inputDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "录入日期"
+        },
+        "location": { "type": "string", "description": "所处位置/坐标" },
+        "marineSurveyNo": {
+          "type": "string",
+          "description": "海况检测历史编号"
+        },
+        "oneYearMaxWaveHeight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "1年最大波高"
+        },
+        "oneYearSignificantWaveHeight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "1年有义波高"
+        },
+        "oneYearWavePeakPeriod": {
+          "type": "integer",
+          "format": "int64",
+          "description": "1年波峰周期"
+        },
+        "relativeCurrentAttackAngle": {
+          "type": "integer",
+          "format": "int64",
+          "description": "相对流攻角"
+        },
+        "relativeWaveAttackAngle": {
+          "type": "integer",
+          "format": "int64",
+          "description": "相对波攻角"
+        },
+        "remark": { "type": "string", "description": "备注" },
+        "seaStatePeriod": {
+          "type": "integer",
+          "format": "int64",
+          "description": "海况周期"
+        },
+        "seawaterDensity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "海水密度"
+        },
+        "seawaterKinematicViscosity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "海水运动粘度"
+        },
+        "steadyCurrentVelocityReferenceHeight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "稳定流参考高度"
+        },
+        "surveyCompany": { "type": "string", "description": "勘查单位" },
+        "tenYearCurrentVelocity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "10年参考流速"
+        },
+        "tenYearSignificantWaveHeight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "10年有义波高"
+        },
+        "tenYearWavePeakPeriod": {
+          "type": "integer",
+          "format": "int64",
+          "description": "10年波峰周期"
+        },
+        "turbulenceintensity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "紊流强度"
+        },
+        "updateTime": { "type": "string", "format": "date-time" }
+      }
+    },
+    "GeoSoilDTO": {
+      "type": "object",
+      "properties": {
+        "axialCoefficient": {
+          "type": "integer",
+          "format": "int64",
+          "description": "土壤轴向摩擦系数"
+        },
+        "backfilDensity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "土壤（回填土）密度"
+        },
+        "createTime": { "type": "string", "format": "date-time" },
+        "id": { "type": "string" },
+        "inspectionDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "检测日期"
+        },
+        "inspector": { "type": "string", "description": "检测单位" },
+        "lateralFrictionCoefficient": {
+          "type": "integer",
+          "format": "int64",
+          "description": "土壤侧向摩擦系数"
+        },
+        "location": { "type": "string", "description": "所处位置/坐标" },
+        "relevantStiffness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "土壤刚度"
+        },
+        "remark": { "type": "string", "description": "备注" },
+        "seabedRoughness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "土床粗糙度"
+        },
+        "shearStrength": {
+          "type": "integer",
+          "format": "int64",
+          "description": "土壤剪切强度"
+        },
+        "soilinspectionNo": {
+          "type": "string",
+          "description": "土壤检测历史编号"
+        },
+        "solidParticlesSpecificGravity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "土壤中固体颗粒的比重"
+        },
+        "specimenType": { "type": "string", "description": "检测样品类型" },
+        "type": { "type": "string", "description": "土壤质地" },
+        "updateTime": { "type": "string", "format": "date-time" },
+        "upliftCoefficient": {
+          "type": "integer",
+          "format": "int64",
+          "description": "土壤垂向摩擦系数"
+        },
+        "waterContent": {
+          "type": "integer",
+          "format": "int64",
+          "description": "土壤含水率"
+        }
+      }
+    },
+    "ConstructionLinepipeDTO": {
+      "type": "object",
+      "properties": {
+        "constructedBy": { "type": "string", "description": "管道加工单位" },
+        "createTime": { "type": "string", "format": "date-time" },
+        "hydrotestQualification": {
+          "type": "integer",
+          "format": "int32",
+          "description": "压力试验是否合格"
+        },
+        "id": { "type": "string" },
+        "innerOuter": {
+          "type": "integer",
+          "format": "int32",
+          "description": "管道/套管"
+        },
+        "innerWallRoughness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "内壁粗糙度"
+        },
+        "kpe": {
+          "type": "integer",
+          "format": "int64",
+          "description": "终止里程"
+        },
+        "kps": {
+          "type": "integer",
+          "format": "int64",
+          "description": "起始里程"
+        },
+        "latitude": { "type": "string", "description": "起始纬度" },
+        "length": {
+          "type": "integer",
+          "format": "int64",
+          "description": "长度"
+        },
+        "longitude": { "type": "string", "description": "起始经度" },
+        "materialId": { "type": "string", "description": "材料编号" },
+        "ndtMethod": { "type": "string", "description": "无损检测方法" },
+        "ndtQualification": {
+          "type": "integer",
+          "format": "int32",
+          "description": "无损检测是否合格"
+        },
+        "number": { "type": "string", "description": "管单元编号" },
+        "outsideDiamater": {
+          "type": "integer",
+          "format": "int64",
+          "description": "外径"
+        },
+        "pipelineId": { "type": "string", "description": "管道编号" },
+        "type": { "type": "integer", "format": "int32", "description": "类型" },
+        "updateTime": { "type": "string", "format": "date-time" },
+        "wallThickness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "壁厚"
+        },
+        "weldCoefficient": {
+          "type": "integer",
+          "format": "int64",
+          "description": "焊缝系数"
+        },
+        "weldType": { "type": "string", "description": "焊接方式" }
+      }
+    },
+    "ConstructionCoatingDTO": {
+      "type": "object",
+      "properties": {
+        "createTime": { "type": "string", "format": "date-time" },
+        "id": { "type": "string" },
+        "kpe": {
+          "type": "integer",
+          "format": "int64",
+          "description": "终止里程"
+        },
+        "kps": {
+          "type": "integer",
+          "format": "int64",
+          "description": "起始里程"
+        },
+        "materialId": { "type": "string", "description": "物料编号" },
+        "number": { "type": "string", "description": "涂层编号" },
+        "pipelineId": { "type": "string", "description": "管道编号" },
+        "type": { "type": "integer", "format": "int32", "description": "类型" },
+        "updateTime": { "type": "string", "format": "date-time" },
+        "wallThickness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "厚度"
+        }
+      }
+    },
+    "MaterialDTO": {
+      "type": "object",
+      "properties": {
+        "areaReduction": {
+          "type": "integer",
+          "format": "int64",
+          "description": "断面收缩率"
+        },
+        "bendingStrength": {
+          "type": "integer",
+          "format": "int64",
+          "description": "弯曲强度"
+        },
+        "constructionType": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结构类型"
+        },
+        "createTime": { "type": "string", "format": "date-time" },
+        "ctod": {
+          "type": "integer",
+          "format": "int64",
+          "description": "裂纹尖端张开位移"
+        },
+        "description": { "type": "string", "description": "描述" },
+        "elongation": {
+          "type": "integer",
+          "format": "int64",
+          "description": "断裂伸长率"
+        },
+        "expansionCoefficient": {
+          "type": "integer",
+          "format": "int64",
+          "description": "热膨胀系数"
+        },
+        "hb": {
+          "type": "integer",
+          "format": "int64",
+          "description": "布氏硬度"
+        },
+        "hc": { "type": "integer", "format": "int64", "description": "热导率" },
+        "hrc": {
+          "type": "integer",
+          "format": "int64",
+          "description": "洛氏硬度"
+        },
+        "hv": {
+          "type": "integer",
+          "format": "int64",
+          "description": "维氏硬度"
+        },
+        "id": { "type": "string" },
+        "impactAbsorbingEnergy": {
+          "type": "integer",
+          "format": "int64",
+          "description": "冲击吸收功"
+        },
+        "jIntegral": {
+          "type": "integer",
+          "format": "int64",
+          "description": "J积分"
+        },
+        "kmat": {
+          "type": "integer",
+          "format": "int64",
+          "description": "平面应标断裂韧度"
+        },
+        "materialDensity": {
+          "type": "integer",
+          "format": "int64",
+          "description": "材质密度"
+        },
+        "materialGrade": { "type": "string", "description": "材料等级" },
+        "materialType": { "type": "string", "description": "材料类型" },
+        "name": { "type": "string", "description": "名称" },
+        "poissonsRatio": {
+          "type": "integer",
+          "format": "int64",
+          "description": "泊松比"
+        },
+        "shearModulus": {
+          "type": "integer",
+          "format": "int64",
+          "description": "切变模量"
+        },
+        "smts": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抗拉强度"
+        },
+        "smys": {
+          "type": "integer",
+          "format": "int64",
+          "description": "屈服强度"
+        },
+        "torsionalStrength": {
+          "type": "integer",
+          "format": "int64",
+          "description": "抗扭强度"
+        },
+        "updateTime": { "type": "string", "format": "date-time" },
+        "youngsModulus": {
+          "type": "integer",
+          "format": "int64",
+          "description": "杨氏模量"
+        }
+      }
+    },
+    "ConstructionWeldDTO": {
+      "type": "object",
+      "properties": {
+        "createTime": { "type": "string", "format": "date-time" },
+        "fieldJointCoatingType": {
+          "type": "string",
+          "description": "补口涂敷类型"
+        },
+        "fieldJointLength": {
+          "type": "integer",
+          "format": "int64",
+          "description": "补口长度"
+        },
+        "id": { "type": "string" },
+        "innerOuter": {
+          "type": "integer",
+          "format": "int32",
+          "description": "管道/套管"
+        },
+        "kp": {
+          "type": "integer",
+          "format": "int64",
+          "description": "焊缝里程"
+        },
+        "number": { "type": "string", "description": "焊缝编号" },
+        "pipelineId": { "type": "string", "description": "管道编号" },
+        "underfillMaterial": { "type": "string", "description": "填充材料" },
+        "updateTime": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ConstructionBulkheadDTO": {
+      "type": "object",
+      "properties": {
+        "createTime": { "type": "string", "format": "date-time" },
+        "externalWallThickness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "外壁厚"
+        },
+        "id": { "type": "string" },
+        "innerOuter": {
+          "type": "integer",
+          "format": "int32",
+          "description": "管道/套管"
+        },
+        "insideDiamater": {
+          "type": "integer",
+          "format": "int64",
+          "description": "内径"
+        },
+        "internalWallThickness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "内壁厚"
+        },
+        "kpe": {
+          "type": "integer",
+          "format": "int64",
+          "description": "终止里程"
+        },
+        "kps": {
+          "type": "integer",
+          "format": "int64",
+          "description": "起始里程"
+        },
+        "latitude": { "type": "string", "description": "起始北纬" },
+        "length": {
+          "type": "integer",
+          "format": "int64",
+          "description": "长度"
+        },
+        "longitude": { "type": "string", "description": "起始东经" },
+        "manufacturer": { "type": "string", "description": "制造商" },
+        "materialId": { "type": "string", "description": "物料编号" },
+        "number": { "type": "string", "description": "锚固件编号" },
+        "outsideDiamater": {
+          "type": "integer",
+          "format": "int64",
+          "description": "外径"
+        },
+        "pipelineId": { "type": "string", "description": "管道编号" },
+        "type": { "type": "integer", "format": "int32", "description": "类型" },
+        "updateTime": { "type": "string", "format": "date-time" }
+      }
+    },
+    "EndTerminationDTO": {
+      "type": "object",
+      "properties": {
+        "createTime": { "type": "string", "format": "date-time" },
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "updateTime": { "type": "string", "format": "date-time" }
+      }
+    },
+    "SelectOption": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "value": { "type": "string" }
+      }
+    },
+    "PipelineDTO": {
+      "type": "object",
+      "properties": {
+        "commissioningDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "投产运行年份"
+        },
+        "corrosionProtectionType": {
+          "type": "string",
+          "description": "腐蚀防护类型"
+        },
+        "createTime": { "type": "string", "format": "date-time" },
+        "description": { "type": "string", "description": "管道描述" },
+        "designDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "设计完工年份"
+        },
+        "id": { "type": "string" },
+        "installationDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "机械完工年份"
+        },
+        "length": {
+          "type": "integer",
+          "format": "int64",
+          "description": "管道长度"
+        },
+        "operatingStatus": { "type": "string", "description": "运营状态" },
+        "ownerId": { "type": "string", "description": "所属编号" },
+        "ownerText": { "type": "string", "description": "所属路径" },
+        "piggable": { "type": "string", "description": "能否通球" },
+        "pipelineFromId": { "type": "string", "description": "起始地" },
+        "pipelineFromText": { "type": "string", "description": "起始地路径" },
+        "pipelineNo": { "type": "string", "description": "管道编号" },
+        "pipelineToId": { "type": "string", "description": "到达地" },
+        "pipelineToText": { "type": "string", "description": "到达地路径" },
+        "safetyClass": { "type": "string", "description": "安全等级" },
+        "type": { "type": "string", "description": "管道类型" },
+        "updateTime": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ConstructionBendDTO": {
+      "type": "object",
+      "properties": {
+        "bendingAngle": {
+          "type": "integer",
+          "format": "int64",
+          "description": "弯曲角度"
+        },
+        "bendingRadius": {
+          "type": "integer",
+          "format": "int64",
+          "description": "弯曲半径"
+        },
+        "createTime": { "type": "string", "format": "date-time" },
+        "id": { "type": "string" },
+        "innerOuter": {
+          "type": "integer",
+          "format": "int32",
+          "description": "管道/套管"
+        },
+        "insideDiamater": {
+          "type": "integer",
+          "format": "int64",
+          "description": "内径"
+        },
+        "kpe": {
+          "type": "integer",
+          "format": "int64",
+          "description": "终止里程"
+        },
+        "kps": {
+          "type": "integer",
+          "format": "int64",
+          "description": "起始里程"
+        },
+        "latitude": { "type": "string", "description": "起始北纬" },
+        "length": {
+          "type": "integer",
+          "format": "int64",
+          "description": "长度"
+        },
+        "longitude": { "type": "string", "description": "起始东经" },
+        "manufacturer": { "type": "string", "description": "制造商" },
+        "materialId": { "type": "string", "description": "物料编号" },
+        "number": { "type": "string", "description": "弯头编号" },
+        "pipelineId": { "type": "string", "description": "管道编号" },
+        "size": { "type": "string", "description": "尺寸" },
+        "type": { "type": "integer", "format": "int32", "description": "类型" },
+        "updateTime": { "type": "string", "format": "date-time" },
+        "wallThickness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "壁厚"
+        }
+      }
+    },
+    "ConstructionTeeDTO": {
+      "type": "object",
+      "properties": {
+        "centerEndC": {
+          "type": "integer",
+          "format": "int64",
+          "description": "中心至断面C"
+        },
+        "centerEndM": {
+          "type": "integer",
+          "format": "int64",
+          "description": "中心至断面M"
+        },
+        "createTime": { "type": "string", "format": "date-time" },
+        "designPressure": {
+          "type": "integer",
+          "format": "int64",
+          "description": "设计压力"
+        },
+        "id": { "type": "string" },
+        "innerOuter": {
+          "type": "integer",
+          "format": "int32",
+          "description": "管道/套管"
+        },
+        "kpe": {
+          "type": "integer",
+          "format": "int64",
+          "description": "终止里程"
+        },
+        "kps": {
+          "type": "integer",
+          "format": "int64",
+          "description": "起始里程"
+        },
+        "latitude": { "type": "string", "description": "起始北纬" },
+        "length": {
+          "type": "integer",
+          "format": "int64",
+          "description": "长度"
+        },
+        "longitude": { "type": "string", "description": "起始东经" },
+        "manufacturer": { "type": "string", "description": "制造商" },
+        "materialId": { "type": "string", "description": "物料编号" },
+        "nominalDiamater": {
+          "type": "integer",
+          "format": "int64",
+          "description": "公称通径"
+        },
+        "nominalWallThickness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "工程壁厚"
+        },
+        "number": { "type": "string", "description": "三通编号" },
+        "outsideDiamater1": {
+          "type": "integer",
+          "format": "int64",
+          "description": "坡口处外径D1"
+        },
+        "outsideDiamater2": {
+          "type": "integer",
+          "format": "int64",
+          "description": "坡口处外径D2"
+        },
+        "pipelineId": { "type": "string", "description": "管道编号" },
+        "type": { "type": "integer", "format": "int32", "description": "类型" },
+        "updateTime": { "type": "string", "format": "date-time" },
+        "weight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "重量"
+        }
+      }
+    },
+    "OwnerDTO": {
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/OwnerDTO" }
+        },
+        "createTime": { "type": "string", "format": "date-time" },
+        "id": { "type": "string" },
+        "level": {
+          "type": "integer",
+          "format": "int32",
+          "description": "等级"
+        },
+        "name": { "type": "string", "description": "名称" },
+        "parent": { "$ref": "#/definitions/OwnerDTO" },
+        "parentId": { "type": "string" },
+        "pathText": { "type": "string", "description": "路径" },
+        "updateTime": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ConstructionFlangeDTO": {
+      "type": "object",
+      "properties": {
+        "createTime": { "type": "string", "format": "date-time" },
+        "designPressure": {
+          "type": "integer",
+          "format": "int64",
+          "description": "设计压力"
+        },
+        "holeSpacing": {
+          "type": "integer",
+          "format": "int64",
+          "description": "孔间距"
+        },
+        "id": { "type": "string" },
+        "innerOuter": {
+          "type": "integer",
+          "format": "int32",
+          "description": "管道/套管"
+        },
+        "kpe": {
+          "type": "integer",
+          "format": "int64",
+          "description": "终止里程"
+        },
+        "kps": {
+          "type": "integer",
+          "format": "int64",
+          "description": "起始里程"
+        },
+        "latitude": { "type": "string", "description": "起始北纬" },
+        "length": {
+          "type": "integer",
+          "format": "int64",
+          "description": "长度"
+        },
+        "longitude": { "type": "string", "description": "起始东经" },
+        "manufacturer": { "type": "string", "description": "制造商" },
+        "materialId": { "type": "string", "description": "物料编号" },
+        "number": { "type": "string", "description": "法兰编号" },
+        "outsideDiamater": {
+          "type": "integer",
+          "format": "int64",
+          "description": "外径"
+        },
+        "pipelineId": { "type": "string", "description": "管道编号" },
+        "screw": { "type": "string", "description": "配用螺丝" },
+        "screwHole": {
+          "type": "integer",
+          "format": "int64",
+          "description": "螺孔"
+        },
+        "size": { "type": "string", "description": "规格" },
+        "thickness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "厚度"
+        },
+        "type": { "type": "integer", "format": "int32", "description": "类型" },
+        "updateTime": { "type": "string", "format": "date-time" },
+        "weight": {
+          "type": "integer",
+          "format": "int64",
+          "description": "重量"
+        }
+      }
+    },
+    "DesignDTO": {
+      "type": "object",
+      "properties": {
+        "corrosionAllowance": {
+          "type": "integer",
+          "format": "int64",
+          "description": "腐蚀裕量"
+        },
+        "createTime": { "type": "string", "format": "date-time" },
+        "designCode": { "type": "string", "description": "设计标准" },
+        "designLife": {
+          "type": "integer",
+          "format": "int64",
+          "description": "设计寿命"
+        },
+        "designPressure": {
+          "type": "integer",
+          "format": "int64",
+          "description": "设计压力"
+        },
+        "designTemperature": {
+          "type": "integer",
+          "format": "int64",
+          "description": "设计温度"
+        },
+        "designUsageFactor": {
+          "type": "integer",
+          "format": "int64",
+          "description": "设计安全系数"
+        },
+        "fabricationTolerance": {
+          "type": "integer",
+          "format": "int64",
+          "description": "制造壁厚偏差"
+        },
+        "id": { "type": "string" },
+        "innerOuter": {
+          "type": "integer",
+          "format": "int32",
+          "description": "管道/套管"
+        },
+        "limitWalllossCriteria": {
+          "type": "integer",
+          "format": "int64",
+          "description": "最大许用壁厚损失"
+        },
+        "nominalWallThickness": {
+          "type": "integer",
+          "format": "int64",
+          "description": "公称壁厚"
+        },
+        "outsideDiamater": {
+          "type": "integer",
+          "format": "int64",
+          "description": "公称直径"
+        },
+        "pipelineId": { "type": "string", "description": "管道编号" },
+        "updateTime": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

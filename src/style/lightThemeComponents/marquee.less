@@ -1,13 +1,24 @@
-.marquee-fa{
-    background: #fff;
-    border: 1px solid var(--lightBlueColor);
+.marquee-fa {
+  background: #fff;
+  display: flex;
+  padding: 10px;
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
+  border-radius: 2px;
+  box-shadow: 0 0 10px 0 rgba(144, 147, 153, 0.3);
+
+  .marquee_head {
     display: flex;
-    padding: 10px;
-    .marquee_head{
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        color: var(--lightBlueColor);
-        font-weight: 700;
-    }
+    align-items: center;
+    font-size: 16px;
+    color: var(--light-blue-color);
+    font-weight: 500;
+  }
+
+  .scrollMarquee {
+    color: #606266;
+    font-size: 16px;
+  }
 }

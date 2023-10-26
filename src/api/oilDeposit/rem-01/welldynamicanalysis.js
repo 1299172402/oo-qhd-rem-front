@@ -1,197 +1,199 @@
 import Axios from '@/utils/request'
+const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
+
 
 export function cementingQuality(request) {
   return Axios({
-    url: `remcAnalysis/cementingQuality`,
+    url: `${baseUrl}/cAnalysis/cementingQuality`,
     method: "post",
     data: request,
   });
 }
 export function declineRate(request) {
   return Axios({
-    url: `remcAnalysis/declineRate`,
+    url: `${baseUrl}/cAnalysis/declineRate`,
     method: "post",
     data: request,
   });
 }
 export function depositionFaciesDiagram(request) {
   return Axios({
-    url: `remcAnalysis/depositionFaciesDiagram`,
+    url: `${baseUrl}/cAnalysis/depositionFaciesDiagram`,
     method: "post",
     data: request,
   });
 }
 export function deviationData(request) {
   return Axios({
-    url: `remcAnalysis/deviationData`,
+    url: `${baseUrl}/cAnalysis/deviationData`,
     method: "post",
     data: request,
   });
 }
 export function drillingTrajectory(request) {
   return Axios({
-    url: `remcAnalysis/drillingTrajectory`,
+    url: `${baseUrl}/cAnalysis/drillingTrajectory`,
     method: "post",
     data: request,
   });
 }
 export function dynamicProd(request) {
   return Axios({
-    url: `remcAnalysis/dynamicProd`,
+    url: `${baseUrl}/cAnalysis/dynamicProd`,
     method: "post",
     data: request,
   });
 }
 export function fluidProducingIntensity(request) {
   return Axios({
-    url: `remcAnalysis/fluidProducingIntensity`,
+    url: `${baseUrl}/cAnalysis/fluidProducingIntensity`,
     method: "post",
     data: request,
   });
 }
 export function getComPerfInterval(request) {
   return Axios({
-    url: `remcAnalysis/getComPerfInterval`,
+    url: `${baseUrl}/cAnalysis/getComPerfInterval`,
     method: "post",
     data: request,
   });
 }
 export function groundReason(request) {
   return Axios({
-    url: `remcAnalysis/groundReason`,
+    url: `${baseUrl}/cAnalysis/groundReason`,
     method: "post",
     data: request,
   });
 }
 export function injectionClosed(request) {
   return Axios({
-    url: `remcAnalysis/injectionClosed`,
+    url: `${baseUrl}/cAnalysis/injectionClosed`,
     method: "post",
     data: request,
   });
 }
 export function injectionMeasureRecommend(request) {
   return Axios({
-    url: `remcAnalysis/injectionMeasureRecommend`,
+    url: `${baseUrl}/cAnalysis/injectionMeasureRecommend`,
     method: "post",
     data: request,
   });
 }
 export function injectionWellDynamicAnalysisDetail(request) {
   return Axios({
-    url: `remcAnalysis/injectionWellDynamicAnalysisDetail`,
+    url: `${baseUrl}/cAnalysis/injectionWellDynamicAnalysisDetail`,
     method: "post",
     data: request,
   });
 }
 export function layerInjectionStatus(request) {
   return Axios({
-    url: `remcAnalysis/layerInjectionStatus`,
+    url: `${baseUrl}/cAnalysis/layerInjectionStatus`,
     method: "post",
     data: request,
   });
 }
 export function layerReason(request) {
   return Axios({
-    url: `remcAnalysis/layerReason`,
+    url: `${baseUrl}/cAnalysis/layerReason`,
     method: "post",
     data: request,
   });
 }
 export function layerVariationTrend(request) {
   return Axios({
-    url: `remcAnalysis/layerVariationTrend`,
+    url: `${baseUrl}/cAnalysis/layerVariationTrend`,
     method: "post",
     data: request,
   });
 }
 export function loggingCurve(request) {
   return Axios({
-    url: `remcAnalysis/loggingCurve`,
+    url: `${baseUrl}/cAnalysis/loggingCurve`,
     method: "post",
     data: request,
   });
 }
 export function loggingInterpretation(request) {
   return Axios({
-    url: `remcAnalysis/loggingInterpretation`,
+    url: `${baseUrl}/cAnalysis/loggingInterpretation`,
     method: "post",
     data: request,
   });
 }
 export function measureRecommend(request) {
   return Axios({
-    url: `remcAnalysis/measureRecommend`,
+    url: `${baseUrl}/cAnalysis/measureRecommend`,
     method: "post",
     data: request,
   });
 }
 export function microLayerData(request) {
   return Axios({
-    url: `remcAnalysis/microLayerData`,
+    url: `${baseUrl}/cAnalysis/microLayerData`,
     method: "post",
     data: request,
   });
 }
 export function microPhasePlot(request) {
   return Axios({
-    url: `remcAnalysis/microPhasePlot`,
+    url: `${baseUrl}/cAnalysis/microPhasePlot`,
     method: "post",
     data: request,
   });
 }
 export function operatingStatus(request) {
   return Axios({
-    url: `remcAnalysis/operatingStatus`,
+    url: `${baseUrl}/cAnalysis/operatingStatus`,
     method: "post",
     data: request,
   });
 }
 export function outProfileLoggingInterpretation(request) {
   return Axios({
-    url: `remcAnalysis/outProfileLoggingInterpretation`,
+    url: `${baseUrl}/cAnalysis/outProfileLoggingInterpretation`,
     method: "post",
     data: request,
   });
 }
 export function potential(request) {
   return Axios({
-    url: `remcAnalysis/potential`,
+    url: `${baseUrl}/cAnalysis/potential`,
     method: "post",
     data: request,
   });
 }
 export function pressure(request) {
   return Axios({
-    url: `remcAnalysis/pressure`,
+    url: `${baseUrl}/cAnalysis/pressure`,
     method: "post",
     data: request,
   });
 }
 export function proWellDynamicAnalysisDetail(request) {
   return Axios({
-    url: `remcAnalysis/proWellDynamicAnalysisDetail`,
+    url: `${baseUrl}/cAnalysis/proWellDynamicAnalysisDetail`,
     method: "post",
     data: request,
   });
 }
 export function produceData(request) {
   return Axios({
-    url: `remcAnalysis/produceData`,
+    url: `${baseUrl}/cAnalysis/produceData`,
     method: "post",
     data: request,
   });
 }
 export function reserveProducing(request) {
   return Axios({
-    url: `remcAnalysis/reserveProducing`,
+    url: `${baseUrl}/cAnalysis/reserveProducing`,
     method: "post",
     data: request,
   });
 }
 export function saturationLoggingInterpretation(request) {
   return Axios({
-    url: `remcAnalysis/saturationLoggingInterpretation`,
+    url: `${baseUrl}/cAnalysis/saturationLoggingInterpretation`,
     method: "post",
     data: request,
   });
@@ -204,42 +206,42 @@ export function saturationLoggingInterpretation(request) {
  */
 export function seismicAttributePlot(request) {
   return Axios({
-    url: `remcAnalysis/seismicAttributePlot`,
+    url: `${baseUrl}/cAnalysis/seismicAttributePlot`,
     method: "post",
     data: request,
   });
 }
 export function seismicPlot(request) {
   return Axios({
-    url: `remcAnalysis/seismicPlot`,
+    url: `${baseUrl}/cAnalysis/seismicPlot`,
     method: "post",
     data: request,
   });
 }
 export function structureDiagram(request) {
   return Axios({
-    url: `remcAnalysis/structureDiagram`,
+    url: `${baseUrl}/cAnalysis/structureDiagram`,
     method: "post",
     data: request,
   });
 }
 export function supplyDischargeRelationship(request) {
   return Axios({
-    url: `remcAnalysis/supplyDischargeRelationship`,
+    url: `${baseUrl}/cAnalysis/supplyDischargeRelationship`,
     method: "post",
     data: request,
   });
 }
 export function testReport(request) {
   return Axios({
-    url: `remcAnalysis/testReport`,
+    url: `${baseUrl}/cAnalysis/testReport`,
     method: "post",
     data: request,
   });
 }
 export function testWellReport(request) {
   return Axios({
-    url: `remcAnalysis/testWellReport`,
+    url: `${baseUrl}/cAnalysis/testWellReport`,
     method: "post",
     data: request,
   });
@@ -253,42 +255,42 @@ export function testWellReport(request) {
  */
 export function uploadPic(request) {
   return Axios({
-    url: `remcAnalysis/uploadPic`,
+    url: `${baseUrl}/cAnalysis/uploadPic`,
     method: "post",
     data: request,
   });
 }
 export function wellBaseInfo(request) {
   return Axios({
-    url: `remcAnalysis/wellBaseInfo`,
+    url: `${baseUrl}/cAnalysis/wellBaseInfo`,
     method: "post",
     data: request,
   });
 }
 export function wellBoreReason(request) {
   return Axios({
-    url: `remcAnalysis/wellBoreReason`,
+    url: `${baseUrl}/cAnalysis/wellBoreReason`,
     method: "post",
     data: request,
   });
 }
 export function wellCompletionDiagram(request) {
   return Axios({
-    url: `remcAnalysis/wellCompletionDiagram`,
+    url: `${baseUrl}/cAnalysis/wellCompletionDiagram`,
     method: "post",
     data: request,
   });
 }
 export function wellNetDiagram(request) {
   return Axios({
-    url: `remcAnalysis/wellNetDiagram`,
+    url: `${baseUrl}/cAnalysis/wellNetDiagram`,
     method: "post",
     data: request,
   });
 }
 export function workingHistory(request) {
   return Axios({
-    url: `remcAnalysis/workingHistory`,
+    url: `${baseUrl}/cAnalysis/workingHistory`,
     method: "post",
     data: request,
   });

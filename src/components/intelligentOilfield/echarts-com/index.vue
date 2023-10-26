@@ -1,47 +1,45 @@
 <template>
-  <div :id="echartsComponents" v-if="!isDispose" class="g-w100 g-h100"></div>
+  <div v-if="!isDispose" :id="echartsComponents" class="g-w100 g-h100 chartsComponentClass" />
 </template>
 
 <script>
-// require('echarts-wordcloud');
 export default {
-  name: 'EchartsComponents',
+  name: "EchartsComponents",
   props: {
     // 接收父组件传递过来的信息
     chartDataOptions: {
       type: Object, // 此处可以为Array或者Object或者其它，根据需求来。
       default: () => {
-        '';
-      },
+        "";
+      }
     },
     echartsType: {
       type: String, // 图表类型。
-      default: 'pie1',
-    },
+      default: "pie1"
+    }
   },
   data() {
     return {
       myEcharts: null,
       isDispose: false,
-      dynamicId: null,
+      dynamicId: null
     };
   },
   computed: {
     echartsComponents() {
       const timestamp = new Date().getTime();
       return `echarts${timestamp}${Math.random() * 100000}`;
-    },
+    }
   },
   watch: {
     chartDataOptions: {
       handler() {
         this.refreshEcharts();
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   mounted() {
-    console.log(this.chartDataOptions);
     setTimeout(() => {
       this.initEcharts();
       //   const that = this
@@ -74,7 +72,7 @@ export default {
   beforeDestroy() {
     // console.log('-----------------------------jintu销毁echarts----------------------------------',this.myEcharts)
     if (this.myEcharts) {
-      this.myEcharts.off('click');
+      this.myEcharts.off("click");
       this.myEcharts.clear();
       this.myEcharts.dispose();
       this.isDispose = true;
@@ -90,34 +88,41 @@ export default {
       this.isDispose = false;
       const $echartsDOM = document.getElementById(this.echartsComponents);
       this.myEcharts = this.$echarts.init($echartsDOM);
-      this.refreshEcharts();
+      // this.refreshEcharts();
     },
     refresh() {
       if (this.myEcharts) this.myEcharts.resize();
     },
     // 图表刷新
     refreshEcharts() {
-      //   const that = this
       // 在渲染点击事件之前先清除点击事件
       if (this.myEcharts) {
-        this.myEcharts.off('click');
+        this.myEcharts.off("click");
+        this.myEcharts.off("legendSelectChanged");
         // 渲染数据
         const option = this.chartDataOptions;
-        console.log(option);
         this.myEcharts.clear();
         this.myEcharts.setOption(option, true, false, false);
-        this.myEcharts.on('click', (params) => {
-          this.$emit('getParams', params, this.chartDataOptions);
+        this.myEcharts.on("click", params => {
+          this.$emit("get-params", params, this.chartDataOptions);
+        });
+        // 点击图例事件暴露
+        this.myEcharts.on("legendSelectChanged", params => {
+          // eslint-disable-next-line no-restricted-globals
+          event.stopPropagation();
+          this.$emit("legend-select-changed", params);
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
-/* .chartsComponentClass {
-    width: 100%;
-    height: 100%;
-} */
+.chartsComponentClass {
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
+}
 </style>

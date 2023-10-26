@@ -1,4 +1,4 @@
-import {merge, cloneDeep} from "lodash";
+import { merge, cloneDeep } from "lodash";
 import { deleteNullAttribute } from "@/utils/objectOperate";
 
 export default {
@@ -6,19 +6,15 @@ export default {
     return {
       loading: false,
       editPopupVisible: false
-    }
+    };
   },
   created() {
     this.modelOk && this.$on("model-ok", this.modelOk);
-    this.getModel(this.$route.query.id);
-  },
-  activated() {
-    this.modelOk && this.$on("model-ok", this.modelOk);
-    this.getModel(this.$route.query.id);
+    this.getModel(this.$route.params.id);
   },
   computed: {
     isView() {
-      return this.$route.query.action === "view"
+      return this.$route.query.action === "view";
     }
   },
   methods: {
@@ -42,7 +38,7 @@ export default {
       }
     },
     handleEditDataOk(param) {
-      this.$refs.editData.handleOk(param)
+      this.$refs.editData.handleOk(param);
     },
     handleEditDataSaveOk() {
       this.editPopupVisible = false;
@@ -52,4 +48,4 @@ export default {
       return true;
     }
   }
-}
+};

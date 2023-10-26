@@ -13,22 +13,22 @@
 
 angular.module('flowableModeler').controller('FlowableMultiInstanceCtrl', [ '$scope', function($scope) {
 
-  if ($scope.property.value == undefined && $scope.property.value == null)
-  {
+    if ($scope.property.value == undefined && $scope.property.value == null)
+    {
     	$scope.property.value = 'None';
-  }
+    }
         
-  $scope.multiInstanceChanged = function() {
+    $scope.multiInstanceChanged = function() {
     	$scope.updatePropertyInModel($scope.property);
 
     	// 扩展逻辑如果是多实例设置多实例的集合和变量
-    $scope.updatePropertyInModel({key: "multiinstance_cardinality", value: "", mode: null});
+        $scope.updatePropertyInModel({key: "multiinstance_cardinality", value: "", mode: null});
     	if ($scope.property.value !== "None" ) {
-      $scope.updatePropertyInModel({key: "multiinstance_collection", value: "${flow_multi_assigns}", mode: null});
-      $scope.updatePropertyInModel({key: "multiinstance_variable", value: "flow_multi_assign", mode: null});
-    } else {
-      $scope.updatePropertyInModel({key: "multiinstance_collection", value: "", mode: null});
-      $scope.updatePropertyInModel({key: "multiinstance_collection", value: "", mode: null});
-    }
-  };
+            $scope.updatePropertyInModel({key: "multiinstance_collection", value: "${flow_multi_assigns}", mode: null});
+            $scope.updatePropertyInModel({key: "multiinstance_variable", value: "flow_multi_assign", mode: null});
+        } else {
+            $scope.updatePropertyInModel({key: "multiinstance_collection", value: "", mode: null});
+            $scope.updatePropertyInModel({key: "multiinstance_collection", value: "", mode: null});
+        }
+    };
 }]);

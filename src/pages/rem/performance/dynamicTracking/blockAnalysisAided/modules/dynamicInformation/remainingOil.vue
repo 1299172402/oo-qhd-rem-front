@@ -1,0 +1,146 @@
+<!--含油饱和度分布图-->
+<template>
+    <div class="z-main">
+        <div class="z-search">
+            <el-select v-model="selectPosition" style="width: 220px;" placeholder="请选择" filterable @change="positionChange">
+                <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
+            </el-select>
+            <div v-if="uploadTime" style="margin-left: 20px;">上传时间：{{ uploadTime }}</div>
+        </div> 
+        <div class="z-echarts">
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div style="overflow: auto;width: 100%; height: 100%;">  
+                    <el-image :src="src">
+                        <div slot="error"></div>
+                    </el-image>
+                </div>
+            </page-panel-new>
+        </div> 
+    </div>
+</template>
+
+<script>
+    import {fieldOilLayers} from "@/api/oilDeposit/rem-02/primaryinfo.js";
+    // miniIo
+    import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+    import {filePreview,downFile} from "@/components/upload/utils/file";
+    import FileSaver from "file-saver";
+    export default {
+        props: {
+            oilFieldId: {},
+            blockId: {}
+        },
+        data() {
+            return {
+                //mniIo
+                fileId:'',
+                filestrId:'',
+                src:'',
+                //选中层位
+                selectPosition: '',
+                //层位所选择内容信息
+                position: [],
+                uploadTime: "", // 文件上传时间
+            };
+        },
+        async mounted() {
+            await this.doSearch();
+        },
+        methods: {
+            async doSearch() {
+                await this.fieldOilLayersApi();
+                let params ={
+                    operationId:this.blockId+'-'+this.selectPosition,
+                    operationType:'BLOCKHYBHDFBT',
+                    readOne:'one' 
+                }
+                queryRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        if(res.data.data.length){
+                            this.fileId=res.data.data[0].fileId;
+                            this.filestrId=res.data.data[0].filestrId;
+                            this.uploadTime=res.data.data[0].uploadTime || "";
+                            downFile(this.fileId).then((res)=>{
+                                this.src=window.URL.createObjectURL(res);
+                            })
+                        }else{
+                            this.fileId="";
+                            this.filestrId="";
+                            this.uploadTime="";
+                            this.src="";
+                        }
+                    }else {
+                        this.$message.error("文件查询接口异常!");
+                    }
+                });
+            },
+            //初始化获取层数据
+            async fieldOilLayersApi(){
+                await fieldOilLayers({oilFieldId: this.oilFieldId,fieldId: this.blockId,wellId: '',}).then((res) => {
+                    if (res.data.code == 200) {
+                        if (res.data.data) {
+                            this.position = res.data.data.fieldLayers;
+                            if (!this.selectPosition && this.position[0]) {
+                                let isTrue=this.position.find((item) => {return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'})
+                                if (isTrue){
+                                    this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
+                                }else{
+                                    this.selectPosition = this.position[0].fieldLayerId;
+                                }
+                                this.$emit('childPara', this.selectPosition);
+                            }
+                        } else {
+                            this.position = [];
+                        }
+                    }
+                });
+            },
+            //监听层位信息
+            positionChange(val) {
+                this.$emit('childPara', this.selectPosition);
+                this.doSearch();
+            },
+            //下载功能
+            doDownLoad() {
+                if(!this.fileId) {
+                    this.$message.error('无可下载内容')
+                    return
+                }
+                let fileName = '含油饱和度分布图';
+                let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
+                if (layerMess) {
+                    fileName= layerMess.layerName +'-'+fileName;
+                }
+                let file_suffix=this.filestrId.split('.')[1];
+                downFile(this.fileId).then(res=>{
+                    FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+                })
+            }
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .z-main{
+        width: 100%;
+        height:calc(100% - 86px);
+        display:flex;
+        flex-direction: column;
+        padding-bottom:15px;
+        .z-search{
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .z-echarts{
+            width: 100%;
+            flex:1;
+            overflow-y:scroll;
+            // border: 1px solid #ddd;
+            border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+        }
+    }
+</style>
+
+
+

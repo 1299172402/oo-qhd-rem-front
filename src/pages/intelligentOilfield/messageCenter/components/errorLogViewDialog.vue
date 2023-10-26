@@ -18,7 +18,7 @@
       </el-table>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button icon="el-icon-close" class="cancel-btn" @click="close">
+      <el-button class="commonBtn" @click="close">
         取消
       </el-button>
     </div>
@@ -40,7 +40,7 @@ export default {
     /** 数据回显 */
     bindModel(messageId) {
       if (messageId) {
-        getErrorLogData(messageId).then((data) => {
+        getErrorLogData(messageId).then(data => {
           this.dataSource = data;
         });
       }

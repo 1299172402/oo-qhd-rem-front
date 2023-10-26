@@ -1,9 +1,9 @@
 /**
  * @param {string} path
- * @returns {Boolean} 
+ * @returns {Boolean}
  */
 export function isExternal(path) {
-  return /^(https?:|mailto:|tel:)/.test(path)
+  return /^(https?:|mailto:|tel:)/.test(path);
 }
 
 /**
@@ -11,8 +11,8 @@ export function isExternal(path) {
  * @returns {Boolean}
  */
 export function validUsername(str) {
-  const valid_map = ['admin', 'editor']
-  return valid_map.indexOf(str.trim()) >= 0
+  const validMap = ["admin", "editor"];
+  return validMap.indexOf(str.trim()) >= 0;
 }
 
 /**
@@ -20,8 +20,17 @@ export function validUsername(str) {
  * @returns {Boolean}
  */
 export function validURL(url) {
-  const reg = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/
-  return reg.test(url)
+  const reg = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
+  return reg.test(url);
+}
+
+/**
+ * @param {string} url
+ * @returns {Boolean}
+ */
+export function looselyValidURL(url) {
+  const reg = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
+  return reg.test(url);
 }
 
 /**
@@ -29,8 +38,8 @@ export function validURL(url) {
  * @returns {Boolean}
  */
 export function validLowerCase(str) {
-  const reg = /^[a-z]+$/
-  return reg.test(str)
+  const reg = /^[a-z]+$/;
+  return reg.test(str);
 }
 
 /**
@@ -38,8 +47,8 @@ export function validLowerCase(str) {
  * @returns {Boolean}
  */
 export function validUpperCase(str) {
-  const reg = /^[A-Z]+$/
-  return reg.test(str)
+  const reg = /^[A-Z]+$/;
+  return reg.test(str);
 }
 
 /**
@@ -47,8 +56,8 @@ export function validUpperCase(str) {
  * @returns {Boolean}
  */
 export function validAlphabets(str) {
-  const reg = /^[A-Za-z]+$/
-  return reg.test(str)
+  const reg = /^[A-Za-z]+$/;
+  return reg.test(str);
 }
 
 /**
@@ -57,8 +66,8 @@ export function validAlphabets(str) {
  */
 export function validEmail(email) {
 //   const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/  
-  return reg.test(email)
+  const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return reg.test(email);
 }
 
 /**
@@ -66,10 +75,10 @@ export function validEmail(email) {
  * @returns {Boolean}
  */
 export function isString(str) {
-  if (typeof str === 'string' || str instanceof String) {
-    return true
+  if (typeof str === "string" || str instanceof String) {
+    return true;
   }
-  return false
+  return false;
 }
 
 /**
@@ -77,10 +86,10 @@ export function isString(str) {
  * @returns {Boolean}
  */
 export function isArray(arg) {
-  if (typeof Array.isArray === 'undefined') {
-    return Object.prototype.toString.call(arg) === '[object Array]'
+  if (typeof Array.isArray === "undefined") {
+    return Object.prototype.toString.call(arg) === "[object Array]";
   }
-  return Array.isArray(arg)
+  return Array.isArray(arg);
 }
 
 /**
@@ -91,14 +100,14 @@ export function scrollToElement(className = "has-error", options) {
   dom?.scrollIntoView(options || { block: "center" });
 }
 
-function getLengthLE(length, required = true, otherRuleArray = [], trigger = "change") {
+function getLengthLE(length, required = true, otherRuleArray = [], trigger = "change", message = "") {
   return [
     ...otherRuleArray,
     {
       required,
       validator(rule, value, callback) {
         if (!value) {
-          return rule.required ? callback(new Error("必填")) : callback();
+          return rule.required ? callback(new Error(`请输入${message}`)) : callback();
         } if (value.length <= length) {
           return callback();
         }
@@ -110,6 +119,12 @@ function getLengthLE(length, required = true, otherRuleArray = [], trigger = "ch
 }
 
 // 必填且字数少于20个
-export const requiredLengthLE20 = getLengthLE(20);
 export const arrayRequired = [{ type: "array", required: true, message: "必填", trigger: ["blur", "change"] }];
 export const simpleRequired = [{ required: true, message: "必填", trigger: ["blur", "change"] }];
+
+// 可自定义提示消息的验证
+export const requiredLengthLE20 = (msg = "") => getLengthLE(20, undefined, undefined, undefined, msg);
+export const customMsgRequired = (msg = "", type = "input", completeMsg, other = {}) => {
+  const message = completeMsg || `请${type === "input" ? "输入" : "选择"}${msg}`;
+  return [{ required: true, message, trigger: ["blur", "change"], ...other }];
+};

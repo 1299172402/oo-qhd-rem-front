@@ -1,6 +1,7 @@
-import {merge, cloneDeep, get} from "lodash";
+import { merge, cloneDeep, get } from "lodash";
 import dayJs from "dayjs";
 import { deleteNullAttribute } from "@/utils/objectOperate";
+import returnPaterPage from "@/utils/returnPaterPage.js";
 
 /**
  * 验证必填项
@@ -13,10 +14,9 @@ function getValidateFormResult(_this, ref, fields = []) {
     fields.push(...Object.keys(error || {}));
     if (valid) {
       return true;
-    } 
+    }
     flag = false;
     return false;
-        
   });
   return flag;
 }
@@ -49,19 +49,17 @@ export default {
       onlySubmitRequired: true,
       saveRequired: [],
       refName: "myForm",
-      needNextAudit: true
-    }
+      needNextAudit: true,
+      returnName: ""
+    };
   },
   created() {
     this.modelOk && this.$on("model-ok", this.modelOk);
-    this.$on("ok", this.handleToList)
+    this.$on("ok", this.handleToList);
   },
   mounted() {
-    this.getModel(this.$route.query.id || this.modelId);
-  },
-  activated() {
     this.beforeGetModel && this.beforeGetModel();
-    this.getModel(this.$route.query.id || this.modelId);
+    this.getModel(this.$route.params.id || this.modelId);
   },
   computed: {
     isAdd() {
@@ -86,9 +84,8 @@ export default {
             this.loading = false;
             this.$emit("model-ok");
           });
-      } 
+      }
       this.$emit("model-ok");
-            
     },
     momentDate(value) {
       return value && dayJs(value) || null;
@@ -108,7 +105,7 @@ export default {
         return;
       }
       this.loading = true;
-      const formData = { ...this.getSaveModel()};
+      const formData = { ...this.getSaveModel() };
       (this.formatMomentDateProps || []).forEach(p => {
         formData[p] = formData[p] && dayJs(formData[p]).format("YYYY-MM-DD HH:mm:ss") || null;
       });
@@ -116,7 +113,7 @@ export default {
         this.$message.success(type === "save" ? "保存成功！" : "提交成功！");
         this.$emit("ok", v);
       })
-        .catch((data) => {
+        .catch(data => {
           this.handleFlowStartedFail(type, data);
         })
         .finally(() => {
@@ -125,7 +122,7 @@ export default {
           });
         });
     },
-    validateForm (isScroll, fields, refName = this.refName, message = "请将必填项填写完整") {
+    validateForm(isScroll, fields, refName = this.refName, message = "请将必填项填写完整") {
       let canNext = true;
       if (!getValidateFormResult(this, refName, fields) && message) {
         this.$message.warning(message);
@@ -162,20 +159,24 @@ export default {
          * 保存提交后跳转到查询页面
          */
     handleToList() {
-      if (this.routeInfo?.ok && !this.isAudit) {
-        this.$router.push({ 
-          name: this.routeInfo.ok.name,
-          params: this.routeInfo.ok.params,
-          query: this.routeInfo.ok.query,
-        })
+      if (this.returnName && !this.isAudit && typeof this.returnName === "string") {
+        returnPaterPage(this.$route.path, this.returnName);
+      } else {
+        this.errorHandle("请确认returnName配置正确");
       }
-      // todo
     },
     handleReturn() {
-      this.$router.go(-1);
+      if (this.returnName && typeof this.returnName === "string") {
+        returnPaterPage(this.$route.path, this.returnName);
+      } else {
+        this.errorHandle("请确认returnName配置正确");
+      }
     },
     getSaveModel() {
       return this.model;
+    },
+    errorHandle(message) {
+      console.error(`EditMixin:${message}`);
     }
   }
-}
+};

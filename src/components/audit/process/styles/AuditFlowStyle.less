@@ -1,33 +1,42 @@
 .title {
-    font-size: 10pt;
-    font-weight: 600;
-    display: block;
-    text-align: left;
-    :root[theme-mode="light"] {
-        color: #000;
-    }
+  font-size: 10pt;
+  font-weight: 600;
+  display: block;
+  text-align: left;
+
+  :root[theme-mode="light"] {
+    color: #000;
+  }
 }
 
 .audit-flow {
-    &-item {
-        display: flex;
-        &-left {
-           padding-right: 10px;
-            &-title, &-person{
-                .title
-            }
-            &-time {
-                font-size: 12px;
-                text-align: left;
-            }
-        }
-        &-right {
-            &-title {
-                .title
-            }
-        }
-        &-description {
-            margin: 10px 0
-        }
+  &-item {
+    display: flex;
+
+    &-left {
+      padding-right: 10px;
+
+      &-title,
+      &-person {
+        .title;
+      }
+
+      &-time {
+        font-size: 12px;
+        text-align: left;
+      }
     }
+
+    &-right {
+      flex: 1;
+
+      &-title {
+        .title;
+      }
+    }
+
+    &-description {
+      margin: 10px 0;
+    }
+  }
 }

@@ -1,96 +1,123 @@
-.stepsrow{
-    .el-step__icon{
-        width: 30px;
-        height: 30px;
-        border: none;
+.stepsrow {
+  background: var(--logo-bg) no-repeat top right !important;
+
+  .el-step__icon {
+    width: 30px;
+    height: 30px;
+    border: none;
+    transition: 0s ease-out;
+  }
+
+  .el-step__head.is-success {
+    .el-step__icon.is-text {
+      background: var(--td-bg-color-page);
+      border: 1px solid var(--light-blue-color);
     }
-    .el-step__head.is-success{
-        .el-step__icon.is-text{
-            background: var(--td-bg-color-page);
-            border: 1px solid var(--lightBlueColor);
-        }
-        .el-icon-check:before{
-            color: var(--lightBlueColor);
-        }
-        .el-step__line{
-            background-color: var(--lightBlueColor);
-        }
-        .el-step__line-inner{
-            display: none;
-        }
+
+    .el-icon-check::before {
+      color: var(--light-blue-color);
     }
-    .el-step__head.is-process {
-        color: #fff;
-        .el-step__icon.is-text{
-            background: var(--lightBlueColor);
-        }
-        
+
+    .el-step__line {
+      background-color: var(--light-blue-color);
     }
-    .el-step__head.is-wait{
-        .el-step__icon.is-text{
-            background: var(--td-bg-color-page);
-            border: 1px solid gray;
-        }
+
+    .el-step__line-inner {
+      display: none;
     }
-    //步骤条描述
-    .el-step__title.is-success{
-        font-weight: 700;
-        color: #717D87;
+  }
+
+  .el-step__head.is-process {
+    color: #fff;
+
+    .el-step__icon.is-text {
+      background: var(--light-blue-color);
+      z-index: 0;
     }
-    .el-step__title.is-process{
-        font-weight: 700;
-        color: #fff;
+  }
+
+  .el-step__head.is-wait {
+    .el-step__icon.is-text {
+      background: var(--td-bg-color-page);
+      border: 1px solid gray;
+      z-index: 0;
     }
-    .el-step__title.is-wait {
-        font-weight: 700;
-        color: #717D87;
-    }
+  }
+  //步骤条描述
+  .el-step__title.is-success {
+    font-weight: 700;
+    color: #717d87;
+  }
+
+  .el-step__title.is-process {
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .el-step__title.is-wait {
+    font-weight: 700;
+    color: #717d87;
+  }
 }
-.stepscolumn{
-    .el-step__icon{
-        width: 30px;
-        height: 30px;
-        border: none;
+
+.stepscolumn {
+  background: var(--logo-bg) no-repeat top right !important;
+
+  .el-step__icon {
+    width: 30px;
+    height: 30px;
+    border: none;
+    transition: 0s ease-out;
+  }
+
+  .el-step__head.is-success {
+    .el-step__icon.is-text {
+      background: var(--td-bg-color-page);
+      border: 1px solid var(--light-blue-color);
     }
-    .el-step__head.is-success{
-        .el-step__icon.is-text{
-            background: var(--td-bg-color-page);
-            border: 1px solid var(--lightBlueColor);
-        }
-        .el-icon-check:before{
-            color: var(--lightBlueColor);
-        }
-        .el-step__line{
-            background-color: var(--lightBlueColor);
-        }
-        .el-step__line-inner{
-            display: none;
-        }
+
+    .el-icon-check::before {
+      color: var(--light-blue-color);
     }
-    .el-step__head.is-process {
-        color: #fff;
-        .el-step__icon.is-text{
-            background: var(--lightBlueColor);
-        }
-        
+
+    .el-step__line {
+      background-color: var(--light-blue-color);
     }
-    .el-step__head.is-wait{
-        .el-step__icon.is-text{
-            background: var(--td-bg-color-page);
-            border: 1px solid gray;
-        }
+
+    .el-step__line-inner {
+      display: none;
     }
-    //步骤条描述
-    .el-step__title.is-success{
-        font-weight: 700;
-        color: #717D87;
+  }
+
+  .el-step__head.is-process {
+    color: #fff;
+
+    .el-step__icon.is-text {
+      background: var(--light-blue-color);
+      z-index: 0;
     }
-    .el-step__title.is-process{
-        font-weight: 700;
-        color: #fff;
+  }
+
+  .el-step__head.is-wait {
+    .el-step__icon.is-text {
+      background: var(--td-bg-color-page);
+      border: 1px solid gray;
+      z-index: 0;
     }
-    .el-step__title.is-wait {
-        font-weight: 700;
-        color: #717D87;
-    }
+  }
+  //步骤条描述
+  .el-step__title.is-success {
+    font-weight: 700;
+    color: #717d87;
+  }
+
+  .el-step__title.is-process {
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .el-step__title.is-wait {
+    font-weight: 700;
+    color: #717d87;
+  }
 }

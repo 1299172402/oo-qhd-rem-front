@@ -1,0 +1,57 @@
+{
+  "MinXMap": 2.057432E7,
+  "MaxXMap": 2.05802E7,
+  "MinYMap": 4139278.0,
+  "MaxYMap": 4145751.0,
+  "PicturePath": "images/22.png",
+  "IsShowPicture": true,
+  "PicMinXMap": 2.057432E7,
+  "PicMaxXMap": 2.05802E7,
+  "PicMinYMap": 4139278.0,
+  "PicMaxYMap": 4145751.0,
+  "Layers": [
+    {
+      "LayerName": "泡泡图",
+      "LayerType": 15,
+      "Active": true,
+      "Display": true,
+      "Objects": [
+        {
+          "ObjType": 150,
+          "Radius": 100,
+          "WellName": "井名",
+          "Legend": false,
+          "CoordX": 20576958,
+          "CoordY": 4140678.25,
+          "Pie": [
+            {
+              "Text": "日产油量",
+              "Code": "日产油量",
+              "Value": 80,
+              "Color": [
+                255,
+                255,
+                0,
+                0
+              ],
+              "ShowText":true
+            },
+            {
+              "Text": "日产油量",
+              "Code": "日产油量",
+              "Value": 20,
+              "Color": [
+                255,
+                0,
+                0,
+                255
+              ],
+              "ShowText":true
+            }
+          ]
+        }
+        
+      ]
+    }
+  ]
+}

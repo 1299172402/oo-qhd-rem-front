@@ -5,6 +5,7 @@
     :model="model"
     class="form-auto-create"
     :class="formClass"
+    v-bind="$attrs"
   >
     <template v-for="item in items">
       <el-form-item
@@ -12,14 +13,14 @@
         :key="item.prop"
         :name="item.prop"
         :prop="item.required ? item.prop : ''"
-        :rules="item.required ? item.rules || simpleRequired : []"
+        :rules="item.required ? item.rules || simpleRequired(item.label) : []"
         :class="item.class"
         :label="item.label"
       >
         <span v-if="item.tip" slot="label">
           <slot name="label" :item="item" />
         </span>
-        <span v-if="viewOnly || item.isView">{{ item.translate ? item.translate(model[item.prop]) : model[item.prop] }}</span>
+        <span v-if="viewOnly || item.isView" :title="item.translate ? item.translate(model[item.prop]) : model[item.prop]">{{ item.translate ? item.translate(model[item.prop]) : model[item.prop] }}</span>
         <slot v-else-if="item.showSlot && $slots[item.prop]" :name="item.prop" />
         <el-input
           v-else-if="!item.type || item.type === 'textarea'"
@@ -29,6 +30,7 @@
           :show-word-limit="item.showWordLimit"
           :clearable="item.clearable === false ? false : true"
           :placeholder="item.placeholder || ('请输入' + item.label)"
+          :disabled="item.disabled"
         />
         <el-input-number
           v-else-if="item.type === 'number'"
@@ -91,15 +93,10 @@ export default {
       default: "form-layout"
     }
   },
-  data() {
-    return {
-      simpleRequired: [{ required: true, message: "必填", trigger: ["change"] }]
-    };
-  },
   methods: {
     validate(showMessage = true, scrollTo = true) {
       return new Promise((resolve, reject) => {
-        this.$refs.form.validate((valid) => {
+        this.$refs.form.validate(valid => {
           if (valid) {
             this.$emit("ok");
             resolve(true);
@@ -113,9 +110,17 @@ export default {
     },
     clearValidate() {
       this.$refs.form.clearValidate();
+    },
+    simpleRequired(msg = "") {
+      return [{ required: true, message: `请输入${msg}`, trigger: ["change"] }];
     }
   }
 };
 </script>
 <style scoped lang="less">
+/deep/ .el-input-number {
+  min-width: 160px;
+  max-width: 220px;
+  width: auto;
+}
 </style>

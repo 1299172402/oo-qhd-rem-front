@@ -1,22 +1,27 @@
 <template>
-  <div style="height: calc(100% - 70px);">
-    <div class="marquee-fa" style="margin-bottom: 20px;">
-      <div class="marquee_head">
-        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px" />
-        <p style="margin-left: 10px; width: 70px">通知公告：</p>
+  <div style="height: 100%;">
+    <!-- TODO: Maybe change back -->
+    <!-- <div class="home-marquee-fa" style="margin-bottom: 20px">
+      <div class="home-marquee_head">
+        <img src="@/assets/notice.png" alt="" style="width: 18px; height: 18px">
+        <p style="margin-left: 10px; width: 70px">
+          通知公告：
+        </p>
       </div>
-      <Marquee style="white-space:pre-wrap;">{{ val }}</Marquee>
-    </div>
-    <pagePanel headerTitle="作业区概览" style="height: calc(100% - 0px)">
-      <div style="width: 100%; height: calc(100% - 10px); overflow: scroll;overflow-x: hidden;" class="el_row_wrap">
-        <el-row :gutter="0">
-          <el-col :span="8" v-for="(item, index) in listNumData" :key="index">
-            <div class="boxCard cardStyle">
+      <marquee style="white-space: pre-wrap;">
+        {{ $store.getters['user/notice'] }}
+      </marquee>
+    </div> -->
+    <div style="width: 100%; height: 100%; overflow: scroll; overflow-x: hidden;padding: 10px;" class="el_row_wrap home-main">
+      <el-row :gutter="0">
+        <el-col v-for="(item, index) in listNumData" :key="index" :span="8">
+          <!-- TODO: Maybe change back -->
+          <!-- <div class="boxCard cardStyle">
               <div class="boxCard_left">
-                <p style="color: var(--lightBlueColor);font-size:16px">{{ item.depName }}</p>
+                <p style="color: var(--light-blue-color);font-size:16px">{{ item.tenantName }}</p>
                 <p class="divStyle">租户授权app数量：<span>{{ item.appNum }}</span></p>
                 <p>租户授权看板数量：<span>{{ item.boardNum }}</span></p>
-                <p>租户授权大屏数量：<span>{{ item.indexNum }}</span></p>
+                <p>租户授权大屏数量：<span>{{ item.businessNum }}</span></p>
                 <p>租户下属用户数量：<span>{{ item.userNum }}</span></p>
               </div>
               <div class="boxCard_middle">
@@ -28,64 +33,100 @@
               <div class="boxCard_right" @click="handleAuth(item.tenantId)">
                 <span>查 看</span>
               </div>
+            </div> -->
+          <div class="home-card cardStyle">
+            <div class="depName card-title">
+              {{ item.tenantName }}
             </div>
-          </el-col>
-          <!-- <el-col :span="8"> <div class="boxCard cardStyle">1-2</div> </el-col>
-          <el-col :span="8"> <div class="boxCard cardStyle">1-3</div> </el-col> -->
-        </el-row>
-        <!-- <el-row>
-          <el-col :span="8">
-            <div class="boxCard cardStyle">2-1</div>
-          </el-col>
-          <el-col :span="8"> <div class="boxCard cardStyle">2-2</div> </el-col>
-          <el-col :span="8"> <div class="boxCard cardStyle">2-3</div> </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12"><div class="boxCard cardStyle">3-1</div></el-col>
-          <el-col :span="12"><div class="boxCard cardStyle">3-2</div></el-col>
-        </el-row> -->
-      </div>
-
-    </pagePanel>
+            <div style="width: 100%; display: flex; justify-content: space-around; margin-top: 28px; margin-bottom: 10px;">
+              <div class="boxCard_left">
+                <p>
+                  租户授权app数量：<span>{{ item.appNum }}</span>
+                </p>
+                <p>
+                  租户授权看板数量：<span>{{ item.boardNum }}</span>
+                </p>
+                <p>
+                  租户授权大屏数量：<span>{{ item.businessNum }}</span>
+                </p>
+                <p>
+                  租户下属用户数量：<span>{{ item.userNum }}</span>
+                </p>
+              </div>
+              <div class="boxCard_middle">
+                <el-progress
+                  type="circle"
+                  :stroke-width="10"
+                  :width="108"
+                  :format="() => (item.userNum ? item.userLonginNum + '/' + item.userNum : '0/0')"
+                  :percentage="computedPercentage(item)"
+                />
+                <p>今日活跃用户统计</p>
+              </div>
+            </div>
+            <div style="text-align: center;">
+              <el-button
+                v-if="$store.state.setting.mode === 'dark'"
+                v-hasPermi="['system:homePage:detail']"
+                type="primary"
+                size="mini"
+                style="width: 80px; height: 32px;"
+                @click="handleAuth(item.tenantId, item.tenantName)"
+              >
+                查看
+              </el-button>
+              <el-button
+                v-else
+                v-hasPermi="['system:homePage:detail']"
+                size="mini"
+                style="width: 80px;height: 32px;color: #fff;background: #0075e9;"
+                @click="handleAuth(item.tenantId, item.tenantName)"
+              >
+                查看
+              </el-button>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 <script>
-import { listNum, noticeList } from '@/api/intelligentOilfield/system/home';
-import marquee from '@/components/intelligentOilfield/marquee-window/index.vue';
+import { listNum, noticeList } from "@/api/intelligentOilfield/system/home";
 
 export default {
-  name: 'Index',
-  components: {
-    marquee,
-  },
+  name: "Index",
   data() {
     return {
-      val: '',
+      val: "",
       listNumData: []
     };
   },
   created() {
     this.listNum();
-    this.noticeList()
+    // TODO: Maybe change back
+    // this.noticeList()
   },
   methods: {
     listNum() {
-      listNum(this.$store.getters['user/userDetail'].user.userId).then((response) => {
+      listNum(this.$store.getters["user/userDetail"].user.userId).then(response => {
         // listNum(100).then((response) => {
-        this.listNumData = response
+        this.listNumData = response;
       });
     },
-    handleAuth(tenantId) {
-      console.log('aa')
+    handleAuth(tenantId, tenantName) {
       //   this.$router.push({ name: `homeDetail`, query: { id } });
-      this.$router.push({ name: `homeDetail`, query: { tenantId } });
+      this.$router.push({ name: "homeDetail", query: { tenantId, pathName: tenantName }, params: { tenantId }});
     },
     noticeList() {
       noticeList().then(response => {
-        response.data.data.forEach(item => {
-          this.val += `${item.noticeContent}                                                                                                    `
-        })
-      })
+        response?.data?.data?.forEach(item => {
+          this.val += `${item.noticeContent}                                                                                                    `;
+        });
+      });
+    },
+    computedPercentage(item) {
+      return item.userNum ? (item.userLonginNum / item.userNum).toFixed(2) * 100 : 0;
     }
   }
 };
@@ -93,15 +134,18 @@ export default {
 
 <style lang="less" scoped>
 .cardStyle {
-  height: 250px;
+  height: 282px;
   margin: 10px;
-  display: flex;
-  justify-content: space-between;
-  border-radius: 4px;
+  // border-radius: 4px;
 }
 
-.cardStyle>div {
-  height: 100%;
+.depName {
+  height: 40px;
+  font-size: 14px;
+  font-family: PingFangSC-Medium, "PingFang SC";
+  font-weight: 500;
+  line-height: 40px;
+  padding-left: 20px;
 }
 
 .el-row {
@@ -139,16 +183,17 @@ export default {
 }
 
 .boxCard_left {
-  padding-top: 15px;
-  padding-left: 15px;
-
   p {
-    height: 35px;
+    height: 22px;
     font-size: 14px;
+    font-family: PingFangSC-Regular, "PingFang SC";
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 16px;
+    color: #3aa4ed;
 
     span {
-      //   margin-left: 5px;
-      color: var(--lightBlueColor);
+      color: var(--light-blue-color);
     }
   }
 }
@@ -156,8 +201,17 @@ export default {
 .boxCard_middle {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+
+  p {
+    height: 20px;
+    font-size: 14px;
+    font-family: PingFangSC-Medium, "PingFang SC";
+    font-weight: 500;
+    color: #8a9fc7;
+    line-height: 20px;
+  }
 }
 
 .boxCard_right {

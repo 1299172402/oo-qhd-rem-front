@@ -9,7 +9,12 @@
   >
     <template v-if="type == 'phone'">
       <t-form-item name="phone">
-        <t-input v-model="formData.phone" :maxlength="11" size="large" placeholder="请输入您的手机号">
+        <t-input
+          v-model="formData.phone"
+          :maxlength="11"
+          size="large"
+          placeholder="请输入您的手机号"
+        >
           <template #prefix-icon>
             <user-icon />
           </template>
@@ -19,7 +24,12 @@
 
     <template v-if="type == 'email'">
       <t-form-item name="email">
-        <t-input v-model="formData.email" type="text" size="large" placeholder="请输入您的邮箱">
+        <t-input
+          v-model="formData.email"
+          type="text"
+          size="large"
+          placeholder="请输入您的邮箱"
+        >
           <template #prefix-icon>
             <mail-icon />
           </template>
@@ -55,12 +65,16 @@
     </template>
 
     <t-form-item class="check-container" name="checked">
-      <t-checkbox v-model="formData.checked">我已阅读并同意 </t-checkbox> <span>本服务协议</span> 和
+      <t-checkbox v-model="formData.checked">
+        我已阅读并同意
+      </t-checkbox> <span>本服务协议</span> 和
       <span>本隐私声明</span>
     </t-form-item>
 
     <t-form-item>
-      <t-button block size="large" type="submit"> 注册 </t-button>
+      <t-button block size="large" type="submit">
+        注册
+      </t-button>
     </t-form-item>
 
     <div class="switch-container">
@@ -71,49 +85,50 @@
   </t-form>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import { UserIcon, MailIcon, BrowseIcon, BrowseOffIcon, LockOnIcon } from 'tdesign-icons-vue';
+import Vue from "vue";
+import { UserIcon, MailIcon, BrowseIcon, BrowseOffIcon, LockOnIcon } from "tdesign-icons-vue";
 
 const INITIAL_DATA = {
-  phone: '',
-  email: '',
-  password: '',
-  verifyCode: '',
-  checked: false,
+  phone: "",
+  email: "",
+  password: "",
+  verifyCode: "",
+  checked: false
 };
 
 const FORM_RULES = {
-  phone: [{ required: true, message: '手机号必填', type: 'error' }],
-  email: [{ required: true, email: true, message: '邮箱必填', type: 'error' }],
-  password: [{ required: true, message: '密码必填', type: 'error' }],
-  verifyCode: [{ required: true, message: '验证码必填', type: 'error' }],
+  phone: [{ required: true, message: "手机号必填", type: "error" }],
+  email: [{ required: true, email: true, message: "邮箱必填", type: "error" }],
+  password: [{ required: true, message: "密码必填", type: "error" }],
+  verifyCode: [{ required: true, message: "验证码必填", type: "error" }]
 };
 
 /** 高级详情 */
 export default Vue.extend({
-  name: 'Register',
+  name: "Register",
   components: {
     UserIcon,
     MailIcon,
     BrowseIcon,
     BrowseOffIcon,
-    LockOnIcon,
+    LockOnIcon
   },
   data() {
     return {
       FORM_RULES,
-      type: 'phone',
+      type: "phone",
       emailOptions: [],
       formData: { ...INITIAL_DATA },
       showPsw: false,
       countDown: 0,
-      intervalTimer: null,
+      intervalTimer: null
     };
   },
   beforeDestroy() {
     clearInterval(this.intervalTimer);
   },
   methods: {
+    /* eslint-disable */
     onSubmit({ validateResult }: { validateResult: boolean }) {
       if (validateResult === true) {
         if (!this.formData.checked) {
@@ -124,6 +139,7 @@ export default Vue.extend({
         this.$emit('registerSuccess');
       }
     },
+    /* eslint-disable */
     switchType(val: 'email' | 'phone') {
       this.$refs.form.reset();
       this.type = val;

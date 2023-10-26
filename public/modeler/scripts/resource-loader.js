@@ -12,83 +12,83 @@
  */
 (function(resources){
 
-  if (resources) {
+    if (resources) {
 
-    // Pause angular bootstrap so we have time to register and override angular services/directives etc
-    window.name = 'NG_DEFER_BOOTSTRAP!';
+        // Pause angular bootstrap so we have time to register and override angular services/directives etc
+        window.name = 'NG_DEFER_BOOTSTRAP!';
 
-    function load(res, node, callback, scope) {
-      let resource;
-      if (res.tag === 'script') {
-        resource = document.createElement('script');
-        resource.type = res.type || 'text/javascript';
-        resource.src = res.src;
+        function load(res, node, callback, scope) {
+            var resource;
+            if (res.tag === 'script') {
+                resource = document.createElement('script');
+                resource.type = res.type || 'text/javascript';
+                resource.src = res.src;
 
-        if (callback) {
-          let done = false;
+                if (callback) {
+                    var done = false;
 
-          // Attach handlers for all browsers
-          resource.onload = resource.onreadystatechange = function()
-          {
-            if (!done && (!this.readyState || this.readyState == "loaded" || this.readyState == "complete"))
-            {
-              done = true;
-              callback.call(scope || this, res);
+                    // Attach handlers for all browsers
+                    resource.onload = resource.onreadystatechange = function()
+                    {
+                        if (!done && (!this.readyState || this.readyState == "loaded" || this.readyState == "complete"))
+                        {
+                            done = true;
+                            callback.call(scope ? scope : this, res);
+                        }
+                    };
+                }
             }
-          };
-        }
-      }
-      else if (res.tag === 'link') {
-        resource = document.createElement('link');
-        resource.rel = res.rel || 'stylesheet';
-        resource.href = res.href;
-      }
-
-      if (node.nextSibling) {
-        node.parentNode.insertBefore(resource, node.nextSibling);
-      }
-      else {
-        node.parentNode.appendChild(resource);
-      }
-
-      if (res.tag === 'link' && callback) {
-        callback.call(scope || this, res);
-      }
-    }
-
-    function getResourceLoaderElement() {
-      const scripts = document.getElementsByTagName('script');
-      for (let i = 0, il = scripts.length; i < il; i++) {
-        if (scripts[i].src.indexOf('scripts/resource-loader.js') != -1) {
-          return scripts[i];
-        }
-      }
-      return null;
-    }
-
-    let res = resources['*'];
-    const resourceLoaderElement = getResourceLoaderElement();
-    const appName = resourceLoaderElement.getAttribute('app');
-    if (resources.hasOwnProperty(appName)) {
-      res = resources[appName];
-    }
-
-    let loadedResources = 0;
-    for (let i = 0, il = res.length; i < il; i++) {
-      load(res[i], resourceLoaderElement, ()=> {
-        loadedResources++;
-        if (loadedResources == res.length) {
-          // Let angular resume bootstrap
-          var interval = window.setInterval(()=> {
-            if (angular && typeof angular.resumeBootstrap === 'function') {
-              angular.resumeBootstrap();
-              window.clearInterval(interval);
+            else if (res.tag === 'link') {
+                resource = document.createElement('link');
+                resource.rel = res.rel || 'stylesheet';
+                resource.href = res.href;
             }
-          }, 20);
 
+            if (node.nextSibling) {
+                node.parentNode.insertBefore(resource, node.nextSibling);
+            }
+            else {
+                node.parentNode.appendChild(resource);
+            }
+
+            if (res.tag === 'link' && callback) {
+                callback.call(scope ? scope : this, res);
+            }
         }
-      });
+
+        function getResourceLoaderElement() {
+            var scripts = document.getElementsByTagName('script');
+            for (var i = 0, il = scripts.length; i < il; i++) {
+                if (scripts[i].src.indexOf('scripts/resource-loader.js') != -1) {
+                    return scripts[i];
+                }
+            }
+            return null;
+        }
+
+        var res = resources['*'];
+        var resourceLoaderElement = getResourceLoaderElement();
+        var appName = resourceLoaderElement.getAttribute('app');
+        if (resources.hasOwnProperty(appName)) {
+            res = resources[appName];
+        }
+
+        var loadedResources = 0;
+        for (var i = 0, il = res.length; i < il; i++) {
+            load(res[i], resourceLoaderElement, function(){
+                loadedResources++;
+                if (loadedResources == res.length) {
+                    // Let angular resume bootstrap
+                    var interval = window.setInterval(function(){
+                        if (angular && typeof angular.resumeBootstrap == 'function') {
+                            angular.resumeBootstrap();
+                            window.clearInterval(interval);
+                        }
+                    }, 20);
+
+                }
+            });
+        }
     }
-  }
 
 })(FLOWABLE.CONFIG.resources);

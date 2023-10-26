@@ -3,111 +3,123 @@
   <div class="app-container">
     <el-row :gutter="20">
       <el-col :span="6" :xs="24">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>查看用户信息</span>
-          </div>
-          <div>
+        <info-window
+          info-width="100%"
+          info-height="100%"
+          header-title="用户基础信息"
+          :header-style="$store.state.setting.mode === 'dark' ? {} : {color:'#0075E9'}"
+        >
+          <div style="padding: 10px 20px;overflow: scroll;" class="g-w100 g-h100">
             <div class="text-center">
-              <userAvatar :user="user" />
-              <div style="margin-bottom: 20px">{{ user.nickName }}</div>
+              <user-avatar :user="allDatas" />
+              <div style="margin-bottom: 20px;">
+                {{ user.nickName ? user.nickName : "无" }}
+              </div>
             </div>
             <ul class="list-group list-group-striped">
-              <li class="list-group-item">
-                <svg-icon icon-class="tree" class="marginRight" />所属机构
-                <div class="pull-right" v-if="user.dept">{{ user.dept.deptName }}</div>
+              <li class="list-group-item g-flex">
+                <div class="marginRight">
+                  所属机构
+                </div>
+                <div v-if="user.dept" class="pull-right rightDiv">
+                  {{ user.dept.deptName }}
+                </div>
+                <div v-else>
+                  无
+                </div>
               </li>
-              <li class="list-group-item">
-                <svg-icon icon-class="peoples" class="marginRight" />
-                用户角色
-                <div class="pull-right">{{ roleGroup }}</div>
+              <li class="list-group-item g-flex">
+                <div class="marginRight">
+                  手机号码
+                </div>
+                <div class="pull-right rightDiv">
+                  {{ user.phonenumber ? user.phonenumber : "无" }}
+                </div>
               </li>
-              <li class="list-group-item">
-                <svg-icon icon-class="post" class="marginRight" />
-                用户岗位
-                <div class="pull-right">{{ postGroup }}</div>
+              <li class="list-group-item g-flex">
+                <div class="marginRight">
+                  用户邮箱
+                </div>
+                <div class="pull-right rightDiv">
+                  {{ user.email ? user.email : "无" }}
+                </div>
               </li>
-              <li class="list-group-item">
-                <svg-icon icon-class="user" class="marginRight" />
-                用户账号
-                <div class="pull-right">{{ user.userName }}</div>
+              <li class="list-group-item g-flex">
+                <div class="marginRight">
+                  登录IP
+                </div>
+                <div class="pull-right rightDiv">
+                  {{ user.loginIp ? user.loginIp : "无" }}
+                </div>
               </li>
-              <li class="list-group-item">
-                <svg-icon icon-class="phone" class="marginRight" />
-                手机号码
-                <div class="pull-right">{{ user.phonenumber }}</div>
-              </li>
-              <li class="list-group-item">
-                <svg-icon icon-class="email" class="marginRight" />
-                用户邮箱
-                <div class="pull-right">{{ user.email }}</div>
-              </li>
-              <li class="list-group-item">
-                <svg-icon icon-class="tool" class="marginRight" />
-                账号类型
-                <div class="pull-right">{{ user.userType }}</div>
-              </li>
-              <li class="list-group-item">
-                <svg-icon icon-class="server" class="marginRight" />
-                登录IP
-                <div class="pull-right">{{ user.loginIp }}</div>
-              </li>
-              <li class="list-group-item">
-                <svg-icon icon-class="date" class="marginRight" />
-                最近登录时间
-                <div class="pull-right">{{ parseTime(user.loginDate) }}</div>
+              <li class="list-group-item g-flex">
+                <div class="marginRight">
+                  最近登录时间
+                </div>
+                <div class="pull-right rightDiv">
+                  {{ user.loginDat ? parseTime(user.loginDate) : "无" }}
+                </div>
               </li>
             </ul>
           </div>
-        </el-card>
+        </info-window>
       </el-col>
       <el-col :span="18" :xs="24">
-        <el-card>
-          <div slot="header" class="clearfix">
-            <span>编辑用户信息</span>
+        <info-window
+          info-width="100%"
+          info-height="100%"
+          header-title="用户账号信息"
+          :header-style="$store.state.setting.mode === 'dark' ? {} : {color:'#0075E9'}"
+        >
+          <div style="padding: 10px 20px;overflow: scroll;" class="g-w100 g-h100">
+            <user-info
+              :user="allDatas"
+              :role-options="roleOptions"
+              :post-options="postOptions"
+              @updateList="updateList"
+            />
           </div>
-          <el-tabs v-model="activeTab">
+        </info-window>
+        <!-- // TODO: Maybe change back -->
+        <!-- <el-tabs v-model="activeTab">
             <el-tab-pane label="基本资料" name="userinfo">
-              <userInfo
-                @updateList="updateList"
+              <user-info
                 :user="allDatas"
-                :roleOptions="roleOptions"
-                :postOptions="postOptions"
+                :role-options="roleOptions"
+                :post-options="postOptions"
+                @updateList="updateList"
               />
             </el-tab-pane>
             <el-tab-pane label="修改密码" name="resetPwd">
-              <resetPwd :user="user" :userName="userName" />
+              <reset-pwd :user="user" :user-name="userName" />
             </el-tab-pane>
-          </el-tabs>
-        </el-card>
+          </el-tabs> -->
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import userAvatar from './userAvatar.vue';
-import userInfo from './userInfo.vue';
-import resetPwd from './resetPwd.vue';
-import { getUser } from '@/api/intelligentOilfield/system/user';
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import userAvatar from "./userAvatar.vue";
+import userInfo from "./userInfo.vue";
+import { getUser } from "@/api/intelligentOilfield/system/user";
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 export default {
-  components: { userAvatar, userInfo, resetPwd },
+  components: { userAvatar, userInfo },
   data() {
     return {
       user: {},
-      roleGroup: '',
-      postGroup: '',
-      activeTab: 'userinfo',
-      roleOptions: {},
-      postOptions: {},
+      roleGroup: "",
+      postGroup: "",
+      activeTab: "userinfo",
+      roleOptions: [],
+      postOptions: [],
       allDatas: {},
-      userName: this.$route.query.userName,
+      userName: this.$route.query.userName
     };
   },
   created() {
-    console.log('获取详情===', this.$route.query);
     this.getUser();
   },
   methods: {
@@ -116,18 +128,18 @@ export default {
       this.getUser();
     },
     getUser() {
-      getUser(this.$route.query.userId).then((response) => {
+      getUser(this.$route.query.userId).then(response => {
         this.allDatas = response.data;
-        this.allDatas.tempPostId = parseInt(response.data.postIds.toLocaleString(), 10);
+        this.allDatas.tempPostId = parseInt(response.data.postIds?.toLocaleString(), 10);
         this.roleOptions = response.data.roles;
         this.postOptions = response.data.posts;
 
         this.user = response.data.data;
-        this.roleGroup = '';
-        this.user.roles.forEach((el) => {
+        this.roleGroup = "";
+        this.user.roles.forEach(el => {
           this.roleGroup += `${el.roleName}/`;
         });
-        response.data.posts.forEach((el) => {
+        response.data.posts.forEach(el => {
           if (el.postId === parseInt(response.data.postIds.toLocaleString(), 10)) {
             this.postGroup = el.postName;
           }
@@ -136,26 +148,33 @@ export default {
         // this.roleGroup = response.roleGroup;
         // this.postGroup = response.postGroup;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
 .marginRight {
+  width: 100px;
   margin-right: 4px;
 }
+
+.rightDiv {
+  width: calc(100% - 106px);
+  text-align: right;
+}
+
 .app-container {
   height: 100%;
+
   .el-row {
     height: 100%;
+
     .el-col {
       height: 100%;
-      .el-card{
+
+      .el-card {
         height: 100%;
         overflow: scroll;
-        .el-card__body{
-          
-        }
       }
     }
   }

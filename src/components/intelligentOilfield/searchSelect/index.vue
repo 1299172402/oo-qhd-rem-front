@@ -1,24 +1,23 @@
 <template>
-    <el-select
-      v-model="selectValue"
-      v-loadmore="loadData"
-      v-bind="$attrs"
-      filterable
-      remote
-      :placeholder="placeholder"
-      :remote-method="handleSearch"
-      v-on="$listeners"
-      @visible-change="changeSearch"
-    >
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      />
-    </el-select>
-  </template>
-  
+  <el-select
+    v-model="selectValue"
+    v-loadmore="loadData"
+    v-bind="$attrs"
+    filterable
+    :placeholder="placeholder"
+    :remote-method="handleSearch"
+    v-on="$listeners"
+    @visible-change="changeSearch"
+  >
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value"
+    />
+  </el-select>
+</template>
+
 <script>
 export default {
   directives: {
@@ -126,9 +125,9 @@ export default {
     getData(type) {
       this.loading = true;
       this.fn(this.getMyParams())
-        .then((v) => {
+        .then(v => {
           const re = v.data[this.queryParamProp.listProp];
-          re.map((item) => {
+          re.map(item => {
             if (!item.label) {
               item.label = item[this.labelProp];
             }
@@ -143,6 +142,11 @@ export default {
             this.options.push(...re);
           }
           this.allowLoad = this.options.length < v.data[this.queryParamProp.totalProp];
+          if (this.options.length > 0) {
+            if (this.options[0].label !== "无") {
+              this.options.unshift({ label: "无", value: undefined });
+            }
+          }
         })
         .finally(() => {
           this.loading = false;
@@ -163,3 +167,9 @@ export default {
   }
 };
 </script>
+<style lang="less" scoped>
+.el-select {
+  width: 240px;
+}
+
+</style>

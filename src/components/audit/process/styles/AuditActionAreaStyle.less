@@ -1,17 +1,19 @@
 @import "theme";
 
 .audit-action {
+  display: flex;
+  justify-content: space-between;
+  padding-left: @default-padding;
+  padding-right: @default-padding;
+
+  &-btns {
     display: flex;
-    justify-content: space-between;
-    padding-left: @default-padding;
-    padding-right: @default-padding;
-    &-btns {
-        display: flex;
-        align-items: center;
-        & > button{
-            &:not(&:last-child) {
-                margin-right: @default-padding;
-            }  
-        }
+    align-items: center;
+
+    & > button {
+      &:not(&:last-child) {
+        margin-right: @default-padding;
+      }
     }
+  }
 }

@@ -19,10 +19,10 @@
           </template>
           <div
             id="stokeContainer"
-            style="width: 100%; height: 351px"
             ref="stokeContainer"
+            style="width: 100%; height: 351px;"
             class="dashboard-chart-container"
-          ></div>
+          />
         </t-card>
       </t-col>
       <t-col :xs="12" :xl="3">
@@ -34,10 +34,17 @@
             <t-col :xs="6" :xl="12">
               <t-card :bordered="false" subtitle="本月出库总计（件）" class="inner-card">
                 <div class="inner-card__content">
-                  <div class="inner-card__content-title">1726</div>
+                  <div class="inner-card__content-title">
+                    1726
+                  </div>
                   <div class="inner-card__content-footer">
                     自从上周以来
-                    <trend class="trend-tag" type="down" :is-reverse-color="false" describe="20.3%" />
+                    <trend
+                      class="trend-tag"
+                      type="down"
+                      :is-reverse-color="false"
+                      describe="20.3%"
+                    />
                   </div>
                 </div>
               </t-card>
@@ -45,10 +52,17 @@
             <t-col :xs="6" :xl="12">
               <t-card :bordered="false" subtitle="本月入库总计（件）" class="inner-card">
                 <div class="inner-card__content">
-                  <div class="inner-card__content-title">226</div>
+                  <div class="inner-card__content-title">
+                    226
+                  </div>
                   <div class="inner-card__content-footer">
                     自从上周以来
-                    <trend class="trend-tag" type="down" :is-reverse-color="false" describe="20.3%" />
+                    <trend
+                      class="trend-tag"
+                      type="down"
+                      :is-reverse-color="false"
+                      describe="20.3%"
+                    />
                   </div>
                 </div>
               </t-card>
@@ -60,25 +74,25 @@
   </t-card>
 </template>
 <script>
-import { TooltipComponent, LegendComponent, GridComponent } from 'echarts/components';
-import { BarChart } from 'echarts/charts';
-import { CanvasRenderer } from 'echarts/renderers';
-import * as echarts from 'echarts/core';
-import { mapState } from 'vuex';
+import { TooltipComponent, LegendComponent, GridComponent } from "echarts/components";
+import { BarChart } from "echarts/charts";
+import { CanvasRenderer } from "echarts/renderers";
+import * as echarts from "echarts/core";
+import { mapState } from "vuex";
 
-import { constructInitDataset } from '../index';
-import { changeChartsTheme } from '@/utils/color';
-import { LAST_7_DAYS } from '@/utils/date';
-import Trend from '@/components/intelligentOilfield/trend/index.vue';
+import { constructInitDataset } from "../index";
+import { changeChartsTheme } from "@/utils/color";
+import { LAST_7_DAYS } from "@/utils/date";
+import Trend from "@/components/intelligentOilfield/trend/index.vue";
 
-import { PANE_LIST, SALE_TEND_LIST, BUY_TEND_LIST, SALE_COLUMNS, BUY_COLUMNS } from '@/service/service-base';
+import { PANE_LIST, SALE_TEND_LIST, BUY_TEND_LIST, SALE_COLUMNS, BUY_COLUMNS } from "@/service/service-base";
 
 echarts.use([TooltipComponent, LegendComponent, GridComponent, BarChart, CanvasRenderer]);
 
 export default {
-  name: 'Overview',
+  name: "Overview",
   components: {
-    Trend,
+    Trend
   },
   data() {
     return {
@@ -87,29 +101,29 @@ export default {
       saleTendList: SALE_TEND_LIST,
       saleColumns: SALE_COLUMNS,
       buyColumns: BUY_COLUMNS,
-      LAST_7_DAYS,
+      LAST_7_DAYS
     };
   },
   computed: {
-    ...mapState('setting', ['brandTheme', 'mode']), // 这里需要用到主题色和主题模式的全局配置
+    ...mapState("setting", ["brandTheme", "mode"]) // 这里需要用到主题色和主题模式的全局配置
   },
   watch: {
     brandTheme() {
       changeChartsTheme([this.stokeChart]);
     },
     mode() {
-      [this.stokeChart].forEach((item) => {
+      [this.stokeChart].forEach(item => {
         item.dispose();
       });
       this.renderCharts();
-    },
+    }
   },
   mounted() {
     this.$nextTick(() => {
       this.updateContainer();
     });
 
-    window.addEventListener('resize', this.updateContainer, false);
+    window.addEventListener("resize", this.updateContainer, false);
     this.renderCharts();
   },
 
@@ -124,23 +138,23 @@ export default {
       this.stokeChart.resize({
         // 根据父容器的大小设置大小
         width: this.stokeContainer.clientWidth,
-        height: this.stokeContainer.clientHeight,
+        height: this.stokeContainer.clientHeight
       });
     },
     renderCharts() {
       const { chartColors } = this.$store.state.setting;
       // 出入库概览
-      if (!this.stokeContainer) this.stokeContainer = document.getElementById('stokeContainer');
+      if (!this.stokeContainer) this.stokeContainer = document.getElementById("stokeContainer");
 
       this.stokeChart = echarts.init(this.stokeContainer);
       this.stokeChart.setOption(constructInitDataset({ dateTime: LAST_7_DAYS, ...chartColors }));
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .dashboard-overview-card {
   /deep/ .t-card__header {

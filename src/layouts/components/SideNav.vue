@@ -6,7 +6,7 @@
       :theme="theme"
       :value="active"
       :collapsed="collapsed"
-      :defaultExpanded="defaultExpanded"
+      :expand-type="showLogo ? 'popup' : 'normal'"
     >
       <template #logo>
         <span v-if="showLogo" :class="`${prefix}-side-nav-logo-wrapper`">
@@ -17,84 +17,74 @@
         </span>
         <span
           v-if="!collapsed && showLogo"
-          style="font-size: 16px"
+          style="font-size: 16px;"
           :style="{ color: formData.mode == 'light' ? '#000' : '#fff' }"
-          >智能油田管理系统</span
-        >
+        >智能油田管理系统</span>
       </template>
-      <menu-content :navData="menu" />
-      <template #operations>
-      </template>
+      <menu-content :nav-data="menu" />
+      <template #operations />
     </t-menu>
-    <div :class="`${prefix}-side-nav-placeholder${collapsed ? '-hidden' : ''}`"></div>
+    <div :class="`${prefix}-side-nav-placeholder${collapsed ? '-hidden' : ''}`" />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { prefix } from '@/config/global';
-import { ClassName } from '@/interface';
-import myLogo from '@/assets/logo.svg';
+import Vue from "vue";
+import { prefix } from "@/config/global";
+import { ClassName } from "@/interface";
+import myLogo from "@/assets/logo.svg";
 // import LogoFull from '@/assets/assets-logo-full.svg';
 
-import MenuContent from './MenuContent.vue';
-import pgk from '../../../package.json';
+import MenuContent from "./MenuContent.vue";
+import pgk from "../../../package.json";
+import routeHighLight from "@/utils/routerMapping/routeHighLight.js";
 
 const MIN_POINT = 992 - 1;
 
 export default Vue.extend({
-  name: 'sideNav',
+  name: "SideNav",
   components: {
-    MenuContent,
+    MenuContent
     // myLogo,
   },
   props: {
     menu: Array,
     showLogo: {
       type: Boolean,
-      default: true,
+      default: true
     },
     isFixed: {
       type: Boolean,
-      default: true,
+      default: true
     },
     layout: String,
     headerHeight: {
       type: String,
-      default: '64px',
+      default: "64px"
     },
     theme: {
       type: String,
-      default: 'light',
+      default: "light"
     },
     isCompact: {
       type: Boolean,
-      default: false,
+      default: false
     },
     maxLevel: {
       type: Number,
-      default: 3,
-    },
+      default: 3
+    }
   },
   data() {
     return {
       prefix,
       pgk,
-      formData: this.$store.state.setting,
+      formData: this.$store.state.setting
     };
   },
   computed: {
-    defaultExpanded() {
-      const path = this.active;
-      const parentPath = path.substring(0, path.lastIndexOf('/'));
-      if (parentPath.lastIndexOf('/')) {
-        const threeLevel = parentPath.substring(0, parentPath.lastIndexOf('/'));
-        return threeLevel === '' ? [] : [threeLevel, parentPath];
-      }
-      return parentPath === '' ? [] : [parentPath];
-    },
     iconName(): string {
-      return this.$store.state.setting.isSidebarCompact ? 'menu-fold' : 'menu-unfold';
+      return this.$store.state.setting.isSidebarCompact ? "menu-fold" : "menu-unfold";
     },
     collapsed(): boolean {
       return this.$store.state.setting.isSidebarCompact;
@@ -103,8 +93,8 @@ export default Vue.extend({
       return [
         `${this.prefix}-sidebar-layout`,
         {
-          [`${this.prefix}-sidebar-compact`]: this.isCompact,
-        },
+          [`${this.prefix}-sidebar-compact`]: this.isCompact
+        }
       ];
     },
     menuCls(): Array<ClassName> {
@@ -113,8 +103,8 @@ export default Vue.extend({
         {
           [`${this.prefix}-side-nav-no-logo`]: !this.showLogo,
           [`${this.prefix}-side-nav-no-fixed`]: !this.isFixed,
-          [`${this.prefix}-side-nav-mix-fixed`]: this.layout === 'mix' && this.isFixed,
-        },
+          [`${this.prefix}-side-nav-mix-fixed`]: this.layout === "mix" && this.isFixed
+        }
       ];
     },
     layoutCls(): Array<ClassName> {
@@ -122,20 +112,24 @@ export default Vue.extend({
     },
     active(): string {
       if (!this.$route.path) {
-        return '';
+        return "";
       }
-      return this.$route.path
-        .split('/')
+      let path = this.$route.path;
+      if (routeHighLight[this.$route.name]) {
+        path = this.$router.resolve({ name: routeHighLight[this.$route.name] })?.route?.path || path;
+      }
+      return path
+        .split("/")
         .filter((_item: string, index: number) => index <= this.maxLevel && index > 0)
         .map((item: string) => `/${item}`)
-        .join('');
+        .join("");
     },
     getLogo() {
       //   if (this.collapsed) {
       return myLogo;
       //   }
       //   return LogoFull;
-    },
+    }
   },
   mounted() {
     this.autoCollapsed();
@@ -146,15 +140,15 @@ export default Vue.extend({
   },
   methods: {
     changeCollapsed(): void {
-      this.$store.commit('setting/toggleSidebarCompact');
+      this.$store.commit("setting/toggleSidebarCompact");
     },
     autoCollapsed(): void {
       const isCompact = window.innerWidth <= MIN_POINT;
-      this.$store.commit('setting/showSidebarCompact', isCompact);
+      this.$store.commit("setting/showSidebarCompact", isCompact);
     },
     handleNav(url: string) {
       this.$router.push(url);
-    },
-  },
+    }
+  }
 });
 </script>

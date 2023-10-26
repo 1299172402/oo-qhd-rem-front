@@ -2,7 +2,12 @@
   <header class="login-header">
     <logo-full-icon class="logo" />
     <div class="operations-container">
-      <t-button theme="default" shape="square" variant="text" @click="toggleSettingPanel">
+      <t-button
+        theme="default"
+        shape="square"
+        variant="text"
+        @click="toggleSettingPanel"
+      >
         <setting-icon class="icon" />
       </t-button>
     </div>
@@ -10,20 +15,20 @@
 </template>
 
 <script>
-import LogoFullIcon from '@/assets/assets-logo-full.svg';
-import { SettingIcon } from 'tdesign-icons-vue';
+import LogoFullIcon from "@/assets/assets-logo-full.svg";
+import { SettingIcon } from "tdesign-icons-vue";
 
 export default {
   components: { LogoFullIcon, SettingIcon },
   methods: {
     toggleSettingPanel() {
-      this.$store.commit('setting/toggleSettingPanel', true);
-    },
-  },
+      this.$store.commit("setting/toggleSettingPanel", true);
+    }
+  }
 };
 </script>
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .login-header {
   height: 64px;

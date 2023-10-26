@@ -1,992 +1,1678 @@
-<!-- 后台——消息中心 -->
+<!-- eslint-disable vue/no-v-html -->
+<!-- 后台——消息中心首页 -->
 <template>
-  <div class="g-w100 g-h100 g-column-flex" style="font-size: 16px; color: #fff">
+  <div ref="elRef" class="g-w100 g-h100" style="font-size: 16px; color: #fff;">
     <el-dialog
-      :title="title"
-      :visible.sync="openDialog"
-      width="700px"
+      :title="iframeDialogTitle"
+      :visible.sync="openIframeDialog"
+      width="1500px"
       append-to-body
       :close-on-click-modal="false"
-      @close="clesrSearchList"
     >
-      <div>
-        <div class="g-row-flex-V" v-if="this.dialogType !== '搜索' && this.dialogType !== 'Flink集群'">
-          <div style="margin-right: 10px">平台类型：</div>
-          <div>
-            <el-select v-model="indicatorSource" placeholder="请选择平台" @change="changeSource" clearable>
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
-            </el-select>
-          </div>
+      <div style="height: 97%;">
+        <div class="g-w100 g-h100" style="height: 700px;">
+          <iframe
+            :id="'iframe_' + currentIframeObj.id"
+            v-postTheme="$store.state.setting.mode"
+            :src="addToken(currentIframeObj.url)"
+            frameborder="0"
+            class="g-w100 g-h100"
+          />
         </div>
-        <div style="margin-top: 20px">
-          <el-tabs v-model="activeName" class="g-pageHeader" v-if="this.dialogType !== '搜索'" @tab-click="handleClick">
-            <el-tab-pane v-for="(item, index2) in tabsList" :label="item.title" :name="item.title" :key="index2">
-            </el-tab-pane>
-          </el-tabs>
-          <div class="g-row-flex-V">
-            <div class="g-row-flex-V">
-              <div style="margin-right: 10px">设备名称：</div>
-              <div>
-                <el-input v-model="nameInput" style="width: 150px" placeholder="请输入设备名称"></el-input>
-              </div>
-            </div>
-            <div class="g-row-flex-V" style="margin: 0 10px">
-              <div style="margin-right: 10px">设备状态：</div>
-              <div>
-                <el-select
-                  style="width: 150px"
-                  v-model="statusModel"
-                  placeholder="请选择设备状态"
-                  @change="changeStatusSource"
-                  clearable
-                >
-                  <el-option v-for="item in statusOptions" :key="item.value" :label="item.label" :value="item.value">
-                  </el-option>
-                </el-select>
-              </div>
-            </div>
-            <div>
-              <el-button type="primary" class="buttonActive_primary" @click="handleQuery">搜索</el-button>
-              <el-button class="commonBtn" @click="resetQuery">重置</el-button>
-            </div>
-          </div>
+        <div slot="footer" class="dialog-footer g-row-flex" style="margin-top: 10px;">
+          <el-button type="primary" @click="openIframeDialog = false">
+            关 闭
+          </el-button>
         </div>
-        <div class="g-row-flex-V" style="flex-wrap: wrap; margin-top: 10px">
-          <div class="typeClass" v-for="(item, index) in searchList" :key="index">
-            <div
-              class="bgClass g-row-flex-V g-w100 g-h100"
-              style="width: 170px; cursor: pointer"
-              @click="clickItem(item, '工作项')"
-              :style="{
-                background: $store.state.setting.mode === 'dark' ? 'rgba(0,169,159,0.3)' : 'rgba(0,169,159,0.5)',
-              }"
-            >
-              <div class="circleStyle" :style="{ background: item.status == 1 ? '#309800' : '#FF4D4F' }"></div>
-              {{ item.equipmentName }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">关 闭</el-button>
       </div>
     </el-dialog>
-    <div
-      style="height: 63.19px; position: relative; display: flex; justify-content: space-between"
-      class="g-row-flex-V"
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="openDialog"
+      width="650px"
+      append-to-body
+      :close-on-click-modal="false"
     >
-      <i class="el-icon-search searchStyle" @click="clickItem(input, '搜索')"></i>
-      <el-input prefix-icon="aa" v-model="input" style="width: 400px" placeholder="请输入检索项目"></el-input>
-      <el-button type="primary" plain size="mini" @click="handleToPage()">设备维护</el-button>
-    </div>
-    <div
-      style="height: 728.8px; position: relative"
-      :style="{ marginTop: isFullScreen ? '25px' : '5px' }"
-      class="g-row-flex"
-    >
-      <div style="height: calc(100% - 0px)" class="g-column-flex leftBgStyle">
-        <div
-          style="margin: 10px 0 0 20px; font-weight: 700"
-          :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : 'var(--onlyLightBlueColor)' }"
-        >
-          边端数据链路
-        </div>
-        <div class="g-w100 g-h100">
-          <!-- I平台 -->
-          <div style="height: 33%; position: relative; z-index: 1" class="g-row-flex-V">
+      <div style="height: 93%;">
+        <div class="g-w100 g-h100" style="height: 450px;">
+          <div class="g-w100 g-h100" style="position: relative;">
             <div
-              class="titleStyle"
-              :style="{ color: $store.state.setting.mode === 'dark' ? '#3AA4ED' : 'var(--onlyLightBlueColor)' }"
+              class="g-row-flex-HV"
+              style="margin: 0 auto;"
+              :class="findDataByPoint('Clouds_IOT', 'class')"
+              @click="clickClouds"
             >
-              I平台
+              云端物联网平台
             </div>
-            <div
-              class="g-row-flex-V"
-              style="justify-content: space-between; width: 540px; height: 90%; border: 1px dashed #979797"
-            >
-              <div class="g-column-flex-V" style="height: calc(100% - 30px); position: relative">
-                <div class="typeClass g-row-flex-V" v-for="(item, index) in resultIptList" :key="index" style="">
-                  <div
-                    class="bgClass g-row-flex-V g-w100 g-h100"
-                    style="cursor: pointer"
-                    :style="{
-                      background: $store.state.setting.mode === 'dark' ? 'rgba(0,169,159,0.3)' : 'rgba(0,169,159,0.5)',
-                    }"
-                    @click="clickItem(item, '工作项')"
-                  >
-                    <div class="circleStyle" :style="{ background: item.isGreen ? '#309800' : '#FF4D4F' }"></div>
-                    <svg-icon v-if="item.icon" class="svgIconClass" :icon-class="item.icon" style="margin-right: 6px" />
-                    {{ item.name }}
-                  </div>
-                  <lineSvg
-                    style="top: 5px"
-                    :setPoints="
-                      index === 0
-                        ? topLine
-                        : index === 1
-                        ? '0,20 180,20 180,19 180,30 258,30'
-                        : index === 2
-                        ? '0,20 180,20 180,19 180,5 258,5'
-                        : ''
-                    "
-                  >
-                  </lineSvg>
-                  <lineSvg style="top: -27px" v-if="index === 3" :setPoints="bottomLine"></lineSvg>
-                </div>
+            <div class="g-row-flex-HV" style="margin-top: 280px;">
+              <div
+                class="mainSize g-column-flex-HV"
+                :class="[
+                  getDataStatus('CEPJ', 'class'),
+                  findDataByCode('CEPJ')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                ]"
+                @click="openNewLink(findDataByCode('CEPJ')?.terraceShowUrl)"
+              >
+                <div class="mainSizeRedBg" :class="[getDataStatusMain('CEPJ')]" />
+                {{ findDataByCode("CEPJ")?.terraceName }}
               </div>
               <div
-                class="bgClass g-column-flex-HV"
-                style="height: 44px; background: rgba(0, 100, 169, 0.3); margin-right: 20px; position: relative"
-                :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(0,100,169,0.3)' : '#183C5B' }"
+                class="mainSize g-column-flex-HV"
+                style="margin: 0 80px;"
+                :class="[
+                  getDataStatus('FPSO', 'class'),
+                  findDataByCode('FPSO')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                ]"
+                @click="openNewLink(findDataByCode('FPSO')?.terraceShowUrl)"
               >
-                物联网平台
-                <lineSvg
-                  style="left: 120px; top: 0px"
-                  svgWidth="206px"
-                  :svgHeight="wwLink"
-                  setPoints="0,20 200,20 200,263 "
-                ></lineSvg>
-              </div>
-            </div>
-            <div class="absoulteDiv">
-              <div
-                class="bgClass g-row-flex-V g-w100 g-h100"
-                style="cursor: pointer"
-                :style="{
-                  background: $store.state.setting.mode === 'dark' ? 'rgba(0,169,159,0.3)' : 'rgba(0,169,159,0.5)',
-                }"
-                @click="clickItem(lastIpt[0], '工作项')"
-              >
-                <div class="circleStyle" :style="{ background: lastIpt[0].isGreen ? '#309800' : '#FF4D4F' }"></div>
-                {{ lastIpt[0].name }}
-              </div>
-              <lineSvg style="left: 70px; top: 30px" svgWidth="70px" :setPoints="verticalLine"></lineSvg>
-            </div>
-          </div>
-          <!-- J平台 -->
-          <div style="height: 33%; position: relative" class="g-row-flex-V">
-            <div
-              class="titleStyle"
-              :style="{ color: $store.state.setting.mode === 'dark' ? '#3AA4ED' : 'var(--onlyLightBlueColor)' }"
-            >
-              J平台
-            </div>
-            <div
-              class="g-row-flex-V"
-              style="justify-content: space-between; width: 540px; height: 90%; border: 1px dashed #979797"
-            >
-              <div class="g-column-flex-V" style="height: calc(100% - 30px)">
-                <div
-                  class="typeClass g-row-flex-V"
-                  v-for="(item, index2) in initJptList"
-                  :key="index2"
-                  style="position: relative"
-                >
-                  <div
-                    class="bgClass g-row-flex-V g-w100 g-h100"
-                    style="cursor: pointer"
-                    :style="{
-                      background: $store.state.setting.mode === 'dark' ? 'rgba(0,169,159,0.3)' : 'rgba(0,169,159,0.5)',
-                    }"
-                    @click="clickItem(item, '工作项')"
-                  >
-                    <div class="circleStyle" :style="{ background: item.isGreen ? '#309800' : '#FF4D4F' }"></div>
-                    <svg-icon v-if="item.icon" class="svgIconClass" :icon-class="item.icon" style="margin-right: 6px" />
-                    {{ item.name }}
-                  </div>
-                  <lineSvg
-                    style="top: 5px; z-index: 0"
-                    :setPoints="
-                      index2 === 0
-                        ? topLine
-                        : index2 === 1
-                        ? '0,20 180,20 180,19 180,30 258,30'
-                        : index2 === 2
-                        ? '0,20 180,20 180,19 180,5 258,5'
-                        : ''
-                    "
-                  >
-                  </lineSvg>
-                  <lineSvg style="top: -27px; z-index: 0" v-if="index2 === 3" :setPoints="bottomLine"></lineSvg>
-                </div>
+                <div class="mainSizeRedBg" :class="[getDataStatusMain('FPSO')]" />
+                {{ findDataByCode("FPSO")?.terraceName }}
               </div>
               <div
-                class="bgClass g-column-flex-HV"
-                style="
-                  height: 44px;
-                  background: rgba(0, 100, 169, 0.3);
-                  margin-right: 20px;
-                  z-index: 0;
-                  position: relative;
-                "
-                :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(0,100,169,0.3)' : '#183C5B' }"
+                class="mainSize g-column-flex-HV"
+                :class="[
+                  getDataStatus('CEPI', 'class'),
+                  findDataByCode('CEPI')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                ]"
+                @click="openNewLink(findDataByCode('CEPI')?.terraceShowUrl)"
               >
-                物联网平台
-                <lineSvg
-                  style="left: 120px; top: 0px"
-                  svgWidth="155px"
-                  svgHeight="50px"
-                  setPoints="0,23 155,23 155,21 "
-                >
-                </lineSvg>
-                <lineSvg style="left: 395px; top: 0px" svgWidth="58px" svgHeight="50px" setPoints="0,23 58,23 58,22 ">
-                </lineSvg>
-                <lineSvg
-                  style="left: 330px; top: 50px"
-                  svgWidth="105px"
-                  svgHeight="266px"
-                  :setPoints="wtLine"
-                ></lineSvg>
+                <div class="mainSizeRedBg" :class="[getDataStatusMain('CEPI')]" />
+                {{ findDataByCode("CEPI")?.terraceName }}
               </div>
             </div>
-          </div>
-          <!-- FPSO平台 -->
-          <div style="height: 33%; position: relative" class="g-row-flex-V">
-            <div
-              class="titleStyle"
-              :style="{ color: $store.state.setting.mode === 'dark' ? '#3AA4ED' : 'var(--onlyLightBlueColor)' }"
-            >
-              FPSO平台
-            </div>
-            <div
-              class="g-row-flex-V"
-              style="justify-content: space-between; width: 540px; height: 90%; border: 1px dashed #979797"
-            >
-              <div class="g-column-flex-V" style="height: calc(100% - 30px)">
-                <div class="typeClass g-row-flex-V" v-for="(item, index3) in resultFPSOptList" :key="index3">
-                  <div
-                    class="bgClass g-row-flex-V g-w100 g-h100"
-                    :style="{
-                      background: $store.state.setting.mode === 'dark' ? 'rgba(0,169,159,0.3)' : 'rgba(0,169,159,0.5)',
-                    }"
-                    style="cursor: pointer"
-                    @click="clickItem(item, '工作项')"
-                  >
-                    <div class="circleStyle" :style="{ background: item.isGreen ? '#309800' : '#FF4D4F' }"></div>
-                    <svg-icon v-if="item.icon" class="svgIconClass" :icon-class="item.icon" style="margin-right: 6px" />
-                    {{ item.name }}
-                  </div>
-                  <lineSvg
-                    style="top: 5px; z-index: 0"
-                    :setPoints="
-                      index3 === 0
-                        ? topLine
-                        : index3 === 1
-                        ? '0,20 180,20 180,19 180,30 258,30'
-                        : index3 === 2
-                        ? '0,20 180,20 180,19 180,5 258,5'
-                        : ''
-                    "
-                  >
-                  </lineSvg>
-                  <lineSvg style="top: -27px; z-index: 0" v-if="index3 === 3" :setPoints="bottomLine"></lineSvg>
-                </div>
-              </div>
-              <div
-                class="bgClass g-column-flex-HV"
-                style="
-                  height: 44px;
-                  background: rgba(0, 100, 169, 0.3);
-                  margin-right: 20px;
-                  z-index: 0;
-                  position: relative;
-                "
-                :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(0,100,169,0.3)' : '#183C5B' }"
-              >
-                物联网平台
-                <lineSvg
-                  style="left: 120px"
-                  :style="{ top: wwlinkTop }"
-                  svgWidth="206px"
-                  :svgHeight="wwLink"
-                  :setPoints="wwLinkLine"
-                ></lineSvg>
-              </div>
-            </div>
-            <div class="absoulteDiv">
-              <div
-                class="bgClass g-row-flex-V g-w100 g-h100"
-                style="cursor: pointer; position: relative; z-index: 1"
-                :style="{
-                  background: $store.state.setting.mode === 'dark' ? 'rgba(0,169,159,0.3)' : 'rgba(0,169,159,0.5)',
-                }"
-                @click="clickItem(lastFPSOpt[0], '工作项')"
-              >
-                <div class="circleStyle" :style="{ background: lastFPSOpt[0].isGreen ? '#309800' : '#FF4D4F' }"></div>
-                {{ lastFPSOpt[0].name }}
-              </div>
-              <lineSvg style="left: 70px; top: 30px; z-index: 0" svgWidth="70px" :setPoints="verticalLine"></lineSvg>
-            </div>
-          </div>
-        </div>
-        <div style="margin: 0px 0 20px 112px; font-size: 14px" class="g-row-flex-V">
-          <div class="circleStyle" style="background: #309800"></div>
-          <div :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#909399' }">数据服务正常</div>
-          <div class="circleStyle" style="background: #ff4d4f"></div>
-          <div :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#909399' }">数据服务异常</div>
-        </div>
-      </div>
-      <div style="height: calc(100% - 0px)" class="g-column-flex rightBgStyle">
-        <div
-          style="margin: 10px 0 0 20px; font-weight: 700"
-          :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : 'var(--onlyLightBlueColor)' }"
-        >
-          云端数据链路
-        </div>
-        <div class="g-row-flex-V g-h100 g-w100">
-          <div class="g-column-flex-HV g-h100" style="width: 22%">
-            <div
-              class="g-column-flex-HV"
-              style="width: 120px; border-radius: 4px; height: 44px; background: rgba(0, 100, 169, 0.3)"
-              :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(0,100,169,0.3)' : '#183C5B' }"
-            >
-              物联网平台
-            </div>
-          </div>
-          <div style="width: 78%" class="g-h100 g-column-flex">
-            <div class="g-row-flex-V" style="height: 30%; position: relative">
-              <div
-                class="pageGreen g-column-flex-HV"
-                style="margin-right: 26px"
-                :style="{
-                  background: $store.state.setting.mode === 'dark' ? 'rgba(45,141,92,0.3)' : 'rgba(45,141,92,0.6)',
-                }"
-              >
-                <div style="margin-bottom: 10px">页面</div>
-                <div class="greenBtn g-column-flex-HV">报警及实时数据展示</div>
-              </div>
-              <lineSvg
-                style="left: 20px; z-index: 0"
-                svgWidth="135px"
-                :style="{ top: fyLinkTop }"
-                :svgHeight="fyLinkHeight"
-                :setPoints="fyPoint"
-              ></lineSvg>
-              <lineSvg
-                style="left: 20px; z-index: 0"
-                svgWidth="300px"
-                :style="{ top: fyLinkTop }"
-                :svgHeight="fyLinkHeight"
-                setPoints="65,20 295,20 295,0"
-              ></lineSvg>
-              <lineSvg
-                style="left: 255px; z-index: 0"
-                svgWidth="400px"
-                :style="{ top: fyLinkTop }"
-                :svgHeight="fyLinkHeight"
-                setPoints="65,20 175,20 175,0"
-              ></lineSvg>
-              <lineSvg
-                style="left: 335px; z-index: 0"
-                svgWidth="400px"
-                :style="{ top: fyLinkTop }"
-                :svgHeight="fyLinkHeight"
-                setPoints="100,20 215,20 215,0"
-              ></lineSvg>
+            <!-- Maritime_FPSO -  Clouds_IOT-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.runningStatus === '1'"
+              linear-id="Maritime_FPSO_Clouds_IOT"
+              :start-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
+              :end-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
+              class="svgClass"
+              :class="[
+                findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              style="left: 270px; top: 45px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="50px"
+              svg-height="286px"
+              set-points="25,286 25,0 26,0"
+              @click-line="openPointsLink(findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl)"
+            />
 
-              <div
-                class="menOrange g-column-flex-HV"
-                :style="{
-                  background: $store.state.setting.mode === 'dark' ? 'rgba(211,90,32,0.3)' : 'rgba(211,90,32,0.6)',
-                }"
-              >
-                <div class="g-column-flex-HV" style="margin-bottom: 10px">门户</div>
-                <div class="g-row-flex-HV">
-                  <div class="orangeBtn g-column-flex-HV" style="width: 100px">站内信</div>
-                  <div class="orangeBtn g-column-flex-HV" style="width: 80px; margin: 0 20px">邮件</div>
-                  <div class="orangeBtn g-column-flex-HV">边端云同步</div>
-                </div>
-              </div>
-            </div>
-            <div class="g-row-flex-V" style="height: 40%">
-              <div class="g-column-flex" style="margin: 0 159px 120px 20px; position: relative">
-                <div
-                  class="blueBtn g-column-flex-HV"
-                  style="width: 140px; margin-bottom: 77px; cursor: pointer"
-                  @click="clickItem('', 'Flink集群')"
-                  :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(36,222,255,0.5)' : '#085296' }"
-                >
-                  Flink集群
-                </div>
-                <lineSvg
-                  style="left: 0px; top: 44px; z-index: 0"
-                  svgWidth="135px"
-                  svgHeight="78px"
-                  setPoints="65,77 65,0 64,0"
-                ></lineSvg>
-                <lineSvg
-                  style="left: 140px; top: 0px; z-index: 0"
-                  svgWidth="155px"
-                  svgHeight="78px"
-                  setPoints="0,23 155,23 155,22"
-                ></lineSvg>
-                <lineSvg
-                  style="left: 140px; top: 23px; z-index: 0"
-                  svgWidth="155px"
-                  svgHeight="78px"
-                  setPoints="77,0 77,70 155,70"
-                ></lineSvg>
-                <lineSvg
-                  style="left: 140px; top: 96px; z-index: 0"
-                  svgWidth="155px"
-                  svgHeight="78px"
-                  setPoints="77,0 77,70 155,70"
-                ></lineSvg>
-                <div
-                  class="blueBtn g-column-flex-HV"
-                  style="width: 140px"
-                  :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(36,222,255,0.5)' : '#085296' }"
-                >
-                  Kafks集群
-                </div>
-              </div>
-              <div
-                class="blueBg g-column-flex-HV"
-                :style="{
-                  background: $store.state.setting.mode === 'dark' ? 'rgba(36,222,255,0.2)' : 'rgba(8,82,150,0.3)',
-                }"
-              >
-                <div
-                  class="blueBtn g-row-flex-HV"
-                  style="width: 154px"
-                  :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(36,222,255,0.5)' : '#085296' }"
-                >
-                  <!-- <img class="dataBase" src="../../../assets/intelligentOilfield/dataBase.png" alt=""
-                      style="margin-right: 3px" /> -->
-                  <svg-icon class="svgIconClass" icon-class="data" style="margin-right: 6px" />
-                  King Base
-                </div>
-                <div
-                  class="blueBtn g-row-flex-HV"
-                  style="width: 154px; margin: 20px 0"
-                  :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(36,222,255,0.5)' : '#085296' }"
-                >
-                  <!-- <img class="dataBase" src="../../../assets/intelligentOilfield/dataBase.png" alt=""
-                      style="margin-right: 3px" /> -->
-                  <svg-icon class="svgIconClass" icon-class="data" style="margin-right: 6px" />
-                  Redis应用层
-                </div>
-                <div
-                  class="g-column-flex-HV blueBtn"
-                  style="width: 154px; height: 144px"
-                  :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(36,222,255,0.5)' : '#085296' }"
-                >
-                  <div class="g-row-flex-H" style="height: 44px">
-                    <!-- <img class="dataBase" src="../../../assets/intelligentOilfield/dataBase.png" alt=""
-                        style="margin-right: 3px" /> -->
-                    <svg-icon class="svgIconClass" icon-class="data" style="margin-right: 6px" />
-                    Clickhouse
-                  </div>
-                  <div class="yellowText">应用层</div>
-                  <div class="yellowText" style="margin: 5px 0">聚合层</div>
-                  <div class="yellowText">明细层</div>
-                </div>
-              </div>
-            </div>
-            <div class="g-row-flex-V" style="height: 30%">
-              <div
-                style="width: 386px; height: 119px"
-                class="blueBg g-row-flex-HV"
-                :style="{
-                  background: $store.state.setting.mode === 'dark' ? 'rgba(36,222,255,0.2)' : 'rgba(8,82,150,0.3)',
-                }"
-              >
-                <div
-                  class="blueBtn"
-                  style="height: 79px; margin-right: 66px"
-                  :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(36,222,255,0.5)' : '#085296' }"
-                >
-                  <div class="g-row-flex-HV" style="height: 44px">
-                    <!-- <img class="dataBase" src="../../../assets/intelligentOilfield/dataBase.png" alt=""
-                        style="margin-right: 3px" /> -->
-                    <svg-icon class="svgIconClass" icon-class="data" style="margin-right: 6px" />
-                    kudu
-                  </div>
-                  <div class="yellowText g-row-flex-HV">贴源层</div>
-                </div>
-                <div
-                  class="blueBtn g-row-flex-HV"
-                  :style="{ background: $store.state.setting.mode === 'dark' ? 'rgba(36,222,255,0.5)' : '#085296' }"
-                >
-                  <!-- <img class="dataBase" src="../../../assets/intelligentOilfield/dataBase.png" alt=""
-                      style="margin-right: 3px" /> -->
-                  <svg-icon class="svgIconClass" icon-class="data" style="margin-right: 6px" />
-                  Minio
-                </div>
-              </div>
-            </div>
+            <!-- Maritime_CEPJ -  Clouds_IOT-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.runningStatus === '1'"
+              linear-id="Maritime_CEPJ_Clouds_IOT"
+              :start-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
+              :end-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
+              class="svgClass"
+              :class="[
+                findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              style="left: 120px; top: 44px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="130px"
+              svg-height="286px"
+              set-points="10,286 10,115 120,115 120,0"
+              @click-line="openPointsLink(findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.pointShowUrl)"
+            />
+            <!-- Maritime_CEPI -  Clouds_IOT-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.runningStatus === '1'"
+              linear-id="Maritime_CEPI_Clouds_IOT"
+              :start-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
+              :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
+              class="svgClass"
+              :class="[
+                findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              style="left: 340px; top: 44px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="130px"
+              svg-height="286px"
+              set-points="120,286 120,115 10,115 10,0"
+              @click-line="openPointsLink(findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl)"
+            />
           </div>
         </div>
-        <div style="margin: 0px 0 20px 36px; font-size: 14px" class="g-row-flex-V">
-          <div class="squareStyle" style="background: #2d8d5c"></div>
-          <div style="margin-right: 10px" :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#909399' }">
-            各业务模块
-          </div>
-          <div class="squareStyle" style="background: #24deff"></div>
-          <div style="margin-right: 10px" :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#909399' }">
-            一库
-          </div>
-          <div class="squareStyle" style="background: #d35a20"></div>
-          <div style="margin-right: 10px" :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#909399' }">
-            一平台
-          </div>
-          <div class="squareStyle" style="background: #0064a9"></div>
-          <div style="margin-right: 10px" :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#909399' }">
-            物联网平台
-          </div>
-          <div class="squareStyle" style="background: #00a99f"></div>
-          <div :style="{ color: $store.state.setting.mode === 'dark' ? '#fff' : '#909399' }">设备</div>
+        <div slot="footer" class="dialog-footer g-row-flex">
+          <el-button type="primary" @click="submitForm">
+            关 闭
+          </el-button>
         </div>
       </div>
-    </div>
+    </el-dialog>
+    <page-panel-new
+      class="g-w100 g-column-flex"
+      style="height: calc(100% - 0px);"
+    >
+      <div class="g-row-flex" style="justify-content: flex-end;">
+        <el-select v-model="zuhuModel" placeholder="请选择租户">
+          <el-option
+            v-for="item in zuhuOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+      <div v-if="errorMessage" class="instructions" style="color: var(--td-text-color-primary);">
+        <el-popover
+          placement="bottom"
+          title=""
+          width="200"
+          trigger="hover"
+        >
+          <div style="font-size: 12px;margin-top: 12px;color: var(--old-red-color);" v-html="errorMessage.replace(/\n/g,'<br/>')" />
+          <div slot="reference" class="g-row-flex-HV" style="cursor: pointer;">
+            <div class="alarmPromptMessage" style="color: #fff;position: relative;left: 0;top: 0;">
+              !
+            </div>
+            <div style="margin-left: 10px;font-size: 14px;color: var(--old-red-color);">
+              海上监控链路接口异常
+            </div>
+          </div>
+        </el-popover>
+      </div>
+      <div
+        v-show="zuhuModel === '秦皇岛作业公司'"
+        style="height: 100%; position: relative;"
+        class="g-column-flex-H"
+      >
+        <el-button
+          style="position: absolute; top: -33px; left: 0;"
+          type="primary"
+          @click="openIframeDialogMethods(ifameList[0])"
+        >
+          {{ ifameList[0].name }}
+        </el-button>
+        <el-button
+          style="position: absolute; top: -33px; left: 110px;"
+          type="primary"
+          @click="openIframeDialogMethods(ifameList[1])"
+        >
+          {{ ifameList[1].name }}
+        </el-button>
+        <div
+          id="mainContainer"
+          style="width: 100%;height: 100%;margin-right: 76px;"
+          class="g-column-flex-H"
+          :style="{marginTop: linkMarginTop + 'px'}"
+        >
+          <div class="topImage g-row-flex-HV" style="position: relative; margin-top: 10px;">
+            <div
+              class="g-row-flex-HV greenBg"
+              :class="[
+                findDataByPoint('Msg', 'class'),
+                findDataByStartAndEnd('Msg', 'Msg')?.pointShowUrl ? 'pointerCursor' : 'autoCursor'
+              ]"
+              @click="openPointsLink(findDataByStartAndEnd('Msg', 'Msg')?.pointShowUrl)"
+            >
+              消息中心
+            </div>
+            <div class="absoultePos" style="left: 230px; top: 36px;">
+              监控数据
+            </div>
+
+            <!-- BigData_Apps - Msg-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('BigData_Apps', 'Msg')?.runningStatus === '1'"
+              linear-id="BigData_Apps_Msg"
+              :start-color="findDataByLink('BigData_Apps', 'Msg')"
+              :end-color="findDataByLink('BigData_Apps', 'Msg')"
+              :class="[findDataByStartAndEnd('BigData_Apps', 'Msg')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
+              class="svgClass"
+              style="left: 199px; top: 11px; z-index: 1 !important;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="125px"
+              svg-height="30px"
+              set-points="125,15 0,15 0,16"
+              @click-line="openPointsLink(findDataByStartAndEnd('BigData_Apps', 'Msg')?.pointShowUrl)"
+            />
+            <div
+              class="g-row-flex-HV yellowBg"
+              :class="[findDataByStartAndEnd('Alarm', 'Alarm')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
+              style="margin-left: 455px;"
+              @click="openPointsLink(findDataByStartAndEnd('Alarm', 'Alarm')?.pointShowUrl)"
+            >
+              报警中心
+            </div>
+            <div class="absoultePos" style="left: 569px; top: 36px;">
+              报警数据
+            </div>
+            <!-- BigData_Apps - Alarm-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('BigData_Apps', 'Alarm')?.runningStatus === '1'"
+              linear-id="BigData_Apps_Alarm"
+              :start-color="findDataByLink('BigData_Apps', 'Alarm')"
+              :end-color="findDataByLink('BigData_Apps', 'Alarm')"
+              class="svgClass"
+              :class="[findDataByStartAndEnd('BigData_Apps', 'Alarm')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
+              style="left: 531px; top: 11px; z-index: 1 !important;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="125px"
+              svg-height="30px"
+              set-points="0,15 123,15 123,16"
+              @click-line="openPointsLink(findDataByStartAndEnd('BigData_Apps', 'Alarm')?.pointShowUrl)"
+            />
+          </div>
+          <div class="topImage1 g-row-flex-HV" style="position: relative; margin-top: -50px;">
+            <div
+              class="g-row-flex-HV"
+              :class="[
+                findDataByPoint('BigData_Apps', 'class'),
+                findDataByStartAndEnd('BigData_Apps', 'BigData_Apps')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              @click="openPointsLink(findDataByStartAndEnd('BigData_Apps', 'BigData_Apps')?.pointShowUrl)"
+            >
+              大数据应用
+            </div>
+            <!-- BigData_Aggs -  BigData_Apps-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('BigData_Aggs', 'BigData_Apps')?.runningStatus === '1'"
+              linear-id="BigData_Aggs_BigData_Apps"
+              :start-color="findDataByLink('BigData_Aggs', 'BigData_Apps')"
+              :end-color="findDataByLink('BigData_Aggs', 'BigData_Apps')"
+              :class="[
+                findDataByStartAndEnd('BigData_Aggs', 'BigData_Apps')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              class="svgClass"
+              style="left: 58px; top: 48px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="100px"
+              svg-height="57px"
+              set-points="50,255 50,0 51,0"
+              @click-line="openPointsLink(findDataByStartAndEnd('BigData_Aggs', 'BigData_Apps')?.pointShowUrl)"
+            />
+          </div>
+          <div class="topImage1 g-row-flex-HV" style="position: relative;">
+            <div
+              class="g-row-flex-HV"
+              :class="[
+                findDataByPoint('BigData_Aggs', 'class'),
+                findDataByStartAndEnd('BigData_Aggs', 'BigData_Aggs')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              @click="openPointsLink(findDataByStartAndEnd('BigData_Aggs', 'BigData_Aggs')?.pointShowUrl)"
+            >
+              大数据聚合
+            </div>
+            <!-- BigData -  BigData_Aggs-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('BigData', 'BigData_Aggs')?.runningStatus === '1'"
+              linear-id="Queue_BigData"
+              :start-color="findDataByLink('BigData', 'BigData_Aggs')"
+              :end-color="findDataByLink('BigData', 'BigData_Aggs')"
+              :class="[findDataByStartAndEnd('BigData', 'BigData_Aggs')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
+              class="svgClass"
+              style="left: 58px; top: 48px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="100px"
+              svg-height="57px"
+              set-points="50,255 50,0 51,0"
+              @click-line="openPointsLink(findDataByStartAndEnd('BigData', 'BigData_Aggs')?.pointShowUrl)"
+            />
+          </div>
+          <div class="topImage1 g-row-flex-HV" style="position: relative;">
+            <div
+              class="g-row-flex-HV"
+              :class="[
+                findDataByPoint('BigData', 'class'),
+                findDataByStartAndEnd('BigData', 'BigData')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              @click="openPointsLink(findDataByStartAndEnd('BigData', 'BigData')?.pointShowUrl)"
+            >
+              大数据处理
+            </div>
+            <div class="absoultePos" style="left: -20px; top: 65px;">
+              大数据服务(Flink)
+            </div>
+            <div class="absoultePos" style="left: 120px; top: 65px; width: 100%;">
+              实时数据，报警数据
+            </div>
+            <!-- Queue -  BigData-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Queue', 'BigData')?.runningStatus === '1'"
+              linear-id="Queue_BigData"
+              :start-color="findDataByLink('Queue', 'BigData')"
+              :end-color="findDataByLink('Queue', 'BigData')"
+              :class="[findDataByStartAndEnd('Queue', 'BigData')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
+              class="svgClass"
+              style="left: 58px; top: 48px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="100px"
+              svg-height="57px"
+              set-points="50,255 50,0 51,0"
+              @click-line="openPointsLink(findDataByStartAndEnd('Queue', 'BigData')?.pointShowUrl)"
+            />
+          </div>
+          <div class="centerImage g-row-flex-HV" style="position: relative;">
+            <div
+              class="g-row-flex-HV"
+              :class="[
+                findDataByPoint('Queue', 'class'),
+                findDataByStartAndEnd('Queue', 'Queue')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              @click="openPointsLink(findDataByStartAndEnd('Queue', 'Queue')?.pointShowUrl)"
+            >
+              消息队列
+            </div>
+            <!-- 数据湖 -->
+            <div
+              class="kuduClass g-row-flex-HV"
+              :class="[
+                findDataByPoint('Kudu', 'class'),
+                findDataByStartAndEnd('Kudu', 'Kudu')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              @click="openPointsLink(findDataByStartAndEnd('Kudu', 'Kudu')?.pointShowUrl)"
+            >
+              数据湖
+            </div>
+            <div class="absoultePos" style="left: 600px; top: 2px;">
+              大数据服务(Flink)
+            </div>
+            <div class="absoultePos" style="left: 593px; top: 47px;">
+              实时数据，报警数据
+            </div>
+            <!-- Queue -  Kudu-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Queue', 'Kudu')?.runningStatus === '1'"
+              linear-id="Queue_Kudu"
+              :start-color="findDataByLink('Queue', 'Kudu')"
+              :end-color="findDataByLink('Queue', 'Kudu')"
+              class="svgClass"
+              :class="[findDataByStartAndEnd('Queue', 'Kudu')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
+              style="left: 593px; top: 21px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="133"
+              svg-height="30"
+              set-points="0,14 0,15 133,15"
+              @click-line="openPointsLink(findDataByStartAndEnd('Queue', 'Kudu')?.pointShowUrl)"
+            />
+
+            <!-- 云端物联网平台 -->
+            <div
+              class="kuduClass g-row-flex-HV"
+              style="left: 42px; cursor: pointer; z-index: 1;"
+              :class="findDataByPoint('Clouds_IOT', 'class')"
+              @click="clickClouds"
+            >
+              云端物联网平台
+            </div>
+            <div class="absoultePos" style="left: 281px; top: 2px;">
+              大数据服务
+            </div>
+            <div class="absoultePos" style="left: 256px; top: 47px;">
+              实时数据，报警数据
+            </div>
+            <!-- Clouds_IOT -  Queue-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Clouds_IOT', 'Queue')?.runningStatus === '1'"
+              linear-id="Clouds_IOT_Queue"
+              :start-color="findDataByLink('Clouds_IOT', 'Queue')"
+              :end-color="findDataByLink('Clouds_IOT', 'Queue')"
+              class="svgClass"
+              :class="[findDataByStartAndEnd('Clouds_IOT', 'Queue')?.pointShowUrl ? 'pointerCursor' : 'autoCursor']"
+              style="left: 254px; top: 21px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="133"
+              svg-height="30"
+              set-points="0,14 0,15 133,15"
+              @click-line="openPointsLink(findDataByStartAndEnd('Clouds_IOT', 'Queue')?.pointShowUrl)"
+            />
+          </div>
+          <div class="bottomImage g-row-flex-HV" style="position: relative;">
+            <div class="absoultePos" style="left: 169px; top: 182px;">
+              物联网ETL
+            </div>
+            <div class="absoultePos" style="left: 265px; top: 182px;">
+              实时数据，报警数据
+            </div>
+            <div class="absoultePos" style="left: 664px; top: 199px;">
+              物联网ETL
+            </div>
+            <div class="absoultePos" style="left: 915px; top: 109px;">
+              物联网ETL
+            </div>
+            <div class="absoultePos" style="left: 887px; top: 155px;">
+              实时数据，报警数据
+            </div>
+            <!-- 一整条线 -->
+            <!-- Maritime_FPSO -  Clouds_IOT-->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.runningStatus === '1'"
+              linear-id="Maritime_FPSO_Clouds_IOT1"
+              :start-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
+              :end-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
+              class="svgClass"
+              :class="[
+                findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              style="left: 635px; top: 174px; z-index: 1 !important;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="30px"
+              svg-height="94px"
+              set-points="15,94 15,0 16,0"
+              @click-line="openPointsLink(findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl)"
+            />
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.runningStatus === '1'"
+              linear-id="Maritime_FPSO_Clouds_IOT2"
+              :start-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
+              :end-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
+              class="svgClass"
+              :class="[
+                findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              style="left: 301px; top: 162px; z-index: 1 !important;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="363px"
+              svg-height="25px"
+              set-points="346,16 346,15 0,15"
+              @click-line="openPointsLink(findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl)"
+            />
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.runningStatus === '1'"
+              linear-id="Maritime_FPSO_Clouds_IOT3"
+              :start-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
+              :end-color="findDataByLink('Maritime_FPSO', 'Clouds_IOT')"
+              class="svgClass"
+              :class="[
+                findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              style="left: 291px; top: 92px; z-index: 1 !important;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="20px"
+              svg-height="95px"
+              set-points="10,88 10,0 11,0"
+              @click-line="openPointsLink(findDataByStartAndEnd('Maritime_FPSO', 'Clouds_IOT')?.pointShowUrl)"
+            />
+            <div class="leftSystem g-h100">
+              <div class="g-w100" style="position: relative; margin-left: 72%; margin-top: 70px;">
+                <!-- CEPJ -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('CEPJ')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: 95px; top: -10px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('CEPJ').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 110px; top: -45px;"
+                    >
+                      <polyline points="0,40 35,5 150,5" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: 122px; top: -65px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('CEPJ').damageCount }}/{{ findDataByCode('CEPJ').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mainSize g-column-flex-HV"
+                  :class="[
+                    getDataStatus('CEPJ', 'class'),
+                    findDataByCode('CEPJ')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  @click="openNewLink(findDataByCode('CEPJ')?.terraceShowUrl)"
+                >
+                  <div class="mainSizeRedBg" :class="[getDataStatusMain('CEPJ')]" />
+                  {{ findDataByCode("CEPJ")?.terraceName }}
+                </div>
+                <!-- WHPA -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('WHPA')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: -180px; top: -80px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('WHPA').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -310px; top: -80px;"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: -315px; top: -65px; width: 125px; text-align: center;">
+                      系统故障：{{ findDataByCode('WHPA').damageCount }}/{{ findDataByCode('WHPA').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('WHPA', 'class'),
+                    findDataByCode('WHPA')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: -175px; top: -73px;"
+                  @click="openNewLink(findDataByCode('WHPA')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('WHPA')]" />
+                  <span>
+                    {{ findDataByCode("WHPA")?.terraceName }}
+                  </span>
+                  <line-svg
+                    :is-flow="findDataByCode('WHPA')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('WHPA')?.terraceCode"
+                    :start-color="getDataStatus('WHPA', 'color')"
+                    :end-color="getDataStatus('WHPA', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('WHPA')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="top: 22px; left: 79px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="125px"
+                    svg-height="50px"
+                    set-points="0,15 115,15 115,50"
+                    @click-line="openNewLink(findDataByCode('WHPA')?.terraceShowUrl)"
+                  />
+                </div>
+                <!-- WHPE -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('WHPE')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: -211px; top: 8px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('WHPE').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -349px; top: 16px;"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: -359px; top: 32px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPE').damageCount }}/{{ findDataByCode('WHPE').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('WHPE', 'class'),
+                    findDataByCode('WHPE')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: -204px; top: 17px;"
+                  @click="openNewLink(findDataByCode('WHPE')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('WHPE')]" />
+                  <span>
+                    {{ findDataByCode("WHPE")?.terraceName }}
+                  </span>
+                  <line-svg
+                    :is-flow="findDataByCode('WHPE')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('WHPE')?.terraceCode"
+                    :start-color="getDataStatus('WHPE', 'color')"
+                    :end-color="getDataStatus('WHPE', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('WHPE')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="top: 25px; left: 79px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="126px"
+                    svg-height="20px"
+                    set-points="0,11 0,10 125,10"
+                    @click-line="openNewLink(findDataByCode('WHPE')?.terraceShowUrl)"
+                  />
+                </div>
+                <!-- WHPF -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('WHPF')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: 300px; top: 88px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('WHPF').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 310px; top: 100px;"
+                    >
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: 332px; top: 117px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPF').damageCount }}/{{ findDataByCode('WHPF').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('WHPF', 'class'),
+                    findDataByCode('WHPF')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: 230px; top: 17px;"
+                  @click="openNewLink(findDataByCode('WHPF')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('WHPF')]" />
+                  <span>
+                    {{ findDataByCode("WHPF")?.terraceName }}
+                  </span>
+                  <line-svg
+                    :is-flow="findDataByCode('WHPF')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('WHPF')?.terraceCode"
+                    :start-color="getDataStatus('WHPF', 'color')"
+                    :end-color="getDataStatus('WHPF', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('WHPF')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="left: -125px; top: 25px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="126px"
+                    svg-height="20px"
+                    set-points="125,10 0,10 0,11"
+                    @click-line="openNewLink(findDataByCode('WHPF')?.terraceShowUrl)"
+                  />
+                </div>
+                <!-- CEPL -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('CEPL')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: -181px; top: 100px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('CEPL').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -314px; top: 106px;"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: -329px; top: 124px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('CEPL').damageCount }}/{{ findDataByCode('CEPL').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('CEPL', 'class'),
+                    findDataByCode('CEPL')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: -175px; top: 107px;"
+                  @click="openNewLink(findDataByCode('CEPL')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('CEPL')]" />
+                  <span>
+                    {{ findDataByCode("CEPL")?.terraceName }}
+                  </span>
+                  <line-svg
+                    :is-flow="findDataByCode('CEPL')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('CEPL')?.terraceCode"
+                    :start-color="getDataStatus('CEPL', 'color')"
+                    :end-color="getDataStatus('CEPL', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('CEPL')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="top: -3px; left: 79px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="125px"
+                    svg-height="50px"
+                    set-points="0,40 115,40 115,0"
+                    @click-line="openNewLink(findDataByCode('CEPL')?.terraceShowUrl)"
+                  />
+                </div>
+                <!-- EPP -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('EPP')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: 270px; top: 176px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('EPP').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: 183px;"
+                    >
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: 299px; top: 200px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('EPP').damageCount }}/{{ findDataByCode('EPP').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('EPP', 'class'),
+                    findDataByCode('EPP')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: 203px; top: 107px;"
+                  @click="openNewLink(findDataByCode('EPP')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('EPP')]" />
+                  <span>
+                    {{ findDataByCode("EPP")?.terraceName }}
+                  </span>
+                  <line-svg
+                    :is-flow="findDataByCode('EPP')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('EPP')?.terraceCode"
+                    :start-color="getDataStatus('EPP', 'color')"
+                    :end-color="getDataStatus('EPP', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('EPP')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="left: -126px; top: -3px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="125px"
+                    svg-height="50px"
+                    set-points="125,40 10,40 10,0"
+                    @click-line="openNewLink(findDataByCode('EPP')?.terraceShowUrl)"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- 一整条线 -->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.runningStatus === '1'"
+              linear-id="Maritime_CEPJ_Clouds_IOT1"
+              :start-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
+              :end-color="findDataByLink('Maritime_CEPJ', 'Clouds_IOT')"
+              class="svgClass"
+              :class="[
+                findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              style="left: 240px; top: 90px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="20px"
+              svg-height="180px"
+              set-points="10,180 10,0 11,0"
+              @click-line="openPointsLink(findDataByStartAndEnd('Maritime_CEPJ', 'Clouds_IOT')?.pointShowUrl)"
+            />
+            <!-- FPSO -->
+            <!-- 带!号小报警 -->
+            <div v-if="findDataByCode('FPSO')?.runningStatus === '0'">
+              <div class="alarmPromptMessage" style="left: 588px; top: 262px;">
+                !
+              </div>
+              <div v-if="findDataByCode('FPSO').allCount !== 0">
+                <svg
+                  style="background: transparent; width: 140px; height: 52px; position: absolute; left: 450px; top: 235px;"
+                >
+                  <polyline points="150,40 105,5 0,5" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                </svg>
+                <div class="warnText" style="left: 440px; top: 216px; width: 125px;text-align: center;">
+                  系统故障：{{ findDataByCode('FPSO').damageCount }}/{{ findDataByCode('FPSO').allCount }}
+                </div>
+              </div>
+            </div>
+            <div class="centerSystem g-w100 g-h100">
+              <div class="g-w100" style="position: relative; margin-left: 43%; margin-top: 70px;">
+                <div
+                  class="mainSize g-column-flex-HV"
+                  :class="[
+                    getDataStatus('FPSO', 'class'),
+                    findDataByCode('FPSO')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  @click="openNewLink(findDataByCode('FPSO')?.terraceShowUrl)"
+                >
+                  <div class="mainSizeRedBg" :class="[getDataStatusFPSO('FPSO')]" />
+                  {{ findDataByCode("FPSO")?.terraceName }}
+                </div>
+              </div>
+            </div>
+            <!-- Maritime_CEPI -  Clouds_IOT-->
+            <!-- 一整条线 -->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.runningStatus === '1'"
+              linear-id="Maritime_CEPI_Clouds_IOT1"
+              :start-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
+              :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
+              class="svgClass"
+              :class="[
+                findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              style="left: 340px; top: 80px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="20px"
+              svg-height="73px"
+              set-points="10,65 10,15 11,15"
+              @click-line="openPointsLink(findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl)"
+            />
+            <!-- 顶部线 -->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.runningStatus === '1'"
+              linear-id="Maritime_CEPI_Clouds_IOT2"
+              :start-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
+              :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
+              class="svgClass"
+              :class="[
+                findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              style="left: 346px; top: 128px;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="822px"
+              svg-height="25px"
+              set-points="822,16 822,15 7,15"
+              @click-line="openPointsLink(findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl)"
+            />
+            <!-- 右侧线 -->
+            <line-svg
+              :is-flow="findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.runningStatus === '1'"
+              linear-id="Maritime_CEPI_Clouds_IOT3"
+              :start-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
+              :end-color="findDataByLink('Maritime_CEPI', 'Clouds_IOT')"
+              class="svgClass"
+              :class="[
+                findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl ? 'pointerCursor' : 'autoCursor',
+              ]"
+              style="left: 1157px; top: 128px; z-index: 1 !important;"
+              div-stroke-width="6"
+              ball-stroke-width="5"
+              svg-width="20px"
+              svg-height="140px"
+              set-points="10,140 11,15 10,15"
+              @click-line="openPointsLink(findDataByStartAndEnd('Maritime_CEPI', 'Clouds_IOT')?.pointShowUrl)"
+            />
+            <!-- 带!号小报警 -->
+            <div v-if="findDataByCode('CEPI')?.runningStatus === '0'">
+              <div class="alarmPromptMessage" style="left: 1158px; top: 362px;">
+                !
+              </div>
+              <div v-if="findDataByCode('CEPI').allCount !== 0">
+                <svg
+                  style="width: 30px; height: 80px; position: absolute; left: 1153px; top: 372px;"
+                >
+                  <polyline points="15,0 15,80" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                </svg>
+                <svg
+                  style="width: 120px; height: 15px; position: absolute; left: 1168px; top: 449px;"
+                >
+                  <polyline points="0,3 120,3" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                </svg>
+                <div class="warnText" style="left: 1168px; top: 430px; width: 125px;text-align: center;">
+                  系统故障：{{ findDataByCode('CEPI').damageCount }}/{{ findDataByCode('CEPI').allCount }}
+                </div>
+              </div>
+            </div>
+            <div class="rightSystem g-w100 g-h100">
+              <div class="g-w100" style="position: relative; margin-left: 40%; margin-top: 70px;">
+                <div
+                  class="mainSize g-column-flex-HV"
+                  :class="[
+                    getDataStatus('CEPI', 'class'),
+                    findDataByCode('CEPI')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  @click="openNewLink(findDataByCode('CEPI')?.terraceShowUrl)"
+                >
+                  <div class="mainSizeRedBg" :class="[getDataStatusMain('CEPI')]" />
+                  {{ findDataByCode("CEPI")?.terraceName }}
+                </div>
+                <!-- WHPH -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('WHPH')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: 270px; top: -85px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('WHPH').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: -80px;"
+                    >
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: 298px; top: -64px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPH').damageCount }}/{{ findDataByCode('WHPH').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('WHPH', 'class'),
+                    findDataByCode('WHPH')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: 203px; top: -73px;"
+                  @click="openNewLink(findDataByCode('WHPH')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('WHPH')]" />
+                  <span>
+                    {{ findDataByCode("WHPH")?.terraceName }}
+                  </span>
+                  <line-svg
+                    :is-flow="findDataByCode('WHPH')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('WHPH')?.terraceCode"
+                    :start-color="getDataStatus('WHPH', 'color')"
+                    :end-color="getDataStatus('WHPH', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('WHPH')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="left: -126px; top: 22px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="125px"
+                    svg-height="50px"
+                    set-points="125,15 10,15 10,50"
+                    @click-line="openNewLink(findDataByCode('WHPH')?.terraceShowUrl)"
+                  />
+                </div>
+                <!-- WHPB -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('WHPB')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: -181px; top: 100px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('WHPB').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -314px; top: 106px;"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: -329px; top: 124px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPB').damageCount }}/{{ findDataByCode('WHPB').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('WHPB', 'class'),
+                    findDataByCode('WHPB')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: -175px; top: 107px;"
+                  @click="openNewLink(findDataByCode('WHPB')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('WHPB')]" />
+                  <span>
+                    {{ findDataByCode("WHPB")?.terraceName }}
+                  </span>
+                  <line-svg
+                    :is-flow="findDataByCode('WHPB')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('WHPB')?.terraceCode"
+                    :start-color="getDataStatus('WHPB', 'color')"
+                    :end-color="getDataStatus('WHPB', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('WHPB')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="top: -3px; left: 79px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="125px"
+                    svg-height="50px"
+                    set-points="0,40 115,40 115,0"
+                    @click-line="openNewLink(findDataByCode('WHPB')?.terraceShowUrl)"
+                  />
+                </div>
+                <!-- WHPC -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('WHPC')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: 300px; top: 8px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('WHPC').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 310px; top: 20px;"
+                    >
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: 332px; top: 37px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPC').damageCount }}/{{ findDataByCode('WHPC').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('WHPC', 'class'),
+                    findDataByCode('WHPC')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: 230px; top: 17px;"
+                  @click="openNewLink(findDataByCode('WHPC')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('WHPC')]" />
+                  <span>{{
+                    findDataByCode("WHPC")?.terraceName
+                  }}</span>
+                  <line-svg
+                    :is-flow="findDataByCode('WHPC')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('WHPC')?.terraceCode"
+                    :start-color="getDataStatus('WHPC', 'color')"
+                    :end-color="getDataStatus('WHPC', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('WHPC')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="left: -125px; top: 25px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="126px"
+                    svg-height="20px"
+                    set-points="125,10 0,10 0,11"
+                    @click-line="openNewLink(findDataByCode('WHPC')?.terraceShowUrl)"
+                  />
+                </div>
+                <!-- CEPK -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('CEPK')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: -211px; top: 8px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('CEPK').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -349px; top: 16px;"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: -359px; top: 32px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('CEPK').damageCount }}/{{ findDataByCode('CEPK').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('CEPK', 'class'),
+                    findDataByCode('CEPK')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: -204px; top: 17px;"
+                  @click="openNewLink(findDataByCode('CEPK')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('CEPK')]" />
+                  <span>{{
+                    findDataByCode("CEPK")?.terraceName
+                  }}</span>
+                  <line-svg
+                    :is-flow="findDataByCode('CEPK')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('CEPK')?.terraceCode"
+                    :start-color="getDataStatus('CEPK', 'color')"
+                    :end-color="getDataStatus('CEPK', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('CEPK')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="top: 25px; left: 79px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="126px"
+                    svg-height="20px"
+                    set-points="0,11 0,10 125,10"
+                    @click-line="openNewLink(findDataByCode('CEPK')?.terraceShowUrl)"
+                  />
+                </div>
+                <!-- WHPD -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('WHPD')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: 270px; top: 100px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('WHPD').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: 275px; top: 103px;"
+                    >
+                      <polyline points="0,0 35,40 150,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: 299px; top: 120px; width: 125px;text-align: center;">
+                      系统故障：{{ findDataByCode('WHPD').damageCount }}/{{ findDataByCode('WHPD').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('WHPD', 'class'),
+                    findDataByCode('WHPD')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: 203px; top: 107px;"
+                  @click="openNewLink(findDataByCode('WHPD')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('WHPD')]" />
+                  <span>{{
+                    findDataByCode("WHPD")?.terraceName
+                  }}</span>
+                  <line-svg
+                    :is-flow="findDataByCode('WHPD')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('WHPD')?.terraceCode"
+                    :start-color="getDataStatus('WHPD', 'color')"
+                    :end-color="getDataStatus('WHPD', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('WHPD')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="left: -126px; top: -3px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="125px"
+                    svg-height="50px"
+                    set-points="125,40 10,40 10,0"
+                    @click-line="openNewLink(findDataByCode('WHPD')?.terraceShowUrl)"
+                  />
+                </div>
+                <!-- WHPG -->
+                <!-- 带!号小报警 -->
+                <div v-if="findDataByCode('WHPG')?.runningStatus === '0'">
+                  <div class="alarmPromptMessage" style="left: -180px; top: -80px;">
+                    !
+                  </div>
+                  <div v-if="findDataByCode('WHPG').allCount !== 0">
+                    <svg
+                      style="background: transparent; width: 140px; height: 52px; position: absolute; left: -310px; top: -80px;"
+                    >
+                      <polyline points="150,0 105,40 0,40" style="fill: none; stroke: var(--old-red-color); stroke-width: 1;" />
+                    </svg>
+                    <div class="warnText" style="left: -315px; top: -65px; width: 125px; text-align: center;">
+                      系统故障：{{ findDataByCode('WHPG').damageCount }}/{{ findDataByCode('WHPG').allCount }}
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="g-column-flex-HV"
+                  :class="[
+                    getDataStatus('WHPG', 'class'),
+                    findDataByCode('WHPG')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor',
+                  ]"
+                  style="position: absolute; left: -175px; top: -73px;"
+                  @click="openNewLink(findDataByCode('WHPG')?.terraceShowUrl)"
+                >
+                  <div class="smallRedBg" :class="[getSmallSignStatus('WHPG')]" />
+                  <span>
+                    {{ findDataByCode("WHPG")?.terraceName }}
+                  </span>
+                  <line-svg
+                    :is-flow="findDataByCode('WHPG')?.runningStatus === '1'"
+                    :linear-id="findDataByCode('WHPG')?.terraceCode"
+                    :start-color="getDataStatus('WHPG', 'color')"
+                    :end-color="getDataStatus('WHPG', 'color')"
+                    class="svgClass"
+                    :class="[findDataByCode('WHPG')?.terraceShowUrl ? 'pointerCursor' : 'autoCursor']"
+                    style="top: 22px; left: 79px;"
+                    div-stroke-width="6"
+                    ball-stroke-width="5"
+                    svg-width="125px"
+                    svg-height="50px"
+                    set-points="0,15 115,15 115,50"
+                    @click-line="openNewLink(findDataByCode('WHPG')?.terraceShowUrl)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </page-panel-new>
   </div>
 </template>
 
 <script>
-import lineSvg from '@/pages/intelligentOilfield/messageCenter/lineSvg.vue';
-import { searchequipment, equipmentStatus } from '@/api/intelligentOilfield/system/equipment';
+import lineSvg from "@/pages/intelligentOilfield/messageCenter/lineSvg.vue";
+import { monitorLinks } from "@/api/intelligentOilfield/system/equipment";
+import { compareDateToS } from "@/utils/date.ts";
+import { addTokenToUrl } from "@/utils/jumpSupApp.js";
+import dayjs from "dayjs";
 
 export default {
-  name: 'Message',
+  dicts: ["hailu_has_token", "hailu_link_url"],
+  name: "Message",
   components: {
-    lineSvg,
+    lineSvg
   },
   data() {
     return {
-      title: '设备分类',
+      errorMessage: "",
+      zoomValue: 0,
+      boxWidth: 0,
+      windowWidth: 1920,
+      linkMarginTop: 0,
+      maritimeLinkInfos: [],
+      cloudsLinkInfos: [],
+      dialogTitle: "海陆物联网数据链路",
       openDialog: false,
-      input: '',
-      initIptList: [
-        { name: '电气类', isGreen: true, icon: 'electrical' },
-        { name: '机械类', isGreen: false, icon: 'machinery' },
-        { name: '仪表类', isGreen: true, icon: 'appearance' },
-        { name: '其他', isGreen: true, icon: 'other' },
-        { name: '视联网平台', isGreen: true },
-      ],
-      resultIptList: [],
-      lastIpt: [],
-      initJptList: [
-        { name: '电气类', isGreen: 0, icon: 'electrical' },
-        { name: '机械类', isGreen: 0, icon: 'machinery' },
-        { name: '仪表类', isGreen: 0, icon: 'appearance' },
-        { name: '其他', isGreen: 0, icon: 'other' },
-      ],
-      initFPSOptList: [
-        { name: '电气类', isGreen: true, icon: 'electrical' },
-        { name: '机械类', isGreen: false, icon: 'machinery' },
-        { name: '仪表类', isGreen: true, icon: 'appearance' },
-        { name: '其他', isGreen: true, icon: 'other' },
-        { name: '视联网平台', isGreen: true },
-      ],
-      resultFPSOptList: [],
-      lastFPSOpt: [],
-      options: [
-        { value: 'I平台', label: 'I平台' },
-        { value: 'J平台', label: 'J平台' },
-        { value: 'FPSO平台', label: 'FPSO平台' },
-      ],
-      indicatorSource: 'I平台',
-      activeName: '电气类',
-      statusOptions: [
-        { value: '', label: '全部' },
-        { value: '1', label: '正常' },
-        { value: '0', label: '异常' },
-      ],
-      statusModel: '',
-      nameInput: '',
-      searchList: [],
-      tabsList: [
-        {
-          title: '电气类',
-          name: '1',
-        },
-        {
-          title: '机械类',
-          name: '2',
-        },
-        {
-          title: '仪表类',
-          name: '3',
-        },
-        {
-          title: '其它',
-          name: '4',
-        },
-        {
-          title: '视联网平台',
-          name: '5',
-        },
-      ],
-      dialogType: '工作项',
-      verticalLine: '12,10 12,10 11,37',
-      topLine: '0,20 120,20 120,35 290 35,290,50',
-      bottomLine: '0,40 120,40 120,25 290 25,290,4',
-      wwLink: '218px',
-      wwlinkTop: '-167px',
-      wwLinkLine: '0,190 200,190 200,0',
-      wtLine: '5,0 5,193 105,193',
-      fyLinkHeight: '37px',
-      fyLinkTop: '150px',
-      fyPoint: '65,37 65,0 64,0',
+      timer: null,
       isFullScreen: false,
+      zuhuModel: "秦皇岛作业公司",
+      zuhuOptions: [
+        { label: "秦皇岛作业公司", value: "秦皇岛作业公司" },
+        { label: "蓬勃作业公司", value: "蓬勃作业公司" }
+      ],
+      iframeDialogTitle: "",
+      openIframeDialog: false,
+      ifameList: [
+        { name: "海上链路总览", url: "http://10.79.32.200:8080/resource/App_2d4a01bdc0a5336a8ddbe66c02becb1e/appCallback.html", id: "sea" },
+        { name: "云端链路总览", url: "https://dds.tjioms-dev.tjltd.cnooc/#/bigDataPage/showData", id: "cloud" }
+      ],
+      currentIframeObj: { name: "海上链路总览", url: "http://10.79.32.200:8080/resource/App_2d4a01bdc0a5336a8ddbe66c02becb1e/appCallback.html", id: "sea" }
     };
   },
-  created() {
-    this.resultIptList = this.initIptList.filter((item) => item.name !== '视联网平台');
-    this.lastIpt = this.initIptList.filter((item) => item.name === '视联网平台');
-    this.resultFPSOptList = this.initFPSOptList.filter((item) => item.name !== '视联网平台');
-    this.lastFPSOpt = this.initFPSOptList.filter((item) => item.name === '视联网平台');
-    this.getstatus();
+  computed: {
+    // CEPJ和CEPI的背景图
+    getDataStatusMain() {
+      return code => {
+        const tempData = this.maritimeLinkInfos.find(item => item.terraceCode === code);
+        if (tempData?.runningStatus === "1") {
+          if (this.$store.state.setting.mode === "dark") {
+            return "mainSizeBlueBg";
+          }
+          return "mainSizeBlueBg_light";
+        }
+        return "mainSizeRedBg";
+      };
+    },
+    // FPSO的背景图
+    getDataStatusFPSO() {
+      return code => {
+        const tempData = this.maritimeLinkInfos.find(item => item.terraceCode === code);
+        if (tempData?.runningStatus === "1") {
+          if (this.$store.state.setting.mode === "dark") {
+            return "mainSizeBlueBgFPSO";
+          }
+          return "mainSizeBlueBgFPSO_light";
+        }
+        return "mainSizeRedBgFPSO";
+      };
+    },
+    // 小图标背景图
+    getSmallSignStatus() {
+      return code => {
+        const tempData = this.maritimeLinkInfos.find(item => item.terraceCode === code);
+        if (tempData?.runningStatus === "1") {
+          if (this.$store.state.setting.mode === "dark") {
+            return "smallBlueBg";
+          }
+          return "smallBlueBg_light";
+        }
+        return "smallRedBg";
+      };
+    },
+    // 通过terraceCode,返回(海面)线/点背景颜色
+    getDataStatus() {
+      return (code, type) => {
+        const tempData = this.maritimeLinkInfos.find(item => item.terraceCode === code);
+        if (type === "color") {
+          return tempData?.runningStatus === "1" ? "#32cd32" : "red";
+        }
+        return tempData?.runningStatus === "1" ? "greenSign" : "redSign";
+      };
+    },
+    // linkType: "LINK":通过startPoint和endPoint,返回(云)线颜色
+    findDataByLink() {
+      return (startPoint, endPoint) => {
+        const tempData = this.cloudsLinkInfos.find(
+          item => item.startPoint === startPoint && item.endPoint === endPoint
+        );
+        return tempData?.runningStatus === "1" ? "#32cd32" : "red";
+      };
+    },
+    // linkType: "POINT":通过startPoint,返回(云)点背景颜色
+    findDataByPoint() {
+      return (point, type) => {
+        const tempData = this.cloudsLinkInfos.find(item => item.linkType === "POINT" && item.startPoint === point);
+        if (type === "color") {
+          return tempData?.runningStatus === "1" ? "#32cd32" : "red";
+        }
+        return tempData?.runningStatus === "1" ? "blueBg" : "redBg";
+      };
+    }
   },
   mounted() {
-    console.log('aaa', document.body.clientHeight);
-    this.differFBL();
-    window.onresize = () =>
-      (() => {
-        // 监听页面宽高变化
-        this.differFBL();
-      })();
+    this.$nextTick(() => {
+      this.refreshData();
+      window.onresize = () => { // 窗口尺寸变化时，重新计意和缩放
+        this.refreshData();
+      };
+      this.getStatus();
+    });
+  },
+  destroyed() {
+    window.clearInterval(this.timer);
   },
   methods: {
-    // 跳转设备维护
-    handleToPage() {
-      this.$router.push({ name: 'Equipment' });
-    },
-    // 获取状态
-    getstatus() {
-      equipmentStatus().then((res) => {
-        this.initIptList[0].isGreen = Number(res.data.data.I平台.电气类);
-        this.initIptList[1].isGreen = Number(res.data.data.I平台.机械类);
-        this.initIptList[2].isGreen = Number(res.data.data.I平台.仪表类);
-        this.initIptList[3].isGreen = Number(res.data.data.I平台.其他);
-        this.initIptList[4].isGreen = Number(res.data.data.I平台.视联网平台);
-        this.initFPSOptList[0].isGreen = Number(res.data.data.EPSO平台.电气类);
-        this.initFPSOptList[1].isGreen = Number(res.data.data.EPSO平台.机械类);
-        this.initFPSOptList[2].isGreen = Number(res.data.data.EPSO平台.仪表类);
-        this.initFPSOptList[3].isGreen = Number(res.data.data.EPSO平台.其他);
-        this.initFPSOptList[4].isGreen = Number(res.data.data.EPSO平台.视联网平台);
-        this.initJptList[0].isGreen = Number(res.data.data.J平台.电气类);
-        this.initJptList[1].isGreen = Number(res.data.data.J平台.机械类);
-        this.initJptList[2].isGreen = Number(res.data.data.J平台.仪表类);
-        this.initJptList[3].isGreen = Number(res.data.data.J平台.其他);
-      });
-    },
-    differFBL() {
-      if (document.body.clientHeight === 1080) {
-        // this.verticalLine = '12,10 12,10 11,58';
-        // this.topLine = '0,20 120,20 120,35 290 35,290,58';
-        // this.bottomLine = '0,40 120,40 120,25 290 25,290,0';
-        // this.wwLink = '265px';
-        // this.wwlinkTop = '-210px';
-        // this.wwLinkLine = '0,235 200,235 200,0';
-        // this.wtLine = '5,0 5,245 105,245';
-        // this.fyLinkHeight = '80px';
-        // this.fyLinkTop = '170px';
-        // this.fyPoint = '65,80 65,0 64,0'
-        this.isFullScreen = true;
+    refreshData() {
+      const baseWidth = 1920;
+      this.windowWidth = window.innerWidth;
+      this.boxWidth = this.$refs.elRef.offsetWidth;
+      this.zoomValue = this.boxWidth / baseWidth;
+
+      if (this.windowWidth === 1920) {
+        this.linkMarginTop = 0;
+        document.getElementById("mainContainer").style.transform = "scale(0.9, 0.9)";
+      } else if (this.windowWidth > 1920) {
+        if (this.boxWidth >= 2604 && this.boxWidth < 3564) {
+          this.linkMarginTop = this.zoomValue * 200;
+        } else if (this.boxWidth >= 3564 && this.boxWidth < 5482) {
+          this.linkMarginTop = this.zoomValue * 300;
+        } else if (this.boxWidth >= 5482 && this.boxWidth < 7404) {
+          this.linkMarginTop = this.zoomValue * 500;
+        } else if (this.boxWidth >= 7404) {
+          this.linkMarginTop = this.zoomValue * 600;
+        } else {
+          this.linkMarginTop = this.zoomValue * 100;
+        }
+        document.getElementById("mainContainer").style.transform = `scale(${this.zoomValue},${this.zoomValue})`;
       } else {
-        // this.verticalLine = '12,10 12,10 11,37';
-        // this.topLine = '0,20 120,20 120,35 290 35,290,50';
-        // this.bottomLine = '0,40 120,40 120,25 290 25,290,4';
-        // this.wwLink = '218px';
-        // this.wwlinkTop = '-167px';
-        // this.wwLinkLine = '0,190 200,190 200,0';
-        // this.wtLine = '5,0 5,193 105,193';
-        // this.fyLinkHeight = '37px';
-        // this.fyLinkTop = '150px';
-        // this.fyPoint = '65,37 65,0 64,0'
-        this.isFullScreen = false;
+        this.linkMarginTop = ((1 - this.zoomValue) * 100 + 20) * -1;
+        document.getElementById("mainContainer").style.transform = `scale(${this.zoomValue},${this.zoomValue})`;
       }
     },
-    // 关闭
-    submitForm() {
-      this.openDialog = false;
-      this.statusModel = '';
-      this.activeName = '电气类';
-      this.searchList = [];
-      this.nameInput = '';
-      this.indicatorSource = 'I平台'
+    addToken(url) {
+      return addTokenToUrl(url);
     },
-    clesrSearchList() {
-      this.statusModel = '';
-      this.activeName = '电气类';
-      this.searchList = [];
-      this.nameInput = '';
-      this.indicatorSource = 'I平台'
+    openIframeDialogMethods(iframeObj) {
+      window.open(addTokenToUrl(iframeObj.url), "_blank");
     },
-    clickItem(val, type) {
-      this.dialogType = type;
-      if (this.dialogType === '搜索') {
-        this.title = '检索结果';
-        const queryParams = {
-          equipmentName: this.input,
-        };
-        searchequipment(queryParams).then((res) => {
-          this.searchList = res.data.data;
-        });
-      } else if (this.dialogType === '工作项') {
-        this.title = '设备分类';
-        const queryParams = {
-          terrace: this.indicatorSource,
-          type: this.activeName,
-          equipmentName: this.nameInput,
-          status: this.statusModel,
-        };
-        searchequipment(queryParams).then((res) => {
-          this.searchList = res.data.data;
-        });
+    openIframeDialogLink(Url, hasToken) {
+      if (hasToken === "true") {
+        window.open(addTokenToUrl(Url), "_blank");
       } else {
-        // Flink集群
-        this.title = 'Flink集群';
-        const queryParams = {
-          type: this.activeName,
-          equipmentName: this.input,
-          status: this.statusModel,
-          clusterStatus: 1,
-        };
-        searchequipment(queryParams).then((res) => {
-          this.searchList = res.data.data;
-        });
+        window.open(Url, "_blank");
       }
+    },
+    clickClouds() {
       this.openDialog = true;
     },
-    // 搜索
-    handleQuery() {
-      if (this.title == '检索结果') {
-        const queryParams = {
-          equipmentName: this.nameInput,
-          status: this.statusModel,
-        };
-        searchequipment(queryParams).then((res) => {
-          this.searchList = res.data.data;
-        });
-      } else if (this.title == '设备分类') {
-        const queryParams = {
-          terrace: this.indicatorSource,
-          type: this.activeName,
-          equipmentName: this.nameInput,
-          status: this.statusModel,
-        };
-        searchequipment(queryParams).then((res) => {
-          this.searchList = res.data.data;
-        });
-      } else {
-        // Flink集群
-        const queryParams = {
-          type: this.activeName,
-          equipmentName: this.nameInput,
-          status: this.statusModel,
-          clusterStatus: 1,
-        };
-        searchequipment(queryParams).then((res) => {
-          this.searchList = res.data.data;
-        });
+    submitForm() {
+      this.openDialog = false;
+    },
+    openNewLink(url) {
+      if (url) {
+        window.open(addTokenToUrl(url), "_blank");
       }
     },
-    // 重置
-    resetQuery() {
-      this.statusModel = '';
-      this.activeName = '电气类';
-      this.searchList = [];
-      this.nameInput = '';
-      this.handleQuery();
+    openPointsLink(url) {
+      if (url) {
+        window.open(addTokenToUrl(url), "_blank");
+      }
     },
-    // 点击Tab标签
-    handleClick(tab, event) {
-      // console.log(tab, event);
-      const queryParams = {
-        terrace: this.title == '设备分类' ? this.indicatorSource : undefined,
-        type: this.activeName,
-        equipmentName: this.nameInput,
-        status: this.statusModel,
-        clusterStatus: this.title == 'Flink集群' ? 1 : undefined,
+    // 跳转设备维护
+    handleToPage() {
+      this.$router.push({ name: "Equipment" });
+    },
+    // 查找(海面)符合条件对象
+    findDataByCode(code) {
+      return this.maritimeLinkInfos.find(item => item.terraceCode === code);
+    },
+    // 查找(云)符合条件对象
+    findDataByStartAndEnd(startPoint, endPoint) {
+      return this.cloudsLinkInfos.find(item => item.startPoint === startPoint && item.endPoint === endPoint);
+    },
+    // 获取状态
+    getStatus() {
+      window.clearInterval(this.timer);
+      const nowDate = new Date();
+      compareDateToS(nowDate);
+      const params = {
+        checkTime: compareDateToS(nowDate)
       };
-      searchequipment(queryParams).then((res) => {
-        this.searchList = res.data.data;
+      let differenceSecond = 0;
+      // 调接口
+      monitorLinks(params).then(res => {
+        differenceSecond = 0;
+        differenceSecond = dayjs(res.data.data.nextCheckTime).diff(compareDateToS(nowDate), "seconds");
+        this.maritimeLinkInfos = res.data.data.maritimeLinkInfos;
+        this.cloudsLinkInfos = res.data.data.cloudsLinkInfos;
+        this.errorMessage = res.data.data.errorMessage;
+        this.timer = window.setInterval(() => {
+          setTimeout(() => {
+            this.getStatus();
+          }, 0);
+        }, differenceSecond * 1000);
       });
-    },
-
-    changeSource(item) {
-      console.log('点击选中111===', item);
-      this.tabsList = [];
-      if (item === 'I平台' || item === 'FPSO平台') {
-        this.tabsList = [
-          {
-            title: '电气类',
-            name: '1',
-          },
-          {
-            title: '机械类',
-            name: '2',
-          },
-          {
-            title: '仪表类',
-            name: '3',
-          },
-          {
-            title: '其它',
-            name: '4',
-          },
-          {
-            title: '视联网平台',
-            name: '5',
-          },
-        ];
-      } else {
-        this.tabsList = [
-          {
-            title: '电气类',
-            name: '1',
-          },
-          {
-            title: '机械类',
-            name: '2',
-          },
-          {
-            title: '仪表类',
-            name: '3',
-          },
-          {
-            title: '其它',
-            name: '4',
-          },
-        ];
-      }
-    },
-    changeStatusSource() {
-      console.log('1');
-    },
-  },
+    }
+  }
 };
 </script>
 
-
 <style scoped>
-.searchStyle {
+.instructions {
   position: absolute;
-  left: 8px;
-  color: var(--lightBlueColor);
-  font-weight: 700;
-  font-size: 18px;
-  cursor: pointer;
+  top: 60px;
+  right: 20px;
+  width: auto;
+  height: auto;
+  padding: 20px;
   z-index: 1;
 }
 
-.typeClass {
-  height: 40px;
-  margin-top: 5px;
-  position: relative;
+.minPage {
+  margin: 0;
 }
 
-.bgClass {
-  background: rgba(0, 169, 159, 0.3);
-  color: #fff;
-  border-radius: 4px;
-  width: 120px;
-  margin-left: 20px;
-}
-
-.lineStyle {
-  border-top: 1px solid red;
-  width: 200px;
-}
-
-.leftBgStyle {
-  width: 672px;
-  background: var(--svgLineBg);
-  border-radius: 4px;
-  margin-right: 80px;
-}
-
-.rightBgStyle {
-  width: 890px;
-  background: var(--svgLineBg);
-  border-radius: 4px;
-}
-
-.titleStyle {
-  width: 112px;
-  height: 22px;
-  font-size: 16px;
-  font-family: AlibabaPuHuiTiB;
-  color: #3aa4ed;
-  line-height: 22px;
-  text-align: center;
-}
-
-.circleStyle {
-  width: 6px;
-  height: 6px;
-  background: #52c41a;
-  border-radius: 6px;
-  margin: 0 6px 0 16px;
-}
-
-.absoulteDiv {
-  position: absolute;
-  right: 40px;
-  top: 20px;
-  height: 40px;
-}
-
-.squareStyle {
-  width: 10px;
-  height: 10px;
-  background: #2d8d5c;
+.redSign {
+  width: 80px;
+  height: 80px;
+  color: var(--old-red-color);
+  background: var(--old-red-bg);
   border-radius: 2px;
-  margin: 0 6px 0 16px;
+  border: 1px solid var(--old-red-color);
+  font-size: 14px;
+  font-family: PingFangSC-Medium, "PingFang SC";
+  font-weight: 500;
 }
 
-.pageGreen {
-  width: 220px;
-  height: 98px;
-  background: rgba(45, 141, 92, 0.3);
-  border-radius: 4px;
+.greenSign {
+  width: 80px;
+  height: 80px;
+  text-align: center;
+  color: var(--old-blue-color);
+  background: var(--old-blue-bg);
+  border-radius: 2px;
+  border: 1px solid var(--old-blue-color);
+  font-size: 14px;
+  font-family: PingFangSC-Medium, "PingFang SC";
+  font-weight: 500;
 }
 
-.greenBtn {
-  width: 180px;
-  height: 44px;
-  background: rgba(45, 141, 92, 0.6);
-  border-radius: 4px;
+.smallRedBg {
+  width: 40px;
+  height: 37px;
+  background-image: url("@/assets/intelligentOilfield/small_red.png");
+  background-repeat: no-repeat;
+  margin-bottom: 2px;
 }
 
-.menOrange {
-  width: 380px;
-  height: 98px;
-  background: rgba(211, 90, 32, 0.3);
-  border-radius: 4px;
+.smallBlueBg {
+  width: 40px;
+  height: 37px;
+  background-image: url("@/assets/intelligentOilfield/small_blue.png");
+  background-repeat: no-repeat;
+  margin-bottom: 2px;
 }
 
-.orangeBtn {
-  width: 120px;
-  height: 44px;
-  background: rgba(211, 90, 32, 0.6);
-  border-radius: 4px;
+.smallBlueBg_light {
+  width: 40px;
+  height: 37px;
+  background-image: url("@/assets/intelligentOilfield/small_blue_light.png");
+  background-repeat: no-repeat;
+  margin-bottom: 2px;
+}
+
+.svgClass {
+  top: 100%;
+  z-index: 0 !important;
+}
+
+.topImage {
+  margin-top: 72px;
+}
+
+.topImage1 {
+  background-size: 100% 100%;
+  height: 60px;
+  margin-top: 40px;
+}
+
+.centerImage {
+  background-size: 100% 100%;
+  width: 980px;
+  height: 76px;
+  margin-top: 32px;
+}
+
+.bottomImage {
+  background-size: 100% 100%;
+  width: 1280px;
+  height: 100px;
+  margin-top: -111px;
+  z-index: -1;
+}
+
+.bottomWaterBg {
+  background-size: 100% 100%;
+  width: 100%;
+  height: 266px;
+  position: relative;
+  justify-content: space-between;
+}
+
+.leftSystem {
+  left: -183px;
+  top: 198px;
+  z-index: 0;
+  width: 530px;
+  height: 100%;
+  position: absolute;
+}
+
+.centerSystem {
+  left: 370px;
+  top: 198px;
+  z-index: 0;
+  height: 100%;
+  width: 530px;
+  position: absolute;
+}
+
+.rightSystem {
+  left: 900px;
+  top: 198px;
+  z-index: 0;
+  width: 530px;
+  height: 100%;
+  position: absolute;
+}
+
+.kuduClass {
+  position: absolute;
+  left: 720px;
 }
 
 .blueBg {
-  width: 194px;
-  height: 312px;
-  background: rgba(36, 222, 255, 0.3);
-  border-radius: 4px;
+  background: url("@/assets/intelligentOilfield/blue-bg.png");
+  background-size: 100% 100%;
+  width: 216px;
+  height: 50px;
+  font-size: 20px;
+  font-family: PingFangSC-Medium, "PingFang SC";
+  font-weight: 500;
+  color: #fff;
 }
 
-.blueBtn {
-  width: 140px;
-  height: 44px;
-  background: rgba(36, 222, 255, 0.5);
-  border-radius: 4px;
+.redBg {
+  background: url("@/assets/intelligentOilfield/red-bg.png");
+  background-size: 100% 100%;
+  width: 216px;
+  height: 50px;
+  font-size: 20px;
+  font-family: PingFangSC-Medium, "PingFang SC";
+  font-weight: 500;
+  color: #fff;
+  padding-bottom: 9px;
 }
 
-.yellowText {
-  font-size: 16px;
-  font-family: AlibabaPuHuiTiR;
-  color: #fffc49;
+.greenBg {
+  background: url("@/assets/intelligentOilfield/green-bg.png");
+  background-size: 100% 100%;
+  width: 200px;
+  height: 48px;
+  font-size: 18px;
+  font-family: PingFangSC-Semibold, "PingFang SC";
+  font-weight: 600;
+  color: #fff;
+  padding-bottom: 9px;
 }
 
-.dataBase {
+.yellowBg {
+  background: url("@/assets/intelligentOilfield/yellow-bg.png");
+  background-size: 100% 100%;
+  width: 200px;
+  height: 48px;
+  font-size: 18px;
+  font-family: PingFangSC-Semibold, "PingFang SC";
+  font-weight: 600;
+  color: #fff;
+}
+
+.mainSize {
+  width: 106px;
+  height: 106px;
+}
+
+.mainSizeRedBg {
+  width: 60px;
+  height: 56px;
+  background-image: url("@/assets/intelligentOilfield/main_red.png");
+  background-repeat: no-repeat;
+  margin-bottom: 5px;
+}
+
+.mainSizeBlueBg {
+  width: 60px;
+  height: 56px;
+  background-image: url("@/assets/intelligentOilfield/main_blue.png");
+  background-repeat: no-repeat;
+  margin-bottom: 5px;
+}
+
+.mainSizeBlueBg_light {
+  width: 60px;
+  height: 56px;
+  background-image: url("@/assets/intelligentOilfield/main_blue_light.png");
+  background-repeat: no-repeat;
+  margin-bottom: 5px;
+}
+
+.mainSizeRedBgFPSO {
+  width: 74px;
+  height: 52px;
+  background-image: url("@/assets/intelligentOilfield/fpso_red.png");
+  background-repeat: no-repeat;
+  margin-bottom: 5px;
+}
+
+.mainSizeBlueBgFPSO {
+  width: 74px;
+  height: 52px;
+  background-image: url("@/assets/intelligentOilfield/fpso_blue.png");
+  background-repeat: no-repeat;
+  margin-bottom: 5px;
+}
+
+.mainSizeBlueBgFPSO_light {
+  width: 74px;
+  height: 52px;
+  background-image: url("@/assets/intelligentOilfield/fpso_blue_light.png");
+  background-repeat: no-repeat;
+  margin-bottom: 5px;
+}
+
+.dialog-footer {
+  justify-content: flex-end;
+}
+
+.absoultePos {
+  position: absolute;
+  color: var(--light-blue-color);
+  left: 0;
+  top: 0;
+  font-size: 14px;
+}
+
+.pointerCursor {
+  cursor: pointer;
+}
+
+.autoCursor {
+  cursor: default;
+}
+
+.alarmPromptMessage {
   width: 20px;
   height: 20px;
+  line-height: 20px;
+  background: var(--old-red-color);
+  border-radius: 20px;
+  position: absolute;
+  left: 240px;
+  top: 115px;
+  z-index: 1;
+  text-align: center;
+}
+
+.warnText {
+  font-size: 12px;
+  color: var(--old-red-color);
+  position: absolute;
+  left: 110px;
+  top: 140px;
 }
 </style>

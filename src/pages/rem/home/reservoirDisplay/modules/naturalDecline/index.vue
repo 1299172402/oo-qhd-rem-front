@@ -1,0 +1,179 @@
+<template>
+    <info-window
+        info-width="100%"
+        info-height="100%"
+        header-title="自然递减率"
+        :is-show-max-btn="true"
+    >
+        <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</el-button>
+        <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downEcharts">下载</el-button>
+        <Echart ref="echartChart" :chart-data="naturalDeclineRate" width="100%" height="100%"></Echart>
+    </info-window>
+</template>
+<script>
+import Echart from "@/components/tools/Echarts/index.vue";
+import * as echarts from "echarts";
+import { natureDeclineChart } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+
+export default {
+  props: ["infodata"],
+  components: {
+    Echart,
+  },
+  data() {
+    return {
+      currentModel: this.$store.state.setting.mode,
+        naturalDeclineRate: {
+            tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                    type: "shadow",
+                },
+            },
+            dataZoom: {
+                start: 95,
+                type: "inside",
+            },
+            grid: {
+                top: "15%",
+                left: "3%",
+                right: "5%",
+                bottom: "12%",
+                containLabel: true,
+            },
+            xAxis: {
+                type: "category",
+                axisLabel: {
+                    color: "#8FA4CC",
+                    margin: 20,
+                },
+                axisTick: {
+                    show:true,
+                    inside: true
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    },
+                },
+            },
+            yAxis: {
+                name: "自然递减率(%)",
+                nameTextStyle: {
+                    color: "#8FA4CC"
+                },
+                min:0,
+                max:100,
+                type: "value",
+                axisLabel: {
+                    color: "#8FA4CC",
+                },
+                axisTick: {
+                    show:true,
+                    inside: true
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    },
+                },
+                splitLine: {
+                    show: false,
+                    lineStyle: {
+                        color: 'rgba(143,164,204,.5)'
+                    },
+                },
+            },
+            series: {
+                data: [],
+                type: "bar",
+                label: {
+                    show: true,
+                },
+            },
+        },
+
+    };
+  },
+  mounted() {
+      this.getNatureDeclineChart()
+  },
+  methods: {
+      linkroute(name) {
+          this.$router.push({
+              path: name,
+              query:{ link:'decreasing',page:'/reservoirDisplay/oilexhibition' }
+          });
+      },
+      //自然递减率
+      getNatureDeclineChart(oilFieldId, fieldId) {
+          let request = {
+              oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+              fieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+          };
+          natureDeclineChart(request).then((res) =>{
+              if (res.data.code == 200) {
+                  let seriesData = [];
+                  let barChartData = res.data.data.chart.barDataSets[0].barDatas;
+                  seriesData = this.getBarChartSeries(barChartData);
+                  this.naturalDeclineRate.yAxis.max = null
+                  this.naturalDeclineRate.yAxis.min = null
+                  this.naturalDeclineRate.series.data = seriesData;
+              }
+          });
+      },
+      downEcharts(){
+          this.$refs.echartChart.chartDownLoad( '自然递减率');
+      },
+      //柱状图
+      getBarChartSeries(barChart) {
+          let seriesData = [];
+          for (let i = 0; i < barChart.length; i++) {
+              let barData = {};
+              //值大于等于0
+              if (barChart[i].value >= 0) {
+                  barData.value = barChart[i].value;
+                  let label = barChart[i].label.split("-");
+                  barData.value = [label[0] + "-" + label[1], barData.value];
+                  barData.name = label[0] + "-" + label[1];
+                  barData.label = {
+                      show: false,
+                  };
+                  barData.itemStyle = {
+                      color: "#1379F7",
+                  };
+                  seriesData.push(barData);
+              } else {
+                  //值小于0
+                  barData.value = barChart[i].value;
+                  let label = barChart[i].label.split("-");
+                  barData.value = [label[0] + "-" + label[1], barData.value];
+                  barData.name = label[0] + "-" + label[1];
+                  barData.label = {
+                      show: false,
+                  };
+                  barData.itemStyle = {
+                      color: "#FF7135",
+                  };
+                  seriesData.push(barData);
+              }
+          }
+          return seriesData;
+      },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.detailLinkBtn {
+position: absolute;
+    right: 45px;
+    top: 10px;
+    width: 50px;
+    line-height: 20px;
+    padding: 0 !important;
+    height: 20px !important;
+    font-size: smaller !important;
+    text-align: center !important;
+}
+</style>

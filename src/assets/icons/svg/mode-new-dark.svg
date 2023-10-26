@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 18</title>
+    <defs>
+        <linearGradient x1="-8.84015083e-13%" y1="50%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#0F65EA" offset="0%"></stop>
+            <stop stop-color="#00D9EA" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-2" cx="12" cy="12" r="12"></circle>
+    </defs>
+    <g id="门户" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="门户首页-深色系办公模式6" transform="translate(-1733.000000, -18.000000)">
+            <g id="编组-18" transform="translate(1733.000000, 18.000000)">
+                <g id="椭圆形备份-3">
+                    <use fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                    <use fill="#3490D3" xlink:href="#path-2"></use>
+                </g>
+                <g id="办公模式" transform="translate(4.000000, 4.000000)">
+                    <rect id="矩形" x="0" y="0" width="16" height="16"></rect>
+                    <g id="编组-15" transform="translate(1.000000, 2.331992)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline id="路径-2" points="7.34967642e-13 8.13081104 6.82121026e-13 1.47619898 14 1.47619898 12.218226 -7.75448803e-14"></polyline>
+                        <polyline id="路径-2备份" transform="translate(7.000000, 7.065406) rotate(-180.000000) translate(-7.000000, -7.065406) " points="5.2846616e-14 11.130811 0 4.47619898 14 4.47619898 12.218226 3"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

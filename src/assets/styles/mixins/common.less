@@ -1,110 +1,135 @@
-
-/*列表上方操作按钮区域*/
+/* 列表上方操作按钮区域 */
 .ant-card-body .table-operator {
-    margin-bottom: 18px;
+  margin-bottom: 18px;
 }
+
 /** Button按钮间距 */
 .table-operator .ant-btn {
-    margin-right: 0px;
-    margin-left: 8px;
+  margin-right: 0;
+  margin-left: 8px;
 }
-/*列表td的padding设置 可以控制列表大小*/
+
+/* 列表td的padding设置 可以控制列表大小 */
 .ant-table-tbody .ant-table-row td {
-    padding-top: 15px;
-    padding-bottom: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
-/*列表页面弹出modal*/
+/* 列表页面弹出modal */
 .ant-modal-cust-warp {
-    height: 100%
+  height: 100%;
 }
 
-/*弹出modal Y轴滚动条*/
+/* 弹出modal Y轴滚动条 */
 .ant-modal-cust-warp .ant-modal-body {
-    height: calc(100% - 110px) !important;
-    overflow-y: auto
+  height: calc(100% - 110px) !important;
+  overflow-y: auto;
 }
 
-/*弹出modal 先有content后有body 故滚动条控制在body上*/
+/* 弹出modal 先有content后有body 故滚动条控制在body上 */
 .ant-modal-cust-warp .ant-modal-content {
-    height: 90% !important;
-    overflow-y: hidden
+  height: 90% !important;
+  overflow-y: hidden;
 }
-/*列表中有图片的加这个样式 参考用户管理*/
+
+/* 列表中有图片的加这个样式 参考用户管理 */
 .anty-img-wrap {
-    height: 25px;
-    position: relative;
+  height: 25px;
+  position: relative;
 }
+
 .anty-img-wrap > img {
-    max-height: 100%;
+  max-height: 100%;
 }
-/*列表中范围查询样式*/
-.query-group-cust{width: calc(50% - 10px)}
-.query-group-split-cust:before{content:"~";width: 20px;display: inline-block;text-align: center}
+
+/* 列表中范围查询样式 */
+.query-group-cust { width: calc(50% - 10px); }
+
+.query-group-split-cust::before {
+  content: "~";
+  width: 20px;
+  display: inline-block;
+  text-align: center;
+}
+
 .ant-table-thead > tr > th {
-    color: #262626;
+  color: #262626;
 }
+
 .ant-table {
-    color: #595959;
+  color: #595959;
 }
-.ant-modal-confirm-warning .ant-modal-confirm-body > .anticon, .ant-modal-confirm-confirm .ant-modal-confirm-body > .anticon {
-    color: #ffb434;
+
+.ant-modal-confirm-warning .ant-modal-confirm-body > .anticon,
+.ant-modal-confirm-confirm .ant-modal-confirm-body > .anticon {
+  color: #ffb434;
 }
+
 .ant-modal-confirm-body .ant-modal-confirm-content {
-    color: #595959;
+  color: #595959;
 }
+
 .ant-notification-notice-icon-error {
-    color: #cc4e4d;
+  color: #cc4e4d;
 }
+
 /* 控制卡片padding-bottom */
-.seach-no-padding-bottom{
-    /deep/ .ant-card-body {
-        padding: 24px 24px 0 24px;
-    }
+.seach-no-padding-bottom {
+  /deep/ .ant-card-body {
+    padding: 24px 24px 0;
+  }
 }
 // 懒加载loading样式
 .lazy-loading {
-    position: absolute;
-    width: calc(100% - 60px);
-    text-align: center;
-    margin-top: -95px;
-    padding: 30px 50px;
+  position: absolute;
+  width: calc(100% - 60px);
+  text-align: center;
+  margin-top: -95px;
+  padding: 30px 50px;
 }
 
 /* ---------------------新增样式----------------------- */
 
 /* tabs样式 */
-.tabsBarCommon /deep/ .ant-tabs-bar{
-    border: none;
+.tabsBarCommon /deep/ .ant-tabs-bar {
+  border: none;
 }
-.tabsBarCommon /deep/ .ant-tabs-nav-wrap{
-    margin-bottom: 0;
+
+.tabsBarCommon /deep/ .ant-tabs-nav-wrap {
+  margin-bottom: 0;
 }
-.tabsBarCommon /deep/ .ant-tabs-tab{
-    border: 1px solid #e8e8e8;
-    padding: 4px 33px;
-    margin-right: 15px;
+
+.tabsBarCommon /deep/ .ant-tabs-tab {
+  border: 1px solid #e8e8e8;
+  padding: 4px 33px;
+  margin-right: 15px;
 }
-.tabsBarCommon /deep/ .ant-tabs-tab-active{
-    background: #1890ff;
-    color: #fff;
+
+.tabsBarCommon /deep/ .ant-tabs-tab-active {
+  background: #1890ff;
+  color: #fff;
 }
-.tabsBarCommon /deep/ .ant-tabs-ink-bar{
-    background-color: inherit;
+
+.tabsBarCommon /deep/ .ant-tabs-ink-bar {
+  background-color: inherit;
 }
-.spaceWidth .ant-space-vertical{
-    width: 100%;
+
+.spaceWidth .ant-space-vertical {
+  width: 100%;
 }
-.MessageCol{
-    font-weight: 600;
+
+.MessageCol {
+  font-weight: 600;
 }
-.batchBtn{
-    margin:20px 0 18px 0;
+
+.batchBtn {
+  margin: 20px 0 18px;
 }
+
 button,
 input,
 optgroup,
 select,
-textarea{
-    font-family: "Helvetica Neue",tahoma,Arial,"PingFang SC","Microsoft YaHei", "Heiti SC" !important;
+textarea {
+  font-family: "Helvetica Neue", tahoma, Arial, "PingFang SC", "Microsoft YaHei", "Heiti SC" !important;
 }

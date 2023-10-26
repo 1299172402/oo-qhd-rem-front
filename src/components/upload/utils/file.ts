@@ -1,10 +1,12 @@
-import axios, { download } from "@/utils/request"
+import axios from "@/utils/request";
+import { download } from "./api";
+import processAxios from "@/pages/intelligentOilfield/configurationCenter/processCenter/api/index.js";
 import { responseWhitelist } from "./responseWhiteList";
 
 /**
  * 根据全称获取文件名和文件后缀
  * @param fullPath 文件名，可能包含路径
- * @returns 
+ * @returns
  */
 export function getFileNameAndExt(fullPath: string) {
   const fullName = fullPath.substr(fullPath.lastIndexOf("/") + 1);
@@ -18,7 +20,7 @@ export function getFileNameAndExt(fullPath: string) {
 /**
  * 上传文件
  * @param data 上传的文件信息
- * @returns 
+ * @returns
  */
 export function upload(data) {
   return axios({
@@ -32,14 +34,13 @@ export function upload(data) {
     .then(v => (v as any).message);
 }
 
-
 /**
  * 根据文件id下载文件
  * @param {*} id 文件id
  */
-export function downFile (id) {
+export function downFile(id) {
   return axios({
-    url: `/sys/common/static/${  id}`,
+    url: `/file/download/${id}`,
     method: "get",
     responseType: "blob"
   });
@@ -48,7 +49,7 @@ export function downFile (id) {
  * 附件是否可预览
  * @param {*} attachmentId 文件id
  */
-export function previewable (attachmentId) {
+export function previewable(attachmentId) {
   return axios({
     url: `/sys/common/previewable/${attachmentId}`,
     method: "get"
@@ -60,7 +61,7 @@ export function previewable (attachmentId) {
  * 附件预览重试
  * @param {*} attachmentId 文件id
  */
-export function retryPreview (attachmentId) {
+export function retryPreview(attachmentId) {
   return axios({
     url: "/sys/common/retryPreview",
     method: "post",
@@ -73,7 +74,7 @@ export function retryPreview (attachmentId) {
  * 附件预览
  * @param {*} attachmentId 文件id
  */
-export function preview (attachmentId) {
+export function preview(attachmentId) {
   return axios({
     url: `/sys/common/preview/${attachmentId}`,
     method: "get",
@@ -82,7 +83,7 @@ export function preview (attachmentId) {
 }
 
 // 下载签到表
-export function downFileExportXls (id: string) {
+export function downFileExportXls(id: string) {
   return axios({
     url: `/tc/activity/participation/exportXls?activityId=${id}`,
     method: "get",
@@ -101,8 +102,9 @@ export function downloadTemplate(url, data) {
   responseWhitelist.use(url, res => res);
   return axios({
     url,
-    method: "post",
+    method: "get",
     responseType: "blob",
+    returnAll: true,
     data
   }).then(({ data: blobParts, headers }) => {
     download(blobParts, decodeURI(headers.downloadfilename), blobParts.type);
@@ -118,6 +120,23 @@ export function downloadTemplate(url, data) {
 export function getImgUrl(file) {
   return Promise.resolve()
     .then(() => URL.createObjectURL(file));
+}
+
+// 上传附件
+export function uploadFile(data, baseURL, url = "/file/upload") {
+  return (baseURL ? processAxios : axios)({
+    url,
+    method: "post",
+    data
+  });
+}
+
+// 文件预览
+export function filePreview(attachmentId) {
+  return axios({
+    url: `/file/preview/${attachmentId}`,
+    method: "get"
+  });
 }
 
 export default {};

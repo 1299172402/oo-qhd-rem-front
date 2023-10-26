@@ -4,11 +4,15 @@
       <t-card title="销售订单排名" class="dashboard-rank-card">
         <template #actions>
           <t-radio-group default-value="dateVal">
-            <t-radio-button value="dateVal">本周</t-radio-button>
-            <t-radio-button value="monthVal">近三个月</t-radio-button>
+            <t-radio-button value="dateVal">
+              本周
+            </t-radio-button>
+            <t-radio-button value="monthVal">
+              近三个月
+            </t-radio-button>
           </t-radio-group>
         </template>
-        <t-table :data="saleTendList" :columns="saleColumns" rowKey="productName">
+        <t-table :data="saleTendList" :columns="saleColumns" row-key="productName">
           <template #index="{ rowIndex }">
             <span :class="getRankClass(rowIndex)">
               {{ rowIndex + 1 }}
@@ -27,11 +31,15 @@
       <t-card title="采购订单排名" class="dashboard-rank-card">
         <template #actions>
           <t-radio-group default-value="dateVal">
-            <t-radio-button value="dateVal">本周</t-radio-button>
-            <t-radio-button value="monthVal">近三个月</t-radio-button>
+            <t-radio-button value="dateVal">
+              本周
+            </t-radio-button>
+            <t-radio-button value="monthVal">
+              近三个月
+            </t-radio-button>
           </t-radio-group>
         </template>
-        <t-table :data="buyTendList" :columns="buyColumns" rowKey="productName">
+        <t-table :data="buyTendList" :columns="buyColumns" row-key="productName">
           <template #index="{ rowIndex }">
             <span :class="getRankClass(rowIndex)">
               {{ rowIndex + 1 }}
@@ -49,35 +57,33 @@
   </t-row>
 </template>
 <script>
-import Trend from '@/components/intelligentOilfield/trend/index.vue';
-import { SALE_TEND_LIST, BUY_TEND_LIST, SALE_COLUMNS, BUY_COLUMNS } from '@/service/service-base';
+import Trend from "@/components/intelligentOilfield/trend/index.vue";
+import { SALE_TEND_LIST, BUY_TEND_LIST, SALE_COLUMNS, BUY_COLUMNS } from "@/service/service-base";
 
 export default {
-  name: 'RankList',
+  name: "RankList",
   components: {
-    Trend,
+    Trend
   },
   data() {
     return {
       buyTendList: BUY_TEND_LIST,
       saleTendList: SALE_TEND_LIST,
       saleColumns: SALE_COLUMNS,
-      buyColumns: BUY_COLUMNS,
+      buyColumns: BUY_COLUMNS
     };
   },
   methods: {
-    rehandleClickOp(val) {
-      console.log(val);
-    },
+    rehandleClickOp() {},
     getRankClass(index) {
-      return ['dashboard-rank__cell', { 'dashboard-rank__cell--top': index < 3 }];
-    },
-  },
+      return ["dashboard-rank__cell", { "dashboard-rank__cell--top": index < 3 }];
+    }
+  }
 };
 </script>
 
 <style lang="less" scoped>
-@import '@/style/variables.less';
+@import "@/style/variables.less";
 
 .dashboard-rank-card {
   padding: 8px;

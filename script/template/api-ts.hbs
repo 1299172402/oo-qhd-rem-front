@@ -1,0 +1,23 @@
+{{#if moduleName}}
+import request from "@/api/{{moduleName}}";
+{{else}}
+import request from "@/utils/httpd";
+{{/if}}
+import { AxiosPromise } from "axios";
+{{#each refs}}
+{{#if (isDiffRef this ../name)}}import { {{this}} } from "@/models{{#if ../moduleName}}/{{../moduleName}}{{/if}}/{{lowerCase this}}";{{/if}}
+{{/each}}
+
+{{#each data}}
+export function {{function}}({{#if args}}{{#each args}}{{#if @first}}{{name}}: {{type}}{{else}}, {{name}}: {{type}}{{/if}}{{/each}}{{/if}}): AxiosPromise<{{#if responseDataType}}{{responseDataType}}{{else}}void{{/if}}> {
+  return request({
+    url: `{{{url}}}{{#if queryParams}}?{{#each queryParams}}{{#if @first}}{{name}}=${ {{~name~}} }{{else}}&{{name}}=${ {{~name~}} }{{/if}}{{/each}}{{/if}}`,
+    method: "{{method}}",
+    {{#if bodyParams}}
+      {{#each bodyParams}}
+    {{#if @first}}data: {{name}},{{/if}}
+      {{/each}}
+    {{/if}}
+  });
+}
+{{/each}}

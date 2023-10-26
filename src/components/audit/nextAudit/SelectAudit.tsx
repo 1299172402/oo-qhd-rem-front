@@ -1,6 +1,6 @@
 import { getUsersInitDataFromStringField } from "@/components/audit/utils";
 import SelectUser from "@/components/audit/nextAudit/SelectUser";
-import "./style/SelectAuditStyle.less"
+import "./style/SelectAuditStyle.less";
 
 export default {
   name: "SelectAudit",
@@ -50,15 +50,14 @@ export default {
     resources() {
       if (this.useDelegationSetting) {
         return this.nextAuditInfosQueryParams.selectDelegationSettings?.selectResources;
-      } 
+      }
       return this.nextAuditInfosQueryParams && this.nextAuditInfosQueryParams.nextActivities && this.nextAuditInfosQueryParams.nextActivities[0].assignResources;
     },
     blankTip() {
       if (this.useDelegationSetting) {
         return !!this.nextAuditInfosQueryParams.selectDelegationSettings?.selectResources;
-      } 
+      }
       return !!this.assignResources;
-            
     },
     assignResources() {
       return this.nextAuditInfosQueryParams?.nextActivities?.[0]?.assignResources || null;
@@ -219,11 +218,11 @@ export default {
   render() {
     const getAuditComponent = () => {
       if (this.blankTip) {
-        const userOPtions = this.resources.map((item) => ({
+        const userOPtions = this.resources.map(item => ({
           label: item.name,
           value: item.id,
           ...item
-        }))
+        }));
         return <div>
           <t-select
             value={this.selectModel}
@@ -233,8 +232,8 @@ export default {
             options={userOPtions}
             placeholder="请选择下一节点审批人"
           />
-        </div>
-      } 
+        </div>;
+      }
       return <SelectUser
         show-dept={true}
         sw-organ-type={""}
@@ -245,13 +244,12 @@ export default {
         disable={this.disabled}
         queryParams={this.setting}
         onChange={this.selectAuditorOk}
-      />
-            
-    }
+      />;
+    };
     return (
       <div class={"select-audit-contianer"}>
         { getAuditComponent() }
       </div>
-    )
+    );
   }
-}
+};

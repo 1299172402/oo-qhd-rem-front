@@ -12,53 +12,53 @@
  */
 angular.module('flowableModeler')
   .controller('FormCtrl', ['$rootScope', '$scope', '$translate', '$http', '$location', '$routeParams','$modal', '$timeout', '$popover',
-    function ($rootScope, $scope, $translate, $http, $location, $routeParams, $modal, $timeout, $popover) {
+                              function ($rootScope, $scope, $translate, $http, $location, $routeParams, $modal, $timeout, $popover) {
 
-      // Main page (needed for visual indicator of current page)
-      $rootScope.setMainPageById('forms');
+    // Main page (needed for visual indicator of current page)
+    $rootScope.setMainPageById('forms');
 
-      $scope.formMode = 'read';
+    $scope.formMode = 'read';
 
-      // Initialize model
-      $scope.model = {
+    // Initialize model
+    $scope.model = {
         // Store the main model id, this points to the current version of a model,
         // even when we're showing history
         latestModelId: $routeParams.modelId
-      };
+    };
 
-      $scope.loadForm = function() {
-        let url;
-        if ($routeParams.modelHistoryId) {
-          url = FLOWABLE.APP_URL.getModelHistoryUrl($routeParams.modelId, $routeParams.modelHistoryId);
-        } else {
-          url = FLOWABLE.APP_URL.getModelUrl($routeParams.modelId);
-        }
+    $scope.loadForm = function() {
+      var url;
+      if ($routeParams.modelHistoryId) {
+        url = FLOWABLE.APP_URL.getModelHistoryUrl($routeParams.modelId, $routeParams.modelHistoryId);
+      } else {
+        url = FLOWABLE.APP_URL.getModelUrl($routeParams.modelId);
+      }
 
-        $http({method: 'GET', url}).
-          success((data, status, headers, config) => {
-            $scope.model.form = data;
-            $scope.loadVersions();
+      $http({method: 'GET', url: url}).
+        success(function(data, status, headers, config) {
+          $scope.model.form = data;
+          $scope.loadVersions();
 
-          }).error((data, status, headers, config) => {
-            $scope.returnToList();
-          });
-      };
+        }).error(function(data, status, headers, config) {
+          $scope.returnToList();
+        });
+    };
 
-      $scope.useAsNewVersion = function() {
+    $scope.useAsNewVersion = function() {
         _internalCreateModal({
     		template: 'views/popup/model-use-as-new-version.html',
     		scope: $scope
     	}, $modal, $scope);
+    };
+
+    $scope.loadVersions = function() {
+
+      var params = {
+        includeLatestVersion: !$scope.model.form.latestVersion
       };
 
-      $scope.loadVersions = function() {
-
-        const params = {
-          includeLatestVersion: !$scope.model.form.latestVersion
-        };
-
-        $http({method: 'GET', url: FLOWABLE.APP_URL.getModelHistoriesUrl($scope.model.latestModelId), params}).
-	      success((data, status, headers, config) => {
+      $http({method: 'GET', url: FLOWABLE.APP_URL.getModelHistoriesUrl($scope.model.latestModelId), params: params}).
+	      success(function(data, status, headers, config) {
 	        if ($scope.model.form.latestVersion) {
 	          if (!data.data) {
 	            data.data = [];
@@ -68,82 +68,82 @@ angular.module('flowableModeler')
 
 	        $scope.model.versions = data;
 	      });
-      };
+    };
 
-      $scope.showVersion = function(version) {
-        if (version) {
-          if (version.latestVersion) {
-            $location.path(`/forms/${   $scope.model.latestModelId}`);
-          } else {
+    $scope.showVersion = function(version) {
+      if (version) {
+        if (version.latestVersion) {
+            $location.path("/forms/" +  $scope.model.latestModelId);
+        } else {
           // Show latest version, no history-suffix needed in URL
-            $location.path(`/forms/${   $scope.model.latestModelId  }/history/${  version.id}`);
-          }
+          $location.path("/forms/" +  $scope.model.latestModelId + "/history/" + version.id);
         }
-      };
+      }
+    };
 
-      $scope.returnToList = function() {
+    $scope.returnToList = function() {
         $location.path("/forms/");
-      };
+    };
 
-      $scope.editForm = function() {
+    $scope.editForm = function() {
         _internalCreateModal({
     		template: 'views/popup/model-edit.html',
 	        scope: $scope
     	}, $modal, $scope);
+    };
+
+    $scope.duplicateForm = function() {
+
+      var modalInstance = _internalCreateModal({
+        template: 'views/popup/form-duplicate.html?version=' + Date.now()
+      }, $modal, $scope);
+
+      modalInstance.$scope.originalModel = $scope.model;
+
+      modalInstance.$scope.duplicateFormCallback = function(result) {
+        $rootScope.editorHistory = [];
+        $location.path("/form-editor/" + result.id);
       };
+    };
 
-      $scope.duplicateForm = function() {
-
-        const modalInstance = _internalCreateModal({
-          template: `views/popup/form-duplicate.html?version=${  Date.now()}`
-        }, $modal, $scope);
-
-        modalInstance.$scope.originalModel = $scope.model;
-
-        modalInstance.$scope.duplicateFormCallback = function(result) {
-          $rootScope.editorHistory = [];
-          $location.path(`/form-editor/${  result.id}`);
-        };
-      };
-
-      $scope.deleteForm = function() {
+    $scope.deleteForm = function() {
         _internalCreateModal({
     		template: 'views/popup/model-delete.html',
     		scope: $scope
     	}, $modal, $scope);
-      };
+    };
 
-      $scope.openEditor = function() {
-        if ($scope.model.form) {
-    	  $location.path(`/form-editor/${  $scope.model.form.id}`);
-        }
-      };
+    $scope.openEditor = function() {
+      if ($scope.model.form) {
+    	  $location.path("/form-editor/" + $scope.model.form.id);
+      }
+    };
 
-      $scope.toggleHistory = function($event) {
-        if (!$scope.historyState) {
-          const state = {};
-          $scope.historyState = state;
+    $scope.toggleHistory = function($event) {
+      if (!$scope.historyState) {
+        var state = {};
+        $scope.historyState = state;
 
-          // Create popover
-          state.popover = $popover(angular.element($event.target), {
-            template: 'views/popover/history.html',
-            placement: 'bottom-right',
-            show: true,
-            scope: $scope,
-            container: 'body'
-          });
+        // Create popover
+        state.popover = $popover(angular.element($event.target), {
+          template: 'views/popover/history.html',
+          placement: 'bottom-right',
+          show: true,
+          scope: $scope,
+          container: 'body'
+        });
 
-          const destroy = function() {
-            state.popover.destroy();
-            delete $scope.historyState;
-          };
+        var destroy = function() {
+          state.popover.destroy();
+          delete $scope.historyState;
+        };
 
-          // When popup is hidden or scope is destroyed, hide popup
-          state.popover.$scope.$on('tooltip.hide', destroy);
-          $scope.$on('$destroy', destroy);
-        }
-      };
+        // When popup is hidden or scope is destroyed, hide popup
+        state.popover.$scope.$on('tooltip.hide', destroy);
+        $scope.$on('$destroy', destroy);
+      }
+    };
 
-      $scope.loadForm();
+    $scope.loadForm();
 
-    }]);
+}]);

@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
 /**
  * @export
@@ -12,7 +12,7 @@ export function getDateArray(dateTime: string[] = [], divideNum = 10): string[] 
     for (let i = 0; i < divideNum; i++) {
       const dateAbsTime: number = (new Date(dateTime[1]).getTime() - new Date(dateTime[0]).getTime()) / divideNum;
       const enhandTime: number = new Date(dateTime[0]).getTime() + dateAbsTime * i;
-      timeArray.push(dayjs(enhandTime).format('YYYY-MM-DD'));
+      timeArray.push(dayjs(enhandTime).format("YYYY-MM-DD"));
     }
   }
 

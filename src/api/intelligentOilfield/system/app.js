@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 
 // 应用API自动生成appID
 export function autoAppId() {
@@ -54,5 +54,21 @@ export function listApp(query) {
     url: "/system/app/list",
     method: "get",
     params: query
+  });
+}
+
+// 根据租户 code 获取已授权应用列表
+export function authorizedAppListByTenantCode(tenantCode) {
+  return request({
+    url: `/system/app/authorizedAppList/${tenantCode}`,
+    method: "get"
+  });
+}
+
+// 根据租户 code 查询信息
+export function getInfoByCode(tenantCode) {
+  return request({
+    url: `/system/tenant/getInfoByCode/${tenantCode}`,
+    method: "get"
   });
 }

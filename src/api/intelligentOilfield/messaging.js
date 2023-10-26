@@ -87,7 +87,10 @@ export function saveConfig(data) {
   return request({
     url: "/message-service/management/binding/bind",
     method: "post",
-    data
+    data,
+    headers: {
+      unDisplayErrTip: true
+    }
   });
 }
 // 查询租户列表信息
@@ -96,5 +99,25 @@ export function listTenant(query) {
     url: "/system/tenant/list",
     method: "get",
     params: query
+  });
+}
+
+// 消息主题导出
+export function themeExport(data) {
+  return request({
+    url: "/message-service/management/binding/export",
+    method: "post",
+    data,
+    responseType: "blob"
+  });
+}
+
+// 消息日志导出
+export function logExport(data) {
+  return request({
+    url: "/message-service/management/logging/export",
+    method: "post",
+    data,
+    responseType: "blob"
   });
 }

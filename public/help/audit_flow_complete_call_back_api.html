@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+      <title>流程正常完成回调Api说明</title>
+      <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+      }
+
+      td,
+      th {
+        border: 1px solid #DDDDDD;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #DDDDDD;
+      }
+      </style>
+  </head>
+  <body class="layui-layout-body">
+  <h2 id="-">流程正常完成回调Api说明</h2>
+  <p><strong>接口地址</strong> <code>/flow/{flowInstanceId}/call-back/complete</code></p>
+  <p><strong>请求方式</strong> <code>POST</code></p>
+  <p><strong>请求参数</strong></p>
+  <table>
+      <thead>
+      <tr>
+          <th>参数名称</th>
+          <th>参数说明</th>
+          <th>请求类型</th>
+          <th>是否必须</th>
+          <th>数据类型</th>
+          <th>schema</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+          <td>flowInstanceId</td>
+          <td>流程实例Id</td>
+          <td>path</td>
+          <td>true</td>
+          <td>string</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>processEndCallBackRo</td>
+          <td>回调数据</td>
+          <td>body</td>
+          <td>true</td>
+          <td>ProcessEndCallBackRo</td>
+          <td>ProcessEndCallBackRo</td>
+      </tr>
+      </tbody>
+  </table>
+  <p><strong>schema属性说明</strong></p>
+  <p><strong>ProcessEndCallBackRo</strong></p>
+  <table>
+      <thead>
+      <tr>
+          <th>参数名称</th>
+          <th>参数说明</th>
+          <th>请求类型</th>
+          <th>是否必须</th>
+          <th>数据类型</th>
+          <th>schema</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+          <td>businessKey</td>
+          <td>业务主键</td>
+          <td>body</td>
+          <td>false</td>
+          <td>string</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>callBackProcessClass</td>
+          <td>回调处理类，在流程上配置</td>
+          <td>body</td>
+          <td>false</td>
+          <td>string</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>processDefinitionId</td>
+          <td>流程定义Id</td>
+          <td>body</td>
+          <td>false</td>
+          <td>string</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>processDefinitionKey</td>
+          <td>流程定义Key</td>
+          <td>body</td>
+          <td>false</td>
+          <td>string</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>processDefinitionVersion</td>
+          <td>流程版本</td>
+          <td>body</td>
+          <td>false</td>
+          <td>integer(int32)</td>
+          <td>&nbsp;</td>
+      </tr>
+      </tbody>
+  </table>
+  <p><strong>响应参数</strong></p>
+  <table>
+      <thead>
+      <tr>
+          <th>参数名称</th>
+          <th>参数说明</th>
+          <th>类型</th>
+          <th>schema</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+          <td>errorInfo</td>
+          <td>错误信息</td>
+          <td>ErrorInfo</td>
+          <td>ErrorInfo</td>
+      </tr>
+      <tr>
+          <td>message</td>
+          <td>兼容SpringMvc的默认错误消息格式</td>
+          <td>string</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>success</td>
+          <td>请求是否成功</td>
+          <td>boolean</td>
+      </tr>
+      </tbody>
+  </table>
+  <p><strong>schema属性说明</strong></p>
+  <p><strong>ErrorInfo</strong></p>
+  <table>
+      <thead>
+      <tr>
+          <th>参数名称</th>
+          <th>参数说明</th>
+          <th>类型</th>
+          <th>schema</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+          <td>message</td>
+          <td>错误消息 </td>
+          <td>string</td>
+          <td>&nbsp;</td>
+      </tr>
+      </tbody>
+  </table>
+  <p><strong>请示例</strong></p>
+  <pre>
+<code class="lang-json">
+POST /flow/1/call-back/complete {
+   "businessKey": "1",
+   "callBackProcessClass": "com.cnooc.test.CallbackHandler",
+   "processDefinitionId": "1",
+   "processDefinitionKey": "test_flow_key",
+   processDefinitionVersion: 1
+}
+</code>
+  </pre>
+  <p><strong>响应示例</strong></p>
+  <pre><code class="lang-json">{
+    <span class="hljs-attr">"success"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+  </body>
+  </html>

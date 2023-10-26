@@ -1,47 +1,56 @@
 .el-table tr {
-//   color: rgba(0, 0, 0, 0.6);
+  // color: rgba(0, 0, 0, 0.6);
+  background: var(--logo-bg) no-repeat top right #f5f5f5;
   color: #606266;
   font-size: 14px;
   font-weight: 400;
 }
 
-.el-table {
-  background: var(--whiteColor);
+.el-table__body tr.current-row > td.el-table__cell {
+  background: #f5f7fa !important;
 }
 
-.el-table .cell{
+.el-table {
+  background: var(--white-color);
+}
+
+.el-table .cell {
   height: 40px;
   line-height: 40px;
 }
+
 .table_header {
   text-align: center;
   color: #303133;
   font-size: 14px;
   font-weight: 600;
-//   background: linear-gradient(to bottom, #F0F2F5, #F0F2F5);
-//   height: 40px
-}
-.el-table td.el-table__cell,
-.el-table th.el-table__cell.is-leaf {
-  border-bottom: 1px solid rgba(242,244,246,1);
-}
-.el-table tbody tr:hover>td {
-  background: var(--opacityBlueBg);
+  //   background: linear-gradient(to bottom, #F0F2F5, #F0F2F5);
+  //   height: 40px
 }
 
-.el-table td.el-table__cell,
-.el-table th.el-table__cell.is-leaf {
-  // border-bottom: 1px solid #B3BDCA;
+.el-table tbody tr:hover > td {
+  background: #f5f7fa;
 }
 
 .el-table tbody tr:last-child {
-  border: 0px;
+  border: 0;
 }
 
 // 滚动条的宽度
 .el-table__body-wrapper::-webkit-scrollbar {
-  width: 6px; // 横向滚动条
-  height: 6px; // 纵向滚动条 必写
+  width: 10px; // 横向滚动条
+  height: 10px; // 纵向滚动条 必写
+}
+
+// header右侧固定白线
+.el-table__fixed-right-patch {
+  // width: 0 !important;
+  width: 11px !important;
+  background: #f5f5f5;
+}
+
+.el-table__fixed-right {
+  // right: 10px !important;
 }
 
 // 滚动条的滑块
@@ -53,23 +62,67 @@
 .el-table .el-table__cell.gutter {
   background: transparent;
 }
+
 .el-table th.el-table__cell,
-.el-table th.el-table__cell.is-leaf{
-    background: #FAFAFA !important;
+.el-table th.el-table__cell.is-leaf {
+  background: unset !important;
+  //opacity: 0.1;
 }
+
+.el-table__footer-wrapper td.el-table__cell {
+  border-top: 1px solid #e7e1e1;
+}
+
+.el-table .el-table__footer-wrapper th.el-table__cell,
+.el-table .el-table__footer-wrapper th.el-table__cell.is-leaf {
+  background: unset !important;
+}
+
+.el-table__fixed-footer-wrapper tbody td.el-table__cell {
+  border-top: 0 solid transparent;
+}
+
 .el-table td.el-table__cell,
 .el-table th.el-table__cell.is-leaf {
-  border-bottom: 1px solid rgba(242,244,246,1);
+  border-bottom: 1px solid #e7e1e1;
+}
+// 表头显示双行（带单位）
+.doubleHeader .el-table__header-wrapper {
+  .cell {
+    height: auto !important;
+  }
+}
+
+.twoRowHeader {
+  height: auto !important;
+
+  .sort-caret.descending {
+    bottom: -6px !important;
+  }
+
+  .sort-caret.ascending {
+    top: 18px !important;
+  }
+}
+
+.headerSortRow1 {
+  max-width: calc(100% - 24px);
+  display: inline-table;
+  text-align: center;
 }
 //表头
 .el-table__header-wrapper {
-  .cell{
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
+
+  .cell {
     // background: #FAFAFA;
     background: transparent;
-      color:  #303133;
-      height: 34px;
-      line-height: 34px;
-      
+    color: #303133;
+    height: 34px;
+    line-height: 34px;
   }
 
   .el-table__cell {
@@ -80,64 +133,163 @@
 .el-table::before {
   display: none;
 }
+
 .headerStyle {
   height: 32px;
   width: 100%;
   line-height: 32px;
-  font-size: 14px;
-  color: var(--whiteColor);
+  font-size: 16px;
+  color: var(--white-color);
   padding: 0 0 0 20px;
-  background: linear-gradient(to right, var(--onlyLightBlueColor), rgba(0, 96, 166, 0.2));
+  background: var(--logo-bg) no-repeat top right #0075e9 !important;
+}
+
+.infoHeaderBg {
+  background: var(--logo-bg) no-repeat top right, #fff;
 }
 
 .footerBox {
-  border: 1px solid var(--lightBlueColor);
   width: 100%;
-  margin: 20px 0 0 0;
+  margin: 20px 0 0;
   height: calc(100% - 125px);
   position: relative;
   //   padding: 14px 14px 0;
-  border: 1px solid #ddd;
-  border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
-//   overflow: hidden;
+  //   overflow: hidden;
+  box-shadow: 0 0 10px 0 rgba(144, 147, 153, 0.3);
 }
-.right{
+
+.panelBox {
+  height: calc(100% - 90px);
+  width: 100%;
+  box-shadow: 0 0 10px 0 rgba(144, 147, 153, 0.3);
+  border: 1px solid #fff;
+}
+
+.maxDivBox {
+  background: var(--logo-bg) no-repeat top right, #fff !important;
+}
+
+.right {
   height: calc(100vh - 145px);
 }
 
 .el-table .descending .sort-caret.descending {
-    border-top-color: var(--lightBlueColor);
+  border-top-color: var(--light-blue-color);
 }
+
 .el-table .ascending .sort-caret.ascending {
-    border-bottom-color: var(--lightBlueColor)
+  border-bottom-color: var(--light-blue-color);
 }
+
 .el-table .sort-caret.ascending {
-    border-bottom-color: rgba(125, 173, 208, 1);
+  border-bottom-color: rgba(125, 173, 208, 1);
 }
+
 .el-table .sort-caret.descending {
-    border-top-color: rgba(125, 173, 208, 1);
+  border-top-color: rgba(125, 173, 208, 1);
 }
+
 .el-table thead.is-group th.el-table__cell {
-    background: transparent;
+  background: transparent;
 }
-.el-table--border .el-table__cell, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
-    border-right: 1px solid rgba(242,244,246,1);
+
+.el-table--border .el-table__cell,
+.el-table__body-wrapper .el-table--border.is-scrolling-left ~ .el-table__fixed {
+  border-right: 1px solid #e7e1e1;
 }
-.el-table--border th.el-table__cell, .el-table__fixed-right-patch {
-    border-bottom: 1px solid rgba(242,244,246,1);
+
+.el-table--border th.el-table__cell,
+.el-table__fixed-right-patch {
+  border-bottom: 1px solid #e7e1e1;
 }
-.el-table--border, .el-table--group {
-    border: 1px solid rgba(242,244,246,1) !important;
+
+.el-table--border,
+.el-table--group {
+  border: 1px solid #e7e1e1 !important;
 }
-.el-table--border::after, .el-table--group::after, .el-table::before {
-    background-color: rgba(242,244,246,1);
+
+.el-table--border::after,
+.el-table--group::after,
+.el-table::before {
+  background-color: rgba(242, 244, 246, 1);
 }
-.tablestyle{
-  .el-table__row{
+
+.tablestyle {
+  .el-table__row {
     line-height: 20px;
-    font-family: PingFangSC-Regular, PingFang SC;
+    font-family: PingFangSC-Regular, "PingFang SC";
   }
 }
-.el-table__cell{
-  padding: 0px !important;
+
+.el-table__cell {
+  padding: 0 !important;
+  background: #fff;
+}
+//固定的表头表尾背景色
+.el-table__fixed-right,
+.el-table__fixed {
+  height: calc(100% - 10px) !important;
+  z-index: 0;
+  box-shadow: 0 -13px 18px 3px #b0b0b3;
+}
+
+.el-table__fixed-header-wrapper {
+  background: #fff;
+  background-image: var(--logo-bg) !important;
+  background-size: unset !important;
+  background-repeat: no-repeat !important;
+  background-position: right top !important;
+
+  .cell {
+    height: 34px;
+    line-height: 34px;
+  }
+}
+
+.el-table--enable-row-transition .el-table__body td.el-table__cell {
+  transition: background-color 0s ease;
+}
+
+.filterTable {
+  .el-icon-arrow-down {
+    background-image: url("@/assets/intelligentOilfield/loudou-light.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 14px;
+    height: 12px;
+    transform: none;
+    line-height: 1;
+  }
+
+  .el-icon-arrow-down::before {
+    color: transparent;
+  }
+}
+
+.el-table--border th.gutter:last-of-type {
+  display: block !important;
+  width: 17px !important;
+  border: 1px solid transparent !important;
+}
+
+.el-table__body-wrapper.is-scrolling-none ~ .el-table__fixed-right {
+  right: 0 !important;
+  height: 100% !important;
+  bottom: 0 !important;
+  box-shadow: none !important;
+}
+
+// 表格只有纵向滚动条
+.el-table--scrollable-y .el-table__fixed-right {
+  right: 10px !important;
+}
+
+// 表格只有纵向滚动条
+.el-table__fixed-right::before {
+  background-color: transparent !important;
+}
+
+// 表格只有横向没有纵向
+.el-table--scrollable-x:not(.el-table--scrollable-y) .el-table__fixed-right {
+  right: 0 !important;
 }

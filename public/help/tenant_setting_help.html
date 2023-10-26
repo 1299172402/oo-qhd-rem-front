@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+      <title>流程平台</title>
+      <style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+  }
+
+  td,
+  th {
+    border: 1px solid #DDDDDD;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #DDDDDD;
+  }
+      </style>
+  </head>
+  <body class="layui-layout-body">
+    <h1>租户设置说明</h1>
+    <h2>基本信息</h2>
+    <ul>
+      <li>
+        租户id：表明租户身份，不可以修改。
+      </li>
+      <li>
+        baseUri：回调业务系统Api的基地址。
+      </li>
+      <li>
+        TOKEN：回调业务系统时需要添加到请求头Authorization中的Token值。
+      </li>
+      <li>
+        待办任务地址：用于拼装门户待办列表的任务链接。
+      </li>
+    </ul>
+    <h2>通知相关设置</h2>
+      <div>
+          模板按通知类型（短信、邮件、站内信）和通知用途（催办、待办、告知）共分为9个可配置模板。模板支持使用变量替换。支持的变量见附录。具体的请求体见门户的文档。
+          <blockquote>
+              以业管系统的待办站内信为例配置如下：<br/>
+              <pre>
+  {
+      "result": [
+          {
+              "create_time": "${createTime}",
+              "important_level": "1",
+              "module_name": "${processDefinitionName}",
+              "sender": "${senderCode}",
+              "title": "业务平台提醒您，您有一项待办任务【${businessName}】需要处理。",
+              "url": "${auditUrl}"
+          }
+      ]
+  }
+              </pre>
+          </blockquote>
+          完成设置后还需要在流程上设置好通知方式后才会进行通知。
+      </div>
+      <h2>附录</h2>
+      通知url和模板中可使用的变量。在使用变量时将变量名放入${}即可。
+      <blockquote>
+          <table>
+              <thead>
+                  <tr>
+                      <td>变量名</td>
+                      <td>说明</td>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>systemCode</td>
+                      <td>系统编辑，格式 bpmn-租户id</td>
+                  </tr>
+                  <tr>
+                      <td>receiverCode</td>
+                      <td>接收人 OA Code</td>
+                  </tr>
+                  <tr>
+                      <td>receiverName</td>
+                      <td>接收姓名</td>
+                  </tr>
+                  <tr>
+                      <td>senderCode</td>
+                      <td>发送人 OA Code</td>
+                  </tr>
+                  <tr>
+                      <td>senderName</td>
+                      <td>发送人姓名</td>
+                  </tr>
+                  <tr>
+                      <td>createTime</td>
+                      <td>任务创建时间，格式为yyyyMMddHHmmss</td>
+                  </tr>
+                  <tr>
+                      <td>businessName</td>
+                      <td>流程名称</td>
+                  </tr>
+                  <tr>
+                      <td>auditUrl</td>
+                      <td>门户待办url(移动端)</td>
+                  </tr>
+                  <tr>
+                      <td>processDefinitionName</td>
+                      <td>流程定义的名称</td>
+                  </tr>
+                  <tr>
+                      <td>activityName</td>
+                      <td>当前审批节点的名称</td>
+                  </tr>
+              </tbody>
+          </table>
+      </blockquote>
+  </body>
+  </html>

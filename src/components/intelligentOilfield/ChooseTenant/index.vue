@@ -8,14 +8,22 @@
       :visible.sync="dialogVisible"
       top="30vh"
       width="40%"
+      @close="cancel"
     >
       <el-table
         ref="table"
+        class="dialog-table"
         :data="dataSource"
+        row-key="tenantId"
         border
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" align="center" />
+        <el-table-column
+          type="selection"
+          width="55"
+          :reserve-selection="true"
+          align="center"
+        />
         <el-table-column
           label="序号"
           type="index"
@@ -36,11 +44,12 @@
         />
       </el-table>
       <span slot="footer" class="dialog-footer">
-        <el-button icon="el-icon-close" @click="dialogVisible = false">取 消</el-button>
-        <el-button icon="el-icon-check" type="primary" @click="addTenement">确 定</el-button>
+        <el-button class="cancelBtn" @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addTenement">确 定</el-button>
       </span>
       <pagination
         v-show="ipagination.total > 0"
+        key="tenant"
         :total="ipagination.total"
         :page.sync="ipagination.pageNum"
         :limit.sync="ipagination.pageSize"
@@ -65,25 +74,20 @@ export default {
     return {
       dialogVisible: false,
       selectTenement: [],
-      dataSource:[],
+      dataSource: [],
       ipagination: {
         current: 1,
         pageSize: 10,
         total: 0
-      },
+      }
     };
-  },
-  created(){
-    this.getList()
   },
   methods: {
     getList() {
-      this.loading = true;
-      tenantList({pageNum:this.ipagination.current, pageSize:this.ipagination.pageSize}).then((response) => {
+      tenantList({ pageNum: this.ipagination.current, pageSize: this.ipagination.pageSize }).then(response => {
         this.dataSource = response.data.rows;
-        console.log( this.dataSource);
         this.ipagination.total = response.data.total;
-        this.loading = false;
+        this.handChangeSelection();
       });
     },
     /**
@@ -98,19 +102,20 @@ export default {
      * 设置已有用户选中状态
      */
     handChangeSelection() {
-      this.dataSource.forEach((row) => {
-        if (this.tenantIds.indexOf(row.tenantId) >= 0) {
-          this.$refs.table.toggleRowSelection(row, true);
-        } else {
-          this.$refs.table.toggleRowSelection(row, false);
-        }
-      });
+      if (this.tenantIds.length) {
+        this.$nextTick(() => {
+          this.dataSource.forEach(row => {
+            const index = this.tenantIds.indexOf(row.tenantId);
+            if (index !== -1) {
+              this.$refs.table.toggleRowSelection(row, true);
+            }
+          });
+        });
+      }
     },
     handChooseUser() {
+      this.getList();
       this.dialogVisible = true;
-      this.$nextTick(() => {
-        this.handChangeSelection();
-      });
     },
     /**
      * 增加租户
@@ -124,12 +129,17 @@ export default {
      */
     handleSelectionChange(val) {
       this.selectTenement = val;
+    },
+    cancel() {
+      this.ipagination.pageNum = 1;
+      this.ipagination.current = 1;
+      this.$refs.table.clearSelection();
     }
   }
 };
 </script>
 <style scoped lang="less">
 .el-table {
-  border-bottom: 1px solid #EBEEF5;
+  border-bottom: 1px solid #ebeef5;
 }
 </style>
