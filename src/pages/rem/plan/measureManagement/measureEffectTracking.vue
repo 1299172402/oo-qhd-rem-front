@@ -47,7 +47,7 @@
         </div>
         <div style="margin-right: 15px">
           <span>措施事件：</span>
-          <el-select v-model="measuresType" class="f2">
+          <el-select v-model="measuresType" class="f2" disabled>
             <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name" :value="item.code">
             </el-option>
           </el-select>

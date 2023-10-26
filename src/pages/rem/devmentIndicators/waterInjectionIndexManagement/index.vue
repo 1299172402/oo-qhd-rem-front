@@ -367,7 +367,7 @@ export default {
       queryParams: {
         companyId: "715AD1CD60484BB59E737CD18A9DE44A", // 作业公司
         oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 油田
-        targetOilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 对标油田
+        targetOilFieldId: "", // 对标油田
         platFormId: "", // 平台
         fileId: "", // 区块id
         layerId: "", // 层系id
@@ -1347,7 +1347,7 @@ export default {
         }
       });
       //对标油田默认qhd3-26油田
-      this.queryParams.targetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+      // this.queryParams.targetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       this.getFetchFields();
       //下面初始化调用各个接口 因为默认的全部平台和全部区块为 油田id 所以这样的区块平台默认写为油田id
       this.doInjectionIndicatorStat();
