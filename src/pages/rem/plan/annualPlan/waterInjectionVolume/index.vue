@@ -43,33 +43,33 @@
         :header-cell-style="{ padding: '0px 0' }"
       >
         <el-table-column type="index" align="center" label="序号" width="80" :index="tableIndex"></el-table-column>
-        <el-table-column prop="theDate" header-align="center" align="left" :label="`时间\n(yyyy-mm-dd)`">
+        <el-table-column prop="theDate" header-align="center" align="center" :label="`时间\n(yyyy-mm-dd)`">
         </el-table-column>
         <el-table-column
           prop="injectionDailyReal"
           header-align="center"
-          align="right"
+          align="center"
           :label="`实际日注入量\n(m³)`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="injectionDailyPlan"
           header-align="center"
-          align="right"
+          align="center"
           :label="`计划日注入量\n(m³)`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           property="injectionSumReal"
           header-align="center"
-          align="right"
+          align="center"
           :label="`实际年累注\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="injectionSumPlan"
           header-align="center"
-          align="right"
+          align="center"
           :label="`计划年累注\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
