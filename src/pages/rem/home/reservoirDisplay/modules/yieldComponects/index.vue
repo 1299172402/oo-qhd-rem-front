@@ -58,7 +58,7 @@ export default {
                 xAxis: [
                     {
                         type: "category",
-                        data: ["基础井", "措施井", "调整井", "开发井"],
+                        data: ["基础产量", "措施产量", "调整产量", "开发产量"],
                         axisLine: {
                             show: true,
                             lineStyle: {
