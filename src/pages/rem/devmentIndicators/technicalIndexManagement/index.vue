@@ -273,7 +273,7 @@ export default {
     //过滤规则 保留两位小数
     numberFormat(val) {
       if (val) {
-        return parseFloat(Number(val).toFixed(2));
+        return parseFloat(val).toFixed(2);
       } else {
         return 0;
       }
@@ -1515,7 +1515,7 @@ export default {
       //默认qhd3-26油田
       // this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       //对标油田默认qhd3-26油田
-      this.selectTargetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+      // this.selectTargetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       let requestField = {
         oilFieldId: this.selectOilFieldId,
       };
