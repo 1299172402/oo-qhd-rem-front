@@ -94,7 +94,7 @@
           ></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="`见效天数\n(m³/d)`" prop="effectDays" width="100"></el-table-column>
+      <el-table-column align="center" :label="`见效天数\n(d)`" prop="effectDays" width="100"></el-table-column>
       <el-table-column align="center" :label="`单井年配产量\n(m³)`" prop="dailyAllocating" width="200">
         <template slot-scope="scope">
           <el-input-number
