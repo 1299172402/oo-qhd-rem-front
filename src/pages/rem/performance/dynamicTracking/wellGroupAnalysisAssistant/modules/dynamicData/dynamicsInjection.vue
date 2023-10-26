@@ -38,14 +38,14 @@
         :header-cell-style="{ 'text-align': 'center' }"
       >
         <el-table-column type="index" label="序号" fixed width="80" align="center"></el-table-column>
-        <el-table-column prop="wellNo" label="井号" fixed min-width="160" align="left"></el-table-column>
-        <el-table-column prop="layerName" label="层位" min-width="200" align="left"></el-table-column>
+        <el-table-column prop="wellNo" label="井号" fixed min-width="160" align="center"></el-table-column>
+        <el-table-column prop="layerName" label="层位" min-width="200" align="center"></el-table-column>
         <el-table-column header-align="center">
           <template slot="header">
             <div>{{ firstMonth }}注水情况</div>
           </template>
-          <el-table-column prop="dosage01" :label="`配注量\n(m³/d)`" min-width="160" align="right"></el-table-column>
-          <el-table-column prop="injectionRatio01" label="注采比" min-width="100" align="right">
+          <el-table-column prop="dosage01" :label="`配注量\n(m³/d)`" min-width="160" align="center"></el-table-column>
+          <el-table-column prop="injectionRatio01" label="注采比" min-width="100" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.injectionRatio01 !== null && scope.row.injectionRatio01 !== ''">{{
                 scope.row.injectionRatio01
@@ -53,7 +53,7 @@
               <span v-else>-</span>
             </template>
           </el-table-column>
-          <el-table-column prop="injectionStrength01" min-width="160" :label="`注水强度\n(m³*d.m)`" align="right">
+          <el-table-column prop="injectionStrength01" min-width="160" :label="`注水强度\n(m³*d.m)`" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.injectionStrength01 !== null && scope.row.injectionStrength01 !== ''">{{
                 scope.row.injectionStrength01
@@ -66,8 +66,8 @@
           <template slot="header">
             <div>{{ secondMonth }}注水情况</div>
           </template>
-          <el-table-column prop="dosage02" :label="`配注量\n(m³/d)`" min-width="160" align="right"></el-table-column>
-          <el-table-column prop="injectionRatio02" label="注采比" min-width="100" align="right">
+          <el-table-column prop="dosage02" :label="`配注量\n(m³/d)`" min-width="160" align="center"></el-table-column>
+          <el-table-column prop="injectionRatio02" label="注采比" min-width="100" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{
                 scope.row.injectionRatio02
@@ -75,14 +75,14 @@
               <span v-else>-</span>
             </template>
           </el-table-column>
-          <el-table-column prop="injectionStrength02" min-width="160" :label="`注水强度\n(m³*d.m)`" align="right">
+          <el-table-column prop="injectionStrength02" min-width="160" :label="`注水强度\n(m³*d.m)`" align="center">
           </el-table-column>
         </el-table-column>
         <el-table-column header-align="center">
           <template slot="header">
             <div>调整幅度</div>
           </template>
-          <el-table-column :label="`配注量\n(m³/d)`" min-width="120" align="right">
+          <el-table-column :label="`配注量\n(m³/d)`" min-width="120" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.dosage02 !== null && scope.row.dosage02 !== ''">{{
                 Number(scope.row.dosage02 - scope.row.dosage01).toFixed(2)
@@ -90,7 +90,7 @@
               <span v-else>-</span>
             </template>
           </el-table-column>
-          <el-table-column prop="injectionRatio02" min-width="140" label="注采比" align="right">
+          <el-table-column prop="injectionRatio02" min-width="140" label="注采比" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{
                 (scope.row.injectionRatio02 - scope.row.injectionRatio01).toFixed(2)
@@ -98,7 +98,7 @@
               <span v-else>-</span>
             </template>
           </el-table-column>
-          <el-table-column :label="`注水强度\n(m³*d.m)`" min-width="160" align="right">
+          <el-table-column :label="`注水强度\n(m³*d.m)`" min-width="160" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.injectionStrength02 !== null && scope.row.injectionStrength02 !== ''">{{
                 (scope.row.injectionStrength02 - scope.row.injectionStrength01).toFixed(2)
