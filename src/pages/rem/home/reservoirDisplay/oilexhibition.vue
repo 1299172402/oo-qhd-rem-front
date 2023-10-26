@@ -26,7 +26,7 @@
                         <el-checkbox label="问题井统计" name="type"/>
                         <el-checkbox label="关停井统计" name="type"/>
                         <el-checkbox label="秦皇岛32-6南区" name="type"/>
-                        <el-checkbox label="分层注入量" name="type"/>
+                        <el-checkbox label="分层注采量" name="type"/>
                         <el-checkbox label="措施建议表" name="type"/>
                         <el-checkbox label="超欠注情况统计" name="type"/>
                         <el-checkbox label="自然递减率" name="type"/>
@@ -97,7 +97,7 @@ export default {
                 { x: 0, y: 28, w: 4, h: 14, i: "5", name: "产能波动", show: true },
                 { x: 4, y: 28, w: 4, h: 14, i: "6", name: "问题井统计", show: true },
                 { x: 0, y: 40, w: 4, h: 20, i: "7", name: "单井井底流压", show: true },
-                { x: 4, y: 40, w: 4, h: 20, i: "8", name: "分层注入量", show: true },
+                { x: 4, y: 40, w: 4, h: 20, i: "8", name: "分层注采量", show: true },
                 { x: 8, y: 40, w: 4, h: 10, i: "9", name: "产量构成详情", show: true },
                 { x: 8, y: 50, w: 4, h: 10, i: "10", name: "关停井统计", show: true },
                 { x: 0, y: 60, w: 6, h: 10, i: "11", name: "措施建议表", show: true },
