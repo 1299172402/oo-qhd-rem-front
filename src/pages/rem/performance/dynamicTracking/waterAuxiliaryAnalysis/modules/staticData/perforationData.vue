@@ -27,7 +27,7 @@
       <el-table-column prop="layerName" label="生产段名称" width="120"></el-table-column>
       <el-table-column prop="accumulated" :label="`射开有效斜厚\n (m)`" width="120"></el-table-column>
       <el-table-column prop="openThickness" :label="`射开有效垂厚\n (m)`" width="120"></el-table-column>
-      <el-table-column prop="remark" label="备注" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="remark" label="备注" show-overflow-tooltip align="left"></el-table-column>
     </el-table>
   </page-panel-new>
 </template>
