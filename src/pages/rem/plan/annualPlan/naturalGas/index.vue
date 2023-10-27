@@ -58,7 +58,8 @@
           prop="oilEquivalent"
           header-align="center"
           align="center"
-          :label="`油当量\n(m³/d)`"
+          :label="`油当量\n(t)`"
+          :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="gasProdRollFocecast"
@@ -212,7 +213,7 @@ export default {
             },
           },
           {
-            name: "油当量(折算)(m³)",
+            name: "油当量(折算)(t)",
             nameLocation: "middle",
             nameGap: 70,
             nameTextStyle: {
