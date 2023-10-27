@@ -453,7 +453,7 @@ export default {
             this.form.wellGroupList = []
             try{
                 getCorrectionOperation(params).then((res) => {
-                if (Array.isArray(res) && res.length) {
+                if (Array.isArray(res)) {
                     this.disabledDateTime = res[0].updateYearMonth ? res[0].updateYearMonth : null
                 }
                 if (res[0].wellGroupId == null) {
