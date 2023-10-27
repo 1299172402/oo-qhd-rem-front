@@ -155,7 +155,7 @@ export default {
                     boxBottomText: [{
                         name: '定产配注方案',
                         url: `https://rem.${this.baseUrl}/#/injection/optimization?page=IpmHome`
-                    }, {name: '注采优化方案', url: `https://rem.${this.baseUrl}/#/injection/optimizationDetail?page=IpmHome`}],
+                    }, {name: '注采优化方案', url: `https://rem.${this.baseUrl}/#/injection/optimization?page=IpmHome&link=rem`}],
                     boxStyle: {
                         pWidth: 'width:8.5vw;margin-left: 6vw;'
                     },
