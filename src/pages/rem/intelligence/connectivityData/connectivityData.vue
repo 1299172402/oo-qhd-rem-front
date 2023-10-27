@@ -166,7 +166,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="operationalNarration" label="连通系数?(计算)" min-width="120"
+                    <el-table-column prop="operationalNarration" label="静态连通性系数" min-width="120"
                                      :render-header="renderheader" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.operationalNarration !== null && scope.row.operationalNarration !== ''">{{scope.row.operationalNarration}}</span>
@@ -181,7 +181,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="correctionFactor" label="连通系数?(修正)" min-width="120"
+                    <el-table-column prop="correctionFactor" label="动态连通性系数" min-width="120"
                                      :render-header="renderheader" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.correctionFactor !== null && scope.row.correctionFactor !== ''">{{scope.row.correctionFactor}}</span>
