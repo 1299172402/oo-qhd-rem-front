@@ -35,9 +35,9 @@
                     <div class="grid-content bg-purple">
                         <div class="yield oil">
                             <div class="box">
-                                <div>{{ dataList.cumeOilProd === null ||dataList.cumeOilProd ===undefined ?
+                                <div>{{ totalOilProduction === null ||totalOilProduction ===undefined ?
                                     Number(0).toFixed(4):
-                                    Number(dataList.cumeOilProd).toFixed(4) }}</div>
+                                    Number(totalOilProduction).toFixed(4) }}</div>
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
@@ -128,6 +128,7 @@
     </div>
 </template>
 <script>
+import {devPhaseInfos} from "@/api/rem/oilfieldmanageplan.js"
 import Echart from "@/components/tools/Echarts/index.vue";
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import {LineChart} from "echarts/charts";
@@ -170,6 +171,7 @@ export default {
     },
     data() {
         return {
+            totalOilProduction:0.0000,
             value1:0,
             value2:0,
             value3:0,
@@ -529,7 +531,7 @@ export default {
             productionMetricsOverview( { ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",date:'2022-12' + '-01'}).then(res=>{
                 this.dataList = res.data.data
-                this.dataList.cumeOilProd = '4493.00'
+                // this.dataList.cumeOilProd = '4493.00'
                 // if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
                 this.mainList[0]= res.data.data.naturalDecline
                 this.mainList[1]= res.data.data.overallDecline
@@ -550,6 +552,21 @@ export default {
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then(res=>{
                 this.oil1two = res.data.data.annualOilProduction,
                 this.oil1 =res.data.data.dayOilProduction
+            })
+
+            devPhaseInfos({
+                fieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                type: "1"
+            }).then(res=>{
+                debugger;
+                //jgl
+                let devPhaseInfos =res.data.data.devPhaseInfos;
+                let sum = 0.0;
+                for (let i = 0; i < devPhaseInfos.length; i++) {
+                    sum += devPhaseInfos[i].oilSum;
+                }
+                this.totalOilProduction= sum;
             })
         },
         getList(){
