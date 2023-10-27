@@ -25,7 +25,7 @@
       <el-table-column prop="NSIncrement" :label="`坐标北南增量\n (m)`" :formatter="toPrecise2"></el-table-column>
       <el-table-column prop="EWIncrement" :label="`坐标东西增量\n (m)`" :formatter="toPrecise2"></el-table-column>
       <el-table-column prop="curvature" :label="`狗腿度\n(°/30m)`" :formatter="toPrecise2"></el-table-column>
-      <el-table-column prop="remark" label="备注"></el-table-column>
+      <el-table-column prop="remark" label="备注" align="left"></el-table-column>
     </el-table>
   </page-panel-new>
 </template>

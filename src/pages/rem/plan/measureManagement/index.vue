@@ -262,7 +262,7 @@
                         "
                         alt=""
                         v-if="scope.row.stimClassCode == '003'"
-                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${
+                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}d)\n${
                           scope.row.realityMeasuresEndTime || '-'
                         } 增产性措施`"
                       />
@@ -276,7 +276,7 @@
                         "
                         alt=""
                         v-else-if="scope.row.stimClassCode == '004'"
-                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${
+                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}d)\n${
                           scope.row.realityMeasuresEndTime || '-'
                         } 增注性措施`"
                       />
@@ -290,7 +290,7 @@
                         "
                         alt=""
                         v-else
-                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${
+                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}d)\n${
                           scope.row.realityMeasuresEndTime || '-'
                         } 维护性措施`"
                       />
@@ -306,7 +306,7 @@
                           <el-progress class="progress2" type="line" :percentage="100" :show-text="false"></el-progress>
                         </div>
                         <div class="day" v-if="Number(scope.row.planMeasuresDayNum)">
-                          {{ scope.row.planMeasuresDayNum }}天
+                          {{ scope.row.planMeasuresDayNum }}d
                         </div>
                       </div>
                       <!-- 实际 -->
@@ -319,7 +319,7 @@
                           <el-progress class="progress1" type="line" :percentage="100" :show-text="false"></el-progress>
                         </div>
                         <div class="day" v-if="Number(scope.row.realityMeasuresDayNum)">
-                          {{ scope.row.realityMeasuresDayNum }}天
+                          {{ scope.row.realityMeasuresDayNum }}d
                         </div>
                       </div>
                     </div>

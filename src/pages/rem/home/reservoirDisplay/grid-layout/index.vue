@@ -352,7 +352,7 @@ export default {
                     return shutdownWell;
                 case "单井井底流压":
                     return exhibition;
-                case "分层注入量":
+                case "分层注采量":
                     return stratifiedInjection;
                 case "措施建议表":
                     return effectMeasure;
