@@ -100,23 +100,23 @@
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
                 <el-table-column prop="wellName" align="center" type="index" width="50px" label="序号"></el-table-column>
-                <el-table-column prop="wellName"  min-width="60px" label="井号"></el-table-column>
-                <el-table-column prop="appendixValueName" min-width="60px" label="*关停分类"></el-table-column>
-                <el-table-column prop="reasonAppendixValueName" min-width="60px" label="*关停原因"></el-table-column>
-                <el-table-column prop="planAppendixValueName" min-width="40px" label="*计划属性"></el-table-column>
-                <el-table-column prop="beginDate" sortable min-width="60px" :label="`*关停开始时间\n(yyyy-mm-dd)`">
+                <el-table-column prop="wellName" align="center" min-width="60px" label="井号"></el-table-column>
+                <el-table-column prop="appendixValueName" align="center" min-width="60px" label="*关停分类"></el-table-column>
+                <el-table-column prop="reasonAppendixValueName" align="center" min-width="60px" label="*关停原因"></el-table-column>
+                <el-table-column prop="planAppendixValueName" align="center" min-width="40px" label="*计划属性"></el-table-column>
+                <el-table-column prop="beginDate" align="center" sortable min-width="60px" :label="`*关停开始时间\n(yyyy-mm-dd)`">
                     <template slot-scope="scope">
                         <span v-if="scope.row.beginDate">{{scope.row.beginDate.substring(0,10)}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="endDate" sortable min-width="60px" :label="`*关停结束时间\n(yyyy-mm-dd)`">
+                <el-table-column prop="endDate" align="center" sortable min-width="60px" :label="`*关停结束时间\n(yyyy-mm-dd)`">
                     <template slot-scope="scope">
                         <span v-if="scope.row.endDate">{{scope.row.endDate.substring(0,10)}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="impactProdution" min-width="40px" align="right" :label="`影响产量\n(m³)`">
+                <el-table-column prop="impactProdution" min-width="40px" align="center" :label="`影响产量\n(m³)`">
                     <template slot-scope="scope">
                       <span v-if="!isNaN(Number(scope.row.impactProdution).toFixed(2))">{{Number(scope.row.impactProdution).toFixed(2)}}</span>  
                         <span v-else>-</span>

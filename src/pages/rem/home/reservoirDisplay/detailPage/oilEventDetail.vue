@@ -65,15 +65,15 @@
                         {{ scope.$index + 1 }}
                     </template>
                 </el-table-column>
-                <el-table-column label="井号" min-width="130px" prop="wellNo" align="left"></el-table-column>
-                <el-table-column label="大事类型" min-width="130px" prop="appendixValueName" align="left">
+                <el-table-column label="井号" min-width="130px" prop="wellNo" align="center"></el-table-column>
+                <el-table-column label="大事类型" min-width="130px" prop="appendixValueName" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.appendixValueName !== null && scope.row.appendixValueName !== ''">{{scope.row.appendixValueName}}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column :label="`开始时间\n(yyyy-mm-dd)`" min-width="140px" prop="startTime" align="right">
+                <el-table-column :label="`开始时间\n(yyyy-mm-dd)`" min-width="140px" prop="startTime" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.startTime !== null && scope.row.startTime !== ''">{{ scope.row.startTime ? scope.row.startTime.split(' ')[0] : ''
@@ -81,7 +81,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column :label="`结束时间\n(yyyy-mm-dd)`" min-width="140px" prop="endTime" align="right">
+                <el-table-column :label="`结束时间\n(yyyy-mm-dd)`" min-width="140px" prop="endTime" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.endTime !== null && scope.row.endTime !== ''">{{ scope.row.endTime ? scope.row.endTime.split(' ')[0] : ''
@@ -89,7 +89,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="大事简要" min-width="130px" prop="chronicle" align="left">
+                <el-table-column label="大事简要" min-width="130px" prop="chronicle" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.chronicle !== null && scope.row.chronicle !== ''">{{scope.row.chronicle}}</span>

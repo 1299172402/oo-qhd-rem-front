@@ -24,7 +24,7 @@
                     <div class="grid-content bg-purple">
                         <div class="yield gas">
                             <div class="box">
-                                <div>{{oil1two}}</div>
+                                <div>{{Number(oil1two).toFixed(4)}}</div>
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
@@ -35,7 +35,9 @@
                     <div class="grid-content bg-purple">
                         <div class="yield oil">
                             <div class="box">
-                                <div>{{ dataList.cumeOilProd }}</div>
+                                <div>{{ dataList.cumeOilProd === null ||dataList.cumeOilProd ===undefined ?
+                                    Number(0).toFixed(4):
+                                    Number(dataList.cumeOilProd).toFixed(4) }}</div>
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
