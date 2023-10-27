@@ -1403,7 +1403,7 @@ export default {
         if (res.data.code == 200) {
           this.blockList = res.data.data;
           this.blockList.unshift({
-            reservoirAnalyseUnitId: oilFieldId,
+            reservoirAnalyseUnitId: this.queryParams.oilFieldId,
             reservoirAnalyseUnitName: "全部",
             reservoirAnalyseUnitNo: "全部",
           });
