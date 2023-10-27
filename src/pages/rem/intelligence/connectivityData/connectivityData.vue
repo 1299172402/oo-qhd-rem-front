@@ -451,7 +451,8 @@ export default {
             };
             this.form.wellGroupIds = []
             this.form.wellGroupList = []
-            getCorrectionOperation(params).then((res) => {
+            try{
+                getCorrectionOperation(params).then((res) => {
                 if (Array.isArray(res) && res.length) {
                     this.disabledDateTime = res[0].updateYearMonth ? res[0].updateYearMonth : null
                 }
@@ -473,6 +474,9 @@ export default {
                 this.$set(this.form, 'tableData', this.form.tableData)
                 this.getSpanArr(this.form.tableData)
             });
+            }catch(e){
+                console.log("查询月份没有数据")
+            }
         },
         // 运算、修正: type = 1 运算，type = 2 修正
         Correction(type) {
