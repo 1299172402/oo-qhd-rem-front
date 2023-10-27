@@ -43,19 +43,19 @@
     <page-panel-new class="app-content">
       <el-row style="height: auto; display: flex; flex-wrap: wrap" :gutter="20">
         <el-col v-for="(item, index) in zbData" :key="index" :span="4">
-          <pagePanel
+          <!-- <pagePanel
             v-if="item.title == '注水指标总览'"
             class="fl"
             :headerTitle="item.title"
             style="height: 180px; margin-top: 20px"
             @click.native="cardClick(item, index)"
-          >
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
-              <span style="font-size: 30px; vertical-align: middle; color: rgb(143, 164, 204)">
-                {{ item.title }}
-              </span>
-            </div>
-          </pagePanel>
+          > -->
+          <div class="homeItem" v-if="item.title == '注水指标总览'" @click="cardClick(item, index)">
+            <span style="font-size: 30px">
+              {{ item.title }}
+            </span>
+          </div>
+          <!-- </pagePanel> -->
           <pagePanel
             v-else
             class="fl"
@@ -1064,10 +1064,10 @@ export default {
             //   return Number(val) + "月";
             // },
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             onZero: false,
@@ -1185,10 +1185,10 @@ export default {
             //   return Number(val) + "月";
             // },
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             onZero: false,
@@ -1329,10 +1329,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.queryParams.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.queryParams.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.queryParams.companyId }).then((data) => {
@@ -1912,6 +1911,19 @@ export default {
   .g-w100:first-child {
     padding-top: 0 !important;
     //   height:auto!important;
+  }
+  .homeItem {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    color: var(--white-color);
+    background: var(--logo-bg) no-repeat top right #0075e9 !important;
+    border: 1px solid #ddd;
+    border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+    box-shadow: unset;
   }
 }
 .formBox {
