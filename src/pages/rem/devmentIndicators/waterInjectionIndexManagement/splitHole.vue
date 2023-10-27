@@ -90,11 +90,12 @@
                 下载
               </el-button>
             </div>
-            <el-table id="fzjcdhglmx" :data="tableData1" border highlight height="calc(100% - 55px)">
+            <el-table id="fzjcdhglmx" :data="tableData1" border highlight height="calc(100% - 130px)">
               <!-- :index="formatIndex"  -->
               <el-table-column
                 label="序号"
                 header-align="center"
+                :index="formatIndex"
                 align="center"
                 type="index"
                 width="80"
@@ -108,14 +109,18 @@
                 align="center"
                 min-width="120"
               ></el-table-column>
-              <el-table-column
-                prop="isUnqualified"
-                label="是否合格"
-                :formatter="formatterBoolean1"
-                align="center"
-                min-width="100"
-              ></el-table-column>
+              <!-- :formatter="formatterBoolean1" -->
+              <el-table-column prop="isUnqualified" label="是否合格" align="center" min-width="100"></el-table-column>
             </el-table>
+            <pagination
+              :total="total"
+              :page.sync="queryParams.page"
+              :limit.sync="queryParams.pageSize"
+              :page-sizes="[10, 20, 50, 100]"
+              :pager-count="5"
+              layout="prev, pager, next, sizes, total"
+              @pagination="handleTableChange"
+            />
           </pagePanel>
         </el-col>
         <el-col :span="12">
@@ -196,7 +201,10 @@ export default {
         month: dayjs().subtract(1, "day").format("YYYY-MM"), // 分注井层段合格率明细 日期选择
         date: dayjs().subtract(1, "day").format("YYYY-MM-DD"), // 单井层段合格明细 日期选择
         isDesc: 1,
+        page: 1,
+        pageSize: 10,
       },
+      total: 0, //  表格分页总数
       // 油田名称
       oilFieldName: "",
       //油田列表
@@ -339,7 +347,7 @@ export default {
     },
     //表格序号
     formatIndex(index) {
-      return (this.queryParams.pageNum - 1) * this.queryParams.pageSize + index + 1;
+      return (this.queryParams.page - 1) * this.queryParams.pageSize + index + 1;
     },
     //返回按钮
     close() {
@@ -414,11 +422,20 @@ export default {
       //分注井层段合格率
       this.doDividingLayerQualityRate();
     },
+    /**
+     *  监听表格分页变化
+     * @param pagination 分页数据对象
+     */
+    handleTableChange(pagination) {
+      this.queryParams.page = pagination.page;
+      this.queryParams.pageSize = pagination.limit;
+      this.doDividingLayerQualityRate();
+    },
     //分注井层段合格率
     doDividingLayerQualityRate() {
       this.oilFieldName =
         this.oilFieldList.filter((item) => item.ogfId === this.queryParams.oilFieldId)[0].ogfName || "";
-      dividingLayerQualityRate(this.queryParams,true).then((res) => {
+      dividingLayerQualityRate(this.queryParams, true).then((res) => {
         if (res?.data?.code == 200) {
           let legendData = [];
           let seriesData = [];
@@ -426,7 +443,8 @@ export default {
           let xSet = new Set();
           let resData = res.data.data;
           let barCharts = resData?.chart?.linearDataSets;
-          this.tableData1 = resData.tableList && resData.tableList[0] ? resData.tableList[0] : [];
+          this.tableData1 = resData.tableList && resData.tableList[0].length && resData.tableList[0][0].rows.length ? resData.tableList[0][0].rows : [];
+          this.total = resData.tableList && resData.tableList[0].length && resData.tableList[0] ? resData.tableList[0][0].total : 0;
           this.tableData2 = resData.tableList && resData.tableList[1] ? resData.tableList[1] : [];
           if (barCharts) {
             barCharts.forEach((item, index) => {
