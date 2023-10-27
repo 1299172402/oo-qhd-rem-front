@@ -39,26 +39,26 @@
         height="calc(100% - 72px)"
       >
         <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
-        <el-table-column prop="wellGroupName" label="井组" width="230px" header-align="center"></el-table-column>
-        <el-table-column prop="yearMonth" :label="`时间\n(yyyy-mm)`" header-align="center"></el-table-column>
-        <el-table-column prop="wellCount" :label="`总井数\n(口)`" align="right"></el-table-column>
-        <el-table-column prop="oilWellsCount" :label="`油井数\n(口)`" align="right"></el-table-column>
-        <el-table-column prop="waterWellsCount" :label="`水井数\n(口)`" align="right"></el-table-column>
+        <el-table-column prop="wellGroupName" label="井组" width="230px" align="center"></el-table-column>
+        <el-table-column prop="yearMonth" :label="`时间\n(yyyy-mm)`" align="center"></el-table-column>
+        <el-table-column prop="wellCount" :label="`总井数\n(口)`" align="center"></el-table-column>
+        <el-table-column prop="oilWellsCount" :label="`油井数\n(口)`" align="center"></el-table-column>
+        <el-table-column prop="waterWellsCount" :label="`水井数\n(口)`" align="center"></el-table-column>
         <el-table-column header-align="center">
           <template slot="header">
             <div>受控井</div>
           </template>
-          <el-table-column prop="effectOneWay" :label="`单向\n(口)`" align="right"> </el-table-column>
-          <el-table-column prop="effectDoubleWay" :label="`双向\n(口)`" align="right"> </el-table-column>
-          <el-table-column prop="effectManyWay" :label="`多向\n(口)`" align="right"> </el-table-column>
-          <el-table-column prop="effectControlledWayCount" :label="`小计\n(口)`" align="right"> </el-table-column>
-          <el-table-column prop="effectControlledWayRate" :label="`受控率\n(%)`" align="right">
+          <el-table-column prop="effectOneWay" :label="`单向\n(口)`" align="center"> </el-table-column>
+          <el-table-column prop="effectDoubleWay" :label="`双向\n(口)`" align="center"> </el-table-column>
+          <el-table-column prop="effectManyWay" :label="`多向\n(口)`" align="center"> </el-table-column>
+          <el-table-column prop="effectControlledWayCount" :label="`小计\n(口)`" align="center"> </el-table-column>
+          <el-table-column prop="effectControlledWayRate" :label="`受控率\n(%)`" align="center">
             <template slot-scope="scoped">
               {{ scoped.row.effectControlledWayRate * 100 }}
             </template>
           </el-table-column>
         </el-table-column>
-        <el-table-column prop="effectUncontrolledWay" :label="`非受控井\n(口)`" align="right"></el-table-column>
+        <el-table-column prop="effectUncontrolledWay" :label="`非受控井\n(口)`" align="center"></el-table-column>
       </el-table>
       <pagination
         :total="total"
