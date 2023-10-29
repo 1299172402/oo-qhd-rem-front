@@ -416,7 +416,8 @@ export default {
                 } else if (window.location.origin.includes('tpro')) {
                     baseUrl = 'tjioms-tpro.tjltd.cnooc'
                 }
-                window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`, '_blank')
+                window.open('https://ipm.'+this.baseUrl+'/#/waterflood/merge')
+                //window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`, '_blank')
                 // this.$router.push({name: "schemePrediction"})
             })
         },
