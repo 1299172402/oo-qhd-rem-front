@@ -16,16 +16,24 @@
           </el-select>
         </div>
         <div style="margin: 10px 20px 10px 0px">
-          日期：
+          年度：
           <el-date-picker
-            v-model="queryParams.dates"
-            type="daterange"
-            range-separator="-"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            value-format="yyyy-MM-dd"
-            unlink-panels
-            @change="createChange"
+            v-model="queryParams.beginDate"
+            type="year"
+            placeholder="年份"
+            style="width: 100px"
+            value-format="yyyy"
+            @change="createChange1"
+          >
+          </el-date-picker>
+          <span> 至 </span>
+          <el-date-picker
+            v-model="queryParams.endDate"
+            type="year"
+            placeholder="年份"
+            style="width: 100px"
+            value-format="yyyy"
+            @change="createChange2"
           >
           </el-date-picker>
         </div>
@@ -152,9 +160,10 @@ export default {
         oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 油田
         fileId: "", // 区块id
         layerId: "", // 层系id
-        dates: [dayjs().format("YYYY-01-01"), dayjs().format("YYYY-MM-DD")], // 时间范围集合
-        beginDate: dayjs().format("YYYY-01-01"), // 开始时间
+        // dates: [dayjs().format("YYYY-01-01"), dayjs().format("YYYY-MM-DD")], // 时间范围集合
+        beginDate: dayjs().subtract(5, "year").format("YYYY-01-01"), // 开始时间
         endDate: dayjs().format("YYYY-MM-DD"), // 结束时间
+        year: dayjs().format("YYYY-MM-DD"),
         // pageNum: 1,
         // pageSize: 9999,
         isDesc: 1,
@@ -367,15 +376,18 @@ export default {
       this.getFetchFields(); // 获取区块类型
       this.getFieldLayers(); // 获取层位信息
     },
-    //时间范围切换
-    createChange(dates) {
-      if (dates && dates.length == 2) {
-        this.queryParams.beginDate = dates[0];
-        this.queryParams.endDate = dates[1];
-      } else {
-        this.queryParams.beginDate = "";
-        this.queryParams.endDate = "";
-      }
+    // 时间范围切换
+    createChange1(data) {
+      this.queryParams.beginDate = dayjs(data).format("YYYY-01-01");
+    },
+    createChange2(data) {
+      this.queryParams.endDate = dayjs(data).format("YYYY-MM-DD");
+      this.queryParams.year = dayjs(data).format("YYYY-MM-DD");
+      // if (data == dayjs().format("YYYY")) {
+      //   this.queryParams.year = dayjs().subtract(1, "day").format("YYYY-MM-DD");
+      // } else {
+      //   this.queryParams.year = dayjs(data).endOf("year").format("YYYY-MM-DD");
+      // }
     },
     //查询
     doSearch() {

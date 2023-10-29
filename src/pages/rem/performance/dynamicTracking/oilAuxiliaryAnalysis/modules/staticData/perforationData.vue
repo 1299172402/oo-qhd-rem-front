@@ -77,7 +77,7 @@
         min-width="120"
         :formatter="toPrecise2"
       ></el-table-column>
-      <el-table-column prop="remark" label="备注" show-overflow-tooltip min-width="150"></el-table-column>
+      <el-table-column prop="remark" label="备注" align="left" show-overflow-tooltip min-width="150"></el-table-column>
     </el-table>
   </page-panel-new>
 </template>

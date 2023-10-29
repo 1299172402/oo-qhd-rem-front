@@ -7,7 +7,9 @@
                     <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
                 </el-tab-pane>
             </el-tabs>
-            <el-button v-if ="activeName =='second' && this.$route.query.page"  style="position: absolute;z-index:50;right: 20px;top:110px" type="primary"  @click="gogo">返回</el-button>
+            <el-button v-if="activeName =='second' && this.$route.query.page"
+                       style="position: absolute;z-index:50;right: 20px;top:110px" type="primary" @click="gogo">返回
+            </el-button>
         </div>
         <header-search v-if="activeName=='first'" style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
@@ -44,9 +46,11 @@
                 >搜索
                 </el-button>
                 <el-button class="commonBtn" @click="refresh" icon="el-icon-refresh"> 重置</el-button>
-                <el-button  type="primary" v-if="$route.query.page" style="position: absolute;right:2%;top:110px" @click="$router.push({
+                <el-button type="primary" v-if="$route.query.page" style="position: absolute;right:2%;top:110px"
+                           @click="$router.push({
                         name:$route.query.page
-                    })">返回</el-button>
+                    })">返回
+                </el-button>
                 <span class="fangan">
             <span style="color: #00b4ff;">{{ queryData.dateTime }}月配产配注方案</span>
             <el-button type="primary" @click="viewDetail">
@@ -57,11 +61,12 @@
             </div>
         </header-search>
         <pagePanelNew v-if="activeName == 'first'" style="height: auto">
-            <el-row  :gutter="20" style="height:800px">
+            <el-row :gutter="20" style="height:800px">
                 <el-col :span="6" style="height:100%">
-                    <pagePanel headerTitle="单井月度配产计划表"  :show-btn="true"
+                    <pagePanel headerTitle="单井月度配产计划表" :show-btn="true"
                                style="height:calc(100% - 10px)">
-                        <el-button style="float: right;margin-top: 0px" type="primary" icon="el-icon-download" @click="doDownExcel()"
+                        <el-button style="float: right;margin-top: 0px" type="primary" icon="el-icon-download"
+                                   @click="doDownExcel()"
                         >下载
                         </el-button
                         >
@@ -140,7 +145,8 @@
                                 <el-table-column prop="layerNo" min-width="200" label="层段号"
                                                  align="center">
                                     <template slot-scope="scope">
-                                        <span v-if="scope.row.layerNo !== null && scope.row.layerNo !== ''">{{scope.row.layerNo}}</span>
+                                        <span
+                                            v-if="scope.row.layerNo !== null && scope.row.layerNo !== ''">{{ scope.row.layerNo }}</span>
                                         <span v-else>-</span>
                                     </template>
                                 </el-table-column>
@@ -209,7 +215,8 @@
                                                     <span>{{ scope.row.froecastInjDaily / scope.row.configurationInjDaily }}</span>
                                     </template>-->
                                 </el-table-column>
-                                <el-table-column prop="remark" show-overflow-tooltip label="备注" align="center" min-width="150">
+                                <el-table-column prop="remark" show-overflow-tooltip label="备注" align="center"
+                                                 min-width="150">
                                     <template slot-scope="scope">
                                         <el-input v-if="modify" v-model="scope.row.remark"/>
                                         <span v-else>{{ scope.row.remark }}</span>
@@ -222,12 +229,12 @@
                 </el-col>
             </el-row>
             <!--  模型运算  -->
-           
+
         </pagePanelNew>
-        
+
         <modelOperation v-else ref="modelOpreation" style="height: 100%"></modelOperation>
-        
-        
+
+
     </div>
 </template>
 <script>
@@ -242,11 +249,11 @@ export default {
         modelOperation, //智能配注
     },
     mixins: [queryConditionMixin],
-    created(){
+    created() {
         //若由REM跳转 聚焦吸水指数
-        if(this.$route.query.link == 'rem'){
+        if (this.$route.query.link == 'rem') {
             this.activeName = "second"
-        }else{
+        } else {
             this.queryTableData(this.form.tableData2)
         }
         this.src = 'https://intelinj.tjioms-dev.tjltd.cnooc/'
@@ -280,19 +287,19 @@ export default {
             mergeObj: {},
             host: window.location.protocol + '//',
             saveLoad: false,
-            src:'',
+            src: '',
         }
     },
     computed: {
         getStyle() {
             return {
-                height:'800px',
-                width:'1720px',
-                border:"none",
-                transform: `scale(${ (this.iframeWidth - 40) / 1720 > 1 ? 1 : (this.iframeWidth - 40) / 1720})`,
+                height: '800px',
+                width: '1720px',
+                border: "none",
+                transform: `scale(${(this.iframeWidth - 40) / 1720 > 1 ? 1 : (this.iframeWidth - 40) / 1720})`,
                 transformOrigin: '0% 0%'
             }
-        }  
+        }
     },
     methods: {
         gogo() {
@@ -350,8 +357,8 @@ export default {
         },
         refresh() {
             this.queryData.blockId = '6CD7342CA6DD418183A4B3BC38584F7C';
-                this.queryData.dateTime = this.eeee();
-               // this.dateTime = '2023-05',
+            this.queryData.dateTime = this.eeee();
+            // this.dateTime = '2023-05',
             this.doSearch();
         },
         // table表头标题样式
@@ -372,7 +379,7 @@ export default {
         },
         // table表格单位换行
         renderheader(h, {column, $index}) {
-            return h('span', {}, [     
+            return h('span', {}, [
                 h('span', {}, column.label.split('?')[0]),
                 h('br'),
                 h('span', {}, column.label.split('?')[1])
@@ -403,13 +410,13 @@ export default {
             }).then(() => {
                 let baseUrl = ''
                 if (window.location.origin.includes('test')) {
-                    this.baseUrl = 'tjioms-test.tjltd.cnooc'
+                    baseUrl = 'tjioms-test.tjltd.cnooc'
                 } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
-                    this.baseUrl = 'tjioms-dev.tjltd.cnooc'
-                }else if (window.location.origin.includes('tpro')) {
-                    this.baseUrl = 'tjioms-tpro.tjltd.cnooc'
+                    baseUrl = 'tjioms-dev.tjltd.cnooc'
+                } else if (window.location.origin.includes('tpro')) {
+                    baseUrl = 'tjioms-tpro.tjltd.cnooc'
                 }
-                window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`,'_blank')
+                window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`, '_blank')
                 // this.$router.push({name: "schemePrediction"})
             })
         },
@@ -458,13 +465,13 @@ export default {
                 blockId: this.queryData.blockId,
                 dateTime: this.queryData.dateTime,
             }
-            
+
             getWellMonthAllocation(params).then((res) => {
                 res.forEach(item => {
                     item.fluidProdDaily = Math.floor(item.fluidProdDaily)
                 })
                 this.tableData1 = res
-            }).catch(()=>{
+            }).catch(() => {
                 this.tableData1 = []
             })
         },
@@ -474,7 +481,7 @@ export default {
                 blockId: this.queryData.blockId,
                 dateTime: this.queryData.dateTime,
             }
-            
+
             getWellMonthInj(params).then((res) => {
                 let arr1 = []
                 res.forEach(item => {
@@ -500,7 +507,7 @@ export default {
                 })
                 this.form.tableData2 = arr1
                 this.getSpanArr(arr1)
-            }).catch(()=>{
+            }).catch(() => {
                 this.form.tableData2 = []
             })
         },
@@ -527,21 +534,21 @@ export default {
         doDownLoadExcelh() {
             exportExcel("#indexscvSecond", this.title2);
         },
-        setWidth(){
+        setWidth() {
             // this.iframeWidth = this.$refs.iframe.parentNode.clientWidth;
         }
     },
-  
+
     mounted() {
         //智能配注调用子组件方法
         // this.$nextTick(()=>{
         //     this.$refs.modelOpreation.getCaseByMax()
         // })
-        if(this.$route.query.link == 'rem'){
+        if (this.$route.query.link == 'rem') {
             this.activeName = 'second'
             this.setWidth()
             this.doSearch()
-        }else{
+        } else {
             this.activeName = 'first'
             this.doSearch()
         }

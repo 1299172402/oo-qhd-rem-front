@@ -6,7 +6,7 @@
             header-title="措施建议表"
             :is-show-max-btn="true"
         >
-            <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('OilAnalysisReport')">详细</el-button>
+            <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('Planmessage')">详细</el-button>
             <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downtable">下载</el-button>
             <el-table
                 :data="tableData"

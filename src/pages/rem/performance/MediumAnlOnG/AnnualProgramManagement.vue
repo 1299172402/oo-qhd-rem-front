@@ -457,7 +457,7 @@ export default {
             },
           },
           {
-            name: "油当量(折算)(10⁴m³)",
+            name: "油当量(折算)(10⁴t)",
             nameTextStyle: {
               color: "#fff",
               fontSize: 14,

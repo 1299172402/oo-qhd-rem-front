@@ -17,7 +17,7 @@
             <el-table-column prop="date" label="序号" align="center" width="50">
                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
             </el-table-column>
-            <el-table-column prop="wellName" label="井号"
+            <el-table-column prop="wellName" label="井号" min-width="130"
                              align="center"></el-table-column>
             <el-table-column prop="productionIntervalNo" min-width="150" label="层位" align="center" >
                 <template slot-scope="scope">

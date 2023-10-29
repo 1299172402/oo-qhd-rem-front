@@ -16,7 +16,7 @@
       <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
       <el-table-column prop="startTime" :label="`开始时间\n(yyyy-mm-dd)`" align="center" width="180"></el-table-column>
       <el-table-column prop="chronicle" label="大事简要" align="center" width="200"></el-table-column>
-      <el-table-column prop="remark" label="备注" align="center"></el-table-column>
+      <el-table-column prop="remark" label="备注" align="left"></el-table-column>
     </el-table>
   </page-panel-new>
 </template>

@@ -16,13 +16,24 @@
           </el-select>
         </div>
         <div style="margin: 10px 20px 10px 0px">
-          日期：
+          年度：
           <el-date-picker
-            v-model="queryParams.year"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择日期"
-            :picker-options="pickerOptions"
+            v-model="queryParams.beginDate"
+            type="year"
+            placeholder="年份"
+            style="width: 100px"
+            value-format="yyyy"
+            @change="createChange1"
+          >
+          </el-date-picker>
+          <span> 至 </span>
+          <el-date-picker
+            v-model="queryParams.endDate"
+            type="year"
+            placeholder="年份"
+            style="width: 100px"
+            value-format="yyyy"
+            @change="createChange2"
           >
           </el-date-picker>
         </div>
@@ -58,12 +69,21 @@
       </pagePanel>
 
       <pagePanel :headerTitle="`${oilFieldName || ''}分注井测试明细`" style="height: 550px" show-btn>
-        <div style="display: flex; justify-content: flex-end">
-          <el-button
-            style="margin-bottom: 20px"
-            type="primary"
-            @click="doDownExcel('#fzjcsmx', `${oilFieldName || ''}分注井测试明细`)"
-          >
+        <div style="display: flex; justify-content: space-between">
+          <div>
+            日期：
+            <el-date-picker
+              v-model="queryParams.year"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期"
+              :picker-options="pickerOptions"
+              style="width: 160px"
+              @change="createChange3"
+            >
+            </el-date-picker>
+          </div>
+          <el-button style="margin-bottom: 20px" icon="el-icon-download" type="primary" @click="downloadFile">
             下载
           </el-button>
         </div>
@@ -106,7 +126,7 @@ import Echart from "@/components/tools/Echarts/index.vue";
 import { dividingTestRate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { QueryOgfDetail, QueryPlatformDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { fetchPlatforms } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { exportExcel } from "@/lib/exportExcel.js";
+import { exportExcel, exportExcelFromJson } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
 export default {
   // name: "splitWellTest",
@@ -120,8 +140,8 @@ export default {
         oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 油田
         platFormId: "", // 平台
         // dates: [dayjs().subtract(7, "day").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD")], // 时间范围集合
-        // beginDate: dayjs().subtract(7, "day").format("YYYY-MM-DD"), // 开始时间
-        // endDate: dayjs().format("YYYY-MM-DD"), // 结束时间
+        beginDate: dayjs().subtract(5, "year").format("YYYY-01-01"), // 开始时间
+        endDate: dayjs().format("YYYY-MM-DD"), // 结束时间
         year: dayjs().subtract(1, "day").format("YYYY-MM-DD"), // 开始时间
         page: 1,
         pageSize: 10,
@@ -299,10 +319,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.queryParams.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.queryParams.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.queryParams.companyId }).then((data) => {
@@ -346,15 +365,20 @@ export default {
       this.queryParams.pageSize = pagination.limit;
       this.doDividingTestRate();
     },
-    //时间范围切换
-    createChange(dates) {
-      if (dates && dates.length == 2) {
-        this.queryParams.beginDate = dates[0];
-        this.queryParams.endDate = dates[1];
+    // 时间范围切换
+    createChange1(data) {
+      this.queryParams.beginDate = dayjs(data).format("YYYY-01-01");
+    },
+    createChange2(data) {
+      this.queryParams.endDate = dayjs(data).format("YYYY-MM-DD");
+      if (data == dayjs().format("YYYY")) {
+        this.queryParams.year = dayjs().subtract(1, "day").format("YYYY-MM-DD");
       } else {
-        this.queryParams.beginDate = "";
-        this.queryParams.endDate = "";
+        this.queryParams.year = dayjs(data).endOf("year").format("YYYY-MM-DD");
       }
+    },
+    createChange3() {
+      this.doDividingTestRate();
     },
     //查询
     doSearch() {
@@ -429,6 +453,25 @@ export default {
     //表格id 表格名称
     doDownExcel(tableId, tableName) {
       exportExcel(tableId, tableName);
+    },
+    /**
+     * hwh
+     * 下载表格信息
+     */
+    downloadFile() {
+      let request = {};
+      Object.assign(request, this.queryParams);
+      request.page = 1;
+      request.pageSize = 99999;
+      dividingTestRate(request).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          let fileName = `${this.oilFieldName || ""}分注井测试明细`;
+          let list = data.data.data?.tableList[0][0].rows || [];
+          let headTitle = this.$refs.table1.$children.length ? this.$refs.table1.$children : null;
+          exportExcelFromJson(headTitle, list, fileName);
+        }
+      });
     },
     //表格时间格式化方法
     formatTime(row, column) {
