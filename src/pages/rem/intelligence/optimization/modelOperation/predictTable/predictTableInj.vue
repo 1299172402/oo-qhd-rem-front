@@ -79,12 +79,12 @@ export default {
       showBtn: [], // 显示操作按钮
       submitData: [],
       tableList: [],
-      props: ["chooseAllData",'tStep','prodListTable'],
+      props: ["chooseAllData",'tStep','prodListTable','submit1','filterHandler'],
       prodListTable2: [],
       prodListTable4: [],
       filterList:[],
       filelistsum:[],
-      props: {
+      /*props: {
         submit1: {
           type: Function,
           default: null
@@ -93,7 +93,7 @@ export default {
           type: Function,
           default: null
         },
-      },
+      },*/
     }
   },
   created(){

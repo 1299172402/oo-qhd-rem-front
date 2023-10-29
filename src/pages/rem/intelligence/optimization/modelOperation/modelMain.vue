@@ -764,7 +764,7 @@ export default {
                 this.echartsListaa.series[0].data = this.startList;
                 this.echartsListaa.series[1].data = this.endList;
                 this.echartsListaa.series[0].markLine.data = this.markLineData;
-                this.echartsListaa = this.echartsListaa
+                //this.echartsListaa = this.echartsListaa
             });
         },
         changeSelectImage(item) {
@@ -1383,7 +1383,7 @@ export default {
                     .then((res) => {
                         this.modelData = res.message;
                         console.log(res);
-                        if (res.code === 0) {
+                        //if (res.code === 0) {
                             this.showcard = false;
                             this.showChange1 = true;
                             //控制card显示时间
@@ -1391,14 +1391,14 @@ export default {
                                 this.showChange1 = false;
                                 // this.zhezhao = false;
                             }, 2000);
-                        } else {
+                       /* } else {
                             this.showcard = false;
                             this.showChange1 = true;
                             setTimeout(() => {
                                 this.showChange1 = false;
                                 // this.zhezhao = false;
                             }, 2000);
-                        }
+                        }*/
                     })
                     .catch((err) => {
                         console.log(err);

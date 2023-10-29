@@ -814,7 +814,7 @@ export default {
                     //图例数据
                     
                     const echartslist = []
-                    seriesData.map((n)=>{
+                    seriesData.forEach((n)=>{
                         if(n.name == '考核日产')
                         {
                             echartslist[0] = n

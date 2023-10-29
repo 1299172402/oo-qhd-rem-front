@@ -380,13 +380,13 @@ export default {
         },
         // 框框标题
         doSearch() {
-            if (this.queryData.dateTime) {
+            //if (this.queryData.dateTime) {
                 this.title1 = '单井月度配产计划表'
                 this.title2 = '单井月度配注计划表'
-            } else {
+            /*} else {
                 this.title1 = '单井月度配产计划表'
                 this.title2 = '单井月度配注计划表'
-            }
+            }*/
             if (this.queryData.ogfId && this.queryData.blockId && this.queryData.dateTime) {
                 this.queryTable()
                 this.queryTableData()
