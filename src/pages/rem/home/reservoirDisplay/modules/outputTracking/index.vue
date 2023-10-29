@@ -32,7 +32,7 @@
                         </div>
                         <div>
                             <div>{{ item.name }}</div>
-                            <div>{{ item.value }}</div>
+                            <div>{{ item.name.indexOf('10⁴m³') !== -1 ? Number(item.value).toFixed(4): item.value }}</div>
                         </div>
                     </el-col>
                 </el-row>

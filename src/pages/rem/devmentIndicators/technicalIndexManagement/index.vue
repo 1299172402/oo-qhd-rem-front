@@ -38,19 +38,19 @@
     <page-panel-new class="app-content">
       <el-row style="height: 380px" :gutter="20">
         <el-col v-for="(item, index) in zbData" :key="index" :span="6" :class="{ active: currentIndex == index }">
-          <pagePanel
+          <!-- <pagePanel
             v-if="item.title == '技术指标总览'"
             class="fl"
             style="height: 156px !important"
-            :headerTitle="item.title"
+            headerTitle=""
             @click.native="cardClick(item, index)"
-          >
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
-              <span style="font-size: 30px; vertical-align: middle; color: rgb(143, 164, 204)">
+          > -->
+            <div class="homeItem" v-if="item.title == '技术指标总览'"  @click="cardClick(item, index)">
+              <span style="font-size: 30px;">
                 {{ item.title }}
               </span>
             </div>
-          </pagePanel>
+          <!-- </pagePanel> -->
           <pagePanel v-else class="fl" style="height: 160px" :headerTitle="item.title">
             <el-button
               style="
@@ -1495,10 +1495,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -2156,6 +2155,19 @@ export default {
   .g-w100:first-child {
     padding-top: 0 !important;
     // height:auto!important;
+  }
+  .homeItem {
+    width: 100%;
+    height: 156px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    color: var(--white-color);
+    background: var(--logo-bg) no-repeat top right #0075e9 !important;
+    border: 1px solid #ddd;
+    border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+    box-shadow: unset;
   }
 }
 .formBox {

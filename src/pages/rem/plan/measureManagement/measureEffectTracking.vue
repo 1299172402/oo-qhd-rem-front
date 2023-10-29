@@ -217,6 +217,7 @@
             :label="`日注水量\n(m³)`"
             min-width="100"
             prop="bmInjWater"
+            :formatter="toPrecise2"
           ></el-table-column>
         </el-table-column>
         <el-table-column align="center" label="措施效果">
@@ -226,6 +227,7 @@
             align="center"
             :label="`当日日增注\n( m³)`"
             min-width="100"
+            :formatter="toPrecise2"
           ></el-table-column>
           <el-table-column
             header-align="center"
@@ -233,6 +235,7 @@
             :label="`累增注\n(m³)`"
             min-width="100"
             prop="sumInjDaily"
+            :formatter="toPrecise2"
           ></el-table-column>
           <el-table-column
             header-align="center"
@@ -247,6 +250,7 @@
             :label="`地质设计日配注\n(m³)`"
             min-width="120"
             prop="geoDesignInjDaily"
+            :formatter="toPrecise2"
           ></el-table-column>
         </el-table-column>
         <el-table-column label="地质设计" header-align="center" align="center">
