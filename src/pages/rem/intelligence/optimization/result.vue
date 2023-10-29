@@ -364,12 +364,17 @@ export default {
         },
         // 可行性评估
         assessBut() {
-            this.$confirm('是否跳转至配注方案分析与评估?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$router.push({name: "schemePrediction"})
+            var baseUrl = ''
+                if (window.location.origin.includes('test')) {
+                    baseUrl = 'tjioms-test.tjltd.cnooc'
+                } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
+                    baseUrl = 'tjioms-dev.tjltd.cnooc'
+                }else if (window.location.origin.includes('tpro')) {
+                    baseUrl = 'tjioms-tpro.tjltd.cnooc'
+                }else{
+                    baseUrl='tjioms-test.tjltd.cnooc'
+                }
+                window.open('https://ipm.'+baseUrl+'/#/waterflood/merge')
             })
         },
         // 保存
