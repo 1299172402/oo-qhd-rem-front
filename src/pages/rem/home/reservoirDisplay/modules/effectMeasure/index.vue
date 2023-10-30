@@ -80,6 +80,7 @@ export default {
     data() {
         return {
             tableData: [],
+            evalTime:'',
         };
     },
     mounted() {
@@ -89,7 +90,8 @@ export default {
         getData(){
             queryMeasureEffectTrack({evaluationDate:'',oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
                 if(res.data.data){
-                    this.tableData = res.data.data                    
+                    this.tableData = res.data.data
+                    this.evalTime = this.tableData[0].evalTime
                 }
             })
         },
@@ -97,7 +99,7 @@ export default {
                 exportExcel("#tablecsxg", "措施建议表");
         },
         linkroute(rname) {
-            this.$router.push({name: rname});
+            this.$router.push({name: rname,query:{measureCode:'0100110',currentDate:this.evalTime,platform:'3FC9A818F5BC43B88270DB80BBB3018F'}});
         },
     }
 };

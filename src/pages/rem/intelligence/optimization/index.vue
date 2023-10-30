@@ -14,7 +14,7 @@
         <header-search v-if="activeName=='first'" style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
-                <el-select v-model="queryData.ogfId" filterable clearable disabled style="width:180px;">
+                <el-select v-model="queryData.ogfId" filterable clearable disabled style="width:180px;" @change="changeOilfield">
                     <el-option
                         v-for="item in oilList"
                         :key="item.ogfId"
@@ -241,6 +241,9 @@
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} from "@/api/rem/r-intelligentIPA.js";
 import {exportExcel} from '@/lib/exportExcel';
+import {
+    getoilfield, //油田下拉
+} from "@/api/rem/r-wellConnectEvaluate.js";
 // 智能配注-模型运算界面
 import modelOperation from "@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue";
 
@@ -257,6 +260,7 @@ export default {
             this.queryTableData(this.form.tableData2)
         }
         this.src = 'https://intelinj.tjioms-dev.tjltd.cnooc/'
+        this.selectData();
     },
     data() {
         return {
@@ -302,6 +306,25 @@ export default {
         }
     },
     methods: {
+        // 获取油田下拉数据
+        selectData() {
+            getoilfield().then(({ogfId}) => {
+                this.oilList = ogfId;
+            });
+        },
+        selectblock() {
+            // if (!this.selectField) return;
+            getblock({
+                ogfId: this.queryData.ogfId
+            }).then(({blockList}) => {
+                this.blockList = blockList;
+            });
+            //   }
+        },
+        changeOilfield() {
+            this.selectblock();
+            this.queryData.blockId = ""
+        },
         gogo() {
             this.$router.push({name: this.$route.query.page});
         },
@@ -388,8 +411,8 @@ export default {
         // 框框标题
         doSearch() {
             //if (this.queryData.dateTime) {
-                this.title1 = '单井月度配产计划表'
-                this.title2 = '单井月度配注计划表'
+            this.title1 = '单井月度配产计划表'
+            this.title2 = '单井月度配注计划表'
             /*} else {
                 this.title1 = '单井月度配产计划表'
                 this.title2 = '单井月度配注计划表'
@@ -408,15 +431,18 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                let baseUrl = ''
+                var baseUrl = ''
                 if (window.location.origin.includes('test')) {
                     baseUrl = 'tjioms-test.tjltd.cnooc'
                 } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
                     baseUrl = 'tjioms-dev.tjltd.cnooc'
                 } else if (window.location.origin.includes('tpro')) {
                     baseUrl = 'tjioms-tpro.tjltd.cnooc'
+                }else{
+                    baseUrl = 'tjioms-test.tjltd.cnooc'
                 }
-                window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`, '_blank')
+                window.open('https://ipm.'+baseUrl+'/#/waterflood/merge')
+                //window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`, '_blank')
                 // this.$router.push({name: "schemePrediction"})
             })
         },
