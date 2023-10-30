@@ -77,9 +77,9 @@ export default ({ mode }) => {
       proxy: {
         "/dev-api": {
           // 用于开发环境下的转发请求
-          target: "http://192.168.1.18:38085/prod-api", // 测试环境地址
+          // target: "http://192.168.1.18:38085/prod-api", // 测试环境地址
           // target: "http://10.8.8.158:8080", // 后端联调地址
-          // target: "http://10.77.79.57:8080", // 内网测试地址
+          target: "http://10.77.79.57:8080", // 内网测试地址
           changeOrigin: true,
           rewrite: path => path.replace(/^\/dev-api/, "")
         }
