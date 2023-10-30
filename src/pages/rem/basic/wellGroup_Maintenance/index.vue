@@ -261,7 +261,7 @@ import {
 } from "@/api/basic/master";
 
 export default {
-    name: "wellGroup_Maintenance",
+    name: "WellGroup_Maintenance",
     components: {treeMultipleSelection},
     data() {
         return {

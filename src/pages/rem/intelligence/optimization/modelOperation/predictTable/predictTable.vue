@@ -72,13 +72,13 @@ export default {
       showBtn: [], // 显示操作按钮
       submitData: [],
       tableWaterList: [],
-      props: ["prodListTable",'tStep',],
-      props: {
+      props: ["prodListTable",'tStep','submit1'],
+      /*props: {
         submit1: {
           type: Function,
           default: null
         }
-      },
+      },*/
       prodListTable1: [],
       prodListTable3: [],
       filterList:[],

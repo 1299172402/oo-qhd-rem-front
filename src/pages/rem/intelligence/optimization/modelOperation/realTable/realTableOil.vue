@@ -189,7 +189,7 @@ export default {
       row.date = row.originaldate;
       row.gasProdDaily = row.originalgasProdDaily;
       row.oilProdDaily = row.originaloilProdDaily;
-      row.waterProdDaily = row.waterProdDaily;
+      //row.waterProdDaily = row.waterProdDaily;
       row.edit = false;
     },
     // 切换选中
