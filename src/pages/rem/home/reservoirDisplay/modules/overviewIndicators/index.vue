@@ -559,8 +559,6 @@ export default {
                 oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 type: "1"
             }).then(res=>{
-                debugger;
-                //jgl
                 let devPhaseInfos =res.data.data.devPhaseInfos;
                 let sum = 0.0;
                 for (let i = 0; i < devPhaseInfos.length; i++) {
