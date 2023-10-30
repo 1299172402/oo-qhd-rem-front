@@ -296,7 +296,7 @@ import treeMultipleSelection from "@/components/intelligentOilfield/tree_multipl
 import {exportExcel} from "@/lib/exportExcel";
 
 export default {
-    name: "density",
+    name: "Density",
     dicts: ["sys_normal_disable"],
     components: {
         treeMultipleSelection
