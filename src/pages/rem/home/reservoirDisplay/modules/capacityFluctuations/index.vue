@@ -190,8 +190,8 @@ export default {
                     var previousDay = new Date(res.data.data.maxProdDate);
                     var previousDayTimestamp = previousDay.getTime() - (24 * 60 * 60 * 1000);
                     previousDay.setTime(previousDayTimestamp);
-                    this.prodDate = res.data.data.maxProdDate
-                    this.prodDateCompare = previousDay.format("yyyy-MM-dd")
+                    this.prodDateCompare = res.data.data.maxProdDate
+                    this.prodDate = previousDay.format("yyyy-MM-dd")
                     res.data.data.xdata.forEach((item) => {
                         if(item.indexOf('以上')!=-1){
                             this.histogram.xAxis.data.push(item.replace(/以上/,'(m³)以上'))

@@ -10,7 +10,7 @@
                     disabled
                     clearable
                     style="width:180px"
-                    @change="changeOil"
+                    @change="changeOilfield"
                 >
                     <el-option
                         v-for="item in oilList"
@@ -286,6 +286,9 @@ import {
     getWellGuessResult,
     wellAvgFluidProdAllocUpdate
 } from '@/api/rem/r-intelligentIPA.js'
+import {
+    getoilfield //油田下拉
+} from "@/api/rem/r-wellConnectEvaluate.js";
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {arrayFindAll} from "@/lib/arrayFind";
 
@@ -343,8 +346,28 @@ export default {
             this.queryData.dateTime = params.dateTime
         }
         this.queryWellAvgFluidProdAlloc();
+        this.selectData();
     },
     methods: {
+         // 获取油田下拉数据
+        selectData() {
+            getoilfield().then(({ogfId}) => {
+                this.oilList = ogfId;
+            });
+        },
+        selectblock() {
+            // if (!this.selectField) return;
+            getblock({
+                ogfId: this.queryData.ogfId
+            }).then(({blockList}) => {
+                this.blockList = blockList;
+            });
+            //   }
+        },
+        changeOilfield() {
+            this.selectblock();
+            this.queryData.blockId = ""
+        },
         eeee() {
             let data = new Date()
             if (data.getMonth() < 10) {

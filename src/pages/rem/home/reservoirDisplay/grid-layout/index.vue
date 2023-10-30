@@ -127,6 +127,7 @@ export default {
         GridLayout: VueGridLayout.GridLayout,
         GridItem: VueGridLayout.GridItem
     },
+    name: "Oilexhibition",
     props: {
         // 公司名称
         companyName: {
