@@ -395,7 +395,6 @@ export default {
               }
           measureRecommend(list).then((res)=>{
               const wells = []
-              console.log(res)
               res.data?.data?.indicatorAnalysisDetailInfos.map((n)=>{
                   if(n.code == this.$route.query.measureCode){
                       n?.basis?.map((j)=>{
@@ -403,6 +402,7 @@ export default {
                       })
                   }
               })
+              console.log(wells)
               if(wells.length > 0){
                   let data = {
                       date: this.queryParams.endTime,
