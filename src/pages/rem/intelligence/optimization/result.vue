@@ -11,9 +11,9 @@
         <header-search height="auto">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
-                <el-select v-model="queryData.ogfId" filterable clearable disabled style="width:180px" @change="changeOilfield">
+                <el-select v-model="selectOilField" filterable clearable disabled style="width:180px">
                     <el-option
-                        v-for="item in oilList"
+                        v-for="item in oilField"
                         :key="item.ogfId"
                         :label="item.ogfName"
                         :value="item.ogfId"
@@ -228,6 +228,7 @@ import {
 import {
     getoilfield, //油田下拉
 } from "@/api/rem/r-wellConnectEvaluate.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import Iframe from '@/components/rem/tools/iframe.vue'
 
 export default {
@@ -238,6 +239,7 @@ export default {
     mixins: [queryConditionMixin],
     data() {
         return {
+            oilField: [],
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
                 blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
@@ -270,6 +272,18 @@ export default {
         }
     },
     methods:{
+        getOilFields() {
+        let _this = this;
+        QueryOgfDetail({}).then((res) => {
+            _this.oilField = res.data.data;
+            //选择油田默认选秦皇岛32-6油田
+            if (_this.oilField.length == 0) {
+            _this.selectOilField = "";
+            } else {
+            _this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+            }
+        });
+        },
         // 获取油田下拉数据
         selectData() {
             getoilfield().then(({ogfId}) => {
@@ -505,7 +519,7 @@ export default {
 
     },
     created() {
-        this.selectData()
+        this.getOilFields();
         const params = JSON.parse(localStorage.getItem('OPTIMIZATION_DETAIL'))
         if (params) {
             this.queryData.ogfId = params.ogfId
