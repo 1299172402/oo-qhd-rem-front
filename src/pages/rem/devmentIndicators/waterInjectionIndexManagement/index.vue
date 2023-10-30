@@ -79,7 +79,7 @@
             <el-row>
               <el-col :span="15">
                 <div style="vertical-align: middle; text-align: center">
-                  <span style="font-size: 26px">{{ item.sz }}</span>
+                  <span style="font-size: 26px">{{ item.sz | numberFormat }}</span>
                   <sub style="color: #8fa4cc; font-size: 15px">
                     {{ item.dw }}
                   </sub>
@@ -94,8 +94,8 @@
                     <el-col :span="13" style="color: #8fa4cc">环比上月</el-col>
                     <el-col :span="11">
                       <template v-if="item.hb">
-                        <span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb | numberFormat }}% ↑</span>
-                        <span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb | numberFormat }}% ↓</span>
+                        <span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb }}% ↑</span>
+                        <span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb }}% ↓</span>
                       </template>
                       <span v-else> - </span>
                     </el-col>
@@ -114,8 +114,8 @@
                     <el-col :span="13" style="color: #8fa4cc">环比上年</el-col>
                     <el-col :span="11">
                       <template v-if="item.hb">
-                        <span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb | numberFormat }}% ↑</span>
-                        <span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb | numberFormat }}% ↓</span>
+                        <span v-if="item.hbTag == 'up'" style="color: #00c39f">{{ item.hb }}% ↑</span>
+                        <span v-if="item.hbTag == 'down'" style="color: #cd3d00">{{ item.hb }}% ↓</span>
                       </template>
                       <span v-else> - </span>
                     </el-col>
@@ -133,8 +133,8 @@
                     <el-col :span="13" style="color: #8fa4cc">同比去年</el-col>
                     <el-col :span="11">
                       <template v-if="item.tb">
-                        <span v-if="item.tbTag == 'up'" style="color: #00c39f">{{ item.tb | numberFormat }}% ↑</span>
-                        <span v-if="item.tbTag == 'down'" style="color: #cd3d00">{{ item.tb | numberFormat }}% ↓</span>
+                        <span v-if="item.tbTag == 'up'" style="color: #00c39f">{{ item.tb }}% ↑</span>
+                        <span v-if="item.tbTag == 'down'" style="color: #cd3d00">{{ item.tb }}% ↓</span>
                       </template>
                       <span v-else> - </span>
                     </el-col>
@@ -143,8 +143,8 @@
                     <el-col :span="13" style="color: #8fa4cc">与考核相比</el-col>
                     <el-col :span="11">
                       <template v-if="item.kh">
-                        <span v-if="item.khTag == 'up'" style="color: #00c39f">{{ item.kh | numberFormat }}% ↑</span>
-                        <span v-if="item.khTag == 'down'" style="color: #cd3d00">{{ item.kh | numberFormat }}% ↓</span>
+                        <span v-if="item.khTag == 'up'" style="color: #00c39f">{{ item.kh }}% ↑</span>
+                        <span v-if="item.khTag == 'down'" style="color: #cd3d00">{{ item.kh }}% ↓</span>
                       </template>
                       <span v-else> - </span>
                     </el-col>
@@ -353,10 +353,10 @@ export default {
   filters: {
     //过滤规则 保留两位小数
     numberFormat(val) {
-      if (val) {
+      if (!isNaN(parseFloat(val))) {
         return parseFloat(Number(val).toFixed(2));
       } else {
-        return 0;
+        return "-";
       }
     },
   },

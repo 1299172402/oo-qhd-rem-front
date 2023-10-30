@@ -824,6 +824,7 @@ export default {
             },
           },
         ],
+        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
         series: [],
       },
       //综合递减率
@@ -1472,7 +1473,7 @@ export default {
   watch: {
     selectOilFieldId(val) {
       this.getFetchFields(val);
-      this.getFetchPlatforms(val);
+      // this.getFetchPlatforms(val);
     },
   },
   mounted() {
@@ -1563,7 +1564,7 @@ export default {
       QueryReservoirAnalyseUnit({ ogfId: oilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.blockList = res.data.data;
-          _this.blockList.unshift({
+          this.blockList.unshift({
             reservoirAnalyseUnitId: oilFieldId,
             reservoirAnalyseUnitName: "全部",
             reservoirAnalyseUnitNo: "全部",
@@ -1716,27 +1717,27 @@ export default {
           }
           //图例数据
           this.inOilProduction.legend.data = legendData;
-          //各线的数据
-          this.inOilProduction.series = seriesData;
-          if (this.searchForm.selectUnitOfProduction == "m") {
-            this.inOilProduction.yAxis[0].name = "日产m³/d";
-            this.inOilProduction.yAxis[1].name = "年产10⁴m³";
-          } else if (this.searchForm.selectUnitOfProduction == "t") {
-            this.inOilProduction.yAxis[0].name = "日产t/d";
-            this.inOilProduction.yAxis[1].name = "年产10⁴t";
-          }
+          // //各线的数据
+          // this.inOilProduction.series = seriesData;
+          // if (this.searchForm.selectUnitOfProduction == "m") {
+          //   this.inOilProduction.yAxis[0].name = "日产m³/d";
+          //   this.inOilProduction.yAxis[1].name = "年产10⁴m³";
+          // } else if (this.searchForm.selectUnitOfProduction == "t") {
+          //   this.inOilProduction.yAxis[0].name = "日产t/d";
+          //   this.inOilProduction.yAxis[1].name = "年产10⁴t";
+          // }
         } else {
           //图例数据
           this.inOilProduction.legend.data = legendData;
-          //各线的数据
-          this.inOilProduction.series = seriesData;
-          if (this.searchForm.selectUnitOfProduction == "m") {
-            this.inOilProduction.yAxis[0].name = "日产m³/d";
-            this.inOilProduction.yAxis[1].name = "年产10⁴m³";
-          } else if (this.searchForm.selectUnitOfProduction == "t") {
-            this.inOilProduction.yAxis[0].name = "日产t/d";
-            this.inOilProduction.yAxis[1].name = "年产10⁴t";
-          }
+          // //各线的数据
+          // this.inOilProduction.series = seriesData;
+          // if (this.searchForm.selectUnitOfProduction == "m") {
+          //   this.inOilProduction.yAxis[0].name = "日产m³/d";
+          //   this.inOilProduction.yAxis[1].name = "年产10⁴m³";
+          // } else if (this.searchForm.selectUnitOfProduction == "t") {
+          //   this.inOilProduction.yAxis[0].name = "日产t/d";
+          //   this.inOilProduction.yAxis[1].name = "年产10⁴t";
+          // }
         }
       });
     },
@@ -1796,23 +1797,42 @@ export default {
           //同比数据
           zb.tb = detail.moy;
           zb.tbTag = detail.yearOnYearTag;
-
           let legendData = [];
-          let series = {};
           let seriesData = [];
-          let chartDatas = res.data.data.chart.linearDataSets[0].linearData;
-          legendData.push(res.data.data.chart.linearDataSets[0].label);
-          series.name = res.data.data.chart.linearDataSets[0].label;
-          series.type = "line";
-          chartDatas.forEach((item, index) => {
-            let point = [];
-            point.push(item.label.substring(0, 7));
-            point.push(item.value);
-            seriesData.push(point);
+          let xData = [];
+          let xSet = new Set();
+          let linearCharts = res.data.data.chart.linearDataSets;
+          linearCharts.forEach((item, index) => {
+            legendData.push(item.label);
+            let series = {};
+            series.name = item.label;
+            if (item.label == "去年实际值") {
+              series.itemStyle = {
+                normal: {
+                  lineStyle: {
+                    width: 5,
+                    type: "dotted",
+                  },
+                },
+              };
+            }
+            series.type = "line";
+            let lineData = item.linearData;
+            let seriesMess = [];
+            lineData.forEach((dot, index) => {
+              let point = [];
+              point.push(dot.label.substring(5, 7));
+              xSet.add(dot.label.substring(5, 7));
+              point.push(dot.value);
+              seriesMess.push(point);
+            });
+            series.data = seriesMess;
+            seriesData.push(series);
           });
-          series.data = seriesData;
+          xData = Array.from(xSet).sort();
+          this.productionSpeed.xAxis.data = xData;
           this.productionSpeed.legend.data = legendData;
-          this.productionSpeed.series.push(series);
+          this.productionSpeed.series = seriesData;
         } else {
           this.productionSpeed.legend.data = [];
           this.productionSpeed.series = [];
