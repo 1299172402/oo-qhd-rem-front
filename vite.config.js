@@ -75,13 +75,19 @@ export default ({ mode }) => {
       port: 8080,
       open: true,
       proxy: {
+        "/dev-api/rem/api": {
+          target: "http://localhost:8081",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/dev-api\/rem\/api/, "/rem/api"),
+        },
         "/dev-api": {
           // 用于开发环境下的转发请求
-          target: "http://192.168.1.18:38085/prod-api", // 测试环境地址
+          // target: "http://192.168.1.18:38085/prod-api", // 测试环境地址
+          target: "http://10.77.78.250",
           // target: "http://10.8.8.158:8080", // 后端联调地址
           // target: "http://10.77.79.57:8080", // 内网测试地址
           changeOrigin: true,
-          rewrite: path => path.replace(/^\/dev-api/, "")
+          rewrite: (path) => path.replace(/^\/dev-api/, "/prod-api")
         }
       }
     }
