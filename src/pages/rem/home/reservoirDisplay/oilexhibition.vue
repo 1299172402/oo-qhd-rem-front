@@ -62,6 +62,7 @@ const moduleName = Object.entries(moduleFiles).reduce(
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 // this.$store.state
 export default {
+    name: "Oilexhibition",
     components: {
         chartsComponents,
         ...moduleName,

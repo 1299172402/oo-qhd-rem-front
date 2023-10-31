@@ -79,7 +79,7 @@
             <el-row>
               <el-col :span="15">
                 <div style="vertical-align: middle; text-align: center">
-                  <span style="font-size: 26px">{{ item.sz }}</span>
+                  <span style="font-size: 26px">{{ item.sz | numberFormat }}</span>
                   <sub style="color: #8fa4cc; font-size: 15px">
                     {{ item.dw }}
                   </sub>
@@ -353,10 +353,10 @@ export default {
   filters: {
     //过滤规则 保留两位小数
     numberFormat(val) {
-      if (val) {
-        return parseFloat(Number(val).toFixed(2));
+      if (!isNaN(parseFloat(val))) {
+        return parseFloat(val).toFixed(2);
       } else {
-        return 0;
+        return "-";
       }
     },
   },

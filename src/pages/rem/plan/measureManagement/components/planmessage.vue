@@ -5,7 +5,7 @@
           <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
 
               <el-form-item label="油田：">
-                  <el-select v-model="queryParams.selectOilField" disabled>
+                  <el-select v-model="queryParams.selectOilField" >
                       <el-option
                           v-for="item in oilFields"
                           :key="item.oilFieldId"
@@ -402,6 +402,7 @@ export default {
                       })
                   }
               })
+              console.log(wells)
               if(wells.length > 0){
                   let data = {
                       date: this.queryParams.endTime,

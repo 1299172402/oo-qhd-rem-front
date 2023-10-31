@@ -14,9 +14,9 @@
         <header-search v-if="activeName=='first'" style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
-                <el-select v-model="queryData.ogfId" filterable clearable disabled style="width:180px;">
+                <el-select v-model="selectOilField" filterable clearable disabled style="width:180px;">
                     <el-option
-                        v-for="item in oilList"
+                        v-for="item in oilField"
                         :key="item.ogfId"
                         :label="item.ogfName"
                         :value="item.ogfId"
@@ -241,6 +241,10 @@
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate} from "@/api/rem/r-intelligentIPA.js";
 import {exportExcel} from '@/lib/exportExcel';
+import {
+    getoilfield, //油田下拉
+} from "@/api/rem/r-wellConnectEvaluate.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 // 智能配注-模型运算界面
 import modelOperation from "@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue";
 
@@ -257,9 +261,11 @@ export default {
             this.queryTableData(this.form.tableData2)
         }
         this.src = 'https://intelinj.tjioms-dev.tjltd.cnooc/'
+        this.getOilFields();
     },
     data() {
         return {
+            oilField: [],
             iframeWidth: 1,
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
@@ -302,6 +308,37 @@ export default {
         }
     },
     methods: {
+        getOilFields() {
+        let _this = this;
+        QueryOgfDetail({}).then((res) => {
+            _this.oilField = res.data.data;
+            //选择油田默认选秦皇岛32-6油田
+            if (_this.oilField.length == 0) {
+            _this.selectOilField = "";
+            } else {
+            _this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+            }
+        });
+        },
+        // 获取油田下拉数据
+        selectData() {
+            getoilfield().then(({ogfId}) => {
+                this.oilList = ogfId;
+            });
+        },
+        selectblock() {
+            // if (!this.selectField) return;
+            getblock({
+                ogfId: this.queryData.ogfId
+            }).then(({blockList}) => {
+                this.blockList = blockList;
+            });
+            //   }
+        },
+        changeOilfield() {
+            this.selectblock();
+            this.queryData.blockId = ""
+        },
         gogo() {
             this.$router.push({name: this.$route.query.page});
         },
@@ -408,15 +445,17 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                let baseUrl = ''
+                var baseUrl = ''
                 if (window.location.origin.includes('test')) {
                     baseUrl = 'tjioms-test.tjltd.cnooc'
                 } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
                     baseUrl = 'tjioms-dev.tjltd.cnooc'
                 } else if (window.location.origin.includes('tpro')) {
                     baseUrl = 'tjioms-tpro.tjltd.cnooc'
+                }else{
+                    baseUrl = 'tjioms-test.tjltd.cnooc'
                 }
-                window.open('https://ipm.'+this.baseUrl+'/#/waterflood/merge')
+                window.open('https://ipm.'+baseUrl+'/#/waterflood/merge')
                 //window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`, '_blank')
                 // this.$router.push({name: "schemePrediction"})
             })
