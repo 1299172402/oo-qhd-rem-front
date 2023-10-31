@@ -82,6 +82,8 @@ export default {
             },
           axisLabel: {
             show: true,
+              showMinLabel: true,
+              showMaxLabel: true,
             textStyle: {
               color: "#a9a8a8", //X轴文字颜色
             },
