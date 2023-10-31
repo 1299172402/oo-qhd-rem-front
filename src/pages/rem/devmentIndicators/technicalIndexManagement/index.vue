@@ -1718,7 +1718,7 @@ export default {
           //图例数据
           this.inOilProduction.legend.data = legendData;
           // //各线的数据
-          // this.inOilProduction.series = seriesData;
+          this.inOilProduction.series = seriesData;
           // if (this.searchForm.selectUnitOfProduction == "m") {
           //   this.inOilProduction.yAxis[0].name = "日产m³/d";
           //   this.inOilProduction.yAxis[1].name = "年产10⁴m³";
@@ -1730,7 +1730,7 @@ export default {
           //图例数据
           this.inOilProduction.legend.data = legendData;
           // //各线的数据
-          // this.inOilProduction.series = seriesData;
+          this.inOilProduction.series = seriesData;
           // if (this.searchForm.selectUnitOfProduction == "m") {
           //   this.inOilProduction.yAxis[0].name = "日产m³/d";
           //   this.inOilProduction.yAxis[1].name = "年产10⁴m³";
