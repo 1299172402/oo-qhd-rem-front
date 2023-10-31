@@ -6,12 +6,12 @@
             header-title="措施建议表"
             :is-show-max-btn="true"
         >
-            <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('Planmessage')">详细</el-button>
+            <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('Planmessage')">详情</el-button>
             <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downtable">下载</el-button>
             <el-table
                 :data="tableData"
                 highlight-current-row
-                height="calc(100% - 50px)"
+                height="100%"
                 id="tablecsxg"
                 border
                 :row-style="{ height: '0px' }"
