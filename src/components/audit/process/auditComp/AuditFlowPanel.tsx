@@ -60,7 +60,7 @@ export default Vue.extend({
               <div class={"audit-flow-item-left"} style={{ width: `${this.maxWidthStyle}` }}>
                 <div class={"audit-flow-item-left-title"}>{item.taskName}</div>
                 <div class={"audit-flow-item-left-person"}>{item.assigneeName}</div>
-                <div class={"audit-flow-item-left-time"}>{ moment(item.endDate).format("YYYY-MM-DD HH:mm:ss") }</div>
+                <div class={"audit-flow-item-left-time"}>{ item.endDate ? moment(item.endDate).format("YYYY-MM-DD HH:mm:ss") : "" }</div>
               </div>
               <t-timeline-item class={"audit-flow-item-right"}>
                 <div class={"audit-flow-item-right-title"}>{getActionDesc(item)}</div>

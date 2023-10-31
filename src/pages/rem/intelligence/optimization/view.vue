@@ -4,16 +4,15 @@
             <div class="my-5" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
                 <el-select
-                    v-model="queryData.ogfId"
+                    v-model="selectOilField"
                     class="f2"
                     filterable
                     disabled
                     clearable
                     style="width:180px"
-                    @change="changeOilfield"
                 >
                     <el-option
-                        v-for="item in oilList"
+                        v-for="item in oilField"
                         :key="item.ogfId"
                         :label="item.ogfName"
                         :value="item.ogfId"
@@ -291,6 +290,8 @@ import {
 } from "@/api/rem/r-wellConnectEvaluate.js";
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {arrayFindAll} from "@/lib/arrayFind";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
+
 
 export default {
     components: {
@@ -299,6 +300,7 @@ export default {
     mixins: [queryConditionMixin],
     data() {
         return {
+            oilField: [],
             queryData: {
                 ogfId: this.$route.params.ogfId,
                 blockId: this.$route.params.blockId,
@@ -346,9 +348,21 @@ export default {
             this.queryData.dateTime = params.dateTime
         }
         this.queryWellAvgFluidProdAlloc();
-        this.selectData();
+        this.getOilFields();
     },
     methods: {
+        getOilFields() {
+        let _this = this;
+        QueryOgfDetail({}).then((res) => {
+            _this.oilField = res.data.data;
+            //选择油田默认选秦皇岛32-6油田
+            if (_this.oilField.length == 0) {
+            _this.selectOilField = "";
+            } else {
+            _this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+            }
+        });
+        },
          // 获取油田下拉数据
         selectData() {
             getoilfield().then(({ogfId}) => {

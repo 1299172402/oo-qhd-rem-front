@@ -14,8 +14,8 @@
       </el-button>
     </div>
     <grid-layout
-      :class="$store.getters['user/getIsMax'] ? 'fullWindow' : 'smallWindow'"
-      :style="{ position: $store.getters['user/getIsMax'] ? 'absolute' : 'relative' }"
+      class="smallWindow"
+      :style="{ position: 'relative' }"
       :layout.sync="currentLayout"
       :col-num="colNum"
       :row-height="singleHeight"
@@ -41,14 +41,14 @@
         :h="item.h"
         :i="item.i"
         :style="{
-          display:
+          visibility:
             currentOpertTitle === ''
-              ? 'block'
+              ? 'inherit'
               : item.name === currentOpertTitle && $store.getters['user/getIsMax']
-                ? 'block'
+                ? 'inherit'
                 : !$store.getters['user/getIsMax']
-                  ? 'block'
-                  : 'none',
+                  ? 'inherit'
+                  : 'hidden',
         }"
         drag-allow-from=".vue-draggable-handle"
         drag-ignore-from=".no-drag"
@@ -303,15 +303,6 @@ export default {
   top: 0;
   left: 0;
   height: 100%;
-}
-
-.fullWindow >>> .vue-grid-item {
-  /* 最大化 */
-  width: 100vw !important;
-  height: 100vh !important;
-  transform: translate3d(0, 0, 0) !important;
-  z-index: 999;
-  position: relative;
 }
 
 .smallWindow >>> .vue-grid-item {

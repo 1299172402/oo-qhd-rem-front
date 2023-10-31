@@ -61,7 +61,9 @@ export default {
             xAxis: {
                 type: 'category',
                 axisLabel: {
-                    color: '#698398'
+                    color: '#698398',
+                    showMinLabel: true,
+                    showMaxLabel: true,
                 },
                 axisTick: {
                     show:true,
