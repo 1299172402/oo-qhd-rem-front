@@ -103,7 +103,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <pagination v-if="pageTotal" :pageSizes="[16, 50, 100]" :total="pageTotal" :page.sync="queryData.page"
+            <pagination v-if="pageTotal" :pageSizes="[10, 50, 100]" :total="pageTotal" :page.sync="queryData.page"
                         :limit.sync="queryData.pageSize" @pagination="pagination"/>
         </page-panel>
     </div>
@@ -122,7 +122,7 @@ import {queryOilFieldIncident, queryOilFieldIncidentType} from "@/api/rem/reserv
 import {QueryPlatformDetail} from "@/api/rem/marster.js"
 
 export default {
-    name: 'oilEventDetail',
+    name: 'OilEventDetail',
     data() {
         return {
             pageTotal: '',
@@ -133,7 +133,7 @@ export default {
                 selectDate: [],
                 event: [],
                 page: 1,
-                pageSize: 16,
+                pageSize: 10,
                 orgId: '715AD1CD60484BB59E737CD18A9DE44A',
             },
             oilFields: [],
@@ -249,7 +249,7 @@ export default {
                 selectDate: [],
                 event: [],
                 page: 1,
-                pageSize: 16,
+                pageSize: 10,
             }
             this.initializeDate();
             await this.getList();

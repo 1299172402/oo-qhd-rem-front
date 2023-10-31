@@ -1,8 +1,9 @@
 <template>
         <div class="box">
-            <img id="im" height="100%" width="80%" />
-            <el-image v-if="initiate" :src="require('@/icons/svg/u2080.png')" style="height:20px;position: absolute;cursor:pointer;left:93%;top:30%" @click="startImageRotation"></el-image>
-            <el-image v-else  :src="require('@/icons/svg/u2077.png')" style="height:20px;cursor:pointer;position: absolute;left:93%;top:30%" @click="stop"></el-image>
+            <p style="position: absolute;top:3%;left:30%">{{this.tieme.slice(0,10)}}</p>
+            <img id="im" height="100%" width="360px" />
+            <el-image v-if="initiate" :src="require('@/icons/svg/u2080.png')" style="height:20px;width:20px;position: absolute;cursor:pointer;left:93%;top:30%" @click="startImageRotation"></el-image>
+            <el-image v-else  :src="require('@/icons/svg/u2077.png')" style="height:20px;width:20px;cursor:pointer;position: absolute;left:93%;top:30%" @click="stop"></el-image>
            
         </div>
 </template>
@@ -20,12 +21,14 @@ export default {
           image:[],
             initiate:true,
             SImg:'',
+            tieme:'',
             rotationTimer:''
         };
     },
   mounted() {
       this.SImg = document.getElementById('im');
       GetModelBasicByMaxModelSort().then((res)=>{
+          this.tieme = res.result.modelBasicEntity.inputDate
           let data = {
               modelBasicId:res.result.modelBasicEntity.modelBasicId,
               modelLayerId: '27F34A07749947F5BC2417DD0E18D14B',
