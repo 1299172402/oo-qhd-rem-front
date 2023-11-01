@@ -99,7 +99,7 @@ export default {
                 exportExcel("#tablecsxg", "措施建议表");
         },
         linkroute(rname) {
-            this.$router.push({name: rname,query:{measureCode:'0100110',currentDate:this.evalTime,platform:'3FC9A818F5BC43B88270DB80BBB3018F'}});
+            this.$router.push({name: rname,query:{currentDate:this.tableData[this.tableData.length-1].evalTime,scourePage:"措施建议表详情"}});
         },
     }
 };
