@@ -14,16 +14,16 @@
             </el-select>
             <!--   轮播按钮   -->
             <el-row style="float: right ">
-                <el-image :src="require('@/icons/svg/u2079.png')" style="height:20px" @click="loopShow2(0)"></el-image>
-                <el-image :src="require('@/icons/svg/u2082.png')" style="height:20px;margin-left: 10px;" @click="clickBtnPre()"></el-image>
-                <el-image :src="require('@/icons/svg/u2077.png')" style="height:20px;margin-left: 10px;" @click="stop"></el-image>
-                <el-image :src="require('@/icons/svg/u2080.png')" style="height:20px;margin-left: 10px;" @click="loop"></el-image>
-                <el-image :src="require('@/icons/svg/u2081.png')" style="height:20px;margin-left: 10px;" @click="clickBtnNext()"></el-image>
-                <el-image :src="require('@/icons/svg/u2078.png')" style="height:20px;margin-left: 10px;" @click="loopShow(timechange[1])"></el-image>
+                <el-image :src="require('@/icons/svg/u2079.png')" style="height:20px;width: 20px" @click="loopShow2(0)"></el-image>
+                <el-image :src="require('@/icons/svg/u2082.png')" style="height:20px;width: 20px;margin-left: 10px;" @click="clickBtnPre()"></el-image>
+                <el-image :src="require('@/icons/svg/u2077.png')" style="height:20px;width: 20px;margin-left: 10px;" @click="stop"></el-image>
+                <el-image :src="require('@/icons/svg/u2080.png')" style="height:20px;width: 20px;margin-left: 10px;" @click="loop"></el-image>
+                <el-image :src="require('@/icons/svg/u2081.png')" style="height:20px;width: 20px;margin-left: 10px;" @click="clickBtnNext()"></el-image>
+                <el-image :src="require('@/icons/svg/u2078.png')" style="height:20px;width: 20px;margin-left: 10px;" @click="loopShow(timechange[1])"></el-image>
             </el-row>
             <!--修改文字轮播版-->
             <el-row v-show="showfont" style="font-size: 14px;line-height: 20px; width:300px;margin-top: 35px">
-                <div v-for="(step, index) in timestep2" :key="index" style="color: white;font-size: 14px;"
+                <div v-for="(step, index) in timestep2" :key="index" style="color: #8FA4CC;font-size: 14px;"
                      v-show="index === num">
                     ({{ num + 1 }}) {{ step }}
                 </div>
@@ -50,9 +50,9 @@
                 <img width="100%" height="100%"  id="imagebody"></img>
             </el-row>
             <el-row style="text-align: center;margin-top: 5px">
-                <el-button type="text" class="radionpv" style="color: white; font-size: 14px;"
+                <el-button type="text" class="radionpv" style="color: #8FA4CC; font-size: 14px;"
                            @click="beforeOptimization(b = 1)">历史阶段</el-button>
-                <el-button type="text" class="radionpv" style="margin-left:70px;color: white; font-size: 14px;line-height:0px"
+                <el-button type="text" class="radionpv" style="margin-left:70px;color: #8FA4CC; font-size: 14px;line-height:0px"
                            @click="afterOptimization(a = 0)">预测阶段</el-button>
             </el-row>
         </div>
@@ -124,6 +124,11 @@ export default {
             this.h();
         }, 1000)
     },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
     watch: {
         tt: {
             handler: function (value) {
@@ -131,7 +136,18 @@ export default {
                     this.run();
                 }
             }
-        }
+        },
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.optionfczc.legend.textStyle.color = "#fff";
+                } else {
+                    this.optionfczc.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate: true
+        },
     },
     methods: {
         run() {
