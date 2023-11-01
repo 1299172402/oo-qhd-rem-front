@@ -906,6 +906,8 @@ export default {
             data: [],
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,

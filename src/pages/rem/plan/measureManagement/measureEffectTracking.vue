@@ -69,7 +69,13 @@
     <div style="height: auto; padding-top: 0; margin-bottom: 14px" class="svg">
       <el-table v-show="type == 0" highlight :data="oilWellTableData" border style="width: 100%">
         <el-table-column type="index" align="center" width="80" label="序号"></el-table-column>
-        <el-table-column prop="wellName" header-align="center" align="center" label="井号" width="160"></el-table-column>
+        <el-table-column
+          prop="wellName"
+          header-align="center"
+          align="center"
+          label="井号"
+          width="160"
+        ></el-table-column>
         <el-table-column
           prop="beginDate"
           header-align="center"
@@ -1014,6 +1020,8 @@ export default {
             axisLabel: {
               show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1083,6 +1091,8 @@ export default {
             },
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1524,6 +1534,8 @@ export default {
           axisLabel: {
             show: false,
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -1649,6 +1661,8 @@ export default {
             axisLabel: {
               show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1684,6 +1698,8 @@ export default {
             },
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1952,6 +1968,8 @@ export default {
             axisLabel: {
               show: true,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1971,6 +1989,8 @@ export default {
             type: "category",
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -2866,6 +2886,8 @@ export default {
               axisLabel: {
                 show: true,
                 color: "#8FA4CC",
+                showMinLabel: true,
+                showMaxLabel: true,
               },
               axisTick: {
                 show: true,

@@ -346,7 +346,7 @@ import {
 } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import dayjs from "dayjs";
 export default {
-  name: "waterInjectionIndexManagement",
+  name: "WaterInjectionIndexManagement",
   components: {
     Echart,
   },

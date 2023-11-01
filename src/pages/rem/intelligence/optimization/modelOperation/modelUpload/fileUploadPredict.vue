@@ -27,10 +27,10 @@
                     :accept="scope.row.accept"
                     :file-list="fileList"
                     :on-change="(file,fileList)=>{return handleChange(file, fileList, scope.row, scope.$index)}">
-                      <el-button type="text" style="color: white;"
+                      <el-button type="text" style="color: #8FA4CC;"
                               icon="el-icon-thumb" @click="choose(scope.$index,scope.row)">选择
                   </el-button>
-                  <el-button type="text" icon="el-icon-upload2" style="color: white;"
+                  <el-button type="text" icon="el-icon-upload2" style="color: #8FA4CC;"
                       @click.stop="uploadFiles(scope.row,scope.$index)">上传
                   </el-button>
                   <el-button  type="text"
@@ -166,6 +166,24 @@ export default {
   mounted() {
     this.receiveId();
   },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.optionfczc.legend.textStyle.color = "#fff";
+                } else {
+                    this.optionfczc.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate: true
+        },
+    },
   methods:{
     //表格表头样式
     headerClass({ column,rowIndex,columnIndex }){
