@@ -50,7 +50,7 @@
 <!--            </div>-->
             <!-- 1、上传历史阶段文件dialog -->
             <div>
-                <el-dialog title="上传历史阶段文件" 
+                <el-dialog title="上传历史阶段文件" :close-on-click-modal="false" :show-close="false"
                            :visible.sync="modelDialogVisibleF" width="47%"
                            style="position: absolute; top: -25px">
                     <fileUpload ref="fileChild" :modelBasicId="modelBasicId" @aa="aa" @parseSureButtonTrue="parseSureButtonTrue"
@@ -243,7 +243,7 @@
                     <el-row type="flex" justify="space-between" :gutter="15">
                         <el-col :span="12">
                             <pagePanel headerTitle="WCONPROD" :show-btn="true"
-                                       style="height: calc(100% - 10px)">
+                                       style="height: calc(100% - 10px);width: 100%">
                                 <realTableOil :prodRealList="prodRealList" :modelBasicId="modelBasicId" :startDate="startDate"
                                               :endDate="endDate" ref="prodRealList"></realTableOil>
                             </pagePanel>
@@ -453,7 +453,7 @@ export default {
                 tooltip: {
                     backgroundColor: "",
                     textStyle: {
-                        color: "#FFFFFF",
+                        color: "#8FA4CC",
                         fontSize: "16",
                     },
                     trigger: "axis",
@@ -468,7 +468,7 @@ export default {
                     x: 240,
                     data: ["当前值", "优化值"],
                     textStyle: {
-                        color: "#FFFFFF",
+                        color: "#8FA4CC",
                         fontSize: 15,
                     },
                 },
@@ -483,7 +483,7 @@ export default {
                         },
                     },
                     iconStyle: {
-                        borderColor: "#FFFFFF",
+                        borderColor: "#8FA4CC",
                     },
                 },
                 dataZoom: [
@@ -521,7 +521,7 @@ export default {
                             rotate: 25,
                             // x轴的字体样式
                             textStyle: {
-                                color: "#FFFFFF",
+                                color: "#8FA4CC",
                                 fontSize: "13",
                             },
                         },
@@ -539,7 +539,7 @@ export default {
                         },
                         nameTextStyle: {
                             padding: [0, 0, -60, -10],
-                            color: "#FFFFFF",
+                            color: "#8FA4CC",
                             fontSize: "13",
                         },
                     },
@@ -551,13 +551,13 @@ export default {
                     name: "m³/天",
                     nameTextStyle: {
                         padding: [0, 0, 10, -45],
-                        color: "#FFFFFF",
+                        color: "#8FA4CC",
                         fontSize: "13",
                     },
                     axisLabel: {
                         show: true,
                         textStyle: {
-                            color: "#FFFFFF",
+                            color: "#8FA4CC",
                             fontSize: "13",
                         },
                     },
@@ -606,6 +606,24 @@ export default {
     // },
     created() {
         this.getCaseId()
+    },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.optionfczc.legend.textStyle.color = "#fff";
+                } else {
+                    this.optionfczc.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate: true
+        },
     },
     methods: {
         //进入页面之后调用“获取最新方案”的方法
@@ -700,7 +718,9 @@ export default {
             const param = {
                 modelBasicId: this.modelBasicInfo.modelBasicId,
             };
+            console.log('是否显示图片sdfghjklhhhhhhhhhhhh')
             GetSchPicTstepData(param).then((res) => {
+                console.log('123456789hhhhhhhhhhhhhhhhhh',res)
                 this.pictureOption = res.result.fileStepList;
                 console.log("res.result.fileStepList", res.result.fileStepList);
                 this.falutName = res.result.fileStepList[0].stepTime;
@@ -764,7 +784,7 @@ export default {
                 this.echartsListaa.series[0].data = this.startList;
                 this.echartsListaa.series[1].data = this.endList;
                 this.echartsListaa.series[0].markLine.data = this.markLineData;
-                //this.echartsListaa = this.echartsListaa
+                this.echartsListaa = this.echartsListaa
             });
         },
         changeSelectImage(item) {
@@ -1457,7 +1477,7 @@ export default {
             // this.zhezhao = false;
             this.dialogReal = true;
             this.dialogVisible = false;
-            this.nextTick(() => {
+            this.$nextTick(() => {
                 this.$refs.prodRealList.DownloadTable();
                 this.$refs.injRealList.DownloadINjTable();
             });

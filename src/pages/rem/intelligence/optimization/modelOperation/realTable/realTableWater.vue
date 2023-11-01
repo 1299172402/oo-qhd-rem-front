@@ -1,51 +1,49 @@
 <template>
   <div>
-      <el-table ref="multipleTable" :data="injRealList" height="520"
-                      :header-cell-style="headerClass"
-                v-loading="pageLoading" element-loading-text="加载中" element-loading-background="rgba(0, 40, 80, 0.7)"
-                       stripe>
-      <el-table-column type="index" label="序号" align="center" :index=" (this.currentPage-1)*this.pageSize+1"  />
-      <el-table-column prop="name" label="井名" align="center">
+      <el-table ref="multipleTable" :data="injRealList" height="650" 
+                v-loading="pageLoading" element-loading-text="加载中" element-loading-background="rgba(0, 40, 80, 0.7)">
+      <el-table-column type="index" label="序号" min-width="10" align="center" :index=" (this.currentPage-1)*this.pageSize+1"  />
+      <el-table-column prop="name" label="井名" align="center" min-width="110">
         <template slot-scope="scope">
           <span >{{scope.row.wellName}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="time" label="时间" align="center">
+      <el-table-column prop="time" label="时间" min-width="70" align="center">
         <template slot-scope="scope">
           <span>{{scope.row.date}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="开关井//状态" :render-header="renderHeader" align="center">
+      <el-table-column prop="status" label="开关井//状态" :render-header="renderHeader" min-width="50" align="center">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.status" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.status}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="ctrlMode" label="控制//模式" :render-header="renderHeader" align="center">
+      <el-table-column prop="ctrlMode" label="控制//模式" :render-header="renderHeader" min-width="45" align="center">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.ctrlMode" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.ctrlMode}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="defaultValue" label="默认//参数" :render-header="renderHeader" align="center">
+      <el-table-column prop="defaultValue" label="默认//参数" :render-header="renderHeader" min-width="40" align="center">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.defaultValue" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.defaultValue}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="injType" label="注入类型" align="center">
+      <el-table-column prop="injType" label="注入类型" min-width="60" align="center">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.injType" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.injType}}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="injDaily" label="日注入量" width="80px" align="center">
+      <el-table-column prop="injDaily" label="日注入量" min-width="60" align="center">
         <template slot-scope="scope">
           <input type="text" v-model="scope.row.injDaily" v-show="scope.row.edit" />
           <span v-show="!scope.row.edit">{{scope.row.injDaily}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作"  align="center">
+      <el-table-column label="操作" min-width="100"  align="center">
         <template slot-scope="scope">
           <el-button size="mini" v-show="!scope.row.edit" class="buttonClassLogo"
                      style="background-color: transparent;color: rgba(255,255,255,0.8);border: 1px dashed rgba(255,255,255,0.5)"
@@ -60,7 +58,6 @@
           </el-row>
         </template>
       </el-table-column>
-
     </el-table>
 
     <div class="page">
@@ -72,7 +69,7 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage"
         :page-size="100"
-        style="text-align: center;">
+        style="float: right;margin-top: 10px">
       </el-pagination>
     </div>
   </div>
@@ -101,6 +98,24 @@ export default {
       prodTotal:undefined
     }
   },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.optionfczc.legend.textStyle.color = "#fff";
+                } else {
+                    this.optionfczc.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate: true
+        },
+    },
   methods: {
     renderHeader(h, { column }) {
       return h("span", {}, [
@@ -156,13 +171,7 @@ export default {
         //this.schDownLoading = false
       })
     },
-
-    //表格表头样式
-    headerClass() {
-      return 'background-color:transparent!important;' +
-          'color:white;' +
-          'text-align:center!important'
-    },
+      
     // 获取选中行的这一条数据
     handleSelectionChange(val) {
       this.multipleSelection = val;

@@ -7,7 +7,7 @@ import Axios from './dispenseRequest';
 // const pathWrite = 'http://10.86.55.41:8005'; //CZY
 // const pathWrite = 'https://dl-front-qhd32-6znyt.tjdevapp.cnooc/dastudio/'; //测试环境地址
 //const pathWrite = 'https://dl-front-qhd32-6znyt.tj.app.cnooc/dastudio/'; //生产地址
-const pathWrite = 'https://intelligentdispensing.tjioms-dev.tjltd.cnooc/'; //后端接口地址-迁移系统-开发环境
+const pathWrite = 'https://intelligentdispensing.tjioms-tpro.tjltd.cnooc/'; //后端接口地址-迁移系统-开发环境
 // const pathWrite = 'https://intelligentdispensing.tjioms-dev.tjltd.cnooc/'
 // const pathWrite = 'https://intelligentdispensing.tjioms-test.tjltd.cnooc/'; //新环境地址(迁移系统)测试环境
 // const pathWrite = 'https://dastudio-qhd32-6znyt.tj.app.cnooc/'
