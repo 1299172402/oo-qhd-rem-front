@@ -246,6 +246,8 @@ export default {
               fontSize: 12,
               show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,

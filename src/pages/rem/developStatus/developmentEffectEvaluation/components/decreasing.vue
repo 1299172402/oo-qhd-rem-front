@@ -135,6 +135,8 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
             margin: 20,
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -218,6 +220,8 @@ export default {
           axisLabel: {
             margin: 20,
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -322,6 +326,8 @@ export default {
           axisLabel: {
             margin: 20,
             color: "#8FA4CC",
+            showMinLabel: true,
+              showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -427,6 +433,8 @@ export default {
           axisLabel: {
             margin: 20,
             color: "#8FA4CC",
+            showMinLabel: true,
+              showMaxLabel: true,
           },
           axisTick: {
             show: true,

@@ -180,7 +180,7 @@ import { exportExcel } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
 
 export default {
-  // name: "waterQuality",
+  name: "WaterQuality",
   components: {
     Echart,
   },

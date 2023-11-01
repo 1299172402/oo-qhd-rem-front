@@ -179,7 +179,7 @@ import { exportExcel, exportExcelFromJson } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
 
 export default {
-  // name: "splitHole",
+  name: "SplitHole",
   components: {
     Echart,
   },

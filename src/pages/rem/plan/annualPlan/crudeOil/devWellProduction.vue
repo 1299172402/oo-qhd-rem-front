@@ -148,38 +148,42 @@ export default {
           itemHeight: 6,
           itemGap: 14,
         },
-        xAxis: {
-          name: "日期 (日)",
-          // nameTextStyle: {
-          //     color: '#8FA4CC',
-          //     fontSize: 14,
-          // },
-          // nameLocation: 'center',
-          nameGap: 30,
-          type: "category",
-          axisLabel: {
-            color: "#8FA4CC",
-            padding: [10, 0, 0, 0],
-            fontSize: 14,
-            // interval: function (index, val) {
-            //   if (val.substr(-2) == "01") {
-            //     return true;
-            //   } else {
-            //     return false;
-            //   }
+        xAxis: [
+          {
+            name: "日期 (日)",
+            // nameTextStyle: {
+            //     color: '#8FA4CC',
+            //     fontSize: 14,
             // },
-            // rotate: 20,
-          },
-          axisTick: {
-            show: true,
-            inside: true,
-          },
-          axisLine: {
-            lineStyle: {
+            // nameLocation: 'center',
+            nameGap: 30,
+            type: "category",
+            axisLabel: {
               color: "#8FA4CC",
+              padding: [10, 0, 0, 0],
+              fontSize: 14,
+              showMinLabel: true,
+              showMaxLabel: true,
+              // interval: function (index, val) {
+              //   if (val.substr(-2) == "01") {
+              //     return true;
+              //   } else {
+              //     return false;
+              //   }
+              // },
+              // rotate: 20,
+            },
+            axisTick: {
+              show: true,
+              inside: true,
+            },
+            axisLine: {
+              lineStyle: {
+                color: "#8FA4CC",
+              },
             },
           },
-        },
+        ],
         yAxis: [
           {
             type: "value",
@@ -292,7 +296,7 @@ export default {
           //图例数据
           this.devWellLineChart.legend.data = legendData;
           this.devWellLineChart.series = seriesData;
-          this.devWellLineChart.xAxis.data = this.getDay(
+          this.devWellLineChart.xAxis[0].data = this.getDay(
             this.searchForm.selectDate[0] || "2023-01-01",
             this.searchForm.selectDate[1] || "2023-12-31",
           );

@@ -149,7 +149,7 @@ import { fetchOilFields, fetchFields, fieldOilLayers } from "@/api/oilDeposit/re
 import { exportExcel } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
 export default {
-  // name: "dynamicMonitoring",
+  name: "DynamicMonitoring",
   components: {
     Echart,
   },

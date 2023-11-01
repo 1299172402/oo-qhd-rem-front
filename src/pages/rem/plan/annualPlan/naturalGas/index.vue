@@ -150,36 +150,40 @@ export default {
           itemHeight: 6,
           itemGap: 14,
         },
-        xAxis: {
-          name: "日期 (日)",
-          // nameTextStyle: {
-          //     color: '#8FA4CC',
-          //     fontSize: 14,
-          // },
-          nameGap: 55,
-          type: "category",
-          axisLabel: {
-            color: "#8FA4CC",
-            padding: [10, 0, 0, 0],
-            fontSize: 14,
-            // interval: function (index, val) {
-            //   if (val.substr(-2) == "01") {
-            //     return true;
-            //   } else {
-            //     return false;
-            //   }
+        xAxis: [
+          {
+            name: "日期 (日)",
+            // nameTextStyle: {
+            //     color: '#8FA4CC',
+            //     fontSize: 14,
             // },
-          },
-          axisTick: {
-            show: true,
-            inside: true,
-          },
-          axisLine: {
-            lineStyle: {
+            nameGap: 55,
+            type: "category",
+            axisLabel: {
               color: "#8FA4CC",
+              padding: [10, 0, 0, 0],
+              fontSize: 14,
+              showMinLabel: true,
+              showMaxLabel: true,
+              // interval: function (index, val) {
+              //   if (val.substr(-2) == "01") {
+              //     return true;
+              //   } else {
+              //     return false;
+              //   }
+              // },
+            },
+            axisTick: {
+              show: true,
+              inside: true,
+            },
+            axisLine: {
+              lineStyle: {
+                color: "#8FA4CC",
+              },
             },
           },
-        },
+        ],
         yAxis: [
           {
             name: "实际产气量(10⁴m³)",
