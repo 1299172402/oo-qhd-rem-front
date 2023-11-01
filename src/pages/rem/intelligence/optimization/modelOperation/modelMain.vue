@@ -77,12 +77,13 @@
                 </el-dialog>
             </div>
             <!-- 调控参数dialog -->
-            <el-card class="modelManagerClass" v-show="regulateParams" style="background-color: rgba(5,52,73,0.8);z-index: 111">
+            <el-dialog title="调控参数数据" :close-on-click-modal="false" :show-close="false"
+                       :visible.sync="regulateParams" style="z-index: 111" width="100%" height="100%">
                 <el-row type="flex" justify="center" :gutter="25">
                     <el-col :span="7">
                         <!--  区块参数 ——  区块调控值 -->
                         <pagePanel headerTitle="区块参数 : 区块调控值"  :show-btn="true"
-                                   style="height: calc(100% - 10px);height: 650px;">
+                                   style="height: calc(100% - 10px);height: 780px;">
                             <el-table height="calc(100% - 10px)" :data="tableListOne">
                                 <el-table-column property="blockName" label="区块" align="center"></el-table-column>
                                 <el-table-column property="maxBlockValue" label="最大调控值//(m³/d)"
@@ -96,7 +97,7 @@
                     <el-col :span="8">
                         <!--  水井参数 ——  注采参数 -->
                         <pagePanel headerTitle="水井参数 : 注采参数"  :show-btn="true"
-                                   style="height: calc(100% - 10px);height: 650px;">
+                                   style="height: calc(100% - 10px);height: 780px;">
                             <el-table :data="tableListTwo" height="calc(100% - 10px)">
                                 <el-table-column type="index" label="序号" align="center"></el-table-column>
                                 <el-table-column property="modelWellNo" label="操作井名" align="center"></el-table-column>
@@ -111,7 +112,7 @@
                     <el-col :span="8">
                         <!--  油井参数 ——  注采参数 -->
                         <pagePanel headerTitle="油井参数 : 注采参数" :show-btn="true"
-                                   style="height: calc(100% - 10px);height: 650px;">
+                                   style="height: calc(100% - 10px);height: 780px;">
                             <el-table :data="tableListThree" height="calc(100% - 10px)">
                                 <el-table-column type="index" label="序号" align="center"></el-table-column>
                                 <el-table-column property="modelWellNo" label="操作井名" align="center"></el-table-column>
@@ -125,9 +126,9 @@
                     </el-col>
                 </el-row>
                 <el-button @click="regulateParams = false"  size="small" type="primary"
-                           style="height: 30px;font-size: 14px;float: right;margin-top: 20px;margin-right: 30px">退出查看
+                           style="height: 30px;font-size: 14px;float: right;margin-top: 10px;margin-right: 30px;margin-bottom: 10px">退出查看
                 </el-button>
-            </el-card>
+            </el-dialog>
             <!-- 模型运行dialog表格card -->
             <el-dialog style="margin-top: 120px"
                 title="模型运行文件"
