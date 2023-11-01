@@ -318,7 +318,7 @@ import {exportExcel} from '@/lib/exportExcel.js';
 import html2canvas from "html2canvas";
 
 export default {
-    name: 'indexHome',
+    name: 'IndexHome',
     components: {
         Echart
     },

@@ -69,10 +69,12 @@
         id="xczyjhb"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
-       
+          <el-table-column   label="序号" type="index" width="50px" align="center"></el-table-column>
         <el-table-column  label="井基本信息" prop="wellId" align="center">
           <el-table-column sortable  label="井号" prop="wellNo" min-width="200px" align="center">
           </el-table-column>
+            <el-table-column sortable  label="推荐措施" prop="measType" min-width="120px" align="center">
+            </el-table-column>
           <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.layerName !== null && scope.row.layerName !== ''">{{scope.row.layerName}}</span>

@@ -147,7 +147,7 @@ import {
 import {queryShutDownWellStatisDetails,queryShutDownWellStatisDetailsDownloadFile, queryShutDownValueDict, queryPlanValueDict} from '@/api/rem/reservoirbillboards'
 import FileSaver from 'file-saver'
 export default {
-    name:'shutdownDetection',
+    name:'ShutdownDetection',
     components: {},
     props: {
         infoData: {
