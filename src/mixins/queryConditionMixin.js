@@ -36,7 +36,13 @@ export default {
             }
             let ogfid
             userListByUserNames(params).then((res)=>{
-                ogfid = res.data.data[0].tenantInfos[0].deptId
+                 var result=res.data.data[0].tenantInfos;
+                if (result.length > 1) {
+                ogfid = res.data.data[0].tenantInfos[1].deptId;
+                } else {
+                ogfid = res.data.data[0].tenantInfos[0].deptId;
+                }
+               
                 queryOperatorsCheckFieldListsDetail({orgId:ogfid}).then((res) => {
                     this.oilList = res.data.data;
                     if (ogfid==='715AD1CD60484BB59E737CD18A9DE44A') {
