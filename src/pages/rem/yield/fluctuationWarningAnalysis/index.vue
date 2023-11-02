@@ -51,7 +51,7 @@
           <div class="rowBox" style="margin-bottom: 20px">
             <div class="row" style="margin-right: 20px">
               <pagePanel :headerTitle="oilFieldName + '产量跟踪预警分析'" style="height: 456px; margin-top: 0" show-btn>
-                <div style="position: absolute; z-index: 10">
+                <div style="position: absolute; z-index: 1">
                   <el-button type="primary" @click="openDetailedChick('红色预警')">红色预警</el-button>
                   <el-button type="primary" @click="openDetailedChick('蓝色预警')">蓝色预警</el-button>
                   <el-button type="primary" @click="openDetailedChick('黄色预警')">黄色预警</el-button>

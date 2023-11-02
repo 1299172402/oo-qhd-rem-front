@@ -325,7 +325,7 @@
                     fixed="left"
                     width="160"
                   ></el-table-column>
-                  <el-table-column prop="productionProblems" label="生产问题" align="center">
+                  <el-table-column prop="productionProblems" label="生产问题" align="center" key="trendOfIndicatorsTab-column-1">
                     <el-table-column
                       width="140"
                       v-for="(item, index) in trendOfIndicatorsTab"
@@ -909,7 +909,7 @@
                     fixed="left"
                     width="160"
                   ></el-table-column>
-                  <el-table-column prop="productionProblems" label="生产问题" align="center">
+                  <el-table-column prop="productionProblems" label="生产问题" align="center" key="trendOfIndicatorsTab-column-2">
                     <el-table-column
                       width="140"
                       v-for="(item, index) in trendOfIndicatorsTab"
@@ -2830,6 +2830,7 @@ export default {
       this.oldTableData = cloneDeep(myData); //加载数据
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
+        this.$forceUpdate();
       });
       // TODO lv 点击后不更改正常异常井数
       // //zxb-重新计算数量
