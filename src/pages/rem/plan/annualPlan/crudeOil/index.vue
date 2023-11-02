@@ -163,10 +163,13 @@ export default {
             nameGap: 40,
             type: "category",
             boundaryGap: false,
+
             axisLabel: {
               color: "#8FA4CC",
               fontSize: 14,
               padding: [10, 0, 0, 0],
+              showMinLabel: true,
+              showMaxLabel: true,
               // interval: function (index, val) {
               //   if (val.substr(-2) == "01") {
               //     return true;

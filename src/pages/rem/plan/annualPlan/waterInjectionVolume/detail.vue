@@ -132,6 +132,8 @@ export default {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
             fontSize: 12,
+            showMinLabel: true,
+            showMaxLabel: true,
             // interval: function (index, val) {
             //   console.log("val", val.substr(-2));
             //   if (val.substr(-2) == "01") {
@@ -283,6 +285,8 @@ export default {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
             fontSize: 14,
+            showMinLabel: true,
+            showMaxLabel: true,
             // interval: function (index, val) {
             //   if (val.substr(-2) == "01") {
             //     return true;

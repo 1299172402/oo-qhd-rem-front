@@ -89,6 +89,8 @@ export default {
           nameGap: 25,
           axisLabel: {
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -291,6 +293,8 @@ export default {
           nameGap: 25,
           axisLabel: {
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,

@@ -182,7 +182,7 @@ import { exportExcel } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
 
 export default {
-  // name: "stratumPressure",
+  name: "StratumPressure",
   components: {
     Echart,
   },

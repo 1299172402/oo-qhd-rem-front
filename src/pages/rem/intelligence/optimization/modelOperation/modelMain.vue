@@ -50,7 +50,7 @@
 <!--            </div>-->
             <!-- 1、上传历史阶段文件dialog -->
             <div>
-                <el-dialog title="上传历史阶段文件" 
+                <el-dialog title="上传历史阶段文件" :close-on-click-modal="false" :show-close="false"
                            :visible.sync="modelDialogVisibleF" width="47%"
                            style="position: absolute; top: -25px">
                     <fileUpload ref="fileChild" :modelBasicId="modelBasicId" @aa="aa" @parseSureButtonTrue="parseSureButtonTrue"
@@ -77,12 +77,13 @@
                 </el-dialog>
             </div>
             <!-- 调控参数dialog -->
-            <el-card class="modelManagerClass" v-show="regulateParams" style="background-color: rgba(5,52,73,0.8);z-index: 111">
+            <el-dialog title="调控参数数据" :close-on-click-modal="false" :show-close="false"
+                       :visible.sync="regulateParams" style="z-index: 111" width="100%" height="100%">
                 <el-row type="flex" justify="center" :gutter="25">
                     <el-col :span="7">
                         <!--  区块参数 ——  区块调控值 -->
                         <pagePanel headerTitle="区块参数 : 区块调控值"  :show-btn="true"
-                                   style="height: calc(100% - 10px);height: 650px;">
+                                   style="height: calc(100% - 10px);height: 780px;">
                             <el-table height="calc(100% - 10px)" :data="tableListOne">
                                 <el-table-column property="blockName" label="区块" align="center"></el-table-column>
                                 <el-table-column property="maxBlockValue" label="最大调控值//(m³/d)"
@@ -96,7 +97,7 @@
                     <el-col :span="8">
                         <!--  水井参数 ——  注采参数 -->
                         <pagePanel headerTitle="水井参数 : 注采参数"  :show-btn="true"
-                                   style="height: calc(100% - 10px);height: 650px;">
+                                   style="height: calc(100% - 10px);height: 780px;">
                             <el-table :data="tableListTwo" height="calc(100% - 10px)">
                                 <el-table-column type="index" label="序号" align="center"></el-table-column>
                                 <el-table-column property="modelWellNo" label="操作井名" align="center"></el-table-column>
@@ -111,7 +112,7 @@
                     <el-col :span="8">
                         <!--  油井参数 ——  注采参数 -->
                         <pagePanel headerTitle="油井参数 : 注采参数" :show-btn="true"
-                                   style="height: calc(100% - 10px);height: 650px;">
+                                   style="height: calc(100% - 10px);height: 780px;">
                             <el-table :data="tableListThree" height="calc(100% - 10px)">
                                 <el-table-column type="index" label="序号" align="center"></el-table-column>
                                 <el-table-column property="modelWellNo" label="操作井名" align="center"></el-table-column>
@@ -125,9 +126,9 @@
                     </el-col>
                 </el-row>
                 <el-button @click="regulateParams = false"  size="small" type="primary"
-                           style="height: 30px;font-size: 14px;float: right;margin-top: 20px;margin-right: 30px">退出查看
+                           style="height: 30px;font-size: 14px;float: right;margin-top: 10px;margin-right: 30px;margin-bottom: 10px">退出查看
                 </el-button>
-            </el-card>
+            </el-dialog>
             <!-- 模型运行dialog表格card -->
             <el-dialog style="margin-top: 120px"
                 title="模型运行文件"
@@ -243,7 +244,7 @@
                     <el-row type="flex" justify="space-between" :gutter="15">
                         <el-col :span="12">
                             <pagePanel headerTitle="WCONPROD" :show-btn="true"
-                                       style="height: calc(100% - 10px)">
+                                       style="height: calc(100% - 10px);width: 100%">
                                 <realTableOil :prodRealList="prodRealList" :modelBasicId="modelBasicId" :startDate="startDate"
                                               :endDate="endDate" ref="prodRealList"></realTableOil>
                             </pagePanel>
@@ -453,7 +454,7 @@ export default {
                 tooltip: {
                     backgroundColor: "",
                     textStyle: {
-                        color: "#FFFFFF",
+                        color: "#8FA4CC",
                         fontSize: "16",
                     },
                     trigger: "axis",
@@ -468,7 +469,7 @@ export default {
                     x: 240,
                     data: ["当前值", "优化值"],
                     textStyle: {
-                        color: "#FFFFFF",
+                        color: "#8FA4CC",
                         fontSize: 15,
                     },
                 },
@@ -483,7 +484,7 @@ export default {
                         },
                     },
                     iconStyle: {
-                        borderColor: "#FFFFFF",
+                        borderColor: "#8FA4CC",
                     },
                 },
                 dataZoom: [
@@ -521,7 +522,7 @@ export default {
                             rotate: 25,
                             // x轴的字体样式
                             textStyle: {
-                                color: "#FFFFFF",
+                                color: "#8FA4CC",
                                 fontSize: "13",
                             },
                         },
@@ -539,7 +540,7 @@ export default {
                         },
                         nameTextStyle: {
                             padding: [0, 0, -60, -10],
-                            color: "#FFFFFF",
+                            color: "#8FA4CC",
                             fontSize: "13",
                         },
                     },
@@ -551,13 +552,13 @@ export default {
                     name: "m³/天",
                     nameTextStyle: {
                         padding: [0, 0, 10, -45],
-                        color: "#FFFFFF",
+                        color: "#8FA4CC",
                         fontSize: "13",
                     },
                     axisLabel: {
                         show: true,
                         textStyle: {
-                            color: "#FFFFFF",
+                            color: "#8FA4CC",
                             fontSize: "13",
                         },
                     },
@@ -606,6 +607,24 @@ export default {
     // },
     created() {
         this.getCaseId()
+    },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.optionfczc.legend.textStyle.color = "#fff";
+                } else {
+                    this.optionfczc.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate: true
+        },
     },
     methods: {
         //进入页面之后调用“获取最新方案”的方法
@@ -700,7 +719,9 @@ export default {
             const param = {
                 modelBasicId: this.modelBasicInfo.modelBasicId,
             };
+            console.log('是否显示图片sdfghjklhhhhhhhhhhhh')
             GetSchPicTstepData(param).then((res) => {
+                console.log('123456789hhhhhhhhhhhhhhhhhh',res)
                 this.pictureOption = res.result.fileStepList;
                 console.log("res.result.fileStepList", res.result.fileStepList);
                 this.falutName = res.result.fileStepList[0].stepTime;
@@ -764,7 +785,7 @@ export default {
                 this.echartsListaa.series[0].data = this.startList;
                 this.echartsListaa.series[1].data = this.endList;
                 this.echartsListaa.series[0].markLine.data = this.markLineData;
-                //this.echartsListaa = this.echartsListaa
+                this.echartsListaa = this.echartsListaa
             });
         },
         changeSelectImage(item) {
@@ -1457,7 +1478,7 @@ export default {
             // this.zhezhao = false;
             this.dialogReal = true;
             this.dialogVisible = false;
-            this.nextTick(() => {
+            this.$nextTick(() => {
                 this.$refs.prodRealList.DownloadTable();
                 this.$refs.injRealList.DownloadINjTable();
             });

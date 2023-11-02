@@ -220,11 +220,13 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -359,11 +361,13 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -388,10 +392,10 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -464,11 +468,13 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -493,10 +499,10 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -552,11 +558,13 @@ export default {
           axisLabel: {
             color: "#8fa4cc",
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -575,10 +583,10 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -669,18 +677,20 @@ export default {
         },
         xAxis: {
           name: "日期 (年)",
-          nameGap: 30, 
+          nameGap: 30,
           nameTextStyle: {
             color: "#8FA4CC",
           },
           type: "category",
           axisLabel: {
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -699,10 +709,10 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
