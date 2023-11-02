@@ -14,7 +14,7 @@
         <header-search v-if="activeName=='first'" style="height: auto;display: grid">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
-                <el-select v-model="selectOilField" filterable clearable disabled style="width:180px;">
+                <el-select v-model="selectOilField" filterable clearable  style="width:180px;">
                     <el-option
                         v-for="item in oilField"
                         :key="item.ogfId"
