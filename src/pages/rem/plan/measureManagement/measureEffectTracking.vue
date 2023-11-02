@@ -36,7 +36,7 @@
         </div>
         <div style="margin-right: 15px">
           <span>井号：</span>
-          <el-select v-model="selectWellId" filterable class="f2">
+          <el-select v-model="selectWellId" filterable class="f2" @change="changeWellId">
             <el-option
               v-for="(item, index) in wells"
               :key="item.wellId"
@@ -47,7 +47,7 @@
         </div>
         <div style="margin-right: 15px">
           <span>措施事件：</span>
-          <el-select v-model="measuresType" class="f2" disabled>
+          <el-select v-model="selectMeasuresId" class="f2" @change="changeMeasuresType">
             <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name" :value="item.code">
             </el-option>
           </el-select>
@@ -88,6 +88,13 @@
           header-align="center"
           align="center"
           :label="`措施结束日期\n(yyyy-mm-dd)`"
+          width="140"
+        ></el-table-column>
+        <el-table-column
+          prop="measureType"
+          header-align="center"
+          align="center"
+          :label="`措施类型`"
           width="140"
         ></el-table-column>
         <el-table-column align="center" label="措施前生产情况">
@@ -2254,6 +2261,8 @@ export default {
           this.selectWellId = this.wells[0].wellId;
         }
       });
+      this.selectMeasuresId = "";
+      this.measuresDate = new Date(this.dateTime).format("yyyy");
     },
     //根据油田id查-平台数据
     getFetchPlatforms(oilFieldId) {
@@ -2267,6 +2276,15 @@ export default {
     //平台下拉框change事件
     onPlatfromChange(val) {
       this.getFetchWells(this.selectOilField, val);
+      this.selectMeasuresId = "";
+      this.measuresDate = new Date(this.dateTime).format("yyyy");
+    },
+    changeWellId() {
+      this.selectMeasuresId = "";
+      this.measuresDate = new Date(this.dateTime).format("yyyy");
+    },
+    changeMeasuresType() {
+      // this.selectMeasuresId = this.measuresType;
     },
     //通过油田或平台-查井号
     async getFetchWells(oilFieldId, platformId) {
