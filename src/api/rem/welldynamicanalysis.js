@@ -378,3 +378,10 @@ export function workingHistory(data) {
     data
   });
 }
+export function pumpReplaceDetailSkip(data) {
+    return request({
+        url: `${baseUrl}/dynamicAnalysis/pumpReplaceDetailSkip`,
+        method: "post",
+        data
+    });
+}
