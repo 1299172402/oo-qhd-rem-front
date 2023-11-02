@@ -19,7 +19,7 @@
                   <Echart  :chart-data="echartsAll" height="100%" width="100%" style="height: 100% !important;"></Echart>
               </div>
               <div style="text-align:center">
-                  <el-radio-group v-model="radio2" @change="changeRadio2" class="radioqk">
+                  <el-radio-group v-model="radio2" @change="changeRadio2" class="radioqk" style="text-align:center">
                       <el-radio-button label="净现值" class="radionpv"></el-radio-button>
                       <el-radio-button label="日(产水/注水/产油)" class="radiofofo"></el-radio-button>
                       <el-radio-button label="累(注水/产水/产油)" class="radiofofo"></el-radio-button>
@@ -349,6 +349,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -563,6 +564,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -777,6 +779,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -964,6 +967,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           data: [],
           //data: ['1','2']
@@ -1106,6 +1110,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           data: [],
           //data: ['1','2']
@@ -1248,6 +1253,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           data: [],
           //data: ['1','2']
@@ -1387,6 +1393,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -1585,6 +1592,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -1783,6 +1791,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -1967,6 +1976,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -2175,6 +2185,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
