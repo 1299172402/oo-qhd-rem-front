@@ -131,11 +131,22 @@ export default {
           },
         },
         // color: ["#1379F7", "#FF5844", "#69b146", "#00BC9C", "#9A72FF", "#DA835E"],
-        color: ["#1379F7", "#DA835E", "#69b146", "#9A72FF", "#FF5844", "#FF5844"],
+        color: ["#1379F7", "#DA835E", "#69b146", "#9A72FF", "#FF5844", "#00bc9c"],
         tooltip: {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
           },
         },
         grid: {

@@ -1669,7 +1669,7 @@ export default {
           name: "采液强度",
           isTwoHeader: true,
           // unit: "[t/(d.m)]",
-          unit: "(m³)",
+          unit: "[m³/(d.m)]",
         },
         {
           code: "cyzs",
