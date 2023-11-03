@@ -293,7 +293,7 @@
                 type="primary"
                 style="margin-left: 20px"
                 v-if="
-                  selCode &&
+                selCode &&
                   (selCode == '0100101' ||
                     selCode == '0100102' ||
                     selCode == '0100103' ||
@@ -1040,7 +1040,7 @@
                                   }
                                 "
                               >
-                                <span class="sp1">{{ item.value }}</span>
+                                <span class="sp1">{{ item.value  }}</span>
                                 <span class="sp2">{{ item.name }}</span>
                               </div>
                               <div
