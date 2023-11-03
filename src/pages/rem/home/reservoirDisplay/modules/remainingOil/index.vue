@@ -1,10 +1,9 @@
 <template>
         <div class="box">
             <p style="position: absolute;top:3%;left:30%">{{this.tieme.slice(0,10)}}</p>
-            <img id="im" height="102%" width="340px" />
+            <img id="im" height="100%" width="78%" />
             <el-image v-if="initiate" :src="require('@/icons/svg/u2080.png')" style="height:20px;width:20px;position: absolute;cursor:pointer;left:93%;top:30%" @click="startImageRotation"></el-image>
             <el-image v-else  :src="require('@/icons/svg/u2077.png')" style="height:20px;width:20px;cursor:pointer;position: absolute;left:93%;top:30%" @click="stop"></el-image>
-           
         </div>
 </template>
 
