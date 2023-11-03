@@ -355,7 +355,7 @@ export default {
                 }else{
                     baseUrl='tjioms-test.tjltd.cnooc'
                 }
-                window.open('https://ipm.'+baseUrl+'/#/waterflood/merge')
+                window.open('https://ipm.'+baseUrl+'/#/waterflood/merge?page=optimization')
             },
         // 保存
         handleSubmit(form) {
