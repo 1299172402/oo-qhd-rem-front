@@ -528,7 +528,7 @@ export default {
         } else {
           baseUrl = "tjioms-test.tjltd.cnooc";
         }
-        window.open(`https://ipm.${baseUrl}/#/waterflood/merge`);
+        window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`);
         // window.open(`https://ipm.${baseUrl}/#/waterflood/merge?page=optimization`, '_blank')
         // this.$router.push({name: "schemePrediction"})
       });
