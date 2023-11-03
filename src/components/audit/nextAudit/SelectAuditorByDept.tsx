@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { queryAuditorDeptTree, queryUserBydept } from "./api/api";
-import SelectAuditorByDepModalForAudit from "./SelectAuditorByDepModalForAudit";
+import SelectAuditorByDepModalForAudit from "./SelectAuditorByDepModalForAudit.vue";
 
 /**
    * 业务逻辑策略模式
@@ -177,6 +177,14 @@ export default Vue.extend({
      */
     handleChange() {
       this.selectOK([], "", false);
+    },
+    /**
+     * 清空下一处理审批人
+     */
+    handleClear() {
+      this.$nextTick(() => {
+        this.$refs.selectModal.clearSelected();
+      });
     }
   },
   render() {
@@ -192,23 +200,26 @@ export default Vue.extend({
               ref="selectModal"
               modalWidth={this.modalWidth}
               multi={this.multi}
-              selectOk={this.selectOK}
               user-id={this.value}
               style="width: 440px"
+              visible={this.visible}
               onInitComp={this.initComp}
+              onOk={this.selectOK}
               onClose={this.visibleChange}
             />
           }>
           <t-select
             value={this.selectUsers || undefined}
+            title={this.selectUsers || undefined}
             mode="multiple"
             notFoundContent={false}
             showArrow={true}
             filterOption={false}
-            placeholde={this.$attrs.placeholder}
+            placeholder={this.$attrs.placeholder}
             onChange={this.handleChange}
             popupVisible={false}
             clearable={true}
+            onClear={this.handleClear}
           >
           </t-select>
         </t-popup>

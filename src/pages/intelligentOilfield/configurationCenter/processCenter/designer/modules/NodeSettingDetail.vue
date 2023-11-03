@@ -244,7 +244,7 @@
                     placeholder="请选择组"
                   >
                     <el-option
-                      v-for="(subItem, subIndex) in assignResourcesGroupSelectionsOptions"
+                      v-for="(subItem, subIndex) in selectUserRulesGroupSelectionsOptions"
                       :key="subIndex"
                       :label="subItem.name"
                       :value="subItem.id"
@@ -317,7 +317,7 @@
             <el-button
               v-if="model.nextAuditSelectResources.length === 0"
               type="text"
-              @click="model.nextAuditSelectResources.push({ relativePerson: 'Starter', canMultiSelect: false })"
+              @click="model.nextAuditSelectResources.push({ relativePerson: 'Starter', canMultiSelect: false, canBreakScope: false })"
             >
               添加
             </el-button>
@@ -594,7 +594,7 @@
                     placeholder="请选择组"
                   >
                     <el-option
-                      v-for="(subItem, subIndex) in assignResourcesGroupSelectionsOptions"
+                      v-for="(subItem, subIndex) in selectUserRulesGroupSelectionsOptions"
                       :key="subIndex"
                       :label="subItem.name"
                       :value="subItem.id"
@@ -909,6 +909,7 @@ export default {
       assignResourcesTypeOptions: [],
       assignResourcesUserSelectionsOptions: [],
       assignResourcesGroupSelectionsOptions: [],
+      selectUserRulesGroupSelectionsOptions: [],
       assignResourcesUseScopeOptions: [],
       delegationSelectResourcesPersonOptions: [],
       fn: {
@@ -949,6 +950,9 @@ export default {
       // 委托指派规则-组
       groupSelections({ appId: this.appId }).then(v => {
         this.assignResourcesGroupSelectionsOptions = v.data || [];
+        // 选人规则 / 委托指派规则 - 组
+        this.selectUserRulesGroupSelectionsOptions = cloneDeep(v.data || []);
+        // 指派规则 - 组
         this.assignResourcesGroupSelectionsOptions.push({ id: "$CUR_ACT_KEY", text: "当前节点", na: "当前节点", name: "当前节点" });
       });
       // 委托指派规则-参照人

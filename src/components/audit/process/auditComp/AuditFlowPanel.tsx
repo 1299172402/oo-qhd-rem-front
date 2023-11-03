@@ -59,13 +59,13 @@ export default Vue.extend({
             <div class={"audit-flow-item"}>
               <div class={"audit-flow-item-left"} style={{ width: `${this.maxWidthStyle}` }}>
                 <div class={"audit-flow-item-left-title"}>{item.taskName}</div>
-                <div class={"audit-flow-item-left-person"}>{item.assigneeName}</div>
+                <div class={"audit-flow-item-left-person"}>{item.assigneeName || item.candidateNames}</div>
                 <div class={"audit-flow-item-left-time"}>{ item.endDate ? moment(item.endDate).format("YYYY-MM-DD HH:mm:ss") : "" }</div>
               </div>
               <t-timeline-item class={"audit-flow-item-right"}>
                 <div class={"audit-flow-item-right-title"}>{getActionDesc(item)}</div>
                 <div>
-                  <t-tag theme="primary" variant="light">{ item.assigneeDeptName || "未指定部门" }</t-tag>
+                  <t-tag theme="primary" variant="light">{ item.assigneeDeptName || item.candidateDepts || "未指定部门" }</t-tag>
                 </div>
                 <p class="audit-flow-item-description">
                   {

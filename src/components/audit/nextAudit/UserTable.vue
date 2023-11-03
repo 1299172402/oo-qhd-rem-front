@@ -1,14 +1,81 @@
+
+<template>
+  <div>
+    <div :class="perfixCls + '__center-search'">
+      <t-input
+        v-model="queryParam.nickName"
+        placeholder="用户名"
+        clearable
+        @enter="handleSearch"
+      />
+      <select-single-input
+        v-if="showRoleSelect && loadUser"
+        v-model="queryParam.roleKey"
+        :options="roleOptions"
+        value-field="roleKey"
+        text-field="roleName"
+        placeholder="请选择角色"
+      />
+      <t-button @click="handleSearch">
+        查询
+      </t-button>
+      <slot name="queryButton" />
+    </div>
+    <t-table
+      v-if="multiple"
+      ref="table"
+      bordered
+      row-key="userId"
+      :columns="columns"
+      :data="dataSource"
+      :pagination="ipagination"
+      :class="perfixCls + '__center-table'"
+      max-height="600"
+      :selected-row-keys="selectedRowKeys"
+      @select-change="rehandleSelectChange"
+      @change="(e) => handleTableChange(e, 'tdesign')"
+    >
+      <div slot="deptName" slot-scope="{row}">
+        {{ row.dept?.deptName || "" }}
+      </div>
+    </t-table>
+    <t-radio-group v-else :value="currentSelectUser">
+      <t-table
+        ref="table"
+        bordered
+        row-key="userId"
+        :columns="columns"
+        :data="dataSource"
+        :pagination="ipagination"
+        :class="perfixCls + '__center-table'"
+        max-height="600"
+        @change="(e) => handleTableChange(e, 'tdesign')"
+      >
+        <t-radio
+          slot="select"
+          slot-scope="{row}"
+          :value="row.userId"
+          @click="handleSelectUserChange(row)"
+        />
+        <div slot="deptName" slot-scope="{row}">
+          {{ row.dept?.deptName || "" }}
+        </div>
+      </t-table>
+    </t-radio-group>
+  </div>
+</template>
+<script>
 import Vue from "vue";
 import { mapGetters } from "vuex";
 import SelectSingleInput from "./SelectSingleInput.vue";
 import ListMixin from "@/components/mixins/ListMixin";
 import "./style/UserTableStyle.less";
-import {
-  getUser
-} from "@/api/intelligentOilfield/system/user";
+import proxy from "@/config/host";
+
+const env = import.meta.env.MODE || "development";
 
 let mountedQueryPromise = null;
-const perfixCls = "select-user-table";
+
 export default Vue.extend({
   name: "UserTable",
   components: {
@@ -70,11 +137,12 @@ export default Vue.extend({
   },
   data() {
     return {
+      perfixCls: "select-user-table",
       disableMixinCreated: true,
       columns: [
-        { title: "", colKey: "id", width: 60, align: "center", cell: (h, { row }) => <t-radio value={row.userId} onClick={() => { (this as any).handleSelectUserChange(row); }}></t-radio> },
-        { title: "用户昵称", width: 150, align: "center", colKey: "nickName" },
-        { title: "部门", align: "center", colKey: "departName", ellipsis: true, cell: (h, { row }) => <div>{row.dept.deptName}</div> }
+        this.multiple ? { colKey: "row-select", type: "multiple" } : { title: "#", colKey: "id", width: 60, align: "center", cell: "select" },
+        { title: "用户名", width: 150, align: "center", colKey: "nickName" },
+        { title: "部门", align: "center", colKey: "deptName", ellipsis: true, cell: "deptName" }
       ],
       url: {
         list: "/system/user/list"
@@ -82,7 +150,7 @@ export default Vue.extend({
       queryParam: {
         nickName: "",
         roleKey: "",
-        orgCode: ""
+        deptId: ""
       },
       dicts: {
         roleCodeOptions: []
@@ -165,27 +233,51 @@ export default Vue.extend({
     }
   },
   created() {
-    // 拉取用户角色
-    getUser()
-      .then(res => {
-        this.roleOptions = res.data.roles;
-      })
-      .finally(() => {
-        this.loadUser = true;
-      });
+    this.getRoles();
   },
   methods: {
+    /**
+     * 根据AppId获取角色信息
+     */
+    getRoles() {
+      const params = {
+        appId: proxy[env].appId
+      };
+        // 拉取用户角色
+      this.$request.get("/system/role/list", { params })
+        .then(res => {
+          this.roleOptions = res.data.rows;
+        })
+        .finally(() => {
+          this.loadUser = true;
+        });
+    },
     clearCurrentSelectUser() {
       this.currentSelectUser = "";
     },
+    /**
+     * 单选用户处理
+     */
     handleSelectUserChange(row) {
       if (this.needDeptBeforeChoose) {
-        if (!this.queryParam.orgCode) {
+        if (!this.queryParam.deptId) {
           return this.$message.warning("请先选择部门");
         }
       }
       this.currentSelectUser = row.userId;
       this.$emit("change", [row.userId], [row]);
+    },
+    /**
+     * 多选用户处理
+     */
+    rehandleSelectChange(value, { selectedRowData }) {
+      if (this.needDeptBeforeChoose) {
+        if (!this.queryParam.deptId) {
+          return this.$message.warning("请先选择部门");
+        }
+      }
+      this.selectedRowKeys = value;
+      this.$emit("change", value, selectedRowData);
     },
     /**
      * 重新设置默认值
@@ -196,17 +288,6 @@ export default Vue.extend({
           this.$emit("set-default", [this.dataSource[0].userId], [this.dataSource[0]]);
         }
       });
-    },
-    /**
-     * 用户选择勾选改变
-     */
-    handleSelectChange(selectedRowKeys, selectionRows) {
-      if (this.needDeptBeforeChoose) {
-        if (!this.queryParam.orgCode) {
-          return this.$message.warning("请先选择部门");
-        }
-      }
-      this.$emit("change", selectedRowKeys, selectionRows);
     },
     /**
      * 执行查询
@@ -232,47 +313,9 @@ export default Vue.extend({
       const props = this.canSelf ? {} : { disabled: this.userInfo.id === row.userId };
       return { props };
     }
-  },
-  render() {
-    const SelectSingleInputEl = (
-      <SelectSingleInput
-        value={this.queryParam.roleKey}
-        options={this.roleOptions}
-        value-field="roleKey"
-        text-field="roleName"
-        placeholder="请选择角色"
-        onChange={ val => { this.$set(this.queryParam, "roleKey", val); }}
-      />
-    );
-    return (
-      <div>
-        <div class={`${perfixCls}__center-search`}>
-          <t-input
-            value={this.queryParam.nickName}
-            placeholder="用户昵称"
-            allow-clear
-            onPressEnter={this.handleSearch}
-            onChange={val => { this.queryParam.nickName = val; }}
-          />
-          {this.showRoleSelect && this.loadUser ? SelectSingleInputEl : null}
-          <t-button onClick={this.handleSearch}>
-            查询
-          </t-button>
-          <slot name="queryButton"></slot>
-        </div>
-        <t-radio-group value={this.currentSelectUser}>
-          <t-table
-            ref="table"
-            bordered
-            row-key="userId"
-            columns={this.columns}
-            data={this.dataSource}
-            pagination={this.ipagination}
-            class={`${perfixCls}__center-table`}
-            onChange={e => this.handleTableChange(e, "tdesign")}
-          />
-        </t-radio-group>
-      </div>
-    );
   }
 });
+</script>
+<style scoped lang="less">
+@import "./style/UserTableStyle.less";
+</style>

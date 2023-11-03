@@ -33,6 +33,10 @@ export const acceptActionsOptions: ActionOption[] = [
     text: "业务流转"
   },
   {
+    value: "Resolve",
+    text: "归还委托"
+  },
+  {
     value: "Terminate",
     text: "驳回"
   },

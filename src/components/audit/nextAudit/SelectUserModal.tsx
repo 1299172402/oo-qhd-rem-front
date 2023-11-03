@@ -2,7 +2,7 @@ import Vue from "vue";
 import { mapGetters } from "vuex";
 import DeptTree from "./DeptTree";
 import OpenClose from "./OpenClose";
-import UserTable from "./UserTable";
+import UserTable from "./UserTable.vue";
 import "./style/SelectUserModalStyle.less";
 
 const allLoading = {

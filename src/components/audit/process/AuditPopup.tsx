@@ -174,22 +174,22 @@ export default Vue.extend({
       return this.submitMethod(action, _this.businessType, data);
     },
     /**
-         * close the audit modal
-         */
+     * close the audit modal
+     */
     closeModel() {
       this.visible = false;
-      this.$refs.auditInfo.$refs.form.reset();
+      this.$refs.auditInfo?.$refs.form?.reset();
       this.$emit("close", false);
       this.$nextTick(() => {
         this.tabIndex = "1";
       });
     },
     /**
-         * part logic of top submit method
-         * @param action audit action
-         * @param businessType actionAip performance type
-         * @param data formData
-         */
+     * part logic of top submit method
+     * @param action audit action
+     * @param businessType actionAip performance type
+     * @param data formData
+     */
     submitMethod(action, businessType, data) {
       if (!this.$refs.signModal || this.$refs.signModal.visible === false) {
         return actionApi(action, businessType, data)
@@ -206,9 +206,9 @@ export default Vue.extend({
     },
     // ------------------------------------------signature------------------------------------------
     /**
-         * saveData If need signature
-         * @param data saveDataEntity
-         */
+     * saveData If need signature
+     * @param data saveDataEntity
+     */
     async saveData(data) {
       if (this.dataSource.extendProperties.find(v => v.key === "signatureKey") && !this.signed) {
         return actionApi(ActionType.SAVEDATA, this.businessType, data);
@@ -216,9 +216,9 @@ export default Vue.extend({
       // 没有签章key，不需要预存saveData
     },
     /**
-         * prepare docs and calculate the needSignature
-         * @param aciton audit action in top submit method
-         */
+     * prepare docs and calculate the needSignature
+     * @param aciton audit action in top submit method
+     */
     async getDocs(action) {
       if (this.dataSource.extendProperties.find(v => v.key === "signatureKey") && !this.signed) {
         const params = {
@@ -260,9 +260,9 @@ export default Vue.extend({
     },
 
     /**
-         * load and decide signaturable
-         * @param data saveDataEntity
-         */
+     * load and decide signaturable
+     * @param data saveDataEntity
+     */
     async loadSignatureData(data) {
       if (this.dataSource.extendProperties.find(v => v.key === "signatureKey")) {
         actionApi(ActionType.SAVEDATA, this.businessType, data)
@@ -290,18 +290,18 @@ export default Vue.extend({
       }
     },
     /**
-         * get the document list
-         * api: prepareSignDocs
-         * @param params {businessKey,taskId,extendProperties}
-         */
+     * get the document list
+     * api: prepareSignDocs
+     * @param params {businessKey,taskId,extendProperties}
+     */
     getDocList(params) {
       return postAction(this.prepareUrl, params)
         .then(res => res.data);
     },
     /**
-         * callBack function of signatureModal close
-         @param val 完成签章后退出标识
-         */
+     * callBack function of signatureModal close
+     * @param val 完成签章后退出标识
+     */
     closeSignatureModal(val) {
       if (val) {
         this.signed = true;
@@ -312,8 +312,8 @@ export default Vue.extend({
       this.needSignature = false;
     },
     /**
-         * complete
-         */
+     * complete
+     */
     completeSign() {
       this.signed = true;
       this.submit();
@@ -323,7 +323,7 @@ export default Vue.extend({
     const AuditContent = (
       <t-tabs class="audit-content" value={this.tabIndex} onChange={val => { this.tabIndex = val; }}>
         <t-tab-panel value="1" label="审批" destroyOnHide={false}>
-          <AuditPanel ref={"auditInfo"} dataSource={this.info}/>
+          <AuditPanel ref={"auditInfo"} dataSource={this.info} flow-back-to-me-mode={this.dataSource && this.dataSource.flowBackToMeMode}/>
         </t-tab-panel>
         <t-tab-panel style={"display: flex"} value="2" label="审批信息">
           <AuditFlowPanel style={"flex: 1"} dataSource={this.commentList} />

@@ -60,7 +60,7 @@
             </template>
           </t-list-item>
           <div class="g-row-flex-H">
-            加载中...
+            {{ tableData.length >= total ? "已全部加载完成" : "加载中..." }}
           </div>
         </div>
 
@@ -340,13 +340,15 @@ export default Vue.extend({
         //     this.tableData = [...this.tableData, ..._res];
         //   }
         queryAlcAlarmByParam(currentParam, false).then(response => {
-          const _res = JSON.parse(JSON.stringify(response.data.rows));
-          if (firstPage) {
-            this.queryParams.pageNum = 1;
-            this.tableData = _res;
-            this.total = response.data.total;
-          } else {
-            this.tableData = [...this.tableData, ..._res];
+          if (response?.data?.rows) {
+            const _res = JSON.parse(JSON.stringify(response.data.rows));
+            if (firstPage) {
+              this.queryParams.pageNum = 1;
+              this.tableData = _res;
+              this.total = response.data.total;
+            } else {
+              this.tableData = [...this.tableData, ..._res];
+            }
           }
         });
       }

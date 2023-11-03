@@ -56,6 +56,12 @@ export default Vue.extend({
         this.selectedDepts = val;
         this.$emit("change", this.selectedDepts);
       }
+    },
+    /**
+     * 高亮节点
+     */
+    actived() {
+      return this.selectedDepts?.map(item => item.key || item.id) || [];
     }
   },
   watch: {
@@ -81,14 +87,11 @@ export default Vue.extend({
       });
   },
   methods: {
+    /**
+     * 选择部门树节点
+     */
     handleCheck(checkedKeys) {
-      const myCheckedKeys = [];
-      if (!this.multiple && checkedKeys.checked && checkedKeys.checked.length > 0) {
-        myCheckedKeys.push(...checkedKeys.checked.slice(-1));
-      } else {
-        myCheckedKeys.push(...(checkedKeys.checked || []));
-      }
-      this.selectedDepts = deptList.filter(v => (checkedKeys.checked || []).includes(v.key));
+      this.selectedDepts = deptList.filter(v => (checkedKeys || []).includes(v.key));
       this.$emit("change", this.selectedDepts);
     },
     getDeptTreeData() {
@@ -177,11 +180,12 @@ export default Vue.extend({
               placeholder="筛选"
             /> : <t-select-input
               style="width: 100%"
-              placeholder="部门"
+              placeholder="请选择部门"
               value={this.currentSelectDept}
               allowInput
               clearable
               multiple
+              inputValue={this.searchValue}
               on-input-change={this.handleDeptChange}
               onClear={() => { this.currentSelectDept = []; }}
               on-tag-change={this.handleTagChange}
@@ -197,9 +201,10 @@ export default Vue.extend({
           value={this.checkedKeys}
           checkable={this.multiple}
           checked={this.checkedKeys}
+          actived={this.actived}
           data={this.filterTreeDict}
-          onChange={this.handleCheck}
           onClick={this.handleSelect}
+          onActive={this.handleCheck}
         />
       </t-card>
     );

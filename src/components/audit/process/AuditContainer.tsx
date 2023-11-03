@@ -149,7 +149,8 @@ export default Vue.extend({
             if (this.infos.businessType && v.acceptActions.includes("Claim")) {
               const data = {
                 bizId: _this.$route.query.businessKey,
-                taskId: _this.$route.query.taskId
+                taskId: _this.$route.query.taskId,
+                procInstId: _this.$route.query.processInstanceId
               };
               return claimApi(this.infos.businessType, data)
                 .then(() => {
