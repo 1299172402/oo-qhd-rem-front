@@ -51,7 +51,7 @@
           <div class="rowBox" style="margin-bottom: 20px">
             <div class="row" style="margin-right: 20px">
               <pagePanel :headerTitle="oilFieldName + '产量跟踪预警分析'" style="height: 456px; margin-top: 0" show-btn>
-                <div style="position: absolute; z-index: 10">
+                <div style="position: absolute; z-index: 1">
                   <el-button type="primary" @click="openDetailedChick('红色预警')">红色预警</el-button>
                   <el-button type="primary" @click="openDetailedChick('蓝色预警')">蓝色预警</el-button>
                   <el-button type="primary" @click="openDetailedChick('黄色预警')">黄色预警</el-button>
@@ -399,8 +399,8 @@
         </el-table>
       </div>
     </el-dialog>
-    <el-dialog title="预警模型条件" :visible.sync="openDetailedDialog" width="80%">
-      <el-table :data="detailedTable" highlight class="z-table" style="width: 100%" height="500px" border>
+    <el-dialog title="预警模型条件" :visible.sync="openDetailedDialog" width="60%">
+      <el-table :data="detailedTable" highlight class="z-table" style="width: 100%" height="400px" border>
         <el-table-column type="index" label="序号" align="center" width="80"> </el-table-column>
         <el-table-column prop="detailed" label="预警条件" align="left" header-align="center"> </el-table-column>
       </el-table>
@@ -2220,6 +2220,12 @@ export default {
       this.openDetailedDialog = true;
       if (name == "红色预警") {
         this.detailedTable = [
+          { detailed: "日产油水平低于年剩余日产油水平，比例大于60%为红色预警	" },
+          { detailed: "日注水水平低于年剩余日注水水平，比例大于60%为红色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日产油水平，比例大于60%为红色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日注水水平，比例大于60%为红色预警	" },
+        ];
+        /* this.detailedTable = [
           {
             detailed:
               "日产油水平低于月滚动预测剩余日产油水平比例 大于 红色预警下界（YUYGDT5）%，即条件>YUYGDT5并且 条件<YUYGDT6为红色预警	",
@@ -2284,9 +2290,15 @@ export default {
             detailed:
               "日产油水平低于年剩余日产油水平比例 小于 红色预警上界（YUNSYT6）%，即条件>YUNSYT5 并且 条件<YUNSYT6为红色预警	",
           },
-        ];
+        ]; */
       } else if (name == "蓝色预警") {
         this.detailedTable = [
+          { detailed: "日产油水平低于年剩余日产油水平，比例大于10% 并且 小于等于30%为蓝色预警	" },
+          { detailed: "日注水水平低于年剩余日注水水平，比例大于 10%，并且小于等于30%为蓝色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日产油水平，比例大于10% 并且 小于等于30%为蓝色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日注水水平，比例大于10% 并且 小于等于30%为蓝色预警	" },
+        ];
+        /*  this.detailedTable = [
           {
             detailed:
               "日产油水平低于年剩余日产油水平比例 小于 蓝色预警上界（YUNSYT2）%，即条件>YUNSYT1 并且 条件<YUNSYT2为蓝色预警	",
@@ -2351,9 +2363,15 @@ export default {
             detailed:
               "日产油水平低于前期（月）日产油水平比例 小于 蓝色预警上界（YUQQYT2）%，即YUQQYT1<条件<YUQQYT2为蓝色预警	",
           },
-        ];
+        ]; */
       } else if (name == "黄色预警") {
         this.detailedTable = [
+          { detailed: "日产油水平低于年剩余日产油水平，比例大于30%  并且 小于等于60%为黄色预警	" },
+          { detailed: "日注水水平低于年剩余日注水水平，比例大于30%，并且小于等于60%为黄色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日产油水平，比例大于30% 并且 小于等于60%为黄色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日注水水平，比例大于30% 并且 小于等于60%为黄色预警	" },
+        ];
+        /* this.detailedTable = [
           {
             detailed:
               "日产油水平低于年剩余日产油水平比例 大于 黄色预警下界（YUNSYT3）%，即条件>YUNSYT3 并且 条件<YUNSYT4为黄色预警	",
@@ -2418,7 +2436,7 @@ export default {
             detailed:
               "日产油水平低于前期（月）日产油水平比例 大于 黄色预警下界（YUQQYT3）%，即YUQQYT3<条件<YUQQYT4为黄色预警	",
           },
-        ];
+        ]; */
       }
     },
   },

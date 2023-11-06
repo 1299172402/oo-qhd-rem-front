@@ -104,6 +104,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "实际措施井次") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + (item.value[1] || 0);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         grid: {
           x: 120,
@@ -251,6 +262,17 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "实际措施井次") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + (item.value[1] || 0);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
           },
         },
         grid: {

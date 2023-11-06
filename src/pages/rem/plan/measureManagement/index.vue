@@ -957,15 +957,15 @@ export default {
   }
 }
 
-::v-deep .el-table__body-wrapper {
-  .el-table__body {
-    tbody tr:last-child {
-      td {
-        border: none;
-      }
-    }
-  }
-}
+// ::v-deep .el-table__body-wrapper {
+//   .el-table__body {
+//     tbody tr:last-child {
+//       td {
+//         border: none;
+//       }
+//     }
+//   }
+// }
 
 .app-container {
   height: 100%;
