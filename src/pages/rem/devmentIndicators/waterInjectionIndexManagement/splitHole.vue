@@ -247,6 +247,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -457,6 +464,9 @@ export default {
                 show: true,
                 position: "top",
                 color: "#8FA4CC",
+                formatter(params) {
+                  return parseFloat(params.value[1] || 0).toFixed(2);
+                },
               };
               let barData = item.linearData;
               let seriesMess = [];

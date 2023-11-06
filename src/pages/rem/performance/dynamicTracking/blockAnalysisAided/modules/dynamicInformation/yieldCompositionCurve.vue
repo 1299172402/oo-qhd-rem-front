@@ -68,7 +68,7 @@ export default {
             end: 100, //滚动条结束位置
           },
         ],
-        grid: [{ x: 60, y: 50, x2: 80, y2: 50 }],
+        grid: [{ x: 80, y: 50, x2: 80, y2: 50 }],
         legend: {
           x: "center",
           bottom: 0,
@@ -80,6 +80,13 @@ export default {
         tooltip: {
           show: true,
           trigger: "axis",
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         xAxis: {
           type: "category",
@@ -272,7 +279,7 @@ export default {
             end: 100, //滚动条结束位置
           },
         ],
-        grid: [{ x: 60, y: 50, x2: 80, y2: 50 }],
+        grid: [{ x: 80, y: 50, x2: 80, y2: 50 }],
         legend: {
           x: "center",
           bottom: 0,
@@ -284,6 +291,13 @@ export default {
         tooltip: {
           show: true,
           trigger: "axis",
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         xAxis: {
           type: "category",
