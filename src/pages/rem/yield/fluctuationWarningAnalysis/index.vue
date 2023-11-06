@@ -479,6 +479,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         dataZoom: {
           start: 0,
@@ -681,6 +692,13 @@ export default {
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
             type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
+          },
+          formatter(params) {
+            console.log(params)
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + " : " + parseFloat(item.value || 0).toFixed(2);
+            });
+            return relVal;
           },
         },
         grid: {

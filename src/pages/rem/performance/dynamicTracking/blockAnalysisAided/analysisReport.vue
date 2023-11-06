@@ -604,6 +604,7 @@ export default {
       tagMessage: "",
       //展示列表
       myList: [],
+      myListCopy: [],
       //开采现状分析
       indexChangeTrend: "",
       //稳产基础分析
@@ -625,13 +626,13 @@ export default {
       // })
     },
     //minIo-获取底图
-    queryRemUploadFileMinioApi(isBoolean) {
+    async queryRemUploadFileMinioApi(isBoolean) {
       let params = {
         operationId: this.selectBlock + "-" + this.selectPosition,
         operationType: "BLOCKCWDT",
         readOne: "one",
       };
-      queryRemUploadFileMinio(params).then((res) => {
+      await queryRemUploadFileMinio(params).then((res) => {
         if (res.data.code == 200) {
           if (res.data.data.length) {
             let data = res.data.data[0].fileId;
@@ -780,10 +781,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -834,14 +834,14 @@ export default {
     //层位change
     selectChange(e) {
       this.queryRemUploadFileMinioApi(true);
-      if (this.myList.length) {
+      if (this.myListCopy.length) {
         this.getLayerWell();
       }
     },
     getLayerWell() {
       let request = {
         layerId: this.selectPosition,
-        wellList: this.myList.map((item) => item.id) || [],
+        wellList: this.myListCopy.map((item) => item.id) || [],
       };
       getLayerWell(request).then((data) => {
         if (data.data.code == 200) {
@@ -1057,7 +1057,11 @@ export default {
               }
               this.wellList = wellList;
               this.tagMessage = tData.msg;
-              this.myList = tData.basis ? tData.basis : [];
+              if (tag != "indexChangeTrendList") {
+                this.myList = tData.basis ? tData.basis : [];
+              } else {
+                this.myListCopy = tData.basis ? tData.basis : [];
+              }
             }
             //获得其值 hwh
             indexName = tData.name;
@@ -1310,7 +1314,9 @@ export default {
         this.recoveryAnalysisList[j].value = t_count; //登记条数
       }
       this.tableData = myData;
-      this.getLayerWell();
+      if (tag == "indexChangeTrendList") {
+        this.getLayerWell();
+      }
       this.clickAnalysis(indexCode, indexName);
     },
     //绘制底图和等值线
