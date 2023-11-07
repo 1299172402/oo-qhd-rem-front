@@ -37,7 +37,14 @@
             :row-class-name="tableRowClassName"
             height="calc(100% - 130px)"
           >
-            <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column
+              type="index"
+              prop="index"
+              label="序号"
+              width="80"
+              align="center"
+              :index="formatIndex"
+            ></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -111,7 +118,14 @@
             </el-button>
           </div>
           <el-table ref="table2" :data="tableData" border highlight height="calc(100% - 130px)">
-            <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column
+              type="index"
+              prop="index"
+              label="序号"
+              width="80"
+              align="center"
+              :index="formatIndex"
+            ></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -217,7 +231,7 @@
             </div>
           </div>
           <el-table ref="table3" :data="tableData" border highlight height="calc(100% - 130px)">
-            <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column type="index" label="序号" width="80" align="center" :index="formatIndex"></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -283,7 +297,14 @@
             :row-class-name="tableRowClassName"
             height="calc(100% - 130px)"
           >
-            <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column
+              type="index"
+              prop="index"
+              label="序号"
+              width="80"
+              align="center"
+              :index="formatIndex"
+            ></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -357,7 +378,14 @@
             </el-button>
           </div>
           <el-table ref="table5" :data="tableData" border highlight height="calc(100% - 130px)">
-            <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column
+              type="index"
+              prop="index"
+              label="序号"
+              width="80"
+              align="center"
+              :index="formatIndex"
+            ></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"> </el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -464,7 +492,14 @@
             </div>
           </div>
           <el-table ref="table6" :data="tableData" border highlight height="calc(100% - 130px)">
-            <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column
+              type="index"
+              prop="index"
+              label="序号"
+              width="80"
+              align="center"
+              :index="formatIndex"
+            ></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -945,6 +980,9 @@ export default {
         });
       }
       // this.$router.push({ name:'warningDispose',query:{warningType:row.warningType,theDate:row.theDate,handler:row.handler,id:row.id,warningCode:row.warningCode,opinion:row.result}})
+    },
+    formatIndex(index) {
+      return (this.page - 1) * this.pageSize + index + 1;
     },
     /**
      *  监听表格分页变化
