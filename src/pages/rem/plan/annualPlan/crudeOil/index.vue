@@ -40,7 +40,7 @@
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
-        <el-table-column type="index" align="center" label="序号" width="80"></el-table-column>
+        <el-table-column type="index" align="center" label="序号" width="80" :index="formatIndex"></el-table-column>
         <el-table-column prop="theDate" header-align="center" align="center" :label="`时间\n(yyyy-mm-dd)`">
         </el-table-column>
         <el-table-column
@@ -474,6 +474,9 @@ export default {
         return row[column.property] ? row[column.property] : "-";
       }
     },
+    formatIndex(index) {
+      return (this.queryParams.page - 1) * this.queryParams.pageSize + index + 1;
+    },
     //分页
     pagination(obj) {
       // if(this.pageSize!=obj.limit){
@@ -483,8 +486,8 @@ export default {
       //     this.page=obj.page;
       // }
       // this.getSearchOilProductionTable();
-      this.page = obj.page;
-      this.pageSize = obj.limit;
+      this.queryParams.page = obj.page;
+      this.queryParams.pageSize = obj.limit;
     },
     //表格-展示||隐藏
     tapDevelop() {
