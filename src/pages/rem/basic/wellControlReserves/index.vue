@@ -300,8 +300,19 @@ export default {
                 if (res.data.code == 200) {
                     this.wells = res.data.data
                     this.queryData.wellId = this.wells[0].wellId
+                    queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
+                        this.cwOptions = res.data.data;
+                    });
                 }
             });
+            this.djclForm = {
+                layerId: '',
+                controlArea: '',
+                evalDetailId: "",
+                probReservesWell: "",
+                recoverableReserves: "",
+                thicknessEffe: ""
+            }
         },
         changewell() {
             this.djclForm = []
