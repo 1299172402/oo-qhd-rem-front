@@ -40,7 +40,7 @@
         :default-sort="{ prop: 'date', order: 'descending' }"
         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
       >
-        <el-table-column type="index" align="center" label="序号" width="80"></el-table-column>
+        <el-table-column type="index" align="center" label="序号" width="80" :index="formatIndex"></el-table-column>
         <el-table-column prop="theDate" header-align="center" align="center" :label="`时间\n(yyyy-mm-dd)`">
         </el-table-column>
         <el-table-column
@@ -131,11 +131,22 @@ export default {
           },
         },
         // color: ["#1379F7", "#FF5844", "#69b146", "#00BC9C", "#9A72FF", "#DA835E"],
-        color: ["#1379F7", "#DA835E", "#69b146", "#9A72FF", "#FF5844", "#FF5844"],
+        color: ["#1379F7", "#DA835E", "#69b146", "#9A72FF", "#FF5844", "#00bc9c"],
         tooltip: {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
           },
         },
         grid: {
@@ -163,10 +174,13 @@ export default {
             nameGap: 40,
             type: "category",
             boundaryGap: false,
+
             axisLabel: {
               color: "#8FA4CC",
               fontSize: 14,
               padding: [10, 0, 0, 0],
+              showMinLabel: true,
+              showMaxLabel: true,
               // interval: function (index, val) {
               //   if (val.substr(-2) == "01") {
               //     return true;
@@ -460,6 +474,9 @@ export default {
         return row[column.property] ? row[column.property] : "-";
       }
     },
+    formatIndex(index) {
+      return (this.queryParams.page - 1) * this.queryParams.pageSize + index + 1;
+    },
     //分页
     pagination(obj) {
       // if(this.pageSize!=obj.limit){
@@ -469,8 +486,8 @@ export default {
       //     this.page=obj.page;
       // }
       // this.getSearchOilProductionTable();
-      this.page = obj.page;
-      this.pageSize = obj.limit;
+      this.queryParams.page = obj.page;
+      this.queryParams.pageSize = obj.limit;
     },
     //表格-展示||隐藏
     tapDevelop() {

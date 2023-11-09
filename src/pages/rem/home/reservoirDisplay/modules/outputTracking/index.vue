@@ -76,7 +76,7 @@ export default {
                 grid: {
                     top: "8%",
                     left: "6%",
-                    right: "6%",
+                    right: "8%",
                     bottom: "22%",
                 },
                 dataZoom: {
@@ -103,6 +103,9 @@ export default {
                         color: '#8FA4CC',
                         fontSize: 10,
                         padding:[10,0,0,70],
+                        showMinLabel: true, 
+                        showMaxLabel: true,
+                        interval: 25, // 设置时间间隔为5个单位
                     },
                     axisTick: {
                         show:true,

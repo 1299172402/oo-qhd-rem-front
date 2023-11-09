@@ -121,6 +121,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "日产气") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         legend: {
           textStyle: {
@@ -259,6 +270,8 @@ export default {
             },
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -628,6 +641,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         legend: {
           textStyle: {
@@ -725,6 +745,8 @@ export default {
             },
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,

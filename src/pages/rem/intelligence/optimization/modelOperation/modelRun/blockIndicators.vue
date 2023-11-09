@@ -19,7 +19,7 @@
                   <Echart  :chart-data="echartsAll" height="100%" width="100%" style="height: 100% !important;"></Echart>
               </div>
               <div style="text-align:center">
-                  <el-radio-group v-model="radio2" @change="changeRadio2" class="radioqk">
+                  <el-radio-group v-model="radio2" @change="changeRadio2" class="radioqk" style="text-align:center">
                       <el-radio-button label="净现值" class="radionpv"></el-radio-button>
                       <el-radio-button label="日(产水/注水/产油)" class="radiofofo"></el-radio-button>
                       <el-radio-button label="累(注水/产水/产油)" class="radiofofo"></el-radio-button>
@@ -281,7 +281,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -293,7 +293,7 @@ export default {
         legend: {
           data: ["日产水", "日注水", "日产油"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -309,7 +309,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -324,7 +324,7 @@ export default {
           name: "时间/天",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           //两边留白
@@ -337,7 +337,7 @@ export default {
             //rotate:20,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -349,6 +349,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -359,14 +360,14 @@ export default {
           name: "m³/d",
           nameTextStyle: {
             padding: [0, 0, 8, -50],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           // y轴的字体样式
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             // formatter: function (value) {
@@ -495,7 +496,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -507,7 +508,7 @@ export default {
         legend: {
           data: ["累注水", "累产水", "累产油"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -523,7 +524,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -538,7 +539,7 @@ export default {
           name: "时间/天",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           //两边留白
@@ -551,7 +552,7 @@ export default {
             //rotate:20,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -563,6 +564,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -573,14 +575,14 @@ export default {
           name: "m³",
           nameTextStyle: {
             padding: [0, 0, 8, -50],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           // y轴的字体样式
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             // formatter: function (value) {
@@ -689,11 +691,11 @@ export default {
             symbol: "circle",
             data: [],
             lineStyle: {
-              color: "#F0FFF0",
+              color: "#00FF7F",
               width: 1,
             },
             itemStyle: {
-              color: "#F0FFF0",
+              color: "#00FF7F",
             },
           },
         ],
@@ -709,7 +711,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -721,7 +723,7 @@ export default {
         legend: {
           data: ["净现值"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -737,7 +739,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -752,7 +754,7 @@ export default {
           name: "时间/天",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           //两边留白
@@ -765,7 +767,7 @@ export default {
             //rotate:20,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -777,6 +779,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -787,14 +790,14 @@ export default {
           name: "元",
           nameTextStyle: {
             padding: [0, 0, 8, -50],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           // y轴的字体样式
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             formatter: function (value) {
@@ -893,7 +896,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -905,7 +908,7 @@ export default {
         legend: {
           data: ["含水率"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -921,7 +924,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -936,7 +939,7 @@ export default {
           name: "时间/天",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           splitLine: {
@@ -952,7 +955,7 @@ export default {
             //rotate:20,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -964,6 +967,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           data: [],
           //data: ['1','2']
@@ -972,14 +976,14 @@ export default {
           name: "无因次",
           nameTextStyle: {
             padding: [0, 0, 8, -50],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           // y轴的字体样式
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             formatter: function (value) {
@@ -1015,11 +1019,11 @@ export default {
             data: [],
             // data: ["200", "300"],
             lineStyle: {
-              color: "#FDF5E6",
+              color: "#FF6A6A",
               width: 1,
             },
             itemStyle: {
-              color: "#FDF5E6",
+              color: "#FF6A6A",
             },
           },
         ],
@@ -1035,7 +1039,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -1047,7 +1051,7 @@ export default {
         legend: {
           data: ["油藏压力"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -1063,7 +1067,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -1078,7 +1082,7 @@ export default {
           name: "时间/天",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           splitLine: {
@@ -1094,7 +1098,7 @@ export default {
             //rotate:20,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -1106,6 +1110,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           data: [],
           //data: ['1','2']
@@ -1114,14 +1119,14 @@ export default {
           name: "barsa",
           nameTextStyle: {
             padding: [0, 0, 8, -50],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           // y轴的字体样式
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             formatter: function (value) {
@@ -1177,7 +1182,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -1189,7 +1194,7 @@ export default {
         legend: {
           data: ["井底流压"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -1205,7 +1210,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -1220,7 +1225,7 @@ export default {
           name: "时间/天",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           splitLine: {
@@ -1236,7 +1241,7 @@ export default {
             //rotate:20,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -1248,6 +1253,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           data: [],
           //data: ['1','2']
@@ -1256,14 +1262,14 @@ export default {
           name: "barsa",
           nameTextStyle: {
             padding: [0, 0, 8, -50],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           // y轴的字体样式
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             formatter: function (value) {
@@ -1319,7 +1325,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -1331,7 +1337,7 @@ export default {
         legend: {
           data: ["累产油", "累产水"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -1347,7 +1353,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -1362,7 +1368,7 @@ export default {
           name: "时间/天",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           //两边留白
@@ -1375,7 +1381,7 @@ export default {
             //rotate:20,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -1387,6 +1393,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -1398,14 +1405,14 @@ export default {
           name: "m³",
           nameTextStyle: {
             padding: [0, 0, 8, -50],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           // y轴的字体样式
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             formatter: function (value) {
@@ -1517,7 +1524,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -1529,7 +1536,7 @@ export default {
         legend: {
           data: ["日产油", "日产水"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -1545,7 +1552,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -1560,7 +1567,7 @@ export default {
           name: "时间/天",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           //两边留白
@@ -1573,7 +1580,7 @@ export default {
             //rotate:20,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -1585,6 +1592,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -1596,14 +1604,14 @@ export default {
           name: "m³/d",
           nameTextStyle: {
             padding: [0, 0, 8, -50],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           // y轴的字体样式
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             formatter: function (value) {
@@ -1715,7 +1723,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -1727,7 +1735,7 @@ export default {
         legend: {
           data: ["累注水"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -1743,7 +1751,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -1758,7 +1766,7 @@ export default {
           name: "时间/天",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           //两边留白
@@ -1771,7 +1779,7 @@ export default {
             //rotate:20,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -1783,6 +1791,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -1794,14 +1803,14 @@ export default {
           name: "m³",
           nameTextStyle: {
             padding: [0, 0, 8, -50],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           // y轴的字体样式
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             formatter: function (value) {
@@ -1899,7 +1908,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -1911,7 +1920,7 @@ export default {
         legend: {
           data: ["液产量", "日注水"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -1927,7 +1936,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -1942,7 +1951,7 @@ export default {
           name: "时间/天",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           //两边留白
@@ -1955,7 +1964,7 @@ export default {
             //rotate:20,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -1967,6 +1976,7 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
@@ -1978,14 +1988,14 @@ export default {
           name: "m³/d",
           nameTextStyle: {
             padding: [0, 0, 8, -50],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           // y轴的字体样式
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             formatter: function (value) {
@@ -2096,7 +2106,7 @@ export default {
           },
           backgroundColor: "rgba(30, 144, 255, 0.2)",
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "16",
           },
           position: function (point) {
@@ -2107,7 +2117,7 @@ export default {
         legend: {
           data: ["优化累产油量"],
           textStyle: {
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: 15,
           },
         },
@@ -2125,7 +2135,7 @@ export default {
             },
           },
           iconStyle: {
-            borderColor: "#FFFFFF",
+            borderColor: "#8FA4CC",
           },
         },
         //图表位置
@@ -2163,7 +2173,7 @@ export default {
             rotate: 25,
             // x轴的字体样式
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
           },
@@ -2175,13 +2185,14 @@ export default {
           },
           axisTick: {
             show: true,
+              inside:true,
           },
           splitLine: {
             show: false,
           },
           nameTextStyle: {
             padding: [0, 0, -60, -10],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           data: [],
@@ -2192,13 +2203,13 @@ export default {
           //nameLocation: "left",
           nameTextStyle: {
             padding: [0, 0, 10, -20],
-            color: "#FFFFFF",
+            color: "#8FA4CC",
             fontSize: "13",
           },
           axisLabel: {
             show: true,
             textStyle: {
-              color: "#FFFFFF",
+              color: "#8FA4CC",
               fontSize: "13",
             },
             formatter: function (value) {
@@ -2275,7 +2286,7 @@ export default {
                   position: "top", //在上方显示
                   textStyle: {
                     //数值样式
-                    color: "#FFFFFF",
+                    color: "#8FA4CC",
                     fontSize: 12,
                   },
                 },
@@ -2322,6 +2333,17 @@ export default {
   },
   //监听radio2值得变化，进行echarts渲染
   watch: {
+      getGlobeTheme: {
+          handler(Nval) {
+              if (Nval == "dark") {
+                  this.optionfczc.legend.textStyle.color = "#fff";
+              } else {
+                  this.optionfczc.legend.textStyle.color = "#000000";
+              }
+          },
+          deep: true,
+          immediate: true
+      },
     radio2: {
       handler(newValue, oldValue) {
         this.radio2 = newValue;
@@ -2358,6 +2380,11 @@ export default {
       this.h();
     }, 1000);
   },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
   methods: {
     run() {
       setTimeout(() => {

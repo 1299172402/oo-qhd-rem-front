@@ -850,7 +850,7 @@ import {
 } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 export default {
-  name: "recoveryEfficiency",
+  name: "RecoveryEfficiency",
   computed: {
     ...mapState({
       mode: (state) => state.setting.mode,
@@ -986,6 +986,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+            });
+            return relVal;
+          },
         },
         xAxis: {
           boundaryGap: false,
@@ -1002,6 +1009,8 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -1130,6 +1139,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -1156,6 +1172,8 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -1269,6 +1287,13 @@ export default {
             type: "shadow",
           },
           confine: true,
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -1294,6 +1319,8 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,

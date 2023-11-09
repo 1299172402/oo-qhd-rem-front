@@ -286,7 +286,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 50%;top: 36%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 39%;top: 36%;width:20%;height:40%;',
                     boxText: '分注分采调控策略',
                     boxBottomText: [{
                         name: '注采调控最优化方案',

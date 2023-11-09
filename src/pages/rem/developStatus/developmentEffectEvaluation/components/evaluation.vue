@@ -185,6 +185,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         dataZoom: {
           start: 0,
@@ -220,11 +227,13 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -324,6 +333,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         // legend: {
         //     x:'center',
@@ -359,11 +375,13 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -388,10 +406,10 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -429,6 +447,13 @@ export default {
             type: "shadow",
           },
           confine: true,
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         legend: {
           x: "center",
@@ -464,11 +489,13 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -493,10 +520,10 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -526,6 +553,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         dataZoom: {
           start: 0,
@@ -552,11 +586,13 @@ export default {
           axisLabel: {
             color: "#8fa4cc",
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -575,10 +611,10 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -645,6 +681,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         // legend: {
         //     data: ['合理地层压力', '压力保持水平'],
@@ -669,18 +712,20 @@ export default {
         },
         xAxis: {
           name: "日期 (年)",
-          nameGap: 30, 
+          nameGap: 30,
           nameTextStyle: {
             color: "#8FA4CC",
           },
           type: "category",
           axisLabel: {
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -699,10 +744,10 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
           },
-           axisTick: {
-              show: true,
-              inside: true,
-            },
+          axisTick: {
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {

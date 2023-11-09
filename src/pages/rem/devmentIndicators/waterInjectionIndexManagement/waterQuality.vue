@@ -180,7 +180,7 @@ import { exportExcel } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
 
 export default {
-  // name: "waterQuality",
+  name: "WaterQuality",
   components: {
     Echart,
   },
@@ -242,6 +242,13 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
           },
         },
         legend: {
@@ -425,6 +432,9 @@ export default {
               show: true,
               position: "top",
               color: "#8FA4CC",
+              formatter(params) {
+                return parseFloat(params.value[1] || 0).toFixed(2);
+              },
             };
             series.itemStyle = {
               normal: {

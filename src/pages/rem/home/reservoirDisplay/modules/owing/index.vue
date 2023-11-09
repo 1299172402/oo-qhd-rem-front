@@ -5,7 +5,7 @@
         header-title="超欠注情况统计"
         :is-show-max-btn="true"
     >
-        <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('/injection/indexHome')">详细</el-button>
+        <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('/injection/indexHome')">详情</el-button>
         <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downTable">下载</el-button>
         <el-table
             :data="tableData"

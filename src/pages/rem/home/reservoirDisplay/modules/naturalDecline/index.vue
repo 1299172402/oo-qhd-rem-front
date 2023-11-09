@@ -5,7 +5,7 @@
         header-title="自然递减率"
         :is-show-max-btn="true"
     >
-        <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</el-button>
+        <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('/developStatus/developmentEffectEvaluation')">详情</el-button>
         <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downEcharts">下载</el-button>
         <Echart ref="echartChart" :chart-data="naturalDeclineRate" width="100%" height="100%"></Echart>
     </info-window>

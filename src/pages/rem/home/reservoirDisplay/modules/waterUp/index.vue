@@ -6,7 +6,7 @@
             header-title="含水上升率"
             :is-show-max-btn="true"
         >
-            <el-button  type="primary" class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</el-button>
+            <el-button  type="primary" class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详情</el-button>
             <el-button  type="primary" class="detailLinkBtn" style="right:110px" @click="downEcharts">下载</el-button>
             <Echart ref="echartChart" :chart-data="rateOfWaterCutRise" width="100%" height="100%"></Echart>
         </info-window>

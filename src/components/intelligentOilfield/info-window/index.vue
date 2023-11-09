@@ -77,15 +77,42 @@ export default {
   },
   methods: {
     maximizeCom() {
+      const gridItem = this.$el.closest(".vue-grid-item");
+      const gridItemParent = gridItem?.parentNode;
       this.isFull = !this.isFull;
+      if (gridItem && gridItemParent) {
+        if (this.isFull) {
+          const close = gridItem.cloneNode(true);
+          gridItem.classList.add("grid-item__max");
+          close.classList.add("close-vue-grid-item");
+          gridItemParent.appendChild(close);
+        } else {
+          gridItem.classList.remove("grid-item__max");
+          setTimeout(() => {
+            gridItemParent.removeChild(document.querySelector(".close-vue-grid-item"));
+          }, 300);
+        }
+        this.$store.commit("user/SETISMAX", !this.$store.getters["user/getIsMax"]);
+      }
       this.$emit("maximizeCom", this.isFull);
       this.$emit("carouselCom");
-      this.$store.commit("user/SETISMAX", !this.$store.getters["user/getIsMax"]);
       this.$bus.$emit("zoomOut", this.headerTitle);
     }
   }
 };
 </script>
+<style>
+.grid-item__max {
+  transform: none !important;
+  position: fixed !important;
+  top: 0;
+  z-index: 9999;
+}
+
+.close-vue-grid-item {
+  visibility: hidden !important;
+}
+</style>
 <style scoped lang="less">
 .posBg {
   position: absolute;
@@ -162,12 +189,12 @@ export default {
 }
 
 .maxPage {
-  position: fixed;
-  z-index: 999;
+  position: fixed !important;
+  z-index: 999 !important;
   top: 0;
   left: 0;
-  width: 100% !important;
-  height: 100% !important;
+  width: 100vw !important;
+  height: 100vh !important;
 }
 
 .minPage {

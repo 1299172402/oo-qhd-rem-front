@@ -133,6 +133,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         dataZoom: {
           start: 0,
@@ -178,6 +185,8 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -250,6 +259,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: ["累计水驱指数", "累积注采比", "月水驱指数"],
@@ -291,6 +307,8 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -387,6 +405,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -427,6 +452,8 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,

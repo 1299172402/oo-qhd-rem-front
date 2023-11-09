@@ -36,7 +36,7 @@
         </div>
         <div style="margin-right: 15px">
           <span>井号：</span>
-          <el-select v-model="selectWellId" filterable class="f2">
+          <el-select v-model="selectWellId" filterable class="f2" @change="changeWellId">
             <el-option
               v-for="(item, index) in wells"
               :key="item.wellId"
@@ -47,7 +47,7 @@
         </div>
         <div style="margin-right: 15px">
           <span>措施事件：</span>
-          <el-select v-model="measuresType" class="f2" disabled>
+          <el-select v-model="selectMeasuresId" class="f2" @change="changeMeasuresType">
             <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name" :value="item.code">
             </el-option>
           </el-select>
@@ -69,7 +69,13 @@
     <div style="height: auto; padding-top: 0; margin-bottom: 14px" class="svg">
       <el-table v-show="type == 0" highlight :data="oilWellTableData" border style="width: 100%">
         <el-table-column type="index" align="center" width="80" label="序号"></el-table-column>
-        <el-table-column prop="wellName" header-align="center" align="center" label="井号" width="160"></el-table-column>
+        <el-table-column
+          prop="wellName"
+          header-align="center"
+          align="center"
+          label="井号"
+          width="160"
+        ></el-table-column>
         <el-table-column
           prop="beginDate"
           header-align="center"
@@ -82,6 +88,13 @@
           header-align="center"
           align="center"
           :label="`措施结束日期\n(yyyy-mm-dd)`"
+          width="140"
+        ></el-table-column>
+        <el-table-column
+          prop="measureType"
+          header-align="center"
+          align="center"
+          :label="`措施类型`"
           width="140"
         ></el-table-column>
         <el-table-column align="center" label="措施前生产情况">
@@ -957,6 +970,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "日产气量") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         legend: {
           textStyle: {
@@ -1014,6 +1038,8 @@ export default {
             axisLabel: {
               show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1083,6 +1109,8 @@ export default {
             },
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1493,6 +1521,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         grid: {
           x: 120,
@@ -1524,6 +1563,8 @@ export default {
           axisLabel: {
             show: false,
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -1597,6 +1638,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -1649,6 +1701,8 @@ export default {
             axisLabel: {
               show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1684,6 +1738,8 @@ export default {
             },
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1928,6 +1984,17 @@ export default {
             // Use axis to trigger tooltip
             type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         grid: [
           {
@@ -1952,6 +2019,8 @@ export default {
             axisLabel: {
               show: true,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1971,6 +2040,8 @@ export default {
             type: "category",
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -2234,6 +2305,8 @@ export default {
           this.selectWellId = this.wells[0].wellId;
         }
       });
+      this.selectMeasuresId = "";
+      this.measuresDate = new Date(this.dateTime).format("yyyy");
     },
     //根据油田id查-平台数据
     getFetchPlatforms(oilFieldId) {
@@ -2247,6 +2320,15 @@ export default {
     //平台下拉框change事件
     onPlatfromChange(val) {
       this.getFetchWells(this.selectOilField, val);
+      this.selectMeasuresId = "";
+      this.measuresDate = new Date(this.dateTime).format("yyyy");
+    },
+    changeWellId() {
+      this.selectMeasuresId = "";
+      this.measuresDate = new Date(this.dateTime).format("yyyy");
+    },
+    changeMeasuresType() {
+      // this.selectMeasuresId = this.measuresType;
     },
     //通过油田或平台-查井号
     async getFetchWells(oilFieldId, platformId) {
@@ -2820,6 +2902,17 @@ export default {
         title: {},
         tooltip: {
           trigger: "axis",
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         /* legend: {}, */
         grid: [
@@ -2866,6 +2959,8 @@ export default {
               axisLabel: {
                 show: true,
                 color: "#8FA4CC",
+                showMinLabel: true,
+                showMaxLabel: true,
               },
               axisTick: {
                 show: true,

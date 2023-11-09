@@ -7,7 +7,7 @@
             header-title="月度产量完成情况"
             :is-show-max-btn="true"
         >
-            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('AnnualPlan')">详细</el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('AnnualPlan')">详情</el-button>
             <el-button type="primary" class="buttonActive_primary detailLinkBtn" style="right:110px"  @click="downEcharts">下载</el-button>
             <Echart ref="echartChart" :chart-data="histogram" style="height: 100%"></Echart>
         </info-window>

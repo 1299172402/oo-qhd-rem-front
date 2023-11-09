@@ -1,66 +1,64 @@
 <template>
   <div class="stytable">
-      <el-table ref="multipleTable"  :data="prodRealList" height="520"
-                v-loading="pageLoading" element-loading-text="加载中" element-loading-background="rgba(0, 40, 80, 0.7)"
-                :header-cell-style="headerClass" stripe>
-        <el-table-column type="index" label="序号" align="center" :index=" (this.currentPage-1)*this.pageSize+1" />
-
-        <el-table-column prop="name" label="井名" align="center" >
+      <el-table ref="multipleTable"  :data="prodRealList" height="650"
+                v-loading="pageLoading" element-loading-text="加载中" element-loading-background="rgba(0, 40, 80, 0.7)">
+        <el-table-column type="index" label="序号" min-width="10" align="center" :index=" (this.currentPage-1)*this.pageSize+1" />
+        <el-table-column prop="name" label="井名" align="center" min-width="100">
           <template slot-scope="scope">
             <span >{{scope.row.wellName}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="date" label="时间" align="center">
+        <el-table-column prop="date" label="时间" align="center" min-width="70">
           <template slot-scope="scope">
             <span>{{scope.row.date}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="开关井//状态" :render-header="renderHeader" align="center">
+        <el-table-column prop="status" label="开关井//状态" :render-header="renderHeader" align="center" min-width="55">
           <template slot-scope="scope">
             <input type="text" v-model="scope.row.status" v-show="scope.row.edit" />
             <span v-show="!scope.row.edit">{{scope.row.status}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="ctrlMode" label="控制//模式" :render-header="renderHeader" align="center">
+        <el-table-column prop="ctrlMode" label="控制//模式" :render-header="renderHeader" align="center" min-width="48">
           <template slot-scope="scope">
             <input type="text" v-model="scope.row.ctrlMode" v-show="scope.row.edit" />
             <span v-show="!scope.row.edit">{{scope.row.ctrlMode}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="defaultValue" label="默认//参数" :render-header="renderHeader" align="center">
+        <el-table-column prop="defaultValue" label="默认//参数" :render-header="renderHeader" align="center" min-width="40">
           <template slot-scope="scope">
             <input type="text" v-model="scope.row.defaultValue" v-show="scope.row.edit" />
             <span v-show="!scope.row.edit">{{scope.row.defaultValue}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="oilProdDaily" label="日产油" align="center">
+        <el-table-column prop="oilProdDaily" label="日产油" align="center" min-width="50">
           <template slot-scope="scope">
             <input type="text" v-model="scope.row.oilProdDaily" v-show="scope.row.edit" />
             <span v-show="!scope.row.edit">{{scope.row.oilProdDaily}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="gasProdDaily" label="日产气" align="center" >
+        <el-table-column prop="gasProdDaily" label="日产气" align="center" min-width="55">
           <template slot-scope="scope">
             <input type="text" v-model="scope.row.gasProdDaily" v-show="scope.row.edit" />
             <span v-show="!scope.row.edit">{{scope.row.gasProdDaily}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="oilProdDaily" label="日产水" align="center" >
+        <el-table-column prop="oilProdDaily" label="日产水" align="center" min-width="50">
           <template slot-scope="scope">
             <input type="text" v-model="scope.row.waterProdDaily" v-show="scope.row.edit" />
             <span v-show="!scope.row.edit">{{scope.row.waterProdDaily}}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column label="操作" align="center" min-width="100">
           <template slot-scope="scope">
-            <el-button size="mini" v-show="!scope.row.edit" class="buttonClassLogo"
+            <el-button size="mini" v-show="!scope.row.edit"
                        style="background-color: transparent;color: rgba(255,255,255,0.8);border: 1px dashed rgba(255,255,255,0.5)"
                        @click="edit(scope.row, scope)">编辑</el-button>
             <el-row type="flex" justify="space-between">
-              <el-button v-show="scope.row.edit" size="mini" class="buttonClassLogo"
+              <el-button v-show="scope.row.edit" size="mini"
                          style="background-color: transparent;color: rgba(255,255,255,0.8);border: 1px dashed rgba(255,255,255,0.5)"
                          @click="save(scope.row)">保存</el-button>
-              <el-button v-show="scope.row.edit" size="mini" class="buttonClassLogo"
+              <el-button v-show="scope.row.edit" size="mini"
                          style="background-color: transparent;color: rgba(255,255,255,0.8);border: 1px dashed rgba(255,255,255,0.5)"
                          @click="cancel(scope.row)">取消</el-button>
             </el-row>
@@ -75,7 +73,7 @@
         @current-change="handleCurrentChange"
         :current-page="currentPage"
         :page-size="100"
-        style="text-align: center;">
+        style="float: right;margin-top: 10px">
       </el-pagination>
 
 <!--    </el-row>-->
@@ -84,7 +82,7 @@
 
 <script>
 import Vue from "vue";
-import { GetFactSchedule} from "@/api/rem/dispenseModel";
+import { GetFactSchedule} from "@/api/rem/dispenseModel.js";
 export default {
   name: "realTableOil",
   data() {
@@ -106,6 +104,24 @@ export default {
 
     }
   },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.optionfczc.legend.textStyle.color = "#fff";
+                } else {
+                    this.optionfczc.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate: true
+        },
+    },
   methods: {
     renderHeader(h, { column }) {
       return h("span", {}, [
@@ -148,7 +164,6 @@ export default {
         pageSize:100,
         pn:this.currentPage,
         wellTypeFlag:"prod"
-
       }
       this.pageLoading = true
       console.log("params",param)

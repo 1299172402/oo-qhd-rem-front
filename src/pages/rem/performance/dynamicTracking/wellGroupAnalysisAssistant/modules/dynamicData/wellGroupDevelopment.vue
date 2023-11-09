@@ -54,6 +54,7 @@ import Echarts from "@/components/tools/Echarts/index.vue";
 import { wellGroupDevLineCharts } from "@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js";
 import FileSaver from "file-saver";
 import { exportExcel } from "@/lib/exportExcel.js";
+import { number } from 'echarts/core';
 export default {
   components: {
     Echarts,
@@ -86,6 +87,17 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "油井总井数" || item.seriesName == "油井开井数" || item.seriesName == "水井总井数" || item.seriesName == "水井开井数") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + Number(item.value[1] || 0);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
           },
         },
         legend: {
@@ -228,6 +240,8 @@ export default {
             axisLabel: {
               //show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,

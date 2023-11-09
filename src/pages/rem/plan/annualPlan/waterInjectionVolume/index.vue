@@ -136,6 +136,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累注" || item.seriesName == "实际年累注") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         grid: {
           x: 120,
@@ -156,33 +167,37 @@ export default {
           itemHeight: 6,
           itemGap: 14,
         },
-        xAxis: {
-          name: "日期 (日)",
-          nameGap: 55,
-          type: "category",
-          boundaryGap: false,
-          axisLabel: {
-            color: "#8FA4CC",
-            padding: [10, 0, 0, 0],
-            fontSize: 14,
-            // interval: function (index, val, arr) {
-            //   if (val.substr(-2) == "01") {
-            //     return true;
-            //   } else {
-            //     return false;
-            //   }
-            // },
-          },
-          axisTick: {
-            show: true,
-            inside: true,
-          },
-          axisLine: {
-            lineStyle: {
+        xAxis: [
+          {
+            name: "日期 (日)",
+            nameGap: 55,
+            type: "category",
+            boundaryGap: false,
+            axisLabel: {
               color: "#8FA4CC",
+              padding: [10, 0, 0, 0],
+              fontSize: 14,
+              showMinLabel: true,
+              showMaxLabel: true,
+              // interval: function (index, val, arr) {
+              //   if (val.substr(-2) == "01") {
+              //     return true;
+              //   } else {
+              //     return false;
+              //   }
+              // },
+            },
+            axisTick: {
+              show: true,
+              inside: true,
+            },
+            axisLine: {
+              lineStyle: {
+                color: "#8FA4CC",
+              },
             },
           },
-        },
+        ],
         yAxis: [
           {
             name: "日注水量(m³)",
@@ -295,7 +310,7 @@ export default {
           xData = Array.from(xSet).sort();
           this.OilYearLineChart.legend.data = legendData;
           this.OilYearLineChart.series = seriesData;
-          this.OilYearLineChart.xAxis.data = xData;
+          this.OilYearLineChart.xAxis[0].data = xData;
           // let arr = xData.filter((item) => item.substr(-2) == "01");
           // let CXArry = [];
           // if (arr.length > 10) {
@@ -334,7 +349,7 @@ export default {
         } else {
           this.OilYearLineChart.legend.data = legendData;
           this.OilYearLineChart.series = seriesData;
-          this.OilYearLineChart.xAxis.data = xData;
+          this.OilYearLineChart.xAxis[0].data = xData;
         }
       });
     },

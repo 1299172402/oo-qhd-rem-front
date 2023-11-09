@@ -69,10 +69,12 @@
         id="xczyjhb"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
-       
+          <el-table-column   label="序号" type="index" width="50px" align="center"></el-table-column>
         <el-table-column  label="井基本信息" prop="wellId" align="center">
           <el-table-column sortable  label="井号" prop="wellNo" min-width="200px" align="center">
           </el-table-column>
+            <el-table-column sortable  label="推荐措施" prop="measType" min-width="120px" align="center" >
+            </el-table-column>
           <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.layerName !== null && scope.row.layerName !== ''">{{scope.row.layerName}}</span>
@@ -302,13 +304,17 @@
 </template>
 
 <script>
-import { queryMeasurePlanList } from "@/api/rem/actionplanmanagement";
-import { pumpReplaceDetail } from "@/api/rem/welldynamicanalysis";
+import {
+    userListByUserNames,
+    queryOperatorsCheckFieldListsDetail,
+    queryListOfOilfieldQueryPlatformsDetail
+} from "@/api/basic/master";
+import { pumpReplaceDetail,pumpReplaceDetailSkip } from "@/api/rem/welldynamicanalysis";
 import {
     measureRecommend,
 } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import {exportExcel} from "@/lib/exportExcel";
-import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate.js";
+import { getOilFieldList } from "@/api/rem/workcompanydesignate.js";
 import {
     fetchPlatforms,
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
@@ -345,11 +351,10 @@ export default {
     };
   },
   created() {
-      if(this.$route.query.platform){
-          this.getList(); 
-      }
       this.getserch()
-    // this.choiceDepts(); // 获取组织机构
+      this.queryParams.endTime=this.$route.query.currentDate
+      this.getList();
+      // this.choiceDepts(); // 获取组织机构
   },
   methods: {
       getserch() {
@@ -377,6 +382,9 @@ export default {
           });
       },
       retrieval(){
+          if (this.$route.query.scourePage === "措施建议表详情") {
+              this.queryTableData();
+          } else {
           let selectPlatform = ''
         if(this.queryParams.selectPlatform == ''){
             selectPlatform = '3FC9A818F5BC43B88270DB80BBB3018F'
@@ -385,7 +393,7 @@ export default {
         }
           let list =
               {
-                  oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                  oilFieldId: this.queryParams.selectOilField,
                   selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
                   evaluationDate: this.queryParams.endTime,
                   platformId:selectPlatform,
@@ -406,7 +414,7 @@ export default {
               if(wells.length > 0){
                   let data = {
                       date: this.queryParams.endTime,
-                      ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                      ogfId: this.queryParams.selectOilField,
                       platId: selectPlatform,
                       measureCode:this.$route.query.measureCode,
                       wellIds:wells,
@@ -420,23 +428,53 @@ export default {
                   });
               }
              
-          })
+          })}
 
       },
       doDownExcel() {
           exportExcel("#xczyjhb", "措施计划情况表");
       },
+      queryTableData(){
+          //jgl
+          let selectPlatform = '';
+          if(this.queryParams.selectPlatform == ''){
+              selectPlatform = '3FC9A818F5BC43B88270DB80BBB3018F'
+          }else{
+              selectPlatform = this.queryParams.selectPlatform
+          }
+          let ogfId = '';
+          if(this.queryParams.selectOilField == ''){
+              ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
+          }else{
+              ogfId = this.queryParams.selectOilField
+          }
+          let params = {
+              date: this.queryParams.endTime,
+              ogfId: ogfId,
+              platId: selectPlatform
+          };
+          pumpReplaceDetailSkip(params).then(res=>{
+              if(res.data.code == 200){
+                  this.noticeList = res.data.data;
+              }else{
+                  this.noticeList = []
+              }
+          })  
+      },
     getList() {
+        if (this.$route.query.scourePage === "措施建议表详情") {
+            this.queryTableData();
+        } else {
         let list = 
         {
-            oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+            oilFieldId: this.queryParams.selectOilField,
             selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
             evaluationDate: this.$route.query.currentDate, 
             platformId: this.$route.query.platform,
             timeGranularityCode: "",
             wellId: "",
             showNormal: true
-        }     
+        };
         this.queryParams.endTime = this.$route.query.currentDate
         measureRecommend(list).then((res)=>{
             const wells = []
@@ -450,7 +488,7 @@ export default {
             if(wells.length>0){
                 let data = {
                     date: this.$route.query.currentDate,
-                    ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                    ogfId: this.queryParams.selectOilField,
                     platId: this.$route.query.platform,
                     wellIds:wells,
                     measureCode:this.$route.query.measureCode,
@@ -464,7 +502,7 @@ export default {
                 });
             }
         })
-      
+        }
     },
       objectSpanMethod({row, column, rowIndex, columnIndex}) {
           const concatList = [

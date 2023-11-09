@@ -263,6 +263,8 @@ export default {
             axisLabel: {
               show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: false,
@@ -337,6 +339,8 @@ export default {
               textStyle: {
                 fontSize: 14,
               },
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: false,
