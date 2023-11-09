@@ -99,7 +99,7 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="wellName" align="center" type="index" width="50px" label="序号"></el-table-column>
+                <el-table-column prop="seqNum" align="center" width="50px" label="序号"></el-table-column>
                 <el-table-column prop="wellName" align="center" min-width="60px" label="井号"></el-table-column>
                 <el-table-column prop="appendixValueName" align="center" min-width="60px" label="*关停分类"></el-table-column>
                 <el-table-column prop="reasonAppendixValueName" align="center" min-width="60px" label="*关停原因"></el-table-column>
@@ -208,10 +208,8 @@ export default {
             lastMonth.setDate(nowDay > daysOflastMonth ? daysOflastMonth : nowDay);
             var startDate =
                 lastMonth.getFullYear() +
-                "-" +
-                (lastMonth.getMonth() + 1 >= 10 ? lastMonth.getMonth() + 1 : "0" + (lastMonth.getMonth() + 1)) +//月份从0开始
-                "-" +
-                (lastMonth.getDate() >= 10 ? lastMonth.getDate() : "0" + lastMonth.getDate());
+                "-01" +
+                "-01"
             
             var endDate =
                 now.getFullYear() +
@@ -236,7 +234,7 @@ export default {
                 searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             }
             await userListByUserNames(params).then((res) => {
-                this.ogfId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
+                this.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
             })
         },
         //油田
@@ -321,6 +319,8 @@ export default {
             this.$router.go(-1);
         },
         async result() {
+            this.queryData.pageNum = 1;
+            this.queryData.pageSize = 10;
             await this.initializeDate();
             await this.getData();
             await this.queryinfo()
