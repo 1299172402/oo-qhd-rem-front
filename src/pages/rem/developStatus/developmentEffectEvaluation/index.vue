@@ -156,15 +156,8 @@ export default {
       canUpload: false,
     };
   },
-  mounted() {
-    this.initData();
-    if (this.$route.query.link) {
-      this.tabsValue = this.$route.query.link;
-      console.log(this.tabsValue);
-      setTimeout(() => {
-        this.$refs.childComponents.doSearch();
-      }, 1000);
-    }
+  async mounted() {
+    await this.initData();
   },
   methods: {
     //重置
@@ -179,10 +172,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -216,6 +208,13 @@ export default {
       let fieldId = this.$route.params.fieldId;
       if (fieldId) {
         this.selectBlock = fieldId;
+      }
+      if (this.$route.query.link) {
+        this.tabsValue = this.$route.query.link;
+        console.log(this.tabsValue);
+        setTimeout(() => {
+          this.$refs.childComponents.doSearch();
+        }, 1000);
       }
     },
     //获得区块信息
