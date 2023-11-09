@@ -181,8 +181,8 @@ export default {
                 let pormps = {
                     ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                     platId: "",
-                    prodDate: yesterdayStr,
-                    prodDateCompare: y + "-" + m + "-" + d
+                    prodDate: y + "-" + m + "-" + d,
+                    prodDateCompare: yesterdayStr
                 }
                 getYieldFluctuation(pormps).then((res) => {
                     this.histogram.yAxis.min = null

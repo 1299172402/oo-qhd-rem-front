@@ -489,7 +489,7 @@
           :limit="limit"
           :fileSize="20"
           :is-show-tip="false"
-          biz-path="rem-front/text"
+          biz-path="rem/oo-qhd-rem-agg"
           :file-type="fileType"
           @change="getResData"
         />
