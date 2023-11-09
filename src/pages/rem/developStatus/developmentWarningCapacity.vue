@@ -86,7 +86,7 @@
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column label="处置状态" align="center">
+            <el-table-column prop="status" label="处置状态" align="center">
               <template slot-scope="scope">
                 {{ scope.row.status ? scope.row.status : "-" }}
               </template>
@@ -172,7 +172,7 @@
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column label="处置状态" align="center">
+            <el-table-column prop="status" label="处置状态" align="center">
               <template slot-scope="scope">
                 {{ scope.row.status ? scope.row.status : "-" }}
               </template>
@@ -346,7 +346,7 @@
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column label="处置状态" align="center">
+            <el-table-column prop="status" label="处置状态" align="center">
               <template slot-scope="scope">
                 {{ scope.row.status ? scope.row.status : "-" }}
               </template>
@@ -432,7 +432,7 @@
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column label="处置状态" align="center">
+            <el-table-column prop="status" label="处置状态" align="center">
               <template slot-scope="scope">
                 {{ scope.row.status ? scope.row.status : "-" }}
               </template>
@@ -1036,22 +1036,22 @@ export default {
         warningTypeCode: this.warningTypeCode,
       };
       if (this.radioValue == "油田指标预警" && this.switchNumber == "1") {
-        this.queryParams.beginDate = this.dateTime[0];
-        this.queryParams.endDate = this.dateTime[1];
-        this.queryParams.warningCode = "WARNING";
+        queryParams.beginDate = this.dateTime[0];
+        queryParams.endDate = this.dateTime[1];
+        queryParams.warningCode = "WARNING";
       } else if (this.radioValue == "油田指标预警" && this.switchNumber == "2") {
-        this.queryParams.beginDate = this.dateTime[0];
-        this.queryParams.endDate = this.dateTime[1];
-        this.queryParams.warningCode = "OBSERVE";
+        queryParams.beginDate = this.dateTime[0];
+        queryParams.endDate = this.dateTime[1];
+        queryParams.warningCode = "OBSERVE";
       } else if (this.radioValue == "油田指标预警" && this.switchNumber == "3") {
-        this.queryParams.beginDate = this.historyDateTime[0];
-        this.queryParams.endDate = this.historyDateTime[1];
-        this.queryParams.warningCode = "HIS";
+        queryParams.beginDate = this.historyDateTime[0];
+        queryParams.endDate = this.historyDateTime[1];
+        queryParams.warningCode = "HIS";
       }
       oilFieldDevWarnings(queryParams).then((data) => {
         let code = data.data.code;
         if (code == 200) {
-          let list = [];
+          let list = data.data.data?.indicatorWarnings || [];
           let headTitle = null;
           let fileName = "";
           if (this.radioValue == "油田指标预警" && this.switchNumber == "1") {
@@ -1079,22 +1079,22 @@ export default {
         warningTypeCode: this.warningTypeCode,
       };
       if (this.radioValue == "区块指标预警" && this.switchNumber == "1") {
-        this.queryParams.beginDate = this.dateTime[0];
-        this.queryParams.endDate = this.dateTime[1];
-        this.queryParams.warningCode = "WARNING";
+        queryParams.beginDate = this.dateTime[0];
+        queryParams.endDate = this.dateTime[1];
+        queryParams.warningCode = "WARNING";
       } else if (this.radioValue == "区块指标预警" && this.switchNumber == "2") {
-        this.queryParams.beginDate = this.dateTime[0];
-        this.queryParams.endDate = this.dateTime[1];
-        this.queryParams.warningCode = "OBSERVE";
+        queryParams.beginDate = this.dateTime[0];
+        queryParams.endDate = this.dateTime[1];
+        queryParams.warningCode = "OBSERVE";
       } else if (this.radioValue == "区块指标预警" && this.switchNumber == "3") {
-        this.queryParams.beginDate = this.historyDateTimeSec[0];
-        this.queryParams.endDate = this.historyDateTimeSec[1];
-        this.queryParams.warningCode = "HIS";
+        queryParams.beginDate = this.historyDateTimeSec[0];
+        queryParams.endDate = this.historyDateTimeSec[1];
+        queryParams.warningCode = "HIS";
       }
       fieldDevWarnings(queryParams).then((data) => {
         let code = data.data.code;
         if (code == 200) {
-          let list = [];
+          let list = data.data.data?.indicatorWarnings || [];
           let headTitle = null;
           let fileName = "";
           if (this.radioValue == "区块指标预警" && this.switchNumber == "1") {
