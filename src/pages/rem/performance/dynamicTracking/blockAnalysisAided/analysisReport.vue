@@ -710,7 +710,8 @@ export default {
       this.isNewformat = !this.isNewformat;
       setTimeout(() => {
         if (this.layerData.data.mutiLayerPicResponse) {
-          if (!this.myList.length && this.myListCopy.length) {
+          // if (!this.myList.length && this.myListCopy.length) {
+          if (!this.myList.length) {
             this.sjcl(this.layerData.data.mutiLayerPicResponse);
           } else {
             this.setProminentWell(this.layerData.data.mutiLayerPicResponse);
@@ -832,18 +833,18 @@ export default {
       });
     },
     //层位change
-    selectChange(e) {
+    async selectChange(e) {
       this.queryRemUploadFileMinioApi(true);
       if (this.myListCopy.length) {
-        this.getLayerWell();
+        await this.getLayerWell();
       }
     },
-    getLayerWell() {
+    async getLayerWell() {
       let request = {
         layerId: this.selectPosition,
         wellList: this.myListCopy.map((item) => item.id) || [],
       };
-      getLayerWell(request).then((data) => {
+      await getLayerWell(request).then((data) => {
         if (data.data.code == 200) {
           this.myList = data.data.data ? data.data.data : [];
           this.myList.filter((item) => (item.well = item.wellName));
@@ -973,7 +974,8 @@ export default {
       areaDiagram(request).then((data) => {
         this.layerData = data.data;
         if (this.layerData.data.mutiLayerPicResponse) {
-          if (!this.myList.length && this.myListCopy.length) {
+          // if (!this.myList.length && this.myListCopy.length) {
+          if (!this.myList.length) {
             this.sjcl(this.layerData.data.mutiLayerPicResponse);
           } else {
             this.setProminentWell(this.layerData.data.mutiLayerPicResponse);
@@ -1010,7 +1012,7 @@ export default {
       this.clickAnalysis();
     },
     //点击
-    selRadioIterm(val, tag) {
+    async selRadioIterm(val, tag) {
       console.log(val, tag, this.indexChangeTrend);
       let myData = []; //我的数据
       let myWellCount = {}; //计算各项目的井数
@@ -1045,6 +1047,7 @@ export default {
               //置空展示信息
               this.tagMessage = "";
               this.myList = [];
+              this.myListCopy = [];
             } else {
               //有数据
               let wellList = tData.wells.split(","); //我的井号串（逗号分割）
@@ -1315,7 +1318,7 @@ export default {
       }
       this.tableData = myData;
       if (tag == "indexChangeTrendList") {
-        this.getLayerWell();
+        await this.getLayerWell();
       }
       this.clickAnalysis(indexCode, indexName);
     },
@@ -1686,19 +1689,19 @@ export default {
         ],
         Objects: [],
       };
-      if (this.myListCopy.length) {
-        this.myListCopy.forEach((el, i) => {
-          if (el.wellCoord !== null) {
-            LayersItem.Objects.push({
-              ObjType: 110,
-              CoordX: el.wellCoord[0].coordX,
-              CoordY: el.wellCoord[0].coordY,
-              WellDotType: String(el.wellCoord[0].wellCode),
-              WellName: el.well,
-            });
-          }
-        });
-      } else {
+      // if (this.myListCopy.length) {
+      //   this.myListCopy.forEach((el, i) => {
+      //     if (el.wellCoord !== null) {
+      //       LayersItem.Objects.push({
+      //         ObjType: 110,
+      //         CoordX: el.wellCoord[0].coordX,
+      //         CoordY: el.wellCoord[0].coordY,
+      //         WellDotType: String(el.wellCoord[0].wellCode),
+      //         WellName: el.well,
+      //       });
+      //     }
+      //   });
+      // } else {
         this.myList.forEach((el, i) => {
           if (el.wellCoord !== null) {
             LayersItem.Objects.push({
@@ -1710,7 +1713,7 @@ export default {
             });
           }
         });
-      }
+      // }
 
       data.Layers.push(LayersItem);
       if (this.isNewformat) {
