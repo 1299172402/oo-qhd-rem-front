@@ -495,7 +495,7 @@
                   label="当前作业内容"
                   prop="workContent"
                   header-align="center"
-                  align="center"
+                  align="left"
                 ></el-table-column>
               </el-table>
               <pagination
