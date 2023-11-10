@@ -643,7 +643,6 @@ export default Vue.extend({
     },
     /** 提交按钮 */
     submitForm() {
-      this.form.postIds = this.form.tempPostId ? this.form.tempPostId?.split(",") : [];
       this.$refs.form.validate(valid => {
         if (valid) {
           delete this.form.password;
@@ -693,9 +692,6 @@ export default Vue.extend({
       getUser(userId).then(response => {
         this.form = response.data.data;
         this.form.idCard = response.data.data.idCard;
-        this.form.postIds = response.data.postIds.length === 0 ? [] : response.data.postIds.toLocaleString().split(",");
-        this.form.tempPostId = response.data.postIds.length === 0 ? "" : String(response.data.postIds.toLocaleString());
-        this.form.roleIds = response.data.roleIds.length === 0 ? [] : response.data.roleIds.toLocaleString().split(",");
         this.open = true;
         this.title = "账号管理";
       });

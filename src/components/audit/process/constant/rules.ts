@@ -52,6 +52,6 @@ interface ActionType {
 
 export const differentTypeRequire: Partial<ActionType> = {
   terminateProcessInstance: ["currentAction.key", "terminateProcessReason", "nextAuditInfo"],
-  completeTask: ["currentAction.key", "opinion", "nextAuditInfo"],
+  completeTask: ["currentAction.key", "opinion", "nextAuditInfo", "nextAuditInfo.nextAuditInfos"],
   rejectTask: ["currentAction.key", "opinion"]
 };

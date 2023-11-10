@@ -452,7 +452,7 @@
                     placeholder="请选择组"
                   >
                     <el-option
-                      v-for="(subItem, subIndex) in assignResourcesGroupSelectionsOptions"
+                      v-for="(subItem, subIndex) in selectUserRulesGroupSelectionsOptions"
                       :key="subIndex"
                       :label="subItem.name"
                       :value="subItem.id"

@@ -57,12 +57,13 @@ export default Vue.extend({
             validator: (this as any).nextActIdValidator
           }
         ],
-        parallelNodeAuditInfo: [{ required: true, message: "请选择处理人", trigger: ["blur"], transform: (this as any).parallelNodeAuditInfoTransform }]
+        "nextAuditInfo.nextAuditInfos": [{ validator: (this as any).validateParallelNodeAuditInfo, trigger: "blur" }]
       },
       FLOW_AUDIT,
       labelCol: { span: 3 },
       wrapperCol: { span: 14 },
       nodeType: "default",
+      notValidate: false,
       auditInfo: {
         nextAuditInfo: {
           nextActId: undefined
@@ -174,7 +175,7 @@ export default Vue.extend({
       if (this.onlyActivity) {
         return "nextAuditInfoNextActId";
       }
-      return (this.isParallelNode ? "parallelNodeAuditInfo" : "nextAuditInfo");
+      return (this.isParallelNode ? "nextAuditInfo.nextAuditInfos" : "nextAuditInfo");
     },
     /**
      * 显示审批意见
@@ -284,9 +285,9 @@ export default Vue.extend({
       }
       this.$nextTick(() => {
         if (this.isParallelNode) {
-          this.$refs.form.validateField("parallelNodeAuditInfo");
+          this.$refs.form?.validate({ fields: ["nextAuditInfo.nextAuditInfos"], trigger: "blur" });
         } else {
-          this.$refs?.form.clearValidate([this.onlyActivity && "nextAuditInfoNextActId" || "nextAuditInfo"]);
+          this.$refs.form?.clearValidate([this.onlyActivity && "nextAuditInfoNextActId" || "nextAuditInfo"]);
         }
       });
     },
@@ -336,8 +337,15 @@ export default Vue.extend({
     /**
      * 并行节点时，需要将每个节点都选择下一节点人
      */
-    parallelNodeAuditInfoTransform() {
-      return this.auditInfo.nextAuditInfo.nextAuditInfos?.every(v => v.users.length > 0) ? "1" : "";
+    validateParallelNodeAuditInfo() {
+      if (this.notValidate) {
+        // 切换处理操作时会触发校验后清空校验，避免闪一下问题
+        return { result: true, type: "success" };
+      }
+      if (this.auditInfo.nextAuditInfo.nextAuditInfos?.every(v => v.users?.length > 0)) {
+        return { result: true, type: "success" };
+      }
+      return { result: false, message: "请选择处理人", type: "error" };
     }
   },
   render() {
@@ -394,6 +402,7 @@ export default Vue.extend({
 
     const nextAuditUserEl = <t-form-item
       label="下一处理节点"
+      class="next-node"
       name={this.nextAuditInfoProp}
       initialData="['1']"
       requiredMark={true}
@@ -411,7 +420,7 @@ export default Vue.extend({
           dataSource={this.dataSource}
           watch-value={this.selectNextAuditWatch}
           class={"select-next-audit"}
-          onParallelNode={val => { this.isParallelNode = val; }}
+          on-parallel-node={val => { this.isParallelNode = val; }}
           onSelectAuditorOk={this.selectAuditorOk}
         />
       </div>
@@ -428,9 +437,11 @@ export default Vue.extend({
                 this.$set(this.auditInfo, "currentAction", cloneDeep(
                   this.acceptActions.find(item => item.key === val)) || {}
                 );
+                this.notValidate = true;
                 this.$nextTick(() => {
                   setTimeout(() => {
                     this.$refs.form.clearValidate();
+                    this.notValidate = false;
                   });
                 });
               }}>

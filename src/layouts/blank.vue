@@ -1,7 +1,7 @@
 <template>
   <div class="myWrapper">
     <keep-alive :include="aliveViews">
-      <router-view :key="$route.path + 'ThirdLevelView'" />
+      <router-view v-if="$route.name === myKidName && !isRefreshing" :key="$route.path + 'ThirdLevelView'" />
     </keep-alive>
   </div>
 </template>
@@ -11,13 +11,22 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "ThirdLevelView",
+  data() {
+    return {
+      myKidName: null
+    };
+  },
   computed: {
     ...mapGetters({
-      tabRouterList: "tabRouter/tabRouterList"
+      tabRouterList: "tabRouter/tabRouterList",
+      isRefreshing: "tabRouter/isRefreshing"
     }),
     aliveViews() {
       return this.tabRouterList?.filter(route => route.isAlive).map(route => route.name) || [];
     }
+  },
+  mounted() {
+    this.myKidName = this.$route.name;
   }
 };
 </script>
