@@ -262,10 +262,10 @@
                       prop="eventType"
                       label="事件类型"
                       header-align="center"
-                      align="left"
+                      align="center"
                       width="180"
                     ></el-table-column>
-                    <el-table-column prop="content" label="井号" header-align="center" align="left"></el-table-column>
+                    <el-table-column prop="content" label="井号" header-align="center" align="center"></el-table-column>
                   </el-table>
                 </div>
               </pagePanel>
