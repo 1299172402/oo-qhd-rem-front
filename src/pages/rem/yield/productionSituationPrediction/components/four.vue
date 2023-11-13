@@ -106,7 +106,7 @@
           ></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="left" label="备注" min-width="300" prop="remark">
+      <el-table-column align="center" label="备注" min-width="300" prop="remark">
         <template slot-scope="scope">
           <el-input v-model="scope.row.remark" size="medium"></el-input>
         </template>
