@@ -259,6 +259,7 @@
                 border
                 ref="reset"
                 style="width: 100%; height: 100%"
+                highlight-current-row
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
@@ -528,7 +529,7 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因2：调整参数影响。\n下步措施：提高生产时率",
+                                                                            "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
                                                                         }
                                                                     ]
                                                                 }
@@ -1546,10 +1547,12 @@ export default {
         //表格鼠标悬浮事件
         handleCurrentChange(row){
             const targetName = row.measure?row.measure.split(';').join(''):row.vauleMeasure.split(';').join('')
+            console.log(this.getTreeName(this.mainList, targetName));
+            console.log(targetName)
                 this.chart.dispatchAction({
                     type:'highlight',
                     seriesIndex:0,
-                    name:this.getTreeName(this.mainList,targetName)
+                    name:this.$route.query.link==6? '归因统计分析':this.getTreeName(this.mainList,targetName)
                 })
         },
     },

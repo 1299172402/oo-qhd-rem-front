@@ -560,7 +560,7 @@ import {
   devStatusInfosDate,
 } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 export default {
-  name: "developmenthistory",
+  name: "Developmenthistory",
   components: {
     Echart,
   },

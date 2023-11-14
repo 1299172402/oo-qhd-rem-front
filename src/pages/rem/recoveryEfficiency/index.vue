@@ -850,7 +850,7 @@ import {
 } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 export default {
-  name: "RecoveryEfficiency",
+  name: "RecoveryEfficiencyIndex",
   computed: {
     ...mapState({
       mode: (state) => state.setting.mode,

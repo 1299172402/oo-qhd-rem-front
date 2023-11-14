@@ -33,7 +33,7 @@
     import three from "./components/three.vue";
     import four from "./components/four.vue";
     export default {
-        name: 'productionSituationPrediction',
+        name: 'ProductionSituationPrediction',
         components: {
           one,
           two,
