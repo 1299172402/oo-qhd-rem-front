@@ -367,7 +367,7 @@ import FileSaver from "file-saver";
 import * as XLSX from "@/lib/xlsx";
 import treeSelectionAll from "@/pages/rem/basic/components/treeSelectionAll.vue";
 export default {
-  name: "measureManagement",
+  name: "MeasureManagement",
   components: {
     fieldOperations,
     treeSelectionAll,
