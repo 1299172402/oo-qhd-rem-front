@@ -556,7 +556,7 @@ import { getWarningsDate } from "@/api/oilDeposit/rem-04/developStatus.js";
 import { exportExcelFromJson } from "@/lib/exportExcel.js";
 
 export default {
-  name: "developmentWarningCapacity",
+  name: "DevelopmentWarningCapacity",
   components: {
     verticalSwitchButton,
   },
