@@ -536,6 +536,8 @@ export default {
               {col: 27, colName: 'sandValue'},
               {col: 28, colName: 'pumpCondition'},
               {col: 29, colName: 'tubularColumnCondition'},
+              {col: 30, colName: 'sandValue'},
+              {col: 31, colName: 'pumpCondition'},
               
           ]
           for (let i = 0; i < concatList.length; i++) {
