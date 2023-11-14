@@ -63,7 +63,7 @@
                         header-cell-class-name="table_header"
                         :default-sort="{ prop: 'date', order: 'descending' }"
                     >
-                        <el-table-column label="序号"  width="50px" type="index" align="center">
+                        <el-table-column label="序号"  width="50px" prop="seqNum" align="center">
                         </el-table-column>
                         <el-table-column label="井号" prop="wellNo" align="center">
                             <template slot-scope="scope">

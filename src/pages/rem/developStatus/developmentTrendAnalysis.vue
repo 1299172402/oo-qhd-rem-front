@@ -73,7 +73,7 @@ import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "
 import { searchDevTrendAnalysis } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getSearchDevTrendAnalysisDate } from "@/api/oilDeposit/rem-04/developStatus.js";
 export default {
-  name: "developmentTrendAnalysis",
+  name: "DevelopmentTrendAnalysis",
   components: {
     Echart,
   },

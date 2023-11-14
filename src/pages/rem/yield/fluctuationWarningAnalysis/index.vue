@@ -426,7 +426,7 @@ import { exportComplexHeaderExcelFromJson } from "@/lib/exportExcel.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 
 export default {
-  name: "fluctuationWarningAnalysis",
+  name: "FluctuationWarningAnalysis",
   components: {
     Echart,
   },
