@@ -237,7 +237,7 @@ import {
 import { QueryOgfDetail, QueryReservoirAnalyseUnit, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { saveAs } from "file-saver";
 export default {
-  name: "modelconfig",
+  name: "Modelconfig",
   data() {
     return {
       dialogVisible: false,
