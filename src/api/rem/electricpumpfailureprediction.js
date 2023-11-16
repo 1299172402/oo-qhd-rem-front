@@ -6,6 +6,9 @@ export function send(data) {
     return request({
         url: `${baseUrl}/message/sendMailIncludePicture`,
         method: "post",
-        data
+        headers: {
+            showLoading: false
+        },
+        data,
     });
 }
