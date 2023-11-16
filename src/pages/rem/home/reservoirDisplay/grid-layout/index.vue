@@ -248,18 +248,31 @@ export default {
                     for (var i = 0; i < byteCharacters.length; i++) {
                         byteArray[i] = byteCharacters.charCodeAt(i);
                     }
-                    let data = {
-                        requestId: "f198c1a239254b0e86529a0668cf4adb",
-                        toAddr:[this.mailBox + '@cnooc.com.cn'],
-                        subject:this.mailtitle,
-                        content:this.content,
-                        ccAddr:[],
-                        senderKey:'ipmEmail',
-                        attachments: [{filename:"油藏看板.png",filedata:[...byteArray] }],
+
+                    let environment = "dev"
+                    if (window.location.origin.includes('test')) {
+                        environment = "test"
+                    } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
+                        environment = "dev"
+                    } else if (window.location.origin.includes('tpro')) {
+                        environment = "tpro"
                     }
-                    send(data).then((res)=>{
-                        if(res==true){
-                            this.$message.success('发送成功！');
+                    let data = {
+                        environment: environment,
+                        requestId: "f198c1a239254b0e86529a0668cf4adb",
+                        toAddr: [this.mailBox + '@cnooc.com.cn'],
+                        subject: this.mailtitle,
+                        content: this.content,
+                        ccAddr: [],
+                        senderKey: 'ipmEmail',
+                        imgBase64: base64String,
+                        // attachments: [{filename: "油藏看板.png", filedata: [...byteArray]}],
+                    }
+                    send(data).then(res => {
+                        if (res.status === 200) {
+                            this.$message.success(res.data.msg);
+                        } else {
+                            this.$message.error(res.data.msg);
                         }
                     })
                 })
