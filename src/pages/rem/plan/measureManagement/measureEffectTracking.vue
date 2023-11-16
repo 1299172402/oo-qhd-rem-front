@@ -375,7 +375,7 @@
             </div>
           </div>
           <div class="svg" v-else-if="oilTabType == '2'">
-            <div class="search-date" style="position: absolute; top: 0; left: 20px; z-index: 99">
+            <!-- <div class="search-date" style="position: absolute; top: 0; left: 20px; z-index: 99">
               <span>日期：</span>
               <el-date-picker
                 v-model="selectDateTime"
@@ -386,9 +386,10 @@
               <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doWellFluxLastDayHour"
                 >搜索</el-button
               >
-            </div>
+            </div> -->
             <div class="echarts-view">
-              <echarts :chart-data="oilOption2" height="100%"></echarts>
+              <!-- <echarts :chart-data="oilOption2" height="100%"></echarts> -->
+              <singleWellDetails :selectedOilWellName="selectWellName"></singleWellDetails>
             </div>
           </div>
           <div class="svg" v-else-if="oilTabType == '3'">
@@ -570,6 +571,7 @@
 import fileSaver from "file-saver";
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import Echarts from "@/components/tools/Echarts/index.vue";
+import singleWellDetails from "./singleWellDetails.vue";
 import { fetchMeasureStatInfos } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getAnalysisResult } from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
 import { uploadFile } from "@/api/oilDeposit/rem-02/primaryinfo.js";
@@ -593,6 +595,7 @@ export default {
   components: {
     verticalSwitchButton,
     Echarts,
+    singleWellDetails
   },
   data() {
     return {
@@ -611,6 +614,7 @@ export default {
       // WellId:'',
       //井号id
       selectWellId: "",
+      selectWellName: "",
       //措施事件下拉框
       measuresTypes: [],
       //措施事件id
@@ -1493,136 +1497,7 @@ export default {
         ],
         series: [],
       },
-      // 油井 虚拟计量曲线
-      oilOption2: {
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {
-              name: "油井日度曲线",
-              pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: "#022644",
-              iconStyle: {
-                opacity: 0,
-              },
-            },
-          },
-        },
-        dataZoom: [
-          {
-            type: "inside",
-            xAxisIndex: [0],
-            start: 0, //滚动条开始位置（共100等份）
-            end: 100, //滚动条结束位置
-          },
-        ],
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow",
-          },
-          formatter(params) {
-            var relVal = params[0].name;
-            params.forEach((item) => {
-              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
-                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
-              } else {
-                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
-              }
-            });
-            return relVal;
-          },
-        },
-        grid: {
-          x: 120,
-          y: 50,
-          x2: 120,
-          y2: 80,
-        },
-        legend: {
-          data: ["油", "气", "水", "液"],
-          textStyle: {
-            color: "#8FA4CC",
-            fontSize: 14,
-          },
-          x: "center",
-          bottom: 30,
-          icon: "rect",
-          itemWidth: 12,
-          itemHeight: 6,
-          itemGap: 14,
-        },
-        xAxis: {
-          name: "时间",
-          nameTextStyle: {
-            color: "#8FA4CC",
-            fontSize: 14,
-          },
-          type: "category",
-          data: [],
-          axisLabel: {
-            show: false,
-            color: "#8FA4CC",
-            showMinLabel: true,
-            showMaxLabel: true,
-          },
-          axisTick: {
-            show: true,
-            inside: true,
-          },
-          axisLine: {
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-        yAxis: {
-          name: "流量(Sm³/d)",
-          nameLocation: "middle",
-          nameGap: 70,
-          nameTextStyle: {
-            color: "#8FA4CC",
-            fontSize: 14,
-          },
-          type: "value",
-          axisLabel: {
-            show: false,
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: true,
-            inside: true,
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-        series: [
-          {
-            name: "油",
-            type: "line",
-            data: [],
-          },
-          {
-            name: "气",
-            type: "line",
-            data: [],
-          },
-          {
-            name: "水",
-            type: "line",
-            data: [],
-          },
-          {
-            name: "液",
-            type: "line",
-            data: [],
-          },
-        ],
-      },
+     
       // 水井折线图内容
       waterOption: {
         dataZoom: [
@@ -3193,51 +3068,8 @@ export default {
     },
     //虚拟计量内容 查询
     doWellFluxLastDayHour() {
-      return false;
-      const request = {
-        date: this.selectDateTime,
-        wellName: this.wellNameNano,
-      };
-      const xData = [];
-      const seriesData1 = [];
-      const seriesData2 = [];
-      const seriesData3 = [];
-      const seriesData4 = [];
-      wellFluxLastDayHour(request)
-        .then((res) => {
-          if (res.data.code == 200) {
-            const tableList = res.data.data;
-            tableList.forEach((item) => {
-              xData.push(item.M_CREATE);
-              const oil = parseFloat(Number(Number(item.M_FO_STDVOL) * 60 * 60 * 24).toFixed(2));
-              const gas = parseFloat(Number(Number(item.M_FG_STDVOL) * 60 * 60 * 24).toFixed(2));
-              const water = parseFloat(Number(Number(item.M_FW_STDVOL) * 60 * 60 * 24).toFixed(2));
-              const fluid = parseFloat(Number(oil + water).toFixed(2));
-              seriesData1.push([item.M_CREATE, oil]);
-              seriesData2.push([item.M_CREATE, gas]);
-              seriesData3.push([item.M_CREATE, water]);
-              seriesData4.push([item.M_CREATE, fluid]);
-            });
-            this.oilOption2.xAxis.data = xData;
-            this.oilOption2.series[0].data = seriesData1;
-            this.oilOption2.series[1].data = seriesData2;
-            this.oilOption2.series[2].data = seriesData3;
-            this.oilOption2.series[3].data = seriesData4;
-          } else {
-            this.oilOption2.xAxis.data = xData;
-            this.oilOption2.series[0].data = seriesData1;
-            this.oilOption2.series[1].data = seriesData2;
-            this.oilOption2.series[2].data = seriesData3;
-            this.oilOption2.series[3].data = seriesData4;
-          }
-        })
-        .catch((err) => {
-          this.oilOption2.xAxis.data = xData;
-          this.oilOption2.series[0].data = seriesData1;
-          this.oilOption2.series[1].data = seriesData2;
-          this.oilOption2.series[2].data = seriesData3;
-          this.oilOption2.series[3].data = seriesData4;
-        });
+      this.selectWellName = this.wells.filter((el) => this.selectWellId == el.wellId)[0].wellName || "";
+      // return false;
     },
     //下载导出文件 tableId tableName
     doDownExcel(tableId, tableName) {
