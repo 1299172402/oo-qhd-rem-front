@@ -200,7 +200,7 @@ export default Vue.extend({
               ref="selectModal"
               modalWidth={this.modalWidth}
               multi={this.multi}
-              user-id={this.value}
+              user-ids={this.value}
               style="width: 440px"
               visible={this.visible}
               onInitComp={this.initComp}

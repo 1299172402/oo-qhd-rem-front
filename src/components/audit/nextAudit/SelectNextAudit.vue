@@ -23,7 +23,7 @@
             <select-auditor-by-dept
               v-else-if="node.selectNextAuditSetting"
               placeholder="请选择审批人"
-              :value="parallelNodeModel[index].users.userId"
+              :value="getUserIds(index)"
               :select-users="parallelNodeModel[index].users.userName"
               :query-params="node.selectNextAuditSetting"
               :multi="node.selectNextAuditSetting.canMultiSelect"
@@ -244,6 +244,12 @@ export default Vue.extend({
     this.clearData();
   },
   methods: {
+    getUserIds(index) {
+      if (Array.isArray(this.parallelNodeModel[index].users)) {
+        return this.parallelNodeModel[index].users.map(item => item.userId).join(",") || "";
+      }
+      return this.parallelNodeModel[index].users?.userId || "";
+    },
     selectNextAct(actId) {
       this.nextAuditInfo = cloneDeep(this.nextActivities.find(item => item.actId === actId));
       this.selectAuditUser = {};

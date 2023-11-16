@@ -106,10 +106,6 @@ export default Vue.extend({
     canSelf: {
       type: Boolean,
       default: true
-    },
-    selectOk: {
-      type: Function,
-      default: () => ({})
     }
   },
   data() {

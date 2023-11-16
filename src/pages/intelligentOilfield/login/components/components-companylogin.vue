@@ -14,7 +14,7 @@
       class="login__submit-btn"
       @click="goCallBack"
     >
-      集团登录
+      集团统一身份认证
     </t-button>
   </div>
 </template>
