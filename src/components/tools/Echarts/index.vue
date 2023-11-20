@@ -56,6 +56,10 @@
                 type: Boolean,
                 default: false,
             },
+            isClear: {
+                type: Boolean,
+                default: true,
+            },
             theme: {
                 type: String,
                 default: "qhd326-zb",
@@ -177,7 +181,9 @@
                 actualData
             } = {}) {
                 if (this.isEmptyObject(this.chartData)) return;
-                this.chart.clear();
+                if ( this.isClear ) {
+                    this.chart.clear();
+                }
                 if (!this.reverse) {
                     this.chart.setOption(this.chartData);
                 } else {
