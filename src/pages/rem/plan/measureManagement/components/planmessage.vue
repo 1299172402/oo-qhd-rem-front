@@ -306,8 +306,8 @@
 <script>
 import {
     userListByUserNames,
-    queryOperatorsCheckFieldListsDetail,
-    queryListOfOilfieldQueryPlatformsDetail
+    QueryOgfDetail,
+    QueryPlatformDetail
 } from "@/api/basic/master";
 import { pumpReplaceDetail,pumpReplaceDetailSkip } from "@/api/rem/welldynamicanalysis";
 import {

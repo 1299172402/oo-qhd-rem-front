@@ -185,9 +185,9 @@
 <script>
 import {getOnSiteWork, onSiteWorkActionEvent, onSiteWorkDownloadFile} from '@/api/rem/actionplanmanagement';
 import {
-    queryListOfOilfieldQueryPlatformsDetail,
-    queryOperatorsCheckFieldListsDetail,
-    queryPlatformQueryWellListDetail,userListByUserNames
+    QueryPlatformDetail,
+    QueryOgfDetail,
+    QueryWellDetail,userListByUserNames
 } from "@/api/basic/master";
 import FileSaver from 'file-saver'
 import {QueryPlatformDetail, QueryWellDetail} from "@/api/rem/marster";
@@ -225,7 +225,7 @@ export default {
         }
         userListByUserNames(params).then((res) => {
            this.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-            queryOperatorsCheckFieldListsDetail({orgId: this.orgId}).then(res => {
+            QueryOgfDetail({orgId: this.orgId}).then(res => {
                 this.oilFields = res.data.data
                 if(this.orgId=='715AD1CD60484BB59E737CD18A9DE44A'){
                     this.queryParams.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F'
@@ -237,10 +237,10 @@ export default {
         onSiteWorkActionEvent().then((res) => {
             this.measures = res.data.data
         })
-        queryListOfOilfieldQueryPlatformsDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then(res => {
+        QueryPlatformDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then(res => {
             this.platforms = res.data.data
         })
-        queryPlatformQueryWellListDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then((res) => {
+        QueryWellDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then((res) => {
             this.wells = res.data.data
         })
     },
@@ -251,7 +251,7 @@ export default {
         //平台下拉-change
         onPlatfromChange(val) {
             //根据平台获得井
-            queryPlatformQueryWellListDetail({platformId: val}).then((res) => {
+            QueryWellDetail({platformId: val}).then((res) => {
                 this.wells = res.data.data
                 this.queryParams.wellId = this.wells[0].wellId
             })
@@ -309,10 +309,10 @@ export default {
             }else{
                 this.queryParams.selectOilField = this.oilFields[0].ogfId
             }
-            queryListOfOilfieldQueryPlatformsDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then(res => {
+            QueryPlatformDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then(res => {
                 this.platforms = res.data.data
             })
-            queryPlatformQueryWellListDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then((res) => {
+            QueryWellDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then((res) => {
                 this.wells = res.data.data
             })
             this.queryParams.asseCode = ''

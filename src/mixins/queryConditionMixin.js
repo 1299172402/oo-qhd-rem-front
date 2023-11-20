@@ -5,7 +5,7 @@ import {
     getWellData,
 } from "@/api/rem/r-intelligentIPA.js";
 import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
-import {queryOperatorsCheckFieldListsDetail, userListByUserNames,QueryBlockDetail} from "@/api/basic/master";
+import {QueryOgfDetail, userListByUserNames,QueryBlockDetail} from "@/api/basic/master";
 export default {
     data () {
         return {
@@ -48,7 +48,7 @@ export default {
                     ogfid = res.data.data[0].tenantInfos[0].deptId;
                 }
                
-                queryOperatorsCheckFieldListsDetail({orgId:ogfid}).then((res) => {
+                QueryOgfDetail({orgId:ogfid}).then((res) => {
                     this.oilList = res.data.data;
                     if (ogfid==='715AD1CD60484BB59E737CD18A9DE44A') {
                         this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
