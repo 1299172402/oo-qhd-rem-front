@@ -118,7 +118,6 @@ import {
     userListByUserNames
 } from "@/api/basic/master";
 import {queryOilFieldIncident, queryOilFieldIncidentType} from "@/api/rem/reservoirbillboards";
-import {QueryPlatformDetail} from "@/api/rem/marster.js"
 
 export default {
     name: 'OilEventDetail',
