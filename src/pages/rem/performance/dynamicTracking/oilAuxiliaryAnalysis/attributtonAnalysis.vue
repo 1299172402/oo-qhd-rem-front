@@ -338,7 +338,6 @@
 import Echart from "@/components/tools/Echarts/index.vue";
 import {
     QueryOgfDetail,
-    QueryPlatformDetail,
     QueryWellDetail, userListByUserNames, QueryPlatformDetail
 } from "@/api/rem/marster.js";
 import * as echarts from "echarts/core";
