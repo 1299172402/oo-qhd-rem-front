@@ -198,7 +198,7 @@
               type="text"
               @click="handleView(scope.row, scope.index)"
             >
-              详细
+                详情
             </el-button>
           </template>
         </el-table-column>

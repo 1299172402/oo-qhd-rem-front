@@ -9,7 +9,7 @@
         >
             <div class="g-w100 g-h100 g-row-flex" style="">
                 <div style="height: 100%; width: 100%" class="g-w100">
-                    <el-button  type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('OilEventDetail')">详细</el-button>
+                    <el-button  type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('OilEventDetail')">详情</el-button>
                     <el-table
                         id="tableD"
                         :data="tableData"

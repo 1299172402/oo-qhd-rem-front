@@ -8,7 +8,7 @@
       :is-show-max-btn="true"
     >
       <div class="g-w100 g-h100 g-row-flex" style="padding: 20px">
-        <el-button  type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute">详细</el-button>
+        <el-button  type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute">详情</el-button>
         <outputTracking></outputTracking>
       </div>
     </info-window>
