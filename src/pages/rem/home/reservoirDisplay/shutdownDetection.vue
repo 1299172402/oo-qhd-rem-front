@@ -138,7 +138,6 @@
 <script>
 import {
     QueryOgfDetail,
-    QueryPlatformDetail,
     QueryWellDetail,
     userListByUserNames,
     QueryPlatformDetail
