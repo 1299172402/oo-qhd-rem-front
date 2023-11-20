@@ -185,8 +185,7 @@
 <script>
 import {getOnSiteWork, onSiteWorkActionEvent, onSiteWorkDownloadFile} from '@/api/rem/actionplanmanagement';
 import {
-    QueryOgfDetail,
-    QueryWellDetail,userListByUserNames
+    QueryOgfDetail,userListByUserNames
 } from "@/api/basic/master";
 import FileSaver from 'file-saver'
 import {QueryPlatformDetail, QueryWellDetail} from "@/api/rem/marster";
