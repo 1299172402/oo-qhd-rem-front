@@ -185,7 +185,6 @@
 <script>
 import {getOnSiteWork, onSiteWorkActionEvent, onSiteWorkDownloadFile} from '@/api/rem/actionplanmanagement';
 import {
-    QueryPlatformDetail,
     QueryOgfDetail,
     QueryWellDetail,userListByUserNames
 } from "@/api/basic/master";
