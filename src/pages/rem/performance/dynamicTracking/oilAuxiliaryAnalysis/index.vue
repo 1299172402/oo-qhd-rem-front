@@ -142,7 +142,7 @@
           </el-tab-pane>
         </el-tabs>
 
-        <keep-alive :include="[]" :max="10" v-if="blockId">
+        <!-- <keep-alive :include="[]" :max="10" v-if="blockId"> -->
           <component
             :is="component"
             ref="componentCustom"
@@ -154,7 +154,7 @@
             @childPara="changeChildParam"
           >
           </component>
-        </keep-alive>
+        <!-- </keep-alive> -->
       </pagePanelNew>
 
       <!-- 连井剖面上传 -->
