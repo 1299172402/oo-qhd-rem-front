@@ -291,7 +291,7 @@
 <script>
 import {queryProductList} from "@/api/rem/workcompanydesignate";
 import {queryDensityInfo, save} from "@/api/rem/density.js";
-import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail,userListByUserNames} from "@/api/basic/master";
+import { QueryOgfDetail,userListByUserNames} from "@/api/basic/master";
 import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 import {exportExcel} from "@/lib/exportExcel";
 
@@ -352,7 +352,7 @@ export default {
             let orgId
             userListByUserNames(params).then((res)=>{
                 orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-                queryOperatorsCheckFieldListsDetail({orgId:orgId}).then((res) => {
+                QueryOgfDetail({orgId:orgId}).then((res) => {
                     this.ogfList = res.data.data;
                     if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
                         this.queryParams.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';

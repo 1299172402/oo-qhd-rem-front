@@ -72,7 +72,7 @@
         </el-tab-pane>
       </el-tabs>
 
-      <keep-alive :include="[]" :max="10" v-if="selectBlock">
+      <!-- <keep-alive :include="[]" :max="10" v-if="selectBlock"> -->
         <component
           :is="component"
           ref="componentCustom"
@@ -80,7 +80,7 @@
           :block-id="selectBlock"
           @childPara="changeChildParam"
         ></component>
-      </keep-alive>
+      <!-- </keep-alive> -->
     </pagePanelNew>
 
     <!-- minIo上传 -->

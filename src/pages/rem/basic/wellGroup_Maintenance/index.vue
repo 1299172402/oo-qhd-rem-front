@@ -255,8 +255,7 @@ import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 import {wellGroupEvaluation} from "@/api/rem/model";
 import {fetchOilFields} from "@/api/oilDeposit/rem-02/primaryinfo";
 import {
-    queryOperatingCompanyDetail,
-    queryOperatorsCheckFieldListsDetail,
+    QueryOgfDetail,
     userListByUserNames
 } from "@/api/basic/master";
 
@@ -546,7 +545,7 @@ export default {
             let ogfid
             userListByUserNames(params).then((res) => {
                 ogfid = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-                queryOperatorsCheckFieldListsDetail({orgId: ogfid}).then((res) => {
+                QueryOgfDetail({orgId: ogfid}).then((res) => {
                     this.options = res.data.data;
                     if (ogfid === '715AD1CD60484BB59E737CD18A9DE44A') {
                         this.query.selectField = '3FC9A818F5BC43B88270DB80BBB3018F'

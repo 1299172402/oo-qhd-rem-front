@@ -188,7 +188,7 @@
                     <el-button
                         type="primary"
                         class="buttonActive_primary detailLinkBtn"
-                        @click="getDetail">详细
+                        @click="getDetail">详情
                     </el-button
                     >
                     <el-button
@@ -208,7 +208,7 @@
                         <el-button
                             type="primary"
                             class="buttonActive_primary detailLinkBtn"
-                            @click="detailed = true">详细
+                            @click="detailed = true">详情
                         </el-button
                         >
                         <el-button

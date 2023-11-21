@@ -154,12 +154,11 @@
 <script>
 
 import {
-    queryListOfOilfieldQueryPlatformsDetail,
-    queryOperatingCompanyDetail,
-    queryOperatorsCheckFieldListsDetail,
+    QueryPlatformDetail,
+    QueryOgfDetail,
     userListByUserNames
 } from "@/api/basic/master";
-import {queryPlatformQueryWellListDetail} from "@/api/rem/marster";
+import {QueryWellDetail} from "@/api/rem/marster";
 import FileSaver from 'file-saver'
 import {queryProblemWellStatisDetails,queryProblemWellStatisDetailsDownloadFile} from '@/api/rem/reservoirbillboards'
 export default {
@@ -203,7 +202,7 @@ export default {
                 this.queryParams.orgId = orgId
             })
             //根据作业公司查询油田 jgl
-            await queryOperatorsCheckFieldListsDetail({orgId:this.queryParams.orgId}).then(res=>{
+            await QueryOgfDetail({orgId:this.queryParams.orgId}).then(res=>{
                 this.oilFields = res.data.data
                 if (this.queryParams.orgId === "715AD1CD60484BB59E737CD18A9DE44A") {
                     this.queryParams.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
@@ -212,26 +211,26 @@ export default {
                 }
             })
             //根据油田查询平台列表
-            await queryListOfOilfieldQueryPlatformsDetail({ogfId:this.queryParams.ogfId}).then(res=>{
+            await QueryPlatformDetail({ogfId:this.queryParams.ogfId}).then(res=>{
                 this.platforms = res.data.data
             })
             const requestPlat = {
                 ogfId: this.queryParams.ogfId,
             };
-            await queryPlatformQueryWellListDetail(requestPlat).then((res) => {
+            await QueryWellDetail(requestPlat).then((res) => {
                 this.wellList = res.data.data;
             });
         },
         async choicepla(val) {
             this.queryParams.assetCode = ''
             this.queryParams.wellId = ''
-            await queryListOfOilfieldQueryPlatformsDetail({ogfId: val}).then(res => {
+            await QueryPlatformDetail({ogfId: val}).then(res => {
                 this.platforms = res.data.data
             })
             const requestPlat = {
                 ogfId: this.queryParams.ogfId,
             };
-            queryPlatformQueryWellListDetail(requestPlat).then((res) => {
+            QueryWellDetail(requestPlat).then((res) => {
                 this.wellList = res.data.data;
             });
         },
@@ -242,7 +241,7 @@ export default {
             })
         },
         choicewell() {
-            queryPlatformQueryWellListDetail({platformId: this.queryParams.assetCode}).then((res) => {
+            QueryWellDetail({platformId: this.queryParams.assetCode}).then((res) => {
                 this.wellList = res.data.data;
                 if (res.data.data.length) {
                     this.queryParams.wellId = this.wellList[0].wellId

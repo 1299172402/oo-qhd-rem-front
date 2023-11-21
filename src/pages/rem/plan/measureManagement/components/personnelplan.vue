@@ -134,7 +134,7 @@ import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
 import {queryCapacityComposition} from "@/api/rem/reservoirbillboards";
-import {queryListOfOilfieldQueryPlatformsDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
+import {QueryPlatformDetail, QueryOgfDetail} from "@/api/basic/master";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 import {exportExcel} from "@/lib/exportExcel";
@@ -304,10 +304,10 @@ export default {
             platformId:this.queryParams.asseCode
         }
         this.selectPlatformPob(data)
-        queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res=>{
+        QueryOgfDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res=>{
             this.oilFields = res.data.data
         })
-        queryListOfOilfieldQueryPlatformsDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
+        QueryPlatformDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
             this.platforms = res.data.data
         })
         // this.choiceDepts(); // 获取组织机构
