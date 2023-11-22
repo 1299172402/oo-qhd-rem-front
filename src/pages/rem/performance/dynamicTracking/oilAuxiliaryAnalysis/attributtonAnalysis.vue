@@ -1463,6 +1463,7 @@ export default {
             if(this.link == 4){
                 this.queryData.month = this.$route.query.currentDate
             }
+            this.getFormData();
         },
         decreaseMonth(dateStr) {
             const date = new Date(dateStr);
