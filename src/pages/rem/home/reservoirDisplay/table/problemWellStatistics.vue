@@ -84,7 +84,7 @@
                                     <span v-else>-</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`日产气\n(m⁴)`" min-width="60px" prop="dailyGas" align="center">
+                            <el-table-column :label="`日产气\n(10⁴m³)`" min-width="60px" prop="dailyGas" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.dailyGas !== null && scope.row.dailyGas !== ''">{{scope.row.dailyGas}}</span>
                                     <span v-else>-</span>
