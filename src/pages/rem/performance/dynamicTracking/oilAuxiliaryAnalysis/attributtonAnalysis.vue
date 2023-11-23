@@ -111,7 +111,6 @@
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
-                :default-sort="{ prop: 'date', order: 'descending' }"
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
@@ -183,7 +182,7 @@
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
-                :default-sort="{ prop: 'date', order: 'descending' }"
+
             >
                 <el-table-column prop="wellGroupName" min-width="250" label="井组名称"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期"></el-table-column>
@@ -197,7 +196,7 @@
                 <el-table-column show-overflow-tooltip prop="attribution" min-width="250"
                                  label="归因"></el-table-column>
                 <el-table-column show-overflow-tooltip prop="measure" min-width="250"
-                                 label="下步措施"></el-table-column>
+                                 label="建议措施"></el-table-column>
             </el-table>
             <pagination
                 :pageSizes="[15, 20, 40, 100]"
@@ -222,7 +221,6 @@
                 ref="reset"
                 style="height: 100%"
                 id="cjyzsj"
-                :default-sort="{ prop: 'date', order: 'descending' }"
             >
                 <el-table-column prop="wellNo" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="evalTime" min-width="150" label="日期">
@@ -273,7 +271,7 @@
                 style="width: 100%; height: 100%"
                 highlight-current-row
                 id="cjyzsj"
-                :default-sort="{ prop: 'date', order: 'descending' }"
+
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
