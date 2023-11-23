@@ -14,7 +14,6 @@ function exportExcel (tableId,fileName) {
     let xlsxParam = { raw: true };
     let fix = document.querySelector(tableId).querySelector('.el-table__fixed');
     let wb;
-    console.log(fix, tableId)
     if(fix){
         wb = XLSX.utils.table_to_book(document.querySelector(tableId).removeChild(fix),xlsxParam);
         document.querySelector(tableId).appendChild(fix);
@@ -22,7 +21,6 @@ function exportExcel (tableId,fileName) {
         wb = XLSX.utils.table_to_book(document.querySelector(tableId),xlsxParam) // 这个id是表格的id
     }
     let wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
-    console.log(wbout, wb)
     try {
         FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName+'.xlsx')
     } catch (e) {
