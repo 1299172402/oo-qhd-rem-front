@@ -7,3 +7,11 @@ export function queryWaterInjIntensityAttributeAnalysis({ assetCode, date, evalR
     method: "get",
   });
 }
+
+export function queryWaterInjDownExcel({ assetCode, date, evalResult, evalTypeId, ogfId, operationZone, title, wellId } = {}) {
+  return request({
+    url: `${baseUrl}/waterInjIntensityAttributeAnalysis/queryWaterInjDownExcel?assetCode=${ assetCode || "" }&date=${ date || "" }&evalResult=${ evalResult || "" }&evalTypeId=${ evalTypeId || "" }&ogfId=${ ogfId || "" }&operationZone=${ operationZone || "" }&title=${ title || "" }&wellId=${ wellId || "" }`,
+    method: "get",
+    responseType: "blob",
+  });
+}
