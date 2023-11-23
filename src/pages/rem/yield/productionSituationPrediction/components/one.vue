@@ -215,7 +215,7 @@ export default {
         },
         {
           type: "当日-前一日产量",
-          code: "当日-前一日产量",
+          code: "baoBiao-baoBiaoYesterday",
         },
         {
           type: "下舱产量/",
@@ -651,7 +651,7 @@ export default {
         case "kaoHe":
           lineTitle = "分公司考核(" + unit2 + ")";
           break;
-        case "当日-前一日产量":
+        case "baoBiao-baoBiaoYesterday":
           lineTitle = "当日-前一日产量(" + unit2 + ")";
           break;
         case "下舱产量-滚动预测(/":
