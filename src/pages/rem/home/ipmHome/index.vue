@@ -312,7 +312,6 @@ export default {
                 let index = this.findIndex(this.currentLists, url)
                 this.currentLists[index].warningShowFlag = false
             }
-            console.log(hasTrueValue)
             if (hasTrueValue == true) {
                 clearInterval(this.timmer)
             } else {

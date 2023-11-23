@@ -61,7 +61,6 @@ const typeMapping = (jsonType, isArray, ref, refSet) => {
     default:
       // eslint-disable-next-line no-case-declarations
       try{
-        console.log('------ref----',ref);
         const _ref = ref.replace("#/definitions/", "").replace(/dto/gi, "");
         if (refSet) {
           if (!refSet.has(_ref)) {
@@ -70,7 +69,6 @@ const typeMapping = (jsonType, isArray, ref, refSet) => {
         }
         return !isArray ? _ref : `${_ref}[]`;
       }catch(err){
-        console.log(err,ref);
       }
   }
 };

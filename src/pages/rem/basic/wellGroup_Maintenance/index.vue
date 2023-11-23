@@ -659,7 +659,6 @@ export default {
             });
         },
         childinfo(val) {
-            console.log(val)
             if (val.length > 3) {
                 this.query.selectBlock = val[3].value
             }
