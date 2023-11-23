@@ -111,15 +111,13 @@
 
 <script>
 import {
-    queryOperatingCompanyDetail,
-    queryOperatorsCheckFieldListsDetail,
-    queryListOfOilfieldQueryPlatformsDetail,
-    queryPlatformQueryWellListDetail,
+    QueryOgfDetail,
+    QueryPlatformDetail,
+    QueryWellDetail,
     queryOilAndGasFieldQueryPositionDetail,
     userListByUserNames
 } from "@/api/basic/master";
 import {queryOilFieldIncident, queryOilFieldIncidentType} from "@/api/rem/reservoirbillboards";
-import {QueryPlatformDetail} from "@/api/rem/marster.js"
 
 export default {
     name: 'OilEventDetail',
@@ -179,7 +177,7 @@ export default {
                 this.queryData.orgId = orgId
             })
             //根据作业公司查询油田
-            await queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
+            await QueryOgfDetail({orgId: this.queryData.orgId}).then(res => {
                 this.oilFields = res.data.data
                 if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
                     this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';
@@ -207,14 +205,14 @@ export default {
             this.getWellData();
         },
         getWellData() {
-            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+            QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = ''
             })
         },
         onPlatfromChange(val) {
             //根据平台获得井
-            queryPlatformQueryWellListDetail({platformId: val}).then((res) => {
+            QueryWellDetail({platformId: val}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = ''
             })
@@ -257,7 +255,7 @@ export default {
             QueryPlatformDetail({ogfId: this.queryData.ogfId}).then(res => {
                 this.platforms = res.data.data
             })
-            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+            QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
             })
             this.title = oilname + '单井大事记录表'

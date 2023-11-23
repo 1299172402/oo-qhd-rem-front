@@ -177,7 +177,6 @@ export default {
                 var y = dd.getFullYear();
                 var m = dd.getMonth() + 1 < 10 ? "0" + (dd.getMonth() + 1) : dd.getMonth() + 1;
                 var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
-                console.log()
                 let pormps = {
                     ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                     platId: "",

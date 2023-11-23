@@ -306,8 +306,8 @@
 <script>
 import {
     userListByUserNames,
-    queryOperatorsCheckFieldListsDetail,
-    queryListOfOilfieldQueryPlatformsDetail
+    QueryOgfDetail,
+    QueryPlatformDetail
 } from "@/api/basic/master";
 import { pumpReplaceDetail,pumpReplaceDetailSkip } from "@/api/rem/welldynamicanalysis";
 import {
@@ -410,7 +410,6 @@ export default {
                       })
                   }
               })
-              console.log(wells)
               if(wells.length > 0){
                   let data = {
                       date: this.queryParams.endTime,

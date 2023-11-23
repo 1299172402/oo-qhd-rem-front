@@ -337,10 +337,8 @@
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import {
-    queryOperatorsCheckFieldListsDetail,
-    queryListOfOilfieldQueryPlatformsDetail,
-    queryOperatingCompanyDetail,
-    queryPlatformQueryWellListDetail, userListByUserNames, QueryPlatformDetail
+    QueryOgfDetail,
+    QueryWellDetail, userListByUserNames, QueryPlatformDetail
 } from "@/api/rem/marster.js";
 import * as echarts from "echarts/core";
 import {queryWaterInjIntensityAttributeAnalysis} from "@/api/rem/waterinjintensityattributeanalysis.js"
@@ -1378,7 +1376,7 @@ export default {
             await userListByUserNames(params).then((res)=>{
                 this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;  
             })
-            await queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then((res) => {
+            await QueryOgfDetail({orgId: this.queryData.orgId}).then((res) => {
                 if (res.data.code == 200) {
                     this.oilFields = res.data.data;
                     if (this.oilFields.length == 0) {
@@ -1403,10 +1401,10 @@ export default {
                             this.wellGroupList.unshift({wellGroupName: '全部', wellGroupId: ''});
                         }
                     });
-                    queryPlatformQueryWellListDetail(requestPlat).then((res) => {
+                    QueryWellDetail(requestPlat).then((res) => {
                         this.wellList = res.data.data;
                     });
-                    queryListOfOilfieldQueryPlatformsDetail(requestPlat).then((res) => {
+                    QueryPlatformDetail(requestPlat).then((res) => {
                         if (res.data.code == 200) {
                             this.platforms = res.data.data;
                             this.platforms.map((n) => {
@@ -1422,7 +1420,7 @@ export default {
         },
         //选择后重新复制井号下拉列表
         choicewell() {
-            queryPlatformQueryWellListDetail({platformId: this.queryData.assetCode}).then((res) => {
+            QueryWellDetail({platformId: this.queryData.assetCode}).then((res) => {
                 this.wellList = res.data.data;
                 if (res.data.data.length) {
                     this.queryData.well = res.data.data[0].wellId
@@ -1458,13 +1456,14 @@ export default {
             }
             this.choicepla(this.queryData.ogfId)
             
-            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+            QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wellList = res.data.data;
                     this.queryData.well = ''
             });
             if(this.link == 4){
                 this.queryData.month = this.$route.query.currentDate
             }
+            this.getFormData();
         },
         decreaseMonth(dateStr) {
             const date = new Date(dateStr);

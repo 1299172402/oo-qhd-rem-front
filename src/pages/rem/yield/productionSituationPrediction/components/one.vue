@@ -431,8 +431,6 @@ export default {
           };
           reList.push(lineObj);
         }
-        console.log("reList");
-        console.log(reList);
       });
       let today = reList.find((item) => {
         return item.code == "baoBiao";
