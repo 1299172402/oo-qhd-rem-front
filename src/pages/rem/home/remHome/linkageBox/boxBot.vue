@@ -166,9 +166,7 @@ export default {
             this.content = !this.content
         }
     },
-    mounted() {
-        console.log(this.currentList,'xxxxxxxxxxxxxxxxx')
-    }
+  
 }
 </script>
 

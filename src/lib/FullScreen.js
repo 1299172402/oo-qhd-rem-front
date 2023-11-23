@@ -20,7 +20,6 @@ export default {
           try {
             document.exitFullscreen();            
           } catch (error) {
-            console.log(error)
           }
         } else if (document.webkitCancelFullScreen) {
           document.webkitCancelFullScreen();

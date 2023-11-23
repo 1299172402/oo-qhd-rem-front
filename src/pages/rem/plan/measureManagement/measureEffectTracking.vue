@@ -2677,7 +2677,8 @@ export default {
       //   .then(() => {
       // this.$message.success("下载成功！");
       // return this.loadData();
-      fileSaver.saveAs(filePath);
+      // fileSaver.saveAs(filePath);
+      window.open(filePath,"_blank")
       // })
       // .catch(() => {
       //   // this.$message.warning("已取消下载");
