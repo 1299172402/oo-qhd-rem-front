@@ -246,7 +246,7 @@ export default {
   },
   async mounted() {
     await this.getForecastDate();
-    this.doSearch();
+    // this.doSearch();
   },
   methods: {
     //重置
