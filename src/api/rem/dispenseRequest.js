@@ -29,7 +29,6 @@ Axios.interceptors.request.use((config)=>{
 Axios.interceptors.response.use((res)=>{
     //服务器成功的回调函数：服务器响应数据回来以后，响应拦截器可以检测到，并做一些事情
     //进度条结束
-    //console.log(res.data)
     nProgress.done();
     return res.data;
 

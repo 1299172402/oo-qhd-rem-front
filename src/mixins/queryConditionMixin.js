@@ -37,7 +37,6 @@ export default {
             let ogfid
             userListByUserNames(params).then((res)=>{
                 var result=res.data.data[0].tenantInfos;
-                console.log(res)
                 if (result.length > 1) {
                     for(var i=0;i<result.length;i++){
                         if(result[i].tenantName==='秦皇岛32-6作业公司'){

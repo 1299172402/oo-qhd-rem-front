@@ -360,24 +360,15 @@ export default {
     },
     // 节点被点击时的回调事件
     handleCheck(data, checked) {
-      console.log(data, checked);
       // 处理tree交互选中逻辑
       if (data.level == 1) {
         // 区块级选中
-        console.log([data.parent.data.value, data.value]);
         this.$refs.tree.setCheckedKeys([data.parent.data.value, data.value]);
       } else if (data.level == 2) {
         // 平台级选中
-        console.log([data.parent.parent.data.value, data.parent.data.value, data.value]);
         this.$refs.tree.setCheckedKeys([data.parent.parent.data.value, data.parent.data.value, data.value]);
       } else if (data.level == 3) {
         // 井号级选中
-        console.log([
-          data.parent.parent.parent.data.value,
-          data.parent.parent.data.value,
-          data.parent.data.value,
-          data.value,
-        ]);
         this.$refs.tree.setCheckedKeys([
           data.parent.parent.parent.data.value,
           data.parent.parent.data.value,
@@ -390,7 +381,6 @@ export default {
     },
     // 节点被点击时数据处理
     resetChecked(data, checked) {
-      console.log("选中数据", data);
       this.selectKeys = this.$refs.tree.getCheckedKeys(false, true);
       let selectList = {
         // orgId: null,
@@ -425,7 +415,6 @@ export default {
     },
     // 通过 keys 设置目前勾选的节点
     setCheckedKeys(keys) {
-      console.log(keys);
       this.selectKeys = keys;
       this.$refs.tree.setCheckedKeys(keys);
     },
