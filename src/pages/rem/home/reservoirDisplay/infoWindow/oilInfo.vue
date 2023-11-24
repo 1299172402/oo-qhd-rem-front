@@ -8,7 +8,7 @@
       :is-show-max-btn="true"
     >
       <div style="height: 90%;width: 90%">
-<!--        <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>-->
+<!--        <button class="detailLinkBtn" @click="linkroute('operationOverview')">详情</button>-->
         <remainingOil></remainingOil>
       </div>
     </info-window>

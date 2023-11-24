@@ -126,7 +126,6 @@
                 params.timeEfficieincy = this.formObj.timeEfficieincy;
                 // 见效天数
                 params.effectDays = this.formObj.effectDays;
-                console.log(params);
                 calcSingleWellMeasureStatInfos(params).then(res => {
                     this.formObj.yearAllocating = res.data.data
                     this.$message.success('计算成功')
@@ -162,7 +161,6 @@
                 this.SelDialogFlag = true
             },
             recvData(data) {
-                console.log(data);
                 this.formObj.measureTypeCode1 = data.code
                 this.formObj.measureTypeName = data.label
                 this.SelDialogFlag = false

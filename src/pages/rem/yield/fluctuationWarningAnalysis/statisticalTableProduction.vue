@@ -702,7 +702,6 @@ export default {
     },
     //自定义井号排序
     borepipeNoSort(oa, ob, code) {
-      console.log("数据输出", oa, ob, code);
       let wellA = oa[code];
       let wellB = ob[code];
       return Number(oa[code]) - Number(ob[code]);

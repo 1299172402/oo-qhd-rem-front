@@ -137,10 +137,8 @@
 </template>
 <script>
 import {
-    queryOperatorsCheckFieldListsDetail,
-    queryListOfOilfieldQueryPlatformsDetail,
-    queryOperatingCompanyDetail,
-    queryPlatformQueryWellListDetail,
+    QueryOgfDetail,
+    QueryWellDetail,
     userListByUserNames,
     QueryPlatformDetail
 } from "@/api/rem/marster.js";
@@ -222,12 +220,6 @@ export default {
             this.$set(this.month, 1, endDate);
 
         },
-        //作业公司
-        // queryJobCompanySelect() {
-        //     queryOperatingCompanyDetail({}).then((res) => {
-        //         this.zygsSelect = res.data.data;
-        //     });
-        // },
         //获取当前作业公司
         async getCurrentJobCompany() {
             let params = {
@@ -239,7 +231,7 @@ export default {
         },
         //油田
         async queryOrgSelect() {
-            await queryOperatorsCheckFieldListsDetail({orgId: this.ogfId}).then((res) => {
+            await QueryOgfDetail({orgId: this.ogfId}).then((res) => {
                 if (res.data.code === 200) {
                     this.oilFields = res.data.data;
                     if (this.orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
@@ -269,7 +261,7 @@ export default {
         },
         //井号
         async queryWellSelect() {
-            await queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+            await QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wellList = res.data.data;
                 this.queryData.wellId = ''
             });
@@ -309,7 +301,7 @@ export default {
             await this.queryPlanAttributesSelect();
         },
         choicewell() {
-            queryPlatformQueryWellListDetail({platformId: this.queryData.platformId}).then((res) => {
+            QueryWellDetail({platformId: this.queryData.platformId}).then((res) => {
                 this.wellList = res.data.data;
                 this.queryData.wellId=''
             });

@@ -493,9 +493,7 @@ export default {
       let width = document.getElementById("tableBox").clientWidth - 510;
       this.width = width; //table最后一列的宽度
       //计算日期 间距
-      console.log("日期宽度", Math.floor(this.width - 44 - 20));
       this.spacing = Math.floor((this.width - 936 - 44 - 20) / 11);
-      console.log("日期间距", this.spacing);
       this.initData();
 
       //监听页面缩放
