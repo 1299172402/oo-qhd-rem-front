@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-const masterUrl = process.env.NODE_ENV == "production" ? "/omc003d" : "/omc003d";
+const masterUrl = process.env.NODE_ENV == "production" ? "/rem/api/omc003d" : "/rem/api/omc003d";
 // http://10.77.78.243:8003/primaryInfo/fetchPlatforms
 
 export function fetchPlatforms(data) {
@@ -35,7 +35,7 @@ export function QueryOrganizationDetail(data) {
 // 获取油田名称及id
 export function QueryOgfDetail(data) {
   return request({
-    url: `${masterUrl}/QueryOgfDetail`,
+    url: `/rem/api/omc003d/QueryOgfDetail`,
     method: "post",
     data,
   });
@@ -43,7 +43,7 @@ export function QueryOgfDetail(data) {
 // 获取平台名称及id - 固定平台
 export function QueryPlatformDetail(data) {
   return request({
-    url: `${masterUrl}/QueryPlatformDetail`,
+    url: `/rem/api/omc003d/QueryPlatformDetail`,
     method: "post",
     data,
   });
@@ -59,7 +59,7 @@ export function QuertProductionPlatformDetail(data) {
 // 获取所有井名称及id
 export function QueryWellDetail(data) {
   return request({
-    url: `${masterUrl}/QueryWellDetail`,
+    url: `/rem/api/omc003d/QueryWellDetail`,
     method: "post",
     data,
   });
@@ -67,7 +67,7 @@ export function QueryWellDetail(data) {
 // 获取油田下的区块
 export function QueryReservoirAnalyseUnit(data) {
   return request({
-    url: `${masterUrl}/QueryReservoirAnalyseUnit`,
+    url: `/rem/api/omc003d/QueryReservoirAnalyseUnit`,
     method: "post",
     data,
   });
