@@ -79,12 +79,6 @@ export default {
                     }
                 })
             });
-            // let param = {
-            //     oilFieldId: this.queryData.ogfId,
-            // };
-            // fetchFields(param).then((res) => {
-            //     this.blockList = res.data.data.fields;
-            // });
         },
         /**
          * 改变区块
