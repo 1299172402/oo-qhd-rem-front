@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-const masterUrl = process.env.NODE_ENV == "production" ? "/rem/api/omc003d" : "/rem/api/omc003d";
+const masterUrl = process.env.NODE_ENV == "production" ? "/omc003d" : "/omc003d";
 // http://10.77.78.243:8003/primaryInfo/fetchPlatforms
 
 export function fetchPlatforms(data) {
