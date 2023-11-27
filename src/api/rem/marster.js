@@ -67,7 +67,7 @@ export function QueryWellDetail(data) {
 // 获取油田下的区块
 export function QueryReservoirAnalyseUnit(data) {
   return request({
-    url: `/rem/api/omc003d/QueryReservoirAnalyseUnit`,
+    url: `${masterUrl}/QueryReservoirAnalyseUnit`,
     method: "post",
     data,
   });
