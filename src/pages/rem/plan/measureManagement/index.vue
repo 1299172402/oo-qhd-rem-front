@@ -562,12 +562,6 @@ export default {
           this.selectOilFieldName = this.oilFields.filter(item => item.ogfId === this.selectOilField)[0].ogfName || "";
         }
       });
-      //油田
-      await QueryOgfDetail({}).then((res) => {
-        if (res.data.code == 200) {
-          this.oilFields = res.data.data;
-        }
-      });
       //平台
       await QueryPlatformDetail({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {
