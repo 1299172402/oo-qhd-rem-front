@@ -10,7 +10,7 @@ export function fetchPlatforms(data) {
 }
 export function QueryPlatformDetail(data) {
     return request({
-        url: `/rem/api/omc003d/QueryPlatformDetail`,
+        url: `${masterUrl}/QueryPlatformDetail`,
         method: "post",
         data
     });
@@ -40,14 +40,14 @@ export function QueryBlockDetail(data) {
 }
 export function QueryWellDetail(data) {
     return request({
-        url: `/rem/api/omc003d/QueryWellDetail`,
+        url: `${masterUrl}/QueryWellDetail`,
         method: "post",
         data,
     });
 }
 export function QueryOgfDetail(data) {
     return request({
-        url: `/rem/api/omc003d/QueryOgfDetail`,
+        url: `${masterUrl}/QueryOgfDetail`,
         method: "post",
         data,
     });
