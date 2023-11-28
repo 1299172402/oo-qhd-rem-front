@@ -231,7 +231,7 @@ export default {
         },
         //油田
         async queryOrgSelect() {
-            await QueryOgfDetail({orgId: this.ogfId}).then((res) => {
+            await QueryOgfDetail({operationZoneId: this.ogfId}).then((res) => {
                 if (res.data.code === 200) {
                     this.oilFields = res.data.data;
                     if (this.orgId === '715AD1CD60484BB59E737CD18A9DE44A') {

@@ -34,19 +34,19 @@ export function QueryOrganizationDetail(data) {
 }
 // 获取油田名称及id
 export function QueryOgfDetail(data) {
-  return request({
-    url: `/rem/api/omc003d/QueryOgfDetail`,
-    method: "post",
-    data,
-  });
+    return request({
+        url: `/rem/api/omc003d/QueryOgfDetail`,
+        method: "post",
+        data,
+    });
 }
 // 获取平台名称及id - 固定平台
 export function QueryPlatformDetail(data) {
-  return request({
-    url: `/rem/api/omc003d/QueryPlatformDetail`,
-    method: "post",
-    data,
-  });
+    return request({
+        url: `/rem/api/omc003d/QueryPlatformDetail`,
+        method: "post",
+        data,
+    });
 }
 // 获取平台名称及id - 查询生产平台，固定平台基础上减去EPP，加上FPSO
 export function QuertProductionPlatformDetail(data) {
@@ -58,19 +58,19 @@ export function QuertProductionPlatformDetail(data) {
 }
 // 获取所有井名称及id
 export function QueryWellDetail(data) {
-  return request({
-    url: `/rem/api/omc003d/QueryWellDetail`,
-    method: "post",
-    data,
-  });
+    return request({
+        url: `/rem/api/omc003d/QueryWellDetail`,
+        method: "post",
+        data,
+    });
 }
 // 获取油田下的区块
 export function QueryReservoirAnalyseUnit(data) {
-  return request({
-    url: `${masterUrl}/QueryReservoirAnalyseUnit`,
-    method: "post",
-    data,
-  });
+    return request({
+        url: `/rem/api/omc003d/QueryReservoirAnalyseUnit`,
+        method: "post",
+        data,
+    });
 }
 export function userListByUserNames(data) {
     return request({
