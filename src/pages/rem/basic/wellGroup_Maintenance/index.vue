@@ -545,7 +545,7 @@ export default {
             let ogfid
             userListByUserNames(params).then((res) => {
                 ogfid = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-                QueryOgfDetail({orgId: ogfid}).then((res) => {
+                QueryOgfDetail({operationZoneId: ogfid}).then((res) => {
                     this.options = res.data.data;
                     if (ogfid === '715AD1CD60484BB59E737CD18A9DE44A') {
                         this.query.selectField = '3FC9A818F5BC43B88270DB80BBB3018F'

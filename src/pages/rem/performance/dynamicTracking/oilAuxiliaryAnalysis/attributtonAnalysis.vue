@@ -1440,7 +1440,7 @@ export default {
             await userListByUserNames(params).then((res)=>{
                 this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;  
             })
-            await QueryOgfDetail({orgId: this.queryData.orgId}).then((res) => {
+            await QueryOgfDetail({operationZoneId: this.queryData.orgId}).then((res) => {
                 if (res.data.code == 200) {
                     this.oilFields = res.data.data;
                     if (this.oilFields.length == 0) {

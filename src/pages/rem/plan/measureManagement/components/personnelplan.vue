@@ -304,7 +304,7 @@ export default {
             platformId:this.queryParams.asseCode
         }
         this.selectPlatformPob(data)
-        QueryOgfDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res=>{
+        QueryOgfDetail({operationZoneId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res=>{
             this.oilFields = res.data.data
         })
         QueryPlatformDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{

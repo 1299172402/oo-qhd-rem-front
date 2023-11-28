@@ -200,7 +200,7 @@ export default {
                 this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
             })
             //根据作业公司查询油田
-            QueryOgfDetail({orgId: this.queryData.orgId}).then(res => {
+            QueryOgfDetail({operationZoneId: this.queryData.orgId}).then(res => {
                 this.oilFields = res.data.data
             })
             //根据油田查询平台列表

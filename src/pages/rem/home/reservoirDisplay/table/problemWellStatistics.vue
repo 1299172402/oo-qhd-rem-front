@@ -202,7 +202,7 @@ export default {
                 this.queryParams.orgId = orgId
             })
             //根据作业公司查询油田 jgl
-            await QueryOgfDetail({orgId:this.queryParams.orgId}).then(res=>{
+            await QueryOgfDetail({operationZoneId:this.queryParams.orgId}).then(res=>{
                 this.oilFields = res.data.data
                 if (this.queryParams.orgId === "715AD1CD60484BB59E737CD18A9DE44A") {
                     this.queryParams.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
