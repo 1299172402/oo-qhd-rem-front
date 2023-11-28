@@ -117,6 +117,9 @@ const GenerateRouter = {
   "ProductionSituationPrediction": () => import("@/pages/rem/yield/productionSituationPrediction/index.vue"), 
    "ModelMain": () => import("@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue"),
    "ModelManager": () => import("@/pages/rem/intelligence/optimization/modelOperation/modelManager.vue"),
+    "DensityMaintenance": () => import("@/pages/rem/basic/densityMaintenance/index.vue"),
+    "HorizontalMaintenance": () => import("@/pages/rem/basic/horizontalMaintenance/index.vue"),
+    
     
   // 
   // "": () => import(""),
