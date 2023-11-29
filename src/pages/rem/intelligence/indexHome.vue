@@ -438,6 +438,15 @@ export default {
             console.log(this.queryData.ogfId)
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
                 this.blockList = res.data.blockList;
+                for(var i=0;i<this.blockList.length;i++){
+                    if(this.blockList[i].blockId==='YCFXDY8B643EDC9007F96F570600457D'){
+                        this.myselect=this.blockList[i].blockId
+                        console.log("5599")
+                    }
+                }
+                console.log("5599")
+                console.log(this.myselect)
+                this.searchList()
                 // this.queryData.blockId=this.blockList[0].blockId
             });
         },
@@ -455,10 +464,11 @@ export default {
             getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
                 this.oilList = res.data.data;
                 var list =res.data.data;
-                console.log("559966")
-                console.log(list)
-                console.log("559966")
-                this.queryData.ogfId = list[0].ogfId
+                for(var i=0;i<list.length;i++){
+                    if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+                        this.queryData.ogfId=list[i].ogfId
+                    }
+                }
                 this.queryBlockFeild1()
             });
 
