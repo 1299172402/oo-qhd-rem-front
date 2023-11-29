@@ -456,9 +456,12 @@ export default {
         queryOilFeild() {
             getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
                 this.oilList = res.data.data;
-                this.queryData.ogfId = this.oilList[0].ogfId
-                // console.log(this.ogfList)
-                
+                var list =res.data.data;
+                for(var i=0;i<list.length;i++){
+                    if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+                        this.queryData.ogfId=list[i].ogfId
+                    }
+                }
                 this.queryBlockFeild()
             });
 
