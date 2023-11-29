@@ -177,7 +177,7 @@ export default {
                 this.queryData.orgId = orgId
             })
             //根据作业公司查询油田
-            await QueryOgfDetail({orgId: this.queryData.orgId}).then(res => {
+            await QueryOgfDetail({operationZoneId: this.queryData.orgId}).then(res => {
                 this.oilFields = res.data.data
                 if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
                     this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';

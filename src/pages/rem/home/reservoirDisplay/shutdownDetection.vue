@@ -83,7 +83,7 @@
                 </div>
             </div>
         </header-search>
-        <pagePanel headerTitle="秦皇岛32-6油田关停井跟踪" style="height: calc(100% - 40px )" class="g-w100"
+        <pagePanel headerTitle="关停井跟踪" style="height: calc(100% - 40px )" class="g-w100"
                    :show-btn="true">
             <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;float: right" @click="doDownExcel()">下载</el-button>
             <el-table
@@ -231,7 +231,7 @@ export default {
         },
         //油田
         async queryOrgSelect() {
-            await QueryOgfDetail({orgId: this.ogfId}).then((res) => {
+            await QueryOgfDetail({operationZoneId: this.orgId}).then((res) => {
                 if (res.data.code === 200) {
                     this.oilFields = res.data.data;
                     if (this.orgId === '715AD1CD60484BB59E737CD18A9DE44A') {

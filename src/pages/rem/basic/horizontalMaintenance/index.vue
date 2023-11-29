@@ -1,4 +1,4 @@
-<!-- 基础数据维护 - 井控储量数据界面 -->
+
 <template>
     <div style="width: 100%; height: 100%" class="pageBox">
         <div style="display: flex;flex-direction: row; height: 100%;">
@@ -47,7 +47,7 @@
                     </div>
                 </header-search>
 
-                <pagePanel headerTitle="单井储量信息维护界面" style="height: calc(100% - 80px)" class="g-w100"
+                <pagePanel headerTitle="压力维护" style="height: calc(100% - 80px)" class="g-w100"
                            :show-btn="true">
                     <div style="margin-top: 5%">
                         <div class="alltitle">{{ wellName }}</div>
@@ -61,50 +61,21 @@
                                     class="demo-ruleForm"
                                 >
                                     <el-row>
-                                        <el-col :span="10">
-                                            <el-form-item label="层位选择" prop="cw">
-                                                <el-select v-model="djclForm.layerId" @change="selectcw"
-                                                           style="width: 100.5%">
-                                                    <el-option
-                                                        v-for="item in cwOptions"
-                                                        :key="item.layerId"
-                                                        :label="item.layerName"
-                                                        :value="item.layerId"
-                                                    >
-                                                    </el-option>
-                                                </el-select>
-                                            </el-form-item>
-                                        </el-col>
-                                        <el-col :span="2">&nbsp;</el-col>
-                                        <el-col :span="10">
-                                            <el-form-item label="有效厚度" prop="cw">
-                                                <el-input v-model="djclForm.thicknessEffe" type="number" :disabled="edit"><i
-                                                    slot="suffix">m</i></el-input>
-                                            </el-form-item>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
                                         <el-col :span="10" style="padding-top:30px">
-                                            <el-form-item label="控制储量" prop="kzcl">
+                                            <el-form-item label="静压" prop="kzcl">
                                                 <el-input v-model="djclForm.probReservesWell" type="number" :disabled="edit"><i
-                                                    slot="suffix">10⁴m³</i></el-input>
+                                                    slot="suffix">MPa</i></el-input>
                                             </el-form-item>
                                         </el-col>
                                         <el-col :span="2">&nbsp;</el-col>
                                         <el-col :span="10" style="padding-top:30px">
-                                            <el-form-item label="控制面积" prop="kzmj">
+                                            <el-form-item label="流压" prop="kzmj">
                                                 <el-input v-model="djclForm.controlArea" type="number" :disabled="edit">
-                                                    <i slot="suffix">km²</i>
+                                                    <i slot="suffix">MPa</i>
                                                 </el-input>
                                             </el-form-item>
                                         </el-col>
-                                        <el-col :span="10" style="padding-top:30px">
-                                            <el-form-item label="可采储量" prop="kzmj">
-                                                <el-input v-model="djclForm.recoverableReserves" type="number" :disabled="edit">
-                                                    <i slot="suffix">10⁴m³</i>
-                                                </el-input>
-                                            </el-form-item>
-                                        </el-col>
+                                        
                                         <!-- <el-col :span="2">㎡</el-col> -->
                                     </el-row>
                                     <el-row>
@@ -195,7 +166,7 @@ export default {
             let params = {
                 searchKeys:[this.$store.getters["user/userDetail"].user.userName],
             }
-           
+
             userListByUserNames(params).then((res)=>{
                 this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
             })
@@ -245,7 +216,7 @@ export default {
             }else{
                 this.edit = false;
             }
-            
+
         },
         queryserch() {
             //获取层位
