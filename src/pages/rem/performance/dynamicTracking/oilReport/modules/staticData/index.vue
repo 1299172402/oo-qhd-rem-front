@@ -21,7 +21,7 @@
             <el-table-column prop="boreType" label="管柱类型"></el-table-column>
             <el-table-column prop="kb" :label="`补心海拔\n(m)`"></el-table-column>
             <el-table-column prop="baseLevelDepth" :label="`基准面深度\n (m)`"></el-table-column>
-            <el-table-column :label="`投产时间\n(yyyy/mm/dd)`" min-width="100" >
+            <el-table-column :label="`投产时间\n(yyyy-mm-dd)`" min-width="100" >
                 <template slot-scope="scope">
                     <span>{{ scope.row.productionDate | formatTime }}</span>
                 </template>

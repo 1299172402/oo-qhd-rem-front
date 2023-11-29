@@ -3,11 +3,11 @@
     <page-panel-new style="height:calc(100% - 101px);margin-top:0;" show-btn>
         <el-table
             id="tableData" 
-            :data="tableData" :border="false" :row-style="{ height: '0px' }"
+            :data="tableData" border :row-style="{ height: '0px' }"
             header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
             style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-            <el-table-column prop="date" :label="`时间\n (yyyy/mm)`" align="center" show-overflow-tooltip min-width="200" fixed="left">
+            <el-table-column prop="date" :label="`时间\n (yyyy-mm)`" align="center" show-overflow-tooltip min-width="200" fixed="left">
                 <template slot-scope="scope">{{ scope.row.date | dateFormat }}</template>
             </el-table-column>
             <el-table-column prop="ogfName" label="区块" show-overflow-tooltip min-width="180" fixed="left"></el-table-column>
@@ -15,11 +15,11 @@
                 <el-table-column prop="proWellCount" label="总井" show-overflow-tooltip min-width="120"></el-table-column>
                 <el-table-column prop="proWellOpen" label="开井" show-overflow-tooltip min-width="120"></el-table-column>
             </el-table-column>
-            <el-table-column :label="`月均日产水平\n (m³/d)`">
+            <el-table-column :label="`月均日产水平\n (m³)`">
                 <el-table-column prop="liquidDailySum" label="液量" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                 <el-table-column prop="oilDailySum" label="油量" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
             </el-table-column>
-            <el-table-column :label="`平均单井日产\n (m³/d)`">
+            <el-table-column :label="`平均单井日产\n (m³)`">
                 <el-table-column prop="liquidDailyAvg" label="液量" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                 <el-table-column prop="oilDailyAvg" label="油量" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
             </el-table-column>
@@ -27,7 +27,7 @@
                 <el-table-column prop="injectionWellCount" label="总井" show-overflow-tooltip min-width="120"></el-table-column>
                 <el-table-column prop="injectionWellOpen" label="开井" show-overflow-tooltip min-width="120"></el-table-column>
             </el-table-column>
-            <el-table-column :label="`日注水\n (m³/d)`">
+            <el-table-column :label="`日注水\n (m³)`">
                 <el-table-column prop="injectionDailySum" label="合计" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
                 <el-table-column prop="injectionDailyAvg" label="平均单井" show-overflow-tooltip min-width="120" :formatter="toPrecise2"></el-table-column>
             </el-table-column>

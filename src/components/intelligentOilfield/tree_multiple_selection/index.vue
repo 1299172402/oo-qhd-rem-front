@@ -35,13 +35,10 @@
         <el-tree
           ref="tree"
           :data="deptOptions"
-          node-key="value"
           show-checkbox
           accordion
           :expand-on-click-node="false"
           :default-expand-all="false"
-          :default-checked-keys="['715AD1CD60484BB59E737CD18A9DE44A','3FC9A818F5BC43B88270DB80BBB3018F']"
-          @check-change="handleCheckChange"
         />
       </div>
     </div>
@@ -49,32 +46,35 @@
 </template>
 
 <script>
-import {getYczcTree} from "@/api/rem/marster.js";
-
 export default {
   props: {
-    "level": {
-      type: String,
-      default: "5"
-    },
-      "start": {
-          type: Number,
-          default: 0
-      },
-      "end": {
-          type: Number,
-          default: 0
-      }
-  },
-  data() {
-    return {
-      deptOptions: [
+    deptOptions: {
+      type: Array,
+      default: () => [
+        {
+          "label": "有限天津分公司",
+          "value": "3DC1B33E1B5B431E99FA163BF9E86E6A",
+          "level": "1",
+          "children": [
+            {
+              "label": "秦皇岛32-6作业公司",
+              "value": "715AD1CD60484BB59E737CD18A9DE44A",
+              "level": "2",
+              "children": [
+                {
+                  "label": "QHD32-6",
+                  "value": "3FC9A818F5BC43B88270DB80BBB3018F",
+                  "level": "3"
+                }
+              ]
+            }
+          ]
+        }
       ]
-    };
+    }
   },
   mounted() {
     this.init();
-    this.getTreeData();
   },
   methods: {
     init() {
@@ -82,14 +82,10 @@ export default {
       const obscure = document.querySelector(".navH span");
       const open = document.querySelector(".open");
       const ensconce = document.querySelector(".ensconce");
-      let that = this;
-      obscure.onclick = () => {
+      obscure.onclick = function() {
         open.style.marginLeft = "-300px";
         setTimeout(() => {
           ensconce.style.display = "block";
-            that.$nextTick(()=>{
-                that.$emit('change')
-          })
         }, 350);
       };
       // 显示菜单
@@ -98,9 +94,6 @@ export default {
         open.style.marginLeft = "0px";
         setTimeout(() => {
           ensconce.style.display = "none";
-            that.$nextTick(()=>{
-                that.$emit('change')
-            })
         }, 100);
       };
       obscure.onclick();
@@ -134,28 +127,7 @@ export default {
         /* 设置fontsize */
         html.style.fontSize = `${fontSize}px`;
       };
-    },
-    getTreeData() {
-      const params = { level: this.level, orgId: "715AD1CD60484BB59E737CD18A9DE44A" };
-        getYczcTree(params).then((res)=>{
-            this.deptOptions = res.data.data;
-            this.setDisabledRecursive( this.deptOptions, this.start, this.end)
-        })
-    },
-      setDisabledRecursive(options, minLevel = 0, maxLevel = Number.MAX_SAFE_INTEGER) {
-          options.forEach((option) => {
-              if (option.level < minLevel || option.level > maxLevel) {
-                  return
-              }
-              option.disabled = true
-              if (option.children) {
-                  this.setDisabledRecursive(option.children, minLevel, maxLevel)
-              }
-          })
-      },
-      handleCheckChange(data, checked, indeterminate) {
-         this.$emit('childinfo',data, checked, indeterminate)
-      },
+    }
   }
 };
 </script>
@@ -319,8 +291,5 @@ export default {
   margin: 0 auto;
   letter-spacing: 0.5em;
   font-weight: 500;
-}
-/deep/ .el-tree > .el-tree-node >.el-tree-node__content .el-checkbox {
-    display: none;
 }
 </style>

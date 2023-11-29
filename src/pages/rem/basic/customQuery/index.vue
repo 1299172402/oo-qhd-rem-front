@@ -23,7 +23,7 @@
                                 <el-option v-for="(item, index) in wellData" :key="index" :label="item.wellName"
                                            :value="item.wellId"/>
                             </el-select>
-                            <span style="padding-left: 20px">日期选择：</span>
+                            <span style="padding-left: 20px">日期：</span>
                             <el-date-picker
                                 v-show="activeTabIndexDate == 3"
                                 v-model="selectDate"
@@ -210,7 +210,7 @@
                     </el-row>
                 </page-panel-new>
                 <page-panel
-                    headerTitle=""
+                    headerTitle="自定义查询"
                     :show-btn="true"
                     v-else-if="activeEchart"
                     style="height: calc(100% - 112px); padding-bottom: 60px"
@@ -223,6 +223,7 @@
                         :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                         :data="queryData"
                         height="calc(100% - 30px)"
+                        border
                         header-cell-class-name="table_header"
                         :cell-style="{ padding: '6px', 'text-align': 'center' }"
                         style="margin: 20px 0; height: calc(100% - 125px)"
@@ -330,7 +331,10 @@
 <script>
 import {queryCustomQueryList} from "@/api/basic/basic";
 import {fetchProductionWells} from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import {queryOperatorsCheckFieldListsDetail, queryPlatformQueryWellListDetail} from "@/api/basic/master";
+import {
+    QueryOgfDetail,
+    QueryWellDetail, userListByUserNames
+} from "@/api/basic/master";
 import {exportExcel} from "@/lib/exportExcel";
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
@@ -342,6 +346,7 @@ export default {
     mounted() {
         const year = new Date().getFullYear();
         this.selectDate = [new Date(`${year}-01-01`).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
+        
         this.initData();
     },
     data() {
@@ -353,6 +358,7 @@ export default {
             ], //树形数组
             pageTotal: 0,
             page: 1,
+            orgId:'',
             pageSize: 15,
             queryData: [],
             dowload: [],
@@ -548,7 +554,7 @@ export default {
                 const request = {
                     ogfId,
                 };
-                queryPlatformQueryWellListDetail(request).then((res) => {
+                QueryWellDetail(request).then((res) => {
                     this.listdata = [
                         {
                             label: "有限天津分公司",
@@ -613,24 +619,31 @@ export default {
             }
         },
         choicewell(val){
-            queryPlatformQueryWellListDetail({ogfId:val}).then(res => {
+            QueryWellDetail({ogfId:val}).then(res => {
                 if (res.data.code == 200) {
-                    this.wellData =res.data.data
+                    this.wellData = res.data.data
+                    this.wellId = ''
                 }
             })
         },
         initData() {
             //查询条件
-            queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res => {
-                if (res.data.code == 200) {
-                    this.oilFields = res.data.data
-                }
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+            }
+            userListByUserNames(params).then((res)=>{
+                this.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
+                QueryOgfDetail({operationZoneId:this.orgId}).then(res => {
+                    if (res.data.code == 200) {
+                        this.oilFields = res.data.data
+                    }
+                })
             })
             let ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
             const request = {
                 ogfId,
             };
-            queryPlatformQueryWellListDetail(request).then((res) => {
+            QueryWellDetail(request).then((res) => {
                 this.listdata = [
                     {
                         label: "有限天津分公司",
@@ -839,14 +852,14 @@ export default {
                             {val: "MONTHLY_OIL_PROD", name: "月产油", unit: "m³"},
                             {val: "MONTHLY_WATER_PROD", name: "月产水", unit: "m³"},
                             {val: "MONTHLY_GAS_PROD", name: "月产气", unit: "m³"},
-                            {val: "DAILY_LIQUID_PROD_LEVEL", name: "日产液水平", unit: "m³/d"},
-                            {val: "DAILY_OIL_PROD_LEVEL", name: "日产油水平", unit: "m³/d"},
-                            {val: "DAILY_WATER_PROD_LEVEL", name: "日产水水平", unit: "m³/d"},
-                            {val: "DAILY_GAS_PROD_LEVEL", name: "日产气水平", unit: "m³/d"},
-                            {val: "DAILY_LIQUID_PROD_CAP", name: "日产液能力", unit: "m³/d"},
-                            {val: "DAILY_OIL_PROD_CAP", name: "日产油能力", unit: "m³/d"},
-                            {val: "DAILY_WATER_PROD_CAP", name: "日产水能力", unit: "m³/d"},
-                            {val: "DAILY_GAS_PROD_CAP", name: "日产气能力", unit: "m³/d"},
+                            {val: "DAILY_LIQUID_PROD_LEVEL", name: "日产液水平", unit: "m³"},
+                            {val: "DAILY_OIL_PROD_LEVEL", name: "日产油水平", unit: "m³"},
+                            {val: "DAILY_WATER_PROD_LEVEL", name: "日产水水平", unit: "m³"},
+                            {val: "DAILY_GAS_PROD_LEVEL", name: "日产气水平", unit: "m³"},
+                            {val: "DAILY_LIQUID_PROD_CAP", name: "日产液能力", unit: "m³"},
+                            {val: "DAILY_OIL_PROD_CAP", name: "日产油能力", unit: "m³"},
+                            {val: "DAILY_WATER_PROD_CAP", name: "日产水能力", unit: "m³"},
+                            {val: "DAILY_GAS_PROD_CAP", name: "日产气能力", unit: "m³"},
                             {val: "GAS_OIL_RATIO", name: "气油比", unit: "m³/m³"},
                             {val: "OIL_GAS_RATIO", name: "油气比", unit: "m³/m³"},
                             {val: "WATER_GAS_RATIO", name: "水气比", unit: "m³/m³"},
@@ -1008,23 +1021,23 @@ export default {
                         (this.productList = [
                             {val: "SYN_WATER_RATIO", name: "综合含水", unit: "%"},
                             {val: "SYN_OIL_GAS_RATIO", name: "综合气油比", unit: "m³/m³"},
-                            {val: "DAILY_LIQUID_PROD_LEVEL", name: "日产液水平", unit: "m³/d"},
-                            {val: "DAILY_OIL_PROD_LEVEL", name: "日产油水平", unit: "m³/d"},
-                            {val: "DAILY_WATER_PROD_LEVEL", name: "日产水水平", unit: "m³/d"},
-                            {val: "DAILY_GAS_PROD_LEVEL", name: "日产气水平", unit: "m³/d"},
-                            {val: "DAILY_LIQUID_PROD_CAP", name: "日产液能力", unit: "m³/d"},
-                            {val: "DAILY_OIL_PROD_CAP", name: "日产油能力", unit: "m³/d"},
-                            {val: "DAILY_WATER_PROD_CAP", name: "日产水能力", unit: "m³/d"},
-                            {val: "DAILY_GAS_PROD_CAP", name: "日产气能力", unit: "m³/d"},
+                            {val: "DAILY_LIQUID_PROD_LEVEL", name: "日产液水平", unit: "m³"},
+                            {val: "DAILY_OIL_PROD_LEVEL", name: "日产油水平", unit: "m³"},
+                            {val: "DAILY_WATER_PROD_LEVEL", name: "日产水水平", unit: "m³"},
+                            {val: "DAILY_GAS_PROD_LEVEL", name: "日产气水平", unit: "m³"},
+                            {val: "DAILY_LIQUID_PROD_CAP", name: "日产液能力", unit: "m³"},
+                            {val: "DAILY_OIL_PROD_CAP", name: "日产油能力", unit: "m³"},
+                            {val: "DAILY_WATER_PROD_CAP", name: "日产水能力", unit: "m³"},
+                            {val: "DAILY_GAS_PROD_CAP", name: "日产气能力", unit: "m³"},
                         ]),
                         (this.totalList = []),
                         (this.injectList = [
-                            {val: "DAILY_LIQUID_INJ_LEVEL", name: "日注液水平", unit: "m³/d"},
-                            {val: "DAILY_WATER_INJ_LEVEL", name: "日注水水平", unit: "m³/d"},
-                            {val: "DAILY_GAS_INJ_LEVEL", name: "日注气水平", unit: "m³/d"},
-                            {val: "DAILY_LIQUID_INJ_CAPACITY", name: "日注液能力", unit: "m³/d"},
-                            {val: "DAILY_WATER_INJ_CAPACITY", name: "日注水能力", unit: "m³/d"},
-                            {val: "DAILY_GAS_INJ_CAPACITY", name: "日注气能力", unit: "m³/d"},
+                            {val: "DAILY_LIQUID_INJ_LEVEL", name: "日注液水平", unit: "m³"},
+                            {val: "DAILY_WATER_INJ_LEVEL", name: "日注水水平", unit: "m³"},
+                            {val: "DAILY_GAS_INJ_LEVEL", name: "日注气水平", unit: "m³"},
+                            {val: "DAILY_LIQUID_INJ_CAPACITY", name: "日注液能力", unit: "m³"},
+                            {val: "DAILY_WATER_INJ_CAPACITY", name: "日注水能力", unit: "m³"},
+                            {val: "DAILY_GAS_INJ_CAPACITY", name: "日注气能力", unit: "m³"},
                         ]),
                         (this.managerList = []);
                     // this.storeList = ['井口储采比','井口采油速度','井口采出油速度','剩余油储量','剩余气储量','剩余油采出速度','剩余气采出速度','剩余油采出程度','剩余气采出程度']

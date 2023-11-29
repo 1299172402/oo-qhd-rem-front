@@ -45,72 +45,73 @@
       </div>
       <el-button icon="el-icon-download" type="primary" @click="doDownExcel('#table1', '单井产量预测')">下载</el-button>
     </div>
-    <el-table :key="Math.random()" id="table1" :data="tableData" height="calc(100% - 58px - 55px)">
-      <el-table-column type="index" width="50"></el-table-column>
-      <el-table-column align="left" label="当前作业井名" prop="wellNo" width="150"></el-table-column>
+    <el-table :key="Math.random()" id="table1" :data="tableData" border height="calc(100% - 58px - 55px)">
+      <el-table-column type="index" width="80" align="center" fixed></el-table-column>
+      <el-table-column align="left" label="当前作业井名" prop="wellNo" width="150" fixed></el-table-column>
       <el-table-column align="center" label="当前作业措施" prop="measureTypeName" width="150"></el-table-column>
       <el-table-column align="center" label="产品类型" prop="productTypeName" width="100"></el-table-column>
-      <el-table-column align="center" :label="`措施见效日期\n(yyyy/mm/dd)`" prop="measureSeffectDate" width="160">
+      <el-table-column align="center" :label="`措施见效日期\n(yyyy-mm-dd)`" prop="measureSeffectDate" width="200">
         <template slot-scope="scope">
           <el-date-picker
             v-model="scope.row.measureSeffectDate"
             type="date"
             format="yyyy-MM-dd"
+            style="width: 160PX;"
             value-format="yyyy-MM-dd"
           ></el-date-picker>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="`日增油/日产油\n(m³/d)`" prop="" width="160">
+      <el-table-column align="center" :label="`日增油/日产油\n(m³)`" prop="" width="200">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.dailyAllocatingBase"
             :precision="4"
             size="medium"
-            style="width: 150px"
+            style="width: 160px"
             controls-position="right"
           ></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="`月递减率\n(%)`" prop="" width="160">
+      <el-table-column align="center" :label="`月递减率\n(%)`" prop="" width="200">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.decreaseRate"
             :precision="4"
             size="medium"
-            style="width: 150px"
+            style="width: 160px"
             controls-position="right"
           ></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="`月时率\n(%)`" prop="" width="160">
+      <el-table-column align="center" :label="`月时率\n(%)`" prop="" width="200">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.timeEfficieincy"
             :precision="4"
             size="medium"
-            style="width: 150px"
+            style="width: 160px"
             controls-position="right"
           ></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="center" :label="`见效天数\n(m³/d)`" prop="effectDays" width="100"></el-table-column>
-      <el-table-column align="center" :label="`单井年配产量\n(m³)`" prop="dailyAllocating" width="160">
+      <el-table-column align="center" :label="`见效天数\n(d)`" prop="effectDays" width="100"></el-table-column>
+      <el-table-column align="center" :label="`单井年配产量\n(m³)`" prop="dailyAllocating" width="200">
         <template slot-scope="scope">
           <el-input-number
             v-model="scope.row.yearAllocating"
             :precision="4"
             size="medium"
-            style="width: 150px"
+            style="width: 160px"
             controls-position="right"
           ></el-input-number>
         </template>
       </el-table-column>
-      <el-table-column align="left" label="备注" prop="remark">
+      <el-table-column align="center" label="备注" min-width="300" prop="remark">
         <template slot-scope="scope">
           <el-input v-model="scope.row.remark" size="medium"></el-input>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="200">
+      <el-table-column align="center" label="操作" width="200" fixed="right">
         <template slot-scope="scope">
           <el-button type="text" @click="calcSingleWellMeasure(scope.row)">计算配产量</el-button>
           <el-button type="text" style="color: #f56c6c" @click="deleteRow(scope.$index, scope.row)">删除</el-button>
@@ -137,7 +138,7 @@
 </template>
 
 <script>
-import { QueryOgfDetail, QueryPlatformDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryPlatformDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { getForecastDate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import {
   getWellDailyMeasureInfo,
@@ -202,10 +203,26 @@ export default {
       this.ogfList = [];
       this.platformList = [];
       this.conditions.platformId = "";
-      // 加载新数据
-      await QueryOgfDetail({ operationZoneId: this.conditions.companyId }).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.ogfList = res.data.data;
+          this.conditions.companyId =
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.conditions.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.ogfList = data.data.data;
+          if (this.conditions.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.conditions.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.conditions.ogfId = this.ogfList[0].ogfId ? this.ogfList[0].ogfId : undefined;
+          }
         }
       });
     },
@@ -213,6 +230,7 @@ export default {
     searchPlatFormList() {
       QueryPlatformDetail({ ogfId: this.conditions.ogfId }).then((res) => {
         if (res.data.code == 200) {
+          this.conditions.platformId = "";
           this.platformList = res.data.data;
         }
       });
@@ -248,7 +266,7 @@ export default {
     },
     //保存结果,策略:先删除，后保存
     save() {
-      this.$message.info("保存中...");
+      // this.$message.info("保存中...");
       insertWellDailyMeasureInfo(this.tableData).then((res) => {
         console.log(res);
         this.$message.info("保存成功...");
@@ -313,9 +331,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .el-table__fixed-header-wrapper .cell,
 ::v-deep .el-table__header-wrapper .cell {
   height: auto !important;
   line-height: 18px !important;
   white-space: pre;
+}
+::v-deep .el-table__fixed-right {
+  z-index: 2;
 }
 </style>

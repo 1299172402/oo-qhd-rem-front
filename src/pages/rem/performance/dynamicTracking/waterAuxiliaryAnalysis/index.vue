@@ -25,7 +25,13 @@
       <headerSearch style="height: 80px">
         <div class="g-row-flex-V g-w100 g-h100">
           <span class="title">油田：</span>
-          <el-select v-model="selectOilField" placeholder="请选择" filterable disabled style="margin-right: 15px">
+          <el-select
+            v-model="selectOilField"
+            placeholder="请选择"
+            filterable
+            style="margin-right: 15px"
+            @change="doChangeYt"
+          >
             <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
           </el-select>
           <span class="title">平台：</span>
@@ -128,18 +134,18 @@
             </div>
           </el-tab-pane>
         </el-tabs>
-        <keep-alive :include="[]" :max="10" v-if="blockId">
-          <component
-            :is="component"
-            ref="componentCustom"
-            :oilFeildId="selectOilField"
-            :platform="selectPlatform"
-            :wellId="selectWellId"
-            :blockId="blockId"
-            @childPara="changeChildParam"
-          >
-          </component>
-        </keep-alive>
+        <!-- <keep-alive :include="[]" :max="10" v-if="blockId"> -->
+        <component
+          :is="component"
+          ref="componentCustom"
+          :oilFeildId="selectOilField"
+          :platform="selectPlatform"
+          :wellId="selectWellId"
+          :blockId="blockId"
+          @childPara="changeChildParam"
+        >
+        </component>
+        <!-- </keep-alive> -->
       </pagePanelNew>
 
       <!-- minIo上传 -->
@@ -158,7 +164,7 @@
             :limit="limit"
             :fileSize="20"
             :is-show-tip="false"
-            biz-path="rem-front/text"
+            biz-path="rem/oo-qhd-rem-agg"
             :file-type="fileType"
             @change="getResData"
           />
@@ -172,8 +178,7 @@
 </template>
 
 <script>
-
-import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 //miniIo
 import { getBlockWell, getMajorEventsBriefly } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
@@ -264,6 +269,7 @@ export default {
       ljpmTag: false,
       //连井剖面弹窗
       ljpmDialog: false,
+      companyId: "",
       //选择油田
       selectOilField: "",
       //油田列
@@ -373,6 +379,10 @@ export default {
             {
               label: "单井基本信息表",
               name: "individualWellBasicInformationSheet",
+            },
+            {
+              label: "生产段状态",
+              name: "productionSectionStatus",
             },
           ],
         },
@@ -622,24 +632,31 @@ export default {
     },
     //初始化 数据
     async initData() {
-      let oilFeildId = this.$route.query.oilField;
       let wellId = this.$route.query.wellId;
-      console.log(oilFeildId, wellId);
-      //获得油田信息给下拉列表
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilField = res.data.data;
-          if (this.oilField.length == 0) {
-            this.selectOilField = "";
-          } else {
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
             this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
           }
         }
       });
-      if (oilFeildId == undefined || oilFeildId == null) {
-        this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
-      } else {
-        this.selectOilField = oilFeildId;
+
+      if (this.$route.query.oilField) {
+        this.selectOilField = this.$route.query.oilField;
       }
       await QueryPlatformDetail({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {
@@ -681,7 +698,7 @@ export default {
     async getBlockWellApi() {
       await getBlockWell({ wellId: this.selectWellId }).then((res) => {
         if (res.data.code == 200) {
-          this.blockId = res.data.data.blockId;
+          this.blockId = res.data.data?.blockId;
         }
       });
     },
@@ -705,6 +722,26 @@ export default {
       } else {
         this.$refs.componentCustom.doSearch();
       }
+    },
+    //切换油田修改平台内容
+    doChangeYt(val) {
+      this.selectPlatform = "";
+      this.selectWellId = "";
+      QueryPlatformDetail({ ogfId: this.selectOilField }).then((res) => {
+        if (res.data.code == 200) {
+          this.platform = res.data.data;
+          this.platform.unshift({
+            platformId: this.selectOilField,
+            platformCode: "全部",
+          });
+          if (this.platform.length == 0) {
+            this.selectPlatform = "";
+          } else {
+            this.selectPlatform = this.platform[0].platformId;
+          }
+        }
+      });
+      this.doChangePT(this.selectOilField);
     },
     //平台change
     doChangePT(val) {

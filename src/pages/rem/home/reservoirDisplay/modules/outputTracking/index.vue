@@ -7,15 +7,15 @@
                 <div style="display: flex;position: relative;bottom: 45px">
                     <div style="width: 50%">
                         <Echart :chart-data="option"></Echart>
-                        <div style="position:absolute;bottom:20%;left:2%;font-size: 10px;text-align: center">
-                            <h5 style="color: #0d84ff">开井数(口)/油田总井数(口)</h5>
+                        <div style="position:relative;bottom:30%;left:0%;font-size: 10px;text-align: center">
+                            <h5 style="color: #0d84ff">开井数(口)/油井总井数(口)</h5>
                             <div style="font-size: 20px;">{{dataList.oilWellOpenTotal}}/{{dataList.oilWellTotal}}</div>
                         </div>
                         
                     </div>
                     <div style="width: 50%">
                         <Echart :chart-data="option2"></Echart>
-                        <div style="position:absolute;bottom:20%;right:5%;font-size: 10px;text-align: center">
+                        <div style="position:relative;bottom:30%;right:1%;font-size: 10px;text-align: center">
                             <h5 style="color: #0d84ff">开井数(口)/水井总井数(口)</h5>
                             <div style="font-size: 20px;">{{dataList.injWellOpenTotal}}/{{dataList.injWellTotal}}</div>
                         </div>
@@ -32,7 +32,7 @@
                         </div>
                         <div>
                             <div>{{ item.name }}</div>
-                            <div>{{ item.value }}</div>
+                            <div>{{ item.name.indexOf('10⁴m³') !== -1 ? Number(item.value).toFixed(4): item.value }}</div>
                         </div>
                     </el-col>
                 </el-row>
@@ -65,7 +65,8 @@ export default {
     data() {
         return {
             productLineChart: {//原油产量折线图
-                color: ['#1379F7', '#FF5844', '#69b146', '#00BC9C', '#9A72FF', '#DA835E'],
+                // color: ['#1379F7', '#FF5844', '#69b146', '#00BC9C', '#9A72FF', '#DA835E'],
+                color: ['#1379F7','#DA835E', '#69b146', '#9A72FF', '#FF5844', '#00BC9C'],
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
@@ -74,8 +75,8 @@ export default {
                 },
                 grid: {
                     top: "8%",
-                    left: "10%",
-                    right: "10%",
+                    left: "6%",
+                    right: "8%",
                     bottom: "22%",
                 },
                 dataZoom: {
@@ -102,16 +103,13 @@ export default {
                         color: '#8FA4CC',
                         fontSize: 10,
                         padding:[10,0,0,70],
-                        interval: function(index, val) {
-                            if (val.substr(-2) == '01') {
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        },
+                        showMinLabel: true, 
+                        showMaxLabel: true,
+                        interval: 25, // 设置时间间隔为5个单位
                     },
                     axisTick: {
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     axisLine: {
                         lineStyle: {
@@ -122,8 +120,6 @@ export default {
                 yAxis: [
                     {
                         name: '日产m³/d',
-                        nameLocation:'middle',
-                        nameGap:70,
                         nameTextStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
@@ -135,7 +131,8 @@ export default {
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,
@@ -152,8 +149,6 @@ export default {
                     },
                     {
                         name: '年产10⁴m³',
-                        nameLocation:'middle',
-                        nameGap:70,
                         nameTextStyle: {
                             color: '#8FA4CC',
                             fontSize: 14,
@@ -165,7 +160,8 @@ export default {
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,
@@ -184,158 +180,7 @@ export default {
                 series: [],
             },
             
-            histogram: {
-                color: ["#00C1DE", "#6F7AF8", "#F5A547", "#3399ff"],
-                tooltip: {
-                    trigger: "axis",
-                    axisPointer: {
-                        type: "shadow",
-                    },
-                },
-                grid: {
-                    left: '5%',
-                    right: '6%',
-                    top: 30,
-                    bottom: 30,
-                    show: false, // 隐藏坐标系网格线
-                    containLabel: true,
-                },
-                legend: {
-                    bottom: "bottom",
-                    textStyle: {
-                        color: "",
-                    },
-                    data: [
-                        {
-                            name: "计划日产",
-                            icon: "circle",
-                        },
-                        {
-                            name: "实际日产",
-                            icon: "circle",
-                        },
-                        {
-                            name: "实际年累产",
-                            icon: "circle",
-                        },
-                        {
-                            name: "计划年累产",
-                            icon: "circle",
-                        },
-                    ],
-                },
-                xAxis: [
-                    {
-                        type: "category",
-                        boundaryGap: false,
-                        data: [],
-                        axisLabel: {
-                            fontSize: 16,
-                            color: "#a9a8a8",
-                            // margin: 10,
-                            interval: 30, // 控制每隔多少个标签显示一个标签
-                            formatter: function (value) {
-                                return Number( value.substring(5, 7) )+ '月'; // 只保留月份部分
-                            },
-                        },
-                        axisLine: {
-                            show: true, // 隐藏 x 轴线
-                            // color:'#a9a8a8'
-                        },
-                        splitLine: {
-                            show: false, // 隐藏 x 轴分隔线
-                        },
-                    },
-                ],
-                yAxis: [
-                    {
-                        type: "value",
-                        name: "日产 (m³/d)",
-                        nameTextStyle: {
-                            padding: [0, 0, 60, 0], // 上、右、下、左
-                        },
-                        min:0,
-                        max:10000,
-                        nameLocation: "center",
-                        axisLine: {
-                            show: true,
-                            lineStyle: {
-                                color: "#a9a8a8",
-                            },
-                        },
-                        splitLine: {
-                            show: false, // 隐藏 x 轴分隔线
-                        },
-                        axisLabel: {
-                            fontSize: 16,
-                            color: "#a9a8a8",
-                            margin: 10,
-                            formatter: "{value}",
-                        },
-                    },
-                    {
-                        type: "value",
-                        name: "年累产(10⁴m³)",
-                        position: "right",
-                        nameTextStyle: {
-                            padding: [60, 0, 0, 0], // 上、右、下、左
-                        },
-                        min:0,
-                        max:10000,
-                        nameLocation: "center",
-                        scale: true,
-                        axisLine: {
-                            show: true,
-                            lineStyle: {
-                                color: "#a9a8a8",
-                            },
-                        },
-                        splitLine: {
-                            show: false, // 隐藏 x 轴分隔线
-                        },
-                        axisLabel: {
-                            fontSize: 16,
-                            color: "#a9a8a8",
-                            margin: 10,
-                            formatter: "{value}",
-                        },
-                    },
-                ],
-                series: [
-                    {
-                        name: "计划日产",
-                        type: "line",
-                        symbolSize: 0, // 设置点的大小为 0，不会显示出来
-                        yAxisIndex: 0,
-                        data: [],
-                    },
-                    {
-                        name: "实际日产",
-                        type: "line",
-                        symbolSize: 0, // 设置点的大小为 0，不会显示出来
-                        yAxisIndex: 0,
-                        data: [],
-                    },
-                    {
-                        name: "实际年累产",
-                        symbolSize: 0, // 设置点的大小为 0，不会显示出来
-                        type: "line",
-                        yAxisIndex: 1,
-                        data: [
-                            
-                        ],
-                    },
-                    {
-                        name: "计划年累产",
-                        type: "line",
-                        symbolSize: 0, // 设置点的大小为 0，不会显示出来
-                        yAxisIndex: 1,
-                        data: [
-                           
-                        ],
-                    },
-                ],
-            },
+            
             dataList:'',
             data: [
                 {
@@ -970,17 +815,46 @@ export default {
                         seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
                     }
                     //图例数据
+                    
+                    const echartslist = []
+                    seriesData.forEach((n)=>{
+                        if(n.name == '考核日产')
+                        {
+                            echartslist[0] = n
+                           legendData[0] = '考核日产'
+                        }else if (n.name == '滚动预测'){
+                            echartslist[1] = n
+                            legendData[1] ='滚动预测'
+                        }
+                        else if (n.name == '实际日产'){
+                            echartslist[2] = n
+                            legendData[2] ='实际日产'
+                        }
+                        else if (n.name == '剩余水平'){
+                            echartslist[3] = n
+                            legendData[3]='剩余水平'
+                        }
+                        else if (n.name == '计划年累产'){
+                            echartslist[4] = n
+                            legendData[4]='计划年累产'
+                        }
+                        else if (n.name == '实际年累产'){
+                            echartslist[5] = n
+                            legendData[5]='实际年累产'
+                        }
+                    })
                     this.productLineChart.legend.data = legendData;
                     //各线的数据
-                    this.productLineChart.series = seriesData;
+                    this.productLineChart.series = echartslist;
                     // if (this.searchForm.selectUnitOfProduction == 'm') {
-                        this.productLineChart.yAxis[0].name = '日产(m³/d)';
+                        this.productLineChart.yAxis[0].name = '日产(m³)';
                         this.productLineChart.yAxis[1].name = '年产(10⁴m³)';
                     // } else if (this.searchForm.selectUnitOfProduction == 't') {
                     //     this.productLineChart.yAxis[0].name = '日产t/d';
                     //     this.productLineChart.yAxis[1].name = '年产10⁴t';
                     // }
-                } else {
+                } 
+                else {
                     //图例数据
                     this.productLineChart.legend.data = legendData;
                     //各线的数据
@@ -1074,30 +948,6 @@ export default {
                 this.data[5].value = res.data.data.reserves
                 this.option.series[2].data[0].value = res.data.data.oilWellPercentage
                 this.option2.series[2].data[0].value = res.data.data.injWellPercentage
-                this.histogram.yAxis[0].min = null
-                this.histogram.yAxis[0].max = null
-                this.histogram.yAxis[1].min = null
-                this.histogram.yAxis[1].max = null
-                //头部表格
-                this.histogram.xAxis[0].data = res.data.data.linearDataSet[1].linearData.map(item=>{
-                    return item.label
-                })
-                //计划日产
-                this.histogram.series[0].data = res.data.data.linearDataSet[1].linearData.map(item=>{
-                    return item.value
-                })
-                //实际日产
-                this.histogram.series[1].data = res.data.data.linearDataSet[0].linearData.map(item=>{
-                    return item.value
-                })
-                //计划累产
-                this.histogram.series[2].data = res.data.data.linearDataSetsSum[1].linearData.map(item=>{
-                    return (item.value/10000).toFixed(2)
-                })
-                //实际累产
-                this.histogram.series[3].data = res.data.data.linearDataSetsSum[0].linearData.map(item=>{
-                    return (item.value/10000).toFixed(2)
-                })
                 this.dataList = res.data.data
             })
         }

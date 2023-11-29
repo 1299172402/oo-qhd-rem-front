@@ -5,18 +5,19 @@
         header-title="超欠注情况统计"
         :is-show-max-btn="true"
     >
-        <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('/injection/indexHome')">详细</el-button>
+        <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('/injection/indexHome')">详情</el-button>
         <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downTable">下载</el-button>
         <el-table
             :data="tableData"
             height="100%"
             id="tabledata"
+            border
             style="width: 100%"
         >
             <el-table-column prop="date" label="序号" align="center" width="50">
                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
             </el-table-column>
-            <el-table-column prop="wellName" label="井号"
+            <el-table-column prop="wellName" label="井号" min-width="130"
                              align="center"></el-table-column>
             <el-table-column prop="productionIntervalNo" min-width="150" label="层位" align="center" >
                 <template slot-scope="scope">

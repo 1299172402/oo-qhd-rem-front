@@ -8,7 +8,7 @@
       trigger="click"
       :autoplay="false"
       arrow="never"
-      indicator-position="outside"
+      :indicator-position="panelList.length > 1 ? 'outside' : 'none'"
     >
       <el-carousel-item
         v-for="(item1, index) in panelList"
@@ -219,7 +219,7 @@ export default {
           userId: this.$store.getters["user/userDetail"].user.userId
         };
         addAccessinfo(paramQuery).then(() => {});
-        jumpSupApp(item.appPcAccessUrl);
+        item.appType === "1" ? window.open(item.appPcAccessUrl, "_blank") : jumpSupApp(item.appPcAccessUrl);
         // document.getElementById(`hrefText${index}`).click();
       } else if (this.modelName === "enter") { // 快捷入口
         window.open(addTokenToUrl(item.enterUrl), "_blank");

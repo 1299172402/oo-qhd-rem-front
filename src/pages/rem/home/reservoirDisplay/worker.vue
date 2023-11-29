@@ -18,15 +18,15 @@
                 <el-form-item label="展示页签" prop="type">
                     <el-checkbox-group v-model="chooseList">
                         <el-checkbox label="剩余油情况" name="type"/>
-                        <el-checkbox label="油田大事件" name="type"/>
+                        <el-checkbox label="油田单井大事件" name="type"/>
                         <el-checkbox label="月度产量对比图" name="type"/>
                         <el-checkbox label="产量构成详情" name="type"/>
                         <el-checkbox label="产能波动" name="type"/>
                         <el-checkbox label="问题井统计" name="type"/>
                         <el-checkbox label="关停井统计" name="type"/>
                         <el-checkbox label="秦皇岛32-6南区" name="type"/>
-                        <el-checkbox label="分层注入量" name="type"/>
-                        <el-checkbox label="措施效果跟踪表" name="type"/>
+                        <el-checkbox label="分层注采量" name="type"/>
+                        <el-checkbox label="措施建议表" name="type"/>
                         <el-checkbox label="超欠注情况统计" name="type"/>
                         <el-checkbox label="自然递减率" name="type"/>
                         <el-checkbox label="采油速度" name="type"/>

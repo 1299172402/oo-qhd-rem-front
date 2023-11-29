@@ -6,7 +6,7 @@
             header-title="秦皇岛32-6油田生产指标总览"
             :is-show-max-btn="true"
         >
-            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('IndexHome')">详细</el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('IndexHome')">详情</el-button>
             <el-button type="primary" class="buttonActive_primary detailLinkBtn"  style="right:110px"  @click="downlist">下载</el-button>
             <el-row :gutter="20" style="margin-top: 20px;padding: 0 20px">
                 <el-col :span="8">
@@ -24,22 +24,24 @@
                     <div class="grid-content bg-purple">
                         <div class="yield gas">
                             <div class="box">
-                                <div>{{oil1two}}</div>
+                                <div>{{Number(oil1two).toFixed(4)}}</div>
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
-                        <div class="text">年产油量</div>
+                        <div class="text">年产油</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
                         <div class="yield oil">
                             <div class="box">
-                                <div>{{ dataList.cumeOilProd }}</div>
+                                <div>{{ totalOilProduction === null ||totalOilProduction ===undefined ?
+                                    Number(0).toFixed(4):
+                                    Number(totalOilProduction).toFixed(4) }}</div>
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
-                        <div class="text">累产油量</div>
+                        <div class="text">总累产油</div>
                     </div>
                 </el-col>
               
@@ -75,7 +77,7 @@
                         <Echart
                             :chart-data="getEchartData(mainList[0], '(%)', 'rgb(0, 220, 187)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(0, 220, 187)')"
                         ></Echart>
-                        <div class="chartText">自然递减</div>
+                        <div class="chartText">自然递减率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
@@ -83,7 +85,7 @@
                         <Echart
                             :chart-data="getEchartData(mainList[1], '(%)', 'rgb(0, 150, 215)', $store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(0, 150, 215)')"
                         ></Echart>
-                        <div class="chartText">综合递减</div>
+                        <div class="chartText">综合递减率</div>
                     </div>
                 </el-col>
                 <el-col :span="8">
@@ -91,7 +93,7 @@
                         <Echart
                             :chart-data="getEchartData(mainList[2], '(%)', 'rgb(209, 74, 202)',$store.state.setting.mode === 'dark' ?'rgb(1,67,78)':'rgb(255, 255, 255)', 'rgb(209, 74, 202)')"
                         ></Echart>
-                        <div class="chartText">总递减</div>
+                        <div class="chartText">总递减率</div>
                     </div>
                 </el-col>
              
@@ -126,6 +128,7 @@
     </div>
 </template>
 <script>
+import {devPhaseInfos} from "@/api/rem/oilfieldmanageplan.js"
 import Echart from "@/components/tools/Echarts/index.vue";
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import {LineChart} from "echarts/charts";
@@ -168,6 +171,7 @@ export default {
     },
     data() {
         return {
+            totalOilProduction:0.0000,
             value1:0,
             value2:0,
             value3:0,
@@ -527,7 +531,7 @@ export default {
             productionMetricsOverview( { ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",date:'2022-12' + '-01'}).then(res=>{
                 this.dataList = res.data.data
-                this.dataList.cumeOilProd = '4493.00'
+                // this.dataList.cumeOilProd = '4493.00'
                 // if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
                 this.mainList[0]= res.data.data.naturalDecline
                 this.mainList[1]= res.data.data.overallDecline
@@ -548,6 +552,19 @@ export default {
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then(res=>{
                 this.oil1two = res.data.data.annualOilProduction,
                 this.oil1 =res.data.data.dayOilProduction
+            })
+
+            devPhaseInfos({
+                fieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                type: "1"
+            }).then(res=>{
+                let devPhaseInfos =res.data.data.devPhaseInfos;
+                let sum = 0.0;
+                for (let i = 0; i < devPhaseInfos.length; i++) {
+                    sum += devPhaseInfos[i].oilSum;
+                }
+                this.totalOilProduction= sum;
             })
         },
         getList(){

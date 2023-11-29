@@ -25,7 +25,6 @@ const GenerateRouter = {
   "MyThirdMenu2": () => import("@/pages/intelligentOilfield/myThirdMenu/index.vue"), // 三级菜单-2管理
 
   //   "Index":()=>import('@/pages/intelligentOilfield/demo/index.vue'),
-  "CodeGeneration": () => import("@/pages/intelligentOilfield/codeGeneration/index.vue"),
 
   "HandleBusinessList": () => import("@/pages/common/handleBusinessList/index.vue"),
   "DoneBusinessList": () => import("@/pages/common/doneBusinessList/index.vue"),
@@ -94,29 +93,35 @@ const GenerateRouter = {
   "MeasureManagement": () => import("@/pages/rem/plan/measureManagement/index.vue"),
   "MeasureEffectTracking": () => import("@/pages/rem/plan/measureManagement/measureEffectTracking.vue"),
   "PersonnelMeasures": () => import("@/pages/rem/plan/measureManagement/personnelMeasures.vue"),
-  "planmessage": () => import("@/pages/rem/plan/measureManagement/components/planmessage.vue"),
+  "Planmessage": () => import("@/pages/rem/plan/measureManagement/components/planmessage.vue"),
   "TwoIncreasesOneDecrease": () => import("@/pages/rem/plan/twoIncreasesOneDecrease/index.vue"),
 
   "RecoveryEfficiencyIndex": () => import("@/pages/rem/recoveryEfficiency/index.vue"), // 采收率及可采储量预测
 
   "IndexHome": () => import("@/pages/rem/intelligence/indexHome.vue"),
   "IpmHome": () => import("@/pages/rem/home/ipmHome/index.vue"),
-  "intelligenceDetail": () => import("@/pages/rem/intelligence/detail.vue"),
+  "IntelligenceDetail": () => import("@/pages/rem/intelligence/detail.vue"),
   "ProductionSplit": () => import("@/pages/rem/intelligence/productionSplit/index.vue"),
-  "splitSection": () => import("@/pages/rem/intelligence/productionSplit/splitSection.vue"),
+  "SplitSection": () => import("@/pages/rem/intelligence/productionSplit/splitSection.vue"),
   "DividingCoefficient": () => import("@/pages/rem/intelligence/productionSplit/DividingCoefficient.vue"),
   "ConnectivityData": () => import("@/pages/rem/intelligence/connectivityData/connectivityData.vue"),
-  "coefficientCalculates": () => import("@/pages/rem/intelligence/connectivityData/connectivityCoefficientCalculatesProperty.vue"),
+  "CoefficientCalculates": () => import("@/pages/rem/intelligence/connectivityData/connectivityCoefficientCalculatesProperty.vue"),
   "Optimization": () => import("@/pages/rem/intelligence/optimization/index.vue"),
-  "optimizationDetail": () => import("@/pages/rem/intelligence/optimization/view.vue"),
-  "optimizationResult": () => import("@/pages/rem/intelligence/optimization/result.vue"),
+  "OptimizationDetail": () => import("@/pages/rem/intelligence/optimization/view.vue"),
+  "OptimizationResult": () => import("@/pages/rem/intelligence/optimization/result.vue"),
 
   "FluctuationWarningAnalysis": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/index.vue"),
   "ProductionOperationAnalysisReport": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/productionOperationAnalysisReport.vue"),
   "AnalysisAbnormal": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/analysisAbnormal.vue"),
   "StatisticalTableProduction": () => import("@/pages/rem/yield/fluctuationWarningAnalysis/statisticalTableProduction.vue"),
-  "ProductionSituationPrediction": () => import("@/pages/rem/yield/productionSituationPrediction/index.vue"),
-
+  "ProductionSituationPrediction": () => import("@/pages/rem/yield/productionSituationPrediction/index.vue"), 
+   "ModelMain": () => import("@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue"),
+   "ModelManager": () => import("@/pages/rem/intelligence/optimization/modelOperation/modelManager.vue"),
+    "DensityMaintenance": () => import("@/pages/rem/basic/densityMaintenance/index.vue"),
+    "HorizontalMaintenance": () => import("@/pages/rem/basic/horizontalMaintenance/index.vue"),
+    
+    
+  // 
   // "": () => import(""),
   // "": () => import(""),
   // "": () => import(""),

@@ -21,7 +21,7 @@
                     <el-button type="primary" style="margin-bottom: 20px;" @click="saveEditRow">保存修改</el-button>
                     <el-button type="primary" style="margin-bottom: 20px;" @click="doDownLoad(1)">下载</el-button>
                 </div>
-                <el-table id="table1" :data="tableData" highlight height="calc(100% - 55px)" :cell-style="{padding:'10px'}">
+                <el-table id="table1" :data="tableData" border highlight height="calc(100% - 55px)" :cell-style="{padding:'10px'}">
                     <el-table-column v-if="show" prop="ogfId"></el-table-column>
                     <el-table-column prop="ogfNo" label="油田" align="center"></el-table-column>
                     <el-table-column prop="queryInitialProd" label="日产量(m³)" align="center">
@@ -50,7 +50,7 @@
                 <div style="display: flex; justify-content: flex-end;"> 
                     <el-button type="primary" style="margin-bottom: 20px;" @click="doDownLoad(2)">下载</el-button>
                 </div>
-                <el-table id="ForecastProductionTable" :data="tableData1" highlight height="calc(100% - 55px)" style="font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
+                <el-table id="ForecastProductionTable" :data="tableData1" border highlight height="calc(100% - 55px)" style="font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
                     <el-table-column label="油田" align="center">
                         <template>
                             <span>预测年产量(10⁴{{unitName}})</span>
@@ -69,7 +69,7 @@
                 <div style="display: flex; justify-content: flex-end;">   
                     <el-button type="primary" style="margin-bottom: 20px;" @click="doDownLoad(3)">下载</el-button>
                 </div>
-                <el-table id="ResidualLevelTable" :data="tableData2" highlight height="calc(100% - 55px)" style="width:100%;font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
+                <el-table id="ResidualLevelTable" :data="tableData2" border highlight height="calc(100% - 55px)" style="width:100%;font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
                     <el-table-column label="油田" align="center" min-width="150">
                         <template slot-scope="scope">
                             <span v-show="scope.$index==0">分公司奋斗，后续需日产({{unitName}})</span>
@@ -283,7 +283,6 @@
                         params.push(lineObj);
                     })
                 }
-                console.log("this.tableData==>", params);
                 saveInfluencingFactorsOfOilfieldProduction(params).then((res) => {
                     if (res.data.code==200&&res.data.data) {
                         this.$message.success("保存成功");

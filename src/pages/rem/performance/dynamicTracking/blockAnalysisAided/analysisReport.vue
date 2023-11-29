@@ -5,7 +5,7 @@
       <div class="g-row-flex-V g-w100 g-h100">
         <div style="margin-left: 10px">
           <span>油田：</span>
-          <el-select v-model="selectOilField" style="width: 180px" filterable clearable disabled>
+          <el-select v-model="selectOilField" style="width: 180px" filterable @change="getFieldsDataApi">
             <el-option
               v-for="item in fieldsData"
               :key="item.ogfId"
@@ -489,7 +489,7 @@
           :limit="limit"
           :fileSize="20"
           :is-show-tip="false"
-          biz-path="rem-front/text"
+          biz-path="rem/oo-qhd-rem-agg"
           :file-type="fileType"
           @change="getResData"
         />
@@ -513,7 +513,8 @@ import {
   proInjectionBalanceAnalysis,
   proStatusAnalysis,
 } from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { getLayerWell } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import { getBorepipeType } from "@/api/oilDeposit/ipm-03/basedata.js";
 import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 // Minio
@@ -540,6 +541,7 @@ export default {
       imageurl: "",
       //接受路由参数
       queryLink: "", //如果为1 默认选中注采平衡分析分类中的第一个，如果为2默认选中采出状况分析下的第一个
+      companyId: "",
       //油田
       fieldsData: [],
       selectOilField: "",
@@ -602,6 +604,7 @@ export default {
       tagMessage: "",
       //展示列表
       myList: [],
+      myListCopy: [],
       //开采现状分析
       indexChangeTrend: "",
       //稳产基础分析
@@ -623,13 +626,13 @@ export default {
       // })
     },
     //minIo-获取底图
-    queryRemUploadFileMinioApi(isBoolean) {
+    async queryRemUploadFileMinioApi(isBoolean) {
       let params = {
         operationId: this.selectBlock + "-" + this.selectPosition,
         operationType: "BLOCKCWDT",
         readOne: "one",
       };
-      queryRemUploadFileMinio(params).then((res) => {
+      await queryRemUploadFileMinio(params).then((res) => {
         if (res.data.code == 200) {
           if (res.data.data.length) {
             let data = res.data.data[0].fileId;
@@ -707,6 +710,7 @@ export default {
       this.isNewformat = !this.isNewformat;
       setTimeout(() => {
         if (this.layerData.data.mutiLayerPicResponse) {
+          // if (!this.myList.length && this.myListCopy.length) {
           if (!this.myList.length) {
             this.sjcl(this.layerData.data.mutiLayerPicResponse);
           } else {
@@ -770,12 +774,28 @@ export default {
           console.log("初始化接口报错!");
         });
     },
+
     //获取油田信息
     async fetchOilFieldsApi() {
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.fieldsData = res.data.data;
-          this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.fieldsData = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.fieldsData[0].ogfId ? this.fieldsData[0].ogfId : undefined;
+          }
         }
       });
     },
@@ -797,6 +817,7 @@ export default {
     },
     //获取层位信息
     async fieldOilLayersApi() {
+      this.selectPosition = "";
       await fieldOilLayers({ oilFieldId: this.selectOilField, fieldId: this.selectBlock }).then((res) => {
         if (res.data.code == 200) {
           if (res.data.data) {
@@ -812,8 +833,23 @@ export default {
       });
     },
     //层位change
-    selectChange(e) {
+    async selectChange(e) {
       this.queryRemUploadFileMinioApi(true);
+      if (this.myListCopy.length) {
+        await this.getLayerWell();
+      }
+    },
+    async getLayerWell() {
+      let request = {
+        layerId: this.selectPosition,
+        wellList: this.myListCopy.map((item) => item.id) || [],
+      };
+      await getLayerWell(request).then((data) => {
+        if (data.data.code == 200) {
+          this.myList = data.data.data ? data.data.data : [];
+          this.myList.filter((item) => (item.well = item.wellName));
+        }
+      });
     },
     //开采现状(地层压力)分析-模型数据
     getProStatusAnalysis(request) {
@@ -835,7 +871,6 @@ export default {
           });
           this.indexChangeTrendNum.zczb = (this.indexChangeTrendNum.zcnum / this.indexChangeTrendNum.allnum) * 100;
           this.indexChangeTrendNum.yczb = (this.indexChangeTrendNum.yczb / this.indexChangeTrendNum.allnum) * 100;
-          console.log("this.indexChangeTrendNum", this.indexChangeTrendNum);
           this.indexChangeTrendList = myData;
         }
       });
@@ -863,7 +898,6 @@ export default {
           this.stabilityFoundationAnalysisNum.yczb =
             (this.stabilityFoundationAnalysisNum.yczb / this.stabilityFoundationAnalysisNum.allnum) * 100;
           this.stabilityFoundationAnalysisList = myData;
-          console.log(data.data.data);
         }
       });
     },
@@ -926,7 +960,6 @@ export default {
     },
     //获取当前区块下的底图边界坐标和显示在底图上的油水井
     clickAnalysis(evalTypeId = "", evalTopic = "") {
-      console.log("evalTypeId----" + evalTypeId);
       let request = {
         evalTopic,
         evalTypeId,
@@ -941,6 +974,7 @@ export default {
       areaDiagram(request).then((data) => {
         this.layerData = data.data;
         if (this.layerData.data.mutiLayerPicResponse) {
+          // if (!this.myList.length && this.myListCopy.length) {
           if (!this.myList.length) {
             this.sjcl(this.layerData.data.mutiLayerPicResponse);
           } else {
@@ -960,7 +994,7 @@ export default {
       this.indexChangeTrend = "";
       this.selCode = "";
       this.myList = [];
-
+      this.myListCopy = [];
       let request = {
         oilFieldId: this.selectOilField, //油田
         fieldId: this.selectBlock, //区块
@@ -978,12 +1012,13 @@ export default {
       this.clickAnalysis();
     },
     //点击
-    selRadioIterm(val, tag) {
+    async selRadioIterm(val, tag) {
+      console.log(val, tag, this.indexChangeTrend);
       let myData = []; //我的数据
       let myWellCount = {}; //计算各项目的井数
       let t_count = 0; //计数器
 
-      if (this.indexChangeTrend != val) {
+      if (this.indexChangeTrend != val || !this.isNewformat) {
         this.indexChangeTrend = val; //选中项目
       } else {
         this.indexChangeTrend = "";
@@ -1000,7 +1035,6 @@ export default {
       let indexCode = "";
       //进行运算
       //1、获取选中井集合
-      console.log("logInfo:::", eval("this." + tag));
       if (eval("this." + tag)) {
         for (let i = 0; i < eval("this." + tag).length; i++) {
           let tData = eval("this." + tag)[i];
@@ -1013,6 +1047,7 @@ export default {
               //置空展示信息
               this.tagMessage = "";
               this.myList = [];
+              this.myListCopy = [];
             } else {
               //有数据
               let wellList = tData.wells.split(","); //我的井号串（逗号分割）
@@ -1024,9 +1059,12 @@ export default {
                 }; //初始容器
               }
               this.wellList = wellList;
-
               this.tagMessage = tData.msg;
-              this.myList = tData.basis ? tData.basis : [];
+              if (tag != "indexChangeTrendList") {
+                this.myList = tData.basis ? tData.basis : [];
+              } else {
+                this.myListCopy = tData.basis ? tData.basis : [];
+              }
             }
             //获得其值 hwh
             indexName = tData.name;
@@ -1279,9 +1317,10 @@ export default {
         this.recoveryAnalysisList[j].value = t_count; //登记条数
       }
       this.tableData = myData;
-
+      if (tag == "indexChangeTrendList") {
+        await this.getLayerWell();
+      }
       this.clickAnalysis(indexCode, indexName);
-      console.log("this.myList", this.myList);
     },
     //绘制底图和等值线
     sjcl(tc) {
@@ -1366,7 +1405,6 @@ export default {
       Layers_cont.Objects = Objects;
       Layers[0] = Layers_cont;
       data.Layers = Layers;
-      console.log("源数据", data);
       if (this.isNewformat) {
         setTimeout(() => {
           this.$refs.H5Chart2.setSampleDate(data);
@@ -1651,19 +1689,33 @@ export default {
         ],
         Objects: [],
       };
-      this.myList.forEach((el, i) => {
-        if (el.wellCoord !== null) {
-          LayersItem.Objects.push({
-            ObjType: 110,
-            CoordX: el.wellCoord[0].coordX,
-            CoordY: el.wellCoord[0].coordY,
-            WellDotType: String(el.wellCoord[0].wellCode),
-            WellName: el.well,
-          });
-        }
-      });
+      // if (this.myListCopy.length) {
+      //   this.myListCopy.forEach((el, i) => {
+      //     if (el.wellCoord !== null) {
+      //       LayersItem.Objects.push({
+      //         ObjType: 110,
+      //         CoordX: el.wellCoord[0].coordX,
+      //         CoordY: el.wellCoord[0].coordY,
+      //         WellDotType: String(el.wellCoord[0].wellCode),
+      //         WellName: el.well,
+      //       });
+      //     }
+      //   });
+      // } else {
+        this.myList.forEach((el, i) => {
+          if (el.wellCoord !== null) {
+            LayersItem.Objects.push({
+              ObjType: 110,
+              CoordX: el.wellCoord[0].coordX,
+              CoordY: el.wellCoord[0].coordY,
+              WellDotType: String(el.wellCoord[0].wellCode),
+              WellName: el.well,
+            });
+          }
+        });
+      // }
+
       data.Layers.push(LayersItem);
-      console.log("绘制突出井号数据源", data);
       if (this.isNewformat) {
         setTimeout(() => {
           this.sjcl(this.layerData.data.mutiLayerPicResponse);
@@ -1722,7 +1774,7 @@ export default {
     //返回
     goBack() {
       this.$router.push({
-        path: "/" + this.$route.query.page,
+        name: this.$route.query.page,
       });
     },
     // 新版左下角图放大缩小时重置状态

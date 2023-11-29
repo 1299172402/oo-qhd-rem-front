@@ -4,13 +4,7 @@
     <headerSearch style="height: 80px">
       <div class="g-row-flex-V g-w100 g-h100">
         <span>油田：</span>
-        <el-select
-          v-model="selectOilField"
-          placeholder="请选择"
-          disabled
-          @change="onFieldChange"
-          style="margin-right: 20px"
-        >
+        <el-select v-model="selectOilField" placeholder="请选择" @change="onFieldChange" style="margin-right: 20px">
           <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"> </el-option>
         </el-select>
         <span>区块：</span>
@@ -37,6 +31,13 @@
         </el-date-picker>
         <el-button icon="el-icon-search" type="primary" @click="searchThing">搜索</el-button>
         <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+        <el-button
+          class="commonBtn"
+          v-if="$route.query.page || $route.query.name"
+          style="position: absolute; right: 2%"
+          @click="$router.push($route.query.page || $route.query.name)"
+          >返回</el-button
+        >
       </div>
     </headerSearch>
     <pagePanelNew style="height: calc(100% - 180px)" class="z-main" show-btn>
@@ -60,7 +61,7 @@
       <Echart :chart-data="lineTable" height="100%" style="margin-bottom: 20px"></Echart>
     </pagePanelNew>
     <pagePanelNew style="height: 300px" class="z-main" show-btn>
-      <el-table :data="messageResult" highlight height="100%" style="width: 100%">
+      <el-table :data="messageResult" border highlight height="100%" style="width: 100%">
         <el-table-column prop="message" label="根据历史数据，拟合预测各生产数据后两个月的趋势"> </el-table-column>
       </el-table>
     </pagePanelNew>
@@ -68,16 +69,17 @@
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import { searchDevTrendAnalysis } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getSearchDevTrendAnalysisDate } from "@/api/oilDeposit/rem-04/developStatus.js";
 export default {
-  name: "developmentTrendAnalysis",
+  name: "DevelopmentTrendAnalysis",
   components: {
     Echart,
   },
   data() {
     return {
+      companyId: "",
       //油田
       oilField: [],
       //油田选中值
@@ -189,7 +191,12 @@ export default {
                 isAxisIndex = val.axisIndex;
                 res = res + "<br>";
               }
-              res = res + val.marker + val.seriesName + ":" + val.value + "<br>";
+              if (val.seriesName == '产液量' || val.seriesName == '产油量'){
+                res = res + val.marker + val.seriesName + ": " + parseFloat(val.value || 0).toFixed(4) + "<br>";
+              } else {
+                res = res + val.marker + val.seriesName + ": " + parseFloat(val.value || 0).toFixed(2) + "<br>";
+
+              }
             }
             return res;
           },
@@ -198,31 +205,31 @@ export default {
           {
             x: "8%",
             y: "8%",
-            width: "90%",
+            width: "88%",
             height: "14%",
           },
           {
             x: "8%",
             y: "26%",
-            width: "90%",
+            width: "88%",
             height: "14%",
           },
           {
             x: "8%",
             y: "44%",
-            width: "90%",
+            width: "88%",
             height: "14%",
           },
           {
             x: "8%",
             y: "62%",
-            width: "90%",
+            width: "88%",
             height: "14%",
           },
           {
             x: "8%",
             y: "80%",
-            width: "90%",
+            width: "88%",
             height: "14%",
           },
         ],
@@ -244,9 +251,12 @@ export default {
               fontSize: 12,
               show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -263,7 +273,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -280,7 +291,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -297,7 +309,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -306,7 +319,7 @@ export default {
             },
           },
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 5,
             nameTextStyle: { color: "#8FA4CC" },
             gridIndex: 4,
@@ -321,7 +334,8 @@ export default {
               verticalAlign: "top",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               onZero: false,
@@ -349,7 +363,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -381,7 +396,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -413,7 +429,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -445,7 +462,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -477,7 +495,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -550,7 +569,7 @@ export default {
             },
           },
           {
-            name: "含水量",
+            name: "含水率",
             type: "line",
             xAxisIndex: 2,
             yAxisIndex: 2,
@@ -659,12 +678,27 @@ export default {
       });
     },
     async initData() {
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilField = res.data.data;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
-      this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
+        }
+      });
       await QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {
           this.block = res.data.data;

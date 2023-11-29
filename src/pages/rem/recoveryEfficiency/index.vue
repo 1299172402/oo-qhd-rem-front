@@ -1,37 +1,50 @@
 <!-- 采收率及可采储量预测 -->
 <template>
   <div class="app-container" style="height: 100%">
-    <header-search style="height: 80px">
-      <div class="g-row-flex-V g-w100 g-h100">
-        <div style="margin-right: 15px">
-          <span>油田：</span>
-          <el-select v-model="selectOilField" placeholder="请选择" class="f2" disabled @change="changeOilfield">
-            <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId">
-            </el-option>
-          </el-select>
-        </div>
-        <div style="margin-right: 15px">
-          <span>区块：</span>
-          <el-select v-model="selectBlock" placeholder="请选择" class="f2" @change="changeBlock">
-            <el-option
-              v-for="item in block"
-              :key="item.reservoirAnalyseUnitId"
-              :label="item.reservoirAnalyseUnitName"
-              :value="item.reservoirAnalyseUnitId"
-            >
-            </el-option>
-          </el-select>
-        </div>
-        <!-- <div>
+    <header-search style="height: auto; padding: 10px 20px 12px">
+      <div class="g-row-flex-V" style="justify-content: space-between">
+        <div class="g-row-flex-V" style="flex-wrap: wrap">
+          <div style="margin: 10px 20px 10px 0px">
+            <span>油田：</span>
+            <el-select v-model="selectOilField" placeholder="请选择" class="f2" @change="changeOilfield">
+              <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId">
+              </el-option>
+            </el-select>
+          </div>
+          <div style="margin: 10px 20px 10px 0px">
+            <span>区块：</span>
+            <el-select v-model="selectBlock" placeholder="请选择" class="f2" @change="changeBlock">
+              <el-option
+                v-for="item in block"
+                :key="item.reservoirAnalyseUnitId"
+                :label="item.reservoirAnalyseUnitName"
+                :value="item.reservoirAnalyseUnitId"
+              >
+              </el-option>
+            </el-select>
+          </div>
+          <!-- <div>
                 <span>层系：</span>
                 <el-select v-model="cx" class="f2" style="width:180px">
                     <el-option v-for="(item,index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId" :disabled="item.disabled">
                     </el-option>
                 </el-select>
             </div> -->
-        <div style="margin-right: 15px">
-          <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="Retrieval">搜索</el-button>
-          <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+          <div style="margin: 10px 20px 10px 0px">
+            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="Retrieval"
+              >搜索</el-button
+            >
+            <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+          </div>
+        </div>
+        <div
+          class="g-row-flex-V"
+          style="flex-wrap: wrap; align-self: flex-end"
+          v-if="$route.query.page || $route.query.name"
+        >
+          <div style="margin: 10px 0px 10px 0px">
+            <el-button class="commonBtn" @click="switchToBack">返回</el-button>
+          </div>
         </div>
       </div>
     </header-search>
@@ -55,6 +68,7 @@
           <el-table
             id="table4"
             :data="wellPerformanceAnalysis"
+            border
             style="width: 100%"
             height="150px"
             class="doubleHeader"
@@ -63,7 +77,7 @@
             header-cell-class-name="table_header"
             :cell-style="{ padding: '6px', 'text-align': 'center' }"
           >
-            <el-table-column prop="name" label="油田(区块)" fixed></el-table-column>
+            <el-table-column prop="name" label="油田(区块)" min-width="160" fixed></el-table-column>
             <el-table-column label="储量状况">
               <el-table-column label-class-name="twoRowHeader">
                 <template #header>
@@ -215,8 +229,15 @@
                       >下载</el-button
                     >
                   </div>
-                  <el-table id="table1" highlight :data="sjtableDate" height="calc(100% - 55px)" class="doubleHeader">
-                    <el-table-column align="center" type="index" label="序号"></el-table-column>
+                  <el-table
+                    id="table1"
+                    highlight
+                    :data="sjtableDate"
+                    border
+                    height="calc(100% - 55px)"
+                    class="doubleHeader"
+                  >
+                    <el-table-column align="center" type="index" label="序号" width="80"></el-table-column>
                     <el-table-column
                       align="center"
                       prop="theDate"
@@ -227,7 +248,7 @@
                         <div>
                           <span>日期</span>
                           <br />
-                          <span>(yyyy/mm/dd)</span>
+                          <span>(yyyy-mm-dd)</span>
                         </div>
                       </template>
                     </el-table-column>
@@ -384,10 +405,11 @@
                         id="table2"
                         highlight
                         :data="djtableDate"
+                        border
                         height="calc(100% - 55px)"
                         class="doubleHeader"
                       >
-                        <el-table-column align="center" type="index" label="序号"></el-table-column>
+                        <el-table-column align="center" type="index" label="序号" width="80"></el-table-column>
                         <el-table-column
                           align="center"
                           prop="theDate"
@@ -398,11 +420,11 @@
                             <div>
                               <span>日期</span>
                               <br />
-                              <span>(yyyy/mm/dd)</span>
+                              <span>(yyyy-mm-dd)</span>
                             </div>
                           </template>
                         </el-table-column>
-                        <el-table-column align="center" prop="x" label="x" :formatter="toPrecise4"></el-table-column>
+                        <!-- <el-table-column align="center" prop="x" label="x" :formatter="toPrecise4"></el-table-column> -->
                         <el-table-column
                           align="center"
                           prop="y"
@@ -411,7 +433,7 @@
                         >
                           <template slot="header">
                             <div>
-                              <span>y</span>
+                              <span>日产油量</span>
                               <br />
                               <span>(10⁴m³)</span>
                             </div>
@@ -531,10 +553,11 @@
                         id="table3"
                         highlight
                         :data="tstableDate"
+                        border
                         height="calc(100% - 55px)"
                         class="doubleHeader"
                       >
-                        <el-table-column align="center" type="index" label="序号"></el-table-column>
+                        <el-table-column align="center" type="index" label="序号" width="80"></el-table-column>
                         <el-table-column
                           align="center"
                           prop="theDate"
@@ -545,7 +568,7 @@
                             <div>
                               <span>日期</span>
                               <br />
-                              <span>(yyyy/mm/dd)</span>
+                              <span>(yyyy-mm-dd)</span>
                             </div>
                           </template>
                         </el-table-column>
@@ -765,7 +788,14 @@
                     >下载</el-button
                   >
                 </div>
-                <el-table id="table1" height="calc(100% - 55px)" :data="computingData" highlight class="doubleHeader">
+                <el-table
+                  id="table1"
+                  height="calc(100% - 55px)"
+                  border
+                  :data="computingData"
+                  highlight
+                  class="doubleHeader"
+                >
                   <el-table-column align="center" prop="formulaName" label="采收率计算方法"></el-table-column>
                   <el-table-column
                     align="center"
@@ -809,7 +839,7 @@
 import { mapState, mapGetters } from "vuex";
 import Echart from "@/components/tools/Echarts/index.vue";
 import { fieldOilLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import {
   oilFieldRecoveryRatio,
   waterDriveChartData,
@@ -820,7 +850,7 @@ import {
 } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 export default {
-  name: "recoveryEfficiency",
+  name: "RecoveryEfficiencyIndex",
   computed: {
     ...mapState({
       mode: (state) => state.setting.mode,
@@ -863,6 +893,7 @@ export default {
       radio2: "图表",
       radio3: 1,
       radio4: "图表",
+      companyId: "",
       selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
       oilField: [],
       selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
@@ -955,6 +986,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+            });
+            return relVal;
+          },
         },
         xAxis: {
           boundaryGap: false,
@@ -971,9 +1009,12 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1002,7 +1043,8 @@ export default {
             color: "#8FA4CC",
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             lineStyle: {
@@ -1097,6 +1139,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -1112,7 +1161,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "日",
+          name: "日期 (日)",
           // name: "时间",
           type: "category",
           nameTextStyle: {
@@ -1123,9 +1172,12 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1156,7 +1208,8 @@ export default {
             fontSize: 14,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1234,6 +1287,13 @@ export default {
             type: "shadow",
           },
           confine: true,
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -1259,9 +1319,12 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1291,7 +1354,8 @@ export default {
             fontSize: 14,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1453,15 +1517,20 @@ export default {
   },
   methods: {
     //重置
-    resetting() {
-      this.$nextTick(() => {
-        this.initDate();
-        this.getOilFields();
-        this.getFieldsData("3FC9A818F5BC43B88270DB80BBB3018F");
-        this.getFieldOilLayers();
+    async resetting() {
+
+      // this.$nextTick(() => {
+        await this.initDate();
+        await this.getOilFields();
+        await this.getFieldsData("3FC9A818F5BC43B88270DB80BBB3018F");
+        await this.getFieldOilLayers();
         this.paramater = {};
         this.Retrieval();
-      });
+      // });
+    },
+    // 返回
+    switchToBack() {
+      this.$router.push(this.$route.query.page || this.$route.query.name);
     },
     //切换tabs
     handleClick() {
@@ -1500,16 +1569,33 @@ export default {
       this.dateTime2 = [new Date().addDays(-365).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
     },
     //获取油田信息
-    getOilFields() {
-      QueryOgfDetail({}).then((res) => {
-        //获取油田信息
-        this.oilField = res.data.data;
+    async getOilFields() {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
+        if (res.data.code == 200) {
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
+        }
       });
     },
     //获得区块信息
-    getFieldsData(oilFieldId) {
+    async getFieldsData(oilFieldId) {
       let _this = this;
-      QueryReservoirAnalyseUnit({ ogfId: oilFieldId }).then((res) => {
+      await QueryReservoirAnalyseUnit({ ogfId: oilFieldId }).then((res) => {
         //获得区块信息
         _this.block = res.data.data;
         _this.block.unshift({
@@ -1522,13 +1608,13 @@ export default {
       });
     },
     //获得层位信息
-    getFieldOilLayers() {
+    async getFieldOilLayers() {
       let request = {
         oilFieldId: this.selectOilField,
         fieldId: this.selectBlock,
         wellId: "",
       };
-      fieldOilLayers(request).then((res) => {
+      await fieldOilLayers(request).then((res) => {
         if (res.data.code == 200) {
           //层段数据
           if (res.data.data) {

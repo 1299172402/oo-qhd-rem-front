@@ -34,56 +34,50 @@
       <el-table-column
         :label="activeName == 'first' ? '消息标题' : '报警名称'"
         prop="title"
-        width="250"
+        width="150"
         :show-overflow-tooltip="true"
       />
       <el-table-column
-        min-width="150"
+        min-width="300"
         :label="activeName == 'first' ? '消息内容' : '报警内容'"
         prop="content"
         align="center"
+        show-overflow-tooltip
       />
       <el-table-column
         label="来源应用"
         align="center"
         prop="appName"
-        width="100"
+        width="150"
+        show-overflow-tooltip
       />
       <!-- <el-table-column label="设施" prop="key5" width="150" align="center" /> -->
       <el-table-column
         label="创建时间"
         align="center"
         prop="createTime"
-        width="250"
+        width="180"
       >
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        label="备注"
-        align="center"
-        prop="remark"
-        width="180"
-      />
-      <el-table-column
-        label="操作"
+        label="状态"
         width="150"
         align="center"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
-          <el-button v-if="scope.row.status === '1'" size="mini" type="text">
+          <div v-if="scope.row.status === '1'" style="font-size: 14px; color: var(--light-blue-color);">
             已读
-          </el-button>
-          <el-button
+          </div>
+          <div
             v-else
-            size="mini"
-            type="text"
-            style="color: red;"
+            style="color: #ff4d4f;font-size: 14px;"
           >
             未读
-          </el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -114,44 +108,7 @@ export default {
       // 总条数
       total: 0,
       // 表格数据
-      dataList: [
-        // {
-        //   key1:'安全帽识别模型',key2:'安全帽识别',key3:'报警：安全帽识别[2022-10-19 14:12:29]报警地点：CEP_NVR2初见视频监控102报警点;QHD326' +
-        //         '下夹板生产汇管-321[CEP-CAM-321]报警等级:二级警报',key4:'云端服务',key5:'设备所属平台',key6:'2022.11.15 18:36',key7:'1',
-        // },
-        // {
-        //   key1:'安全帽识别模型',key2:'安全帽识别',key3:'报警：安全帽识别[2022-10-19 14:12:29]报警地点：CEP_NVR2初见视频监控102报警点;QHD326' +
-        //           '下夹板生产汇管-321[CEP-CAM-321]报警等级:二级警报',key4:'云端服务',key5:'设备所属平台',key6:'2022.11.15 18:36',key7:'1',
-        // },
-        // {
-        //   key1:'安全帽识别模型',key2:'安全帽识别',key3:'报警：安全帽识别[2022-10-19 14:12:29]报警地点：CEP_NVR2初见视频监控102报警点;QHD326' +
-        //           '下夹板生产汇管-321[CEP-CAM-321]报警等级:二级警报',key4:'云端服务',key5:'设备所属平台',key6:'2022.11.15 18:36',key7:'1',
-        // },
-        // {
-        //   key1:'安全帽识别模型',key2:'安全帽识别',key3:'报警：安全帽识别[2022-10-19 14:12:29]报警地点：CEP_NVR2初见视频监控102报警点;QHD326' +
-        //           '下夹板生产汇管-321[CEP-CAM-321]报警等级:二级警报',key4:'云端服务',key5:'设备所属平台',key6:'2022.11.15 18:36',key7:'2',
-        // },
-        // {
-        //   key1:'安全帽识别模型',key2:'安全帽识别',key3:'报警：安全帽识别[2022-10-19 14:12:29]报警地点：CEP_NVR2初见视频监控102报警点;QHD326' +
-        //           '下夹板生产汇管-321[CEP-CAM-321]报警等级:二级警报',key4:'云端服务',key5:'设备所属平台',key6:'2022.11.15 18:36',key7:'1',
-        // },
-        // {
-        //   key1:'安全帽识别模型',key2:'安全帽识别',key3:'报警：安全帽识别[2022-10-19 14:12:29]报警地点：CEP_NVR2初见视频监控102报警点;QHD326' +
-        //           '下夹板生产汇管-321[CEP-CAM-321]报警等级:二级警报',key4:'云端服务',key5:'设备所属平台',key6:'2022.11.15 18:36',key7:'2',
-        // },
-        // {
-        //   key1:'安全帽识别模型',key2:'安全帽识别',key3:'报警：安全帽识别[2022-10-19 14:12:29]报警地点：CEP_NVR2初见视频监控102报警点;QHD326' +
-        //           '下夹板生产汇管-321[CEP-CAM-321]报警等级:二级警报',key4:'云端服务',key5:'设备所属平台',key6:'2022.11.15 18:36',key7:'2',
-        // },
-        // {
-        //   key1:'安全帽识别模型',key2:'安全帽识别',key3:'报警：安全帽识别[2022-10-19 14:12:29]报警地点：CEP_NVR2初见视频监控102报警点;QHD326' +
-        //           '下夹板生产汇管-321[CEP-CAM-321]报警等级:二级警报',key4:'云端服务',key5:'设备所属平台',key6:'2022.11.15 18:36',key7:'1',
-        // },
-        // {
-        //   key1:'安全帽识别模型',key2:'安全帽识别',key3:'报警：安全帽识别[2022-10-19 14:12:29]报警地点：CEP_NVR2初见视频监控102报警点;QHD326' +
-        //           '下夹板生产汇管-321[CEP-CAM-321]报警等级:二级警报',key4:'云端服务',key5:'设备所属平台',key6:'2022.11.15 18:36',key7:'2',
-        // },
-      ],
+      dataList: [],
       // 查询参数
       queryParams: {
         pageNum: 1,

@@ -27,10 +27,12 @@ export default {
         linkageBoxBot
     },
     mounted() {
-        if(window.location.origin.includes('test')){
+        if (window.location.origin.includes('test')) {
             this.baseUrl = 'tjioms-test.tjltd.cnooc'
-        }else if (window.location.origin.includes('dev') || window.location.origin.includes('808')){
+        } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
             this.baseUrl = 'tjioms-dev.tjltd.cnooc'
+        }else if (window.location.origin.includes('tpro')) {
+            this.baseUrl = 'tjioms-tpro.tjltd.cnooc'
         }
         this.getinfo()
         this.arrowFun()
@@ -60,21 +62,21 @@ export default {
                     // boxBottomText: ['单井分层液量', '区块分层液量', '劈分剖面','劈分系数'],
                     boxBottomText: [{
                         name: '单井分层液量',
-                        url: `https://rem.${this.baseUrl}/#/injection/productionSplit`
+                        url: `https://rem.${this.baseUrl}/#/injection/productionSplit?page=IpmHome`
                     },
                         {
                             name: '区块分层液量',
-                            url: `https://rem.${this.baseUrl}/#/injection/productionSplit`
+                            url: `https://rem.${this.baseUrl}/#/injection/productionSplit?page=IpmHome`
                         },
                         {
                             name: '劈分剖面',
-                            url: `https://rem.${this.baseUrl}/#/injection/splitSection?link=ipmHome`,
+                            url: `https://rem.${this.baseUrl}/#/injection/splitSection?page=IpmHome`,
                             alarmPageCode: 'SPLSEC',
                         },
                         {
                             name: '劈分系数',
                             alarmPageCode: 'SPLFAC',
-                            url: `https://rem.${this.baseUrl}/#/injection/DividingCoefficient?link=ipmHome`
+                            url: `https://rem.${this.baseUrl}/#/injection/DividingCoefficient?link=IpmHome`
                         }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
@@ -91,18 +93,18 @@ export default {
                     // boxBottomText: ['注采井组维护', '井间连通系数', '平面液量分流'],
                     boxBottomText: [{
                         name: '注采井组维护',
-                        url: `https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance`,
+                        url: `https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance?page=IpmHome`,
                         alarmPageCode: 'IAPGMA',
                     },
                         {
                             name: '井间连通系数',
-                            url: `https://rem.${this.baseUrl}/#/injection/connectivityData`,
+                            url: `https://rem.${this.baseUrl}/#/injection/connectivityData?page=IpmHome`,
                             alarmPageCode: 'WECOCO',
                         },
                         {
                             name: '平面液量分流',
                             alarmPageCode: 'FLVOSH',
-                            url: `https://rem.${this.baseUrl}/#/injection/connectivityData`
+                            url: `https://rem.${this.baseUrl}/#/injection/connectivityData?page=IpmHome`
                         },],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;',
@@ -120,11 +122,11 @@ export default {
                     // boxBottomText: ['分层剩余油分布', '平面剩余油分布'],
                     boxBottomText: [{
                         name: '分层剩余油分布',
-                        url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem`
+                        url: `https://rem.${this.baseUrl}/#/injection/optimization?page=IpmHome`
                     },
                         {
                             name: '平面剩余油分布',
-                            url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem`
+                            url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=IpmHome`
                         }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;'
@@ -152,8 +154,8 @@ export default {
                     boxText: '区块注采方案',
                     boxBottomText: [{
                         name: '定产配注方案',
-                        url: `https://rem.${this.baseUrl}/#/injection/optimization`
-                    }, {name: '注采优化方案', url: `https://rem.${this.baseUrl}/#/injection/optimizationDetail`}],
+                        url: `https://rem.${this.baseUrl}/#/injection/optimization?page=IpmHome`
+                    }, {name: '注采优化方案', url: `https://rem.${this.baseUrl}/#/injection/optimization?page=IpmHome&link=rem`}],
                     boxStyle: {
                         pWidth: 'width:8.5vw;margin-left: 6vw;'
                     },
@@ -168,10 +170,10 @@ export default {
                     boxBottomText: [{
                         name: '注采强度判定',
                         alarmPageCode: 'DOINST',
-                        url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport`
+                        url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingBlock/blockAnalysisReport?page=IpmHome`
                     }, {
                         name: '井组注采比分析',
-                        url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport`
+                        url: `https://rem.${this.baseUrl}/#/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport?page=IpmHome`
                     }],
                     boxStyle: {
                         pWidth: 'width:8.5vw;margin-left: 6vw;'
@@ -310,7 +312,6 @@ export default {
                 let index = this.findIndex(this.currentLists, url)
                 this.currentLists[index].warningShowFlag = false
             }
-            console.log(hasTrueValue)
             if (hasTrueValue == true) {
                 clearInterval(this.timmer)
             } else {

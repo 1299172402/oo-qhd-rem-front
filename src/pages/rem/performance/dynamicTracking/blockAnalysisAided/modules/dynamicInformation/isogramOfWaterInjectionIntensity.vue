@@ -5,7 +5,7 @@
             <el-select v-model="selectPosition" style="width: 220px;margin-right:20px;" placeholder="请选择" filterable @change="positionChange">
                 <el-option v-for="(item, index) in position" :key="index" :label="item.layerName" :value="item.fieldLayerId"></el-option>
             </el-select>
-            <span>时间：</span>
+            <span>日期：</span>
             <el-date-picker v-model="yearTime" type="month" placeholder="选择年月" value-format="yyyy-MM-dd" style="margin-right:20px;"></el-date-picker>
             <el-button type="primary" @click="OnChangeImage">确认</el-button>
             <el-button type="primary" style="margin-left:auto!important;" @click="addComparisonChart">{{!isAddComparisonChart?'添加':'删除'}}对比图</el-button>

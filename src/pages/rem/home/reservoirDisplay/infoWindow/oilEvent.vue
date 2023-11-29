@@ -4,18 +4,19 @@
         <info-window
             info-width="100%"
             info-height="100%"
-            header-title="油田大事件"
+            header-title="油田单井大事件"
             :is-show-max-btn="true"
         >
             <div class="g-w100 g-h100 g-row-flex" style="">
                 <div style="height: 100%; width: 100%" class="g-w100">
-                    <el-button  type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('OilEventDetail')">详细</el-button>
+                    <el-button  type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('OilEventDetail')">详情</el-button>
                     <el-table
                         id="tableD"
                         :data="tableData"
                         highlight-current-row
                         height="100%"
                         ref="table"
+                        border
                         style="margin-top: 10px;margin: 0"
                         :row-style="{ height: '50px' }"
                         :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
@@ -70,7 +71,6 @@ export default {
             })
         },
         remark(row){
-            console.log(row)
             const text = row.remark;
             const firstChar = text.charAt(0);
             const isLetter = /^[A-Za-z]$/.test(firstChar);

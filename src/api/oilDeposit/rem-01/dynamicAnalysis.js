@@ -403,3 +403,10 @@ export function queryEvaluationWaterInjCount({ assetCode ,date,ogfId , reservoir
     });
 }
 
+export function getLayerWell(request){
+  return Axios({
+    url: `${baseUrl}/dynamicAnalysis/getLayerWell`,
+    method: "post",
+    data: request,
+  });
+}

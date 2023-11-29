@@ -11,9 +11,9 @@
         <header-search height="auto">
             <div v-if="activeName == 'first'" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
-                <el-select v-model="queryData.ogfId" filterable clearable disabled style="width:180px">
+                <el-select v-model="selectOilField" filterable clearable disabled style="width:180px">
                     <el-option
-                        v-for="item in oilList"
+                        v-for="item in oilField"
                         :key="item.ogfId"
                         :label="item.ogfName"
                         :value="item.ogfId"
@@ -82,7 +82,7 @@
                             ></el-table-column>
                             <el-table-column
                                 prop="allocating"
-                                label="本月日配产量?(m³/d)"
+                                label="本月日配产量?(m³)"
                                 :render-header="renderheader"
                                 align="center"
                             ></el-table-column>
@@ -123,7 +123,7 @@
                                 <el-table-column
                                     prop="injWellDaily"
                                     :render-header="renderheader"
-                                    label="日配注量?(m³/d)"
+                                    label="日配注量?(m³)"
                                     min-width="100"
                                     align="center"
                                 ></el-table-column>
@@ -133,21 +133,21 @@
                                 <el-table-column
                                     prop="froecastInjDaily"
                                     :render-header="renderheader"
-                                    label="预测日配注量?(m³/d)"
+                                    label="预测日配注量?(m³)"
                                     min-width="120"
                                     align="center"
                                 ></el-table-column>
                                 <el-table-column
                                     prop="afterConfigurationInjDaily"
                                     :render-header="renderheader"
-                                    label="上月实际日注水量?(m³/d)"
+                                    label="上月实际日注水量?(m³)"
                                     min-width="150"
                                     align="center"
                                 ></el-table-column>
                                 <el-table-column
                                     prop="afterInjDaily"
                                     :render-header="renderheader"
-                                    label="上月日配注水量?(m³/d)"
+                                    label="上月日配注水量?(m³)"
                                     min-width="120"
                                     align="center"
                                 ></el-table-column>
@@ -155,7 +155,7 @@
                                 <el-table-column
                                     prop="configurationInjDaily"
                                     :render-header="renderheader"
-                                    label="本月日配注量?(m³/d)"
+                                    label="本月日配注量?(m³)"
                                     min-width="150"
                                     align="center"
                                 >
@@ -225,6 +225,10 @@ import {
     getChatPlanINjAlloc,
     wellAvgFluidProdAllocUpdate, wellAvgFluidProdAllocUpdateNew
 } from "@/api/rem/r-intelligentIPA.js";
+import {
+    getoilfield, //油田下拉
+} from "@/api/rem/r-wellConnectEvaluate.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import Iframe from '@/components/rem/tools/iframe.vue'
 
 export default {
@@ -235,6 +239,7 @@ export default {
     mixins: [queryConditionMixin],
     data() {
         return {
+            oilField: [],
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
                 blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
@@ -266,66 +271,42 @@ export default {
             schemeId: '',
         }
     },
-    methods: {
-        // 合并单元格
-        mergeTable({row, column, rowIndex, columnIndex}) {
-            if (columnIndex === 0) {
-                if (this.mergeObj['injWellNo'][rowIndex]) {
-                    return [this.mergeObj['injWellNo'][rowIndex], 1]
-                } else {
-                    return [0, 0]
-                }
-            }
-
-            if (columnIndex === 1) {
-                if (this.mergeObj['injWellNo'][rowIndex]) {
-                    return [this.mergeObj['injWellNo'][rowIndex], 1]
-                } else {
-                    return [0, 0]
-                }
-            }
-
-            if (columnIndex === 2) {
-                if (this.mergeObj['injWellNo'][rowIndex]) {
-                    return [this.mergeObj['injWellNo'][rowIndex], 1]
-                } else {
-                    return [0, 0]
-                }
-            }
-        },
-        // 合并单元格数据处理
-        getSpanArr(data) {
-            this.mergeArr.forEach((key, index1) => {
-                let count = 0;
-                this.mergeObj[key] = []
-                data.forEach((item, index) => {
-                    if (index === 0) {
-                        this.mergeObj[key].push(1)
-                    } else {
-                        if (item[key] === data[index - 1][key]) {
-                            this.mergeObj[key][count] += 1;
-                            this.mergeObj[key].push(0)
-                        } else {
-                            count = index
-                            this.mergeObj[key].push(1)
-                        }
-                    }
-                })
-            })
-        },
-        // 时间处理
-        eeee() {
-            let data = new Date()
-            if (data.getMonth() < 10) {
-                return data.getFullYear() + '-0' + data.getMonth()
+    methods:{
+        getOilFields() {
+        let _this = this;
+        QueryOgfDetail({}).then((res) => {
+            _this.oilField = res.data.data;
+            //选择油田默认选秦皇岛32-6油田
+            if (_this.oilField.length == 0) {
+            _this.selectOilField = "";
             } else {
-                return data.getFullYear() + '-' + data.getMonth()
+            _this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
             }
+        });
         },
-        // table表头标题样式
-        tableColorone({row, column, rowIndex, columnIndex}) {
+        // 获取油田下拉数据
+        selectData() {
+            getoilfield().then(({ogfId}) => {
+                this.oilList = ogfId;
+            });
+        },
+        selectblock() {
+            // if (!this.selectField) return;
+            getblock({
+                ogfId: this.queryData.ogfId
+            }).then(({blockList}) => {
+                this.blockList = blockList;
+            });
+            //   }
+        },
+        changeOilfield() {
+            this.selectblock();
+            this.queryData.blockId = ""
+        },
+      // table表头标题样式
+      tableColorone({row, column, rowIndex, columnIndex}) {
             if (
-                column.label === "本月日配注量?(m³/d)"
+                column.label === "本月日配注量?(m³)"
             ) {
                 return "color:#66ffff"; //修改的样式
             } else {
@@ -364,14 +345,18 @@ export default {
         },
         // 可行性评估
         assessBut() {
-            this.$confirm('是否跳转至配注方案分析与评估?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                this.$router.push({name: "schemePrediction"})
-            })
-        },
+            var baseUrl = ''
+                if (window.location.origin.includes('test')) {
+                    baseUrl = 'tjioms-test.tjltd.cnooc'
+                } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
+                    baseUrl = 'tjioms-dev.tjltd.cnooc'
+                }else if (window.location.origin.includes('tpro')) {
+                    baseUrl = 'tjioms-tpro.tjltd.cnooc'
+                }else{
+                    baseUrl='tjioms-test.tjltd.cnooc'
+                }
+                window.open('https://ipm.'+baseUrl+'/#/waterflood/merge?page=optimization')
+            },
         // 保存
         handleSubmit(form) {
             this.$refs[form].validate((valid) => {
@@ -457,7 +442,6 @@ export default {
                 this.getSpanArr(arr1)
             })
         },
-
         objectSpanMethod({row, column, rowIndex, columnIndex}) {
             if (row.rowSpan) {
                 if (columnIndex == 0 || columnIndex == 1 || columnIndex == 2) {
@@ -474,9 +458,68 @@ export default {
                     }
                 }
             }
+        },
+        // 合并单元格
+        mergeTable({row, column, rowIndex, columnIndex}) {
+            if (columnIndex === 0) {
+                if (this.mergeObj['injWellNo'][rowIndex]) {
+                    return [this.mergeObj['injWellNo'][rowIndex], 1]
+                } else {
+                    return [0, 0]
+                }
+            }
+
+            if (columnIndex === 1) {
+                if (this.mergeObj['injWellNo'][rowIndex]) {
+                    return [this.mergeObj['injWellNo'][rowIndex], 1]
+                } else {
+                    return [0, 0]
+                }
+            }
+
+            if (columnIndex === 2) {
+                if (this.mergeObj['injWellNo'][rowIndex]) {
+                    return [this.mergeObj['injWellNo'][rowIndex], 1]
+                } else {
+                    return [0, 0]
+                }
+            }
+        },
+        getSpanArr(data){
+            this.mergeArr.forEach((key, index1)=>{
+                let count = 0;
+                this.mergeObj[key] = []
+                data.forEach((item, index)=>{
+                    if (index === 0) {
+                        this.mergeObj[key].push(1)
+                    } else {
+                        if (item[key] === data[index - 1][key]) {
+                            this.mergeObj[key][count] += 1;
+                            this.mergeObj[key].push(0)
+                        } else {
+                            count = index
+                            this.mergeObj[key].push(1)
+                        }
+                    }
+
+                })
+            })
+
+        },
+        // 时间处理
+        eeee() {
+           let data = new Date()
+           if (data.getMonth() < 10) {
+                return data.getFullYear() + '-0' + data.getMonth()
+            } else {
+                return data.getFullYear() + '-' + data.getMonth()
+            }
+
         }
+
     },
     created() {
+        this.getOilFields();
         const params = JSON.parse(localStorage.getItem('OPTIMIZATION_DETAIL'))
         if (params) {
             this.queryData.ogfId = params.ogfId
@@ -487,8 +530,10 @@ export default {
         }
         this.tableDataList = JSON.parse(localStorage.getItem('PRATIE_TABLEDATE'))
         this.queryTableData(this.form.tableData2)
+        
     },
     mounted() {
+        
         const table = JSON.parse(localStorage.getItem('SINGLEWELL_TABLE'))
         this.sigleWellTable = Array.isArray(table) ? table : []
         this.doSearch()

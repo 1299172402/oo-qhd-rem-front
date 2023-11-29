@@ -4,12 +4,17 @@
     <headerSearch class="g-w100 g-h100" style="height: 80px; margin-bottom: 20px">
       <div style="height: 100%; display: flex; align-items: center; flex-wrap: wrap">
         <span>油田：</span>
-        <el-select v-model="selectOilField" placeholder="请选择" disabled style="margin-right: 15px">
+        <el-select v-model="selectOilField" placeholder="请选择" style="margin-right: 15px">
           <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
         </el-select>
         <span>区块：</span>
         <el-select v-model="selectBlock" placeholder="请选择" style="margin-right: 15px">
-          <el-option v-for="item in block" :key="item.reservoirAnalyseUnitId" :label="item.reservoirAnalyseUnitName" :value="item.reservoirAnalyseUnitId"></el-option>
+          <el-option
+            v-for="item in block"
+            :key="item.reservoirAnalyseUnitId"
+            :label="item.reservoirAnalyseUnitName"
+            :value="item.reservoirAnalyseUnitId"
+          ></el-option>
         </el-select>
         <span>预警分析日期设置：</span>
         <el-date-picker
@@ -46,6 +51,11 @@
           <div class="rowBox" style="margin-bottom: 20px">
             <div class="row" style="margin-right: 20px">
               <pagePanel :headerTitle="oilFieldName + '产量跟踪预警分析'" style="height: 456px; margin-top: 0" show-btn>
+                <div style="position: absolute; z-index: 1">
+                  <el-button type="primary" @click="openDetailedChick('红色预警')">红色预警</el-button>
+                  <el-button type="primary" @click="openDetailedChick('蓝色预警')">蓝色预警</el-button>
+                  <el-button type="primary" @click="openDetailedChick('黄色预警')">黄色预警</el-button>
+                </div>
                 <Echart
                   :chart-data="echartOption"
                   height="400px"
@@ -242,13 +252,20 @@
                   <el-table
                     id="table1"
                     highlight
+                    border
                     :data="eventData"
                     style="width: 100%"
                     height="100%"
                     empty-text="当日无大事件"
                   >
-                    <el-table-column prop="eventType" label="事件类型" align="center" width="180"></el-table-column>
-                    <el-table-column prop="content" label="井号" align="center"></el-table-column>
+                    <el-table-column
+                      prop="eventType"
+                      label="事件类型"
+                      header-align="center"
+                      align="center"
+                      width="180"
+                    ></el-table-column>
+                    <el-table-column prop="content" label="井号" header-align="center" align="center"></el-table-column>
                   </el-table>
                 </div>
               </pagePanel>
@@ -382,13 +399,19 @@
         </el-table>
       </div>
     </el-dialog>
+    <el-dialog title="预警模型条件" :visible.sync="openDetailedDialog" width="60%">
+      <el-table :data="detailedTable" highlight class="z-table" style="width: 100%" height="400px" border>
+        <el-table-column type="index" label="序号" align="center" width="80"> </el-table-column>
+        <el-table-column prop="detailed" label="预警条件" align="left" header-align="center"> </el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import * as echarts from "echarts";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import {
   outputTracingAnalysis,
   reasonAnalysis,
@@ -403,7 +426,7 @@ import { exportComplexHeaderExcelFromJson } from "@/lib/exportExcel.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 
 export default {
-  name: "fluctuationWarningAnalysis",
+  name: "FluctuationWarningAnalysis",
   components: {
     Echart,
   },
@@ -421,6 +444,7 @@ export default {
       wellAllNum: "",
       //油田
       oilField: [],
+      companyId: "",
       //油田名字
       oilFieldName: "秦皇岛32-6油田",
       //油田选中值
@@ -455,15 +479,26 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         dataZoom: {
           start: 0,
           type: "inside",
         },
         grid: {
-          x: 170,
-          y: 50,
-          x2: 50,
+          x: 150,
+          y: 70,
+          x2: 80,
           y2: 100,
         },
         toolbox: {
@@ -494,7 +529,7 @@ export default {
           bottom: 30,
         },
         xAxis: {
-          name: "日",
+          name: "日期 (日)",
           // nameTextStyle: {
           //     color: "#8FA4CC",
           //     fontSize: 14,
@@ -504,6 +539,8 @@ export default {
             color: "#8FA4CC",
             padding: [10, 0, 0, 0],
             fontSize: 14,
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisLine: {
             lineStyle: {
@@ -511,7 +548,8 @@ export default {
             },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           splitLine: {
             show: false,
@@ -530,8 +568,12 @@ export default {
           axisLine: {
             show: true,
             lineStyle: {
-              color: "#979797",
+              color: "#8FA4CC",
             },
+          },
+          axisTick: {
+            show: true,
+            inside: true,
           },
           axisLabel: {
             color: "#8FA4CC",
@@ -651,6 +693,13 @@ export default {
             // 坐标轴指示器，坐标轴触发有效
             type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
           },
+          formatter(params) {
+            console.log(params)
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + " : " + parseFloat(item.value || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         grid: {
           x: 50,
@@ -681,9 +730,12 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             margin: 20,
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -707,7 +759,8 @@ export default {
             fontSize: 14,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -769,6 +822,9 @@ export default {
       lineMin: 0,
       //单井产量波动分析
       dialogVisible: false,
+      // 预警详细信息弹窗
+      openDetailedDialog: false,
+      detailedTable: [],
       //产量分析数据内容
       productAnaysisTable: [],
       //缓存权限数据
@@ -961,8 +1017,26 @@ export default {
 
     //初始化页面数据
     async initData() {
-      await QueryOgfDetail({}).then((res) => {
-        this.oilField = res.data.data;
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
+        if (res.data.code == 200) {
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
+        }
       });
       await QueryReservoirAnalyseUnit({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {
@@ -2160,6 +2234,229 @@ export default {
     openDialogWindow() {
       this.dialogVisible = true;
     },
+    openDetailedChick(name) {
+      this.openDetailedDialog = true;
+      if (name == "红色预警") {
+        this.detailedTable = [
+          { detailed: "日产油水平低于年剩余日产油水平，比例大于60%为红色预警	" },
+          { detailed: "日注水水平低于年剩余日注水水平，比例大于60%为红色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日产油水平，比例大于60%为红色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日注水水平，比例大于60%为红色预警	" },
+        ];
+        /* this.detailedTable = [
+          {
+            detailed:
+              "日产油水平低于月滚动预测剩余日产油水平比例 大于 红色预警下界（YUYGDT5）%，即条件>YUYGDT5并且 条件<YUYGDT6为红色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于月滚动预测剩余日产油水平比例 小于 红色预警上界（YUYGDT6）%，即条件>YUYGDT5并且 条件<YUYGDT6为红色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（日）日产油水平比例 大于 红色预警下界（YUQQRT5）%，即YUQQRT3<条件<YUQQRT4为红色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（日）日产油水平比例 小于 红色预警上界（YUQQRT6）%，即YUQQRT3<条件<YUQQRT4为红色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（月）日产油水平比例 大于 红色预警下界（YUQQYT5）%，即YUQQYT5<条件<YUQQYT6为红色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（月）日产油水平比例 小于 红色预警上界（YUQQYT6）%，即YUQQYT5<条件<YUQQYT6为红色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于年剩余日注水水平的比例 大于 红色预警下界（ZSNSYT5）%，即ZSNSYT5<条件<ZSNSYT6为红色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于年剩余日注水水平的比例 小于 红色预警上界（ZSNSYT6）%，即ZSNSYT5<条件<ZSNSYT6为红色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于月滚动预测剩余日注水水平比例 大于 红色预警下界（ZSYGDT5）%，即ZSYGDT5<条件<ZSYGDT6为红色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于月滚动预测剩余日注水水平比例 小于 红色预警上界（ZSYGDT6）%，即ZSYGDT5<条件<ZSYGDT6为红色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（日）日注水水平比例 大于 红色预警下界（ZSQQRT5）%，即ZSQQRT5<条件<ZSQQRT6为红色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（日）日注水水平比例 小于 红色预警上界（ZSQQRT6）%，即ZSQQRT5<条件<ZSQQRT6为红色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（月）日注水水平比例 大于 红色预警下界（ZSQQYT5）%，即ZSQQYT5<条件<ZSQQYT6为红色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（月）日注水水平比例 小于 红色预警上界（ZSQQYT6）%，即ZSQQYT5<条件<ZSQQYT6为红色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于年剩余日产油水平比例 大于 红色预警下界（YUNSYT5）%，即条件>YUNSYT5 并且 条件<YUNSYT6为红色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于年剩余日产油水平比例 小于 红色预警上界（YUNSYT6）%，即条件>YUNSYT5 并且 条件<YUNSYT6为红色预警	",
+          },
+        ]; */
+      } else if (name == "蓝色预警") {
+        this.detailedTable = [
+          { detailed: "日产油水平低于年剩余日产油水平，比例大于10% 并且 小于等于30%为蓝色预警	" },
+          { detailed: "日注水水平低于年剩余日注水水平，比例大于 10%，并且小于等于30%为蓝色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日产油水平，比例大于10% 并且 小于等于30%为蓝色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日注水水平，比例大于10% 并且 小于等于30%为蓝色预警	" },
+        ];
+        /*  this.detailedTable = [
+          {
+            detailed:
+              "日产油水平低于年剩余日产油水平比例 小于 蓝色预警上界（YUNSYT2）%，即条件>YUNSYT1 并且 条件<YUNSYT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于年剩余日产油水平比例 大于 蓝色预警下界（YUNSYT1）%，即条件>YUNSYT1 并且 条件<YUNSYT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于月滚动预测剩余日产油水平比例 大于 蓝色预警下界（YUYGDT1）%，即条件>YUYGDT1 并且 条件<YUYGDT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于月滚动预测剩余日产油水平比例 小于 蓝色预警上界（YUYGDT2）%，即条件>YUYGDT1 并且 条件<YUYGDT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（日）日产油水平比例 大于 蓝色预警下界（YUQQRT1）%，即条件>YUQQRT1 并且 条件<YUQQRT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（日）日产油水平比例 小于 蓝色预警上界（YUQQRT2）%，即条件>YUQQRT1 并且 条件<YUQQRT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于年剩余日注水水平的比例 大于 蓝色预警下界（ZSNSYT1）%，即ZSNSYT1<条件<ZSNSYT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于年剩余日注水水平的比例 小于 蓝色预警上界（ZSNSYT2）%，即ZSNSYT1<条件<ZSNSYT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于月滚动预测剩余日注水水平比例 大于 蓝色预警下界（ZSYGDT1）%，即ZSYGDT1<条件<ZSYGDT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于月滚动预测剩余日注水水平比例 小于 蓝色预警上界（ZSYGDT2）%，即ZSYGDT1<条件<ZSYGDT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（日）日注水水平比例 大于 蓝色预警下界（ZSQQRT1）%，即ZSQQRT1<条件<ZSQQRT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（日）日注水水平比例 小于 蓝色预警上界（ZSQQRT2）%，即ZSQQRT1<条件<ZSQQRT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（月）日注水水平比例 大于 蓝色预警下界（ZSQQYT1）%，即ZSQQYT1<条件<ZSQQYT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（月）日注水水平比例 小于 蓝色预警上界（ZSQQYT2）%，即ZSQQYT1<条件<ZSQQYT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（月）日产油水平比例 大于 蓝色预警下界（YUQQYT1）%，即YUQQYT1<条件<YUQQYT2为蓝色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（月）日产油水平比例 小于 蓝色预警上界（YUQQYT2）%，即YUQQYT1<条件<YUQQYT2为蓝色预警	",
+          },
+        ]; */
+      } else if (name == "黄色预警") {
+        this.detailedTable = [
+          { detailed: "日产油水平低于年剩余日产油水平，比例大于30%  并且 小于等于60%为黄色预警	" },
+          { detailed: "日注水水平低于年剩余日注水水平，比例大于30%，并且小于等于60%为黄色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日产油水平，比例大于30% 并且 小于等于60%为黄色预警	" },
+          { detailed: "日产油水平低于月滚动预测剩余日注水水平，比例大于30% 并且 小于等于60%为黄色预警	" },
+        ];
+        /* this.detailedTable = [
+          {
+            detailed:
+              "日产油水平低于年剩余日产油水平比例 大于 黄色预警下界（YUNSYT3）%，即条件>YUNSYT3 并且 条件<YUNSYT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于年剩余日产油水平比例 小于 黄色预警上界（YUNSYT4）%，即条件>YUNSYT3 并且 条件<YUNSYT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于月滚动预测剩余日产油水平比例 大于 黄色预警下界（YUYGDT3）%，即条件>YUYGDT3并且 条件<YUYGDT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于月滚动预测剩余日产油水平比例 小于 黄色预警上界（YUYGDT4）%，即条件>YUYGDT3并且 条件<YUYGDT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（日）日产油水平比例 大于 黄色预警下界（YUQQRT3）%，即条件>YUQQRT3 并且 条件<YUQQRT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（日）日产油水平比例 小于 黄色预警上界（YUQQRT4）%，即条件>YUQQRT3 并且 条件<YUQQRT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（月）日产油水平比例 小于 黄色预警上界（YUQQYT4）%，即YUQQYT3<条件<YUQQYT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于年剩余日注水水平的比例 大于 黄色预警下界（ZSNSYT3）%，即ZSNSYT3<条件<ZSNSYT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于年剩余日注水水平的比例 小于 黄色预警上界（ZSNSYT4）%，即ZSNSYT3<条件<ZSNSYT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于月滚动预测剩余日注水水平比例 大于 黄色预警下界（ZSYGDT3）%，即ZSYGDT3<条件<ZSYGDT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于月滚动预测剩余日注水水平比例 小于 黄色预警上界（ZSYGDT4）%，即ZSYGDT3<条件<ZSYGDT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（日）日注水水平比例 大于 黄色预警下界（ZSQQRT3）%，即ZSQQRT3<条件<ZSQQRT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（日）日注水水平比例 小于 黄色预警上界（ZSQQRT4）%，即ZSQQRT3<条件<ZSQQRT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（月）日注水水平比例 大于 黄色预警下界（ZSQQYT3）%，即ZSQQYT3<条件<ZSQQYTT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日注水水平低于前期（月）日注水水平比例 小于 黄色预警上界（ZSQQYT4）%，即ZSQQYT3<条件<ZSQQYTT4为黄色预警	",
+          },
+          {
+            detailed:
+              "日产油水平低于前期（月）日产油水平比例 大于 黄色预警下界（YUQQYT3）%，即YUQQYT3<条件<YUQQYT4为黄色预警	",
+          },
+        ]; */
+      }
+    },
   },
 };
 </script>
@@ -2199,12 +2496,12 @@ export default {
                 flex: 1;
                 height: 0;
               }
-              .z-table {
-                ::v-deep .cell {
-                  height: 60px;
-                  line-height: inherit;
-                }
-              }
+              // .z-table {
+              //   ::v-deep .cell {
+              // height: 60px;
+              // line-height: inherit;
+              // }
+              // }
             }
           }
         }

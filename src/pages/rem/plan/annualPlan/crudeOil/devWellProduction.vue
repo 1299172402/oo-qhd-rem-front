@@ -28,35 +28,40 @@
       <el-table
         id="tableData"
         :data="tableData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        :cell-style="{ padding: '6px' }"
         style="width: 100%"
         height="calc(100% - 130px)"
         :default-sort="{ prop: 'date', order: 'descending' }"
-        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+        :header-cell-style="{ padding: '0px 0' }"
       >
-        <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
-        <el-table-column prop="prodDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
+        <el-table-column type="index" align="center" label="序号" width="80" :index="tableIndex"></el-table-column>
+        <el-table-column prop="prodDate" header-align="center" align="center" :label="`时间\n(yyyy-mm-dd)`">
+        </el-table-column>
         <el-table-column
           prop="measureWellNumReal"
+          header-align="center"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际措施井次\n(次)' : '实际措施井次\n(次)'"
         ></el-table-column>
         <el-table-column
           prop="measureWellNumPlan"
+          header-align="center"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划措施井次\n(次)' : '计划措施井次\n(次)'"
         ></el-table-column>
         <el-table-column
           prop="oilprodReal"
+          header-align="center"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际月产油量\n(m³/d)' : '实际月产油量\n(t/d)'"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="oilprodPlan"
+          header-align="center"
           align="center"
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划月产油量\n(m³/d)' : '计划月产油量\n(t/d)'"
           :formatter="toPrecise2"
@@ -123,6 +128,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "实际措施井次" || item.seriesName == "计划措施井次") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + (item.value[1] || 0);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         grid: {
           x: 120,
@@ -143,37 +159,42 @@ export default {
           itemHeight: 6,
           itemGap: 14,
         },
-        xAxis: {
-          name: '日',
-          // nameTextStyle: {
-          //     color: '#8FA4CC',
-          //     fontSize: 14,
-          // },
-          // nameLocation: 'center',
-          nameGap: 30,
-          type: "category",
-          axisLabel: {
-            color: "#8FA4CC",
-            padding: [10, 0, 0, 0],
-            fontSize: 14,
-            interval: function (index, val) {
-              if (val.substr(-2) == "01") {
-                return true;
-              } else {
-                return false;
-              }
-            },
-            // rotate: 20,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            lineStyle: {
+        xAxis: [
+          {
+            name: "日期 (日)",
+            // nameTextStyle: {
+            //     color: '#8FA4CC',
+            //     fontSize: 14,
+            // },
+            // nameLocation: 'center',
+            nameGap: 30,
+            type: "category",
+            axisLabel: {
               color: "#8FA4CC",
+              padding: [10, 0, 0, 0],
+              fontSize: 14,
+              showMinLabel: true,
+              showMaxLabel: true,
+              // interval: function (index, val) {
+              //   if (val.substr(-2) == "01") {
+              //     return true;
+              //   } else {
+              //     return false;
+              //   }
+              // },
+              // rotate: 20,
+            },
+            axisTick: {
+              show: true,
+              inside: true,
+            },
+            axisLine: {
+              lineStyle: {
+                color: "#8FA4CC",
+              },
             },
           },
-        },
+        ],
         yAxis: [
           {
             type: "value",
@@ -189,7 +210,8 @@ export default {
               fontSize: 14,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -285,7 +307,7 @@ export default {
           //图例数据
           this.devWellLineChart.legend.data = legendData;
           this.devWellLineChart.series = seriesData;
-          this.devWellLineChart.xAxis.data = this.getDay(
+          this.devWellLineChart.xAxis[0].data = this.getDay(
             this.searchForm.selectDate[0] || "2023-01-01",
             this.searchForm.selectDate[1] || "2023-12-31",
           );

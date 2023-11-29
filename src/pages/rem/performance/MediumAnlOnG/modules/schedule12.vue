@@ -22,7 +22,7 @@
         <el-table-column prop="pt" label="平台" align="center" width="120"></el-table-column>
         <el-table-column prop="cljzly" label="处理的介质来源" align="center" width="240"></el-table-column>
         <el-table-column label="投产时间" align="center">
-          <el-table-column prop="tcrq" label="yyyy/mm/dd" align="center" width="120"></el-table-column>
+          <el-table-column prop="tcrq" label="yyyy-mm-dd" align="center" width="120"></el-table-column>
         </el-table-column>
         <el-table-column label="设施处理能力" align="center">
           <el-table-column label="最大液处理能力" align="center">
@@ -375,7 +375,6 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log("zmmm--", data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {

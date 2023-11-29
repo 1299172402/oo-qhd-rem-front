@@ -4,7 +4,7 @@
     <headerSearch style="height: 80px">
       <div class="g-row-flex-V g-w100 g-h100">
         <span>油田：</span>
-        <el-select v-model="oilfield" disabled @change="onFieldChange" style="margin-right: 20px">
+        <el-select v-model="oilfield" @change="onFieldChange" style="margin-right: 20px">
           <el-option v-for="item in oiloptions" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
         </el-select>
         <span>区块：</span>
@@ -49,7 +49,7 @@
           >
         </div>
         <div style="padding-bottom: 5px; height: calc(100% - 55px)">
-          <el-table id="tableData" :data="tableData" highlight height="100%">
+          <el-table id="tableData" :data="tableData" highlight border height="100%">
             <el-table-column
               prop="phase"
               label="开发阶段"
@@ -60,14 +60,14 @@
             ></el-table-column>
             <el-table-column
               prop="beginDate"
-              :label="`阶段开始时间\n (yyyy/mm)`"
+              :label="`阶段开始时间\n (yyyy-mm)`"
               align="center"
               width="140"
               show-overflow-tooltip
             ></el-table-column>
             <el-table-column
               prop="endDate"
-              :label="`阶段结束时间\n (yyyy/mm)`"
+              :label="`阶段结束时间\n (yyyy-mm)`"
               align="center"
               width="140"
               show-overflow-tooltip
@@ -95,7 +95,7 @@
             ></el-table-column>
             <el-table-column
               prop="liquidDaily"
-              :label="`阶段末日产液\n (m³/d)`"
+              :label="`阶段末日产液\n (m³)`"
               align="center"
               width="180px"
               show-overflow-tooltip
@@ -103,7 +103,7 @@
             ></el-table-column>
             <el-table-column
               prop="oilDaily"
-              :label="`阶段末日产油量\n (m³/d)`"
+              :label="`阶段末日产油量\n (m³)`"
               align="center"
               width="190px"
               show-overflow-tooltip
@@ -223,7 +223,7 @@
               <el-checkbox label="水井总井数（口)"></el-checkbox>
             </el-col>
             <el-col :span="12">
-              <el-checkbox label="日注水（m³/d)"></el-checkbox>
+              <el-checkbox label="日注水（m³)"></el-checkbox>
             </el-col>
           </el-row>
           <el-row style="margin-top: 10px">
@@ -236,7 +236,7 @@
           </el-row>
           <el-row style="margin-top: 10px">
             <el-col :span="12">
-              <el-checkbox label="单元日产液（m³/d)"></el-checkbox>
+              <el-checkbox label="单元日产液（m³)"></el-checkbox>
             </el-col>
             <el-col :span="12">
               <el-checkbox label="月注采比"></el-checkbox>
@@ -244,7 +244,7 @@
           </el-row>
           <el-row style="margin-top: 10px">
             <el-col :span="12">
-              <el-checkbox label="单元日产油（m³/d)"></el-checkbox>
+              <el-checkbox label="单元日产油（m³)"></el-checkbox>
             </el-col>
             <el-col :span="12">
               <el-checkbox label="年产油（m³)"></el-checkbox>
@@ -267,7 +267,7 @@
         <div style="margin-bottom: 20px; display: flex; align-item: center; justify-content: space-between">
           <div class="fl">
             <span style="color: #fff">油田：</span>
-            <el-select v-model="oilfield1" disabled style="margin-right: 15px">
+            <el-select v-model="oilfield1" style="margin-right: 15px">
               <el-option
                 v-for="item in oiloptions"
                 :key="item.ogfId"
@@ -275,7 +275,7 @@
                 :value="item.ogfId"
               ></el-option>
             </el-select>
-            <span style="color: #fff">月份：</span>
+            <span style="color: #fff">日期：</span>
             <el-date-picker v-model="dateFirst" type="month" value-format="yyyy-MM"></el-date-picker>
             <!-- <span>~</span> -->
             <!-- <el-date-picker v-model="dateSecond" type="month" placeholder="对比时间2" value-format="yyyy-MM"></el-date-picker> -->
@@ -297,10 +297,10 @@
             >
           </div>
         </div>
-        <el-table id="kfxz" :data="tableData2" highlight height="400px">
+        <el-table id="kfxz" :data="tableData2" border highlight height="400px">
           <el-table-column
             prop="date"
-            :label="`时间\n(yyyy/mm/dd)`"
+            :label="`时间\n(yyyy-mm)`"
             align="center"
             show-overflow-tooltip
             min-width="200"
@@ -334,7 +334,7 @@
               min-width="120"
             ></el-table-column>
           </el-table-column>
-          <el-table-column :label="'月均日产水平' + (currentUnit == 'm' ? '（m³/d)' : '（t/d)')" align="center">
+          <el-table-column :label="'月均日产水平' + (currentUnit == 'm' ? '（m³)' : '（t)')" align="center">
             <el-table-column
               prop="liquidDailySum"
               label="液量"
@@ -352,7 +352,7 @@
               :formatter="toPrecise2"
             ></el-table-column>
           </el-table-column>
-          <el-table-column :label="'平均单井日产' + (currentUnit == 'm' ? '（m³/d)' : '（t/d)')" align="center">
+          <el-table-column :label="'平均单井日产' + (currentUnit == 'm' ? '（m³)' : '（t)')" align="center">
             <el-table-column
               prop="liquidDailyAvg"
               label="液量"
@@ -386,7 +386,7 @@
               min-width="120"
             ></el-table-column>
           </el-table-column>
-          <el-table-column label="日注水（m³/d)" align="center">
+          <el-table-column label="日注水（m³)" align="center">
             <el-table-column
               prop="injectionDailySum"
               label="合计"
@@ -414,7 +414,7 @@
             prop="cumOilProdYearly"
             :label="'截止当月年产油' + (currentUnit == 'm' ? '（m³)' : '（t)')"
             align="center"
-            min-width="140"
+            min-width="160"
             show-overflow-tooltip
             :formatter="toPrecise2"
           ></el-table-column>
@@ -551,7 +551,7 @@
 import moment from "dayjs";
 import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 import {
   chart,
@@ -560,7 +560,7 @@ import {
   devStatusInfosDate,
 } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 export default {
-  name: "developmenthistory",
+  name: "Developmenthistory",
   components: {
     Echart,
   },
@@ -622,6 +622,7 @@ export default {
           label: "年产油",
         },
       ],
+      companyId: "",
       //油田
       oilfield: "",
       //区块
@@ -681,67 +682,78 @@ export default {
           {
             x: "160",
             y: "1%",
-            width: "88%",
+            width: "85%",
             height: "7%",
           },
           {
             x: "160",
             y: "10%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "20%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "30%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "40%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "50%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "60%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "70%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "80%",
-            width: "88%",
+            width: "85%",
             height: "8%",
           },
           {
             x: "160",
             y: "90%",
-            width: "88%",
+            width: "85%",
             height: "7%",
           },
         ],
         tooltip: {
           show: true,
           trigger: "axis",
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "年产油(10⁴m³)") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         xAxis: [
           {
@@ -753,7 +765,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -770,7 +783,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -786,7 +800,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -802,7 +817,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -818,7 +834,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -834,7 +851,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -850,7 +868,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -866,7 +885,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -882,7 +902,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -891,14 +912,17 @@ export default {
             },
           },
           {
-            name: "年",
+            name: "日期 (年)",
             gridIndex: 9,
             data: [],
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -977,7 +1001,7 @@ export default {
             },
           },
           {
-            name: "油田日产液(m³/d)\n\n油田日产油(m³/d)",
+            name: "油田日产液(m³)\n\n油田日产油(m³)",
             nameLocation: "center",
             nameGap: 35,
             nameRotate: 0,
@@ -1009,7 +1033,7 @@ export default {
             },
           },
           {
-            name: "平均单井日产液(m³/d)\n\n平均单井日产油(m³/d)",
+            name: "平均单井日产液(m³)\n\n平均单井日产油(m³)",
             nameLocation: "center",
             nameGap: 35,
             nameRotate: 0,
@@ -1103,7 +1127,7 @@ export default {
             },
           },
           {
-            name: "油田平均日注水(m³/d)",
+            name: "油田平均日注水(m³)",
             nameLocation: "center",
             nameGap: 35,
             nameRotate: 0,
@@ -1279,7 +1303,7 @@ export default {
           },
           {
             type: "line",
-            name: "油田日产液(m³/d)",
+            name: "油田日产液(m³)",
             symbol: "none",
             xAxisIndex: 2,
             yAxisIndex: 2,
@@ -1290,7 +1314,7 @@ export default {
           },
           {
             type: "line",
-            name: "油田日产油(m³/d)",
+            name: "油田日产油(m³)",
 
             symbol: "none",
             xAxisIndex: 2,
@@ -1302,7 +1326,7 @@ export default {
           },
           {
             type: "line",
-            name: "平均单井日产液(m³/d)",
+            name: "平均单井日产液(m³)",
 
             symbol: "none",
             xAxisIndex: 3,
@@ -1314,7 +1338,7 @@ export default {
           },
           {
             type: "line",
-            name: "平均单井日产油(m³/d)",
+            name: "平均单井日产油(m³)",
 
             symbol: "none",
             xAxisIndex: 3,
@@ -1350,7 +1374,7 @@ export default {
           },
           {
             type: "line",
-            name: "油田平均日注水(m³/d)",
+            name: "油田平均日注水(m³)",
 
             symbol: "none",
             xAxisIndex: 6,
@@ -1361,14 +1385,22 @@ export default {
             data: [],
           },
           {
-            type: "line",
+            type: "bar",
             name: "地层压降(MPa)",
-
-            symbol: "none",
+            barWidth: 22,
             xAxisIndex: 7,
             yAxisIndex: 7,
             itemStyle: {
-              color: "#1379F7",
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "#00D9EA",
+                },
+                {
+                  offset: 1,
+                  color: "#0F65EA",
+                },
+              ]),
             },
             data: [],
           },
@@ -1468,16 +1500,27 @@ export default {
       });
     },
     async initData() {
-      //油田
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oiloptions = res.data.data;
-          if (this.oiloptions.length == 0) {
-            this.oilfield = "";
-            this.oilfield1 = "";
-          } else {
+          this.companyId =
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oiloptions = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
             this.oilfield = "3FC9A818F5BC43B88270DB80BBB3018F";
             this.oilfield1 = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.oilfield = this.oiloptions[0].ogfId ? this.oiloptions[0].ogfId : undefined;
+            this.oilfield1 = this.oiloptions[0].ogfId ? this.oiloptions[0].ogfId : undefined;
           }
         }
       });
@@ -1497,7 +1540,7 @@ export default {
     },
     //获取区块
     getFetchFields(oilFieldId) {
-      QueryReservoirAnalyseUnit({ ogfId: oilFieldid }).then((res) => {
+      QueryReservoirAnalyseUnit({ ogfId: oilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.blockoptions = res.data.data;
           this.blockoptions.unshift({
@@ -1514,14 +1557,14 @@ export default {
       let request = {
         oilFieldId: oilFieldId,
       };
-      QueryReservoirAnalyseUnit({ogfId: oilFieldId}).then((res) => {
+      QueryReservoirAnalyseUnit({ ogfId: oilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.blockoptions1 = res.data.data;
           this.blockoptions1.unshift({
-          reservoirAnalyseUnitId: oilFieldId,
-          reservoirAnalyseUnitName: "全部",
-          reservoirAnalyseUnitNo: "全部",
-        });
+            reservoirAnalyseUnitId: oilFieldId,
+            reservoirAnalyseUnitName: "全部",
+            reservoirAnalyseUnitNo: "全部",
+          });
           this.block1 = oilFieldId;
         }
       });
@@ -1843,7 +1886,7 @@ export default {
         linearData.forEach((item, index) => {
           let point = [];
           let label = item.label.split("-");
-          point.push(label[0] + "-" + label[1]);
+          point.push(label[0]);
           point.push(item.value);
           xData.push(label[0] + "-" + label[1]);
           seriesData.push(point);
@@ -1890,6 +1933,7 @@ export default {
         });
       }
       this.option.xAxis[9].data = xData;
+      this.option.xAxis[7].data = xData;
       this.option.series[13].data = seriesData;
     },
     //清空图表内容
@@ -2035,6 +2079,14 @@ export default {
     &::before {
       content: "-";
     }
+  }
+}
+::v-deep .el-table__fixed-header-wrapper,
+::v-deep .el-table__header-wrapper {
+  .cell {
+    height: auto !important;
+    line-height: 1.8 !important;
+    white-space: pre;
   }
 }
 </style>

@@ -27,15 +27,7 @@
         <headerSearch style="height: 80px">
           <div class="g-row-flex-V g-w100 g-h100">
             <span>油田：</span>
-            <el-select
-              v-model="selYtdm"
-              class="f2"
-              style="width: 180px"
-              filterable
-              clearable
-              disabled
-              @change="queryBlockList"
-            >
+            <el-select v-model="selYtdm" class="f2" style="width: 180px" filterable @change="queryBlockList">
               <el-option v-for="item in ytData" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId">
               </el-option>
             </el-select>
@@ -59,7 +51,7 @@
               >
               </el-option>
             </el-select>
-            <span style="margin-left: 15px">年月：</span>
+            <span style="margin-left: 15px">日期：</span>
             <el-date-picker
               v-model="currentDate"
               type="date"
@@ -68,6 +60,17 @@
             ></el-date-picker>
             <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
             <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+            <el-button
+              class="commonBtn"
+              v-if="$route.query.page"
+              style="position: absolute; right: 2%"
+              @click="
+                $router.push({
+                  name: $route.query.page,
+                })
+              "
+              >返回</el-button
+            >
           </div>
         </headerSearch>
         <pagePanelNew style="height: calc(100% - 100px)" class="g-w100">
@@ -77,6 +80,8 @@
             >
             <el-button type="primary" @click="isNewformat = !isNewformat">切换版式</el-button>
           </div>
+          <!-- /* display: flex;
+              flex-direction: column; */ -->
           <div
             style="
               height: calc(100% - 50px);
@@ -84,8 +89,6 @@
               overflow-x: hidden;
               padding-left: 8px;
               padding-right: 7px;
-              display: flex;
-              flex-direction: column;
             "
           >
             <el-row style="height: auto" :gutter="15" class="cont">
@@ -194,7 +197,7 @@
                 </el-button>
               </el-row>
             </div>
-            <div style="flex: 1; min-height: 380px">
+            <div style="height: 620px">
               <pagePanel headerTitle="井组动态分析详情列表" style="margin-top: 0; height: 100%">
                 <div style="display: flex; justify-content: flex-end">
                   <el-button
@@ -206,42 +209,47 @@
                   >
                 </div>
                 <el-table
-                  :key="Math.random()"
+                  key="wellGroupAnalysisAssistant-table1"
                   id="table1"
                   highlight
-                  :data="tableData"
-                  height="calc(100% - 55px)"
+                  :data="
+                    tableData.slice(
+                      (queryParams.page - 1) * queryParams.pageSize,
+                      queryParams.page * queryParams.pageSize,
+                    )
+                  "
+                  height="calc(100% - 110px)"
                   ref="tableList"
                   class="doubleHeader"
                   row-key="id"
                   default-expand-all
                   :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+                  @sort-change="sortChange"
                 >
-                  <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                   <el-table-column
+                    key="table1-index"
+                    type="index"
+                    label="序号"
+                    align="center"
+                    width="80px"
+                    fixed="left"
+                    :index="formatIndex"
+                  ></el-table-column>
+
+                  <el-table-column
+                    key="table1-wellId"
                     prop="wellId"
                     align="center"
                     label="井组"
                     width="240px"
-                    :sortable="true"
-                    :sort-method="
-                      (a, b) => {
-                        return borepipeNoSort(a, b, 'wellId');
-                      }
-                    "
+                    sortable="custom"
                     fixed="left"
                   ></el-table-column>
-                  <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
                   <el-table-column
                     v-for="(item, index) in trendOfIndicatorsTab"
-                    :key="index"
+                    :key="`table1-${item.code}`"
                     :prop="item.code"
-                    sortable
-                    :sort-method="
-                      (a, b) => {
-                        return borepipeNoSort(a, b, item.code);
-                      }
-                    "
+                    sortable="custom"
                     align="center"
                     min-width="170"
                   >
@@ -359,6 +367,16 @@
                     </el-table-column>
                   </el-table-column>
                 </el-table>
+                <pagination
+                  v-show="pageTotal > 0"
+                  layout="prev, pager, next, sizes, total"
+                  :page-sizes="[10, 20, 50, 100]"
+                  :pager-count="5"
+                  :total="pageTotal"
+                  :page.sync="queryParams.page"
+                  :limit.sync="queryParams.pageSize"
+                  @pagination="pagination"
+                />
               </pagePanel>
             </div>
           </div>
@@ -369,15 +387,7 @@
         <headerSearch style="height: 80px">
           <div class="g-row-flex-V g-w100 g-h100">
             <span>油田：</span>
-            <el-select
-              v-model="selYtdm"
-              class="f2"
-              style="width: 180px"
-              filterable
-              clearable
-              disabled
-              @change="queryBlockList"
-            >
+            <el-select v-model="selYtdm" class="f2" style="width: 180px" filterable @change="queryBlockList">
               <el-option v-for="item in ytData" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId">
               </el-option>
             </el-select>
@@ -401,7 +411,7 @@
               >
               </el-option>
             </el-select>
-            <span style="margin-left: 15px">年月：</span>
+            <span style="margin-left: 15px">日期：</span>
             <el-date-picker
               v-model="currentDate"
               type="date"
@@ -410,11 +420,22 @@
             ></el-date-picker>
             <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
             <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
+            <el-button
+              class="commonBtn"
+              v-if="$route.query.page"
+              style="position: absolute; right: 2%"
+              @click="
+                $router.push({
+                  name: $route.query.page,
+                })
+              "
+              >返回</el-button
+            >
           </div>
         </headerSearch>
         <div class="app-container3">
           <div class="leftBox">
-            <img src="@/assets/rem/performance/bg.gif" alt="" class="img1" />
+            <!-- <img src="@/assets/rem/performance/bg.gif" alt="" class="img1" />
             <img src="@/assets/rem/performance/jing-small.png" alt="" class="img2" />
             <img src="@/assets/rem/performance/shui-donghua.gif" alt="" class="img3" />
             <img src="@/assets/rem/performance/di.png" alt="" class="img4" />
@@ -422,7 +443,11 @@
             <img src="@/assets/rem/performance/01zhu.gif" alt="" class="img5" />
             <img src="@/assets/rem/performance/01cai.gif" alt="" class="img7" />
             <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
+            <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else /> -->
+            <img src="@/assets/rem/performance/jingzu.gif" alt="" class="speed" />
+            <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
             <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
+            
           </div>
           <div class="rightBox">
             <div class="v1">
@@ -735,7 +760,7 @@
                 </div>
               </pagePanel>
             </div>
-            <div style="height: 680px">
+            <div style="height: 620px">
               <pagePanel header-title="井组动态分析详情列表" style="height: 100%">
                 <div style="display: flex; justify-content: flex-end">
                   <el-button
@@ -747,42 +772,46 @@
                   >
                 </div>
                 <el-table
-                  :key="Math.random()"
+                  key="wellGroupAnalysisAssistant-table2"
                   id="table2"
                   highlight
-                  :data="tableData"
-                  height="calc(100% - 55px)"
+                  :data="
+                    tableData.slice(
+                      (queryParams.page - 1) * queryParams.pageSize,
+                      queryParams.page * queryParams.pageSize,
+                    )
+                  "
+                  row-key="id"
+                  height="calc(100% - 110px)"
                   ref="tableList"
                   class="doubleHeader"
-                  row-key="id"
                   default-expand-all
                   :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+                  @sort-change="sortChange"
                 >
-                  <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
                   <el-table-column
+                    type="index"
+                    label="序号"
+                    align="center"
+                    width="100px"
+                    fixed="left"
+                    :index="formatIndex"
+                  ></el-table-column>
+                  <el-table-column
+                    key="table2-wellId"
                     prop="wellId"
                     align="center"
                     label="井组"
                     width="240px"
-                    :sortable="true"
-                    :sort-method="
-                      (a, b) => {
-                        return borepipeNoSort(a, b, 'wellId');
-                      }
-                    "
+                    sortable="custom"
                     fixed="left"
                   ></el-table-column>
                   <!-- sortable="custom" TODO lv 一期功能未完善，暂时屏蔽 -->
                   <el-table-column
                     v-for="(item, index) in trendOfIndicatorsTab"
-                    :key="index"
+                    :key="`table2-${item.code}`"
                     :prop="item.code"
-                    sortable
-                    :sort-method="
-                      (a, b) => {
-                        return borepipeNoSort(a, b, item.code);
-                      }
-                    "
+                    sortable="custom"
                     align="center"
                     min-width="170"
                   >
@@ -900,6 +929,16 @@
                     </el-table-column>
                   </el-table-column>
                 </el-table>
+                <pagination
+                  v-show="pageTotal > 0"
+                  layout="prev, pager, next, sizes, total"
+                  :page-sizes="[10, 20, 50, 100]"
+                  :pager-count="5"
+                  :total="pageTotal"
+                  :page.sync="queryParams.page"
+                  :limit.sync="queryParams.pageSize"
+                  @pagination="pagination"
+                />
               </pagePanel>
             </div>
           </div>
@@ -919,17 +958,23 @@ import {
   wellGroupDynamicAnalysisDetail,
 } from "@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js";
 import { selectWellGroup } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 import compareSort from "@/lib/compareSort.js";
 import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
 import { exportExcel } from "@/lib/exportExcel.js";
+import { cloneDeep } from "lodash";
 
 export default {
   name: "wellGroupAnalysisReport",
   mixins: [compareSort],
   components: {
     treeSelectionCustom,
+  },
+  computed: {
+    pageTotal() {
+      return this.tableData.length || 0;
+    },
   },
   data() {
     return {
@@ -941,6 +986,7 @@ export default {
       //数据来源,大于０为后台提取
       dataSource: 1,
       initTypes: 1, //进行初始加载
+      companyId: "",
       //油田筛选条件
       ytData: [],
       selYtdm: "", //选中项
@@ -1007,8 +1053,14 @@ export default {
       recommendedMeasuresData: [],
       //油井动态分析详细列表
       tableData: [],
+      oldTableData: [],
+      sortOrder: {},
       //指标变化趋势动态表头
       trendOfIndicatorsTab: [],
+      queryParams: {
+        page: 1,
+        pageSize: 10,
+      },
     };
   },
   async mounted() {
@@ -1050,12 +1102,26 @@ export default {
     },
     //获取油田
     async queryOilFeildList() {
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.ytData = res.data.data;
-          //初始选中油田
-          if (this.selYtdm == "" || this.selYtdm == undefined) {
-            this.selYtdm = "3FC9A818F5BC43B88270DB80BBB3018F"; //hwh xg 默认初始化qhd326 //myData[0].oilFieldId;
+          // this.companyId =
+          //   res.data.data[0]?.currentTenantBindOrgId
+          //     ? res.data.data[0].currentTenantBindOrgId
+          //     : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId ? res.data.data[0].currentTenantBindOrgId : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.ytData = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selYtdm = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selYtdm = this.ytData[0].ogfId ? this.ytData[0].ogfId : undefined;
           }
           this.queryBlockList();
         }
@@ -1220,6 +1286,7 @@ export default {
             let key2 = t_data.code;
             let groupEvalBases = messData.groupEvalBases; //层位数据
             let children = myData[i].children;
+            console.log("children信息", myData,children,i,messData)
             if (children.length) {
               for (let a = 0; a < groupEvalBases.length; a++) {
                 let isFindOut = false; //默认没有查到
@@ -1564,6 +1631,7 @@ export default {
         this.recommendedMeasuresOptions[j].value = t_count; //登记条数
       }
       this.tableData = myData;
+      this.oldTableData = cloneDeep(myData);
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
       });
@@ -1824,15 +1892,35 @@ export default {
         },
       });
     },
-    ///自定义井号排序
-    borepipeNoSort(oa, ob, prop) {
-      let wellA = oa[prop];
-      let wellB = ob[prop];
-      return this.wellNoSort(wellA, wellB);
+    // 表格排序自定义方法
+    sortChange({ column, prop, order }) {
+      this.queryParams.page = 1;
+      if (order === "ascending") {
+        this.tableData = this.tableData.sort((a, b) => {
+          return prop === "wellId" ? this.wellNoSort(a[prop], b[prop]) : a[prop] - b[prop];
+        });
+      } else if (order === "descending") {
+        this.tableData = this.tableData.sort((a, b) => {
+          return prop === "wellId" ? this.wellNoSort(b[prop], a[prop]) : b[prop] - a[prop];
+        });
+      } else {
+        this.tableData = cloneDeep(this.oldTableData);
+      }
     },
     //下载导出文件 tableId tableName
     doDownExcel(tableId, tableName) {
       exportExcel(tableId, tableName);
+    },
+    // 自定序号
+    formatIndex(index) {
+      return (this.queryParams.page - 1) * this.queryParams.pageSize + index + 1;
+    },
+    /**
+     * 切换分页
+     */
+    pagination(e) {
+      this.queryParams.page = e.page;
+      this.queryParams.pageSize = e.limit;
     },
   },
 };
@@ -1867,10 +1955,14 @@ export default {
         border-radius: 5px;
       }
       .leftBox {
-        width: 563px;
+        width: 460px;
         // height:1240px;
-        height: 968px;
+        height: 1200px;
         position: relative;
+        .speed {
+          width: 100%;
+          height: 100%;
+        }
         .img1 {
           width: 100%;
           height: 100%;

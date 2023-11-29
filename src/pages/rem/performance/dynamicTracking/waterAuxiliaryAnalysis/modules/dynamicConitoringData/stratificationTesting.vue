@@ -1,7 +1,7 @@
 <!--分层调配数据-->
 <template>
     <div class="z-main">
-        <!-- <el-table id="tableData" :data="tableData" :border="false" :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
+        <!-- <el-table id="tableData" :data="tableData" border :row-style="{ height: '0px' }" header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }" style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }" :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
             <el-table-column type="index" label="序号" width="80"></el-table-column>
             <el-table-column prop="borePipeName" label="井号" min-width="140"></el-table-column>
             <el-table-column prop="startDate" label="开始时间" width="120">

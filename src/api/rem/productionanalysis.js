@@ -7,3 +7,11 @@ export function queryProductionAnalysisList({ assetCode, date, evalResult, objec
     method: "get",
   });
 }
+
+export function queryProductionDownExcel({ assetCode, date, evalResult, objectId, ogfId, operationZone, title } = {}) {
+  return request({
+    url: `${baseUrl}/productionAnalysis/queryProductionDownExcel?assetCode=${ assetCode || "" }&date=${ date || "" }&evalResult=${ evalResult || "" }&objectId=${ objectId || "" }&ogfId=${ ogfId || "" }&operationZone=${ operationZone || "" }&title=${ title || "" }`,
+    method: "get",
+    responseType: "blob",
+  });
+}

@@ -3,10 +3,10 @@
         <info-window
             info-width="100%"
             info-height="100%"
-            header-title="含水上升"
+            header-title="含水上升率"
             :is-show-max-btn="true"
         >
-            <el-button  type="primary" class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</el-button>
+            <el-button  type="primary" class="detailLinkBtn" @click="linkroute('/developStatus/developmentEffectEvaluation')">详情</el-button>
             <el-button  type="primary" class="detailLinkBtn" style="right:110px" @click="downEcharts">下载</el-button>
             <Echart ref="echartChart" :chart-data="rateOfWaterCutRise" width="100%" height="100%"></Echart>
         </info-window>
@@ -42,9 +42,9 @@ export default {
                     type: "inside",
                 },
                 grid: {
-                    top: "5%",
-                    left: "8%",
-                    right: "5%",
+                    top: "15%",
+                    left: "3%",
+                    right: "10%",
                     bottom: "12%",
                     containLabel: true,
                 },
@@ -57,18 +57,17 @@ export default {
                 },
                 xAxis: {
                     name: "含水率(%)",
-                    nameLocation: "center",
                     nameTextStyle: {
                         color: "#8FA4CC",
                     },
-                    nameGap: 25,
                     //min:90,
                     type: "value",
                     axisLabel: {
                         color: "#8FA4CC",
                     },
                     axisTick: {
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     axisLine: {
                         show: true,
@@ -85,20 +84,19 @@ export default {
                 },
                 yAxis: {
                     name: "含水上升率(%)",
-                    nameLocation: "center",
                     nameTextStyle: {
                         color: "#a9a8a8",
                         // padding: [0, 0, 0, 0], // 上、右、下、左
                     },
                     max: 100,
                     min: 0,
-                    nameGap: 35,
                     type: "value",
                     axisLabel: {
                         color: "#8FA4CC",
                     },
                     axisTick: {
-                        show: false,
+                        show:true,
+                        inside: true
                     },
                     axisLine: {
                         lineStyle: {

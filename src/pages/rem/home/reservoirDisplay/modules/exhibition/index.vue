@@ -6,7 +6,7 @@
           header-title="单井井底流压"
           :is-show-max-btn="true"
       >
-        <el-button  type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</el-button>
+        <el-button  type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('/injection/indexHome')">详情</el-button>
           <el-button type="primary" class="buttonActive_primary detailLinkBtn"  style="right:110px"  @click="downEcharts">下载</el-button>
           <Echart
               :chart-data="getResidueOilChart()"
@@ -143,7 +143,7 @@ export default {
                       data: this.ResidueOilRank.map(item => Number(item.dhFlowingPress).toFixed(1)),
                   },
                   {
-                      name: '日产液量(m³/d)',
+                      name: '日产液量(m³)',
                       type: 'bar',
                       xAxisIndex: 0,
                       color: 'rgb(4,182,131)',

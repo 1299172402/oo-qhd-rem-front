@@ -4,7 +4,7 @@
     <pagePanel headerTitle="测井数据" style="height: 600px;" show-btn>
       <el-table
         :data="tableData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
         :cell-style="{ padding: '6px', 'text-align': 'center' }"

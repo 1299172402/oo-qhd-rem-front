@@ -4,10 +4,10 @@
         <info-window
             info-width="100%"
             info-height="100%"
-            header-title="秦皇岛32-6油田月度产量对比图"
+            header-title="月度产量完成情况"
             :is-show-max-btn="true"
         >
-            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('AnnualPlan')">详细</el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('AnnualPlan')">详情</el-button>
             <el-button type="primary" class="buttonActive_primary detailLinkBtn" style="right:110px"  @click="downEcharts">下载</el-button>
             <Echart ref="echartChart" :chart-data="histogram" style="height: 100%"></Echart>
         </info-window>
@@ -27,6 +27,7 @@ export default {
     },
     data() {
         return {
+            xAxisData: [],
             histogram: {
                 tooltip: {
                     trigger: "axis",
@@ -52,21 +53,22 @@ export default {
                     type: "inside",
                 },
                 grid: {
-                    top: 30,
-                    left: '7%',
+                    top: '10%',
+                    left: '5%',
                     right: 10,
                     bottom: 50,
                 },
                 xAxis: [
                     {
                         type: "category",
-                        data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+                        data: [],
                         axisLabel: {
                             color: "#a9a8a8",
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         label: {
                             interval: 0,
@@ -84,18 +86,15 @@ export default {
                     {
                         type: "value",
                         name: "月产油(10⁴m³)",
-                        nameTextStyle: {
-                            padding: [0, 0, 30, 0], // 上、右、下、左
-                        },
                         min: 0,
                         max: 100,
-                        nameLocation: "center",
                         axisLabel: {
                             color: "#a9a8a8",
                             fontSize: 14,
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,
@@ -168,11 +167,16 @@ export default {
                 this.histogram.yAxis[0].min = null
                 this.histogram.yAxis[0].max = null
                 this.histogram.series[0].data = res.data.data.monthlyPlannedOutputVo.map(item => {
-                    return Number(item.allocProdMonthly).toFixed(4)
+                    return Number(item.allocProdMonthly / 10000).toFixed(4)
                 })
                 this.histogram.series[1].data = res.data.data.monthlyActualOutputVoList.map(item => {
                     return Number(item.checkedProdMonthly / 10000).toFixed(4)
                 })
+                this.xAxisData = [];
+                res.data.data.monthlyPlannedOutputVo.map(item => {
+                    return this.xAxisData.push(item.yearMonthesG)
+                })
+                this.histogram.xAxis[0].data = this.xAxisData;
             })
         }
     },
@@ -182,7 +186,7 @@ export default {
         },
     },
     watch: {
-        getGlobeTheme: {
+        getGlobeTheme: { 
             immediate: true,
             handler(Nval) {
                 if (Nval == "dark") {

@@ -257,11 +257,6 @@ export default {
     },
     // 节点被点击时数据处理
     resetChecked(data, checked) {
-      console.log(
-        "选中数据",
-        this.$refs.tree.getCheckedKeys(false, true),
-        this.$refs.tree.getCheckedNodes(false, true),
-      );
       this.selectKeys = this.$refs.tree.getCheckedKeys(false, true);
       let selectList = {
         orgId: null,

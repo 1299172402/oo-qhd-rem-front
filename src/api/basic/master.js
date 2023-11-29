@@ -8,35 +8,14 @@ export function fetchPlatforms(data) {
         data
     });
 }
-export function queryOgfReg(data) {
+export function QueryPlatformDetail(data) {
     return request({
-        url: `${masterUrl}/queryOgfReg`,
-        method: "post",
-        data
-    });
-}
-export function queryOperatingCompanyDetail(data) {
-    return request({
-        url: `${masterUrl}/queryOperatingCompanyDetail`,
-        method: "post",
-        data
-    });
-}
-export function queryListOfOilfieldQueryPlatformsDetail(data) {
-    return request({
-        url: `${masterUrl}/queryListOfOilfieldQueryPlatformsDetail`,
+        url: `/rem/api/omc003d/QueryPlatformDetail`,
         method: "post",
         data
     });
 }
 
-export function queryPlatformQueryWellListDetail(data) {
-    return request({
-        url: `${masterUrl}/queryPlatformQueryWellListDetail`,
-        method: "post",
-        data
-    });
-}
 export function queryOilAndGasFieldQueryPositionDetail(data) {
     return request({
         url: `${masterUrl}/queryOilAndGasFieldQueryPositionDetail`,
@@ -44,18 +23,32 @@ export function queryOilAndGasFieldQueryPositionDetail(data) {
         data
     });
 }
-export function queryOperatorsCheckFieldListsDetail(data) {
+
+export function userListByUserNames(data) {
     return request({
-        url: `${masterUrl}/queryOperatorsCheckFieldListsDetail`,
+        url: `${masterUrl}/system/syncData/userListByUserNames`,
         method: "post",
         data
     });
 }
-
-export function userListByUserNames(data) {
+export function QueryBlockDetail(data) {
     return request({
-        url: `system/syncData/userListByUserNames`,
+        url: `${masterUrl}/QueryBlockDetail`,
         method: "post",
         data
+    });
+}
+export function QueryWellDetail(data) {
+    return request({
+        url: `/rem/api/omc003d/QueryWellDetail`,
+        method: "post",
+        data,
+    });
+}
+export function QueryOgfDetail(data) {
+    return request({
+        url: `/rem/api/omc003d/QueryOgfDetail`,
+        method: "post",
+        data,
     });
 }

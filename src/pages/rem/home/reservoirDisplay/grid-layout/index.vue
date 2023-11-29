@@ -127,6 +127,7 @@ export default {
         GridLayout: VueGridLayout.GridLayout,
         GridItem: VueGridLayout.GridItem
     },
+    name: "Oilexhibition",
     props: {
         // 公司名称
         companyName: {
@@ -247,18 +248,31 @@ export default {
                     for (var i = 0; i < byteCharacters.length; i++) {
                         byteArray[i] = byteCharacters.charCodeAt(i);
                     }
-                    let data = {
-                        requestId: "f198c1a239254b0e86529a0668cf4adb",
-                        toAddr:[this.mailBox + '@cnooc.com.cn'],
-                        subject:this.mailtitle,
-                        content:this.content,
-                        ccAddr:[],
-                        senderKey:'ipmEmail',
-                        attachments: [{filename:"油藏看板.png",filedata:[...byteArray] }],
+
+                    let environment = "dev"
+                    if (window.location.origin.includes('test')) {
+                        environment = "test"
+                    } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
+                        environment = "dev"
+                    } else if (window.location.origin.includes('tpro')) {
+                        environment = "tpro"
                     }
-                    send(data).then((res)=>{
-                        if(res==true){
-                            this.$message.success('发送成功！');
+                    let data = {
+                        environment: environment,
+                        requestId: "f198c1a239254b0e86529a0668cf4adb",
+                        toAddr: [this.mailBox + '@cnooc.com.cn'],
+                        subject: this.mailtitle,
+                        content: this.content,
+                        ccAddr: [],
+                        senderKey: 'ipmEmail',
+                        imgBase64: base64String,
+                        // attachments: [{filename: "油藏看板.png", filedata: [...byteArray]}],
+                    }
+                    send(data).then(res => {
+                        if (res.status === 200) {
+                            this.$message.success(res.data.msg);
+                        } else {
+                            this.$message.error(res.data.msg);
                         }
                     })
                 })
@@ -338,9 +352,9 @@ export default {
                     return daily;
                 case "剩余油情况":
                     return oilInfo;
-                case "油田大事件":
+                case "油田单井大事件":
                     return oilEvent;
-                case "秦皇岛32-6油田月度产量对比图":
+                case "月度产量完成情况":
                     return monthContrast;
                 case "产量构成详情":
                     return yieldComponects;
@@ -352,9 +366,9 @@ export default {
                     return shutdownWell;
                 case "单井井底流压":
                     return exhibition;
-                case "分层注入量":
+                case "分层注采量":
                     return stratifiedInjection;
-                case "措施效果跟踪表":
+                case "措施建议表":
                     return effectMeasure;
                 case "超欠注情况统计":
                     return owing;
@@ -364,7 +378,7 @@ export default {
                     return recoverLevel;
                 case "采油速度":
                     return recoveryRate;
-                case "含水上升":
+                case "含水上升率":
                     return waterUp;
                 case "秦皇岛32-6油田生产指标总览":
                     return overviewIndicators;

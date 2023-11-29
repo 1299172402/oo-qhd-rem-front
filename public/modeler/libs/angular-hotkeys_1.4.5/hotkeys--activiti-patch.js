@@ -1,5 +1,5 @@
 /*! 
- * angular-hotkeys v1.4.5
+ * angular-hotkeys 
  * https://chieffancypants.github.io/angular-hotkeys
  * Copyright (c) 2014 Wes Cruver
  * License: MIT
@@ -587,7 +587,7 @@
  * Mousetrap is a simple keyboard shortcut library for Javascript with
  * no external dependencies
  *
- * @version 1.4.6
+ * @version
  * @url craig.is/killing/mice
  */
 (function(window, document, undefined) {

@@ -4,7 +4,7 @@
         <headerSearch class="g-w100 g-h100" style="width: 100%;margin-top: 12px">
             <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
                 <el-form-item label="油田：">
-                    <el-select v-model="queryParams.selectOilField" disabled>
+                    <el-select v-model="queryParams.selectOilField">
                         <el-option
                             v-for="(item, index) in oilFields"
                             :key="index"
@@ -134,7 +134,7 @@ import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
 import {queryCapacityComposition} from "@/api/rem/reservoirbillboards";
-import {queryListOfOilfieldQueryPlatformsDetail, queryOperatorsCheckFieldListsDetail} from "@/api/basic/master";
+import {QueryPlatformDetail, QueryOgfDetail} from "@/api/basic/master";
 
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 import {exportExcel} from "@/lib/exportExcel";
@@ -304,10 +304,10 @@ export default {
             platformId:this.queryParams.asseCode
         }
         this.selectPlatformPob(data)
-        queryOperatorsCheckFieldListsDetail({orgId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res=>{
+        QueryOgfDetail({operationZoneId:'715AD1CD60484BB59E737CD18A9DE44A'}).then(res=>{
             this.oilFields = res.data.data
         })
-        queryListOfOilfieldQueryPlatformsDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
+        QueryPlatformDetail({ogfId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
             this.platforms = res.data.data
         })
         // this.choiceDepts(); // 获取组织机构

@@ -5,7 +5,7 @@
           <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
 
               <el-form-item label="油田：">
-                  <el-select v-model="queryParams.selectOilField" disabled>
+                  <el-select v-model="queryParams.selectOilField" >
                       <el-option
                           v-for="item in oilFields"
                           :key="item.oilFieldId"
@@ -69,10 +69,12 @@
         id="xczyjhb"
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
-       
+          <el-table-column   label="序号" type="index" width="50px" align="center"></el-table-column>
         <el-table-column  label="井基本信息" prop="wellId" align="center">
           <el-table-column sortable  label="井号" prop="wellNo" min-width="200px" align="center">
           </el-table-column>
+            <el-table-column sortable  label="推荐措施" prop="measType" min-width="120px" align="center" >
+            </el-table-column>
           <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.layerName !== null && scope.row.layerName !== ''">{{scope.row.layerName}}</span>
@@ -105,19 +107,19 @@
           </el-table-column>
         </el-table-column>
         <el-table-column label="生产现状" prop="name" align="center">
-          <el-table-column sortable :label="`投产日期\n    （yyyy/mm/dd）`" min-width="200" prop="startDate" align="center">
+          <el-table-column sortable :label="`投产日期\n    （yyyy-mm-dd）`" min-width="200" prop="startDate" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.startDate !== null && scope.row.startDate !== ''">{{scope.row.startDate}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable :label="`日产液\n（m³/d）`" min-width="130px" prop="fluidProdDaily" align="center">
+          <el-table-column sortable :label="`日产液\n（m³）`" min-width="130px" prop="fluidProdDaily" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.fluidProdDaily !== null && scope.row.fluidProdDaily !== ''">{{scope.row.fluidProdDaily}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable :label="`日产油\n（m³/d）`" min-width="130px" prop="oilProdDaily" align="center">
+          <el-table-column sortable :label="`日产油\n（m³）`" min-width="130px" prop="oilProdDaily" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.oilProdDaily !== null && scope.row.oilProdDaily !== ''">{{scope.row.oilProdDaily}}</span>
                   <span v-else>-</span>
@@ -141,7 +143,7 @@
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable :label="`地层压力测试时间\n （yyyy/mm/dd）`"  prop="testDate" min-width="200" align="center">
+          <el-table-column sortable :label="`地层压力测试时间\n （yyyy-mm-dd）`"  prop="testDate" min-width="200" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.testDate !== null && scope.row.testDate !== ''">{{(scope.row.testDate)}}</span>
                   <span v-else>-</span>
@@ -197,13 +199,13 @@
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="120px" :label="`日增油\n（m³/d）`" prop="forecastOilInc" align="center">
+          <el-table-column sortable min-width="120px" :label="`日增油\n（m³）`" prop="forecastOilInc" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.forecastOilInc !== null && scope.row.forecastOilInc !== ''">{{scope.row.forecastOilInc}}</span>
                   <span v-else>-</span>
               </template>
           </el-table-column>
-          <el-table-column sortable min-width="120px"  :label="`日产油\n（m³/d）`" prop="forecastOil" align="center">
+          <el-table-column sortable min-width="120px"  :label="`日产油\n（m³）`" prop="forecastOil" align="center">
               <template slot-scope="scope">
                   <span v-if="scope.row.forecastOil !== null && scope.row.forecastOil !== ''">{{scope.row.forecastOil}}</span>
                   <span v-else>-</span>
@@ -302,13 +304,17 @@
 </template>
 
 <script>
-import { queryMeasurePlanList } from "@/api/rem/actionplanmanagement";
-import { pumpReplaceDetail } from "@/api/rem/welldynamicanalysis";
+import {
+    userListByUserNames,
+    QueryOgfDetail,
+    QueryPlatformDetail
+} from "@/api/basic/master";
+import { pumpReplaceDetail,pumpReplaceDetailSkip } from "@/api/rem/welldynamicanalysis";
 import {
     measureRecommend,
 } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import {exportExcel} from "@/lib/exportExcel";
-import { getOilFieldList, queryProductList } from "@/api/rem/workcompanydesignate.js";
+import { getOilFieldList } from "@/api/rem/workcompanydesignate.js";
 import {
     fetchPlatforms,
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
@@ -345,11 +351,10 @@ export default {
     };
   },
   created() {
-      if(this.$route.query.platform){
-          this.getList(); 
-      }
       this.getserch()
-    // this.choiceDepts(); // 获取组织机构
+      this.queryParams.endTime=this.$route.query.currentDate
+      this.getList();
+      // this.choiceDepts(); // 获取组织机构
   },
   methods: {
       getserch() {
@@ -377,6 +382,9 @@ export default {
           });
       },
       retrieval(){
+          if (this.$route.query.scourePage === "措施建议表详情") {
+              this.queryTableData();
+          } else {
           let selectPlatform = ''
         if(this.queryParams.selectPlatform == ''){
             selectPlatform = '3FC9A818F5BC43B88270DB80BBB3018F'
@@ -385,7 +393,7 @@ export default {
         }
           let list =
               {
-                  oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                  oilFieldId: this.queryParams.selectOilField,
                   selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
                   evaluationDate: this.queryParams.endTime,
                   platformId:selectPlatform,
@@ -405,7 +413,7 @@ export default {
               if(wells.length > 0){
                   let data = {
                       date: this.queryParams.endTime,
-                      ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                      ogfId: this.queryParams.selectOilField,
                       platId: selectPlatform,
                       measureCode:this.$route.query.measureCode,
                       wellIds:wells,
@@ -419,23 +427,53 @@ export default {
                   });
               }
              
-          })
+          })}
 
       },
       doDownExcel() {
           exportExcel("#xczyjhb", "措施计划情况表");
       },
+      queryTableData(){
+          //jgl
+          let selectPlatform = '';
+          if(this.queryParams.selectPlatform == ''){
+              selectPlatform = '3FC9A818F5BC43B88270DB80BBB3018F'
+          }else{
+              selectPlatform = this.queryParams.selectPlatform
+          }
+          let ogfId = '';
+          if(this.queryParams.selectOilField == ''){
+              ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
+          }else{
+              ogfId = this.queryParams.selectOilField
+          }
+          let params = {
+              date: this.queryParams.endTime,
+              ogfId: ogfId,
+              platId: selectPlatform
+          };
+          pumpReplaceDetailSkip(params).then(res=>{
+              if(res.data.code == 200){
+                  this.noticeList = res.data.data;
+              }else{
+                  this.noticeList = []
+              }
+          })  
+      },
     getList() {
+        if (this.$route.query.scourePage === "措施建议表详情") {
+            this.queryTableData();
+        } else {
         let list = 
         {
-            oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+            oilFieldId: this.queryParams.selectOilField,
             selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
             evaluationDate: this.$route.query.currentDate, 
             platformId: this.$route.query.platform,
             timeGranularityCode: "",
             wellId: "",
             showNormal: true
-        }     
+        };
         this.queryParams.endTime = this.$route.query.currentDate
         measureRecommend(list).then((res)=>{
             const wells = []
@@ -449,7 +487,7 @@ export default {
             if(wells.length>0){
                 let data = {
                     date: this.$route.query.currentDate,
-                    ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                    ogfId: this.queryParams.selectOilField,
                     platId: this.$route.query.platform,
                     wellIds:wells,
                     measureCode:this.$route.query.measureCode,
@@ -463,7 +501,7 @@ export default {
                 });
             }
         })
-      
+        }
     },
       objectSpanMethod({row, column, rowIndex, columnIndex}) {
           const concatList = [
@@ -497,6 +535,8 @@ export default {
               {col: 27, colName: 'sandValue'},
               {col: 28, colName: 'pumpCondition'},
               {col: 29, colName: 'tubularColumnCondition'},
+              {col: 30, colName: 'sandValue'},
+              {col: 31, colName: 'pumpCondition'},
               
           ]
           for (let i = 0; i < concatList.length; i++) {

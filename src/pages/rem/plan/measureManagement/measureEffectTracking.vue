@@ -14,7 +14,7 @@
       <div class="g-row-flex-V g-w100 g-h100">
         <div style="margin-right: 15px">
           <span>油田：</span>
-          <el-select v-model="selectOilField" class="f2" disabled @change="onFieldChange">
+          <el-select v-model="selectOilField" class="f2" @change="onFieldChange">
             <el-option
               v-for="(item, index) in oilFields"
               :key="item.ogfId"
@@ -25,7 +25,7 @@
         </div>
         <div style="margin-right: 15px">
           <span>平台：</span>
-          <el-select v-model="selectPlatform" class="f2" style="width: 220px" @change="onPlatfromChange">
+          <el-select v-model="selectPlatform" class="f2" @change="onPlatfromChange">
             <el-option
               v-for="(item, index) in platforms"
               :key="item.platformId"
@@ -36,7 +36,7 @@
         </div>
         <div style="margin-right: 15px">
           <span>井号：</span>
-          <el-select v-model="selectWellId" filterable class="f2">
+          <el-select v-model="selectWellId" filterable class="f2" @change="changeWellId">
             <el-option
               v-for="(item, index) in wells"
               :key="item.wellId"
@@ -47,13 +47,13 @@
         </div>
         <div style="margin-right: 15px">
           <span>措施事件：</span>
-          <el-select v-model="measuresType" class="f2">
+          <el-select v-model="selectMeasuresId" class="f2" @change="changeMeasuresType">
             <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name" :value="item.code">
             </el-option>
           </el-select>
         </div>
         <div style="margin-right: 15px">
-          <span>时间:</span>
+          <span>日期：</span>
           <el-date-picker
             class="f3"
             v-model="dateTime"
@@ -67,23 +67,39 @@
       </div>
     </headerSearch>
     <div style="height: auto; padding-top: 0; margin-bottom: 14px" class="svg">
-      <el-table v-show="type == 0" highlight :data="oilWellTableData" style="width: 100%">
-        <el-table-column type="index" align="center" width="50" label="序号"></el-table-column>
-        <el-table-column prop="wellName" align="center" label="井号" width="160"></el-table-column>
+      <el-table v-show="type == 0" highlight :data="oilWellTableData" border style="width: 100%">
+        <el-table-column type="index" align="center" width="80" label="序号"></el-table-column>
+        <el-table-column
+          prop="wellName"
+          header-align="center"
+          align="center"
+          label="井号"
+          width="160"
+        ></el-table-column>
         <el-table-column
           prop="beginDate"
+          header-align="center"
           align="center"
-          :label="`措施开始日期\n(yyyy/mm/dd)`"
+          :label="`措施开始日期\n(yyyy-mm-dd)`"
           width="140"
         ></el-table-column>
         <el-table-column
           prop="endDate"
+          header-align="center"
           align="center"
-          :label="`措施结束日期\n(yyyy/mm/dd)`"
+          :label="`措施结束日期\n(yyyy-mm-dd)`"
+          width="140"
+        ></el-table-column>
+        <el-table-column
+          prop="measureType"
+          header-align="center"
+          align="center"
+          :label="`措施类型`"
           width="140"
         ></el-table-column>
         <el-table-column align="center" label="措施前生产情况">
           <el-table-column
+            header-align="center"
             align="center"
             :label="`日产液\n(m³)`"
             width="80"
@@ -93,6 +109,7 @@
           <el-table-column align="center" :label="`日产油\n(m³)`" width="80" prop="bmOilDaily" :formatter="toPrecise2">
           </el-table-column>
           <el-table-column
+            header-align="center"
             align="center"
             :label="`含水率\n(%)`"
             width="80"
@@ -102,6 +119,7 @@
         </el-table-column>
         <el-table-column align="center" label="措施效果">
           <el-table-column
+            header-align="center"
             align="center"
             :label="`当日日增油\n(m³)`"
             width="110"
@@ -109,15 +127,23 @@
             :formatter="toPrecise2"
           ></el-table-column>
           <el-table-column
+            header-align="center"
             align="center"
             :label="`累增油\n(m³)`"
             width="85"
             prop="sumOilDaily"
             :formatter="toPrecise2"
           ></el-table-column>
-          <el-table-column prop="days" align="center" :label="`增产有效期\n(d)`" width="100"></el-table-column>
+          <el-table-column
+            prop="days"
+            header-align="center"
+            align="center"
+            :label="`增产有效期\n(d)`"
+            width="100"
+          ></el-table-column>
           <el-table-column
             prop="geoDesignOilDaily"
+            header-align="center"
             align="center"
             :label="`地质设计日增油\n(m³)`"
             width="130"
@@ -125,20 +151,22 @@
           ></el-table-column>
           <el-table-column
             prop="avgOilDaily"
+            header-align="center"
             align="center"
-            :label="`平均日增油\n(m³/d)`"
+            :label="`平均日增油\n(m³)`"
             width="100"
             :formatter="toPrecise2"
           ></el-table-column>
           <el-table-column
             prop=""
+            header-align="center"
             align="center"
-            :label="`滚动预测日增油\n(m³/d)`"
+            :label="`滚动预测日增油\n(m³)`"
             width="140"
             :formatter="toPrecise2"
           ></el-table-column>
         </el-table-column>
-        <el-table-column label="地质设计" align="center">
+        <el-table-column label="地质设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.geoDesg" class="chicked">
               <el-button
@@ -148,21 +176,11 @@
                 >方案查看</el-button
               >
             </div>
-            <!-- TODO 临时 -->
-            <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
-              <el-button
-                type="text"
-                @click="switchToPlan(scope.row.geoDesg, scope.row.geoDesgSl)"
-                :disabled="!canDownload"
-                >方案查看</el-button
-              >
-            </div>
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column label="工艺设计" align="center">
+        <el-table-column label="工艺设计" header-align="center" align="center">
           <template slot-scope="scope">
-            <!-- TODO 临时 -->
             <div v-if="scope.row.oprgProcDesg" class="chicked">
               <el-button
                 type="text"
@@ -171,30 +189,12 @@
                 >方案查看
               </el-button>
             </div>
-            <!-- TODO 临时 -->
-            <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
-              <el-button
-                type="text"
-                @click="switchToPlan(scope.row.oprgProcDesg, scope.row.oprgProcDesgSl)"
-                :disabled="!canDownload"
-                >方案查看
-              </el-button>
-            </div>
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column label="施工设计" align="center">
+        <el-table-column label="施工设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.oprgDesg" class="chicked">
-              <el-button
-                type="text"
-                @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)"
-                :disabled="!canDownload"
-                >方案查看
-              </el-button>
-            </div>
-            <!-- TODO 临时 -->
-            <div v-else-if="scope.row.wellName == 'QHD32-6-I1H'" class="chicked">
               <el-button
                 type="text"
                 @click="switchToPlan(scope.row.oprgDesg, scope.row.oprgDesgSl)"
@@ -208,44 +208,65 @@
       </el-table>
       <el-table v-show="type == 1" highlight :data="waterWellTableData" style="width: 100%">
         <el-table-column type="index" align="center" width="60" label="序号"></el-table-column>
-        <el-table-column prop="wellNo" align="center" label="井号" width="160"></el-table-column>
+        <el-table-column prop="wellNo" header-align="center" align="center" label="井号" width="160"></el-table-column>
         <el-table-column
           prop="beginDate"
+          header-align="center"
           align="center"
-          :label="`措施开始日期\n(yyyy/mm/dd)`"
+          :label="`措施开始日期\n(yyyy-mm-dd)`"
           min-width="110px"
         ></el-table-column>
         <el-table-column
           prop="endDate"
+          header-align="center"
           align="center"
-          :label="`措施结束日期\n(yyyy/mm/dd)`"
+          :label="`措施结束日期\n(yyyy-mm-dd)`"
           min-width="110px"
         ></el-table-column>
         <el-table-column align="center" label="措施前注入情况" min-width="100">
           <el-table-column
+            header-align="center"
             align="center"
-            :label="`日注水量\n(m³/d)`"
+            :label="`日注水量\n(m³)`"
             min-width="100"
             prop="bmInjWater"
+            :formatter="toPrecise2"
           ></el-table-column>
         </el-table-column>
         <el-table-column align="center" label="措施效果">
           <el-table-column
             prop="injDaily"
+            header-align="center"
             align="center"
-            :label="`当日日增注\n( m³/d)`"
+            :label="`当日日增注\n( m³)`"
             min-width="100"
+            :formatter="toPrecise2"
           ></el-table-column>
-          <el-table-column align="center" :label="`累增注\n(m³)`" min-width="100" prop="sumInjDaily"></el-table-column>
-          <el-table-column align="center" :label="`增注有效期\n(d)`" min-width="100" prop="days"></el-table-column>
           <el-table-column
+            header-align="center"
             align="center"
-            :label="`地质设计日配注\n(m³/d)`"
+            :label="`累增注\n(m³)`"
+            min-width="100"
+            prop="sumInjDaily"
+            :formatter="toPrecise2"
+          ></el-table-column>
+          <el-table-column
+            header-align="center"
+            align="center"
+            :label="`增注有效期\n(d)`"
+            min-width="100"
+            prop="days"
+          ></el-table-column>
+          <el-table-column
+            header-align="center"
+            align="center"
+            :label="`地质设计日配注\n(m³)`"
             min-width="120"
             prop="geoDesignInjDaily"
+            :formatter="toPrecise2"
           ></el-table-column>
         </el-table-column>
-        <el-table-column label="地质设计" align="center">
+        <el-table-column label="地质设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.geoDesg" class="chicked">
               <el-button
@@ -258,7 +279,7 @@
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column label="工艺设计" align="center">
+        <el-table-column label="工艺设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.oprgProcDesg" class="chicked">
               <el-button
@@ -271,7 +292,7 @@
             <span v-else>-</span>
           </template>
         </el-table-column>
-        <el-table-column label="施工设计" align="center">
+        <el-table-column label="施工设计" header-align="center" align="center">
           <template slot-scope="scope">
             <div v-if="scope.row.oprgDesg" class="chicked">
               <el-button
@@ -321,14 +342,14 @@
           <div class="svg" v-else-if="oilTabType == '1'">
             <div class="search-date">
               <span>日期：</span>
+              <!-- @change="createChange" -->
               <el-date-picker
-                v-model="dateDetail"
+                v-model="selectRealData"
                 type="datetimerange"
                 range-separator="-"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-                value-format="yyyy-MM-dd"
-                @change="createChange"
+                value-format="yyyy-MM-dd HH:mm:ss"
               ></el-date-picker>
               <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts"
                 >搜索</el-button
@@ -354,7 +375,7 @@
             </div>
           </div>
           <div class="svg" v-else-if="oilTabType == '2'">
-            <div class="search-date" style="position: absolute; top: 0; left: 20px; z-index: 99">
+            <!-- <div class="search-date" style="position: absolute; top: 0; left: 20px; z-index: 99">
               <span>日期：</span>
               <el-date-picker
                 v-model="selectDateTime"
@@ -365,9 +386,10 @@
               <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doWellFluxLastDayHour"
                 >搜索</el-button
               >
-            </div>
+            </div> -->
             <div class="echarts-view">
-              <echarts :chart-data="oilOption2" height="100%"></echarts>
+              <!-- <echarts :chart-data="oilOption2" height="100%"></echarts> -->
+              <singleWellDetails :selectedOilWellName="selectWellName"></singleWellDetails>
             </div>
           </div>
           <div class="svg" v-else-if="oilTabType == '3'">
@@ -385,18 +407,36 @@
               <el-table
                 id="table2"
                 :data="chemicalTableData"
+                border
                 highlight
                 style="width: 100%"
                 height="calc(100% - 55px)"
                 :row-style="{ height: '0px' }"
-                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                :header-cell-style="{ padding: '0px 0' }"
                 header-cell-class-name="table_header"
-                :cell-style="{ padding: '2px', 'text-align': 'center' }"
+                :cell-style="{ padding: '2px' }"
               >
-                <el-table-column label="序号" type="index"></el-table-column>
-                <el-table-column :label="`日期\n(yyyy/mm/dd)`" prop="dateTime"></el-table-column>
-                <el-table-column :label="`含水\n(%)`" prop="wtr" :formatter="toPrecise2"></el-table-column>
-                <el-table-column :label="`含砂\n(%)`" prop="sand" :formatter="toPrecise2"></el-table-column>
+                <el-table-column label="序号" width="80" align="center" type="index"></el-table-column>
+                <el-table-column
+                  :label="`日期\n(yyyy-mm-dd)`"
+                  header-align="center"
+                  align="center"
+                  prop="dateTime"
+                ></el-table-column>
+                <el-table-column
+                  :label="`含水\n(%)`"
+                  prop="wtr"
+                  header-align="center"
+                  align="center"
+                  :formatter="toPrecise2"
+                ></el-table-column>
+                <el-table-column
+                  :label="`含砂\n(%)`"
+                  prop="sand"
+                  header-align="center"
+                  align="center"
+                  :formatter="toPrecise2"
+                ></el-table-column>
                 <!-- <el-table-column label="备注" prop="remark"></el-table-column> -->
               </el-table>
             </div>
@@ -416,18 +456,48 @@
               <el-table
                 ref="table3"
                 :data="getWorkProgressData"
+                border
                 highlight
                 height="calc( 100% - 130px)"
                 :row-style="{ height: '0px' }"
-                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                :header-cell-style="{ padding: '0px 0' }"
                 header-cell-class-name="table_header"
-                :cell-style="{ padding: '2px', 'text-align': 'center' }"
+                :cell-style="{ padding: '2px' }"
               >
-                <el-table-column :label="`日期\n(yyyy/mm/dd)`" prop="dateTime" width="180"></el-table-column>
-                <el-table-column label="井号" prop="wellNo" width="180"></el-table-column>
-                <el-table-column :label="`开始时间\n(yyyy/mm/dd)`" prop="beginTime" width="250"></el-table-column>
-                <el-table-column :label="`预计结束时间\n(yyyy/mm/dd)`" prop="endTime" width="250"></el-table-column>
-                <el-table-column label="当前作业内容" prop="workContent"></el-table-column>
+                <el-table-column
+                  :label="`日期\n(yyyy-mm-dd)`"
+                  prop="dateTime"
+                  width="180"
+                  header-align="center"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  label="井号"
+                  prop="wellNo"
+                  width="180"
+                  header-align="center"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  :label="`开始时间\n(yyyy-mm-dd)`"
+                  prop="beginTime"
+                  width="250"
+                  header-align="center"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  :label="`预计结束时间\n(yyyy-mm-dd)`"
+                  prop="endTime"
+                  width="250"
+                  header-align="center"
+                  align="center"
+                ></el-table-column>
+                <el-table-column
+                  label="当前作业内容"
+                  prop="workContent"
+                  header-align="center"
+                  align="left"
+                ></el-table-column>
               </el-table>
               <pagination
                 v-show="pageTotal2 > 0"
@@ -481,7 +551,7 @@
                 range-separator="-"
                 start-placeholder="开始日期"
                 end-placeholder="结束日期"
-                value-format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd HH:mm:ss"
               ></el-date-picker>
               <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts"
                 >搜索</el-button
@@ -501,6 +571,7 @@
 import fileSaver from "file-saver";
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import Echarts from "@/components/tools/Echarts/index.vue";
+import singleWellDetails from "./singleWellDetails.vue";
 import { fetchMeasureStatInfos } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getAnalysisResult } from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
 import { uploadFile } from "@/api/oilDeposit/rem-02/primaryinfo.js";
@@ -515,7 +586,7 @@ import {
 } from "@/api/oilDeposit/ipm-03/machineprodwellipm.js";
 import { transformBorepipeNo } from "@/api/oilDeposit/ipm-03/basedata.js";
 import { wellFluxLastDayHour } from "@/api/oilDeposit/opm/opmData.js";
-import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { nameAndCode } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getWorkProgress } from "@/api/oilDeposit/rem-04/plan.js";
 import { exportExcel, exportExcelFromJson } from "@/lib/exportExcel.js";
@@ -524,11 +595,13 @@ export default {
   components: {
     verticalSwitchButton,
     Echarts,
+    singleWellDetails
   },
   data() {
     return {
       //油田下拉框
       oilFields: [],
+      companyId: "",
       //油田id
       selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
       //平台下拉框
@@ -541,6 +614,7 @@ export default {
       // WellId:'',
       //井号id
       selectWellId: "",
+      selectWellName: "",
       //措施事件下拉框
       measuresTypes: [],
       //措施事件id
@@ -611,7 +685,6 @@ export default {
         ],
         borepipeId: "",
       },
-      dateDetail: [new Date().addDays(-1).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")],
       checkList: [],
       realTimeData: [],
       isSelect: 0,
@@ -901,6 +974,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "日产气量") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         legend: {
           textStyle: {
@@ -958,9 +1042,12 @@ export default {
             axisLabel: {
               show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -993,7 +1080,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -1002,7 +1090,7 @@ export default {
             },
           },
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 50,
             gridIndex: 2,
             type: "category",
@@ -1025,9 +1113,12 @@ export default {
             },
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -1053,7 +1144,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1083,7 +1175,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1112,7 +1205,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1144,7 +1238,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1172,7 +1267,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1202,7 +1298,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1233,7 +1330,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1263,7 +1361,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1291,7 +1390,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1321,7 +1421,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1351,7 +1452,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1395,121 +1497,7 @@ export default {
         ],
         series: [],
       },
-      // 油井 虚拟计量曲线
-      oilOption2: {
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {
-              name: "油井日度曲线",
-              pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-              backgroundColor: "#022644",
-              iconStyle: {
-                opacity: 0,
-              },
-            },
-          },
-        },
-        dataZoom: [
-          {
-            type: "inside",
-            xAxisIndex: [0],
-            start: 0, //滚动条开始位置（共100等份）
-            end: 100, //滚动条结束位置
-          },
-        ],
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "shadow",
-          },
-        },
-        grid: {
-          x: 120,
-          y: 50,
-          x2: 120,
-          y2: 80,
-        },
-        legend: {
-          data: ["油", "气", "水", "液"],
-          textStyle: {
-            color: "#8FA4CC",
-            fontSize: 14,
-          },
-          x: "center",
-          bottom: 30,
-          icon: "rect",
-          itemWidth: 12,
-          itemHeight: 6,
-          itemGap: 14,
-        },
-        xAxis: {
-          name: "时间",
-          nameTextStyle: {
-            color: "#8FA4CC",
-            fontSize: 14,
-          },
-          type: "category",
-          data: [],
-          axisLabel: {
-            show: false,
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-        yAxis: {
-          name: "流量(Sm³/d)",
-          nameLocation: "middle",
-          nameGap: 70,
-          nameTextStyle: {
-            color: "#8FA4CC",
-            fontSize: 14,
-          },
-          type: "value",
-          axisLabel: {
-            show: false,
-            color: "#8FA4CC",
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              color: "#8FA4CC",
-            },
-          },
-        },
-        series: [
-          {
-            name: "油",
-            type: "line",
-            data: [],
-          },
-          {
-            name: "气",
-            type: "line",
-            data: [],
-          },
-          {
-            name: "水",
-            type: "line",
-            data: [],
-          },
-          {
-            name: "液",
-            type: "line",
-            data: [],
-          },
-        ],
-      },
+     
       // 水井折线图内容
       waterOption: {
         dataZoom: [
@@ -1524,6 +1512,17 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
           },
         },
         legend: {
@@ -1577,9 +1576,12 @@ export default {
             axisLabel: {
               show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -1588,7 +1590,7 @@ export default {
             },
           },
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 30,
             gridIndex: 1,
             type: "category",
@@ -1611,9 +1613,12 @@ export default {
             },
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -1641,7 +1646,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1670,7 +1676,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1700,7 +1707,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1728,7 +1736,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1758,7 +1767,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1787,7 +1797,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1817,7 +1828,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1847,6 +1859,17 @@ export default {
             // Use axis to trigger tooltip
             type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         grid: [
           {
@@ -1871,9 +1894,12 @@ export default {
             axisLabel: {
               show: true,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -1889,6 +1915,8 @@ export default {
             type: "category",
             axisLabel: {
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -1917,7 +1945,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1948,7 +1977,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -2053,7 +2083,10 @@ export default {
       // 获得年份
       const year = new Date().getFullYear();
       this.selectData = [new Date(`${year}-01-01`).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
-      this.selectRealData = [new Date().addDays(-1).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
+      this.selectRealData = [
+        new Date().addDays(-1).format("yyyy-MM-dd hh:mm:ss"),
+        new Date().format("yyyy-MM-dd hh:mm:ss"),
+      ];
       // this.selectData.push(new Date(year+'-01-01').format('yyyy-MM-dd'));
       // this.selectData.push(new Date().format('yyyy-MM-dd'));
       this.getFetchMeasureStatInfos(
@@ -2072,10 +2105,25 @@ export default {
       this.doSearchCharts();
     },
     async initSearchSelect() {
-      //油田
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilFields = res.data.data;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilFields = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
+          }
         }
       });
       //平台
@@ -2116,8 +2164,24 @@ export default {
       });
     },
     //油田下拉框change事件
-    onFieldChange(val) {
-      this.getFetchPlatforms(val);
+    async onFieldChange(val) {
+      await QueryPlatformDetail({ ogfId: val }).then((res) => {
+        if (res.data.code == 200) {
+          this.platforms = res.data.data || [];
+          this.selectPlatform = this.platforms[0]?.platformId || "";
+        }
+      });
+      await QueryWellDetail({
+        ogfId: val,
+        platformId: this.selectPlatform,
+      }).then((res) => {
+        if (res.data.code == 200) {
+          this.wells = res.data.data;
+          this.selectWellId = this.wells[0].wellId;
+        }
+      });
+      this.selectMeasuresId = "";
+      this.measuresDate = new Date(this.dateTime).format("yyyy");
     },
     //根据油田id查-平台数据
     getFetchPlatforms(oilFieldId) {
@@ -2131,6 +2195,15 @@ export default {
     //平台下拉框change事件
     onPlatfromChange(val) {
       this.getFetchWells(this.selectOilField, val);
+      this.selectMeasuresId = "";
+      this.measuresDate = new Date(this.dateTime).format("yyyy");
+    },
+    changeWellId() {
+      this.selectMeasuresId = "";
+      this.measuresDate = new Date(this.dateTime).format("yyyy");
+    },
+    changeMeasuresType() {
+      // this.selectMeasuresId = this.measuresType;
     },
     //通过油田或平台-查井号
     async getFetchWells(oilFieldId, platformId) {
@@ -2599,29 +2672,18 @@ export default {
     },
     //下载文档 跳转至方案查看
     switchToPlan(filePath, fileType) {
-      this.$modal
-        .confirm("是否确认下载？")
-        .then(() => {
-          // this.$message.success("下载成功！");
-          // return this.loadData();
-        })
-        .catch(() => {
-          // this.$message.warning("已取消下载");
-        });
-      return;
-      const fp = encodeURI(filePath);
-      const ft = fileType;
-      const request = {
-        filePath: fp,
-        fileType: ft,
-      };
-      getDocDownloadUrl(request).then((res) => {
-        if (res.code == 200) {
-          const fn = res.headers.filename;
-          const fileName = decodeURI(fn);
-          fileSaver.saveAs(res.data, fileName);
-        }
-      });
+      // this.$modal
+      //   .confirm("是否确认下载？")
+      //   .then(() => {
+      // this.$message.success("下载成功！");
+      // return this.loadData();
+      // fileSaver.saveAs(filePath);
+      window.open(filePath,"_blank")
+      // })
+      // .catch(() => {
+      //   // this.$message.warning("已取消下载");
+      //   fileSaver.saveAs(filePath);
+      // });
     },
     fatchAllData() {
       this.getRealtimeData();
@@ -2659,14 +2721,19 @@ export default {
     },
     getRealtimeData() {
       this.realTimeData = [];
-      getOilWellData(this.queryParams).then((res) => {
+      const request = {
+        ...this.queryParams,
+        beginDate: this.selectRealData[0],
+        endDate: this.selectRealData[1],
+      };
+      getOilWellData(request).then((res) => {
         if (res.data.code == 200) {
           const data = res.data.data;
           if (Object.keys(data).length) {
             this.realTimeData = data;
           }
         }
-        getPumpData(this.queryParams).then((ref) => {
+        getPumpData(request).then((ref) => {
           if (ref.data.code == 200) {
             const data = ref.data.data;
             if (Object.keys(data).length) {
@@ -2711,6 +2778,17 @@ export default {
         title: {},
         tooltip: {
           trigger: "axis",
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         /* legend: {}, */
         grid: [
@@ -2743,7 +2821,7 @@ export default {
           ...this.defaultType
             .map((arr, index) => arr.filter((item) => this.queryParams.paramCodes.includes(item)))
             .map((item, index) => ({
-              // name: "日",
+              // name: "日期 (日)",
               // nameGap: 30,
               gridIndex: index,
               type: "category",
@@ -2757,9 +2835,12 @@ export default {
               axisLabel: {
                 show: true,
                 color: "#8FA4CC",
+                showMinLabel: true,
+                showMaxLabel: true,
               },
               axisTick: {
-                show: false,
+                show: true,
+                inside: true,
               },
               axisLine: {
                 lineStyle: {
@@ -2797,7 +2878,8 @@ export default {
                     minInterval: 0,
                   },
                   axisTick: {
-                    show: false,
+                    show: true,
+                    inside: true,
                   },
                   axisLine: {
                     show: true,
@@ -2987,51 +3069,8 @@ export default {
     },
     //虚拟计量内容 查询
     doWellFluxLastDayHour() {
-      return false;
-      const request = {
-        date: this.selectDateTime,
-        wellName: this.wellNameNano,
-      };
-      const xData = [];
-      const seriesData1 = [];
-      const seriesData2 = [];
-      const seriesData3 = [];
-      const seriesData4 = [];
-      wellFluxLastDayHour(request)
-        .then((res) => {
-          if (res.data.code == 200) {
-            const tableList = res.data.data;
-            tableList.forEach((item) => {
-              xData.push(item.M_CREATE);
-              const oil = parseFloat(Number(Number(item.M_FO_STDVOL) * 60 * 60 * 24).toFixed(2));
-              const gas = parseFloat(Number(Number(item.M_FG_STDVOL) * 60 * 60 * 24).toFixed(2));
-              const water = parseFloat(Number(Number(item.M_FW_STDVOL) * 60 * 60 * 24).toFixed(2));
-              const fluid = parseFloat(Number(oil + water).toFixed(2));
-              seriesData1.push([item.M_CREATE, oil]);
-              seriesData2.push([item.M_CREATE, gas]);
-              seriesData3.push([item.M_CREATE, water]);
-              seriesData4.push([item.M_CREATE, fluid]);
-            });
-            this.oilOption2.xAxis.data = xData;
-            this.oilOption2.series[0].data = seriesData1;
-            this.oilOption2.series[1].data = seriesData2;
-            this.oilOption2.series[2].data = seriesData3;
-            this.oilOption2.series[3].data = seriesData4;
-          } else {
-            this.oilOption2.xAxis.data = xData;
-            this.oilOption2.series[0].data = seriesData1;
-            this.oilOption2.series[1].data = seriesData2;
-            this.oilOption2.series[2].data = seriesData3;
-            this.oilOption2.series[3].data = seriesData4;
-          }
-        })
-        .catch((err) => {
-          this.oilOption2.xAxis.data = xData;
-          this.oilOption2.series[0].data = seriesData1;
-          this.oilOption2.series[1].data = seriesData2;
-          this.oilOption2.series[2].data = seriesData3;
-          this.oilOption2.series[3].data = seriesData4;
-        });
+      this.selectWellName = this.wells.filter((el) => this.selectWellId == el.wellId)[0].wellName || "";
+      // return false;
     },
     //下载导出文件 tableId tableName
     doDownExcel(tableId, tableName) {
@@ -3139,7 +3178,7 @@ export default {
 }
 
 .f2 {
-  width: 250px !important;
+  width: 200px !important;
 }
 
 .f3 {

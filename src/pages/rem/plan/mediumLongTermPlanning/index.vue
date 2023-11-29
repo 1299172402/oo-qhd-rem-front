@@ -4,13 +4,8 @@
     <header-search style="height: 80px">
       <div class="g-row-flex-V g-w100 g-h100">
         <span>油田：</span>
-        <el-select v-model="selectOilField" disabled>
-          <el-option
-            v-for="item in oilField"
-            :key="item.ogfId"
-            :label="item.ogfName"
-            :value="item.ogfId"
-          ></el-option>
+        <el-select v-model="selectOilField" placeholder="请选择">
+          <el-option v-for="item in oilField" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
         </el-select>
         <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField"
           >搜索</el-button
@@ -27,37 +22,57 @@
         @click="doDownExcel('#tableData', `${oilFieldName || ''} 中长期计划表`)"
         >下载</el-button
       >
-      <el-table :data="tableData2" id="tableData" height="calc(100% - 40px)" highlight style="width: 100%">
-        <el-table-column prop="theYear" align="center" label="年份"></el-table-column>
+      <el-table :data="tableData2" id="tableData" height="calc(100% - 40px)" highlight border style="width: 100%">
+        <el-table-column prop="theYear" header-align="center" align="center" label="年份"></el-table-column>
         <el-table-column
           prop="baseProduct"
+          header-align="center"
           align="center"
           :label="`基础产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
-        <el-table-column prop="newJustWellNum" align="center" :label="`新增调整井井数\n(口)`"></el-table-column>
+        <el-table-column
+          prop="newJustWellNum"
+          header-align="center"
+          align="center"
+          :label="`新增调整井井数\n(口)`"
+        ></el-table-column>
         <el-table-column
           prop="oldWellProduct"
+          header-align="center"
           align="center"
           :label="`调整井滚动产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
-        <el-table-column prop="oilWellIncNum" align="center" :label="`油井增产措施井次\n(口)`"></el-table-column>
+        <el-table-column
+          prop="oilWellIncNum"
+          header-align="center"
+          align="center"
+          :label="`油井增产措施井次\n(口)`"
+        ></el-table-column>
         <el-table-column
           prop="measureProduct"
+          header-align="center"
           align="center"
           :label="`措施产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
-        <el-table-column prop="chemicalWellNum" align="center" :label="`化学驱井次\n(口)`"></el-table-column>
+        <el-table-column
+          prop="chemicalWellNum"
+          header-align="center"
+          align="center"
+          :label="`化学驱井次\n(口)`"
+        ></el-table-column>
         <el-table-column
           prop="chemicalProduct"
+          header-align="center"
           align="center"
           :label="`化学驱产量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="productAll"
+          header-align="center"
           align="center"
           :label="`产量合计\n(10⁴m³)`"
           :formatter="toPrecise4"
@@ -67,7 +82,7 @@
   </div>
 </template>
 <script>
-import { QueryOgfDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { searchLongTermPlan } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 
@@ -75,6 +90,7 @@ export default {
   name: "mediumLongTermPlanning",
   data() {
     return {
+      companyId: "",
       //选择油田
       selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
       //油田列表
@@ -266,13 +282,26 @@ export default {
     },
     //初始化
     async initData() {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
+        if (res.data.code == 200) {
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
+        }
+      });
       //获取油田信息
-      await QueryOgfDetail({}).then((res) => {
-        this.oilField = res.data.data;
-        if (this.oilField.length == 0) {
-          this.selectOilField = "";
-        } else {
-          this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilField = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
+          }
         }
       });
       //发现油田名称

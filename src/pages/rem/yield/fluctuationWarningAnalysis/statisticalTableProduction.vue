@@ -8,7 +8,7 @@
       <div style="display: flex; align-items: center; flex-wrap: wrap">
         <div style="margin-right: 15px; margin-bottom: 10px">
           <span>油田：</span>
-          <el-select v-model="searchForm.ogfId" disabled @change="onFieldChange" style="width: 165px">
+          <el-select v-model="searchForm.ogfId" @change="onFieldChange" style="width: 165px">
             <el-option
               v-for="(item, index) in oilFields"
               :key="item.ogfId"
@@ -19,7 +19,7 @@
         </div>
         <div style="margin-right: 15px; margin-bottom: 10px">
           <span>平台：</span>
-          <el-select v-model="searchForm.platId" @change="onPlatfromChange" style="width: 220px">
+          <el-select v-model="searchForm.platId" clearable @change="onPlatfromChange" style="width: 220px">
             <el-option
               v-for="(item, index) in platforms"
               :key="item.platformId"
@@ -40,9 +40,9 @@
           </el-select>
         </div>
         <div style="margin-right: 15px; margin-bottom: 10px">
-          <span>对比基准日期：</span>
+          <span>对比日期：</span>
           <el-date-picker
-            v-model="searchForm.prodDate"
+            v-model="searchForm.prodDateCompare"
             :clearable="false"
             style="width: 160px"
             type="date"
@@ -51,9 +51,9 @@
           ></el-date-picker>
         </div>
         <div style="margin-right: 15px; margin-bottom: 10px">
-          <span>对比日期：</span>
+          <span>对比基准日期：</span>
           <el-date-picker
-            v-model="searchForm.prodDateCompare"
+            v-model="searchForm.prodDate"
             :clearable="false"
             style="width: 160px"
             type="date"
@@ -70,6 +70,7 @@
         </div>
         <div style="margin-right: 15px; margin-bottom: 10px">
           <el-button type="primary" icon="el-icon-search" @click="getWellOutputWaveTable(true)">搜索</el-button>
+          <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
         </div>
       </div>
     </headerSearch>
@@ -86,7 +87,7 @@
             margin-left: 0;
           "
         >
-          <span>秦皇岛32-6油田单井产量变化</span>
+          <span>{{ searchForm.ogfName }}单井产量变化</span>
           <div>
             <el-button type="primary" style="height: 30px" @click="doDownIndex">下载</el-button>
             <el-button type="primary" style="height: 30px" @click="goBack">返回</el-button>
@@ -96,7 +97,7 @@
           <el-table
             id="tableData"
             :data="tableData"
-            :border="false"
+            border
             :row-style="{ height: '0px' }"
             header-cell-class-name="table_header"
             :cell-style="{ padding: '6px', 'text-align': 'center' }"
@@ -111,7 +112,7 @@
               <el-table-column
                 sortable
                 prop="fluidProdDaily"
-                :label="`日产液\n(m³/d)`"
+                :label="`日产液\n(m³)`"
                 width="90"
                 :formatter="formatter"
                 :sort-method="
@@ -123,7 +124,7 @@
               <el-table-column
                 sortable
                 prop="oilProdDaily"
-                :label="`日产油\n(m³/d)`"
+                :label="`日产油\n(m³)`"
                 width="90"
                 :formatter="formatter"
                 :sort-method="
@@ -172,7 +173,7 @@
               <el-table-column
                 sortable
                 prop="fluidProdDailyCompare"
-                :label="`日产液\n(m³/d)`"
+                :label="`日产液\n(m³)`"
                 width="90"
                 :formatter="formatter"
                 :sort-method="
@@ -184,7 +185,7 @@
               <el-table-column
                 sortable
                 prop="oilProdDailyCompare"
-                :label="`日产油\n(m³/d)`"
+                :label="`日产油\n(m³)`"
                 width="90"
                 :formatter="formatter"
                 :sort-method="
@@ -238,8 +239,8 @@
                 :sort-method="
                   (a, b) => {
                     return borepipeNoSort1(
-                      numReduce(a.fluidProdDaily, a.fluidProdDailyCompare),
-                      numReduce(b.fluidProdDaily, b.fluidProdDailyCompare),
+                      numReduce(a.fluidProdDailyCompare, a.fluidProdDaily),
+                      numReduce(b.fluidProdDailyCompare, b.fluidProdDaily),
                     );
                   }
                 "
@@ -248,25 +249,25 @@
                   <span style="display: flex; align-items: center; justify-content: center">
                     {{
                       row.fluidProdDaily !== null
-                        ? numReduce(row.fluidProdDaily, row.fluidProdDailyCompare).toFixed(2)
+                        ? numReduce(row.fluidProdDailyCompare, row.fluidProdDaily).toFixed(2)
                         : "-"
                     }}
                     <img
                       src="@/assets/rem/yieId/upTriangle.png"
                       alt=""
-                      v-if="row.fluidProdDaily !== null && numReduce(row.fluidProdDaily, row.fluidProdDailyCompare) > 0"
+                      v-if="row.fluidProdDaily !== null && numReduce(row.fluidProdDailyCompare, row.fluidProdDaily) > 0"
                       style="width: 20px; height: 20px"
                     />
                     <span
                       v-if="
-                        row.fluidProdDaily !== null && numReduce(row.fluidProdDaily, row.fluidProdDailyCompare) === 0
+                        row.fluidProdDaily !== null && numReduce(row.fluidProdDailyCompare, row.fluidProdDaily) === 0
                       "
                       style="width: 12px; height: 3px; background-color: #ffe706; margin-left: 8px"
                     ></span>
                     <img
                       src="@/assets/rem/yieId/downTriangle.png"
                       alt=""
-                      v-if="row.fluidProdDaily !== null && numReduce(row.fluidProdDaily, row.fluidProdDailyCompare) < 0"
+                      v-if="row.fluidProdDaily !== null && numReduce(row.fluidProdDailyCompare, row.fluidProdDaily) < 0"
                       style="width: 20px; height: 20px"
                     />
                   </span>
@@ -324,31 +325,31 @@
                 :sort-method="
                   (a, b) => {
                     return borepipeNoSort1(
-                      numReduce(a.waterRatio, a.waterRatioCompare),
-                      numReduce(b.waterRatio, b.waterRatioCompare),
+                      numReduce(a.waterRatioCompare, a.waterRatio),
+                      numReduce(b.waterRatioCompare, b.waterRatio),
                     );
                   }
                 "
               >
                 <template slot-scope="{ row }">
                   <span style="display: flex; align-items: center; justify-content: center">
-                    {{ row.waterRatio !== null ? numReduce(row.waterRatio, row.waterRatioCompare).toFixed(2) : "-" }}
+                    {{ row.waterRatio !== null ? numReduce(row.waterRatioCompare, row.waterRatio).toFixed(2) : "-" }}
                     <img
                       src="@/assets/rem/yieId/UP.png"
                       alt=""
-                      v-if="row.waterRatio !== null && numReduce(row.waterRatio, row.waterRatioCompare) > 0"
+                      v-if="row.waterRatio !== null && numReduce(row.waterRatioCompare, row.waterRatio) > 0"
                       style="width: 20px; height: 20px"
                     />
                     <img
                       src="@/assets/rem/yieId/equation.png"
                       alt=""
-                      v-if="row.waterRatio !== null && numReduce(row.waterRatio, row.waterRatioCompare) == 0"
+                      v-if="row.waterRatio !== null && numReduce(row.waterRatioCompare, row.waterRatio) == 0"
                       style="width: 20px; height: 20px; margin-left: 8px"
                     />
                     <img
                       src="@/assets/rem/yieId/DOWN.png"
                       alt=""
-                      v-if="row.waterRatio !== null && numReduce(row.waterRatio, row.waterRatioCompare) < 0"
+                      v-if="row.waterRatio !== null && numReduce(row.waterRatioCompare, row.waterRatio) < 0"
                       style="width: 20px; height: 20px"
                     />
                   </span>
@@ -362,8 +363,8 @@
                 :sort-method="
                   (a, b) => {
                     return borepipeNoSort1(
-                      numReduce(a.dhFlowingPress, a.dhFlowingPressCompare),
-                      numReduce(b.dhFlowingPress, b.dhFlowingPressCompare),
+                      numReduce(a.dhFlowingPressCompare, a.dhFlowingPress),
+                      numReduce(b.dhFlowingPressCompare, b.dhFlowingPress),
                     );
                   }
                 "
@@ -371,7 +372,7 @@
                 <template slot-scope="scope">
                   {{
                     scope.row.dhFlowingPress !== null
-                      ? numReduce(scope.row.dhFlowingPress, scope.row.dhFlowingPressCompare).toFixed(2)
+                      ? numReduce(scope.row.dhFlowingPressCompare, scope.row.dhFlowingPress).toFixed(2)
                       : "-"
                   }}
                 </template>
@@ -384,8 +385,8 @@
                 :sort-method="
                   (a, b) => {
                     return borepipeNoSort1(
-                      numReduce(a.pumpFrequency, a.pumpFrequencyCompare),
-                      numReduce(b.pumpFrequency, b.pumpFrequencyCompare),
+                      numReduce(a.pumpFrequencyCompare, a.pumpFrequency),
+                      numReduce(b.pumpFrequencyCompare, b.pumpFrequency),
                     );
                   }
                 "
@@ -394,25 +395,25 @@
                   <span style="display: flex; align-items: center; justify-content: center">
                     {{
                       row.pumpFrequency !== null
-                        ? numReduce(row.pumpFrequency, row.pumpFrequencyCompare).toFixed(2)
+                        ? numReduce(row.pumpFrequencyCompare, row.pumpFrequency).toFixed(2)
                         : "-"
                     }}
                     <img
                       src="@/assets/rem/yieId/UP.png"
                       alt=""
-                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequency, row.pumpFrequencyCompare) > 0"
+                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequencyCompare, row.pumpFrequency) > 0"
                       style="width: 20px; height: 20px"
                     />
                     <img
                       src="@/assets/rem/yieId/equation.png"
                       alt=""
-                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequency, row.pumpFrequencyCompare) == 0"
+                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequencyCompare, row.pumpFrequency) == 0"
                       style="width: 20px; height: 20px; margin-left: 8px"
                     />
                     <img
                       src="@/assets/rem/yieId/DOWN.png"
                       alt=""
-                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequency, row.pumpFrequencyCompare) < 0"
+                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequencyCompare, row.pumpFrequency) < 0"
                       style="width: 20px; height: 20px"
                     />
                   </span>
@@ -428,7 +429,7 @@
 </template>
 
 <script>
-import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { getWellOutputWaveTable, getWellOutputWaveTableDate } from "@/api/oilDeposit/rem-04/yieId.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 import * as D3 from "d3";
@@ -465,12 +466,14 @@ export default {
       ],
       //参数
       searchForm: {
+        companyId: "",
         ogfId: "",
+        ogfName: "",
         platId: "",
         wellId: "",
         wellIds: [], //井标识集合
-        prodDate: new Date().addDays(-1).format("yyyy-MM-dd"), //对比基准日期
-        prodDateCompare: new Date().addDays(-2).format("yyyy-MM-dd"), //对比日期
+        prodDate: new Date().addDays(-2).format("yyyy-MM-dd"), //对比基准日期
+        prodDateCompare: new Date().addDays(-1).format("yyyy-MM-dd"), //对比日期
         influenceFactor: "", //影响因素
       },
       //表格数据
@@ -500,8 +503,9 @@ export default {
       } else {
         await getWellOutputWaveTableDate().then((res) => {
           if (res.data.code == 200) {
-            this.searchForm.prodDate = res.data.data;
-            this.searchForm.prodDateCompare = new Date(this.searchForm.prodDate).addDays(-1).format("yyyy-MM-dd");
+            this.searchForm.prodDateCompare = res.data.data;
+            this.searchForm.prodDate = new Date(res.data.data).addDays(-1).format("yyyy-MM-dd");
+
           }
         });
       }
@@ -524,28 +528,54 @@ export default {
     } else {
       await getWellOutputWaveTableDate().then((res) => {
         if (res.data.code == 200) {
-          this.searchForm.prodDate = res.data.data;
-          this.searchForm.prodDateCompare = new Date(this.searchForm.prodDate).addDays(-1).format("yyyy-MM-dd");
+          this.searchForm.prodDateCompare = res.data.data;
+          this.searchForm.prodDate = new Date(res.data.data).addDays(-1).format("yyyy-MM-dd");
+
         }
       });
     }
     await this.initData();
   },
   methods: {
+    //重置
+    resetting() {
+      this.$nextTick(() => {
+        Object.assign(this.$data, this.$options.data());
+        //初始化时间段
+        // this.selectDate = [new Date().addDays(-30).format("yyyy-MM-dd"), new Date().addDays(-1).format("yyyy-MM-dd")];
+        //初始化筛选设置
+        // this.setParaValue = "2";
+        this.initData();
+      });
+    },
     //页面初始化信息
     async initData() {
-      //油田
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilFields = res.data.data;
-          this.searchForm.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
+          this.searchForm.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.searchForm.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilFields = data.data.data;
+          if (this.searchForm.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.searchForm.ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.searchForm.ogfId = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
+          }
         }
       });
       //平台
       await QueryPlatformDetail({ ogfId: this.searchForm.ogfId }).then((res) => {
         if (res.data.code == 200) {
           let platforms = res.data.data;
-          this.searchForm.platId = platforms[0].platformId;
+          // this.searchForm.platId = platforms[0].platformId;
           this.platforms = platforms;
         }
       });
@@ -573,7 +603,7 @@ export default {
       this.wells = [];
       QueryWellDetail({
         ogfId: this.searchForm.ogfId,
-        platformId: this.searchForm.platId,
+        platformId: this.searchForm.platId || undefined,
       }).then((res) => {
         if (res.data.code == 200) {
           this.wells = res.data.data;
@@ -584,6 +614,7 @@ export default {
     },
     //产量波动统计表
     getWellOutputWaveTable(isWellIdsNull) {
+      this.searchForm.ogfName = this.oilFields.filter((item) => item.ogfId === this.searchForm.ogfId)[0].ogfName || "";
       if (this.searchForm.wellId || isWellIdsNull) {
         this.searchForm.wellIds = [];
       }
@@ -596,8 +627,8 @@ export default {
               if (el.oilProdDaily !== null) {
                 //产油对比
                 let comparisonOilProduction = this.numReduce(
-                  el.oilProdDaily,
                   el.oilProdDailyCompare ? el.oilProdDailyCompare : "0.0",
+                  el.oilProdDaily,
                 );
                 tableData[i].comparisonOilProduction = comparisonOilProduction;
                 minMax.push(Math.abs(comparisonOilProduction));
@@ -667,11 +698,10 @@ export default {
     },
     //下载导出csv文件
     doDownIndex() {
-      exportExcel("#tableData", "秦皇岛32-6油田单井产量变化");
+      exportExcel("#tableData", `${this.searchForm.ogfName}单井产量变化`);
     },
     //自定义井号排序
     borepipeNoSort(oa, ob, code) {
-      console.log("数据输出", oa, ob, code);
       let wellA = oa[code];
       let wellB = ob[code];
       return Number(oa[code]) - Number(ob[code]);

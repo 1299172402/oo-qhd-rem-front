@@ -56,13 +56,27 @@ function showLoading(target) {
   }
   needLoadingRequestCount += 1;
 }
+
+function determineLoading(config) {
+  if (!config) return false;
+  return (
+    store.getters["permission/scrollLoading"] &&
+    config.headers.showLoading !== false &&
+    !config.url.includes("/system/CustomPanel/listByCustomId") &&
+    !config.url.includes("system/app/appListByUserIdAndTenantId") &&
+    !whiteListLoading.includes(config.url)
+  );
+}
+
 // 隐藏loading
-function hideLoading() {
-  needLoadingRequestCount -= 1;
-  needLoadingRequestCount = Math.max(needLoadingRequestCount, 0); // 做个保护
-  if (needLoadingRequestCount === 0) {
+function hideLoading(config = {}, needDetermine = true) {
+  if (!needDetermine || determineLoading(config)) {
+    needLoadingRequestCount -= 1;
+    needLoadingRequestCount = Math.max(needLoadingRequestCount, 0); // 做个保护
+    if (needLoadingRequestCount === 0) {
     // 关闭loading
-    toHideLoading();
+      toHideLoading();
+    }
   }
 }
 
@@ -92,9 +106,7 @@ function logoutBox(response = null) {
       store.dispatch("user/logout").then(() => {
         router.replace({ path: "/" });
       });
-      if (response?.config?.headers?.showLoading !== false) {
-        hideLoading();
-      }
+      hideLoading(response?.config);
     }
   });
 }
@@ -116,16 +128,15 @@ instance.interceptors.request.use(
     //   config.headers.Authorization = `Bearer ${store.getters['user/token']}`;
     // }
     // 判断当前请求是否设置了不显示Loading
-    if (store.getters["permission/scrollLoading"] && config.headers.showLoading !== false && !config.url.includes("/system/CustomPanel/listByCustomId") && !config.url.includes("system/app/appListByUserIdAndTenantId") && whiteListLoading.indexOf(config.url) === -1) {
+    if (determineLoading(config)) {
       showLoading(config.headers.loadingTarget);
     }
     return config;
   },
   err => {
+    const { config } = err;
     // 判断当前请求是否设置了不显示Loading
-    // if(config.headers.showLoading !== false){
-    hideLoading();
-    // }
+    hideLoading(config);
     Promise.reject(err);
   }
 );
@@ -144,12 +155,12 @@ instance.interceptors.response.use(
       store.commit("user/setToken", response.headers.ntk);
     }
     if (response.config.returnAll) {
-      hideLoading();
+      hideLoading(response.config);
       return response;
     }
     // 二进制数据则直接返回
     if (response.request.responseType === "blob" || response.request.responseType === "arraybuffer") {
-      hideLoading();
+      hideLoading(response.config);
       return response.data;
     }
     if (response.data.code === 401 && interceptCount === 0) {
@@ -182,39 +193,32 @@ instance.interceptors.response.use(
           offset: 50
         });
       }
-      if (response.config.headers.showLoading !== false) {
-        hideLoading();
-      }
+      hideLoading(response.config);
     } else if (response.data.code === 200) {
       interceptCount = 0;
       const { data } = response;
       // 判断当前请求是否设置了不显示Loading（不显示自然无需隐藏）
-      if (response.config.headers.showLoading !== false) {
-        hideLoading();
-      }
+      hideLoading(response.config);
       if (router.app?.$route?.name === "login") { // 登录页面关闭所有loading
-        if (response.config.headers.showLoading !== false) {
-          needLoadingRequestCount = 1;
-          hideLoading();
-        }
+        needLoadingRequestCount = 1;
+        hideLoading(response.config, false);
       }
       if (data.code === CODE.REQUEST_SUCCESS) {
         return data;
       }
       return response;
     } else {
-      hideLoading();
+      hideLoading(response.config);
       return response.data;
     }
   },
   err => {
     const { config, response } = err;
+
     // 判断当前请求是否设置了不显示Loading（不显示自然无需隐藏）
-    // if(response.config.headers.showLoading !== false){
-    hideLoading();
-    // }
+    hideLoading(config);
     if (!config || !config.retry) {
-      if (response.config.headers.unDisplayErrTip) {
+      if (response?.config.headers.unDisplayErrTip) {
         return Promise.reject(err);
       } if (err.response?.data.code === 401) {
         logoutBox();

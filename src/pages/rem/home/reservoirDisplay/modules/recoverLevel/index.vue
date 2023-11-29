@@ -5,7 +5,7 @@
         header-title="采出程度与含水率关系图"
         :is-show-max-btn="true"
     >
-        <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</el-button>
+        <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('/developStatus/developmentEffectEvaluation')">详情</el-button>
         <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downEcharts">下载</el-button>
         <Echart ref="echartChart" :chart-data="relationship" width="100%" height="100%"></Echart>
     </info-window>
@@ -31,9 +31,9 @@ export default {
       currentModel: this.$store.state.setting.mode,
         relationship: {
             grid:{
-                top: "5%",
-                right: "5%",
-                bottom:"25%",
+                top: "15%",
+                right: "18%",
+                bottom:"20%",
                 left: "12%",
             },
             tooltip: {
@@ -55,17 +55,16 @@ export default {
             },
             xAxis: {
                 name: '地质储量采出程度(%)',
-                nameLocation: 'center',
                 nameTextStyle: {
                     color: '#8FA4CC'
                 },
-                nameGap: 30,
                 type: 'value',
                 axisLabel: {
                     color: '#8FA4CC'
                 },
                 axisTick: {
-                    show: false
+                    show:true,
+                    inside: true
                 },
                 axisLine: {
                     show: true,
@@ -82,19 +81,18 @@ export default {
             },
             yAxis: {
                 name: '综合含水率(%)',
-                nameLocation: 'center',
                 nameTextStyle: {
                     color: '#8FA4CC'
                 },
                 max:100,
                 min:0,
-                nameGap: 30,
                 type: 'value',
                 axisLabel: {
                     color: '#8FA4CC'
                 },
                 axisTick: {
-                    show: false
+                    show:true,
+                    inside: true
                 },
                 axisLine: {
                     show:true,

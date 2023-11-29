@@ -49,10 +49,10 @@
           <el-table-column prop="oilproduction" label="10⁴m³" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="日产油水平" align="center">
-          <el-table-column prop="dailyoillevel" label="m³/d" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="dailyoillevel" label="m³" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="日产油能力" align="center">
-          <el-table-column prop="dailyfuelcapacity" label="m³/d" align="center" min-width="100"></el-table-column>
+          <el-table-column prop="dailyfuelcapacity" label="m³" align="center" min-width="100"></el-table-column>
         </el-table-column>
         <el-table-column label="综合气油比" align="center">
           <el-table-column
@@ -182,7 +182,6 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log("zmmm--", data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {

@@ -1,401 +1,462 @@
 <!-- 天然气 -->
 <template>
-    <div class="tab-container">
-        <pagePanel :headerTitle="searchForm.oilFieldName + '天然气产量跟踪图'" :style="{marginTop:0, height: height+'px'}" show-btn>
-            <!-- <div slot-name="titleContent">
+  <div class="tab-container">
+    <pagePanel
+      :headerTitle="searchForm.oilFieldName + '天然气产量跟踪图'"
+      :style="{ marginTop: 0, height: height + 'px' }"
+      show-btn
+    >
+      <!-- <div slot-name="titleContent">
                 <el-button type="primary" style="position: absolute;right:50px;top:6px;height:30px;" @click="downEchart">下载</el-button>
             </div> -->
-            <Echart ref="echartChart" :chart-data="GasProLineChart" height="100%"></Echart>
-        </pagePanel>
-        <div class="develop">
-            <span :class="[isDevelop?'top-span':'active-span']" @click="tapDevelop"></span>
-        </div>
-        <pagePanel :headerTitle="searchForm.oilFieldName + '天然气产量跟踪表'" style="height: 580px;" show-btn v-show="isDevelop">
-            <div slot-name="titleContent" style="display: flex; justify-content: flex-end;">
-                <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="downTable">下载</el-button>
-            </div>
-            <el-table 
-                id="tableData"
-                :data="tableData" :border="false" :row-style="{ height: '0px' }"
-                header-cell-class-name="table_header" :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                style="width:100%;" height="calc(100% - 130px)" :default-sort="{ prop: 'date', order: 'descending' }"
-                :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
-                <el-table-column type="index" align="center" label="序号" :index="tableIndex"></el-table-column>
-                <el-table-column prop="prodDate" align="center" :label="`时间\n(yyyy/mm/dd)`"> </el-table-column>
-                <el-table-column property="gasProdPlan" align="center" :label="`计划产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
-                <el-table-column property="gasProdDaily" align="center" :label="`产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
-                <el-table-column prop="oilEquivalent" align="center" :label="`油当量\n(m³/d)`" :formatter="toPrecise2"></el-table-column>
-                <el-table-column prop="gasProdRollFocecast" align="center" :label="`滚动预测产气量\n(10⁴m³)`" :formatter="toPrecise4"></el-table-column>
-            </el-table>
-            <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/>
-        </pagePanel>
+      <Echart ref="echartChart" :chart-data="GasProLineChart" height="100%"></Echart>
+    </pagePanel>
+    <div class="develop">
+      <span :class="[isDevelop ? 'top-span' : 'active-span']" @click="tapDevelop"></span>
     </div>
+    <pagePanel
+      :headerTitle="searchForm.oilFieldName + '天然气产量跟踪表'"
+      style="height: 580px"
+      show-btn
+      v-show="isDevelop"
+    >
+      <div slot-name="titleContent" style="display: flex; justify-content: flex-end">
+        <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px" @click="downTable"
+          >下载</el-button
+        >
+      </div>
+      <el-table
+        id="tableData"
+        :data="tableData"
+        border
+        :row-style="{ height: '0px' }"
+        header-cell-class-name="table_header"
+        :cell-style="{ padding: '6px' }"
+        style="width: 100%"
+        height="calc(100% - 130px)"
+        :default-sort="{ prop: 'date', order: 'descending' }"
+        :header-cell-style="{ padding: '0px 0' }"
+      >
+        <el-table-column type="index" align="center" label="序号" width="80" :index="tableIndex"></el-table-column>
+        <el-table-column prop="prodDate" header-align="center" align="center" :label="`时间\n(yyyy-mm-dd)`">
+        </el-table-column>
+        <el-table-column
+          property="gasProdPlan"
+          header-align="center"
+          align="center"
+          :label="`计划产气量\n(10⁴m³)`"
+          :formatter="toPrecise4"
+        ></el-table-column>
+        <el-table-column
+          property="gasProdDaily"
+          header-align="center"
+          align="center"
+          :label="`实际产气量\n(10⁴m³)`"
+          :formatter="toPrecise4"
+        ></el-table-column>
+        <el-table-column
+          prop="oilEquivalent"
+          header-align="center"
+          align="center"
+          :label="`气转油量\n(t)`"
+          :formatter="toPrecise2"
+        ></el-table-column>
+        <el-table-column
+          prop="gasProdRollFocecast"
+          header-align="center"
+          align="center"
+          :label="`滚动预测产气量\n(10⁴m³)`"
+          :formatter="toPrecise4"
+        ></el-table-column>
+      </el-table>
+      <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination" />
+    </pagePanel>
+  </div>
 </template>
 
 <script>
-    import Echart from '@/components/tools/Echarts/index.vue';
-    import { searchGasChart} from '@/api/oilDeposit/rem-03/oilfieldmanageplan.js';
-    import { getGasTable ,downGetGasTable } from '@/api/oilDeposit/rem-04/plan.js';
-    import FileSaver from 'file-saver';
-    export default {
-        components: {
-            Echart,
+import Echart from "@/components/tools/Echarts/index.vue";
+import { searchGasChart } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import { getGasTable, downGetGasTable } from "@/api/oilDeposit/rem-04/plan.js";
+import FileSaver from "file-saver";
+export default {
+  components: {
+    Echart,
+  },
+  props: {
+    searchForm: {
+      type: Object,
+      default: () => {
+        return {
+          oilFieldName: "",
+          selectOilField: "",
+          selectDate: [],
+          planTypeCode: "",
+          rollForecastVersion: "",
+          selectUnitOfProduction: "",
+        };
+      },
+    },
+  },
+  data() {
+    return {
+      height: "",
+      GasProLineChart: {
+        //天然气产量折线图
+        toolbox: {
+          show: true,
+          feature: {
+            saveAsImage: {
+              name: (this.searchForm.oilFieldName ? this.searchForm.oilFieldName : "") + "天然气产量跟踪图",
+              pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
+              backgroundColor: "#022644",
+              iconStyle: {
+                opacity: 0,
+              },
+            },
+          },
         },
-        props:{
-            searchForm:{
-                type:Object,
-                default:()=>{
-                    return {
-                        oilFieldName:'',
-                        selectOilField:'',
-                        selectDate:[],
-                        planTypeCode:'',
-                        rollForecastVersion:'',
-                        selectUnitOfProduction:'',
-                    }
-                }
-            }
+        dataZoom: [
+          {
+            type: "inside",
+            xAxisIndex: [0],
+            start: 0, //滚动条开始位置（共100等份）
+            end: 100, //滚动条结束位置
+          },
+        ],
+        color: ["#1379F7", "#DA835E", "rgb(255,0,0)", "#69b146"],
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划产气量" || item.seriesName == "实际产气量" || item.seriesName == "滚动预测") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
-        data() {
-            return {
-                height:'',
-                GasProLineChart: {//天然气产量折线图
-                    toolbox: {
-                        show: true,
-                        feature: {
-                            saveAsImage: {
-                                name:  (this.searchForm.oilFieldName ? this.searchForm.oilFieldName : '') + "天然气产量跟踪图",
-                                pixelRatio: 15, //值越大分辨率越高,下载的图片越清晰
-                                backgroundColor: '#022644',
-                                iconStyle:{
-                                    opacity:0
-                                }
-                            },
-                        },
-                    },
-                    dataZoom: [
-                        {
-                            type: "inside",
-                            xAxisIndex: [0],
-                            start: 0, //滚动条开始位置（共100等份）
-                            end: 100, //滚动条结束位置
-                        },
-                    ],
-                    color: ['#1379F7', '#DA835E', 'rgb(255,0,0)', '#69b146'],
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow',
-                        },
-                    },
-                    grid:{
-                        x: 120,
-                        y: 30,
-                        x2: 120,
-                        y2: 100,
-                    },
-                    legend: {
-                        data: [],
-                        textStyle: {
-                            color: '#8FA4CC',
-                            fontSize: 14,
-                        },
-                        x:'center',
-                        bottom:30,
-                        icon: 'rect',
-                        itemWidth: 12,
-                        itemHeight: 6,
-                        itemGap: 14,
-                    },
-                    xAxis: {
-                        name: '日',
-                        // nameTextStyle: {
-                        //     color: '#8FA4CC',
-                        //     fontSize: 14,
-                        // },
-                        nameGap: 55,
-                        type: 'category',
-                        axisLabel: {
-                            color: '#8FA4CC',
-                            padding:[10,0,0,0],
-                            fontSize: 14,
-                            interval: function(index, val) {
-                                if (val.substr(-2) == '01') {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            },
-                        },
-                        axisTick: {
-                            show: false,
-                        },
-                        axisLine: {
-                            lineStyle: {
-                                color: '#8FA4CC',
-                            },
-                        },
-                    },
-                    yAxis: [
-                        {
-                            name: '产气量(10⁴m³)',
-                            nameLocation:'middle',
-                            nameGap:70,
-                            nameTextStyle: {
-                                color: '#8FA4CC',
-                                fontSize: 14,
-                            },
-                            scale: true,
-                            type: 'value',
-                            axisLabel: {
-                                color: '#8FA4CC',
-                                fontSize: 14,
-                            },
-                            axisTick: {
-                                show: false,
-                            },
-                            axisLine: {
-                                show: true,
-                                lineStyle: {
-                                    color: '#8FA4CC',
-                                },
-                            },
-                            splitLine: {
-                                show: false,
-                                lineStyle: {
-                                    color: '#8FA4CC',
-                                },
-                            },
-                        },
-                        {
-                            name: '油当量(折算)(m³)',
-                            nameLocation:'middle',
-                            nameGap:70,
-                            nameTextStyle: {
-                                color: '#8FA4CC',
-                                fontSize: 14,
-                            },
-                            minInterval: 0.01,
-                            scale: true,
-                            type: 'value',
-                            axisLabel: {
-                                color: '#8FA4CC',
-                                fontSize: 14,
-                            },
-                            axisTick: {
-                                show: false,
-                            },
-                            axisLine: {
-                                show: true,
-                                lineStyle: {
-                                    color: '#8FA4CC',
-                                },
-                            },
-                            splitLine: {
-                                show: false,
-                                lineStyle: {
-                                    color: '#8FA4CC',
-                                },
-                            },
-                        },
-                    ],
-                    series: [],
-                },
-                isDevelop:false,//是否展示表格
-                tableData:[],//天然气表格数据
-                page:1,
-                pageSize:10,
-                total:0,
-            };
+        grid: {
+          x: 120,
+          y: 30,
+          x2: 120,
+          y2: 100,
         },
-        mounted() {
-            this.height=document.getElementById('pagePanelNew').scrollHeight-40-46-50-7-15;
-            this.initData();
+        legend: {
+          data: [],
+          textStyle: {
+            color: "#8FA4CC",
+            fontSize: 14,
+          },
+          x: "center",
+          bottom: 30,
+          icon: "rect",
+          itemWidth: 12,
+          itemHeight: 6,
+          itemGap: 14,
         },
-        methods: {
-            //初始化信息
-            async initData() {
-                this.getSearchGasChart();
-                this.getGasTable();
+        xAxis: [
+          {
+            name: "日期 (日)",
+            // nameTextStyle: {
+            //     color: '#8FA4CC',
+            //     fontSize: 14,
+            // },
+            nameGap: 55,
+            type: "category",
+            axisLabel: {
+              color: "#8FA4CC",
+              padding: [10, 0, 0, 0],
+              fontSize: 14,
+              showMinLabel: true,
+              showMaxLabel: true,
+              // interval: function (index, val) {
+              //   if (val.substr(-2) == "01") {
+              //     return true;
+              //   } else {
+              //     return false;
+              //   }
+              // },
             },
-            //年度计划 天然气统计图
-            getSearchGasChart() {
-                let request = {
-                    oilFieldId: this.searchForm.selectOilField,
-                    beginDate: this.searchForm.selectDate[0],
-                    endDate: this.searchForm.selectDate[1],
-                    planTypeCode: this.searchForm.planTypeCode,
-                    rollForecastVersion: this.searchForm.rollForecastVersion,
-                };
-                searchGasChart(request).then((res) => {
-                    //图例中信息
-                    let legendData = [];
-                    //折线数据信息
-                    let seriesData = [];
-                    //请求成功 获得数据
-                    if (res.data.code == 200) {
-                        //获得图表中数据
-                        let chartDataS = res.data.data.chart.linearDataSets;
-                        for (let i = 0; i < chartDataS.length; i++) {
-                            legendData.push(chartDataS[i].label);
-                            seriesData.push(this.getLinearChartSeriesGasChart(chartDataS[i]));
-                        }
-                        //获得图例结果赋值
-                        this.GasProLineChart.legend.data = legendData;
-                        //获得折线数据结果赋值
-                        this.GasProLineChart.series = seriesData;
-                    } else {
-                        //获得图例结果赋值
-                        this.GasProLineChart.legend.data = legendData;
-                        //获得折线数据结果赋值
-                        this.GasProLineChart.series = seriesData;
-                    }
-                });
+            axisTick: {
+              show: true,
+              inside: true,
             },
-            //天然气统计图 解析折线数据 拼接折线数据
-            getLinearChartSeriesGasChart(linearChart) {
-                let series = {};
-                series.name = linearChart.label;
-                series.type = 'line';
-                series.symbol = 'none';
-                let labelName = linearChart.label;
-                if (labelName == '产气量') {
-                    series.yAxisIndex = 0;
-                } else if (labelName == '油当量（折算）') {
-                    series.yAxisIndex = 1;
-                }
-                let seriesData = [];
-                let lineData = linearChart.linearData;
-                for (let i = 0; i < lineData.length; i++) {
-                    let point = [];
-                    point.push(lineData[i].label);
-                    if (labelName == '产气量') {
-                        point.push(parseFloat(Number(lineData[i].value).toFixed(2)));
-                    } else if (labelName == '油当量（折算）') {
-                        point.push(parseFloat(Number(lineData[i].value).toFixed(4)));
-                    }else {
-                        point.push(lineData[i].value);
-                    }
-                    seriesData.push(point);
-                }
-                series.data = seriesData;
-                return series;
+            axisLine: {
+              lineStyle: {
+                color: "#8FA4CC",
+              },
             },
-            //表格数据获取
-            getGasTable() {
-                let request = {
-                    oilFieldId: this.searchForm.selectOilField,
-                    beginDate: this.searchForm.selectDate[0],
-                    endDate: this.searchForm.selectDate[1],
-                    planTypeCode: this.searchForm.planTypeCode,
-                    rollForecastVersion: this.searchForm.rollForecastVersion,
-                    pageNum: this.page,
-                    pageSize: this.pageSize,
-                };
-                getGasTable(request).then((res) => {
-                    if (res.data.code == 200) {
-                        this.tableData = res.data.rows;
-                        this.total = res.data.total;
-                    } else {
-                        this.tableData = [];
-                        this.total = 0;
-                    }
-                });
+          },
+        ],
+        yAxis: [
+          {
+            name: "实际产气量(10⁴m³)",
+            nameLocation: "middle",
+            nameGap: 70,
+            nameTextStyle: {
+              color: "#8FA4CC",
+              fontSize: 14,
             },
-            //保留两位小数
-            toPrecise2(row, column, cellValue, index) {
-                if (
-                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
-                    typeof parseFloat(row[column.property]) === "number"
-                ) {
-                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
-                    ? parseFloat(row[column.property]).toFixed(2)
-                    : "0";
-                } else {
-                    return row[column.property] ? row[column.property] : "-";
-                }
+            scale: true,
+            type: "value",
+            axisLabel: {
+              color: "#8FA4CC",
+              fontSize: 14,
             },
-            //保留四位小数
-            toPrecise4(row, column, cellValue, index) {
-                if (
-                    (row[column.property] || parseFloat(row[column.property]) === 0) &&
-                    typeof parseFloat(row[column.property]) === "number"
-                ) {
-                    return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
-                    ? parseFloat(row[column.property]).toFixed(4)
-                    : "0";
-                } else {
-                    return row[column.property] ? row[column.property] : "-";
-                }
+            axisTick: {
+              show: true,
+              inside: true,
             },
-            //表格索引
-            tableIndex(index) {
-                index = index + 1 + (this.page - 1) * this.pageSize;
-                return index;
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#8FA4CC",
+              },
             },
-            //分页
-            pagination(obj){
-                if(this.pageSize!=obj.limit){
-                    this.page=1;
-                    this.pageSize=obj.limit;
-                }else{
-                    this.page=obj.page;
-                }
-                this.getGasTable();
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "#8FA4CC",
+              },
             },
-            //表格-展示||隐藏
-            tapDevelop(){
-                this.isDevelop=!this.isDevelop;
-                if(this.isDevelop){
-                    this.$nextTick(()=>{
-                        let parentDom=document.getElementsByClassName('tab-container')[0];
-                        parentDom.scrollBy({top: this.height,behavior: 'smooth'});
-                    })
-                }
+          },
+          {
+            name: "气转油量(t)",
+            nameLocation: "middle",
+            nameGap: 70,
+            nameTextStyle: {
+              color: "#8FA4CC",
+              fontSize: 14,
             },
-            //下载echarts
-            downEchart() {
-                this.$refs.echartChart.chartDownLoad(this.searchForm.oilFieldName +'天然气产量跟踪图');
+            minInterval: 0.01,
+            scale: true,
+            type: "value",
+            axisLabel: {
+              color: "#8FA4CC",
+              fontSize: 14,
             },
-            //导出table
-            downTable() {
-                let request = {
-                    oilFieldId: this.searchForm.selectOilField,
-                    unitType: this.searchForm.selectUnitOfProduction,
-                    beginDate: this.searchForm.selectDate[0],
-                    endDate: this.searchForm.selectDate[1],
-                    planTypeCode: this.searchForm.planTypeCode,
-                    rollForecastVersion: this.searchForm.rollForecastVersion,
-                };
-                downGetGasTable(request).then(res=>{
-                    const blob = new Blob([res], { type: "application/octet-stream" });
-                    FileSaver.saveAs(blob, this.searchForm.oilFieldName + '天然气产量跟踪表.xlsx');
-                })
+            axisTick: {
+              show: true,
+              inside: true,
             },
-        },
+            axisLine: {
+              show: true,
+              lineStyle: {
+                color: "#8FA4CC",
+              },
+            },
+            splitLine: {
+              show: false,
+              lineStyle: {
+                color: "#8FA4CC",
+              },
+            },
+          },
+        ],
+        series: [],
+      },
+      isDevelop: false, //是否展示表格
+      tableData: [], //天然气表格数据
+      page: 1,
+      pageSize: 10,
+      total: 0,
     };
+  },
+  mounted() {
+    this.height = document.getElementById("pagePanelNew").scrollHeight - 40 - 46 - 50 - 7 - 15;
+    this.initData();
+  },
+  methods: {
+    //初始化信息
+    async initData() {
+      this.getSearchGasChart();
+      this.getGasTable();
+    },
+    //年度计划 天然气统计图
+    getSearchGasChart() {
+      let request = {
+        oilFieldId: this.searchForm.selectOilField,
+        beginDate: this.searchForm.selectDate[0],
+        endDate: this.searchForm.selectDate[1],
+        planTypeCode: this.searchForm.planTypeCode,
+        rollForecastVersion: this.searchForm.rollForecastVersion,
+      };
+      searchGasChart(request).then((res) => {
+        //图例中信息
+        let legendData = [];
+        //折线数据信息
+        let seriesData = [];
+        //请求成功 获得数据
+        if (res.data.code == 200) {
+          //获得图表中数据
+          let chartDataS = res.data.data.chart.linearDataSets;
+          for (let i = 0; i < chartDataS.length; i++) {
+            legendData.push(chartDataS[i].label);
+            seriesData.push(this.getLinearChartSeriesGasChart(chartDataS[i]));
+          }
+          //获得图例结果赋值
+          this.GasProLineChart.legend.data = legendData;
+          //获得折线数据结果赋值
+          this.GasProLineChart.series = seriesData;
+        } else {
+          //获得图例结果赋值
+          this.GasProLineChart.legend.data = legendData;
+          //获得折线数据结果赋值
+          this.GasProLineChart.series = seriesData;
+        }
+      });
+    },
+    //天然气统计图 解析折线数据 拼接折线数据
+    getLinearChartSeriesGasChart(linearChart) {
+      let series = {};
+      series.name = linearChart.label;
+      series.type = "line";
+      series.symbol = "none";
+      let labelName = linearChart.label;
+      if (labelName == "实际产气量") {
+        series.yAxisIndex = 0;
+      } else if (labelName == "气转油量") {
+        series.yAxisIndex = 1;
+      }
+      let seriesData = [];
+      let lineData = linearChart.linearData;
+      for (let i = 0; i < lineData.length; i++) {
+        let point = [];
+        point.push(lineData[i].label);
+        if (labelName == "实际产气量") {
+          point.push(parseFloat(Number(lineData[i].value).toFixed(2)));
+        } else if (labelName == "气转油量") {
+          point.push(parseFloat(Number(lineData[i].value).toFixed(4)));
+        } else {
+          point.push(lineData[i].value);
+        }
+        seriesData.push(point);
+      }
+      series.data = seriesData;
+      return series;
+    },
+    //表格数据获取
+    getGasTable() {
+      let request = {
+        oilFieldId: this.searchForm.selectOilField,
+        beginDate: this.searchForm.selectDate[0],
+        endDate: this.searchForm.selectDate[1],
+        planTypeCode: this.searchForm.planTypeCode,
+        rollForecastVersion: this.searchForm.rollForecastVersion,
+        pageNum: this.page,
+        pageSize: this.pageSize,
+      };
+      getGasTable(request).then((res) => {
+        if (res.data.code == 200) {
+          this.tableData = res.data.rows;
+          this.total = res.data.total;
+        } else {
+          this.tableData = [];
+          this.total = 0;
+        }
+      });
+    },
+    //保留两位小数
+    toPrecise2(row, column, cellValue, index) {
+      if (
+        (row[column.property] || parseFloat(row[column.property]) === 0) &&
+        typeof parseFloat(row[column.property]) === "number"
+      ) {
+        return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+          ? parseFloat(row[column.property]).toFixed(2)
+          : "0";
+      } else {
+        return row[column.property] ? row[column.property] : "-";
+      }
+    },
+    //保留四位小数
+    toPrecise4(row, column, cellValue, index) {
+      if (
+        (row[column.property] || parseFloat(row[column.property]) === 0) &&
+        typeof parseFloat(row[column.property]) === "number"
+      ) {
+        return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
+          ? parseFloat(row[column.property]).toFixed(4)
+          : "0";
+      } else {
+        return row[column.property] ? row[column.property] : "-";
+      }
+    },
+    //表格索引
+    tableIndex(index) {
+      index = index + 1 + (this.page - 1) * this.pageSize;
+      return index;
+    },
+    //分页
+    pagination(obj) {
+      if (this.pageSize != obj.limit) {
+        this.page = 1;
+        this.pageSize = obj.limit;
+      } else {
+        this.page = obj.page;
+      }
+      this.getGasTable();
+    },
+    //表格-展示||隐藏
+    tapDevelop() {
+      this.isDevelop = !this.isDevelop;
+      if (this.isDevelop) {
+        this.$nextTick(() => {
+          let parentDom = document.getElementsByClassName("tab-container")[0];
+          parentDom.scrollBy({ top: this.height, behavior: "smooth" });
+        });
+      }
+    },
+    //下载echarts
+    downEchart() {
+      this.$refs.echartChart.chartDownLoad(this.searchForm.oilFieldName + "天然气产量跟踪图");
+    },
+    //导出table
+    downTable() {
+      let request = {
+        oilFieldId: this.searchForm.selectOilField,
+        unitType: this.searchForm.selectUnitOfProduction,
+        beginDate: this.searchForm.selectDate[0],
+        endDate: this.searchForm.selectDate[1],
+        planTypeCode: this.searchForm.planTypeCode,
+        rollForecastVersion: this.searchForm.rollForecastVersion,
+      };
+      downGetGasTable(request).then((res) => {
+        const blob = new Blob([res], { type: "application/octet-stream" });
+        FileSaver.saveAs(blob, this.searchForm.oilFieldName + "天然气产量跟踪表.xlsx");
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-    .tab-container{
-        height: 100%;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        padding-top:7px;
-        padding-left:7px;
-        padding-right:15px;
-        padding-bottom:15px;
+.tab-container {
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-top: 7px;
+  padding-left: 7px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+}
+#tableData {
+  ::v-deep .el-table__header-wrapper .cell {
+    height: auto;
+    line-height: 18px;
+    white-space: pre;
+  }
+  ::v-deep .cell:empty {
+    &::before {
+      content: "-";
     }
-    #tableData{
-        ::v-deep .el-table__header-wrapper .cell{
-            height: auto;
-            line-height: 18px;
-            white-space: pre;
-        }
-        ::v-deep .cell:empty{
-            &::before {
-                content: '-';
-            } 
-        }
-    } 
+  }
+}
 </style>

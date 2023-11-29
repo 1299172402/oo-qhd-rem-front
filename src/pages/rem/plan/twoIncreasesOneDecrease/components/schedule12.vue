@@ -11,7 +11,7 @@
             <el-table-column prop="pt" label="平台" align="center" min-width="160"></el-table-column>
             <el-table-column prop="cljzly" label="处理的介质来源" align="center" min-width="240"></el-table-column>
             <el-table-column label="投产时间" align="center">
-                <el-table-column prop="tcrq" :label="`(yyyy-dd-mm)`" align="center" min-width="130"></el-table-column>
+                <el-table-column prop="tcrq" :label="`(yyyy-mm-dd)`" align="center" min-width="130"></el-table-column>
             </el-table-column>
             <el-table-column label="设施处理能力" align="center">
                 <el-table-column label="最大液处理能力" align="center">
@@ -29,13 +29,13 @@
             </el-table-column>
             <el-table-column label="2019年12月日均产量" align="center">
                 <el-table-column label="日产液" align="center">
-                    <el-table-column prop="nmrcye" label="(m³/d)" align="center" min-width="120"></el-table-column>
+                    <el-table-column prop="nmrcye" label="(m³)" align="center" min-width="120"></el-table-column>
                 </el-table-column>
                 <el-table-column label="日产油" align="center">
-                    <el-table-column prop="nmrcyou" label="(m³/d)" align="center" min-width="120"></el-table-column>
+                    <el-table-column prop="nmrcyou" label="(m³)" align="center" min-width="120"></el-table-column>
                 </el-table-column>
                 <el-table-column label="日产气" align="center">
-                    <el-table-column prop="nmrcq" label="(10⁴m³/d)" align="center" min-width="120"></el-table-column>
+                    <el-table-column prop="nmrcq" label="(10⁴m³)" align="center" min-width="120"></el-table-column>
                 </el-table-column>
             </el-table-column>
             <el-table-column label="电量" align="center">
@@ -65,7 +65,7 @@
                         yt: "秦皇岛32-6油田",
                         pt: "QHD32-6WHPA",
                         cljzly: "不处理",
-                        tcrq: "2001/10/08",
+                        tcrq: "2001-10-08",
                         zdyeclnl: "0",
                         zdyclnl: "0",
                         zdqclnl: "0",
@@ -86,7 +86,7 @@
                         yt: "秦皇岛32-6油田",
                         pt: "QHD32-6WHPB",
                         cljzly: "不处理",
-                        tcrq: "2001/10/08",
+                        tcrq: "2001-10-08",
                         zdyeclnl: "0",
                         zdyclnl: "0",
                         zdqclnl: "0",
@@ -107,7 +107,7 @@
                         yt: "秦皇岛32-6油田",
                         pt: "QHD32-6WHPC",
                         cljzly: "不处理",
-                        tcrq: "2002/07/01",
+                        tcrq: "2002-07-01",
                         zdyeclnl: "0",
                         zdyclnl: "0",
                         zdqclnl: "0",
@@ -128,7 +128,7 @@
                         yt: "秦皇岛32-6油田",
                         pt: "QHD32-6WHPD",
                         cljzly: "不处理",
-                        tcrq: "2002/05/28",
+                        tcrq: "2002-05-28",
                         zdyeclnl: "0",
                         zdyclnl: "0",
                         zdqclnl: "0",
@@ -149,7 +149,7 @@
                         yt: "秦皇岛32-6油田",
                         pt: "QHD32-6WHPE",
                         cljzly: "不处理",
-                        tcrq: "2002/08/10",
+                        tcrq: "2002-08-10",
                         zdyeclnl: "0",
                         zdyclnl: "0",
                         zdqclnl: "0",
@@ -170,7 +170,7 @@
                         yt: "秦皇岛32-6油田",
                         pt: "QHD32-6WHPF",
                         cljzly: "不处理",
-                        tcrq: "2002/08/10",
+                        tcrq: "2002-08-10",
                         zdyeclnl: "0",
                         zdyclnl: "0",
                         zdqclnl: "0",
@@ -191,7 +191,7 @@
                         yt: "秦皇岛32-6油田",
                         pt: "QHD32-6WHPG",
                         cljzly: "不处理",
-                        tcrq: "2014/12/10",
+                        tcrq: "2014-12-10",
                         zdyeclnl: "0",
                         zdyclnl: "0",
                         zdqclnl: "0",
@@ -212,7 +212,7 @@
                         yt: "秦皇岛32-6油田",
                         pt: "QHD32-6WHPH",
                         cljzly: "不处理",
-                        tcrq: "2013/11/29",
+                        tcrq: "2013-11-29",
                         zdyeclnl: "0",
                         zdyclnl: "0",
                         zdqclnl: "0",
@@ -233,7 +233,7 @@
                         yt: "秦皇岛32-6油田",
                         pt: "QHD32-6CPEI",
                         cljzly: "B/C/G/H/I平台产液",
-                        tcrq: "2013/11/29",
+                        tcrq: "2013-11-29",
                         zdyeclnl: "64605",
                         zdyclnl: "10440",
                         zdqclnl: "20.59",
@@ -254,7 +254,7 @@
                         yt: "秦皇岛32-6油田",
                         pt: "QHD32-6CPEJ",
                         cljzly: "E和J平台产液",
-                        tcrq: "2014/09/05",
+                        tcrq: "2014-09-05",
                         zdyeclnl: "65814",
                         zdyclnl: "7695",
                         zdqclnl: "8.54",

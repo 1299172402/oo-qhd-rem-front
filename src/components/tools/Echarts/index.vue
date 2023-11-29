@@ -56,6 +56,10 @@
                 type: Boolean,
                 default: false,
             },
+            isClear: {
+                type: Boolean,
+                default: true,
+            },
             theme: {
                 type: String,
                 default: "qhd326-zb",
@@ -177,7 +181,9 @@
                 actualData
             } = {}) {
                 if (this.isEmptyObject(this.chartData)) return;
-                this.chart.clear();
+                if ( this.isClear ) {
+                    this.chart.clear();
+                }
                 if (!this.reverse) {
                     this.chart.setOption(this.chartData);
                 } else {
@@ -225,7 +231,7 @@
                 let res = this.chart.getDataURL({
                     type: "png",
                     pixelRatio: 1.5,
-                    backgroundColor: "#022644",
+                    backgroundColor: this.$store.state.setting.mode == "dark"? '#022644':'#fff',
                 });
                 let name =  typeof(fileName)  == 'string' ? fileName : this.chartData.toolbox.feature.saveAsImage.name;
                 console.log(typeof(fileName)  == 'string', fileName)

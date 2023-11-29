@@ -5,7 +5,7 @@ import {
     getWellData,
 } from "@/api/rem/r-intelligentIPA.js";
 import { fetchFields } from "@/api/rem/primaryinfoqhdrem";
-import {queryOperatorsCheckFieldListsDetail, userListByUserNames} from "@/api/basic/master";
+import {QueryOgfDetail, userListByUserNames,QueryBlockDetail} from "@/api/basic/master";
 export default {
     data () {
         return {
@@ -36,9 +36,24 @@ export default {
             }
             let ogfid
             userListByUserNames(params).then((res)=>{
-                ogfid = res.data.data[0].tenantInfos[0].deptId
-                queryOperatorsCheckFieldListsDetail({orgId:ogfid}).then((res) => {
+                var result=res.data.data[0].tenantInfos;
+                if (result.length > 1) {
+                    for(var i=0;i<result.length;i++){
+                        if(result[i].tenantName==='秦皇岛32-6作业公司'){
+                            ogfid = result[i].deptId;
+                        }
+                    }
+                } else {
+                    ogfid = res.data.data[0].tenantInfos[0].deptId;
+                }
+               
+                QueryOgfDetail({operationZoneId:ogfid}).then((res) => {
                     this.oilList = res.data.data;
+                    if (ogfid==='715AD1CD60484BB59E737CD18A9DE44A') {
+                        this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
+                    }else {
+                        this.queryData.ogfId = this.oilList[0].ogfId ?this.oilList[0].ogfId : undefined
+                    }
                 });
             })
            
@@ -64,12 +79,6 @@ export default {
                     }
                 })
             });
-            // let param = {
-            //     oilFieldId: this.queryData.ogfId,
-            // };
-            // fetchFields(param).then((res) => {
-            //     this.blockList = res.data.data.fields;
-            // });
         },
         /**
          * 改变区块

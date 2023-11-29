@@ -5,10 +5,10 @@
       <el-table
         id="tableData"
         :data="tableData"
-        :border="false"
+        border
         :row-style="{ height: '0px' }"
         header-cell-class-name="table_header"
-        :cell-style="{ padding: '6px', 'text-align': 'center' }"
+        :cell-style="{ padding: '6px' }"
         style="width: 100%;"
         height="100%"
         :default-sort="{ prop: 'date', order: 'descending' }"
@@ -17,7 +17,7 @@
         <el-table-column type="index" label="序号" width="150px" align="center"> </el-table-column>
         <el-table-column prop="startTime" :label="`开始时间\n(yyyy-mm-dd)`" align="center" width="250"> </el-table-column>
         <el-table-column prop="chronicle" label="大事简要" align="center" width="300"> </el-table-column>
-        <el-table-column prop="remark" label="备注" align="center"> </el-table-column>
+        <el-table-column prop="remark" label="备注" align="left"></el-table-column>
       </el-table>
     </pagePanel>
   </div>

@@ -3,16 +3,17 @@
         <info-window
             info-width="100%"
             info-height="100%"
-            header-title="措施效果跟踪表"
+            header-title="措施建议表"
             :is-show-max-btn="true"
         >
-            <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('OilAnalysisReport')">详细</el-button>
+            <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('Planmessage')">详情</el-button>
             <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downtable">下载</el-button>
             <el-table
                 :data="tableData"
                 highlight-current-row
-                height="calc(100% - 50px)"
+                height="100%"
                 id="tablecsxg"
+                border
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px', color: '' }"
                 header-cell-class-name="table_header"
@@ -30,7 +31,7 @@
                 </el-table-column>
                 <el-table-column prop="evalTime" width="100px" label="">
                     <template slot="header">
-                        <div >推荐日期</div>
+                        <div >评价日期</div>
                     </template>
                     <template slot-scope="scope">
                         <span v-if="scope.row.evalTime !== null && scope.row.evalTime !== ''">{{scope.row.evalTime}}</span>
@@ -79,6 +80,7 @@ export default {
     data() {
         return {
             tableData: [],
+            evalTime:'',
         };
     },
     mounted() {
@@ -88,15 +90,16 @@ export default {
         getData(){
             queryMeasureEffectTrack({evaluationDate:'',oilFieldId:'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res=>{
                 if(res.data.data){
-                    this.tableData = res.data.data                    
+                    this.tableData = res.data.data
+                    this.evalTime = this.tableData[0].evalTime
                 }
             })
         },
         downtable(){
-                exportExcel("#tablecsxg", "措施效果跟踪表");
+                exportExcel("#tablecsxg", "措施建议表");
         },
         linkroute(rname) {
-            this.$router.push({name: rname});
+            this.$router.push({name: rname,query:{currentDate:this.tableData[this.tableData.length-1].evalTime,scourePage:"措施建议表详情"}});
         },
     }
 };

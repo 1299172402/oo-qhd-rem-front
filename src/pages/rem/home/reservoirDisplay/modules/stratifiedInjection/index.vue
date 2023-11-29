@@ -3,10 +3,10 @@
       <info-window
           info-width="100%"
           info-height="100%"
-          header-title="分层注入量"
+          header-title="分层注采量"
           :is-show-max-btn="true"
       >
-          <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('/injection/indexHome')">详细</el-button>
+          <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('/injection/indexHome')">详情</el-button>
           <el-button  type="primary" class="buttonActive_primary detailLinkBtn"  style="right:110px"  @click="downEcharts">下载</el-button>
           <Echart ref="echartChart" :chart-data="option" width="100%" height="100%"></Echart>
       </info-window>
@@ -102,7 +102,7 @@ export default {
           this.$router.push({path: rname,query: {link:'remHome'}});
       },
       downEcharts(){
-          this.$refs.echartChart.chartDownLoad( '分层注入量');
+          this.$refs.echartChart.chartDownLoad( '分层注采量');
       },
       //分层注采量
       queryStratifiedInjectionDetails() {

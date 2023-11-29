@@ -8,8 +8,6 @@
             v-model="queryData.ogfId"
             class="f2"
             filterable
-            clearable
-            disabled
             style="width:180px"
             @change="changeOil"
           >
@@ -63,97 +61,111 @@
     </header-search>
     <page-panel header-title="分层注采详情" style="height:calc(100% - 80px);">
         <el-button style="float: right;margin-top:-5px " @click="doExportFile" icon="el-icon-download" type="primary">下载</el-button>
-          <el-table v-show="!isTableComp" id="export1" :data="tableData" style="width: 100%;" height="100%" highlight>
+          <el-table v-show="!isTableComp" id="export1" :data="tableData" style="width: 100%;" height="calc(100% - 30px)" highlight>
             <el-table-column prop="date" label="层位" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.productionIntervalNo }}</span>
-              </template>
+                <template slot-scope="scope">
+                    <span v-if="scope.row.productionIntervalNo !== null && scope.row.productionIntervalNo !== ''">{{scope.row.productionIntervalNo}}</span>
+                    <span v-else>-</span>
+                </template>
             </el-table-column>
             <el-table-column prop="name" label="配注量（10⁴m³）" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.injAlloc.first }}</span>
-              </template>
+                <template slot-scope="scope">
+                    <span v-if="scope.row.injAlloc.first !== null && scope.row.injAlloc.first !== ''">{{scope.row.injAlloc.first}}</span>
+                    <span v-else>-</span>
+                </template>
             </el-table-column>
             <el-table-column prop="address" label="注水量（10⁴m³）" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.inj.first }}</span>
-              </template>
+                <template slot-scope="scope">
+                    <span v-if="scope.row.inj.first !== null && scope.row.inj.first !== ''">{{scope.row.inj.first}}</span>
+                    <span v-else>-</span>
+                </template>
             </el-table-column>
             <el-table-column prop="address" label="配注完成率（%）" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.overWaterInj.first }}</span>
-              </template>
+                <template slot-scope="scope">
+                    <span v-if="scope.row.overWaterInj.first !== null && scope.row.overWaterInj.first !== ''">{{scope.row.overWaterInj.first}}</span>
+                    <span v-else>-</span>
+                </template>
             </el-table-column>
             <el-table-column label="产油量（10⁴m³）" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.oilData.first }}</span>
-              </template>
+                <template slot-scope="scope">
+                    <span v-if="scope.row.oilData.first !== null && scope.row.oilData.first !== ''">{{scope.row.oilData.first}}</span>
+                    <span v-else>-</span>
+                </template>
             </el-table-column>
             <el-table-column label="产液量（10⁴m³）" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.fluidProd.first }}</span>
-              </template>
+                <template slot-scope="scope">
+                    <span v-if="scope.row.fluidProd.first !== null && scope.row.fluidProd.first !== ''">{{scope.row.fluidProd.first}}</span>
+                    <span v-else>-</span>
+                </template>
             </el-table-column>
             <el-table-column prop="address" label="注采比" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.layerRatio.first }}</span>
-              </template>
+                <template slot-scope="scope">
+                    <span v-if="scope.row.layerRatio.first !== null && scope.row.layerRatio.first !== ''">{{scope.row.layerRatio.first}}</span>
+                    <span v-else>-</span>
+                </template>
             </el-table-column>
           </el-table>
 
          <!-- 对比 table -->
-          <el-table v-show="isTableComp" id="exportCom" :data="tableData" style="width: 100%" height="100%" highlight>
+          <el-table v-show="isTableComp" id="exportCom" :data="tableData" style="width: 100%" height="calc(100% - 30px)" highlight>
             <el-table-column prop="date" label="层位" min-width="240" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.productionIntervalNo }}</span>
-              </template>
+                <template slot-scope="scope">
+                    <span v-if="scope.row.productionIntervalNo !== null && scope.row.productionIntervalNo !== ''">{{scope.row.productionIntervalNo}}</span>
+                    <span v-else>-</span>
+                </template>
             </el-table-column>
             <el-table-column prop="name" label="配注量（10⁴m³）" align="center">
               <!-- 对比标题 -->
               <el-table-column v-for="(item, index) of columnList" :key="index" :label="item.label" min-width="160" align="center">
-                <template slot-scope="scope">
-                 <span>{{ scope.row.injAlloc[item.key] }}</span>
-                </template>
+                  <template slot-scope="scope">
+                      <span v-if="scope.row.injAlloc[item.key] !== null && scope.row.injAlloc[item.key] !== ''">{{scope.row.injAlloc[item.key]}}</span>
+                      <span v-else>-</span>
+                  </template>
               </el-table-column>
             </el-table-column>
             <el-table-column prop="address" label="注水量（10⁴m³）" align="center">
               <!-- 对比标题 -->
               <el-table-column v-for="(item, index) of columnList" :key="index" :label="item.label" min-width="160" align="center">
-                <template slot-scope="scope">
-                 <span>{{ scope.row.inj[item.key] }}</span>
-                </template>
+                  <template slot-scope="scope">
+                      <span v-if="scope.row.inj[item.key] !== null && scope.row.inj[item.key] !== ''">{{scope.row.inj[item.key]}}</span>
+                      <span v-else>-</span>
+                  </template>
               </el-table-column>
             </el-table-column>
             <el-table-column prop="address" label="配注完成率（%）" align="center">
               <!-- 对比标题 -->
               <el-table-column v-for="(item, index) of columnList" :key="index" :label="item.label" min-width="160" align="center">
-                <template slot-scope="scope">
-                 <span>{{ scope.row.overWaterInj[item.key] }}</span>
-                </template>
+                  <template slot-scope="scope">
+                      <span v-if="scope.row.overWaterInj[item.key] !== null && scope.row.overWaterInj[item.key] !== ''">{{scope.row.overWaterInj[item.key]}}</span>
+                      <span v-else>-</span>
+                  </template>
               </el-table-column>
             </el-table-column>
             <el-table-column prop="address" label="产油量（10⁴m³）" align="center">
               <!-- 对比标题 -->
               <el-table-column v-for="(item, index) of columnList" :key="index" :label="item.label" min-width="160" align="center">
-                <template slot-scope="scope">
-                 <span>{{ scope.row.oilData[item.key] }}</span>
-                </template>
+                  <template slot-scope="scope">
+                      <span v-if="scope.row.oilData[item.key] !== null && scope.row.oilData[item.key] !== ''">{{scope.row.oilData[item.key]}}</span>
+                      <span v-else>-</span>
+                  </template>
               </el-table-column>
             </el-table-column>
             <el-table-column prop="address" label="产液量（10⁴m³）" align="center">
               <!-- 对比标题 -->
               <el-table-column v-for="(item, index) of columnList" :key="index" :label="item.label" min-width="160" align="center">
-                <template slot-scope="scope">
-                 <span>{{ scope.row.fluidProd[item.key] }}</span>
-                </template>
+                  <template slot-scope="scope">
+                      <span v-if="scope.row.fluidProd[item.key] !== null && scope.row.fluidProd[item.key] !== ''">{{scope.row.fluidProd[item.key]}}</span>
+                      <span v-else>-</span>
+                  </template>
               </el-table-column>
             </el-table-column>
             <el-table-column prop="address" label="注采比" align="center">
               <!-- 对比标题 -->
               <el-table-column v-for="(item, index) of columnList" :key="index" :label="item.label" min-width="160" align="center">
-                <template slot-scope="scope">
-                 <span>{{ scope.row.layerRatio[item.key] }}</span>
-                </template>
+                  <template slot-scope="scope">
+                      <span v-if="scope.row.layerRatio[item.key] !== null && scope.row.layerRatio[item.key] !== ''">{{scope.row.layerRatio[item.key]}}</span>
+                      <span v-else>-</span>
+                  </template>
               </el-table-column>
             </el-table-column>
           </el-table>
@@ -221,7 +233,16 @@ export default {
       this.$router.go(-1)
     },
     queryBut () {
-      this.queryStratifiedInjectionDetails()
+        if(this.queryData.timeStatus == true){
+            if(this.queryData.endTime.length<2) {
+                this.$message.error('请选择对比时间！') }
+            else{
+                this.queryStratifiedInjectionDetails()  
+            }
+        }else{
+            this.queryStratifiedInjectionDetails()
+        }
+
     },
     // 重置按钮
     refresh(){
@@ -420,5 +441,21 @@ export default {
 }
 ::v-deep .el-table thead.is-group th{
   padding: 10px 0;
+}
+#export1 {
+    
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
+}
+#export1 {
+
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
 }
 </style>

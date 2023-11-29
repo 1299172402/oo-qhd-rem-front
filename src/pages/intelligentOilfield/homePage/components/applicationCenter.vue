@@ -50,6 +50,7 @@
             trigger="click"
             :autoplay="false"
             :arrow="carouselList.length > 1 ? 'always' : 'never'"
+            :indicator-position="carouselList.length > 1 ? '' : 'none'"
           >
             <el-carousel-item v-for="(item, index) in carouselList" :key="index">
               <div
@@ -197,7 +198,7 @@ export default {
         userId: this.$store.getters["user/userDetail"].user.userId
       };
       addAccessinfo(paramQuery).then(() => {});
-      jumpSupApp(item.appPcAccessUrl);
+      item.appType === "1" ? window.open(item.appPcAccessUrl, "_blank") : jumpSupApp(item.appPcAccessUrl);
     },
     initData() {
       this.allPanels = [];

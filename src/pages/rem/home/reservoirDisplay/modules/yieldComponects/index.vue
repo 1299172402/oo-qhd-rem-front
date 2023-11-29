@@ -6,7 +6,7 @@
             header-title="产量构成详情"
             :is-show-max-btn="true"
         >
-            <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute">详细</el-button>
+            <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute">详情</el-button>
             <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downEcharts">下载</el-button>
             <Echart ref="echartChart" :chart-data="histogram" width="100%" height="100%"></Echart>
         </info-window>
@@ -58,7 +58,7 @@ export default {
                 xAxis: [
                     {
                         type: "category",
-                        data: ["基础井", "措施井", "调整井", "开发井"],
+                        data: ["基础产量", "措施产量", "调整产量", "开发产量"],
                         axisLine: {
                             show: true,
                             lineStyle: {
@@ -68,7 +68,8 @@ export default {
                             },
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLabel: {
                             show: true,
@@ -82,16 +83,13 @@ export default {
                     {
                         type: "value",
                         name: '当年累产油量(10⁴m³)',
-                        nameLocation: "center",
-                        nameTextStyle: {
-                            padding: [0, 0, 20, 0], // 上、右、下、左
-                        },
                         axisLabel: {
                             formatter: "{value} ",
                             color:'#a9a8a8'
                         },
                         axisTick: {
-                            show: false,
+                            show:true,
+                            inside: true
                         },
                         axisLine: {
                             show: true,

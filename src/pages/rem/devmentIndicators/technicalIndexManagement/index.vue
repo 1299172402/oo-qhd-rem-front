@@ -1,43 +1,56 @@
 <!-- 技术指标管理 -->
 <template>
   <div class="app-container">
-    <header-search style="width: 100%; height: 80px">
-      <div class="g-row-flex-V g-w100 g-h100">
-        <div style="margin: 10px 20px 10px 0px">
-          <span>油田：</span>
-          <el-select v-model="selectOilFieldId" disabled>
-            <el-option
-              v-for="item in oilFieldList"
-              :key="item.ogfId"
-              :label="item.ogfName"
-              :value="item.ogfId"
-            ></el-option>
-          </el-select>
-        </div>
-        <!-- <div style="margin: 10px 20px 10px 0px">
+    <header-search style="height: auto; padding: 10px 20px 12px">
+      <div class="g-row-flex-V" style="justify-content: space-between">
+        <div class="g-row-flex-V g-w100 g-h100" style="flex-wrap: wrap">
+          <div style="margin: 10px 20px 10px 0px">
+            <span>油田：</span>
+            <el-select v-model="selectOilFieldId" @change="initAllData">
+              <el-option
+                v-for="item in oilFieldList"
+                :key="item.ogfId"
+                :label="item.ogfName"
+                :value="item.ogfId"
+              ></el-option>
+            </el-select>
+          </div>
+          <!-- <div style="margin: 10px 20px 10px 0px">
                     年度：
                     <el-date-picker v-model="year" type="year" placeholder="选择年" value-format="yyyy-12-31"></el-date-picker>
                 </div> -->
-        <el-button icon="el-icon-search" type="primary" @click="doSearch">搜索</el-button>
+          <div style="margin: 10px 20px 10px 0px">
+            <el-button icon="el-icon-search" type="primary" @click="doSearch()">搜索</el-button>
+          </div>
+        </div>
+        <div class="g-row-flex-V" style="flex-wrap: wrap">
+          <el-button
+            class="commonBtn"
+            v-if="$route.query.page || $route.query.name"
+            style="position: absolute; right: 2%"
+            @click="$router.push($route.query.page || $route.query.name)"
+            >返回</el-button
+          >
+        </div>
       </div>
     </header-search>
 
     <page-panel-new class="app-content">
       <el-row style="height: 380px" :gutter="20">
         <el-col v-for="(item, index) in zbData" :key="index" :span="6" :class="{ active: currentIndex == index }">
-          <pagePanel
+          <!-- <pagePanel
             v-if="item.title == '技术指标总览'"
             class="fl"
             style="height: 156px !important"
-            :headerTitle="item.title"
+            headerTitle=""
             @click.native="cardClick(item, index)"
-          >
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center">
-              <span style="font-size: 30px; vertical-align: middle; color: rgb(143, 164, 204)">
-                {{ item.title }}
-              </span>
-            </div>
-          </pagePanel>
+          > -->
+          <div class="homeItem" v-if="item.title == '技术指标总览'" @click="cardClick(item, index)">
+            <span style="font-size: 30px">
+              {{ item.title }}
+            </span>
+          </div>
+          <!-- </pagePanel> -->
           <pagePanel v-else class="fl" style="height: 160px" :headerTitle="item.title">
             <el-button
               style="
@@ -56,7 +69,7 @@
             <div style="display: flex; margin-left: 10px; height: 82px">
               <div style="width: 50%">
                 <span style="vertical-align: middle">
-                  <span style="font-size: 26px; margin-right: 6px">{{ item.sz }}</span>
+                  <span style="font-size: 26px; margin-right: 6px">{{ item.sz | numberFormat }}</span>
                   <sub style="color: #8fa4cc; font-size: 15px">{{ item.dw }}</sub>
                 </span>
                 <div style="margin-top: 10px">
@@ -139,12 +152,12 @@
           >
         </div>
         <div style="margin-top: 10px; height: calc(100% - 50px)">
-          <el-table id="indexscv" :data="tableData" highlight height="100%">
+          <el-table id="indexscv" :data="tableData" border highlight height="100%">
             <el-table-column prop="name" label="指标" align="center"></el-table-column>
             <el-table-column prop="real" label="实际值" align="center" :formatter="toPrecise2"></el-table-column>
             <el-table-column
               prop="compareOilField"
-              label="对标油田(羊三木)"
+              label="对标油田"
               align="center"
               :formatter="toPrecise2"
             ></el-table-column>
@@ -237,7 +250,7 @@ import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
 import { exportExcel } from "@/lib/exportExcel.js";
 import { fetchPlatforms } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import {
   oilYear,
   compositeDeclineRate,
@@ -252,7 +265,7 @@ import { searchOilProductionChart } from "@/api/oilDeposit/rem-03/oilfieldmanage
 import dayjs from "dayjs";
 
 export default {
-  name: "technicalIndexManagement",
+  name: "TechnicalIndexManagement",
   components: {
     Echart,
   },
@@ -260,7 +273,7 @@ export default {
     //过滤规则 保留两位小数
     numberFormat(val) {
       if (val) {
-        return parseFloat(Number(val).toFixed(2));
+        return parseFloat(val).toFixed(2);
       } else {
         return 0;
       }
@@ -271,6 +284,7 @@ export default {
       currentIndex: 0,
       //查询参数
       queryParams: {},
+      companyId: "",
       //选中油田
       selectOilFieldId: "",
       // 年度
@@ -338,8 +352,6 @@ export default {
       oilFieldList: [],
       //区块列表
       blockList: [],
-      //平台列表
-      platformList: [],
       //综合递减率 区块选择
       selectDecreaseBlock: "",
       //含水上升率 平台选择
@@ -429,6 +441,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         toolbox: {
           show: true,
@@ -476,9 +499,12 @@ export default {
                 return false;
               }
             },
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             lineStyle: {
@@ -507,7 +533,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -536,7 +563,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -570,6 +598,17 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
           },
         },
         toolbox: {
@@ -606,7 +645,7 @@ export default {
         },
         xAxis: [
           {
-            name: "日",
+            name: "日期 (日)",
             nameGap: 30,
             nameTextStyle: { color: "#8FA4CC" },
             type: "category",
@@ -615,16 +654,19 @@ export default {
               color: "#8FA4CC",
               fontSize: 14,
               padding: [10, 0, 0, 0],
-              interval: function (index, val) {
-                if (val.substr(-2) == "01") {
-                  return true;
-                } else {
-                  return false;
-                }
-              },
+              // interval: function (index, val) {
+              //   if (val.substr(-2) == "01") {
+              //     return true;
+              //   } else {
+              //     return false;
+              //   }
+              // },
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               lineStyle: {
@@ -649,7 +691,8 @@ export default {
               fontSize: 14,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -679,7 +722,8 @@ export default {
               fontSize: 14,
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -711,6 +755,13 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
           },
         },
         toolbox: {
@@ -746,7 +797,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -755,9 +806,12 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -774,7 +828,7 @@ export default {
         },
         yAxis: [
           {
-            name: "采油速度(%)",
+            name: "可采储量采油速度(%)",
             nameLocation: "middle",
             nameGap: 70,
             nameTextStyle: {
@@ -787,7 +841,8 @@ export default {
               color: "#8FA4CC",
             },
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -804,6 +859,7 @@ export default {
             },
           },
         ],
+        color: ["#1379F7", "#FF5844", "#F5BE43", "#00BC9C", "#FF5844", "#DA835E", "#9A72FF", "#FF30AD", "#2ACAFF"],
         series: [],
       },
       //综合递减率
@@ -842,6 +898,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         grid: {
           x: 120,
@@ -863,7 +926,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -872,12 +935,15 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
-            formatter: function (val) {
-              return Number(val) + "月";
-            },
+            showMinLabel: true,
+            showMaxLabel: true,
+            // formatter: function (val) {
+            //   return Number(val) + "月";
+            // },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -909,7 +975,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -970,6 +1037,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -985,7 +1059,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -994,12 +1068,15 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
-            formatter: function (val) {
-              return Number(val) + "月";
-            },
+            showMinLabel: true,
+            showMaxLabel: true,
+            // formatter: function (val) {
+            //   return Number(val) + "月";
+            // },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1031,7 +1108,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1064,6 +1142,13 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
           },
         },
         toolbox: {
@@ -1099,16 +1184,19 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
           type: "category",
           axisLabel: {
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1138,7 +1226,8 @@ export default {
             },
             //scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1170,6 +1259,13 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
           },
         },
         toolbox: {
@@ -1205,16 +1301,19 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
           type: "category",
           axisLabel: {
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1258,7 +1357,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1278,7 +1378,7 @@ export default {
         series: [
           {
             data: [5.5, 5.3, 5.1, 4.8, 5.4, 5.2, 5.6, 5.3, 5, 5.3, 5.2, 5.5],
-            type: "bar",
+            type: "line",
             barWidth: "32",
             name: "去年实际值",
             label: {
@@ -1289,7 +1389,7 @@ export default {
           {
             data: [5.2, 5.5, 5.7, 5.8, 6.0, 5.5, 5.3, 5.1, 4.8, 5.4, 5.2, 5.5],
 
-            type: "bar",
+            type: "line",
             barWidth: "32",
             name: "今年实际值",
             label: {
@@ -1341,6 +1441,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -1356,7 +1463,7 @@ export default {
           itemGap: 14,
         },
         xAxis: {
-          name: "月",
+          name: "日期 (月)",
           nameTextStyle: {
             color: "#8FA4CC",
           },
@@ -1365,12 +1472,15 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
-            formatter: function (val) {
-              return Number(val) + "月";
-            },
+            showMinLabel: true,
+            showMaxLabel: true,
+            // formatter: function (val) {
+            //   return Number(val) + "月";
+            // },
           },
           axisTick: {
-            show: false,
+            show: true,
+            inside: true,
           },
           axisLine: {
             show: true,
@@ -1401,7 +1511,8 @@ export default {
             },
             scale: true,
             axisTick: {
-              show: false,
+              show: true,
+              inside: true,
             },
             axisLine: {
               show: true,
@@ -1442,7 +1553,7 @@ export default {
   watch: {
     selectOilFieldId(val) {
       this.getFetchFields(val);
-      this.getFetchPlatforms(val);
+      // this.getFetchPlatforms(val);
     },
   },
   mounted() {
@@ -1460,25 +1571,38 @@ export default {
     },
     //页面初始化操作
     async initData() {
-      //获取油田信息
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilFieldList = res.data.data;
-        } else {
-          this.$message.error("油田读取错误");
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilFieldList = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilFieldId = this.oilFieldList[0].ogfId ? this.oilFieldList[0].ogfId : undefined;
+          }
         }
       });
       //默认qhd3-26油田
-      this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+      // this.selectOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       //对标油田默认qhd3-26油田
-      this.selectTargetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
+      // this.selectTargetOilFieldId = "3FC9A818F5BC43B88270DB80BBB3018F";
       let requestField = {
         oilFieldId: this.selectOilFieldId,
       };
       QueryReservoirAnalyseUnit({ ogfId: this.selectOilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.blockList = res.data.data;
-          _this.blockList.unshift({
+          this.blockList.unshift({
             reservoirAnalyseUnitId: this.selectOilFieldId,
             reservoirAnalyseUnitName: "全部",
             reservoirAnalyseUnitNo: "全部",
@@ -1486,13 +1610,21 @@ export default {
           this.selectDecreaseBlock = this.selectOilFieldId;
         }
       });
-      fetchPlatforms(requestField).then((res) => {
+      this.initAllData();
+    },
+    initAllData() {
+      QueryReservoirAnalyseUnit({ ogfId: this.selectOilFieldId }).then((res) => {
         if (res.data.code == 200) {
-          this.platformList = res.data.data.platform;
-          this.selectIncreasingRatePlatform = res.data.data.platform[0].platFormId;
-          this.selectNaturalDeclinePlatform = res.data.data.platform[0].platFormId;
+          this.blockList = res.data.data;
+          this.blockList.unshift({
+            reservoirAnalyseUnitId: this.selectOilFieldId,
+            reservoirAnalyseUnitName: "全部",
+            reservoirAnalyseUnitNo: "全部",
+          });
+          this.selectDecreaseBlock = this.selectOilFieldId;
         }
       });
+
       //以下接口平台 区块 参数默认为全部 全部默认为油田id
       this.getTechIndicatorStat(this.selectOilFieldId, this.selectTargetOilFieldId, "", "", this.developmentPhase);
       this.doOilYear2(this.selectOilFieldId);
@@ -1512,25 +1644,12 @@ export default {
       QueryReservoirAnalyseUnit({ ogfId: oilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.blockList = res.data.data;
-          _this.blockList.unshift({
+          this.blockList.unshift({
             reservoirAnalyseUnitId: oilFieldId,
             reservoirAnalyseUnitName: "全部",
             reservoirAnalyseUnitNo: "全部",
           });
           this.selectDecreaseBlock = oilFieldId;
-        }
-      });
-    },
-    //获得平台数据
-    getFetchPlatforms(oilFieldId) {
-      let request = {
-        oilFieldId: oilFieldId,
-      };
-      fetchPlatforms(request).then((res) => {
-        if (res.data.code == 200) {
-          this.platformList = res.data.data.platform;
-          this.selectIncreasingRatePlatform = res.data.data.platform[0].platFormId;
-          this.selectNaturalDeclinePlatform = res.data.data.platform[0].platFormId;
         }
       });
     },
@@ -1678,27 +1797,27 @@ export default {
           }
           //图例数据
           this.inOilProduction.legend.data = legendData;
-          //各线的数据
+          // //各线的数据
           this.inOilProduction.series = seriesData;
-          if (this.searchForm.selectUnitOfProduction == "m") {
-            this.inOilProduction.yAxis[0].name = "日产m³/d";
-            this.inOilProduction.yAxis[1].name = "年产10⁴m³";
-          } else if (this.searchForm.selectUnitOfProduction == "t") {
-            this.inOilProduction.yAxis[0].name = "日产t/d";
-            this.inOilProduction.yAxis[1].name = "年产10⁴t";
-          }
+          // if (this.searchForm.selectUnitOfProduction == "m") {
+          //   this.inOilProduction.yAxis[0].name = "日产m³/d";
+          //   this.inOilProduction.yAxis[1].name = "年产10⁴m³";
+          // } else if (this.searchForm.selectUnitOfProduction == "t") {
+          //   this.inOilProduction.yAxis[0].name = "日产t/d";
+          //   this.inOilProduction.yAxis[1].name = "年产10⁴t";
+          // }
         } else {
           //图例数据
           this.inOilProduction.legend.data = legendData;
-          //各线的数据
+          // //各线的数据
           this.inOilProduction.series = seriesData;
-          if (this.searchForm.selectUnitOfProduction == "m") {
-            this.inOilProduction.yAxis[0].name = "日产m³/d";
-            this.inOilProduction.yAxis[1].name = "年产10⁴m³";
-          } else if (this.searchForm.selectUnitOfProduction == "t") {
-            this.inOilProduction.yAxis[0].name = "日产t/d";
-            this.inOilProduction.yAxis[1].name = "年产10⁴t";
-          }
+          // if (this.searchForm.selectUnitOfProduction == "m") {
+          //   this.inOilProduction.yAxis[0].name = "日产m³/d";
+          //   this.inOilProduction.yAxis[1].name = "年产10⁴m³";
+          // } else if (this.searchForm.selectUnitOfProduction == "t") {
+          //   this.inOilProduction.yAxis[0].name = "日产t/d";
+          //   this.inOilProduction.yAxis[1].name = "年产10⁴t";
+          // }
         }
       });
     },
@@ -1758,23 +1877,42 @@ export default {
           //同比数据
           zb.tb = detail.moy;
           zb.tbTag = detail.yearOnYearTag;
-
           let legendData = [];
-          let series = {};
           let seriesData = [];
-          let chartDatas = res.data.data.chart.linearDataSets[0].linearData;
-          legendData.push(res.data.data.chart.linearDataSets[0].label);
-          series.name = res.data.data.chart.linearDataSets[0].label;
-          series.type = "line";
-          chartDatas.forEach((item, index) => {
-            let point = [];
-            point.push(item.label.substring(0, 7));
-            point.push(item.value);
-            seriesData.push(point);
+          let xData = [];
+          let xSet = new Set();
+          let linearCharts = res.data.data.chart.linearDataSets;
+          linearCharts.forEach((item, index) => {
+            legendData.push(item.label);
+            let series = {};
+            series.name = item.label;
+            if (item.label == "去年实际值") {
+              series.itemStyle = {
+                normal: {
+                  lineStyle: {
+                    width: 5,
+                    type: "dotted",
+                  },
+                },
+              };
+            }
+            series.type = "line";
+            let lineData = item.linearData;
+            let seriesMess = [];
+            lineData.forEach((dot, index) => {
+              let point = [];
+              point.push(dot.label.substring(5, 7));
+              xSet.add(dot.label.substring(5, 7));
+              point.push(dot.value);
+              seriesMess.push(point);
+            });
+            series.data = seriesMess;
+            seriesData.push(series);
           });
-          series.data = seriesData;
+          xData = Array.from(xSet).sort();
+          this.productionSpeed.xAxis.data = xData;
           this.productionSpeed.legend.data = legendData;
-          this.productionSpeed.series.push(series);
+          this.productionSpeed.series = seriesData;
         } else {
           this.productionSpeed.legend.data = [];
           this.productionSpeed.series = [];
@@ -2002,12 +2140,15 @@ export default {
             legendData.push(item.label);
             let series = {};
             series.name = item.label;
-            series.type = "bar";
+            series.type = "line";
             series.barWidth = "22";
             series.label = {
               show: true,
               position: "top",
               color: "#8fa4cc",
+              formatter(params) {
+                return parseFloat(params.value[1] || 0).toFixed(2);
+              },
             };
             let barData = item.linearData;
             let seriesMess = [];
@@ -2060,12 +2201,15 @@ export default {
             legendData.push(item.label);
             let series = {};
             series.name = item.label;
-            series.type = "bar";
+            series.type = "line";
             series.barWidth = "22";
             series.label = {
               show: true,
               position: "top",
               color: "#8fa4cc",
+              formatter(params) {
+                return parseFloat(params.value[1] || 0).toFixed(2);
+              },
             };
             let barData = item.linearData;
             let seriesMess = [];
@@ -2117,6 +2261,19 @@ export default {
   .g-w100:first-child {
     padding-top: 0 !important;
     // height:auto!important;
+  }
+  .homeItem {
+    width: 100%;
+    height: 156px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    color: var(--white-color);
+    background: var(--logo-bg) no-repeat top right #0075e9 !important;
+    border: 1px solid #ddd;
+    border-image: linear-gradient(180deg, #2e5b7c, #01aaf2) 3 3;
+    box-shadow: unset;
   }
 }
 .formBox {

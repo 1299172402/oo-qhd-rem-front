@@ -29,7 +29,7 @@
         <div style="display: flex; align-items: center; flex-wrap: wrap">
           <div style="margin-right: 15px; margin-bottom: 10px">
             <span>油田：</span>
-            <el-select v-model="selectOilField" disabled @change="onFieldChange" style="width: 165px">
+            <el-select v-model="selectOilField" @change="onFieldChange" style="width: 165px">
               <el-option
                 v-for="(item, index) in oilFields"
                 :key="item.ogfId"
@@ -94,7 +94,7 @@
             </el-select>
           </div>
           <div style="margin-right: 15px; margin-bottom: 10px">
-            <span>年份:</span>
+            <span>年度:</span>
             <el-date-picker
               v-model="dateTime"
               style="width: 160px; margin-left: 10px"
@@ -105,7 +105,7 @@
             ></el-date-picker>
           </div>
           <div style="margin-right: 15px; margin-bottom: 10px">
-            <span>开始月份：</span>
+            <span>开始日期：</span>
             <el-select v-model="beginMonth" style="width: 100px" placeholder="选择开始月">
               <el-option
                 v-for="(item, index) in 12"
@@ -116,7 +116,7 @@
             </el-select>
           </div>
           <div style="margin-right: 15px; margin-bottom: 10px">
-            <span>结束月份：</span>
+            <span>结束日期：</span>
             <el-select v-model="endMonth" style="width: 100px" placeholder="选择结束月">
               <el-option
                 v-for="(item, index) in 12"
@@ -147,7 +147,7 @@
               margin-left: 0;
             "
           >
-            <span>秦皇岛32-6油田作业计划跟踪</span>
+            <span>{{selectOilFieldName}}作业计划跟踪</span>
             <el-button type="primary" icon="el-icon-download" style="height: 30px" @click="doExportFile"
               >下载</el-button
             >
@@ -158,16 +158,17 @@
               :data="
                 tableData.slice((queryParams.page - 1) * queryParams.pageSize, queryParams.page * queryParams.pageSize)
               "
+              border
               height="calc(100% - 44px)"
               :row-style="{ height: '0px' }"
-              :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+              :header-cell-style="{  padding: '0px 0' }"
               header-cell-class-name="table_header"
-              :cell-style="{ padding: '2px', 'text-align': 'center' }"
+              :cell-style="{ padding: '2px'}"
               style="width: 100%; overflow-x: hidden"
             >
-              <el-table-column prop="wellNo" label="井号" width="140" sortable></el-table-column>
-              <el-table-column prop="measureName" label="作业类型" width="80"></el-table-column>
-              <el-table-column prop="measureName3" :label="`措施作业天数\n(计划/实际)\n(d)`" width="110">
+              <el-table-column prop="wellNo" label="井号" width="140" header-align="center" align="center" sortable></el-table-column>
+              <el-table-column prop="measureName" label="作业类型" width="80" header-align="center" align="center"></el-table-column>
+              <el-table-column prop="measureName3" :label="`措施作业天数\n(计划/实际)\n(d)`" width="110" header-align="center" align="center">
                 <template slot-scope="scope">
                   <span v-if="scope.row.planMeasuresDayNum || scope.row.realityMeasuresDayNum">
                     {{ scope.row.planMeasuresDayNum ? scope.row.planMeasuresDayNum : 0 }}/{{
@@ -176,8 +177,8 @@
                   </span>
                 </template>
               </el-table-column>
-              <el-table-column prop="status" :label="`措施是否\n达标`" width="80"></el-table-column>
-              <el-table-column label="类别" width="100">
+              <el-table-column prop="status" :label="`措施是否\n达标`" width="80" header-align="center" align="center"></el-table-column>
+              <el-table-column label="类别" width="100" header-align="center" align="center">
                 <template slot-scope="scope">
                   <div style="line-height: 18px" v-if="measureVersion == '002003'">分公司考核 <br />实际</div>
                   <div style="line-height: 18px" v-else-if="measureVersion == '001'">分公司奋斗 <br />实际</div>
@@ -261,7 +262,7 @@
                         "
                         alt=""
                         v-if="scope.row.stimClassCode == '003'"
-                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${
+                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}d)\n${
                           scope.row.realityMeasuresEndTime || '-'
                         } 增产性措施`"
                       />
@@ -275,7 +276,7 @@
                         "
                         alt=""
                         v-else-if="scope.row.stimClassCode == '004'"
-                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${
+                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}d)\n${
                           scope.row.realityMeasuresEndTime || '-'
                         } 增注性措施`"
                       />
@@ -289,7 +290,7 @@
                         "
                         alt=""
                         v-else
-                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}天)\n${
+                        :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}d)\n${
                           scope.row.realityMeasuresEndTime || '-'
                         } 维护性措施`"
                       />
@@ -305,7 +306,7 @@
                           <el-progress class="progress2" type="line" :percentage="100" :show-text="false"></el-progress>
                         </div>
                         <div class="day" v-if="Number(scope.row.planMeasuresDayNum)">
-                          {{ scope.row.planMeasuresDayNum }}天
+                          {{ scope.row.planMeasuresDayNum }}d
                         </div>
                       </div>
                       <!-- 实际 -->
@@ -318,7 +319,7 @@
                           <el-progress class="progress1" type="line" :percentage="100" :show-text="false"></el-progress>
                         </div>
                         <div class="day" v-if="Number(scope.row.realityMeasuresDayNum)">
-                          {{ scope.row.realityMeasuresDayNum }}天
+                          {{ scope.row.realityMeasuresDayNum }}d
                         </div>
                       </div>
                     </div>
@@ -358,7 +359,7 @@
 <script>
 import fieldOperations from "./popups/fieldOperations.vue";
 import moment from "dayjs";
-import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
+import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { fetchMeasureInfos, nameAndCode } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getMeasureVersion, getFetchMeasureInfos } from "@/api/oilDeposit/rem-04/plan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
@@ -366,7 +367,7 @@ import FileSaver from "file-saver";
 import * as XLSX from "@/lib/xlsx";
 import treeSelectionAll from "@/pages/rem/basic/components/treeSelectionAll.vue";
 export default {
-  name: "measureManagement",
+  name: "MeasureManagement",
   components: {
     fieldOperations,
     treeSelectionAll,
@@ -405,8 +406,10 @@ export default {
         pageSize: 15,
       },
       pageTotal: 0,
+      companyId: "",
       // 油田
       selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
+      selectOilFieldName: "",
       // 油田下拉框
       oilFields: [],
       // 平台
@@ -490,9 +493,7 @@ export default {
       let width = document.getElementById("tableBox").clientWidth - 510;
       this.width = width; //table最后一列的宽度
       //计算日期 间距
-      console.log("日期宽度", Math.floor(this.width - 44 - 20));
       this.spacing = Math.floor((this.width - 936 - 44 - 20) / 11);
-      console.log("日期间距", this.spacing);
       this.initData();
 
       //监听页面缩放
@@ -538,10 +539,27 @@ export default {
     },
     //页面初始化信息
     async initData() {
-      //油田
-      await QueryOgfDetail({}).then((res) => {
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      };
+      await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.oilFields = res.data.data;
+          this.companyId =
+            res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
+              : undefined;
+        }
+      });
+      await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          this.oilFields = data.data.data;
+          if (this.companyId === "715AD1CD60484BB59E737CD18A9DE44A") {
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+          } else {
+            this.selectOilField = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
+          }
+          this.selectOilFieldName = this.oilFields.filter(item => item.ogfId === this.selectOilField)[0].ogfName || "";
         }
       });
       //平台
@@ -603,6 +621,7 @@ export default {
     },
     //措施列表数据
     getFetchMeasureInfos() {
+      this.selectOilFieldName = this.oilFields.filter(item => item.ogfId === this.selectOilField)[0].ogfName || "";
       if (!this.dateTime) {
         this.$message.warning("开始年份不能为空！");
         return false;
@@ -748,16 +767,17 @@ export default {
       this.pageSize = e.limit;
     },
     //油田下拉-change
-    onFieldChange(val) {
-      this.getFetchPlatforms(val);
+   async onFieldChange(val) {
+      await this.getFetchPlatforms(val);
+      this.getFetchWells(this.selectOilField, this.selectPlatform);
       this.getMeasureNameAndCode();
     },
     //通过油田查询平台
-    getFetchPlatforms(oilFieldId) {
-      QueryPlatformDetail({ ogfId: oilFieldId }).then((res) => {
+    async getFetchPlatforms(oilFieldId) {
+      await QueryPlatformDetail({ ogfId: oilFieldId }).then((res) => {
         if (res.data.code == 200) {
           this.platforms = res.data.data;
-          this.selectPlatform = oilFieldId;
+          this.selectPlatform = this.platforms[0].platformId;
         }
       });
     },
@@ -821,7 +841,6 @@ export default {
           this.wells = res.data.data;
         }
       });
-      0;
       this.wells.unshift({
         wellId: "",
         wellName: "全部",
@@ -930,15 +949,15 @@ export default {
   }
 }
 
-::v-deep .el-table__body-wrapper {
-  .el-table__body {
-    tbody tr:last-child {
-      td {
-        border: none;
-      }
-    }
-  }
-}
+// ::v-deep .el-table__body-wrapper {
+//   .el-table__body {
+//     tbody tr:last-child {
+//       td {
+//         border: none;
+//       }
+//     }
+//   }
+// }
 
 .app-container {
   height: 100%;

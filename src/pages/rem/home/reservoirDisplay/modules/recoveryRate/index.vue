@@ -5,7 +5,7 @@
         header-title="采油速度"
         :is-show-max-btn="true"
     >
-        <el-button  type="primary" class="buttonActive_primary detailLinkBtn"   @click="linkroute('/developStatus/developmentEffectEvaluation')">详细</el-button>
+        <el-button  type="primary" class="buttonActive_primary detailLinkBtn"   @click="linkroute('/developStatus/developmentEffectEvaluation')">详情</el-button>
         <el-button  type="primary" class="buttonActive_primary detailLinkBtn"    style="right:110px"  @click="downEcharts">下载</el-button>
         <Echart ref="echartChart" :chart-data="productionSpeed" width="100%" height="100%"></Echart>
     </info-window>
@@ -54,17 +54,20 @@ export default {
             },
             grid:{
                 top: "15%",
-                right: "15%",
+                right: "10%",
                 bottom:"15%",
-                left: "15%",
+                left: "10%",
             },
             xAxis: {
                 type: 'category',
                 axisLabel: {
-                    color: '#698398'
+                    color: '#698398',
+                    showMinLabel: true,
+                    showMaxLabel: true,
                 },
                 axisTick: {
-                    show: false
+                    show:true,
+                    inside: true
                 },
                 axisLine: {
                     show: true,
@@ -85,20 +88,19 @@ export default {
             yAxis: [
                 {
                     name: '地质储量采油速度(%)',
-                    nameLocation: 'center',
                     nameTextStyle: {
                         color: '#8FA4CC'
                     },
                     max:100,
                     min:0,
-                    nameGap: 44,
                     type: 'value',
                     minInterval: 0,
                     axisLabel: {
                         color: '#8FA4CC'
                     },
                     axisTick: {
-                        show: false
+                        show:true,
+                        inside: true
                     },
                     axisLine: {
                         show: true,
@@ -115,20 +117,19 @@ export default {
                 },
                 {
                     name: '可采、剩余可采采油速度(%)',
-                    nameLocation: 'center',
                     nameTextStyle: {
                         color: '#8FA4CC'
                     },
                     max:100,
                     min:0,
-                    nameGap: 44,
                     type: 'value',
                     minInterval: 0,
                     axisLabel: {
                         color: '#698398'
                     },
                     axisTick: {
-                        show: false
+                        show:true,
+                        inside: true
                     },
                     axisLine: {
                         show: true,
