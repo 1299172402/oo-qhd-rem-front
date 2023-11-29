@@ -223,7 +223,7 @@ export default {
         }
         userListByUserNames(params).then((res) => {
            this.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-            QueryOgfDetail({orgId: this.orgId}).then(res => {
+            QueryOgfDetail({operationZoneId: this.orgId}).then(res => {
                 this.oilFields = res.data.data
                 if(this.orgId=='715AD1CD60484BB59E737CD18A9DE44A'){
                     this.queryParams.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F'

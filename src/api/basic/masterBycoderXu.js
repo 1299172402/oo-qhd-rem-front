@@ -16,12 +16,10 @@ export function getFieldListsDetail(data) {
         data
     });
 }
-export function getblockData(params) {
+export function getblockData(data) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/getblockData`,
         method: "post",
-        params: params
-    }).then((res) => {
-        return res.data
+        data
     });
 }

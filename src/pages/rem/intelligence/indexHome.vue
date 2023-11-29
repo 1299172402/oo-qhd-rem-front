@@ -12,7 +12,7 @@
                     filterable
                     clearable
                     style="width:180px"
-                    @change="changeOil"
+                    @change="changeOil1"
                 >
                     <el-option
                         v-for="item in oilList"
@@ -22,7 +22,7 @@
                     ></el-option>
                 </el-select>
                 <span>区块：</span>
-                <el-select v-model="queryData.blockId">
+                <el-select v-model="myselect">
                     <el-option
                         v-for="item in blockList"
                         :key="item.blockId"
@@ -314,7 +314,7 @@ import {
 } from "@/api/rem/r-intelligentIPA.js";
 import {getuserListByUserNames,getFieldListsDetail,getblockData} from "@/api/basic/masterBycoderXu.js"
 import FileSaver from 'file-saver'
-import queryConditionMixin from "@/mixins/queryConditionMixin.js";
+// import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {exportExcel} from '@/lib/exportExcel.js';
 import html2canvas from "html2canvas";
 
@@ -323,20 +323,23 @@ export default {
     components: {
         Echart
     },
-    mixins: [queryConditionMixin],
+    // mixins: [queryConditionMixin],
     data() {
         return {
+            myselect:'',
             oilList:[],
+            blockList:[],
             baseUrl: process.env.NODE_ENV == "production" ? '/rem/' : '/',
             queryData: {
                 //区块
                 blockId: '',
+                ogfId: '',
+                orgId:'',
                 //选择时间
-                dateTime: this.eeee(),
+                dateTime: this.eeee()
                 // dateTime: '2023-05',
                 //油田
-                ogfId: '',
-                orgId:''
+                
             },
             chartDom: '',
             title: '',
@@ -428,19 +431,14 @@ export default {
         this.getuserListByUserNamesData()
     },
     methods: {
-        changeOil () {
-            this.queryData.blockId = "";
-            this.queryData.wellId = "";
-            this.queryBlockFeild();
+        changeOil1 () {
+            this.queryBlockFeild1();
         },
-        queryBlockFeild () {
+        queryBlockFeild1 () {
+            console.log(this.queryData.ogfId)
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
-                this.blockList = res.blockList;
-                this.blockList.forEach(item => {
-                    if (item.blockId == this.queryData.blockId) {
-                        this.title = item.blockName
-                    }
-                })
+                this.blockList = res.data.blockList;
+                // this.queryData.blockId=this.blockList[0].blockId
             });
         },
         getuserListByUserNamesData(){
@@ -449,17 +447,19 @@ export default {
             }
             getuserListByUserNames(params).then((res)=>{
                 this.queryData.orgId=res.data.data[0].currentTenantBindOrgId
-                this.queryOilFeild()
+                this.queryOilFeild1()
             })
 
         },
-        queryOilFeild() {
+        queryOilFeild1() {
             getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
                 this.oilList = res.data.data;
-                this.queryData.ogfId = this.oilList[0].ogfId
-                // console.log(this.ogfList)
-                
-                this.queryBlockFeild()
+                var list =res.data.data;
+                console.log("559966")
+                console.log(list)
+                console.log("559966")
+                this.queryData.ogfId = list[0].ogfId
+                this.queryBlockFeild1()
             });
 
         },
@@ -521,6 +521,8 @@ export default {
          * 获取数据
          */
         searchList() {
+            console.log(this.myselect)
+            this.queryData.blockId=this.myselect
             if (!this.queryData.dateTime) {
                 return this.$message.error('请输入时间')
             }
@@ -555,6 +557,8 @@ export default {
         },
         //左侧区块
         queryWellGroupBlock() {
+            
+            
             getWellGroupBlock(this.queryData).then((res) => {
                 res.injRatio = res.injRatio == null ? '' : Number(res.injRatio).toFixed(1)
                 res.haveWater = res.haveWater == null ? '' : Number(res.haveWater).toFixed(1)

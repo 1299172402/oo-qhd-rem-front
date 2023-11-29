@@ -352,7 +352,7 @@ export default {
             let orgId
             userListByUserNames(params).then((res)=>{
                 orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-                QueryOgfDetail({orgId:orgId}).then((res) => {
+                QueryOgfDetail({operationZoneId:orgId}).then((res) => {
                     this.ogfList = res.data.data;
                     if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
                         this.queryParams.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';

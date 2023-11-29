@@ -633,7 +633,7 @@ export default {
             }
             userListByUserNames(params).then((res)=>{
                 this.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-                QueryOgfDetail({orgId:this.orgId}).then(res => {
+                QueryOgfDetail({operationZoneId:this.orgId}).then(res => {
                     if (res.data.code == 200) {
                         this.oilFields = res.data.data
                     }
