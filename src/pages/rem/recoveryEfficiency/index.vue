@@ -850,7 +850,7 @@ import {
 } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 export default {
-  name: "recoveryEfficiency",
+  name: "RecoveryEfficiencyIndex",
   computed: {
     ...mapState({
       mode: (state) => state.setting.mode,
@@ -986,6 +986,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+            });
+            return relVal;
+          },
         },
         xAxis: {
           boundaryGap: false,
@@ -1002,6 +1009,8 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -1130,6 +1139,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -1156,6 +1172,8 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -1269,6 +1287,13 @@ export default {
             type: "shadow",
           },
           confine: true,
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -1294,6 +1319,8 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -1490,15 +1517,16 @@ export default {
   },
   methods: {
     //重置
-    resetting() {
-      this.$nextTick(() => {
-        this.initDate();
-        this.getOilFields();
-        this.getFieldsData("3FC9A818F5BC43B88270DB80BBB3018F");
-        this.getFieldOilLayers();
+    async resetting() {
+
+      // this.$nextTick(() => {
+        await this.initDate();
+        await this.getOilFields();
+        await this.getFieldsData("3FC9A818F5BC43B88270DB80BBB3018F");
+        await this.getFieldOilLayers();
         this.paramater = {};
         this.Retrieval();
-      });
+      // });
     },
     // 返回
     switchToBack() {
@@ -1565,9 +1593,9 @@ export default {
       });
     },
     //获得区块信息
-    getFieldsData(oilFieldId) {
+    async getFieldsData(oilFieldId) {
       let _this = this;
-      QueryReservoirAnalyseUnit({ ogfId: oilFieldId }).then((res) => {
+      await QueryReservoirAnalyseUnit({ ogfId: oilFieldId }).then((res) => {
         //获得区块信息
         _this.block = res.data.data;
         _this.block.unshift({
@@ -1580,13 +1608,13 @@ export default {
       });
     },
     //获得层位信息
-    getFieldOilLayers() {
+    async getFieldOilLayers() {
       let request = {
         oilFieldId: this.selectOilField,
         fieldId: this.selectBlock,
         wellId: "",
       };
-      fieldOilLayers(request).then((res) => {
+      await fieldOilLayers(request).then((res) => {
         if (res.data.code == 200) {
           //层段数据
           if (res.data.data) {

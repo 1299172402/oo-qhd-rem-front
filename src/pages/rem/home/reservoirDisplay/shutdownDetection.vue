@@ -99,7 +99,7 @@
                 id="cjyzsj"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="wellName" align="center" type="index" width="50px" label="序号"></el-table-column>
+                <el-table-column prop="seqNum" align="center" width="50px" label="序号"></el-table-column>
                 <el-table-column prop="wellName" align="center" min-width="60px" label="井号"></el-table-column>
                 <el-table-column prop="appendixValueName" align="center" min-width="60px" label="*关停分类"></el-table-column>
                 <el-table-column prop="reasonAppendixValueName" align="center" min-width="60px" label="*关停原因"></el-table-column>
@@ -137,17 +137,15 @@
 </template>
 <script>
 import {
-    queryOperatorsCheckFieldListsDetail,
-    queryListOfOilfieldQueryPlatformsDetail,
-    queryOperatingCompanyDetail,
-    queryPlatformQueryWellListDetail,
+    QueryOgfDetail,
+    QueryWellDetail,
     userListByUserNames,
     QueryPlatformDetail
 } from "@/api/rem/marster.js";
 import {queryShutDownWellStatisDetails,queryShutDownWellStatisDetailsDownloadFile, queryShutDownValueDict, queryPlanValueDict} from '@/api/rem/reservoirbillboards'
 import FileSaver from 'file-saver'
 export default {
-    name:'shutdownDetection',
+    name:'ShutdownDetection',
     components: {},
     props: {
         infoData: {
@@ -208,10 +206,8 @@ export default {
             lastMonth.setDate(nowDay > daysOflastMonth ? daysOflastMonth : nowDay);
             var startDate =
                 lastMonth.getFullYear() +
-                "-" +
-                (lastMonth.getMonth() + 1 >= 10 ? lastMonth.getMonth() + 1 : "0" + (lastMonth.getMonth() + 1)) +//月份从0开始
-                "-" +
-                (lastMonth.getDate() >= 10 ? lastMonth.getDate() : "0" + lastMonth.getDate());
+                "-01" +
+                "-01"
             
             var endDate =
                 now.getFullYear() +
@@ -224,24 +220,18 @@ export default {
             this.$set(this.month, 1, endDate);
 
         },
-        //作业公司
-        // queryJobCompanySelect() {
-        //     queryOperatingCompanyDetail({}).then((res) => {
-        //         this.zygsSelect = res.data.data;
-        //     });
-        // },
         //获取当前作业公司
         async getCurrentJobCompany() {
             let params = {
                 searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             }
             await userListByUserNames(params).then((res) => {
-                this.ogfId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
+                this.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
             })
         },
         //油田
         async queryOrgSelect() {
-            await queryOperatorsCheckFieldListsDetail({orgId: this.ogfId}).then((res) => {
+            await QueryOgfDetail({orgId: this.ogfId}).then((res) => {
                 if (res.data.code === 200) {
                     this.oilFields = res.data.data;
                     if (this.orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
@@ -271,7 +261,7 @@ export default {
         },
         //井号
         async queryWellSelect() {
-            await queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+            await QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wellList = res.data.data;
                 this.queryData.wellId = ''
             });
@@ -311,7 +301,7 @@ export default {
             await this.queryPlanAttributesSelect();
         },
         choicewell() {
-            queryPlatformQueryWellListDetail({platformId: this.queryData.platformId}).then((res) => {
+            QueryWellDetail({platformId: this.queryData.platformId}).then((res) => {
                 this.wellList = res.data.data;
                 this.queryData.wellId=''
             });
@@ -321,6 +311,8 @@ export default {
             this.$router.go(-1);
         },
         async result() {
+            this.queryData.pageNum = 1;
+            this.queryData.pageSize = 10;
             await this.initializeDate();
             await this.getData();
             await this.queryinfo()

@@ -88,13 +88,13 @@
                         <el-table-column label="油气田" fixed width="130px" prop="ogfName"
                                          align="center"></el-table-column>
                         <el-table-column label="一月" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[0]">{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.planDensityValue" size="small"/></span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[0]">{{ Number(scope.row.january).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.january" size="small"
@@ -103,13 +103,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="二月" prop="two" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[1]">{{ Number(scope.row.february).toFixed(4) }}</span>
                                     <span v-else>
@@ -119,13 +119,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="三月" prop="three" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[2]">{{ Number(scope.row.march).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.march" size="small"
@@ -134,13 +134,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="四月" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[3]">{{ Number(scope.row.april).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.april" size="small"
@@ -149,13 +149,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="五月" prop="five" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[4]">{{ Number(scope.row.may).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.may" size="small"
@@ -164,13 +164,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="六月" prop="six" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[5]">{{ Number(scope.row.june).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.june" size="small"
@@ -179,13 +179,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="七月" prop="seven" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[6]">{{ Number(scope.row.july).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.july" size="small"
@@ -194,13 +194,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="八月" prop="eight" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[7]">{{ Number(scope.row.august).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.august" size="small"
@@ -209,13 +209,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="九月" prop="nine" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[8]">{{ Number(scope.row.september).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.september" size="small"
@@ -224,13 +224,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="十月" prop="ten" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[9]">{{ Number(scope.row.october).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.october" size="small"
@@ -239,13 +239,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="十一月" prop="eleven" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[10]">{{ Number(scope.row.november).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.november" size="small"
@@ -254,13 +254,13 @@
                             </el-table-column>
                         </el-table-column>
                         <el-table-column label="十二月" prop="twelve" align="center">
-                            <el-table-column :label="`计划\n(g/cm³)`" width="130px" prop="planDensityValue"
+                            <el-table-column :label="`计划\n(t/m³)`" width="130px" prop="planDensityValue"
                                              align="center">
                                 <template slot-scope="scope">
                                     <span >{{ Number(scope.row.planDensityValue).toFixed(4) }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column :label="`实际\n(g/cm³)`" width="130px" align="center">
+                            <el-table-column :label="`实际\n(t/m³)`" width="130px" align="center">
                                 <template slot-scope="scope">
                                     <span v-if="isDisabled[11]">{{ Number(scope.row.december).toFixed(4) }}</span>
                                     <span v-else> <el-input v-model="scope.row.december" size="small"
@@ -291,7 +291,7 @@
 <script>
 import {queryProductList} from "@/api/rem/workcompanydesignate";
 import {queryDensityInfo, save} from "@/api/rem/density.js";
-import {queryOperatingCompanyDetail, queryOperatorsCheckFieldListsDetail,userListByUserNames} from "@/api/basic/master";
+import { QueryOgfDetail,userListByUserNames} from "@/api/basic/master";
 import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 import {exportExcel} from "@/lib/exportExcel";
 
@@ -352,7 +352,7 @@ export default {
             let orgId
             userListByUserNames(params).then((res)=>{
                 orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-                queryOperatorsCheckFieldListsDetail({orgId:orgId}).then((res) => {
+                QueryOgfDetail({orgId:orgId}).then((res) => {
                     this.ogfList = res.data.data;
                     if (orgId === '715AD1CD60484BB59E737CD18A9DE44A') {
                         this.queryParams.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F';

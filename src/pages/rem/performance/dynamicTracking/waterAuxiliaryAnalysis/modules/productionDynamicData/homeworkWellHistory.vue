@@ -7,17 +7,17 @@
       border
       :row-style="{ height: '0px' }"
       header-cell-class-name="table_header"
-      :cell-style="{ padding: '6px', 'text-align': 'center' }"
+      :cell-style="{ padding: '6px' }"
       style="width: 100%"
       height="100%"
       :default-sort="{ prop: 'date', order: 'descending' }"
-      :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+      :header-cell-style="{ padding: '0px 0' }"
     >
       <el-table-column type="index" label="序号" align="center" width="80"></el-table-column>
       <el-table-column prop="startTime" :label="`开始时间\n(yyyy-mm-dd)`" align="center" width="180"></el-table-column>
       <!--<el-table-column prop="endTime" label="结束时间" align="center"></el-table-column>-->
       <el-table-column prop="chronicle" label="大事简要" align="center" width="200"></el-table-column>
-      <el-table-column prop="remark" label="备注" align="center"></el-table-column>
+      <el-table-column prop="remark" label="备注" header-align="center" align="left"></el-table-column>
     </el-table>
   </page-panel-new>
 </template>

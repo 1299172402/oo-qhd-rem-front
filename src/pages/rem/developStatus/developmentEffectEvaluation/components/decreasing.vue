@@ -108,6 +108,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + "  " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         dataZoom: {
           start: 95,
@@ -135,6 +142,8 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
             margin: 20,
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -191,6 +200,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + "  " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         dataZoom: {
           start: 95,
@@ -218,6 +234,8 @@ export default {
           axisLabel: {
             margin: 20,
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -299,6 +317,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + "  " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         toolbox: {
           show: true,
@@ -322,6 +347,8 @@ export default {
           axisLabel: {
             margin: 20,
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,
@@ -404,6 +431,13 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker +  "  " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
+          },
         },
         toolbox: {
           show: true,
@@ -427,6 +461,8 @@ export default {
           axisLabel: {
             margin: 20,
             color: "#8FA4CC",
+            showMinLabel: true,
+            showMaxLabel: true,
           },
           axisTick: {
             show: true,

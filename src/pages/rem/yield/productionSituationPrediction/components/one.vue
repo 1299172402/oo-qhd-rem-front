@@ -54,8 +54,9 @@
         :label="outputTrackingTableDate"
         align="center"
         width="300"
+        
       ></el-table-column>
-      <el-table-column label="作业公司" align="center">
+      <el-table-column label="作业公司" align="center" class-name="decollateClass">
         <el-table-column prop="zygsjc" label="基础井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
         <el-table-column prop="zygscs" label="措施井" align="center" width="100" :formatter="toPrecise2">
@@ -64,11 +65,18 @@
         </el-table-column>
         <el-table-column prop="zygskf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="zygshj" label="合计" align="center" width="100" :formatter="toPrecise2">
+        <el-table-column
+          prop="zygshj"
+          label="合计"
+          align="center"
+          width="100"
+          :formatter="toPrecise2"
+          class-name="decollateClass"
+        >
         </el-table-column>
       </el-table-column>
       <!-- QHD32-6 -->
-      <el-table-column label="QHD32-6" align="center">
+      <el-table-column label="QHD32-6" align="center" class-name="decollateClass">
         <el-table-column prop="qhd326jc" label="基础井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
         <el-table-column prop="qhd326cs" label="措施井" align="center" width="100" :formatter="toPrecise2">
@@ -77,10 +85,10 @@
         </el-table-column>
         <el-table-column prop="qhd326kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="qhd326hj" label="合计" align="center" width="100" :formatter="toPrecise2">
+        <el-table-column prop="qhd326hj" label="合计" align="center" width="100" :formatter="toPrecise2" class-name="decollateClass">
         </el-table-column>
       </el-table-column>
-      <el-table-column label="CFD6-4" align="center">
+      <el-table-column label="CFD6-4" align="center" class-name="decollateClass">
         <el-table-column prop="cfd64jc" label="基础井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
         <el-table-column prop="cfd64cs" label="措施井" align="center" width="100" :formatter="toPrecise2">
@@ -89,11 +97,11 @@
         </el-table-column>
         <el-table-column prop="cfd64kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="cfd64hj" label="合计" align="center" width="100" :formatter="toPrecise2">
+        <el-table-column prop="cfd64hj" label="合计" align="center" width="100" :formatter="toPrecise2" class-name="decollateClass">
         </el-table-column>
       </el-table-column>
       <!-- NB35-2 -->
-      <el-table-column label="NB35-2" align="center">
+      <el-table-column label="NB35-2" align="center" class-name="decollateClass">
         <el-table-column prop="nb352jc" label="基础井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
         <el-table-column prop="nb352cs" label="措施井" align="center" width="100" :formatter="toPrecise2">
@@ -102,10 +110,10 @@
         </el-table-column>
         <el-table-column prop="nb352kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="nb352hj" label="合计" align="center" width="100" :formatter="toPrecise2">
+        <el-table-column prop="nb352hj" label="合计" align="center" width="100" :formatter="toPrecise2" class-name="decollateClass">
         </el-table-column>
       </el-table-column>
-      <el-table-column label="BZ3-2" align="center">
+      <el-table-column label="BZ3-2" align="center" class-name="decollateClass">
         <el-table-column prop="bz32jc" label="基础井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
         <el-table-column prop="bz32cs" label="措施井" align="center" width="100" :formatter="toPrecise2">
@@ -114,10 +122,10 @@
         </el-table-column>
         <el-table-column prop="bz32kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="bz32hj" label="合计" align="center" width="100" :formatter="toPrecise2">
+        <el-table-column prop="bz32hj" label="合计" align="center" width="100" :formatter="toPrecise2" class-name="decollateClass">
         </el-table-column>
       </el-table-column>
-      <el-table-column label="QHD33-1" align="center">
+      <el-table-column label="QHD33-1" align="center" class-name="decollateClass">
         <el-table-column prop="qhd331jc" label="基础井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
         <el-table-column prop="qhd331cs" label="措施井" align="center" width="100" :formatter="toPrecise2">
@@ -126,7 +134,7 @@
         </el-table-column>
         <el-table-column prop="qhd331kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="qhd331hj" label="合计" align="center" width="100" :formatter="toPrecise2">
+        <el-table-column prop="qhd331hj" label="合计" align="center" width="100" :formatter="toPrecise2" class-name="decollateClass">
         </el-table-column>
       </el-table-column>
       <el-table-column label="QHD33-1S" align="center">
@@ -207,7 +215,7 @@ export default {
         },
         {
           type: "当日-前一日产量",
-          code: "当日-前一日产量",
+          code: "baoBiao-baoBiaoYesterday",
         },
         {
           type: "下舱产量/",
@@ -238,7 +246,7 @@ export default {
   },
   async mounted() {
     await this.getForecastDate();
-    this.doSearch();
+    // this.doSearch();
   },
   methods: {
     //重置
@@ -423,8 +431,6 @@ export default {
           };
           reList.push(lineObj);
         }
-        console.log("reList");
-        console.log(reList);
       });
       let today = reList.find((item) => {
         return item.code == "baoBiao";
@@ -645,7 +651,7 @@ export default {
         case "kaoHe":
           lineTitle = "分公司考核(" + unit2 + ")";
           break;
-        case "当日-前一日产量":
+        case "baoBiao-baoBiaoYesterday":
           lineTitle = "当日-前一日产量(" + unit2 + ")";
           break;
         case "下舱产量-滚动预测(/":
@@ -686,3 +692,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+::v-deep .decollateClass {
+  .cell {
+    // background: red !important;
+    // border-right: 1px solid red;
+    border-right: 1px solid var(--light-blue-color);
+  }
+}
+</style>

@@ -6,7 +6,7 @@
           header-title="关停井统计"
           :is-show-max-btn="true"
       >
-          <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('ShutdownDetection')">详细</el-button>
+          <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('ShutdownDetection')">详情</el-button>
           <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downEcharts">下载</el-button>
           <Echart ref="echartChart" :chart-data="histogram" width="100%" height="100%"></Echart>
       </info-window>
@@ -82,6 +82,8 @@ export default {
             },
           axisLabel: {
             show: true,
+              showMinLabel: true,
+              showMaxLabel: true,
             textStyle: {
               color: "#a9a8a8", //X轴文字颜色
             },
@@ -90,7 +92,7 @@ export default {
         yAxis: [
           {
             type: "value",
-            name: "关停影响产量(m³)",
+            name: "关停影响产量(10⁴m³)",
             nameTextStyle: {
               color: "#a9a8a8",
             },

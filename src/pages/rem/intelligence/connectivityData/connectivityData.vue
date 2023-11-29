@@ -5,7 +5,7 @@
             <el-form style="margin: 20px 0 10px 0" :inline="true">
                 <el-form-item label="油田：">
                     <el-select
-                        v-model="queryData.ogfId"
+                        v-model="this.selectOilField"
                         filterable
                         disabled
                         clearable
@@ -284,6 +284,7 @@ import {
 } from "@/api/rem/r-wellConnectEvaluate.js";
 import {exportExcel} from "@/lib/exportExcel";
 import FileSaver from "file-saver";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 
 export default {
     name:'connectivityData',
@@ -305,6 +306,8 @@ export default {
             }
         }
         return {
+            oilList:[],
+            selectOilField:"",
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
                 blockId: 'YCFXDY8B643EDC9007F96F570600457D',
@@ -353,7 +356,8 @@ export default {
             localStorage.removeItem('CONNECTIVITY_DATA')
         }
         //获取油田下拉数据
-        this.selectData();
+        
+        this.getOilFields();
         this.tableOilfield()
     },
     computed: {
@@ -362,6 +366,17 @@ export default {
         }
     },
     methods: {
+        getOilFields() {
+            QueryOgfDetail({}).then((res) => {
+                this.oilList = res.data.data;
+                //选择油田默认选秦皇岛32-6油田
+                if (this.oilList.length == 0) {
+                    this.selectOilField = "";
+                } else {
+                    this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+                }
+            });
+        },
         mergeTable({row, column, rowIndex, columnIndex}) {
             if (columnIndex === 0 || columnIndex === 1 || columnIndex === 2) {
                 if (this.mergeObj['wellGroupName'][rowIndex]) {
@@ -397,7 +412,7 @@ export default {
             var year = yesterday.getFullYear(); // 获取年份
             var month = (yesterday.getMonth() + 1).toString().padStart(2, '0'); // 获取月份，并确保格式正确
             var day = yesterday.getDate().toString().padStart(2, '0'); // 获取日期，并确保格式正确
-            return `${year}-${month}-${day}`; // 构造日期字符串
+            return `${year}-${month}`; // 构造日期字符串
         },
         tableColor({row, column, rowIndex, columnIndex}) {
             if (rowIndex === 0 && columnIndex === 4 || columnIndex === 10) {

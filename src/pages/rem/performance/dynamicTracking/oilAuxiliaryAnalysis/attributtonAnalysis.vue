@@ -96,6 +96,9 @@
             <Echart id="option2" :chart-data="option4" style="height: 100%"></Echart>
         </pagePanel>
         <pagePanel v-if="link=='5'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
+            <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px">下载
+            </el-button>
             <el-table
                 height="calc(100% - 50px)"
                 :row-style="{ height: '0px' }"
@@ -108,7 +111,6 @@
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
-                :default-sort="{ prop: 'date', order: 'descending' }"
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
@@ -154,7 +156,7 @@
                 </el-table-column>
                 <el-table-column prop="attribution" min-width="250" label="归因"
                                  show-overflow-tooltip></el-table-column>
-                <el-table-column prop="measure" min-width="250" label="措施" show-overflow-tooltip></el-table-column>
+                <el-table-column prop="measure" min-width="250" label="建议措施" show-overflow-tooltip></el-table-column>
             </el-table>
             <pagination
                 :pageSizes="[15, 20, 40, 100]"
@@ -165,6 +167,9 @@
             />
         </pagePanel>
         <pagePanel v-if="link=='6'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
+            <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px">下载
+            </el-button>
             <el-table
                 height="calc(100% - 50px)"
                 :row-style="{ height: '0px' }"
@@ -177,7 +182,7 @@
                 ref="reset"
                 style="width: 100%; height: 100%"
                 id="cjyzsj"
-                :default-sort="{ prop: 'date', order: 'descending' }"
+
             >
                 <el-table-column prop="wellGroupName" min-width="250" label="井组名称"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期"></el-table-column>
@@ -191,7 +196,7 @@
                 <el-table-column show-overflow-tooltip prop="attribution" min-width="250"
                                  label="归因"></el-table-column>
                 <el-table-column show-overflow-tooltip prop="measure" min-width="250"
-                                 label="下步措施"></el-table-column>
+                                 label="建议措施"></el-table-column>
             </el-table>
             <pagination
                 :pageSizes="[15, 20, 40, 100]"
@@ -202,6 +207,9 @@
             />
         </pagePanel>
         <pagePanel v-if="link=='4'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
+            <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px">下载
+            </el-button>
             <el-table
                 height="calc(100% - 50px)"
                 :row-style="{ height: '0px' }"
@@ -213,7 +221,6 @@
                 ref="reset"
                 style="height: 100%"
                 id="cjyzsj"
-                :default-sort="{ prop: 'date', order: 'descending' }"
             >
                 <el-table-column prop="wellNo" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="evalTime" min-width="150" label="日期">
@@ -248,6 +255,9 @@
         </pagePanel>
         <pagePanel v-if="link=='1' || link=='2' || link=='3'" :headerTitle="title+'明细表'" style="height: 100%"
                    :show-btn="true">
+            <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px">下载
+            </el-button>
             <el-table
                 height="calc(100% - 50px)"
                 :row-style="{ height: '0px' }"
@@ -259,8 +269,9 @@
                 border
                 ref="reset"
                 style="width: 100%; height: 100%"
+                highlight-current-row
                 id="cjyzsj"
-                :default-sort="{ prop: 'date', order: 'descending' }"
+
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
@@ -321,7 +332,7 @@
                 </el-table-column>
                 <el-table-column prop="attribution" min-width="250" show-overflow-tooltip
                                  label="归因"></el-table-column>
-                <el-table-column prop="measure" min-width="250" show-overflow-tooltip label="措施"></el-table-column>
+                <el-table-column prop="measure" min-width="250" show-overflow-tooltip label="建议措施"></el-table-column>
             </el-table>
             <pagination
                 :pageSizes="[15, 20, 40, 100]"
@@ -336,18 +347,17 @@
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import {
-    queryOperatorsCheckFieldListsDetail,
-    queryListOfOilfieldQueryPlatformsDetail,
-    queryOperatingCompanyDetail,
-    queryPlatformQueryWellListDetail, userListByUserNames, QueryPlatformDetail
+    QueryOgfDetail,
+    QueryWellDetail, userListByUserNames, QueryPlatformDetail
 } from "@/api/rem/marster.js";
 import * as echarts from "echarts/core";
-import {queryWaterInjIntensityAttributeAnalysis} from "@/api/rem/waterinjintensityattributeanalysis.js"
+import {queryWaterInjIntensityAttributeAnalysis,queryWaterInjDownExcel} from "@/api/rem/waterinjintensityattributeanalysis.js"
 import {analyzeOilWellFluidAttributionQuery} from "@/api/rem/wellmonthlyanalysis";
-import {oilWellFluidQuery} from "@/api/rem/oilwellfluid";
+import {oilWellFluidQuery,oilWellFluidDownExcel} from "@/api/rem/oilwellfluid";
 import {selectWellGroup} from "@/api/oilDeposit/rem-02/primaryinfo";
-import {queryProductionAnalysisList} from "@/api/rem/productionanalysis";
+import {queryProductionAnalysisList, queryProductionDownExcel} from "@/api/rem/productionanalysis";
 import toFixed from "xe-utils/toFixed";
+import FileSaver from 'file-saver'
 
 export default {
     components: {
@@ -528,7 +538,7 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因2：调整参数影响。\n下步措施：提高生产时率",
+                                                                            "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
                                                                         }
                                                                     ]
                                                                 }
@@ -1365,6 +1375,59 @@ export default {
         this.link = this.$route.query.link
     },
     methods: {
+        downexcel() {
+            let resultDate = ''
+            if(this.link==4){
+                resultDate = this.queryData.month
+            }else{
+                if( this.queryData.month.length > 7){
+                    resultDate = this.decreaseMonth(this.queryData.month);
+                }else{
+                    resultDate = this.decreaseMonth(this.queryData.month+'-06');
+                }
+                resultDate = resultDate.toISOString().substr(0, 10)//日期
+            }
+            let params = {
+                date: resultDate,
+                wellId: this.queryData.well,//井号
+                assetCode: this.queryData.assetCode,//平台
+                ogfId: this.queryData.ogfId,//油田
+                operationZone: this.queryData.orgId,//作业公司
+                evalResult: this.evalResult,//编码
+                evalTypeId: 'ZS',//判断是否为注水(仅获取注水列表需要传入该参数)
+                objectId: this.queryData.wellGroup,//井组ID
+                title:''//对应的标题
+            }
+            if (this.link == '4') {
+                if(this.evalResult == '注水强度变高'){
+                    params.evalResult = 'BG'
+                }else{
+                    params.evalResult = 'BD'
+                }
+                params.title=this.title
+                //查询注水列表接口
+                queryWaterInjDownExcel(params).then(res => {
+                  const aBlob = new Blob([res]);
+                  FileSaver.saveAs(aBlob, params.title+'明细表.xls' );
+                })
+            }
+            if (this.link == '6') {
+                params.title=this.title
+                //查询井组动态分析归因接口
+                queryProductionDownExcel(params).then(res => {
+                  const aBlob = new Blob([res]);
+                  FileSaver.saveAs(aBlob, params.title+'明细表.xls' );
+                })
+            }
+            if (this.link == '1' || this.link == '2' || this.link == '3' || this.link == '5') {
+                //剩余归因分析共用接口
+              params.title = this.title;
+              oilWellFluidDownExcel(params).then(res => {
+                  const aBlob = new Blob([res]);
+                  FileSaver.saveAs(aBlob, params.title+'明细表.xls' );
+                });
+            }
+        },
         formatAmount(row, column, cellValue) {
             return Number(cellValue).toFixed(2);
         },
@@ -1377,7 +1440,7 @@ export default {
             await userListByUserNames(params).then((res)=>{
                 this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;  
             })
-            await queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then((res) => {
+            await QueryOgfDetail({orgId: this.queryData.orgId}).then((res) => {
                 if (res.data.code == 200) {
                     this.oilFields = res.data.data;
                     if (this.oilFields.length == 0) {
@@ -1402,10 +1465,10 @@ export default {
                             this.wellGroupList.unshift({wellGroupName: '全部', wellGroupId: ''});
                         }
                     });
-                    queryPlatformQueryWellListDetail(requestPlat).then((res) => {
+                    QueryWellDetail(requestPlat).then((res) => {
                         this.wellList = res.data.data;
                     });
-                    queryListOfOilfieldQueryPlatformsDetail(requestPlat).then((res) => {
+                    QueryPlatformDetail(requestPlat).then((res) => {
                         if (res.data.code == 200) {
                             this.platforms = res.data.data;
                             this.platforms.map((n) => {
@@ -1421,7 +1484,7 @@ export default {
         },
         //选择后重新复制井号下拉列表
         choicewell() {
-            queryPlatformQueryWellListDetail({platformId: this.queryData.assetCode}).then((res) => {
+            QueryWellDetail({platformId: this.queryData.assetCode}).then((res) => {
                 this.wellList = res.data.data;
                 if (res.data.data.length) {
                     this.queryData.well = res.data.data[0].wellId
@@ -1457,13 +1520,14 @@ export default {
             }
             this.choicepla(this.queryData.ogfId)
             
-            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+            QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wellList = res.data.data;
                     this.queryData.well = ''
             });
             if(this.link == 4){
                 this.queryData.month = this.$route.query.currentDate
             }
+            this.getFormData();
         },
         decreaseMonth(dateStr) {
             const date = new Date(dateStr);
@@ -1546,10 +1610,12 @@ export default {
         //表格鼠标悬浮事件
         handleCurrentChange(row){
             const targetName = row.measure?row.measure.split(';').join(''):row.vauleMeasure.split(';').join('')
+            console.log(this.getTreeName(this.mainList, targetName));
+            console.log(targetName)
                 this.chart.dispatchAction({
                     type:'highlight',
                     seriesIndex:0,
-                    name:this.getTreeName(this.mainList,targetName)
+                    name:this.$route.query.link==6? '归因统计分析':this.getTreeName(this.mainList,targetName)
                 })
         },
     },

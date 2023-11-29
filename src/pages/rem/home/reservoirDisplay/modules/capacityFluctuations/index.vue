@@ -6,7 +6,7 @@
             header-title="产能波动"
             :is-show-max-btn="true"
         >
-            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('StatisticalTableProduction')">详细</el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('StatisticalTableProduction')">详情</el-button>
             <el-button type="primary" class="buttonActive_primary detailLinkBtn"  style="right:110px"  @click="downEcharts">下载</el-button>
             <Echart ref="echartChart" :chart-data="histogram" height="100%"></Echart>
         </info-window>
@@ -177,12 +177,11 @@ export default {
                 var y = dd.getFullYear();
                 var m = dd.getMonth() + 1 < 10 ? "0" + (dd.getMonth() + 1) : dd.getMonth() + 1;
                 var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
-                console.log()
                 let pormps = {
                     ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                     platId: "",
-                    prodDate: yesterdayStr,
-                    prodDateCompare: y + "-" + m + "-" + d
+                    prodDate: y + "-" + m + "-" + d,
+                    prodDateCompare: yesterdayStr
                 }
                 getYieldFluctuation(pormps).then((res) => {
                     this.histogram.yAxis.min = null

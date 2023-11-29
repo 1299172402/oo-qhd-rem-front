@@ -332,9 +332,8 @@
 import {queryCustomQueryList} from "@/api/basic/basic";
 import {fetchProductionWells} from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {
-    queryOperatingCompanyDetail,
-    queryOperatorsCheckFieldListsDetail,
-    queryPlatformQueryWellListDetail, userListByUserNames
+    QueryOgfDetail,
+    QueryWellDetail, userListByUserNames
 } from "@/api/basic/master";
 import {exportExcel} from "@/lib/exportExcel";
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
@@ -555,7 +554,7 @@ export default {
                 const request = {
                     ogfId,
                 };
-                queryPlatformQueryWellListDetail(request).then((res) => {
+                QueryWellDetail(request).then((res) => {
                     this.listdata = [
                         {
                             label: "有限天津分公司",
@@ -620,7 +619,7 @@ export default {
             }
         },
         choicewell(val){
-            queryPlatformQueryWellListDetail({ogfId:val}).then(res => {
+            QueryWellDetail({ogfId:val}).then(res => {
                 if (res.data.code == 200) {
                     this.wellData = res.data.data
                     this.wellId = ''
@@ -634,7 +633,7 @@ export default {
             }
             userListByUserNames(params).then((res)=>{
                 this.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-                queryOperatorsCheckFieldListsDetail({orgId:this.orgId}).then(res => {
+                QueryOgfDetail({orgId:this.orgId}).then(res => {
                     if (res.data.code == 200) {
                         this.oilFields = res.data.data
                     }
@@ -644,7 +643,7 @@ export default {
             const request = {
                 ogfId,
             };
-            queryPlatformQueryWellListDetail(request).then((res) => {
+            QueryWellDetail(request).then((res) => {
                 this.listdata = [
                     {
                         label: "有限天津分公司",

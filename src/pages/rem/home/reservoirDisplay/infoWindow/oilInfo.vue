@@ -7,8 +7,8 @@
       header-title="剩余油情况"
       :is-show-max-btn="true"
     >
-      <div class="g-w100 g-h100 g-row-flex" style="padding: 20px">
-<!--        <button class="detailLinkBtn" @click="linkroute('operationOverview')">详细</button>-->
+      <div style="height: 90%;width: 90%">
+<!--        <button class="detailLinkBtn" @click="linkroute('operationOverview')">详情</button>-->
         <remainingOil></remainingOil>
       </div>
     </info-window>

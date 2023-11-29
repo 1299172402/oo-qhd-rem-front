@@ -37,7 +37,14 @@
             :row-class-name="tableRowClassName"
             height="calc(100% - 130px)"
           >
-            <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column
+              type="index"
+              prop="index"
+              label="序号"
+              width="80"
+              align="center"
+              :index="formatIndex"
+            ></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -79,7 +86,7 @@
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column label="处置状态" align="center">
+            <el-table-column prop="status" label="处置状态" align="center">
               <template slot-scope="scope">
                 {{ scope.row.status ? scope.row.status : "-" }}
               </template>
@@ -111,7 +118,14 @@
             </el-button>
           </div>
           <el-table ref="table2" :data="tableData" border highlight height="calc(100% - 130px)">
-            <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column
+              type="index"
+              prop="index"
+              label="序号"
+              width="80"
+              align="center"
+              :index="formatIndex"
+            ></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -158,7 +172,7 @@
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column label="处置状态" align="center">
+            <el-table-column prop="status" label="处置状态" align="center">
               <template slot-scope="scope">
                 {{ scope.row.status ? scope.row.status : "-" }}
               </template>
@@ -217,7 +231,7 @@
             </div>
           </div>
           <el-table ref="table3" :data="tableData" border highlight height="calc(100% - 130px)">
-            <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column type="index" label="序号" width="80" align="center" :index="formatIndex"></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -283,7 +297,14 @@
             :row-class-name="tableRowClassName"
             height="calc(100% - 130px)"
           >
-            <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column
+              type="index"
+              prop="index"
+              label="序号"
+              width="80"
+              align="center"
+              :index="formatIndex"
+            ></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -325,7 +346,7 @@
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column label="处置状态" align="center">
+            <el-table-column prop="status" label="处置状态" align="center">
               <template slot-scope="scope">
                 {{ scope.row.status ? scope.row.status : "-" }}
               </template>
@@ -357,7 +378,14 @@
             </el-button>
           </div>
           <el-table ref="table5" :data="tableData" border highlight height="calc(100% - 130px)">
-            <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column
+              type="index"
+              prop="index"
+              label="序号"
+              width="80"
+              align="center"
+              :index="formatIndex"
+            ></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"> </el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -404,7 +432,7 @@
                 </el-button>
               </template>
             </el-table-column>
-            <el-table-column label="处置状态" align="center">
+            <el-table-column prop="status" label="处置状态" align="center">
               <template slot-scope="scope">
                 {{ scope.row.status ? scope.row.status : "-" }}
               </template>
@@ -464,7 +492,14 @@
             </div>
           </div>
           <el-table ref="table6" :data="tableData" border highlight height="calc(100% - 130px)">
-            <el-table-column type="index" prop="index" label="序号" width="80" align="center"></el-table-column>
+            <el-table-column
+              type="index"
+              prop="index"
+              label="序号"
+              width="80"
+              align="center"
+              :index="formatIndex"
+            ></el-table-column>
             <el-table-column prop="theDate" :label="`预警时间\n(yyyy-mm-dd)`" align="center"></el-table-column>
             <el-table-column prop="obj" label="预警对象" align="center"></el-table-column>
             <el-table-column prop="warningType" label="预警模型类型" align="center"></el-table-column>
@@ -521,7 +556,7 @@ import { getWarningsDate } from "@/api/oilDeposit/rem-04/developStatus.js";
 import { exportExcelFromJson } from "@/lib/exportExcel.js";
 
 export default {
-  name: "developmentWarningCapacity",
+  name: "DevelopmentWarningCapacity",
   components: {
     verticalSwitchButton,
   },
@@ -946,6 +981,9 @@ export default {
       }
       // this.$router.push({ name:'warningDispose',query:{warningType:row.warningType,theDate:row.theDate,handler:row.handler,id:row.id,warningCode:row.warningCode,opinion:row.result}})
     },
+    formatIndex(index) {
+      return (this.page - 1) * this.pageSize + index + 1;
+    },
     /**
      *  监听表格分页变化
      * @param pagination 分页数据对象
@@ -998,22 +1036,22 @@ export default {
         warningTypeCode: this.warningTypeCode,
       };
       if (this.radioValue == "油田指标预警" && this.switchNumber == "1") {
-        this.queryParams.beginDate = this.dateTime[0];
-        this.queryParams.endDate = this.dateTime[1];
-        this.queryParams.warningCode = "WARNING";
+        queryParams.beginDate = this.dateTime[0];
+        queryParams.endDate = this.dateTime[1];
+        queryParams.warningCode = "WARNING";
       } else if (this.radioValue == "油田指标预警" && this.switchNumber == "2") {
-        this.queryParams.beginDate = this.dateTime[0];
-        this.queryParams.endDate = this.dateTime[1];
-        this.queryParams.warningCode = "OBSERVE";
+        queryParams.beginDate = this.dateTime[0];
+        queryParams.endDate = this.dateTime[1];
+        queryParams.warningCode = "OBSERVE";
       } else if (this.radioValue == "油田指标预警" && this.switchNumber == "3") {
-        this.queryParams.beginDate = this.historyDateTime[0];
-        this.queryParams.endDate = this.historyDateTime[1];
-        this.queryParams.warningCode = "HIS";
+        queryParams.beginDate = this.historyDateTime[0];
+        queryParams.endDate = this.historyDateTime[1];
+        queryParams.warningCode = "HIS";
       }
       oilFieldDevWarnings(queryParams).then((data) => {
         let code = data.data.code;
         if (code == 200) {
-          let list = [];
+          let list = data.data.data?.indicatorWarnings || [];
           let headTitle = null;
           let fileName = "";
           if (this.radioValue == "油田指标预警" && this.switchNumber == "1") {
@@ -1041,22 +1079,22 @@ export default {
         warningTypeCode: this.warningTypeCode,
       };
       if (this.radioValue == "区块指标预警" && this.switchNumber == "1") {
-        this.queryParams.beginDate = this.dateTime[0];
-        this.queryParams.endDate = this.dateTime[1];
-        this.queryParams.warningCode = "WARNING";
+        queryParams.beginDate = this.dateTime[0];
+        queryParams.endDate = this.dateTime[1];
+        queryParams.warningCode = "WARNING";
       } else if (this.radioValue == "区块指标预警" && this.switchNumber == "2") {
-        this.queryParams.beginDate = this.dateTime[0];
-        this.queryParams.endDate = this.dateTime[1];
-        this.queryParams.warningCode = "OBSERVE";
+        queryParams.beginDate = this.dateTime[0];
+        queryParams.endDate = this.dateTime[1];
+        queryParams.warningCode = "OBSERVE";
       } else if (this.radioValue == "区块指标预警" && this.switchNumber == "3") {
-        this.queryParams.beginDate = this.historyDateTimeSec[0];
-        this.queryParams.endDate = this.historyDateTimeSec[1];
-        this.queryParams.warningCode = "HIS";
+        queryParams.beginDate = this.historyDateTimeSec[0];
+        queryParams.endDate = this.historyDateTimeSec[1];
+        queryParams.warningCode = "HIS";
       }
       fieldDevWarnings(queryParams).then((data) => {
         let code = data.data.code;
         if (code == 200) {
-          let list = [];
+          let list = data.data.data?.indicatorWarnings || [];
           let headTitle = null;
           let fileName = "";
           if (this.radioValue == "区块指标预警" && this.switchNumber == "1") {

@@ -86,7 +86,7 @@ import { exportExcel } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
 
 export default {
-  // name: "annualInjection",
+  name: "AnnualInjection",
   components: {
     Echart,
   },
@@ -149,6 +149,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划年累注" || item.seriesName == "实际年累注") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         legend: {
           data: [],
@@ -174,6 +185,8 @@ export default {
             color: "#8FA4CC",
             fontSize: 14,
             padding: [10, 0, 0, 0],
+            showMinLabel: true,
+            showMaxLabel: true,
             // TODO lv 临时暂时屏蔽， 数据不够
             // interval: function (index, val) {
             //   //判断是否是一号
@@ -188,9 +201,9 @@ export default {
             // },
           },
           axisTick: {
-              show: true,
-              inside: true,
-            },
+            show: true,
+            inside: true,
+          },
           axisLine: {
             show: true,
             lineStyle: {
@@ -299,10 +312,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.queryParams.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.queryParams.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.queryParams.companyId }).then((data) => {

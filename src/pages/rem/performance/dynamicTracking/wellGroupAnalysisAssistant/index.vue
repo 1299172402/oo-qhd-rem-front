@@ -132,7 +132,7 @@
           </el-tab-pane>
         </el-tabs>
 
-        <keep-alive :include="[]" :max="10" v-if="selectBlock">
+        <!-- <keep-alive :include="[]" :max="10" v-if="selectBlock"> -->
           <component
             :is="component"
             ref="componentCustom"
@@ -143,7 +143,7 @@
             :wellGroupId="selectWellGroup"
             @childPara="changeChildParam"
           ></component>
-        </keep-alive>
+        <!-- </keep-alive> -->
       </pagePanelNew>
 
       <!-- minIo上传 -->
@@ -162,7 +162,7 @@
             :limit="limit"
             :fileSize="20"
             :is-show-tip="false"
-            biz-path="rem-front/text"
+            biz-path="rem/oo-qhd-rem-agg"
             :file-type="fileType"
             @change="getResData"
           />

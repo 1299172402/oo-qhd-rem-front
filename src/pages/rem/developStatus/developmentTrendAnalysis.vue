@@ -73,7 +73,7 @@ import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "
 import { searchDevTrendAnalysis } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getSearchDevTrendAnalysisDate } from "@/api/oilDeposit/rem-04/developStatus.js";
 export default {
-  name: "developmentTrendAnalysis",
+  name: "DevelopmentTrendAnalysis",
   components: {
     Echart,
   },
@@ -191,7 +191,12 @@ export default {
                 isAxisIndex = val.axisIndex;
                 res = res + "<br>";
               }
-              res = res + val.marker + val.seriesName + ":" + val.value + "<br>";
+              if (val.seriesName == '产液量' || val.seriesName == '产油量'){
+                res = res + val.marker + val.seriesName + ": " + parseFloat(val.value || 0).toFixed(4) + "<br>";
+              } else {
+                res = res + val.marker + val.seriesName + ": " + parseFloat(val.value || 0).toFixed(2) + "<br>";
+
+              }
             }
             return res;
           },
@@ -246,6 +251,8 @@ export default {
               fontSize: 12,
               show: false,
               color: "#8FA4CC",
+              showMinLabel: true,
+              showMaxLabel: true,
             },
             axisTick: {
               show: true,
@@ -676,10 +683,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {

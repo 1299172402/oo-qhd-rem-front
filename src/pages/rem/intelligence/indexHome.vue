@@ -188,7 +188,7 @@
                     <el-button
                         type="primary"
                         class="buttonActive_primary detailLinkBtn"
-                        @click="getDetail">详细
+                        @click="getDetail">详情
                     </el-button
                     >
                     <el-button
@@ -208,7 +208,7 @@
                         <el-button
                             type="primary"
                             class="buttonActive_primary detailLinkBtn"
-                            @click="detailed = true">详细
+                            @click="detailed = true">详情
                         </el-button
                         >
                         <el-button
@@ -312,28 +312,31 @@ import {
     getStratifiedInjectionDetails,
     getResidueOilCondotion
 } from "@/api/rem/r-intelligentIPA.js";
+import {getuserListByUserNames,getFieldListsDetail,getblockData} from "@/api/basic/masterBycoderXu.js"
 import FileSaver from 'file-saver'
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {exportExcel} from '@/lib/exportExcel.js';
 import html2canvas from "html2canvas";
 
 export default {
-    name: 'indexHome',
+    name: 'IndexHome',
     components: {
         Echart
     },
     mixins: [queryConditionMixin],
     data() {
         return {
+            oilList:[],
             baseUrl: process.env.NODE_ENV == "production" ? '/rem/' : '/',
             queryData: {
                 //区块
-                blockId: 'YCFXDY8B643EDC9007F96F570600457D',
+                blockId: '',
                 //选择时间
                 dateTime: this.eeee(),
                 // dateTime: '2023-05',
                 //油田
-                ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
+                ogfId: '',
+                orgId:''
             },
             chartDom: '',
             title: '',
@@ -421,9 +424,48 @@ export default {
         }
     },
     mounted() {
-        this.searchList()
+        // this.searchList()
+        this.getuserListByUserNamesData()
     },
     methods: {
+        changeOil () {
+            this.queryData.blockId = "";
+            this.queryData.wellId = "";
+            this.queryBlockFeild();
+        },
+        queryBlockFeild () {
+            getblockData({ogfId:this.queryData.ogfId}).then((res) => {
+                this.blockList = res.blockList;
+                this.blockList.forEach(item => {
+                    if (item.blockId == this.queryData.blockId) {
+                        this.title = item.blockName
+                    }
+                })
+            });
+        },
+        getuserListByUserNamesData(){
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+            }
+            getuserListByUserNames(params).then((res)=>{
+                this.queryData.orgId=res.data.data[0].currentTenantBindOrgId
+                this.queryOilFeild()
+            })
+
+        },
+        queryOilFeild() {
+            getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
+                this.oilList = res.data.data;
+                var list =res.data.data;
+                for(var i=0;i<list.length;i++){
+                    if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+                        this.queryData.ogfId=list[i].ogfId
+                    }
+                }
+                this.queryBlockFeild()
+            });
+
+        },
         returnBack() {
             this.$router.go(-1)
         },

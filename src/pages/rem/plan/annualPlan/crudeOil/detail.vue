@@ -127,6 +127,8 @@ export default {
             axisLabel: {
               color: "#8FA4CC",
               fontSize: 10,
+              showMinLabel: true,
+              showMaxLabel: true,
               // interval: function (index, val) {
               //   if (val.substr(-2) == "01") {
               //     return true;
@@ -227,6 +229,8 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
             fontSize: 10,
+            showMinLabel: true,
+            showMaxLabel: true,
             // interval: function (index, val) {
             //   if (val.substr(-2) == "01") {
             //     return true;
@@ -357,6 +361,8 @@ export default {
             axisLabel: {
               color: "#8FA4CC",
               fontSize: 10,
+              showMinLabel: true,
+              showMaxLabel: true,
               // interval: function (index, val) {
               //   if (val.substr(-2) == "01") {
               //     return true;
@@ -488,6 +494,8 @@ export default {
             axisLabel: {
               color: "#8FA4CC",
               fontSize: 10,
+              showMinLabel: true,
+              showMaxLabel: true,
               // interval: function (index, val) {
               //   if (val.substr(-2) == "01") {
               //     return true;
@@ -585,6 +593,8 @@ export default {
             axisLabel: {
               color: "#8FA4CC",
               fontSize: 10,
+              showMinLabel: true,
+              showMaxLabel: true,
               // interval: function (index, val) {
               //   if (val.substr(-2) == "01") {
               //     return true;
@@ -679,6 +689,8 @@ export default {
           axisLabel: {
             color: "#8FA4CC",
             fontSize: 10,
+            showMinLabel: true,
+            showMaxLabel: true,
             // interval: function (index, val) {
             //   if (val.substr(-2) == "01") {
             //     return true;

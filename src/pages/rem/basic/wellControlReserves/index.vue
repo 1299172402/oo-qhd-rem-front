@@ -135,10 +135,9 @@ import {
     queryWellControlReserves
 } from "@/api/rem/welldetailedevaluationresult";
 import {
-    queryOperatingCompanyDetail,
-    queryOperatorsCheckFieldListsDetail,
-    queryListOfOilfieldQueryPlatformsDetail,
-    queryPlatformQueryWellListDetail,
+    QueryOgfDetail,
+    QueryPlatformDetail,
+    QueryWellDetail,
     queryOilAndGasFieldQueryPositionDetail,userListByUserNames
 } from "@/api/basic/master";
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
@@ -196,18 +195,16 @@ export default {
             let params = {
                 searchKeys:[this.$store.getters["user/userDetail"].user.userName],
             }
-            queryOperatingCompanyDetail({}).then(res => {
-                this.deptSelect = res.data.data
-            })
+           
             userListByUserNames(params).then((res)=>{
                 this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
             })
             //根据作业公司查询油田
-            queryOperatorsCheckFieldListsDetail({orgId: this.queryData.orgId}).then(res => {
+            QueryOgfDetail({orgId: this.queryData.orgId}).then(res => {
                 this.oilFields = res.data.data
             })
             //根据油田查询平台列表
-            queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
+            QueryPlatformDetail({ogfId: this.queryData.ogfId}).then(res => {
                 this.platforms = res.data.data
             })
         },
@@ -229,11 +226,11 @@ export default {
             });
         },
         choicepla(val){
-            queryListOfOilfieldQueryPlatformsDetail({ogfId: val}).then(res => {
+            QueryPlatformDetail({ogfId: val}).then(res => {
                 this.platforms = res.data.data
                 this.queryData.pt = ''
             })
-            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+            QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = this.wells[0].wellId
                 queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
@@ -271,7 +268,7 @@ export default {
             });
         },
         getData() {
-            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+            QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = this.wells[0].wellId
                 queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
@@ -281,7 +278,7 @@ export default {
         },
         //平台下拉-change
         onPlatfromChange(val) {
-            queryPlatformQueryWellListDetail({platformId: val, ogfId: this.queryData.ogfId}).then((res) => {
+            QueryWellDetail({platformId: val, ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = this.wells[0]?.wellId
             })
@@ -292,16 +289,27 @@ export default {
             }else{
                 this.queryData.ogfId = this.oilFields[0].ogfId
             }
-            queryListOfOilfieldQueryPlatformsDetail({ogfId: this.queryData.ogfId}).then(res => {
+            QueryPlatformDetail({ogfId: this.queryData.ogfId}).then(res => {
                 this.platforms = res.data.data
                 this.queryData.pt = ''
             })
-            queryPlatformQueryWellListDetail({ogfId: this.queryData.ogfId}).then((res) => {
+            QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
                 if (res.data.code == 200) {
                     this.wells = res.data.data
                     this.queryData.wellId = this.wells[0].wellId
+                    queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
+                        this.cwOptions = res.data.data;
+                    });
                 }
             });
+            this.djclForm = {
+                layerId: '',
+                controlArea: '',
+                evalDetailId: "",
+                probReservesWell: "",
+                recoverableReserves: "",
+                thicknessEffe: ""
+            }
         },
         changewell() {
             this.djclForm = []

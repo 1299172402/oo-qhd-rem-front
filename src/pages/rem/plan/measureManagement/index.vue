@@ -367,7 +367,7 @@ import FileSaver from "file-saver";
 import * as XLSX from "@/lib/xlsx";
 import treeSelectionAll from "@/pages/rem/basic/components/treeSelectionAll.vue";
 export default {
-  name: "measureManagement",
+  name: "MeasureManagement",
   components: {
     fieldOperations,
     treeSelectionAll,
@@ -493,9 +493,7 @@ export default {
       let width = document.getElementById("tableBox").clientWidth - 510;
       this.width = width; //table最后一列的宽度
       //计算日期 间距
-      console.log("日期宽度", Math.floor(this.width - 44 - 20));
       this.spacing = Math.floor((this.width - 936 - 44 - 20) / 11);
-      console.log("日期间距", this.spacing);
       this.initData();
 
       //监听页面缩放
@@ -562,12 +560,6 @@ export default {
             this.selectOilField = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
           }
           this.selectOilFieldName = this.oilFields.filter(item => item.ogfId === this.selectOilField)[0].ogfName || "";
-        }
-      });
-      //油田
-      await QueryOgfDetail({}).then((res) => {
-        if (res.data.code == 200) {
-          this.oilFields = res.data.data;
         }
       });
       //平台
@@ -957,15 +949,15 @@ export default {
   }
 }
 
-::v-deep .el-table__body-wrapper {
-  .el-table__body {
-    tbody tr:last-child {
-      td {
-        border: none;
-      }
-    }
-  }
-}
+// ::v-deep .el-table__body-wrapper {
+//   .el-table__body {
+//     tbody tr:last-child {
+//       td {
+//         border: none;
+//       }
+//     }
+//   }
+// }
 
 .app-container {
   height: 100%;

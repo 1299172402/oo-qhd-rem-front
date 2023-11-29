@@ -51,14 +51,14 @@
           property="gasProdDaily"
           header-align="center"
           align="center"
-          :label="`产气量\n(10⁴m³)`"
+          :label="`实际产气量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="oilEquivalent"
           header-align="center"
           align="center"
-          :label="`油当量\n(t)`"
+          :label="`气转油量\n(t)`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
@@ -130,6 +130,17 @@ export default {
           axisPointer: {
             type: "shadow",
           },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              if (item.seriesName == "计划产气量" || item.seriesName == "实际产气量" || item.seriesName == "滚动预测") {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              } else {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              }
+            });
+            return relVal;
+          },
         },
         grid: {
           x: 120,
@@ -150,39 +161,43 @@ export default {
           itemHeight: 6,
           itemGap: 14,
         },
-        xAxis: {
-          name: "日期 (日)",
-          // nameTextStyle: {
-          //     color: '#8FA4CC',
-          //     fontSize: 14,
-          // },
-          nameGap: 55,
-          type: "category",
-          axisLabel: {
-            color: "#8FA4CC",
-            padding: [10, 0, 0, 0],
-            fontSize: 14,
-            // interval: function (index, val) {
-            //   if (val.substr(-2) == "01") {
-            //     return true;
-            //   } else {
-            //     return false;
-            //   }
+        xAxis: [
+          {
+            name: "日期 (日)",
+            // nameTextStyle: {
+            //     color: '#8FA4CC',
+            //     fontSize: 14,
             // },
-          },
-          axisTick: {
-            show: true,
-            inside: true,
-          },
-          axisLine: {
-            lineStyle: {
+            nameGap: 55,
+            type: "category",
+            axisLabel: {
               color: "#8FA4CC",
+              padding: [10, 0, 0, 0],
+              fontSize: 14,
+              showMinLabel: true,
+              showMaxLabel: true,
+              // interval: function (index, val) {
+              //   if (val.substr(-2) == "01") {
+              //     return true;
+              //   } else {
+              //     return false;
+              //   }
+              // },
+            },
+            axisTick: {
+              show: true,
+              inside: true,
+            },
+            axisLine: {
+              lineStyle: {
+                color: "#8FA4CC",
+              },
             },
           },
-        },
+        ],
         yAxis: [
           {
-            name: "产气量(10⁴m³)",
+            name: "实际产气量(10⁴m³)",
             nameLocation: "middle",
             nameGap: 70,
             nameTextStyle: {
@@ -213,7 +228,7 @@ export default {
             },
           },
           {
-            name: "油当量(折算)(t)",
+            name: "气转油量(t)",
             nameLocation: "middle",
             nameGap: 70,
             nameTextStyle: {
@@ -305,9 +320,9 @@ export default {
       series.type = "line";
       series.symbol = "none";
       let labelName = linearChart.label;
-      if (labelName == "产气量") {
+      if (labelName == "实际产气量") {
         series.yAxisIndex = 0;
-      } else if (labelName == "油当量（折算）") {
+      } else if (labelName == "气转油量") {
         series.yAxisIndex = 1;
       }
       let seriesData = [];
@@ -315,9 +330,9 @@ export default {
       for (let i = 0; i < lineData.length; i++) {
         let point = [];
         point.push(lineData[i].label);
-        if (labelName == "产气量") {
+        if (labelName == "实际产气量") {
           point.push(parseFloat(Number(lineData[i].value).toFixed(2)));
-        } else if (labelName == "油当量（折算）") {
+        } else if (labelName == "气转油量") {
           point.push(parseFloat(Number(lineData[i].value).toFixed(4)));
         } else {
           point.push(lineData[i].value);

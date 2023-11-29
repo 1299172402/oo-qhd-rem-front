@@ -160,7 +160,7 @@ import measureProduction from "./crudeOil/measureProduction.vue";
 import adjustingWellProduction from "./crudeOil/adjustingWellProduction.vue";
 import devWellProduction from "./crudeOil/devWellProduction.vue";
 export default {
-  name: "annualPlan",
+  name: "AnnualPlan",
   components: {
     crudeOil,
     naturalGas,

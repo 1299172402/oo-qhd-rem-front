@@ -82,15 +82,9 @@
                   @change="doSearch"
                 ></el-date-picker>
               </div>
-              <el-button
-                style="margin-bottom: 20px"
-                type="primary"
-                @click="doDownExcel('#fzjcdhglmx', `${oilFieldName || ''}分注井层段合格率明细`)"
-              >
-                下载
-              </el-button>
+              <el-button style="margin-bottom: 20px" type="primary" @click="downloadFile"> 下载 </el-button>
             </div>
-            <el-table id="fzjcdhglmx" :data="tableData1" border highlight height="calc(100% - 130px)">
+            <el-table ref="table1" id="fzjcdhglmx" :data="tableData1" border highlight height="calc(100% - 130px)">
               <!-- :index="formatIndex"  -->
               <el-table-column
                 label="序号"
@@ -181,11 +175,11 @@
 import Echart from "@/components/tools/Echarts/index.vue";
 import { dividingLayerQualityRate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { QueryOgfDetail, QueryPlatformDetail, userListByUserNames } from "@/api/rem/marster.js";
-import { exportExcel } from "@/lib/exportExcel.js";
+import { exportExcel, exportExcelFromJson } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
 
 export default {
-  // name: "splitHole",
+  name: "SplitHole",
   components: {
     Echart,
   },
@@ -252,6 +246,13 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
           },
         },
         legend: {
@@ -443,8 +444,14 @@ export default {
           let xSet = new Set();
           let resData = res.data.data;
           let barCharts = resData?.chart?.linearDataSets;
-          this.tableData1 = resData.tableList && resData.tableList[0].length && resData.tableList[0][0].rows.length ? resData.tableList[0][0].rows : [];
-          this.total = resData.tableList && resData.tableList[0].length && resData.tableList[0] ? resData.tableList[0][0].total : 0;
+          this.tableData1 =
+            resData.tableList && resData.tableList[0].length && resData.tableList[0][0].rows.length
+              ? resData.tableList[0][0].rows
+              : [];
+          this.total =
+            resData.tableList && resData.tableList[0].length && resData.tableList[0]
+              ? resData.tableList[0][0].total
+              : 0;
           this.tableData2 = resData.tableList && resData.tableList[1] ? resData.tableList[1] : [];
           if (barCharts) {
             barCharts.forEach((item, index) => {
@@ -457,6 +464,9 @@ export default {
                 show: true,
                 position: "top",
                 color: "#8FA4CC",
+                formatter(params) {
+                  return parseFloat(params.value[1] || 0).toFixed(2);
+                },
               };
               let barData = item.linearData;
               let seriesMess = [];
@@ -484,6 +494,25 @@ export default {
     //表格id 表格名称
     doDownExcel(tableId, tableName) {
       exportExcel(tableId, tableName);
+    },
+    /**
+     * hwh
+     * 下载表格信息
+     */
+    downloadFile() {
+      let request = {};
+      Object.assign(request, this.queryParams);
+      request.page = 1;
+      request.pageSize = 99999;
+      dividingLayerQualityRate(request).then((data) => {
+        let code = data.data.code;
+        if (code == 200) {
+          let fileName = `${this.oilFieldName || ""}分注井层段合格率明细`;
+          let list = data.data.data?.tableList[0][0].rows || [];
+          let headTitle = this.$refs.table1.$children.length ? this.$refs.table1.$children : null;
+          exportExcelFromJson(headTitle, list, fileName);
+        }
+      });
     },
     //表格格式化方法 - 是否合格 1不合格 0合格
     formatterBoolean1(row, column) {

@@ -39,10 +39,10 @@
                 "
               >
 <!--                <el-row style="border: 0px !important;">-->
-                  <el-button icon="el-icon-thumb" type="text" style="color: white;" @click="choose(scope.$index,scope.row)">
+                  <el-button icon="el-icon-thumb" type="text" style="color: #8FA4CC;" @click="choose(scope.$index,scope.row)">
                     选择
                   </el-button>
-                <el-button icon="el-icon-upload2" type="text" style="color: white;" @click.stop="uploadFiles(scope.row,scope.$index)">
+                <el-button icon="el-icon-upload2" type="text" style="color: #8FA4CC;" @click.stop="uploadFiles(scope.row,scope.$index)">
                   上传
                 </el-button>
                 <el-button icon="el-icon-upload" type="text"  @click.stop="updateFileType(scope.row, scope.$index)">
@@ -302,6 +302,24 @@ export default {
   mounted() {
     this.receiveId();
   },
+    computed: {
+        getGlobeTheme(val) {
+            return this.$store.state.setting.mode;
+        },
+    },
+    watch: {
+        getGlobeTheme: {
+            handler(Nval) {
+                if (Nval == "dark") {
+                    this.optionfczc.legend.textStyle.color = "#fff";
+                } else {
+                    this.optionfczc.legend.textStyle.color = "#000000";
+                }
+            },
+            deep: true,
+            immediate: true
+        },
+    },
   methods: {
     //表格表头样式
     headerClass({ column, rowIndex, columnIndex }) {

@@ -7,3 +7,11 @@ export function oilWellFluidQuery({ assetCode, date, evalResult, ogfId, operatio
     method: "get",
   });
 }
+
+export function oilWellFluidDownExcel({ wellId, assetCode, ogfId, operationZone, evalResult, date, title } = {}) {
+  return request({
+    url: `${baseUrl}/oilWellFluid/oilWellFluidDownExcel?wellId=${ wellId || "" }&assetCode=${ assetCode || "" }&ogfId=${ ogfId || "" }&operationZone=${ operationZone || "" }&evalResult=${ evalResult || "" }&date=${ date || "" }&title=${ title || "" }`,
+    method: "get",
+    responseType: "blob",
+  });
+}

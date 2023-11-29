@@ -134,18 +134,18 @@
             </div>
           </el-tab-pane>
         </el-tabs>
-        <keep-alive :include="[]" :max="10" v-if="blockId">
-          <component
-            :is="component"
-            ref="componentCustom"
-            :oilFeildId="selectOilField"
-            :platform="selectPlatform"
-            :wellId="selectWellId"
-            :blockId="blockId"
-            @childPara="changeChildParam"
-          >
-          </component>
-        </keep-alive>
+        <!-- <keep-alive :include="[]" :max="10" v-if="blockId"> -->
+        <component
+          :is="component"
+          ref="componentCustom"
+          :oilFeildId="selectOilField"
+          :platform="selectPlatform"
+          :wellId="selectWellId"
+          :blockId="blockId"
+          @childPara="changeChildParam"
+        >
+        </component>
+        <!-- </keep-alive> -->
       </pagePanelNew>
 
       <!-- minIo上传 -->
@@ -164,7 +164,7 @@
             :limit="limit"
             :fileSize="20"
             :is-show-tip="false"
-            biz-path="rem-front/text"
+            biz-path="rem/oo-qhd-rem-agg"
             :file-type="fileType"
             @change="getResData"
           />
@@ -379,6 +379,10 @@ export default {
             {
               label: "单井基本信息表",
               name: "individualWellBasicInformationSheet",
+            },
+            {
+              label: "生产段状态",
+              name: "productionSectionStatus",
             },
           ],
         },
@@ -634,10 +638,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -695,7 +698,7 @@ export default {
     async getBlockWellApi() {
       await getBlockWell({ wellId: this.selectWellId }).then((res) => {
         if (res.data.code == 200) {
-          this.blockId = res.data.data.blockId;
+          this.blockId = res.data.data?.blockId;
         }
       });
     },

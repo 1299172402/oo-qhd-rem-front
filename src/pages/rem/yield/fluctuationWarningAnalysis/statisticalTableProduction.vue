@@ -40,9 +40,9 @@
           </el-select>
         </div>
         <div style="margin-right: 15px; margin-bottom: 10px">
-          <span>对比基准日期：</span>
+          <span>对比日期：</span>
           <el-date-picker
-            v-model="searchForm.prodDate"
+            v-model="searchForm.prodDateCompare"
             :clearable="false"
             style="width: 160px"
             type="date"
@@ -51,9 +51,9 @@
           ></el-date-picker>
         </div>
         <div style="margin-right: 15px; margin-bottom: 10px">
-          <span>对比日期：</span>
+          <span>对比基准日期：</span>
           <el-date-picker
-            v-model="searchForm.prodDateCompare"
+            v-model="searchForm.prodDate"
             :clearable="false"
             style="width: 160px"
             type="date"
@@ -239,8 +239,8 @@
                 :sort-method="
                   (a, b) => {
                     return borepipeNoSort1(
-                      numReduce(a.fluidProdDaily, a.fluidProdDailyCompare),
-                      numReduce(b.fluidProdDaily, b.fluidProdDailyCompare),
+                      numReduce(a.fluidProdDailyCompare, a.fluidProdDaily),
+                      numReduce(b.fluidProdDailyCompare, b.fluidProdDaily),
                     );
                   }
                 "
@@ -249,25 +249,25 @@
                   <span style="display: flex; align-items: center; justify-content: center">
                     {{
                       row.fluidProdDaily !== null
-                        ? numReduce(row.fluidProdDaily, row.fluidProdDailyCompare).toFixed(2)
+                        ? numReduce(row.fluidProdDailyCompare, row.fluidProdDaily).toFixed(2)
                         : "-"
                     }}
                     <img
                       src="@/assets/rem/yieId/upTriangle.png"
                       alt=""
-                      v-if="row.fluidProdDaily !== null && numReduce(row.fluidProdDaily, row.fluidProdDailyCompare) > 0"
+                      v-if="row.fluidProdDaily !== null && numReduce(row.fluidProdDailyCompare, row.fluidProdDaily) > 0"
                       style="width: 20px; height: 20px"
                     />
                     <span
                       v-if="
-                        row.fluidProdDaily !== null && numReduce(row.fluidProdDaily, row.fluidProdDailyCompare) === 0
+                        row.fluidProdDaily !== null && numReduce(row.fluidProdDailyCompare, row.fluidProdDaily) === 0
                       "
                       style="width: 12px; height: 3px; background-color: #ffe706; margin-left: 8px"
                     ></span>
                     <img
                       src="@/assets/rem/yieId/downTriangle.png"
                       alt=""
-                      v-if="row.fluidProdDaily !== null && numReduce(row.fluidProdDaily, row.fluidProdDailyCompare) < 0"
+                      v-if="row.fluidProdDaily !== null && numReduce(row.fluidProdDailyCompare, row.fluidProdDaily) < 0"
                       style="width: 20px; height: 20px"
                     />
                   </span>
@@ -325,31 +325,31 @@
                 :sort-method="
                   (a, b) => {
                     return borepipeNoSort1(
-                      numReduce(a.waterRatio, a.waterRatioCompare),
-                      numReduce(b.waterRatio, b.waterRatioCompare),
+                      numReduce(a.waterRatioCompare, a.waterRatio),
+                      numReduce(b.waterRatioCompare, b.waterRatio),
                     );
                   }
                 "
               >
                 <template slot-scope="{ row }">
                   <span style="display: flex; align-items: center; justify-content: center">
-                    {{ row.waterRatio !== null ? numReduce(row.waterRatio, row.waterRatioCompare).toFixed(2) : "-" }}
+                    {{ row.waterRatio !== null ? numReduce(row.waterRatioCompare, row.waterRatio).toFixed(2) : "-" }}
                     <img
                       src="@/assets/rem/yieId/UP.png"
                       alt=""
-                      v-if="row.waterRatio !== null && numReduce(row.waterRatio, row.waterRatioCompare) > 0"
+                      v-if="row.waterRatio !== null && numReduce(row.waterRatioCompare, row.waterRatio) > 0"
                       style="width: 20px; height: 20px"
                     />
                     <img
                       src="@/assets/rem/yieId/equation.png"
                       alt=""
-                      v-if="row.waterRatio !== null && numReduce(row.waterRatio, row.waterRatioCompare) == 0"
+                      v-if="row.waterRatio !== null && numReduce(row.waterRatioCompare, row.waterRatio) == 0"
                       style="width: 20px; height: 20px; margin-left: 8px"
                     />
                     <img
                       src="@/assets/rem/yieId/DOWN.png"
                       alt=""
-                      v-if="row.waterRatio !== null && numReduce(row.waterRatio, row.waterRatioCompare) < 0"
+                      v-if="row.waterRatio !== null && numReduce(row.waterRatioCompare, row.waterRatio) < 0"
                       style="width: 20px; height: 20px"
                     />
                   </span>
@@ -363,8 +363,8 @@
                 :sort-method="
                   (a, b) => {
                     return borepipeNoSort1(
-                      numReduce(a.dhFlowingPress, a.dhFlowingPressCompare),
-                      numReduce(b.dhFlowingPress, b.dhFlowingPressCompare),
+                      numReduce(a.dhFlowingPressCompare, a.dhFlowingPress),
+                      numReduce(b.dhFlowingPressCompare, b.dhFlowingPress),
                     );
                   }
                 "
@@ -372,7 +372,7 @@
                 <template slot-scope="scope">
                   {{
                     scope.row.dhFlowingPress !== null
-                      ? numReduce(scope.row.dhFlowingPress, scope.row.dhFlowingPressCompare).toFixed(2)
+                      ? numReduce(scope.row.dhFlowingPressCompare, scope.row.dhFlowingPress).toFixed(2)
                       : "-"
                   }}
                 </template>
@@ -385,8 +385,8 @@
                 :sort-method="
                   (a, b) => {
                     return borepipeNoSort1(
-                      numReduce(a.pumpFrequency, a.pumpFrequencyCompare),
-                      numReduce(b.pumpFrequency, b.pumpFrequencyCompare),
+                      numReduce(a.pumpFrequencyCompare, a.pumpFrequency),
+                      numReduce(b.pumpFrequencyCompare, b.pumpFrequency),
                     );
                   }
                 "
@@ -395,25 +395,25 @@
                   <span style="display: flex; align-items: center; justify-content: center">
                     {{
                       row.pumpFrequency !== null
-                        ? numReduce(row.pumpFrequency, row.pumpFrequencyCompare).toFixed(2)
+                        ? numReduce(row.pumpFrequencyCompare, row.pumpFrequency).toFixed(2)
                         : "-"
                     }}
                     <img
                       src="@/assets/rem/yieId/UP.png"
                       alt=""
-                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequency, row.pumpFrequencyCompare) > 0"
+                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequencyCompare, row.pumpFrequency) > 0"
                       style="width: 20px; height: 20px"
                     />
                     <img
                       src="@/assets/rem/yieId/equation.png"
                       alt=""
-                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequency, row.pumpFrequencyCompare) == 0"
+                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequencyCompare, row.pumpFrequency) == 0"
                       style="width: 20px; height: 20px; margin-left: 8px"
                     />
                     <img
                       src="@/assets/rem/yieId/DOWN.png"
                       alt=""
-                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequency, row.pumpFrequencyCompare) < 0"
+                      v-if="row.pumpFrequency !== null && numReduce(row.pumpFrequencyCompare, row.pumpFrequency) < 0"
                       style="width: 20px; height: 20px"
                     />
                   </span>
@@ -472,8 +472,8 @@ export default {
         platId: "",
         wellId: "",
         wellIds: [], //井标识集合
-        prodDate: new Date().addDays(-1).format("yyyy-MM-dd"), //对比基准日期
-        prodDateCompare: new Date().addDays(-2).format("yyyy-MM-dd"), //对比日期
+        prodDate: new Date().addDays(-2).format("yyyy-MM-dd"), //对比基准日期
+        prodDateCompare: new Date().addDays(-1).format("yyyy-MM-dd"), //对比日期
         influenceFactor: "", //影响因素
       },
       //表格数据
@@ -503,8 +503,9 @@ export default {
       } else {
         await getWellOutputWaveTableDate().then((res) => {
           if (res.data.code == 200) {
-            this.searchForm.prodDate = res.data.data;
-            this.searchForm.prodDateCompare = new Date(this.searchForm.prodDate).addDays(-1).format("yyyy-MM-dd");
+            this.searchForm.prodDateCompare = res.data.data;
+            this.searchForm.prodDate = new Date(res.data.data).addDays(-1).format("yyyy-MM-dd");
+
           }
         });
       }
@@ -527,8 +528,9 @@ export default {
     } else {
       await getWellOutputWaveTableDate().then((res) => {
         if (res.data.code == 200) {
-          this.searchForm.prodDate = res.data.data;
-          this.searchForm.prodDateCompare = new Date(this.searchForm.prodDate).addDays(-1).format("yyyy-MM-dd");
+          this.searchForm.prodDateCompare = res.data.data;
+          this.searchForm.prodDate = new Date(res.data.data).addDays(-1).format("yyyy-MM-dd");
+
         }
       });
     }
@@ -625,8 +627,8 @@ export default {
               if (el.oilProdDaily !== null) {
                 //产油对比
                 let comparisonOilProduction = this.numReduce(
-                  el.oilProdDaily,
                   el.oilProdDailyCompare ? el.oilProdDailyCompare : "0.0",
+                  el.oilProdDaily,
                 );
                 tableData[i].comparisonOilProduction = comparisonOilProduction;
                 minMax.push(Math.abs(comparisonOilProduction));
@@ -700,7 +702,6 @@ export default {
     },
     //自定义井号排序
     borepipeNoSort(oa, ob, code) {
-      console.log("数据输出", oa, ob, code);
       let wellA = oa[code];
       let wellB = ob[code];
       return Number(oa[code]) - Number(ob[code]);

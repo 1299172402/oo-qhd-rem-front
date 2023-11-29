@@ -49,7 +49,7 @@
 
     <page-panel-new class="app-content">
       <pagePanel headerTitle="分注井测试率" style="height: 500px" show-btn>
-        <div class="g-row-flex-V" style="margin-bottom: 20px">
+        <div class="g-row-flex-V" style="position: absolute; left: 20px">
           <div style="margin-right: 20px">
             平台：
             <el-select v-model="queryParams.platFormId" clearable="" style="width: 220px">
@@ -65,7 +65,7 @@
             <el-button icon="el-icon-search" type="primary" @click="doSearch">确定</el-button>
           </div>
         </div>
-        <Echart :chart-data="separateInjectionWellTestRate" height="calc(100% - 55px)"></Echart>
+        <Echart :chart-data="separateInjectionWellTestRate" height="calc(100%)"></Echart>
       </pagePanel>
 
       <pagePanel :headerTitle="`${oilFieldName || ''}分注井测试明细`" style="height: 550px" show-btn>
@@ -179,12 +179,12 @@ export default {
           textStyle: {
             color: "#8FA4CC",
           },
-          top: 0,
+          top: 40,
           left: "center",
         },
         grid: {
           x: 120,
-          y: 80,
+          y: 110,
           x2: 100,
           y2: 60,
         },
@@ -205,6 +205,13 @@ export default {
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter(params) {
+            var relVal = params[0].name;
+            params.forEach((item) => {
+              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+            });
+            return relVal;
           },
         },
         legend: {
@@ -411,6 +418,9 @@ export default {
                 show: true,
                 position: "top",
                 color: "#8FA4CC",
+                formatter(params) {
+                  return parseFloat(params.value[1] || 0).toFixed(2);
+                },
               };
               series.itemStyle = {
                 normal: {

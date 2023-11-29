@@ -33,7 +33,7 @@
     import three from "./components/three.vue";
     import four from "./components/four.vue";
     export default {
-        name: 'productionSituationPrediction',
+        name: 'ProductionSituationPrediction',
         components: {
           one,
           two,
@@ -499,8 +499,6 @@
                         };
                         reList.push(lineObj);
                     }
-                    console.log('reList')
-                    console.log(reList)
                 })
                 let today = reList.find((item) => {
                     return item.code == "baoBiao"
@@ -508,7 +506,6 @@
                 let yesterday = reList.find((item) => {
                     return item.code == "baoBiaoYesterday"
                 });
-                console.log(today, yesterday)
                 var obj = {
                     'type': "当日-前一日产量",
                     'zygsjc': (today['zygsjc'] == '' && yesterday['zygsjc'] == '') ? '' : (today['zygsjc'] - yesterday['zygsjc']).toFixed(2),

@@ -129,7 +129,7 @@ export default {
                     analysisUrl: `https://rem.${this.baseUrl}/#/injection/optimization?page=Linkage`
                 },
                 {
-                    style: 'position:absolute;left: 55%;top: 56%;width:18%;height:40%;',
+                    style: 'position:absolute;left: 53%;top: 56%;width:18%;height:40%;',
                     boxText: '注采状况分析',
                     boxBottomText: [
                         {
@@ -286,7 +286,7 @@ export default {
                     warningShowFlag: false,
                 },
                 {
-                    style: 'position:absolute;left: 50%;top: 36%;width:20%;height:40%;',
+                    style: 'position:absolute;left: 39%;top: 36%;width:20%;height:40%;',
                     boxText: '分注分采调控策略',
                     boxBottomText: [{
                         name: '注采调控最优化方案',
