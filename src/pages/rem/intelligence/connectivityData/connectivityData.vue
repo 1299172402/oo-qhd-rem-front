@@ -166,7 +166,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="operationalNarration" label="连通系数?(计算)" min-width="120"
+                    <el-table-column prop="operationalNarration" label="静态连通性系数" min-width="120"
                                      :render-header="renderheader" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.operationalNarration !== null && scope.row.operationalNarration !== ''">{{scope.row.operationalNarration}}</span>
@@ -181,7 +181,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="correctionFactor" label="连通系数?(修正)" min-width="120"
+                    <el-table-column prop="correctionFactor" label="动态连通性系数" min-width="120"
                                      :render-header="renderheader" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.correctionFactor !== null && scope.row.correctionFactor !== ''">{{scope.row.correctionFactor}}</span>
@@ -466,8 +466,9 @@ export default {
             };
             this.form.wellGroupIds = []
             this.form.wellGroupList = []
-            getCorrectionOperation(params).then((res) => {
-                if (Array.isArray(res) && res.length) {
+            try{
+                getCorrectionOperation(params).then((res) => {
+                if (Array.isArray(res)) {
                     this.disabledDateTime = res[0].updateYearMonth ? res[0].updateYearMonth : null
                 }
                 if (res[0].wellGroupId == null) {
@@ -488,6 +489,9 @@ export default {
                 this.$set(this.form, 'tableData', this.form.tableData)
                 this.getSpanArr(this.form.tableData)
             });
+            }catch(e){
+                console.log("查询月份没有数据")
+            }
         },
         // 运算、修正: type = 1 运算，type = 2 修正
         Correction(type) {
