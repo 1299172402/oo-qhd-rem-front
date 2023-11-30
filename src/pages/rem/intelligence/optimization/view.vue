@@ -288,18 +288,19 @@ import {
 import {
     getoilfield //油田下拉
 } from "@/api/rem/r-wellConnectEvaluate.js";
-import queryConditionMixin from "@/mixins/queryConditionMixin.js";
+// import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {arrayFindAll} from "@/lib/arrayFind";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
+import {getuserListByUserNames,getFieldListsDetail,getblockData} from "@/api/basic/masterBycoderXu.js"
 
 
 export default {
     components: {
         Echart
     },
-    mixins: [queryConditionMixin],
+    // mixins: [queryConditionMixin],
     data() {
         return {
+            blockList:[],
             oilField: [],
             queryData: {
                 ogfId: this.$route.params.ogfId,
