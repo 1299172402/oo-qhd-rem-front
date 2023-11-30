@@ -481,7 +481,8 @@ export default {
               seriesData.push(series);
             });
           }
-          xData = Array.from(xSet).sort();
+          // xData = Array.from(xSet).sort();
+          xData = Array.from(xSet);
           this.sectionPassRate.xAxis.data = xData;
           this.sectionPassRate.legend.data = legendData;
           this.sectionPassRate.series = seriesData;

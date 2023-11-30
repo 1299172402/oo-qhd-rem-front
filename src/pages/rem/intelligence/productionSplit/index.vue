@@ -262,11 +262,11 @@
 import {
     getProductionSplit,
     getOgfInfo,
-    getblockData,
     getWellData,
     exportProductionSplit
 } from "@/api/rem/r-intelligentIPA.js";
 import {exportExcel} from "@/lib/exportExcel";
+import {getuserListByUserNames,getFieldListsDetail,getblockData} from "@/api/basic/masterBycoderXu.js"
 import FileSaver from "file-saver";
 
 let timeNew = new Date();
@@ -280,6 +280,7 @@ export default {
     components: {},
     data() {
         return {
+            orgId:'',
             queryData: {
                 ogfId: {
                     value: "3FC9A818F5BC43B88270DB80BBB3018F",
@@ -348,7 +349,7 @@ export default {
             this.queryData.wellCategory = "01"
             this.queryData.wellId = ["DA0269628E74490ABDE198E7D1DBF3EA"]
         }
-        this.queryOilFeild();
+        this.getuserListByUserNamesData();
         this.queryBlockFeild();
         this.queryWellData();
         this.createChange(this.queryData.value)
@@ -368,10 +369,26 @@ export default {
         /**
          * 获取油田
          */
+        getuserListByUserNamesData(){
+          let params = {
+            searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+          }
+          getuserListByUserNames(params).then((res)=>{
+            this.orgId=res.data.data[0].currentTenantBindOrgId
+            this.queryOilFeild()
+          })
+
+        },
         queryOilFeild() {
-            getOgfInfo().then((res) => {
-                this.oilList = res.ogfId;
-            });
+          getFieldListsDetail({orgId:this.orgId}).then((res) => {
+            this.oilList = res.data.data;
+            var list =res.data.data;
+            for(var i=0;i<list.length;i++){
+              if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+                this.queryData.ogfId.value=list[i].ogfId
+              }
+            }
+          });
         },
         //改变油田
         changeOil() {
@@ -383,12 +400,9 @@ export default {
          * 获取区块
          */
         queryBlockFeild() {
-            let param = {
-                ogfId: this.queryData.ogfId.value,
-            };
-            getblockData(param).then((res) => {
-                this.blockList = res.blockList;
-            });
+          getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
+            this.blockList = res.data.blockList;
+          });
         },
         /**
          * 改变区块
