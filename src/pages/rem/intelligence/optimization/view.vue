@@ -288,18 +288,19 @@ import {
 import {
     getoilfield //油田下拉
 } from "@/api/rem/r-wellConnectEvaluate.js";
-import queryConditionMixin from "@/mixins/queryConditionMixin.js";
+// import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {arrayFindAll} from "@/lib/arrayFind";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
+import {getuserListByUserNames,getFieldListsDetail,getblockData} from "@/api/basic/masterBycoderXu.js"
 
 
 export default {
     components: {
         Echart
     },
-    mixins: [queryConditionMixin],
+    // mixins: [queryConditionMixin],
     data() {
         return {
+            blockList:[],
             oilField: [],
             queryData: {
                 ogfId: this.$route.params.ogfId,
@@ -348,20 +349,31 @@ export default {
             this.queryData.dateTime = params.dateTime
         }
         this.queryWellAvgFluidProdAlloc();
-        this.getOilFields();
+        this.getuserListByUserNamesData();
     },
     methods: {
         getOilFields() {
-        let _this = this;
-        QueryOgfDetail({}).then((res) => {
-            _this.oilField = res.data.data;
-            //选择油田默认选秦皇岛32-6油田
-            if (_this.oilField.length == 0) {
-            _this.selectOilField = "";
-            } else {
-            _this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+            getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
+                this.oilField = res.data.data;
+                var list =res.data.data;
+                for(var i=0;i<list.length;i++){
+                    if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+                        this.selectOilField=list[i].ogfId
+
+                    }
+                }
+                this.selectblock()
+            });
+        },
+        getuserListByUserNamesData(){
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
             }
-        });
+            getuserListByUserNames(params).then((res)=>{
+                this.queryData.orgId=res.data.data[0].currentTenantBindOrgId
+                this.getOilFields()
+            })
+
         },
          // 获取油田下拉数据
         selectData() {
@@ -371,12 +383,16 @@ export default {
         },
         selectblock() {
             // if (!this.selectField) return;
-            getblock({
-                ogfId: this.queryData.ogfId
-            }).then(({blockList}) => {
-                this.blockList = blockList;
-            });
+            // getblock({
+            //     ogfId: this.queryData.ogfId
+            // }).then(({blockList}) => {
+            //     this.blockList = blockList;
+            // });
             //   }
+            this.queryData.ogfId=this.selectOilField
+            getblockData({ogfId:this.queryData.ogfId}).then((res) => {
+                this.blockList = res.data.blockList;
+            });
         },
         changeOilfield() {
             this.selectblock();
