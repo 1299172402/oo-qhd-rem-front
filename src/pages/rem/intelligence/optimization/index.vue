@@ -300,10 +300,7 @@
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import { getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate } from "@/api/rem/r-intelligentIPA.js";
 import { exportExcel } from "@/lib/exportExcel";
-import {
-  getoilfield // 油田下拉
-} from "@/api/rem/r-wellConnectEvaluate.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
+import {getuserListByUserNames,getFieldListsDetail,getblockData} from "@/api/basic/masterBycoderXu.js"
 // 智能配注-模型运算界面
 import modelOperation from "@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue";
 
@@ -311,13 +308,16 @@ export default {
   components: {
     modelOperation // 智能配注
   },
-  mixins: [queryConditionMixin],
+  // mixins: [queryConditionMixin],
   data() {
     return {
+        blockList:[],
+        selectOilField:'',
       ifrefsh: false,
       oilField: [],
       iframeWidth: 1,
       queryData: {
+        orgId:'',
         ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
         // blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
         blockId: "YCFXDY8B643EDC9007F96F570600457D",
@@ -365,7 +365,7 @@ export default {
       this.queryTableData(this.form.tableData2, this.ifrefsh);
     }
     this.src = "https://intelinj.tjioms-dev.tjltd.cnooc/";
-    this.getOilFields();
+    this.getuserListByUserNamesData();
   },
 
   mounted() {
@@ -373,6 +373,8 @@ export default {
     // this.$nextTick(()=>{
     //     this.$refs.modelOpreation.getCaseByMax()
     // })
+      
+      
     if (this.$route.query.link == "rem") {
       this.activeName = "second";
       this.setWidth();
@@ -383,40 +385,45 @@ export default {
     }
   },
   methods: {
+    getuserListByUserNamesData(){
+      let params = {
+        searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+      }
+      getuserListByUserNames(params).then((res)=>{
+        this.queryData.orgId=res.data.data[0].currentTenantBindOrgId
+        this.getOilFields()
+      })
+
+    },
     upModelForRedis() {
       this.ifrefsh = true;
       this.queryTableData(this.form.tableData2, this.ifrefsh);
     },
     getOilFields() {
-      const _this = this;
-      QueryOgfDetail({}).then(res => {
-        _this.oilField = res.data.data;
-        // 选择油田默认选秦皇岛32-6油田
-        if (_this.oilField.length == 0) {
-          _this.selectOilField = "";
-        } else {
-          _this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
+      
+      getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
+        this.oilField = res.data.data;
+        var list =res.data.data;
+        for(var i=0;i<list.length;i++){
+          if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+            this.selectOilField=list[i].ogfId
+            
+          }
         }
+        this.selectblock()
       });
     },
-    // 获取油田下拉数据
-    selectData() {
-      getoilfield().then(({ ogfId }) => {
-        this.oilList = ogfId;
-      });
-    },
+  
     selectblock() {
-      // if (!this.selectField) return;
-      getblock({
-        ogfId: this.queryData.ogfId
-      }).then(({ blockList }) => {
-        this.blockList = blockList;
+      this.queryData.ogfId=this.selectOilField
+      getblockData({ogfId:this.queryData.ogfId}).then((res) => {
+        this.blockList = res.data.blockList;
       });
-      //   }
+      
+     
     },
     changeOilfield() {
       this.selectblock();
-      this.queryData.blockId = "";
     },
     gogo() {
       this.$router.push({ name: this.$route.query.page });

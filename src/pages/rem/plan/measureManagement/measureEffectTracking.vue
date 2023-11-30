@@ -822,7 +822,7 @@ export default {
         {
           paramName: "油嘴直径",
           paramCode: "003009",
-          unit: "%",
+          unit: "mm",
         },
         {
           paramName: "泵电压",

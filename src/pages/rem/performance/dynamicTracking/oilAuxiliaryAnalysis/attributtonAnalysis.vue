@@ -934,7 +934,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 6,
-                                                                    "name": "归因9：注水调配英雄。\n下步措施：调整配注量",
+                                                                    "name": "归因9：注水调配影响。\n下步措施：调整配注量",
                                                                 },
                                                                 {
                                                                     "level": 6,
