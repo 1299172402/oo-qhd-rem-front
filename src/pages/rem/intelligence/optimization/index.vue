@@ -300,135 +300,142 @@
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import { getWellMonthAllocation, getWellMonthInj, wellAvgFluidProdAllocUpdate } from "@/api/rem/r-intelligentIPA.js";
 import { exportExcel } from "@/lib/exportExcel";
-import {
-    getoilfield // 油田下拉
-} from "@/api/rem/r-wellConnectEvaluate.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
+import {getuserListByUserNames,getFieldListsDetail,getblockData} from "@/api/basic/masterBycoderXu.js"
 // 智能配注-模型运算界面
 import modelOperation from "@/pages/rem/intelligence/optimization/modelOperation/modelMain.vue";
 
 export default {
-    components: {
-        modelOperation // 智能配注
-    },
-    mixins: [queryConditionMixin],
-    data() {
-        return {
-            ifrefsh: false,
-            oilField: [],
-            iframeWidth: 1,
-            queryData: {
-                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                // blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
-                blockId: "YCFXDY8B643EDC9007F96F570600457D",
-                dateTime: this.eeee()
-                // '2022-10'
-                // new Date().format("yyyy-MM")
-            },
-            activeName: "first",
-            modify: false,
-            tableData1: [],
-            form: {
-                tableData2: []
-            },
-            title1: "",
-            title2: "",
-            rules: {
-                configurationInjDaily: [
-                    { required: true, message: "请输入", trigger: "blur" },
-                    { type: "number", message: "输入值必须为数字" }
-                ]
-            },
-            mergeArr: ["injWellNo"],
-            mergeObj: {},
-            host: `${window.location.protocol}//`,
-            saveLoad: false,
-            src: ""
-        };
-    },
-    computed: {
-        getStyle() {
-            return {
-                height: "800px",
-                width: "1720px",
-                border: "none",
-                transform: `scale(${(this.iframeWidth - 40) / 1720 > 1 ? 1 : (this.iframeWidth - 40) / 1720})`,
-                transformOrigin: "0% 0%"
-            };
-        }
-    },
-    created() {
-        // 若由REM跳转 聚焦吸水指数
-        if (this.$route.query.link == "rem") {
-            this.activeName = "second";
-        } else {
-            this.queryTableData(this.form.tableData2, this.ifrefsh);
-        }
-        this.src = "https://intelinj.tjioms-dev.tjltd.cnooc/";
-        this.getOilFields();
-    },
+  components: {
+    modelOperation // 智能配注
+  },
+  // mixins: [queryConditionMixin],
+  data() {
+    return {
+        blockList:[],
+        selectOilField:'',
+      ifrefsh: false,
+      oilField: [],
+      iframeWidth: 1,
+      queryData: {
+        orgId:'',
+        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+        // blockId: '6CD7342CA6DD418183A4B3BC38584F7C',
+        blockId: "YCFXDY8B643EDC9007F96F570600457D",
+        dateTime: this.eeee()
+        // '2022-10'
+        // new Date().format("yyyy-MM")
+      },
+      activeName: "first",
+      modify: false,
+      tableData1: [],
+      form: {
+        tableData2: []
+      },
+      title1: "",
+      title2: "",
+      rules: {
+        configurationInjDaily: [
+          { required: true, message: "请输入", trigger: "blur" },
+          { type: "number", message: "输入值必须为数字" }
+        ]
+      },
+      mergeArr: ["injWellNo"],
+      mergeObj: {},
+      host: `${window.location.protocol}//`,
+      saveLoad: false,
+      src: ""
+    };
+  },
+  computed: {
+    getStyle() {
+      return {
+        height: "800px",
+        width: "1720px",
+        border: "none",
+        transform: `scale(${(this.iframeWidth - 40) / 1720 > 1 ? 1 : (this.iframeWidth - 40) / 1720})`,
+        transformOrigin: "0% 0%"
+      };
+    }
+  },
+  created() {
+    // 若由REM跳转 聚焦吸水指数
+    if (this.$route.query.link == "rem") {
+      this.activeName = "second";
+    } else {
+      this.queryTableData(this.form.tableData2, this.ifrefsh);
+    }
+    this.src = "https://intelinj.tjioms-dev.tjltd.cnooc/";
+    this.getuserListByUserNamesData();
+  },
 
-    mounted() {
-        // 智能配注调用子组件方法
-        // this.$nextTick(()=>{
-        //     this.$refs.modelOpreation.getCaseByMax()
-        // })
-        if (this.$route.query.link == "rem") {
-            this.activeName = "second";
-            this.setWidth();
-            this.doSearch();
-        } else {
-            this.activeName = "first";
-            this.doSearch();
-        }
+  mounted() {
+    // 智能配注调用子组件方法
+    // this.$nextTick(()=>{
+    //     this.$refs.modelOpreation.getCaseByMax()
+    // })
+      
+      
+    if (this.$route.query.link == "rem") {
+      this.activeName = "second";
+      this.setWidth();
+      this.doSearch();
+    } else {
+      this.activeName = "first";
+      this.doSearch();
+    }
+  },
+  methods: {
+    getuserListByUserNamesData(){
+      let params = {
+        searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+      }
+      getuserListByUserNames(params).then((res)=>{
+        this.queryData.orgId=res.data.data[0].currentTenantBindOrgId
+        this.getOilFields()
+      })
+
     },
-    methods: {
-        upModelForRedis() {
-            this.ifrefsh = true;
-            this.queryTableData(this.form.tableData2, this.ifrefsh);
-        },
-        getOilFields() {
-            const _this = this;
-            QueryOgfDetail({}).then(res => {
-                _this.oilField = res.data.data;
-                // 选择油田默认选秦皇岛32-6油田
-                if (_this.oilField.length == 0) {
-                    _this.selectOilField = "";
-                } else {
-                    _this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
-                }
-            });
-        },
-        // 获取油田下拉数据
-        selectData() {
-            getoilfield().then(({ ogfId }) => {
-                this.oilList = ogfId;
-            });
-        },
-        selectblock() {
-            // if (!this.selectField) return;
-            getblock({
-                ogfId: this.queryData.ogfId
-            }).then(({ blockList }) => {
-                this.blockList = blockList;
-            });
-            //   }
-        },
-        changeOilfield() {
-            this.selectblock();
-            this.queryData.blockId = "";
-        },
-        gogo() {
-            this.$router.push({ name: this.$route.query.page });
-        },
-        // 合并单元格
-        mergeTable({ row, column, rowIndex, columnIndex }) {
-            if (columnIndex === 0) {
-                if (this.mergeObj.injWellNo[rowIndex]) {
-                    return [this.mergeObj.injWellNo[rowIndex], 1];
-                }
-                return [0, 0];
-            }
+    upModelForRedis() {
+      this.ifrefsh = true;
+      this.queryTableData(this.form.tableData2, this.ifrefsh);
+    },
+    getOilFields() {
+      
+      getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
+        this.oilField = res.data.data;
+        var list =res.data.data;
+        for(var i=0;i<list.length;i++){
+          if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+            this.selectOilField=list[i].ogfId
+            
+          }
+        }
+        this.selectblock()
+      });
+    },
+  
+    selectblock() {
+      this.queryData.ogfId=this.selectOilField
+      getblockData({ogfId:this.queryData.ogfId}).then((res) => {
+        this.blockList = res.data.blockList;
+      });
+      
+     
+    },
+    changeOilfield() {
+      this.selectblock();
+    },
+    gogo() {
+      this.$router.push({ name: this.$route.query.page });
+    },
+    // 合并单元格
+    mergeTable({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0) {
+        if (this.mergeObj.injWellNo[rowIndex]) {
+          return [this.mergeObj.injWellNo[rowIndex], 1];
+        }
+        return [0, 0];
+      }
 
             if (columnIndex === 1) {
                 if (this.mergeObj.injWellNo[rowIndex]) {
