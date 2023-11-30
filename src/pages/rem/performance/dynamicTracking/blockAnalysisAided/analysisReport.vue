@@ -653,8 +653,8 @@ export default {
                 const imgBase64 = canvas.toDataURL();
                 this.minioImgSrc = imgBase64;
                 if (isBoolean) {
-                  // this.clickAnalysis();
-                  this.sjcl(this.layerData.data.mutiLayerPicResponse);
+                  this.clickAnalysis();
+                  // this.sjcl(this.layerData.data.mutiLayerPicResponse);
                 }
               };
             });
@@ -1702,17 +1702,17 @@ export default {
       //     }
       //   });
       // } else {
-        this.myList.forEach((el, i) => {
-          if (el.wellCoord !== null) {
-            LayersItem.Objects.push({
-              ObjType: 110,
-              CoordX: el.wellCoord[0].coordX,
-              CoordY: el.wellCoord[0].coordY,
-              WellDotType: String(el.wellCoord[0].wellCode),
-              WellName: el.well,
-            });
-          }
-        });
+      this.myList.forEach((el, i) => {
+        if (el.wellCoord !== null) {
+          LayersItem.Objects.push({
+            ObjType: 110,
+            CoordX: el.wellCoord[0].coordX,
+            CoordY: el.wellCoord[0].coordY,
+            WellDotType: String(el.wellCoord[0].wellCode),
+            WellName: el.well,
+          });
+        }
+      });
       // }
 
       data.Layers.push(LayersItem);
