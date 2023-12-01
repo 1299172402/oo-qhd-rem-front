@@ -24,9 +24,9 @@
                                    ref="elselect1">
                             <el-option
                                 v-for="item in blanks"
-                                :key="item.blockId"
-                                :label="item.blockName"
-                                :value="item.blockId"
+                                :key="item.reservoirAnalyseUnitId"
+                                :label="item.reservoirAnalyseUnitNo"
+                                :value="item.reservoirAnalyseUnitId"
                             ></el-option>
                         </el-select>
                     </el-form-item>
@@ -258,6 +258,7 @@ import {
     QueryOgfDetail,
     userListByUserNames
 } from "@/api/basic/master";
+import {QueryReservoirAnalyseUnit} from "@/api/rem/marster"
 
 export default {
     name: "WellGroup_Maintenance",
@@ -530,8 +531,8 @@ export default {
         preserve() {
             if (this.query.selectBlock) {
                 let blockName = this.blanks.find(
-                    (item) => item.blockId == this.query.selectBlock
-                ).blockName;
+                    (item) => item.reservoirAnalyseUnitId == this.query.selectBlock
+                ).reservoirAnalyseUnitNo;
                 exportExcel('#indexscv', blockName + '小层井组定义');
             } else {
                 this.$message.error("请选择区块")
@@ -581,38 +582,44 @@ export default {
                     ]
                 }
             ];
-            if (!this.query.selectField) return
-            getblock({
-                ogfId: this.query.selectField
-            }).then(({blockList}) => {
-                if (blockList[0].blockId == null) {
-                    this.blanks = []
-                } else {
-                    this.blanks = blockList
-                    let data = []
-                    blockList.map((n) => {
-                        data.push({
-                            label: n.blockName,
-                            level: "4",
-                            value: n.blockId,
-                            children: []
-                        })
-                    })
-                    this.listdata[0].children[0].children[0].children.push(...data)
-                    this.key++
-                }
+          if (!this.query.selectField) return
+          QueryReservoirAnalyseUnit({
+            ogfId: this.query.selectField
+          }).then(res => {
+            if (res === null || res === undefined || res.data.data === null || res.data.data === undefined) {
+              this.query.selectBlock = ''
+              this.blanks = []
+              return;
+            }
+            let blockList = res.data.data
+            if (blockList[0].reservoirAnalyseUnitId == null) {
+              this.blanks = [];
+            } else {
+              this.blanks = blockList;
+              let data = [];
+              blockList.map((n) => {
+                data.push({
+                  label: n.reservoirAnalyseUnitNo,
+                  level: "4",
+                  value: n.reservoirAnalyseUnitId,
+                  children: []
+                })
+              });
+              this.listdata[0].children[0].children[0].children.push(...data);
+              this.key++;
+            }
 
-                if (this.blanks != null && this.blanks.length > 0) {
-                    if (this.query.selectField === '3FC9A818F5BC43B88270DB80BBB3018F') {
-                        this.query.selectBlock= 'YCFXDY8B643EDC9007F96F570600457D'
-                    } else {
-                        this.query.selectBlock = this.blanks[0].blockId;
-                    }
-                } else {
-                    this.query.selectBlock = ''
-                }
-                this.tableOilfield();
-            });
+            if (this.blanks != null && this.blanks.length > 0) {
+              if (this.query.selectField === '3FC9A818F5BC43B88270DB80BBB3018F') {
+                this.query.selectBlock = 'YCFXDY8B643EDC9007F96F570600457D'
+              } else {
+                this.query.selectBlock = this.blanks[0].reservoirAnalyseUnitId;
+              }
+            } else {
+              this.query.selectBlock = ''
+            }
+            this.tableOilfield();
+          });
         },
         // 油田下拉点击事件
         changeOilfield() {
