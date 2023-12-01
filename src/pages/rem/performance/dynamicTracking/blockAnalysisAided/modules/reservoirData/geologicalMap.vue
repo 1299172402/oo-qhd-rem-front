@@ -218,16 +218,18 @@ export default {
         }
       });
 
-      let request = {
-        oilFieldId: this.oilFieldId,
-        fieldId: this.blockId,
-        layerId: this.selectPosition,
-      };
-      reservoirDataComprehensiveGeologicalMap(request).then((res) => {
-        if (res.data.code == 200) {
-          this.tableData = res.data.data.comGeoFormaDivisions;
-        }
-      });
+      if (this.oilFieldId && this.blockId) {
+        let request = {
+          oilFieldId: this.oilFieldId,
+          fieldId: this.blockId,
+          layerId: this.selectPosition,
+        };
+        reservoirDataComprehensiveGeologicalMap(request).then((res) => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.comGeoFormaDivisions;
+          }
+        });
+      }
     },
     selectChange(e) {
       this.$emit("childPara", e);
