@@ -25,7 +25,7 @@
                             <el-option
                                 v-for="item in blanks"
                                 :key="item.reservoirAnalyseUnitId"
-                                :label="item.reservoirAnalyseUnitNo"
+                                :label="item.reservoirAnalyseUnitName"
                                 :value="item.reservoirAnalyseUnitId"
                             ></el-option>
                         </el-select>
@@ -599,7 +599,7 @@ export default {
               let data = [];
               blockList.map((n) => {
                 data.push({
-                  label: n.reservoirAnalyseUnitNo,
+                  label: n.reservoirAnalyseUnitName,
                   level: "4",
                   value: n.reservoirAnalyseUnitId,
                   children: []
@@ -611,7 +611,7 @@ export default {
 
             if (this.blanks != null && this.blanks.length > 0) {
               if (this.query.selectField === '3FC9A818F5BC43B88270DB80BBB3018F') {
-                this.query.selectBlock = 'YCFXDY8B643EDC9007F96F570600457D'
+                this.query.selectBlock = '83D33B89B0DAB7DFA440BD060746883A'
               } else {
                 this.query.selectBlock = this.blanks[0].reservoirAnalyseUnitId;
               }
