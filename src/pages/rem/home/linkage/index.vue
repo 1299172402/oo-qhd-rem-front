@@ -591,9 +591,8 @@ video {
         }
 
         span {
-            font-size: 1%;
             position: absolute;
-            top: 43%;
+            top: 40%;
             left: 30%;
             margin: auto;
             color: #34d4e0;
