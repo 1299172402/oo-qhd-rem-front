@@ -21,9 +21,9 @@
                     <el-select v-model="queryData.blockId" @change="changeBlock">
                         <el-option
                             v-for="item in blockList"
-                            :key="item.blockId"
-                            :label="item.blockName"
-                            :value="{ value: item.blockId, label: item.blockName }"
+                            :key="item.reservoirAnalyseUnitId"
+                            :label="item.reservoirAnalyseUnitName"
+                            :value="{ value: item.reservoirAnalyseUnitId, label: item.reservoirAnalyseUnitName }"
                         ></el-option>
                     </el-select>
                 </el-form-item>
@@ -261,12 +261,10 @@
 
 import {
     getProductionSplit,
-    getOgfInfo,
-    getWellData,
     exportProductionSplit
 } from "@/api/rem/r-intelligentIPA.js";
 import {exportExcel} from "@/lib/exportExcel";
-import {getuserListByUserNames,getFieldListsDetail,getblockData} from "@/api/basic/masterBycoderXu.js"
+import {getuserListByUserNames,getFieldListsDetail,getblockData,getWellData} from "@/api/basic/masterBycoderXu.js"
 import FileSaver from "file-saver";
 
 let timeNew = new Date();
@@ -316,7 +314,7 @@ export default {
             //井别下拉
             wellCategoryList: [
                 {id: "01", name: "油井"},
-                {id: "02", name: "水井"},
+                {id: "02", name: "水井"}
             ],
             //井号下拉
             wellList: [],
@@ -380,7 +378,7 @@ export default {
 
         },
         queryOilFeild() {
-          getFieldListsDetail({orgId:this.orgId}).then((res) => {
+          getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
             this.oilList = res.data.data;
             var list =res.data.data;
             for(var i=0;i<list.length;i++){
@@ -401,7 +399,7 @@ export default {
          */
         queryBlockFeild() {
           getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
-            this.blockList = res.data.blockList;
+            this.blockList = res.data.data;
           });
         },
         /**
@@ -429,12 +427,20 @@ export default {
          * 井号下拉
          */
         queryWellData() {
-            let params = {
-                blockId: this.queryData.blockId.value,
-                apprndixId: this.queryData.wellCategory,
-            };
-            getWellData(params).then((res) => {
-                this.wellList = res.wellList;
+            // let params = {
+            //     blockId: this.queryData.blockId.value,
+            //     apprndixId: this.queryData.wellCategory,
+            // };
+            var welltypeName=null;
+            if(this.queryData.wellCategory==="01"){
+              welltypeName='采油井'
+            }else {
+              welltypeName='注水井'
+            }
+            getWellData({blockId:this.queryData.blockId.value,ogfId:this.queryData.ogfId.value,wellboreType:welltypeName}).then((res) => {
+                this.wellList=res.data.data
+                console.log(this.wellList)
+                // this.wellList = res.wellList;
             });
         },
         /**
