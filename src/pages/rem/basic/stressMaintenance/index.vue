@@ -1,4 +1,4 @@
-<!-- 基础数据维护 - 水平段维护 -->
+<!-- 基础数据维护 - 压力维护 -->
 <template>
   <div style="width: 100%; height: 100%" class="pageBox">
     <div style="display: flex; flex-direction: row; height: 100%">
@@ -62,7 +62,7 @@
           </div>
         </header-search>
 
-        <pagePanel headerTitle="水平段维护" style="height: calc(100% - 80px)" class="g-w100" :show-btn="true">
+        <pagePanel headerTitle="压力维护" style="height: calc(100% - 80px)" class="g-w100" :show-btn="true">
           <div style="margin-top: 5%">
             <div class="alltitle">{{ wellName }}</div>
             <div class="boxall" style="height: 500px; width: 900px; margin: auto">
@@ -76,17 +76,17 @@
                 >
                   <el-row>
                     <el-col :span="10" style="padding-top: 30px">
-                      <el-form-item label="水平段长度" prop="kzcl">
-                        <el-input v-model="djclForm.horizonIntervalLen" type="number" :disabled="edit"
-                          ><i slot="suffix">m</i></el-input
+                      <el-form-item label="静压" prop="kzcl">
+                        <el-input v-model="djclForm.staticPress" type="number" :disabled="edit"
+                          ><i slot="suffix">MPa</i></el-input
                         >
                       </el-form-item>
                     </el-col>
                     <el-col :span="2">&nbsp;</el-col>
                     <el-col :span="10" style="padding-top: 30px">
-                      <el-form-item label="水平段砂岩长度" prop="kzmj">
-                        <el-input v-model="djclForm.horizonSandstoneLen" type="number" :disabled="edit">
-                          <i slot="suffix">m</i>
+                      <el-form-item label="流压" prop="kzmj">
+                        <el-input v-model="djclForm.flowPress" type="number" :disabled="edit">
+                          <i slot="suffix">MPa</i>
                         </el-input>
                       </el-form-item>
                     </el-col>
@@ -109,12 +109,12 @@
   </div>
 </template>
 <script>
-import { getHorizonSection, saveOrUpdateHorizonSection } from "@/api/rem/welldetailedevaluationresult";
+import { getSinglePress, saveOrUpdateSinglePress } from "@/api/rem/welldetailedevaluationresult";
 import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail, userListByUserNames } from "@/api/basic/master";
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 
 export default {
-  name: "HorizontalMaintenance",
+  name: "StressMaintenance",
   components: { treeMultipleSelection },
   data() {
     return {
@@ -129,9 +129,9 @@ export default {
       platforms: [],
       oilFields: [],
       djclForm: {
-        remHorizonSectionId: "",
-        horizonIntervalLen: "",
-        horizonSandstoneLen: "",
+        remSigngWellPressId: "",
+        staticPress: "",
+        flowPress: "",
       },
       wellName: "",
     };
@@ -176,19 +176,19 @@ export default {
       this.wellName = this.wells.find((item) => {
         return item.wellId === this.queryData.wellId;
       }).wellName;
-      getHorizonSection({
+      getSinglePress({
         wellId: this.queryData.wellId,
       }).then((res) => {
         console.log(res.data);
         if (res.data.code == 200) {
-          this.djclForm.remHorizonSectionId = res.data.data.remHorizonSectionId;
-          this.djclForm.horizonIntervalLen = res.data.data.horizonIntervalLen;
-          this.djclForm.horizonSandstoneLen = res.data.data.horizonSandstoneLen;
+          this.djclForm.remSigngWellPressId = res.data.data.remSigngWellPressId;
+          this.djclForm.staticPress = res.data.data.staticPress;
+          this.djclForm.flowPress = res.data.data.flowPress;
         } else {
           this.djclForm = {
-            remHorizonSectionId: "",
-            horizonIntervalLen: "",
-            horizonSandstoneLen: "",
+            remSigngWellPressId: "",
+            staticPress: "",
+            flowPress: "",
           };
         }
       });
@@ -212,9 +212,9 @@ export default {
       // }
     },
     save() {
-      this.djclForm.horizonIntervalLen = Number(this.djclForm.horizonIntervalLen);
-      this.djclForm.horizonSandstoneLen = Number(this.djclForm.horizonSandstoneLen);
-      saveOrUpdateHorizonSection({ ...this.djclForm, wellId: this.queryData.wellId }).then((res) => {
+      this.djclForm.staticPress = Number(this.djclForm.staticPress);
+      this.djclForm.flowPress = Number(this.djclForm.flowPress);
+      saveOrUpdateSinglePress({ ...this.djclForm, wellId: this.queryData.wellId }).then((res) => {
         if (res.data.code == 200) {
           this.edit = true;
           this.$message.success("保存成功！");
@@ -254,16 +254,16 @@ export default {
         }
       });
       this.djclForm = {
-        remHorizonSectionId: "",
-        horizonIntervalLen: "",
-        horizonSandstoneLen: "",
+        remSigngWellPressId: "",
+        staticPress: "",
+        flowPress: "",
       };
     },
     changewell() {
       this.djclForm = {
-        remHorizonSectionId: "",
-        horizonIntervalLen: "",
-        horizonSandstoneLen: "",
+        remSigngWellPressId: "",
+        staticPress: "",
+        flowPress: "",
       };
     },
     childinfo(data) {
