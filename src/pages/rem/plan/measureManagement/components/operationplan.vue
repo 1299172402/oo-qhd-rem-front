@@ -15,7 +15,7 @@
                 </el-form-item>
                 <el-form-item label="平台：">
                     <el-select @change="onPlatfromChange" clearable v-model="queryParams.asseCode">
-                        <el-option v-for="item in platforms" :key="item.id" :label="item.platformName"
+                        <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformCode"
                                    :value="item.platformId">
                         </el-option>
                     </el-select>
@@ -217,7 +217,6 @@ export default {
         };
     },
     created() {
-        this.retrieval();
         let params = {
             searchKeys: [this.$store.getters["user/userDetail"].user.userName],
         }
@@ -230,17 +229,19 @@ export default {
                 }else{
                     this.queryParams.selectOilField = this.oilFields[0].ogfId
                 }
+                onSiteWorkActionEvent().then((res) => {
+                    this.measures = res.data.data
+                    QueryPlatformDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then(res => {
+                        this.platforms = res.data.data
+                        QueryWellDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then((res) => {
+                            this.wells = res.data.data
+                            this.retrieval();
+                        })
+                    })
+                })
             })
         })
-        onSiteWorkActionEvent().then((res) => {
-            this.measures = res.data.data
-        })
-        QueryPlatformDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then(res => {
-            this.platforms = res.data.data
-        })
-        QueryWellDetail({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then((res) => {
-            this.wells = res.data.data
-        })
+
     },
     methods: {
         show(data) {

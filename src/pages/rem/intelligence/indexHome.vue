@@ -25,9 +25,9 @@
                 <el-select v-model="myselect">
                     <el-option
                         v-for="item in blockList"
-                        :key="item.blockId"
-                        :label="item.blockName"
-                        :value="item.blockId"
+                        :key="item.reservoirAnalyseUnitId"
+                        :label="item.reservoirAnalyseUnitName"
+                        :value="item.reservoirAnalyseUnitId"
                     ></el-option>
                 </el-select>
                 <span>年度：</span>
@@ -228,12 +228,12 @@
                     </page-panel>
                     <el-dialog :visible.sync="detailed" title="单井井底流压">
                         <el-table :data="residueOil" height="600">
-                            <el-table-column prop="date" label="序号" align="center" width="80">
+                            <el-table-column prop="date" label="序号" align="center" width="80" sortable>
                                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
                             </el-table-column>
-                            <el-table-column prop="wellNo" label="井号" align="center">
+                            <el-table-column prop="wellNo" label="井号" align="center" sortable>
                             </el-table-column>
-                            <el-table-column prop="dhFlowingPress" label="井底流压(MPa)" align="center">
+                            <el-table-column prop="dhFlowingPress" label="井底流压(MPa)" align="center" sortable>
                                 <template slot-scope="scope">
                         <span
                             v-if="scope.row.dhFlowingPress !== null && scope.row.dhFlowingPress !== ''">{{
@@ -242,7 +242,7 @@
                                     <span v-else>-</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="fluidProdDaily" label="日产液量(m³)" align="center">
+                            <el-table-column prop="fluidProdDaily" label="日产液量(m³)" align="center" sortable>
                                 <template slot-scope="scope">
                         <span
                             v-if="scope.row.fluidProdDaily !== null && scope.row.fluidProdDaily !== ''">{{
@@ -435,17 +435,17 @@ export default {
             this.queryBlockFeild1();
         },
         queryBlockFeild1 () {
-            console.log(this.queryData.ogfId)
+        
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
-                this.blockList = res.data.blockList;
+                this.blockList = res.data.data;
                 for(var i=0;i<this.blockList.length;i++){
-                    if(this.blockList[i].blockId==='YCFXDY8B643EDC9007F96F570600457D'){
-                        this.myselect=this.blockList[i].blockId
-                        console.log("5599")
+                    if(this.blockList[i].reservoirAnalyseUnitId==='83D33B89B0DAB7DFA440BD060746883A'){
+                        this.myselect=this.blockList[i].reservoirAnalyseUnitId
+                    
                     }
                 }
-                console.log("5599")
-                console.log(this.myselect)
+                
+         
                 this.searchList()
                 // this.queryData.blockId=this.blockList[0].blockId
             });
@@ -461,7 +461,7 @@ export default {
 
         },
         queryOilFeild1() {
-            getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
+            getFieldListsDetail({operationZoneId:this.queryData.orgId}).then((res) => {
                 this.oilList = res.data.data;
                 var list =res.data.data;
                 for(var i=0;i<list.length;i++){
@@ -531,7 +531,7 @@ export default {
          * 获取数据
          */
         searchList() {
-            console.log(this.myselect)
+       
             this.queryData.blockId=this.myselect
             if (!this.queryData.dateTime) {
                 return this.$message.error('请输入时间')
@@ -543,8 +543,8 @@ export default {
             //超欠注情况统计
             this.queryUltraShortShotStatistics()
             this.blockList.forEach(item => {
-                if (item.blockId == this.queryData.blockId) {
-                    this.title = item.blockName
+                if (item.reservoirAnalyseUnitId == this.queryData.blockId) {
+                    this.title = item.reservoirAnalyseUnitName
                 }
             });
             let params = {
