@@ -25,9 +25,9 @@
                 <el-select v-model="myselect">
                     <el-option
                         v-for="item in blockList"
-                        :key="item.blockId"
-                        :label="item.blockName"
-                        :value="item.blockId"
+                        :key="item.reservoirAnalyseUnitId"
+                        :label="item.reservoirAnalyseUnitName"
+                        :value="item.reservoirAnalyseUnitId"
                     ></el-option>
                 </el-select>
                 <span>年度：</span>
@@ -435,17 +435,17 @@ export default {
             this.queryBlockFeild1();
         },
         queryBlockFeild1 () {
-            console.log(this.queryData.ogfId)
+        
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
-                this.blockList = res.data.blockList;
+                this.blockList = res.data.data;
                 for(var i=0;i<this.blockList.length;i++){
-                    if(this.blockList[i].blockId==='YCFXDY8B643EDC9007F96F570600457D'){
-                        this.myselect=this.blockList[i].blockId
-                        console.log("5599")
+                    if(this.blockList[i].reservoirAnalyseUnitId==='YCFXDY8B643EDC9007F96F570600457D'){
+                        this.myselect=this.blockList[i].reservoirAnalyseUnitId
+                    
                     }
                 }
-                console.log("5599")
-                console.log(this.myselect)
+                
+         
                 this.searchList()
                 // this.queryData.blockId=this.blockList[0].blockId
             });
@@ -461,7 +461,7 @@ export default {
 
         },
         queryOilFeild1() {
-            getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
+            getFieldListsDetail({operationZoneId:this.queryData.orgId}).then((res) => {
                 this.oilList = res.data.data;
                 var list =res.data.data;
                 for(var i=0;i<list.length;i++){
@@ -531,7 +531,7 @@ export default {
          * 获取数据
          */
         searchList() {
-            console.log(this.myselect)
+       
             this.queryData.blockId=this.myselect
             if (!this.queryData.dateTime) {
                 return this.$message.error('请输入时间')
