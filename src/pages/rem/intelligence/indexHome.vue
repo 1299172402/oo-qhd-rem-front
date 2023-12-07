@@ -543,8 +543,8 @@ export default {
             //超欠注情况统计
             this.queryUltraShortShotStatistics()
             this.blockList.forEach(item => {
-                if (item.blockId == this.queryData.blockId) {
-                    this.title = item.blockName
+                if (item.reservoirAnalyseUnitId == this.queryData.blockId) {
+                    this.title = item.reservoirAnalyseUnitName
                 }
             });
             let params = {
