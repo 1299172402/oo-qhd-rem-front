@@ -129,7 +129,8 @@ export default {
                     }
                     window.open(`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage`, '_parent');
                 })
-            }else{
+            }
+            else{
                 let linkurl = currentList.boxBottomText.find((n)=>{
                     if(n.warningShowFlag == true){
                         return n
@@ -144,7 +145,11 @@ export default {
                     this.warningShowFlag = false
                 }).then(()=>{
                     if (!url) return
-                    window.open(linkurl.url, '_parent');
+                    if(currentList?.warningurl){
+                        window.open(currentList.warningurl, '_parent');
+                    }else{
+                        window.open(linkurl.url, '_parent'); 
+                    }
                 })
             }
 

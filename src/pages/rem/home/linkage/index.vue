@@ -314,11 +314,12 @@ export default {
                         {
                             name: '混输海管设计输量',
                             warningShowFlag: false, alarmTime: "",
-                            url: `https://prm-pom.${this.baseUrl}/#/home/pipe?page=Linkage`
+                            // https://prm.tjioms-dev.tjltd.cnooc/#/manage/optimize
+                            url: `https://prm.${this.baseUrl}/#/manage/optimize?page=Linkage`
                         },
                         {
                             name: '注水海管设计输量', alarmTime: "",
-                            url: `https://prm-pom.${this.baseUrl}/#/home/pipe?page=Linkage`
+                            url: `https://prm.${this.baseUrl}/#/manage/optimize?page=Linkage`
                         }
                     ],
                     boxBottomContent: [
@@ -338,6 +339,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/10.png', import.meta.url).href,
                     showFlag: false,
+                    warningurl:`https://prm.${this.baseUrl}/#/manage/gathering?page=Linkage`,
                     alarmPageCode: ['BJ-SC-002'],
                     warningShowFlag: false,
                 },
@@ -348,12 +350,12 @@ export default {
                         {
                             name: '混输液处理能力',
                             warningShowFlag: false, alarmTime: "",
-                            url: `https://prm-pom.${this.baseUrl}/#/home/plat?page=Linkage`
+                            url: `https://prm.${this.baseUrl}/#/manage/optimize?page=Linkage`
                         },
                         {
                             name: '生产水处理能力',
                             warningShowFlag: false, alarmTime: "",
-                            url: `https://prm-pom.${this.baseUrl}/#/home/plat?page=Linkage`
+                            url: `https://prm.${this.baseUrl}/#/manage/optimize?page=Linkage`
                         }
                     ],
                     boxBottomContent: [
@@ -371,6 +373,7 @@ export default {
                     },
                     imgUrl: new URL('./topBox/28.png', import.meta.url).href,
                     showFlag: false,
+                    warningurl:`https://prm.${this.baseUrl}/#/manage/injection?page=Linkage`,
                     alarmPageCode: ['BJ-SC-003'],
                     warningShowFlag: false,
                 },
