@@ -4,7 +4,7 @@
             <el-form style="margin: 20px 0 10px 0" :inline="true">
                 <el-row>
                     <el-form-item label="油田：">
-                        <el-select v-model="params.ogfId.value" disabled>
+                        <el-select v-model="params.ogfId.value">
                             <el-option
                                 v-for="item in params.ogfList"
                                 :key="item.value"
@@ -14,7 +14,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="区块：">
-                        <el-select v-model="params.blockId.value" disabled>
+                        <el-select v-model="params.blockId.value">
                             <el-option
                                 v-for="item in params.blockList"
                                 :key="item.value"
@@ -24,7 +24,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="井别：">
-                        <el-select v-model="params.wellCategory" class="f2" style="width: 100px" filterable disabled>
+                        <el-select v-model="params.wellCategory" class="f2" style="width: 100px" filterable>
                             <el-option
                                 v-for="item  in wellCategoryList"
                                 :key="item.id"
@@ -34,7 +34,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="井号：">
-                        <el-select v-model="wellId" class="f2" disabled>
+                        <el-select v-model="wellId" class="f2">
                             <el-option
                                 v-for="item in params.wellId"
                                 :key="item.wellId"
@@ -52,7 +52,6 @@
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"
                             value-format="yyyy-MM-dd"
-                            disabled
                         ></el-date-picker>
                     </el-form-item>
                    
@@ -66,17 +65,6 @@
             style="position: relative; margin-top: 20px;height: calc(100% - 100px);" show-btn
         >
             <el-container class="layout">
-                <el-header height="auto" align="left">
-                    <span>井号：</span>
-                    <el-select v-model="wellId" @change="doSearch">
-                        <el-option
-                            v-for="item in params.wellId"
-                            :key="item.wellId"
-                            :label="item.wellName"
-                            :value="item.wellId"
-                        ></el-option>
-                    </el-select>
-                </el-header>
                 <el-main>
                     <div
                         v-if="data"
