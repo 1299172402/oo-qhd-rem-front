@@ -14,8 +14,8 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="平台："  >
-                    <el-select  clearable v-model="queryParams.asseCode">
-                        <el-option v-for="item in platforms" :key="item.id" :label="item.platformName" :value="item.platformId">
+                    <el-select  clearable v-model="queryParams.selectPlatform">
+                        <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformCode" :value="item.platformId">
                         </el-option>
                     </el-select>
                 </el-form-item>
