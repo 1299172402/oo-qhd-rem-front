@@ -228,12 +228,12 @@
                     </page-panel>
                     <el-dialog :visible.sync="detailed" title="单井井底流压">
                         <el-table :data="residueOil" height="600">
-                            <el-table-column prop="date" label="序号" align="center" width="80">
+                            <el-table-column prop="date" label="序号" align="center" width="80" sortable>
                                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
                             </el-table-column>
-                            <el-table-column prop="wellNo" label="井号" align="center">
+                            <el-table-column prop="wellNo" label="井号" align="center" sortable>
                             </el-table-column>
-                            <el-table-column prop="dhFlowingPress" label="井底流压(MPa)" align="center">
+                            <el-table-column prop="dhFlowingPress" label="井底流压(MPa)" align="center" sortable>
                                 <template slot-scope="scope">
                         <span
                             v-if="scope.row.dhFlowingPress !== null && scope.row.dhFlowingPress !== ''">{{
@@ -242,7 +242,7 @@
                                     <span v-else>-</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="fluidProdDaily" label="日产液量(m³)" align="center">
+                            <el-table-column prop="fluidProdDaily" label="日产液量(m³)" align="center" sortable>
                                 <template slot-scope="scope">
                         <span
                             v-if="scope.row.fluidProdDaily !== null && scope.row.fluidProdDaily !== ''">{{
@@ -439,7 +439,7 @@ export default {
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
                 this.blockList = res.data.data;
                 for(var i=0;i<this.blockList.length;i++){
-                    if(this.blockList[i].reservoirAnalyseUnitId==='YCFXDY8B643EDC9007F96F570600457D'){
+                    if(this.blockList[i].reservoirAnalyseUnitId==='83D33B89B0DAB7DFA440BD060746883A'){
                         this.myselect=this.blockList[i].reservoirAnalyseUnitId
                     
                     }
