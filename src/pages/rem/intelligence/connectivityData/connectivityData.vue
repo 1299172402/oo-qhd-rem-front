@@ -23,9 +23,9 @@
                     <el-select v-model="queryData.blockId" filterable clearable>
                         <el-option
                             v-for="item in blockList"
-                            :key="item.blockId"
-                            :label="item.blockName"
-                            :value=" item.blockId"
+                            :key="item.reservoirAnalyseUnitId"
+                            :label="item.reservoirAnalyseUnitName"
+                            :value=" item.reservoirAnalyseUnitId"
                         ></el-option>
                     </el-select>
                 </el-form-item>
@@ -305,6 +305,7 @@ export default {
             }
         }
         return {
+            blockList:[],
             oilList:[],
             selectOilField:"",
             queryData: {
@@ -376,7 +377,7 @@ export default {
   
         },
         getOilFields() {
-          getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
+          getFieldListsDetail({operationZoneId:this.queryData.orgId}).then((res) => {
             this.oilList = res.data.data;
             var list =res.data.data;
             for(var i=0;i<list.length;i++){
@@ -445,7 +446,7 @@ export default {
         // 获取区块下拉数据
         selectblock() {
           getblockData({ogfId:this.queryData.ogfId}).then((res) => {
-            this.blockList = res.data.blockList;
+            this.blockList = res.data.data;
           });
         },
         // 油田下拉点击事件

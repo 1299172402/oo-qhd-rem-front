@@ -36,9 +36,9 @@
         <el-select v-model="queryData.blockId">
           <el-option
             v-for="item in blockList"
-            :key="item.blockId"
-            :label="item.blockName"
-            :value="item.blockId"
+            :key="item.reservoirAnalyseUnitId"
+            :label="item.reservoirAnalyseUnitName"
+            :value="item.reservoirAnalyseUnitId"
           />
         </el-select>
         <span style="margin-left:20px">时间：</span>
@@ -401,7 +401,7 @@ export default {
     },
     getOilFields() {
       
-      getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
+      getFieldListsDetail({operationZoneId:this.queryData.orgId}).then((res) => {
         this.oilField = res.data.data;
         var list =res.data.data;
         for(var i=0;i<list.length;i++){
@@ -417,7 +417,7 @@ export default {
     selectblock() {
       this.queryData.ogfId=this.selectOilField
       getblockData({ogfId:this.queryData.ogfId}).then((res) => {
-        this.blockList = res.data.blockList;
+        this.blockList = res.data.data;
       });
       
      
