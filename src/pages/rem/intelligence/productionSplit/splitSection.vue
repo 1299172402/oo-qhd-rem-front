@@ -294,7 +294,11 @@ export default {
       queryBlockFeild() {
         getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
           this.blockList = res.data.data;
-          this.queryData.blockId.value=this.blockList[1].reservoirAnalyseUnitId
+          for(var i=0;i<this.blockList.length;i++){
+            if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
+              this.queryData.blockId.value=this.blockList[i].reservoirAnalyseUnitId
+            }
+          }
           this.queryWellData();
         });
       },
