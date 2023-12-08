@@ -418,6 +418,7 @@ export default {
       this.queryData.ogfId=this.selectOilField
       getblockData({ogfId:this.queryData.ogfId}).then((res) => {
         this.blockList = res.data.data;
+        this.queryData.blockId=this.blockList[0].reservoirAnalyseUnitId
       });
       
      

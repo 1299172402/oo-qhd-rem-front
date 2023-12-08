@@ -400,6 +400,7 @@ export default {
         queryBlockFeild() {
           getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
             this.blockList = res.data.data;
+            this.queryData.blockId.value=this.blockList[0].reservoirAnalyseUnitId
           });
         },
         /**

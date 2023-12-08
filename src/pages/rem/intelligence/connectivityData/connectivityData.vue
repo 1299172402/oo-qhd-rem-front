@@ -310,7 +310,7 @@ export default {
             selectOilField:"",
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
-                blockId: 'YCFXDY8B643EDC9007F96F570600457D',
+                blockId: '',
                 dateTime: this.eeee(),
             },
             //   new Date().format("yyyy-MM")
@@ -447,6 +447,7 @@ export default {
         selectblock() {
           getblockData({ogfId:this.queryData.ogfId}).then((res) => {
             this.blockList = res.data.data;
+            this.queryData.blockId=this.blockList[0].reservoirAnalyseUnitId
           });
         },
         // 油田下拉点击事件
