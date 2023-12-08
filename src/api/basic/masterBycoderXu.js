@@ -3,7 +3,7 @@ const masterUrl = process.env.NODE_ENV == "production" ? "/omc003d" : "/omc003d"
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 export function getuserListByUserNames(data) {
     return Axios({
-        url: `${masterUrl}/system/syncData/userListByUserNames`,
+        url: `${baseUrl}/omc003d/userListByUserNames`,
         method: "post",
         data
     });

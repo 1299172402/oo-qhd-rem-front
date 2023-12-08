@@ -166,6 +166,7 @@ import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
 import {getChopSection} from '@/api/rem/r-intelligentIPA.js';
 // import { number } from 'echarts/lib/export';
+import {getuserListByUserNames,getFieldListsDetail,getblockData,getWellData} from "@/api/basic/masterBycoderXu.js"
 
 
 export default {
@@ -260,6 +261,86 @@ export default {
         this.queryChopSection();
     },
     methods: {
+      getuserListByUserNamesData(){
+        let params = {
+          searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+        }
+        getuserListByUserNames(params).then((res)=>{
+          this.orgId=res.data.data[0].currentTenantBindOrgId
+          this.queryOilFeild()
+        })
+
+      },
+      queryOilFeild() {
+        getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
+          this.oilList = res.data.data;
+          var list =res.data.data;
+          for(var i=0;i<list.length;i++){
+            if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+              this.queryData.ogfId.value=list[i].ogfId
+            }
+          }
+        });
+      },
+      //改变油田
+      changeOil() {
+        // this.queryData.blockId = "";
+        this.queryData.wellId = [];
+        this.queryBlockFeild();
+      },
+      /**
+       * 获取区块
+       */
+      queryBlockFeild() {
+        getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
+          this.blockList = res.data.data;
+          this.queryData.blockId.value=this.blockList[1].reservoirAnalyseUnitId
+          this.queryWellData();
+        });
+      },
+      /**
+       * 改变区块
+       */
+      changeBlock(e) {
+        console.log(e)
+        this.queryData.wellId = [];
+        if (this.queryData.wellCategory) {
+          this.queryWellData();
+        }
+      },
+      /**
+       * 改变井别
+       */
+      changeWell() {
+        if (this.queryData.blockId) {
+          this.queryData.wellId = []
+          this.tableData = []
+          this.queryWellData();
+
+        }
+      },
+      /**
+       * 井号下拉
+       */
+        queryWellData() {
+        // let params = {
+        //     blockId: this.queryData.blockId.value,
+        //     apprndixId: this.queryData.wellCategory,
+        // };
+        var welltypeName=null;
+        if(this.queryData.wellCategory==="01"){
+          welltypeName='采油井'
+        }else {
+          welltypeName='注水井'
+        }
+        getWellData({blockId:this.queryData.blockId.value,ogfId:this.queryData.ogfId.value,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
+          this.wellList=res.data.data
+          console.log(this.wellList)
+          // this.queryData.wellId=this.wellList[27].wellId
+          this.doSearch()
+          // this.wellList = res.wellList;
+        });
+      },
         // 搜索
         doSearch(qq) {
             this.data = null;
