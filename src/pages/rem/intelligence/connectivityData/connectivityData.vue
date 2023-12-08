@@ -447,7 +447,12 @@ export default {
         selectblock() {
           getblockData({ogfId:this.queryData.ogfId}).then((res) => {
             this.blockList = res.data.data;
-            this.queryData.blockId=this.blockList[1].reservoirAnalyseUnitId
+            for(var i=0;i<this.blockList.length;i++){
+              if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
+                this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
+              }
+            }
+            
             this.tableOilfield()
           });
         },
