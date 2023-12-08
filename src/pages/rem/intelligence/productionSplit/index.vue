@@ -437,7 +437,7 @@ export default {
             }else {
               welltypeName='注水井'
             }
-            getWellData({blockId:this.queryData.blockId.value,ogfId:this.queryData.ogfId.value,wellboreType:welltypeName}).then((res) => {
+            getWellData({blockId:this.queryData.blockId.value,ogfId:this.queryData.ogfId.value,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
                 this.wellList=res.data.data
                 console.log(this.wellList)
                 // this.wellList = res.wellList;
