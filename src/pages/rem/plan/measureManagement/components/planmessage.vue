@@ -75,9 +75,9 @@
                     </el-table-column>
                     <el-table-column sortable  label="推荐措施" prop="measType" min-width="120px" align="center" >
                     </el-table-column>
-                    <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center">
+                    <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center" class-name="cellWrap"  >
                         <template slot-scope="scope">
-                            <span v-if="scope.row.layerName !== null && scope.row.layerName !== ''">{{scope.row.layerName}}</span>
+                            <span v-if="scope.row.layerName !== null && scope.row.layerName !== ''" v-html="scope.row.layerName"></span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
@@ -87,9 +87,9 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="`油层厚度 \n（m）`"  sortable width="130px" prop="reservoirThickness" align="center">
+                    <el-table-column :label="`油层厚度 \n（m）`"  sortable width="130px" prop="reservoirThickness" align="center" class-name="cellWrap">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.reservoirThickness !== null && scope.row.reservoirThickness !== ''">{{scope.row.reservoirThickness.toFixed(2)}}</span>
+                            <span v-if="scope.row.reservoirThickness !== null && scope.row.reservoirThickness !== ''" v-html="scope.row.reservoirThickness"></span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
@@ -273,7 +273,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px"   :label="`海管情况\n     (m³)`" prop="quantity" align="center">
+                    <el-table-column sortable min-width="130px"   :label="`海管余量\n     (m³)`" prop="quantity" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.quantity !== null && scope.row.quantity !== ''"> {{Number(scope.row.quantity).toFixed(2)}}</span>
                             <span v-else>-</span>
@@ -357,6 +357,12 @@ export default {
         // this.choiceDepts(); // 获取组织机构
     },
     methods: {
+        // formatArray(arr) {
+        //     let a=arr.map((item) => {
+        //         return item + '<br/>';
+        //     }).join('');
+        //     return a;
+        // },
         getserch() {
             getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
                 if (res.data.code == 200) {
@@ -493,7 +499,53 @@ export default {
                             measureCode:this.$route.query.measureCode,
                         };
                         pumpReplaceDetail(data).then((res) => {
+                            // this.noticeList=[{
+                            //     "wellId": "1E3522013117430FBDB893903542FD5D",
+                            //     "measType": "开层",
+                            //     "wellNo": "QHD32-6-A18",
+                            //     "layerName": "明化镇组下段Ⅳ油组3小层<br/>明化镇组下段Ⅲ油组2小层",
+                            //     "blockId": "83D33B89B0DAB7DFA440BD060746882A",
+                            //     "blockName": "秦皇岛32-6北区",
+                            //     "reservoirThickness": "0.57,1.22,1.75,2.17,2.48,2.64,5.96,7.57",
+                            //     "horizonIntervalLen": null,
+                            //     "completionMethod": null,
+                            //     "startDate": "2001-10-11",
+                            //     "fluidProdDaily": 0.0,
+                            //     "oilProdDaily": 0.0,
+                            //     "waterRatio": null,
+                            //     "pumpFrequency": 0.0,
+                            //     "cumOilProdYearly": 173170.36,
+                            //     "testDate": null,
+                            //     "basalLevelStaticPress": null,
+                            //     "flowPress": null,
+                            //     "productPress": null,
+                            //     "probReservesWell": null,
+                            //     "remainingRecoverableReserves": null,
+                            //     "fluidProductionIndex": null,
+                            //     "forecastFluid": 0.0,
+                            //     "forecastWaterRatio": null,
+                            //     "forecastOilInc": null,
+                            //     "forecastOil": 0.0,
+                            //     "forecastProductPress": null,
+                            //     "forecastFlowPress": null,
+                            //     "displacementEfficiency": null,
+                            //     "historySandDay": 0,
+                            //     "sandDay": 0,
+                            //     "sandValue": null,
+                            //     "pumpCondition": "日产液量波动,日度健康度异常AI",
+                            //     "tubularColumnCondition": null,
+                            //     "fromPlatform": "C099F9FAB82348FDB73B33EECCE20A08",
+                            //     "fromPlatformName": "QHD32-6WHPA",
+                            //     "toplatform": "5FFA69B3168C4596925315A30B137B46",
+                            //     "toplatformName": null,
+                            //     "quantity": "8579.413018",
+                            //     "pumpEnergyConsumeForecast": null,
+                            //     "frequencyConverter": null,
+                            //     "transformer": null,
+                            //     "yearMonth": null
+                            // }];
                             if(res.data.code == 200){
+                                // debugger
                                 this.noticeList = res.data.data;
                             }else{
                                 this.noticeList = []
@@ -634,5 +686,10 @@ export default {
         line-height: 18px;
         white-space: pre;
     }
+}
+ ::v-deep .cellWrap .cell{
+        height: auto !important;
+        line-height: 30px !important;
+        white-space: pre !important;
 }
 </style>

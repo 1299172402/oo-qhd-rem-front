@@ -1,5 +1,6 @@
 import request from "@/utils/request";
 const masterUrl = process.env.NODE_ENV == "production" ? "/omc003d" : "/omc003d";
+const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api";
 // http://10.77.78.243:8003/primaryInfo/fetchPlatforms
 
 export function fetchPlatforms(data) {
@@ -74,7 +75,8 @@ export function QueryReservoirAnalyseUnit(data) {
 }
 export function userListByUserNames(data) {
     return request({
-        url: `${masterUrl}/system/syncData/userListByUserNames`,
+        // url: `${masterUrl}/system/syncData/userListByUserNames`,
+        url: `${baseUrl}/omc003d/userListByUserNames`,
         method: "post",
         data,
     });

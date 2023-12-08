@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 const masterUrl = process.env.NODE_ENV == "production" ? "/omc003d" : "/omc003d"
+const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api";
 
 export function fetchPlatforms(data) {
     return request({
@@ -26,9 +27,10 @@ export function queryOilAndGasFieldQueryPositionDetail(data) {
 
 export function userListByUserNames(data) {
     return request({
-        url: `${masterUrl}/system/syncData/userListByUserNames`,
+        // url: `${masterUrl}/system/syncData/userListByUserNames`,
+        url: `${baseUrl}/omc003d/userListByUserNames`,
         method: "post",
-        data
+        data,
     });
 }
 export function QueryBlockDetail(data) {
