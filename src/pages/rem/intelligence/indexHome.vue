@@ -454,7 +454,7 @@ export default {
             let params = {
                 searchKeys:[this.$store.getters["user/userDetail"].user.userName],
             }
-            getuserListByUserNames(params).then((res)=>{
+            getuserListByUserNames({searchKeys:[this.$store.getters["user/userDetail"].user.userName]}).then((res)=>{
                 this.queryData.orgId=res.data.data[0].currentTenantBindOrgId
                 this.queryOilFeild1()
             })
