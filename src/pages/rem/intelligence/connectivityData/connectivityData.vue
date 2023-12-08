@@ -358,7 +358,7 @@ export default {
         //获取油田下拉数据
         
         this.getuserListByUserNamesData();
-        this.tableOilfield()
+        
     },
     computed: {
         disabledComp() {
@@ -447,7 +447,8 @@ export default {
         selectblock() {
           getblockData({ogfId:this.queryData.ogfId}).then((res) => {
             this.blockList = res.data.data;
-            this.queryData.blockId=this.blockList[0].reservoirAnalyseUnitId
+            this.queryData.blockId=this.blockList[1].reservoirAnalyseUnitId
+            this.tableOilfield()
           });
         },
         // 油田下拉点击事件

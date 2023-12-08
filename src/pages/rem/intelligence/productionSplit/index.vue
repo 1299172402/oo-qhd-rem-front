@@ -349,7 +349,6 @@ export default {
         }
         this.getuserListByUserNamesData();
         this.queryBlockFeild();
-        this.queryWellData();
         this.createChange(this.queryData.value)
         this.queryProductionSplit()
     },
@@ -400,7 +399,8 @@ export default {
         queryBlockFeild() {
           getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
             this.blockList = res.data.data;
-            this.queryData.blockId.value=this.blockList[0].reservoirAnalyseUnitId
+            this.queryData.blockId.value=this.blockList[1].reservoirAnalyseUnitId
+            this.queryWellData();
           });
         },
         /**
@@ -441,6 +441,8 @@ export default {
             getWellData({blockId:this.queryData.blockId.value,ogfId:this.queryData.ogfId.value,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
                 this.wellList=res.data.data
                 console.log(this.wellList)
+                // this.queryData.wellId=this.wellList[27].wellId
+                this.doSearch()
                 // this.wellList = res.wellList;
             });
         },
