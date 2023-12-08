@@ -139,7 +139,7 @@ export function wellGroups(request) {
  */
 export function selectWellGroup(params) {
   return Axios({
-    url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/selectWellGroup`,
+    url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/selectWellGroupNew`,
     method: "get",
     params,
   });

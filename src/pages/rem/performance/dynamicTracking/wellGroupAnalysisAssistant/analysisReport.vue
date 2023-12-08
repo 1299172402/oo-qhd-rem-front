@@ -417,6 +417,7 @@
               type="date"
               value-format="yyyy-MM-dd"
               :clearable="false"
+              @change="handleCurrentDateChange"
             ></el-date-picker>
             <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="doSearch">搜索</el-button>
             <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
@@ -1079,6 +1080,9 @@ export default {
     },
   },
   methods: {
+      handleCurrentDateChange(v) {
+          this.queryWellGroupList();
+      },
     //重置
     resetting() {
       let isNewformat = this.isNewformat;
@@ -1128,27 +1132,34 @@ export default {
       });
     },
     //获取区块
-    async queryBlockList(paramMap) {
-      await QueryReservoirAnalyseUnit({ ogfId: this.selYtdm }).then((res) => {
-        if (res.data.code == 200) {
-          this.blockData = res.data.data;
-          this.blockData.unshift({
-            reservoirAnalyseUnitId: this.selYtdm,
-            reservoirAnalyseUnitName: "全部",
-            reservoirAnalyseUnitNo: "全部",
+      async queryBlockList(paramMap) {
+          await QueryReservoirAnalyseUnit({ogfId: this.selYtdm}).then((res) => {
+              if (res.data.code == 200) {
+                  this.blockData = res.data.data;
+                  if (this.blockData === null) {
+                      this.blockData = [{
+                          reservoirAnalyseUnitId: this.selYtdm,
+                          reservoirAnalyseUnitName: "全部",
+                          reservoirAnalyseUnitNo: "全部",
+                      }];
+                  } else {
+                      this.blockData.unshift({
+                          reservoirAnalyseUnitId: this.selYtdm,
+                          reservoirAnalyseUnitName: "全部",
+                          reservoirAnalyseUnitNo: "全部",
+                      });
+                  }
+                  this.selBlock = this.blockData[0].reservoirAnalyseUnitId;
+                  this.queryWellGroupList();
+              }
           });
-
-          this.selBlock = this.blockData[0].reservoirAnalyseUnitId;
-          this.queryWellGroupList();
-        }
-      });
-    },
+      },
     //获取井组
     async queryWellGroupList() {
       await selectWellGroup({
         ogfId: this.selYtdm,
-        blockId: this.selBlock,
-        dateTime: new Date().format("yyyy-MM-dd"),
+        blockId: this.selBlock === this.selYtdm ? '' :this.selBlock ,
+        dateTime: this.currentDate,
       }).then((res) => {
         if (res.data.code == 200) {
           this.searchKeys = "";

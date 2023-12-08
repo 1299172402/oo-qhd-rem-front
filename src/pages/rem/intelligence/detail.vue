@@ -22,9 +22,9 @@
           <el-select v-model="queryData.blockId">
             <el-option
               v-for="item in blockList"
-              :key="item.blockId"
-              :label="item.blockName"
-              :value="item.blockId"
+              :key="item.reservoirAnalyseUnitId"
+              :label="item.reservoirAnalyseUnitName"
+              :value="item.reservoirAnalyseUnitId"
             ></el-option>
           </el-select>
           <span style="margin-left: 20px">时间：</span>
@@ -176,13 +176,14 @@
 <script>
 import { getStratifiedInjectionDetailsComp } from '@/api/rem/r-intelligentIPA.js';
 import { exportExcel } from '@/lib/exportExcel';
+import {getuserListByUserNames,getFieldListsDetail,getblockData} from "@/api/basic/masterBycoderXu.js"
 import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 
 export default {
   name:'intelligenceDetail',
   components: {
   },
-  mixins: [queryConditionMixin],
+  // mixins: [queryConditionMixin],
   data () {
     return {
       activeName: "月度",
@@ -226,6 +227,45 @@ export default {
     }
   },
   methods: {
+    queryBlockFeild1 () {
+
+      getblockData({ogfId:this.queryData.ogfId}).then((res) => {
+        this.blockList = res.data.data;
+        for(var i=0;i<this.blockList.length;i++){
+          if(this.blockList[i].reservoirAnalyseUnitId==='83D33B89B0DAB7DFA440BD060746883A'){
+            this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
+            this.queryStratifiedInjectionDetails()
+          }
+        }
+
+
+        this.searchList()
+        // this.queryData.blockId=this.blockList[0].blockId
+      });
+    },
+    getuserListByUserNamesData(){
+      let params = {
+        searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+      }
+      getuserListByUserNames(params).then((res)=>{
+        this.queryData.orgId=res.data.data[0].currentTenantBindOrgId
+        this.queryOilFeild1()
+      })
+
+    },
+    queryOilFeild1() {
+      getFieldListsDetail({operationZoneId:this.queryData.orgId}).then((res) => {
+        this.oilList = res.data.data;
+        var list =res.data.data;
+        for(var i=0;i<list.length;i++){
+          if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+            this.queryData.ogfId=list[i].ogfId
+          }
+        }
+        this.queryBlockFeild1()
+      });
+
+    },
     /**
      * 获取表格
      */
@@ -407,8 +447,8 @@ export default {
     },
   },
   mounted () {
-    this.queryStratifiedInjectionDetails()
-    this.queryOilFeild()
+    this.getuserListByUserNamesData()
+    
   },
 }
 </script>

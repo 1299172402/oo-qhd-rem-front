@@ -4,10 +4,9 @@
             <div class="my-5" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
                 <el-select
-                    v-model="selectOilField"
+                    v-model="this.selectOilField"
                     class="f2"
                     filterable
-                    disabled
                     clearable
                     style="width:180px"
                 >
@@ -22,9 +21,9 @@
                 <el-select v-model="queryData.blockId">
                     <el-option
                         v-for="item in blockList"
-                        :key="item.blockId"
-                        :label="item.blockName"
-                        :value="item.blockId"
+                        :key="item.reservoirAnalyseUnitId"
+                        :label="item.reservoirAnalyseUnitName"
+                        :value="item.reservoirAnalyseUnitId"
                     ></el-option>
                 </el-select>
                 <span>时间：</span>
@@ -300,6 +299,7 @@ export default {
     // mixins: [queryConditionMixin],
     data() {
         return {
+            
             blockList:[],
             oilField: [],
             queryData: {
@@ -353,7 +353,7 @@ export default {
     },
     methods: {
         getOilFields() {
-            getFieldListsDetail({orgId:this.queryData.orgId}).then((res) => {
+            getFieldListsDetail({operationZoneId:this.queryData.orgId}).then((res) => {
                 this.oilField = res.data.data;
                 var list =res.data.data;
                 for(var i=0;i<list.length;i++){
@@ -376,11 +376,11 @@ export default {
 
         },
          // 获取油田下拉数据
-        selectData() {
-            getoilfield().then(({ogfId}) => {
-                this.oilList = ogfId;
-            });
-        },
+        // selectData() {
+        //     getoilfield().then(({ogfId}) => {
+        //         this.oilList = ogfId;
+        //     });
+        // },
         selectblock() {
             // if (!this.selectField) return;
             // getblock({
@@ -391,7 +391,8 @@ export default {
             //   }
             this.queryData.ogfId=this.selectOilField
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
-                this.blockList = res.data.blockList;
+                this.blockList = res.data.data;
+                this.queryData.blockId=this.blockList[1].reservoirAnalyseUnitId
             });
         },
         changeOilfield() {

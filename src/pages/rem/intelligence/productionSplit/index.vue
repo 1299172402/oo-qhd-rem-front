@@ -5,7 +5,6 @@
                 <el-form-item label="油田：">
                     <el-select
                         v-model="queryData.ogfId"
-                        disabled
                         style="width: 180px"
                         @change="changeOil"
                     >
@@ -18,7 +17,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区块：">
-                    <el-select v-model="queryData.blockId" @change="changeBlock">
+                    <el-select v-model="queryData.blockId">
                         <el-option
                             v-for="item in blockList"
                             :key="item.reservoirAnalyseUnitId"
@@ -348,10 +347,10 @@ export default {
             this.queryData.wellId = ["DA0269628E74490ABDE198E7D1DBF3EA"]
         }
         this.getuserListByUserNamesData();
-        this.queryBlockFeild();
-        this.queryWellData();
+        
+        
         this.createChange(this.queryData.value)
-        this.queryProductionSplit()
+        
     },
     //方法
     methods: {
@@ -386,6 +385,7 @@ export default {
                 this.queryData.ogfId.value=list[i].ogfId
               }
             }
+            this.queryBlockFeild()
           });
         },
         //改变油田
@@ -400,6 +400,8 @@ export default {
         queryBlockFeild() {
           getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
             this.blockList = res.data.data;
+            this.queryData.blockId.value=this.blockList[0].reservoirAnalyseUnitId
+            this.queryWellData()
           });
         },
         /**
@@ -439,7 +441,7 @@ export default {
             }
             getWellData({blockId:this.queryData.blockId.value,ogfId:this.queryData.ogfId.value,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
                 this.wellList=res.data.data
-                console.log(this.wellList)
+                this.queryProductionSplit()
                 // this.wellList = res.wellList;
             });
         },
