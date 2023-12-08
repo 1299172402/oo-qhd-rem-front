@@ -567,9 +567,12 @@ export default {
         },
         //左侧区块
         queryWellGroupBlock() {
-            
-            
+
+            console.log("898966")
+            console.log(this.queryData)
             getWellGroupBlock(this.queryData).then((res) => {
+                console.log("898966")
+                console.log(res)
                 res.injRatio = res.injRatio == null ? '' : Number(res.injRatio).toFixed(1)
                 res.haveWater = res.haveWater == null ? '' : Number(res.haveWater).toFixed(1)
                 res.waterProd = res.waterProd == null ? '' : Number(res.waterProd).toFixed(4)
