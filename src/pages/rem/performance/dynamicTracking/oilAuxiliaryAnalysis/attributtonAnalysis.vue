@@ -34,8 +34,8 @@
                         </el-form-item>
                         <el-form-item v-if="link == 6" label="水井井组:">
                             <el-select v-model="queryData.wellGroup" style="width:180px" filterable clearable>
-                                <el-option v-for="item in wellGroupList" :key="item.wellGroupId"
-                                           :label="item.wellGroupName" :value="item.wellGroupId">
+                                <el-option v-for="item in wellGroupList" :key="item.wellGroupName"
+                                           :label="item.wellGroupName" :value="item.wellGroupName">
                                 </el-option>
                             </el-select>
                         </el-form-item>
@@ -68,6 +68,7 @@
                                 key="2"
                                 style="width: 170px"
                                 placeholder="选择月"
+                                @change="handleMonthChange"
                             >
                             </el-date-picker>
                         </el-form-item>
@@ -1375,6 +1376,19 @@ export default {
         this.link = this.$route.query.link
     },
     methods: {
+        handleMonthChange() {
+            selectWellGroup({
+                ogfId: this.queryData.ogfId,
+                platformId: this.queryData.assetCode,
+                dateTime: this.queryData.month
+            }).then((res) => {
+                if (res.data.code == 200) {
+                    this.wellGroupList = res.data.data;
+                    this.wellGroupList.unshift({wellGroupName: '全部', wellGroupId: ''});
+                    this.queryData.wellGroup= '全部'
+                }
+            });
+        },
         downexcel() {
             let resultDate = ''
             if(this.link==4){
@@ -1395,7 +1409,7 @@ export default {
                 operationZone: this.queryData.orgId,//作业公司
                 evalResult: this.evalResult,//编码
                 evalTypeId: 'ZS',//判断是否为注水(仅获取注水列表需要传入该参数)
-                objectId: this.queryData.wellGroup,//井组ID
+                wellGroupName: this.queryData.wellGroup === '全部' ? '' : this.queryData.wellGroup,//井组ID
                 title:''//对应的标题
             }
             if (this.link == '4') {
@@ -1457,12 +1471,13 @@ export default {
                         ogfId: this.selectOilField,
                     };
                     selectWellGroup({
-                        ogfId: this.selectOilField,
-                        dateTime: new Date().format('yyyy-MM-dd')
+                        ogfId: this.queryData.ogfId,
+                        dateTime: this.queryData.month
                     }).then((res) => {
                         if (res.data.code == 200) {
                             this.wellGroupList = res.data.data;
                             this.wellGroupList.unshift({wellGroupName: '全部', wellGroupId: ''});
+                            this.queryData.wellGroup= '全部'
                         }
                     });
                     QueryWellDetail(requestPlat).then((res) => {
@@ -1492,6 +1507,17 @@ export default {
                     this.queryData.well = ''
                 }
             });
+            selectWellGroup({
+                ogfId: this.queryData.ogfId,
+                platformId: this.queryData.assetCode,
+                dateTime: this.queryData.month
+            }).then((res) => {
+                if (res.data.code == 200) {
+                    this.wellGroupList = res.data.data;
+                    this.wellGroupList.unshift({wellGroupName: '全部', wellGroupId: ''});
+                    this.queryData.wellGroup= '全部'
+                }
+            });
         },
         //切换分页
         pagination(e) {
@@ -1507,6 +1533,17 @@ export default {
             this.queryData.assetCode = ''
             QueryPlatformDetail({ogfId: val}).then(res => {
                 this.platforms = res.data.data
+                selectWellGroup({
+                    ogfId: this.queryData.ogfId,
+                    platformId: this.queryData.assetCode,
+                    dateTime: this.queryData.month
+                }).then((res) => {
+                    if (res.data.code == 200) {
+                        this.wellGroupList = res.data.data;
+                        this.wellGroupList.unshift({wellGroupName: '全部', wellGroupId: ''});
+                        this.queryData.wellGroup= '全部'
+                    }
+                });
             })
         },
         doSearch() {
@@ -1562,7 +1599,7 @@ export default {
                 evalTypeId: 'ZS',//判断是否为注水(仅获取注水列表需要传入该参数)
                 pageNum: this.queryData.pageNum,//分页页码
                 pageSize: this.queryData.pageSize,//每页条数
-                objectId: this.queryData.wellGroup//井组ID
+                wellGroupName: this.queryData.wellGroup === '全部' ? '' : this.queryData.wellGroup //井组ID
             }
             if (this.link == '4') {
                 if(this.evalResult == '注水强度变高'){
