@@ -774,21 +774,37 @@ export default {
       //作业公司选中数据
       // this.queryParams.companyId = selectList.orgId;
       // 油田选中数据
-      // this.selectOilField = selectList.ogfId;
+      this.selectOilField = selectList.ogfId;
       //平台选中数据
       this.selectPlatform = selectList.platformIds;
       // 井号选中数据
       this.selectWellId = selectList.wellIds;
-      // 判断如果没有wellList没有当前井号，调取井号接口根据平台获取井号数据
-      let isUpdata = this.wellData.map((item) => item.borepipeId).includes(selectList.wellIds);
+      // 判断如果当前平台，调用获取平台接口
+      let isUpdata1 = this.platform.map((item) => item.platformId).includes(selectList.platformIds);
+      if (!isUpdata1) {
+        this.platform = [];
+        QueryPlatformDetail({ ogfId: this.selectOilField }).then((res) => {
+          //判断联通状态
+          if (res.data.code == 200) {
+            this.platform = res.data?.data || [];
+            this.platform.unshift({
+              platformId: this.selectOilField,
+              platformCode: "全部",
+            });
+          }
+        });
+      }
+      // 判断如果当前井号，调用获取井号接口
+      let isUpdata = this.wellData.map((item) => item.wellId).includes(selectList.wellIds);
       if (!isUpdata) {
+        this.wellData = [];
         QueryWellDetail({
           ogfId: this.selectOilField,
           platformId: this.selectOilField == this.selectPlatform ? undefined : this.selectPlatform,
           wellboreType: "注水井",
         }).then((res) => {
           if (res.data.code == 200) {
-            this.wellData = res.data.data.injectionWell;
+            this.wellData = res.data?.data || [];
           }
         });
       }

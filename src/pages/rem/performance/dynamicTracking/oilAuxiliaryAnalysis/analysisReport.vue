@@ -44,7 +44,7 @@
 
             <span style="margin-left: 15px">平台：</span>
             <el-select v-model="platform" class="f2" style="width: 170px" filterable @change="changePlatform">
-              <el-option v-for="item in ptData" :key="item.platFormId" :label="item.platName" :value="item.platFormId">
+              <el-option v-for="item in ptData" :key="item.c" :label="item.platName" :value="item.platFormId">
               </el-option>
             </el-select>
             :
@@ -293,7 +293,7 @@
                 type="primary"
                 style="margin-left: 20px"
                 v-if="
-                selCode &&
+                  selCode &&
                   (selCode == '0100101' ||
                     selCode == '0100102' ||
                     selCode == '0100103' ||
@@ -1040,7 +1040,7 @@
                                   }
                                 "
                               >
-                                <span class="sp1">{{ item.value  }}</span>
+                                <span class="sp1">{{ item.value }}</span>
                                 <span class="sp2">{{ item.name }}</span>
                               </div>
                               <div
@@ -1853,7 +1853,7 @@ export default {
       QueryReservoirAnalyseUnit({ ogfId: this.selYtdm }).then((res) => {
         if (res.data.code == 200) {
           //获得区块信息
-          this.blocks = res.data.data;
+          this.blocks = res.data?.data || [];
           this.blocks.unshift({
             reservoirAnalyseUnitId: this.selYtdm,
             reservoirAnalyseUnitName: "全部",
@@ -1892,6 +1892,7 @@ export default {
       await QueryWellDetail({
         ogfId: this.selYtdm,
         platformId: this.platform == this.selYtdm ? undefined : this.platform,
+        blockId: this.selectBlock,
         wellboreType: "采油井",
       }).then((res) => {
         if (res.data.code == 200) {
@@ -1930,7 +1931,7 @@ export default {
     getSelectItems(selectList, selectData) {
       // console.log(selectList, '测试')
       // 油田选中数据
-      // this.selYtdm = selectList.ogfId;
+      this.selYtdm = selectList.ogfId;
       // 区块选中数据
       this.selectBlock = selectList.blockId;
       // 平台选中数据
@@ -1940,19 +1941,45 @@ export default {
       // if (selectData.level === 1) {
       this.paramMap.oilFieldId = this.selYtdm; //油田
       this.paramMap.selectBlock = this.selectBlock; //区块
-      fetchPlatforms(this.paramMap).then((res) => {
-        if (res.data.code == 200) {
-          QueryWellDetail({
-            ogfId: this.selYtdm,
-            platformId: this.platform == this.selYtdm ? undefined : this.platform,
-            wellboreType: "采油井",
-          }).then((res) => {
-            if (res.data.code == 200) {
-              this.wellData = res.data.data;
-            }
-          });
-        }
-      });
+      // 判断如果当前区块，调用获取区块接口
+      let isUpdata1 = this.blocks.map((item) => item.reservoirAnalyseUnitId).includes(selectList.blockId);
+      if (!isUpdata1) {
+        QueryReservoirAnalyseUnit({ ogfId: this.selYtdm }).then((res) => {
+          if (res.data.code == 200) {
+            //获得区块信息
+            this.blocks = res.data?.data || [];
+            this.blocks.unshift({
+              reservoirAnalyseUnitId: this.selYtdm,
+              reservoirAnalyseUnitName: "全部",
+              reservoirAnalyseUnitNo: "全部",
+            });
+          }
+        });
+      }
+      // 判断如果当前平台，调用获取平台接口
+      let isUpdata2 = this.ptData.map((item) => item.platFormId).includes(selectList.platformId);
+      if (!isUpdata2) {
+        fetchPlatforms(this.paramMap).then((res) => {
+          if (res.data.code == 200) {
+            let myData = res.data.data.platform;
+            this.ptData = myData;
+          }
+        });
+      }
+      // 判断如果当前井号，调用获取井号接口
+      let isUpdata3 = this.ptData.map((item) => item.platFormId).includes(selectList.platformId);
+      if (!isUpdata3) {
+        QueryWellDetail({
+          ogfId: this.selYtdm,
+          platformId: this.platform == this.selYtdm ? undefined : this.platform,
+          blockId: this.selectBlock,
+          wellboreType: "采油井",
+        }).then((res) => {
+          if (res.data.code == 200) {
+            this.wellData = res.data.data;
+          }
+        });
+      }
     },
     //进行数据查询处理
     doSearch() {
@@ -2595,7 +2622,7 @@ export default {
           data[j].value = t_count; //登记条数
           if (key == "productionTrendsOptions") {
             if (t_count > 0) {
-              let titleName = t_data.name + " " + (t_data.unit ? t_data.unit : "");
+              let titleName = t_data.name + "" + (t_data.unit ? t_data.unit : "");
               if (titleName.lastIndexOf("m3") > -1) {
                 titleName = titleName.replace("m3", "m³");
               }
