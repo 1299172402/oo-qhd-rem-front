@@ -361,11 +361,9 @@ export default {
     // 若由REM跳转 聚焦吸水指数
     if (this.$route.query.link == "rem") {
       this.activeName = "second";
-    } else {
-      this.queryTableData(this.form.tableData2, this.ifrefsh);
-    }
+    } 
     this.src = "https://intelinj.tjioms-dev.tjltd.cnooc/";
-    this.getuserListByUserNamesData();
+    
   },
 
   mounted() {
@@ -378,10 +376,10 @@ export default {
     if (this.$route.query.link == "rem") {
       this.activeName = "second";
       this.setWidth();
-      this.doSearch();
+      this.getuserListByUserNamesData();
     } else {
       this.activeName = "first";
-      this.doSearch();
+      this.getuserListByUserNamesData();
     }
   },
   methods: {
@@ -418,6 +416,12 @@ export default {
       this.queryData.ogfId=this.selectOilField
       getblockData({ogfId:this.queryData.ogfId}).then((res) => {
         this.blockList = res.data.data;
+        for(var i=0;i<this.blockList.length;i++){
+          if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
+            this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
+          }
+        }
+        this.doSearch()
       });
       
      

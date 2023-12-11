@@ -2,7 +2,7 @@
     <div style="height:100%;">
         <div class="titleBox">
             <el-tabs v-model="activeName" class="g-pageHeader">
-                <el-tab-pane label="定产配注" name="first"></el-tab-pane>
+                <el-tab-pane label="定产配12312注" name="first"></el-tab-pane>
                 <el-tab-pane label="智能配注" name="second">
                     <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
                 </el-tab-pane>
