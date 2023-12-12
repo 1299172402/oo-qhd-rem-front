@@ -267,8 +267,28 @@ export default {
       };
     },
     childinfo(data) {
-      this.queryData.pt = data[3].value;
-      this.queryData.wellId = data[4].value;
+      this.queryData.ogfId = data[2]?.value || "";
+      this.queryData.pt = data[3]?.value || "";
+      this.queryData.wellId = data[4]?.value || "";
+      // 判断如果当前平台，调用获取平台接口
+      let isUpdata1 = this.platforms.map((item) => item.platformId).includes(this.queryData.pt);
+      if (!isUpdata1) {
+        this.platforms = [];
+        QueryPlatformDetail({ ogfId: this.queryData.ogfId }).then((res) => {
+          if (res.data.code == 200) {
+            this.platforms = res.data.data;
+          }
+        });
+      }
+      let isUpdata = this.wells.map((item) => item.wellId).includes(this.queryData.wellId);
+      if (!isUpdata) {
+        this.wells = [];
+        QueryWellDetail({ ogfId: this.queryData.ogfId, platformId: this.queryData.pt || undefined }).then((res) => {
+          if (res.data.code == 200) {
+            this.wells = res.data.data;
+          }
+        });
+      }
     },
   },
 };
