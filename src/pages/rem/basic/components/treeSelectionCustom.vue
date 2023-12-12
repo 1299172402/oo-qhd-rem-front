@@ -50,7 +50,8 @@ import {
   fetchInjectionWellsByPlatform,
   selectWellGroup,
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { wellGroupList} from "@/api/rem/wellgroupinformaintenance";
+import { QueryOgfDetail, QueryReservoirAnalyseUnit, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
+// import { wellGroupList } from "@/api/rem/wellgroupinformaintenance";
 
 export default {
   props: {
@@ -78,7 +79,7 @@ export default {
     // 默认选中数据
     defaultCheckedKeys: {
       type: Array,
-      default: () => ["715AD1CD60484BB59E737CD18A9DE44A", "3FC9A818F5BC43B88270DB80BBB3018F"],
+      default: () => ["715AD1CD60484BB59E737CD18A9DE44A"],
     },
   },
   data() {
@@ -160,14 +161,14 @@ export default {
     async loadNode(node, resolve) {
       if (node.level === 0) {
         let arr = [];
-        await fetchOilFields().then((res) => {
+        await QueryOgfDetail({ operationZoneId: this.orgId }).then((res) => {
           let code = res.data.code;
           if (code == 200) {
-            res.data.data.oilFields.map((item) => {
+            res.data.data.map((item) => {
               arr.push({
                 ...item,
-                label: item.name,
-                value: item.oilFieldId,
+                label: item.ogfName,
+                value: item.ogfId,
                 level: 0,
                 // parent: node.parent,
               });
@@ -178,19 +179,17 @@ export default {
       }
       if (node.level === 1) {
         let arr = [];
-        await fetchFields({ oilFieldId: node.data.value }).then((res) => {
+        await QueryReservoirAnalyseUnit({ ogfId: node.data.value }).then((res) => {
           let code = res.data.code;
-          if (code == 200) {
-            res.data.data.fields.map((item) => {
-              if (item.fieldId != "3FC9A818F5BC43B88270DB80BBB3018F") {
+          if (code == 200 && res.data?.data?.length) {
+            res.data.data.map((item) => {
               arr.push({
                 ...item,
-                label: item.name,
-                value: item.fieldId,
+                label: item.reservoirAnalyseUnitName,
+                value: item.reservoirAnalyseUnitId,
                 level: 1,
                 parent: node,
               });
-              }
             });
           }
         });
@@ -208,53 +207,53 @@ export default {
             if (code == 200) {
               res.data.data.map((item) => {
                 if (item.platName != "全部") {
-                arr.push({
-                  ...item,
-                  label: item.wellGroupName,
-                  value: item.wellGroupId,
-                  level: 2,
-                  parent: node,
-                  isLeaf: true,
-                });
+                  arr.push({
+                    ...item,
+                    label: item.wellGroupName,
+                    value: item.wellGroupId,
+                    level: 2,
+                    parent: node,
+                    isLeaf: true,
+                  });
                 }
               });
             }
           });
         } else if (this.treeType === 4) {
-          await wellGroupList({
+          await selectWellGroup({
             ogfId: node.parent.data.value,
             blockId: node.data.value,
+            dateTime: new Date().format("yyyy-MM-dd"),
             // blockId: "YCFXDY8B643EDC9007F96F570600457D",
           }).then((res) => {
             let code = res.data.code;
             if (code == 200) {
               res.data.data.map((item) => {
                 if (item.platName != "全部") {
-                arr.push({
-                  ...item,
-                  label: item.wellGroupName,
-                  value: item.wellGroupId,
-                  level: 2,
-                  parent: node,
-                  isLeaf: true,
-                });
+                  arr.push({
+                    ...item,
+                    label: item.wellGroupName,
+                    value: item.wellGroupId,
+                    level: 2,
+                    parent: node,
+                    isLeaf: true,
+                  });
                 }
               });
             }
           });
-        }else {
+        } else {
           await fetchPlatforms({ oilFieldId: node.parent.data.value, selectBlock: node.data.value }).then((res) => {
-            let code = res.data.code;
-            if (code == 200) {
+            if (res.data.code == 200) {
               res.data.data.platform.map((item) => {
                 if (item.platName != "全部") {
-                arr.push({
-                  ...item,
-                  label: item.platName,
-                  value: item.platFormId,
-                  level: 2,
-                  parent: node,
-                });
+                  arr.push({
+                    ...item,
+                    label: item.platName,
+                    value: item.platFormId,
+                    level: 2,
+                    parent: node,
+                  });
                 }
               });
             }
@@ -266,75 +265,94 @@ export default {
       if (node.level === 3) {
         if (this.treeType === 1 || this.treeType === 2) {
           let arr = [];
-          if (node.data.value == node.parent.parent.data.value) {
-            if (this.treeType === 1) {
-              await fetchProductionWells({ oilFieldId: node.parent.parent.data.value }).then((res) => {
-                let code = res.data.code;
-                if (code == 200) {
-                  res.data.data.productionWells.map((item) => {
-                    arr.push({
-                      ...item,
-                      label: item.wellName,
-                      value: item.wellId,
-                      isLeaf: true,
-                      level: 3,
-                      parent: node,
-                    });
-                  });
-                }
-              });
-            } else {
-              await fetchInjectionWells({ oilFieldId: node.parent.parent.data.value }).then((res) => {
-                let code = res.data.code;
-                if (code == 200) {
-                  res.data.data.injectionWell.map((item) => {
-                    arr.push({
-                      ...item,
-                      label: item.wellName,
-                      value: item.wellId,
-                      isLeaf: true,
-                      level: 3,
-                      parent: node,
-                    });
-                  });
-                }
+          // if (node.data.value == node.parent.parent.data.value) {
+          //   if (this.treeType === 1) {
+          //     await fetchProductionWells({ oilFieldId: node.parent.parent.data.value }).then((res) => {
+          //       let code = res.data.code;
+          //       if (code == 200) {
+          //         res.data.data.productionWells.map((item) => {
+          //           arr.push({
+          //             ...item,
+          //             label: item.wellName,
+          //             value: item.wellId,
+          //             isLeaf: true,
+          //             level: 3,
+          //             parent: node,
+          //           });
+          //         });
+          //       }
+          //     });
+          //   } else {
+          //     await fetchInjectionWells({ oilFieldId: node.parent.parent.data.value }).then((res) => {
+          //       let code = res.data.code;
+          //       if (code == 200) {
+          //         res.data.data.injectionWell.map((item) => {
+          //           arr.push({
+          //             ...item,
+          //             label: item.wellName,
+          //             value: item.wellId,
+          //             isLeaf: true,
+          //             level: 3,
+          //             parent: node,
+          //           });
+          //         });
+          //       }
+          //     });
+          //   }
+          // } else {
+          //   if (this.treeType === 1) {
+          //     await fetchProductionWellsByPlatform({ platformId: node.data.value }).then((res) => {
+          //       let code = res.data.code;
+          //       if (code == 200) {
+          //         res.data.data.productionWells.map((item) => {
+          //           arr.push({
+          //             ...item,
+          //             label: item.wellName,
+          //             value: item.wellId,
+          //             isLeaf: true,
+          //             level: 3,
+          //             parent: node,
+          //           });
+          //         });
+          //       }
+          //     });
+          //   } else {
+          //     await fetchInjectionWellsByPlatform({ platformId: node.data.value }).then((res) => {
+          //       let code = res.data.code;
+          //       if (code == 200) {
+          //         res.data.data.injectionWell.map((item) => {
+          //           arr.push({
+          //             ...item,
+          //             label: item.wellName,
+          //             value: item.wellId,
+          //             isLeaf: true,
+          //             level: 3,
+          //             parent: node,
+          //           });
+          //         });
+          //       }
+          //     });
+          //   }
+          // }
+          await QueryWellDetail({
+            ogfId: node.parent.parent.data.value,
+            platformId: node.data.value == node.parent.parent.data.value ? undefined : node.data.value,
+            blockId: node.parent.data.value,
+            wellboreType: this.treeType === 1 ? "采油井" : "注水井",
+          }).then((res) => {
+            if (res.data.code == 200) {
+              res.data.data.map((item) => {
+                arr.push({
+                  ...item,
+                  label: item.wellName,
+                  value: item.wellId,
+                  isLeaf: true,
+                  level: 3,
+                  parent: node,
+                });
               });
             }
-          } else {
-            if (this.treeType === 1) {
-              await fetchProductionWellsByPlatform({ platformId: node.data.value }).then((res) => {
-                let code = res.data.code;
-                if (code == 200) {
-                  res.data.data.productionWells.map((item) => {
-                    arr.push({
-                      ...item,
-                      label: item.wellName,
-                      value: item.wellId,
-                      isLeaf: true,
-                      level: 3,
-                      parent: node,
-                    });
-                  });
-                }
-              });
-            } else {
-              await fetchInjectionWellsByPlatform({ platformId: node.data.value }).then((res) => {
-                let code = res.data.code;
-                if (code == 200) {
-                  res.data.data.injectionWell.map((item) => {
-                    arr.push({
-                      ...item,
-                      label: item.wellName,
-                      value: item.wellId,
-                      isLeaf: true,
-                      level: 3,
-                      parent: node,
-                    });
-                  });
-                }
-              });
-            }
-          }
+          });
           return resolve(arr);
         } else {
           return resolve([]);
