@@ -51,7 +51,7 @@ import {
   selectWellGroup,
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { QueryOgfDetail, QueryReservoirAnalyseUnit, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
-import { wellGroupList } from "@/api/rem/wellgroupinformaintenance";
+// import { wellGroupList } from "@/api/rem/wellgroupinformaintenance";
 
 export default {
   props: {
@@ -220,9 +220,10 @@ export default {
             }
           });
         } else if (this.treeType === 4) {
-          await wellGroupList({
+          await selectWellGroup({
             ogfId: node.parent.data.value,
             blockId: node.data.value,
+            dateTime: new Date().format("yyyy-MM-dd"),
             // blockId: "YCFXDY8B643EDC9007F96F570600457D",
           }).then((res) => {
             let code = res.data.code;

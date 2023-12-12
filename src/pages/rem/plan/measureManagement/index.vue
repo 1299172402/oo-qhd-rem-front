@@ -615,7 +615,7 @@ export default {
       });
       this.wellId = "";
       let wellId = this.wellId == "" ? this.wells.map((item) => item.wellId) : [this.wellId];
-      this.defaultCheckedKeys = [this.selectPlatform, ...wellId];
+      this.defaultCheckedKeys = [this.selectOilField, this.selectPlatform, ...wellId];
       //措施类型
       this.getMeasureNameAndCode();
       //措施列表数据
@@ -813,7 +813,7 @@ export default {
     },
     changeWell(val) {
       let wellId = this.wellId == "" ? this.wells.map((item) => item.wellId) : [this.wellId];
-      this.$refs.treeSelectionAll.setCheckedKeys([this.selectPlatform, ...wellId]);
+      this.$refs.treeSelectionAll.setCheckedKeys([this.selectOilField, this.selectPlatform, ...wellId]);
       //措施类型
       this.getMeasureNameAndCode();
     },
@@ -830,7 +830,7 @@ export default {
         QueryPlatformDetail({ ogfId: this.selectOilField }).then((res) => {
           //判断联通状态
           if (res.data.code == 200) {
-            this.platforms = res.data?.data ||[];
+            this.platforms = res.data?.data || [];
           }
         });
       }
@@ -868,6 +868,8 @@ export default {
       }).then((res) => {
         if (res.data.code == 200) {
           this.wells = res.data.data;
+          let wellId = this.wellId == "" ? this.wells.map((item) => item.wellId) : [this.wellId];
+          this.$refs.treeSelectionAll.setCheckedKeys([this.selectOilField, this.selectPlatform, ...wellId]);
         }
       });
       this.wells.unshift({

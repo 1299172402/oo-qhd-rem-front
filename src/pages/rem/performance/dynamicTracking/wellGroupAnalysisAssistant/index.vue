@@ -508,11 +508,12 @@ export default {
           }
         }
       });
+      this.defaultCheckedKeys = [this.selectOilField, this.selectBlock, this.selectWellGroup];
       this.doSearch();
     },
     // 井组切换事件
     changeWellGroup() {
-      this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.selectWellGroup]);
+      this.$refs.treeSelectionCustom.setCheckedKeys([this.selectOilField, this.selectBlock, this.selectWellGroup]);
     },
     // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
     getSelectItems(selectList, selectData) {
@@ -603,7 +604,7 @@ export default {
             this.newWellGroup = [];
             this.selectWellGroup = "";
           }
-          this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.selectWellGroup]);
+          this.$refs.treeSelectionCustom.setCheckedKeys([this.selectOilField, this.selectBlock, this.selectWellGroup]);
         }
       });
     },

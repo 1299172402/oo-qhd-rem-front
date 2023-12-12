@@ -765,6 +765,7 @@ export default {
       }
 
       await this.getBlockWellApi();
+      this.defaultCheckedKeys = [this.selectOilField, this.selectPlatform, this.selectWellId];
       this.getLjpmWells();
       this.doSearch();
     },
@@ -808,7 +809,7 @@ export default {
           this.wellData = wellData.filter((el) => el.wellName);
           this.selectWellId = this.wellData[0].wellId;
         }
-        this.$refs.treeSelection.setCheckedKeys([this.selectPlatform, this.selectWellId]);
+        this.$refs.treeSelection.setCheckedKeys([this.selectOilField, this.selectPlatform, this.selectWellId]);
       });
     },
     //大事简要数据源接口
@@ -887,7 +888,7 @@ export default {
       if (this.$refs.componentCustom.selectPosition) {
         this.$refs.componentCustom.selectPosition = this.childParam;
       }
-      this.$refs.treeSelection.setCheckedKeys([this.selectPlatform, this.selectWellId]);
+      this.$refs.treeSelection.setCheckedKeys([this.selectOilField, this.selectPlatform, this.selectWellId]);
       this.getBlockWellApi();
     },
     // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
@@ -918,7 +919,7 @@ export default {
       // 判断如果当前井号，调用获取井号接口
       let isUpdata = this.wellData.map((item) => item.borepipeId).includes(selectList.wellIds);
       if (!isUpdata) {
-        this.wellData =[];
+        this.wellData = [];
         QueryWellDetail({
           ogfId: this.selectOilField,
           platformId: this.selectOilField == this.selectPlatform ? undefined : this.selectPlatform,
