@@ -27,13 +27,7 @@
         <headerSearch style="height: 80px">
           <div class="g-row-flex-V g-w100 g-h100">
             <span>油田：</span>
-            <el-select
-              v-model="selYtdm"
-              class="f2"
-              style="width: 180px"
-              filterable
-              @change="getFieldsData"
-            >
+            <el-select v-model="selYtdm" class="f2" style="width: 180px" filterable @change="getFieldsData">
               <el-option v-for="item in ytData" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
             </el-select>
             <span style="margin-left: 15px">区块：</span>
@@ -325,7 +319,12 @@
                     fixed="left"
                     width="160"
                   ></el-table-column>
-                  <el-table-column prop="productionProblems" label="生产问题" align="center" key="trendOfIndicatorsTab-column-1">
+                  <el-table-column
+                    prop="productionProblems"
+                    label="生产问题"
+                    align="center"
+                    key="trendOfIndicatorsTab-column-1"
+                  >
                     <el-table-column
                       width="140"
                       v-for="(item, index) in trendOfIndicatorsTab"
@@ -470,13 +469,7 @@
         <headerSearch style="height: 80px">
           <div class="g-row-flex-V g-w100 g-h100">
             <span>油田：</span>
-            <el-select
-              v-model="selYtdm"
-              class="f2"
-              style="width: 170px"
-              filterable
-              @change="getFieldsData"
-            >
+            <el-select v-model="selYtdm" class="f2" style="width: 170px" filterable @change="getFieldsData">
               <el-option v-for="item in ytData" :key="item.ogfId" :label="item.ogfName" :value="item.ogfId"></el-option>
             </el-select>
             <span style="margin-left: 15px">区块：</span>
@@ -909,7 +902,12 @@
                     fixed="left"
                     width="160"
                   ></el-table-column>
-                  <el-table-column prop="productionProblems" label="生产问题" align="center" key="trendOfIndicatorsTab-column-2">
+                  <el-table-column
+                    prop="productionProblems"
+                    label="生产问题"
+                    align="center"
+                    key="trendOfIndicatorsTab-column-2"
+                  >
                     <el-table-column
                       width="140"
                       v-for="(item, index) in trendOfIndicatorsTab"
@@ -1263,10 +1261,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -1345,6 +1342,7 @@ export default {
       QueryWellDetail({
         ogfId: this.selYtdm,
         platformId: this.platform == this.selYtdm ? undefined : this.platform,
+        blockId: this.selectBlock,
         wellboreType: "注水井",
       }).then((res) => {
         if (res.data.code == 200) {
@@ -1390,25 +1388,45 @@ export default {
       this.wellId = selectList.wellId;
       this.paramMap.oilFieldId = this.selYtdm; //油田
       this.paramMap.selectBlock = this.selectBlock; //区块
-      this.ptData = [];
-      this.wellData = [];
-      fetchPlatforms(this.paramMap).then((res) => {
-        let msg = res.data.msg;
-        if (msg == "success") {
-          this.ptData = res.data?.data?.platform || [];
-
-          QueryWellDetail({
-            ogfId: this.selYtdm,
-            platformId: this.platform == this.selYtdm ? undefined : this.platform,
-            wellboreType: "注水井",
-          }).then((res) => {
-            let msg = res.data.msg;
-            if (msg == "success") {
-              this.wellData = res.data?.data || [];
-            }
-          });
-        }
-      });
+      // 判断如果当前区块，调用获取区块接口
+      let isUpdata1 = this.blocks.map((item) => item.reservoirAnalyseUnitId).includes(selectList.blockId);
+      if (!isUpdata1) {
+        QueryReservoirAnalyseUnit({ ogfId: this.selYtdm }).then((res) => {
+          if (res.data.code == 200) {
+            //获得区块信息
+            this.blocks = res.data?.data || [];
+            this.blocks.unshift({
+              reservoirAnalyseUnitId: this.selYtdm,
+              reservoirAnalyseUnitName: "全部",
+              reservoirAnalyseUnitNo: "全部",
+            });
+          }
+        });
+      }
+      // 判断如果当前平台，调用获取平台接口
+      let isUpdata2 = this.ptData.map((item) => item.platFormId).includes(selectList.platformId);
+      if (!isUpdata2) {
+        fetchPlatforms(this.paramMap).then((res) => {
+          if (res.data.code == 200) {
+            let myData = res.data.data.platform;
+            this.ptData = myData;
+          }
+        });
+      }
+      // 判断如果当前井号，调用获取井号接口
+      let isUpdata3 = this.ptData.map((item) => item.platFormId).includes(selectList.platformId);
+      if (!isUpdata3) {
+        QueryWellDetail({
+          ogfId: this.selYtdm,
+          platformId: this.platform == this.selYtdm ? undefined : this.platform,
+          blockId: this.selectBlock,
+          wellboreType: "注水井",
+        }).then((res) => {
+          if (res.data.code == 200) {
+            this.wellData = res.data.data;
+          }
+        });
+      }
     },
     //进行数据查询处理
     async doSearch() {

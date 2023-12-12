@@ -143,17 +143,17 @@
         </el-tabs>
 
         <!-- <keep-alive :include="[]" :max="10" v-if="blockId"> -->
-          <component
-            :is="component"
-            ref="componentCustom"
-            :oilFeildId="selectOilField"
-            :platform="selectPlatform"
-            :wellId="selectWellId"
-            :blockId="blockId"
-            :majorEventsBrieflyValue="majorEventsBrieflyValue"
-            @childPara="changeChildParam"
-          >
-          </component>
+        <component
+          :is="component"
+          ref="componentCustom"
+          :oilFeildId="selectOilField"
+          :platform="selectPlatform"
+          :wellId="selectWellId"
+          :blockId="blockId"
+          :majorEventsBrieflyValue="majorEventsBrieflyValue"
+          @childPara="changeChildParam"
+        >
+        </component>
         <!-- </keep-alive> -->
       </pagePanelNew>
 
@@ -699,7 +699,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -887,21 +889,37 @@ export default {
       //作业公司选中数据
       // this.queryParams.companyId = selectList.orgId;
       // 油田选中数据
-      // this.selectOilField = selectList.ogfId;
+      this.selectOilField = selectList.ogfId;
       //平台选中数据
       this.selectPlatform = selectList.platformIds;
       // 井号选中数据
       this.selectWellId = selectList.wellIds;
-      // 判断如果没有wellList没有当前井号，调取井号接口根据平台获取井号数据
+      // 判断如果当前平台，调用获取平台接口
+      let isUpdata1 = this.platform.map((item) => item.platformId).includes(selectList.platformIds);
+      if (!isUpdata1) {
+        this.platform = [];
+        QueryPlatformDetail({ ogfId: this.selectOilField }).then((res) => {
+          //判断联通状态
+          if (res.data.code == 200) {
+            this.platform = res.data?.data || [];
+            this.platform.unshift({
+              platformId: this.selectOilField,
+              platformCode: "全部",
+            });
+          }
+        });
+      }
+      // 判断如果当前井号，调用获取井号接口
       let isUpdata = this.wellData.map((item) => item.borepipeId).includes(selectList.wellIds);
       if (!isUpdata) {
+        this.wellData =[];
         QueryWellDetail({
-          ogfId: selectOilField,
-          platformId: this.selectOilField == this.selectPlatform ? undefined : selectPlatform,
+          ogfId: this.selectOilField,
+          platformId: this.selectOilField == this.selectPlatform ? undefined : this.selectPlatform,
           wellboreType: "采油井",
         }).then((res) => {
           if (res.data.code == 200) {
-            let wellData = res.data.data;
+            let wellData = res.data?.data || [];
             this.wellData = wellData.filter((el) => el.wellName);
           }
         });

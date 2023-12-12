@@ -152,7 +152,7 @@ export default {
       };
     },
     getTreeData() {
-      const params = { level: this.level, orgId: "715AD1CD60484BB59E737CD18A9DE44A" };
+      const params = { level: this.level, operationZoneId: "715AD1CD60484BB59E737CD18A9DE44A" };
       if(this.type==1){
             this.deptOptions = this.arrayData;
             this.setDisabledRecursive(this.deptOptions, this.start, this.end);

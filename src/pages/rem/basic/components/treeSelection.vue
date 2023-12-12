@@ -56,7 +56,7 @@ export default {
     // 是否必填
     isRequire: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     isMultiple: {
       type: Boolean,
@@ -64,7 +64,7 @@ export default {
     },
     start: {
       type: Number,
-      default: 4,
+      default: 3,
     },
     end: {
       type: Number,
@@ -153,7 +153,11 @@ export default {
     },
     // 获取树结构数据
     getTreeData() {
-      const params = { level: this.level, orgId: this.orgId, wellType: this.wellType };
+      const params = {
+        level: this.level,
+        operationZoneId: this.orgId,
+        wellType: this.wellType,
+      };
       getYczcTree(params).then((res) => {
         this.deptOptions = res.data.data;
         this.setDisabledRecursive(this.deptOptions, this.start, this.end);
@@ -188,18 +192,28 @@ export default {
     handleCheck(data, checked) {
       // 处理tree交互选中逻辑
       if (this.isMultiple) {
-        if (data.level == 4) {
-          // // 平台级选中
+        if (data.level == 3) {
+          // 油田级选中
           let childrenIds = data.children.map((item) => item.value);
-          console.log(this.selectKeys.includes(data.value), this.selectKeys, childrenIds, "平台多选");
           if (this.selectKeys.includes(data.value)) {
             let selectKeysFilter = this.selectKeys.filter(
               (item) => item != data.value && childrenIds.indexOf(item) == -1,
             );
-            console.log(selectKeysFilter, "selectKeysFilter");
             this.$refs.tree.setCheckedKeys(selectKeysFilter);
           } else {
             this.$refs.tree.setCheckedKeys([...this.selectKeys, ...childrenIds, data.value]);
+          }
+        } else if (data.level == 4) {
+          // 平台级选中
+          if (this.selectKeys.includes(data.value)) {
+            let parentList = this.getParentId(this.deptOptions, "value", data.value);
+            let parentIds = parentList.map((item) => item.value);
+            let filterSelect = [...this.selectKeys, ...parentIds].filter((item) => item != data.value);
+            this.$refs.tree.setCheckedKeys(filterSelect);
+          } else {
+            let parentList = this.getParentId(this.deptOptions, "value", data.value);
+            let parentIds = parentList.map((item) => item.value);
+            this.$refs.tree.setCheckedKeys([...this.selectKeys, ...parentIds]);
           }
         } else if (data.level == 5) {
           // 井号级选中，暂时不需要处理
@@ -215,19 +229,37 @@ export default {
           }
         }
       } else {
-        if (data.level == 4) {
-          // 平台级选中
+        if (data.level == 3) {
+          // 油田级选中
           if (this.isRequire) {
             // 必选
-            this.$refs.tree.setCheckedKeys([data.value, data.children[0]?.value]);
+            this.$refs.tree.setCheckedKeys([data.value, data.children[0]?.value, data.children[0]?.children[0]?.value]);
           } else {
-            let childrenIds = data.children.map((item) => item.value);
             if (this.selectKeys.includes(data.value)) {
               let parentList = this.getParentId(this.deptOptions, "value", data.value);
               let parentIds = parentList.filter((item) => item.level < 4).map((item) => item.value);
               this.$refs.tree.setCheckedKeys(parentIds);
             } else {
-              this.$refs.tree.setCheckedKeys([data.value, data.children[0]?.value]);
+              this.$refs.tree.setCheckedKeys([data.value, data.children[0]?.value, data.children[0]?.children[0]?.value]);
+            }
+          }
+        } else if (data.level == 4) {
+          // 平台级选中
+          if (this.isRequire) {
+            // 必选
+            let parentList = this.getParentId(this.deptOptions, "value", data.value);
+            let parentIds = parentList.map((item) => item.value);
+            this.$refs.tree.setCheckedKeys([...parentIds, data.children[0]?.value]);
+          } else {
+            if (this.selectKeys.includes(data.value)) {
+              let parentList = this.getParentId(this.deptOptions, "value", data.value);
+              let parentIds = parentList.map((item) => item.value);
+              let filterSelect = parentIds.filter((item) => item != data.value);
+              this.$refs.tree.setCheckedKeys([...filterSelect, data.children[0]?.value]);
+            } else {
+              let parentList = this.getParentId(this.deptOptions, "value", data.value);
+              let parentIds = parentList.map((item) => item.value);
+              this.$refs.tree.setCheckedKeys([...parentIds, data.children[0]?.value]);
             }
           }
         } else if (data.level == 5) {
