@@ -44,6 +44,7 @@ export default {
     blockId: {},
     //井组id
     wellGroupId: {},
+    wellGroupName: {},
   },
   data() {
     return {
@@ -67,7 +68,7 @@ export default {
     //获取minio图片
     async queryRemUploadFileMinioApi() {
       let params = {
-        operationId: this.blockId + "-" + this.wellGroupId,
+        operationId: this.blockId + "-" + this.wellGroupName,
         operationType: "WELLGROUPJZLTT",
         readOne: "one",
       };

@@ -133,16 +133,17 @@
         </el-tabs>
 
         <!-- <keep-alive :include="[]" :max="10" v-if="selectBlock"> -->
-          <component
-            :is="component"
-            ref="componentCustom"
-            :oilFieldId="selectOilField"
-            :blockId="selectBlock"
-            :wellCentre="wellCentre"
-            :wellGrouplist="newWellGroup"
-            :wellGroupId="selectWellGroup"
-            @childPara="changeChildParam"
-          ></component>
+        <component
+          :is="component"
+          ref="componentCustom"
+          :oilFieldId="selectOilField"
+          :blockId="selectBlock"
+          :wellCentre="wellCentre"
+          :wellGrouplist="newWellGroup"
+          :wellGroupId="selectWellGroup"
+          :wellGroupName="selectWellGroupName"
+          @childPara="changeChildParam"
+        ></component>
         <!-- </keep-alive> -->
       </pagePanelNew>
 
@@ -178,6 +179,7 @@
 <script>
 import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import { wellGroupList } from "@/api/rem/wellgroupinformaintenance";
+import { selectWellGroup } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
 // Minio
 import { addRemUploadFileMinio } from "@/api/rem/remuploadfileminio";
@@ -210,6 +212,12 @@ export default {
           limit: 1,
           fileType: ["bmp", "jpg", "jpeg", "png", "pdf"],
         },
+        tracer: {
+          //示踪剂
+          operationType: "SZJ",
+          limit: 1,
+          fileType: ["bmp", "jpg", "jpeg", "png", "pdf", "docx"],
+        },
       },
       fileId: "",
       downloadButton: false,
@@ -229,6 +237,7 @@ export default {
       wellCentre: "WATERCENTRE",
       //井组选中值
       selectWellGroup: "",
+      selectWellGroupName: "",
       //井组列表
       wellGroup: [],
       //新井组列表
@@ -348,6 +357,10 @@ export default {
   methods: {
     //minIo-打开上传组件
     ljpmUploadDialogLast() {
+      if (this.childParam == "TRACER_INFORMATION" || !this.childParam) {
+        this.$message.error("请选择示踪剂结果或示踪剂报告后上传!");
+        return;
+      }
       this.limit = this.operationTypeList[this.currentModule].limit;
       this.fileType = this.operationTypeList[this.currentModule].fileType;
       this.ljpmDialogLast = true;
@@ -363,13 +376,18 @@ export default {
     },
     //minIo-监听上传
     getResData(data) {
-      console.log("data123456789", data);
+      this.selectWellGroupName = this.newWellGroup.length
+        ? this.newWellGroup.filter((item) => item.wellGroupId === this.selectWellGroup)[0].wellGroupName
+        : "";
       let operationType = this.operationTypeList[this.currentModule].operationType;
+      if (this.operationTypeList[this.currentModule].operationType == "SZJ") {
+        operationType = this.childParam;
+      }
       let params = {
         fileId: data[0].id,
         filestrId: data[0].name,
         remUploadFileMinioId: "",
-        operationId: this.selectBlock + "-" + this.selectWellGroup, //这个值很重要，这是确定业务与图片的依赖关系。
+        operationId: this.selectBlock + "-" + this.selectWellGroupName, //这个值很重要，这是确定业务与图片的依赖关系。
         operationType, //这个值很重要，这是确定业务与图片的依赖关系。
       };
       this.uploadFile(params);
@@ -439,10 +457,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -476,9 +493,10 @@ export default {
       //井组信息初始化
       let obj = {
         ogfId: this.selectOilField,
-        blockId: "YCFXDY8B643EDC9007F96F570600457D",
+        blockId: this.selectBlock === this.selectOilField ? "" : this.selectBlock,
+        dateTime: new Date().format("yyyy-MM-dd"),
       };
-      await wellGroupList(obj).then((res) => {
+      await selectWellGroup(obj).then((res) => {
         if (res.data.code == 200 && res.data.data && res.data.data.length) {
           this.newWellGroup = res.data.data;
           if (this.$route.query.wellId) {
@@ -507,7 +525,11 @@ export default {
       // 判断如果没有wellGroupList没有当前井组，调取井组接口根据区块获取井号数据
       let isUpdata = this.newWellGroup.map((item) => item.wellId).includes(selectList.selectWellGroup);
       if (!isUpdata || selectList.blockId != this.selectBlock) {
-        wellGroupList({ ogfId: this.selYtdm, blockId: this.selectBlock }).then((res) => {
+        selectWellGroup({
+          ogfId: this.selectOilField,
+          blockId: this.selectBlock === this.selectOilField ? "" : this.selectBlock,
+          dateTime: new Date().format("yyyy-MM-dd"),
+        }).then((res) => {
           if (res.data.code == 200) {
             this.newWellGroup = res.data.data;
           }
@@ -516,6 +538,9 @@ export default {
     },
     //搜索功能
     doSearch() {
+      this.selectWellGroupName = this.newWellGroup.length
+        ? this.newWellGroup.filter((item) => item.wellGroupId === this.selectWellGroup)[0].wellGroupName
+        : "";
       this.$nextTick(() => {
         this.$refs.componentCustom.oilFieldId = this.selectOilField;
         this.$refs.componentCustom.blockId = this.selectBlock;
@@ -559,16 +584,17 @@ export default {
       // } else {
       // oilFieldId.push(this.selectBlock);
       // }
-      let blockId = this.selectBlock;
-      if (blockId == "3FC9A818F5BC43B88270DB80BBB3018F") {
-        blockId = "YCFXDY8B643EDC9007F96F570600457D";
-      }
+      // let blockId = this.selectBlock;
+      // if (blockId == "3FC9A818F5BC43B88270DB80BBB3018F") {
+      //   blockId = "YCFXDY8B643EDC9007F96F570600457D";
+      // }
       let obj = {
         ogfId: this.selectOilField,
-        blockId: blockId,
+        blockId: this.selectBlock === this.selectOilField ? "" : this.selectBlock,
+        dateTime: new Date().format("yyyy-MM-dd"),
       };
       //动态资料-井组配注变化动态||井组连通性变化动态||注采井网状态变化 调zxp这个接口
-      await wellGroupList(obj).then((res) => {
+      await selectWellGroup(obj).then((res) => {
         if (res.data.code == 200) {
           if (res.data.data && res.data.data.length) {
             this.newWellGroup = res.data.data;

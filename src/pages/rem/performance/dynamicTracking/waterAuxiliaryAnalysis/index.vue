@@ -202,6 +202,12 @@ export default {
       fileType: ["pdf"],
       imageurl: "",
       operationTypeList: {
+        seismicProfile: {
+          //测井曲线
+          operationType: "DZPMT",
+          limit: 1,
+          fileType: ["bmp", "jpg", "jpeg", "png", "pdf"],
+        },
         wellLoggingCurve: {
           //测井曲线
           operationType: "WATERCJQX",
