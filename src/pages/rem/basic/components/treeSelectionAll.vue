@@ -55,7 +55,7 @@ export default {
     },
     start: {
       type: Number,
-      default: 4,
+      default: 3,
     },
     end: {
       type: Number,
@@ -144,7 +144,12 @@ export default {
     },
     // 获取树结构数据
     getTreeData() {
-      const params = { level: this.level, orgId: this.orgId, wellType: this.wellType };
+      const params = {
+        level: this.level,
+        operationZoneId: this.orgId,
+        // ogfId: this.ogfId,
+        wellType: this.wellType,
+      };
       getYczcTree(params).then((res) => {
         this.deptOptions = res.data.data;
         this.setDisabledRecursive(this.deptOptions, this.start, this.end);
@@ -178,39 +183,26 @@ export default {
     // 节点被点击时的回调事件
     handleCheck(data, checked) {
       // 处理tree交互选中逻辑
-      if (data.level == 4) {
+      if (data.level == 3) {
+        // 油田级选中
+        let childrenIds = data.children[0].children.map((item) => item.value);
+        this.$refs.tree.setCheckedKeys([data.value, data.children[0].value, ...childrenIds]);
+      } else if (data.level == 4) {
         // 平台级选中
+        let parentList = this.getParentId(this.deptOptions, "value", data.value);
+        let parentIds = parentList.map((item) => item.value);
         let childrenIds = data.children.map((item) => item.value);
-        // if (this.selectKeys.includes(data.value)) {
-        //   let parentList = this.getParentId(this.deptOptions, "value", data.value);
-        //   let parentIds = parentList.filter((item) => item.level < 4).map((item) => item.value);
-        //   this.$refs.tree.setCheckedKeys(parentIds);
-        // } else {
-          this.$refs.tree.setCheckedKeys([data.value, ...childrenIds]);
-        // }
+        this.$refs.tree.setCheckedKeys([...parentIds, ...childrenIds]);
       } else if (data.level == 5) {
-        // if (this.selectKeys.includes(data.value)) {
-        //   let parentList = this.getParentId(this.deptOptions, "value", data.value);
-        //   let parentIds = parentList.map((item) => item.value);
-        //   let filterSelect = parentIds.filter((item) => item != data.value);
-        //   this.$refs.tree.setCheckedKeys(filterSelect);
-        // } else {
-          let parentList = this.getParentId(this.deptOptions, "value", data.value);
-          let parentIds = parentList.map((item) => item.value);
-          this.$refs.tree.setCheckedKeys(parentIds);
-        // }
+        let parentList = this.getParentId(this.deptOptions, "value", data.value);
+        let parentIds = parentList.map((item) => item.value);
+        this.$refs.tree.setCheckedKeys(parentIds);
       }
-
       // 处理tree数据逻辑
       this.resetChecked(data, checked);
     },
     // 节点被点击时数据处理
     resetChecked(data, checked) {
-      console.log(
-        "选中数据",
-        this.$refs.tree.getCheckedKeys(false, true),
-        this.$refs.tree.getCheckedNodes(false, true),
-      );
       this.selectKeys = this.$refs.tree.getCheckedKeys(false, true);
       let selectList = {
         orgId: null,
