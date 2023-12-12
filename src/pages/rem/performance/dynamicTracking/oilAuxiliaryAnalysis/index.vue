@@ -261,6 +261,12 @@ export default {
       fileType: ["pdf"],
       imageurl: "",
       operationTypeList: {
+        seismicProfile: {
+          // 地震剖面图
+          operationType: "DZPMT",
+          limit: 1,
+          fileType: ["bmp", "jpg", "jpeg", "png", "pdf"],
+        },
         whileDrillingTrajectory: {
           //地质探边图
           operationType: "OILDZTBT",

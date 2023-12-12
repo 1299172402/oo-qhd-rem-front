@@ -46,8 +46,8 @@ export default {
     doSearch() {
       this.imageList = [];
       let params = {
-        operationId: this.blockId,
-        operationType: "BLOCKDZPMT",
+        operationId: this.wellId,
+        operationType: "DZPMT",
         readOne: "one",
       };
       queryRemUploadFileMinio(params).then((res) => {
