@@ -147,7 +147,7 @@
               margin-left: 0;
             "
           >
-            <span>{{selectOilFieldName}}作业计划跟踪</span>
+            <span>{{ selectOilFieldName }}作业计划跟踪</span>
             <el-button type="primary" icon="el-icon-download" style="height: 30px" @click="doExportFile"
               >下载</el-button
             >
@@ -161,14 +161,33 @@
               border
               height="calc(100% - 44px)"
               :row-style="{ height: '0px' }"
-              :header-cell-style="{  padding: '0px 0' }"
+              :header-cell-style="{ padding: '0px 0' }"
               header-cell-class-name="table_header"
-              :cell-style="{ padding: '2px'}"
+              :cell-style="{ padding: '2px' }"
               style="width: 100%; overflow-x: hidden"
             >
-              <el-table-column prop="wellNo" label="井号" width="140" header-align="center" align="center" sortable></el-table-column>
-              <el-table-column prop="measureName" label="作业类型" width="80" header-align="center" align="center"></el-table-column>
-              <el-table-column prop="measureName3" :label="`措施作业天数\n(计划/实际)\n(d)`" width="110" header-align="center" align="center">
+              <el-table-column
+                prop="wellNo"
+                label="井号"
+                width="140"
+                header-align="center"
+                align="center"
+                sortable
+              ></el-table-column>
+              <el-table-column
+                prop="measureName"
+                label="作业类型"
+                width="80"
+                header-align="center"
+                align="center"
+              ></el-table-column>
+              <el-table-column
+                prop="measureName3"
+                :label="`措施作业天数\n(计划/实际)\n(d)`"
+                width="110"
+                header-align="center"
+                align="center"
+              >
                 <template slot-scope="scope">
                   <span v-if="scope.row.planMeasuresDayNum || scope.row.realityMeasuresDayNum">
                     {{ scope.row.planMeasuresDayNum ? scope.row.planMeasuresDayNum : 0 }}/{{
@@ -177,7 +196,13 @@
                   </span>
                 </template>
               </el-table-column>
-              <el-table-column prop="status" :label="`措施是否\n达标`" width="80" header-align="center" align="center"></el-table-column>
+              <el-table-column
+                prop="status"
+                :label="`措施是否\n达标`"
+                width="80"
+                header-align="center"
+                align="center"
+              ></el-table-column>
               <el-table-column label="类别" width="100" header-align="center" align="center">
                 <template slot-scope="scope">
                   <div style="line-height: 18px" v-if="measureVersion == '002003'">分公司考核 <br />实际</div>
@@ -544,10 +569,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -559,7 +583,8 @@ export default {
           } else {
             this.selectOilField = this.oilFields[0].ogfId ? this.oilFields[0].ogfId : undefined;
           }
-          this.selectOilFieldName = this.oilFields.filter(item => item.ogfId === this.selectOilField)[0].ogfName || "";
+          this.selectOilFieldName =
+            this.oilFields.filter((item) => item.ogfId === this.selectOilField)[0].ogfName || "";
         }
       });
       //平台
@@ -590,7 +615,7 @@ export default {
       });
       this.wellId = "";
       let wellId = this.wellId == "" ? this.wells.map((item) => item.wellId) : [this.wellId];
-      this.defaultCheckedKeys = [this.selectPlatform, ...wellId];
+      this.defaultCheckedKeys = [this.selectOilField, this.selectPlatform, ...wellId];
       //措施类型
       this.getMeasureNameAndCode();
       //措施列表数据
@@ -621,7 +646,7 @@ export default {
     },
     //措施列表数据
     getFetchMeasureInfos() {
-      this.selectOilFieldName = this.oilFields.filter(item => item.ogfId === this.selectOilField)[0].ogfName || "";
+      this.selectOilFieldName = this.oilFields.filter((item) => item.ogfId === this.selectOilField)[0].ogfName || "";
       if (!this.dateTime) {
         this.$message.warning("开始年份不能为空！");
         return false;
@@ -767,7 +792,7 @@ export default {
       this.pageSize = e.limit;
     },
     //油田下拉-change
-   async onFieldChange(val) {
+    async onFieldChange(val) {
       await this.getFetchPlatforms(val);
       this.getFetchWells(this.selectOilField, this.selectPlatform);
       this.getMeasureNameAndCode();
@@ -788,27 +813,31 @@ export default {
     },
     changeWell(val) {
       let wellId = this.wellId == "" ? this.wells.map((item) => item.wellId) : [this.wellId];
-      this.$refs.treeSelectionAll.setCheckedKeys([this.selectPlatform, ...wellId]);
+      this.$refs.treeSelectionAll.setCheckedKeys([this.selectOilField, this.selectPlatform, ...wellId]);
       //措施类型
       this.getMeasureNameAndCode();
     },
     // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
     getSelectItems(selectList, selectData) {
-      // 判断如果没有wellList没有当前井号，调取井号接口根据平台获取井号数据
-      // let isUpdata = this.wells.map((item) => item.wellId).includes(selectList.wellIds);
-      // if (!isUpdata || selectList.platformIds !=  this.selectPlatform) {
-      //     this.getFetchWells(this.selectOilField, selectList.platformIds);
-      // }
-      //作业公司选中数据
-      // this.queryParams.companyId = selectList.orgId;
       // 油田选中数据
-      // this.queryParams.ogfId = selectList.ogfId;
+      this.selectOilField = selectList.ogfId;
       //平台选中数据
       this.selectPlatform = selectList.platformIds;
-      // 判断如果没有wellList没有当前井号，调取井号接口根据平台获取井号数据
+      // 判断如果当前平台，调用获取平台接口
+      let isUpdata1 = this.platforms.map((item) => item.platformId).includes(selectList.platformIds);
+      if (!isUpdata1) {
+        this.platforms = [];
+        QueryPlatformDetail({ ogfId: this.selectOilField }).then((res) => {
+          //判断联通状态
+          if (res.data.code == 200) {
+            this.platforms = res.data?.data || [];
+          }
+        });
+      }
+      // 判断如果当前井号，调用获取井号接口
       let isUpdate = false;
       // 井号选中数据
-      if (selectData.level == 4) {
+      if (selectData.level == 4 || selectData.level == 3) {
         this.wellId = "";
       } else {
         this.wellId = selectList.wellIds;
@@ -839,6 +868,8 @@ export default {
       }).then((res) => {
         if (res.data.code == 200) {
           this.wells = res.data.data;
+          let wellId = this.wellId == "" ? this.wells.map((item) => item.wellId) : [this.wellId];
+          this.$refs.treeSelectionAll.setCheckedKeys([this.selectOilField, this.selectPlatform, ...wellId]);
         }
       });
       this.wells.unshift({

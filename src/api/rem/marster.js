@@ -20,7 +20,8 @@ export function queryOilAndGasFieldQueryPositionDetail(data) {
 }
 export function getYczcTree(data) {
   return request({
-    url: `${masterUrl}/getYczcTree`,
+    // url: `${masterUrl}/getYczcTree`,
+    url: `${baseUrl}/omc003d/getYczcTree`,
     method: "post",
     data,
   });
