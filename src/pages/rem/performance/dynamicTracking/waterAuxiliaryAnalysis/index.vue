@@ -202,6 +202,12 @@ export default {
       fileType: ["pdf"],
       imageurl: "",
       operationTypeList: {
+        seismicProfile: {
+          //测井曲线
+          operationType: "DZPMT",
+          limit: 1,
+          fileType: ["bmp", "jpg", "jpeg", "png", "pdf"],
+        },
         wellLoggingCurve: {
           //测井曲线
           operationType: "WATERCJQX",
@@ -692,6 +698,7 @@ export default {
         this.selectWellId = wellMess.wellId;
       }
       await this.getBlockWellApi();
+      this.defaultCheckedKeys = [this.selectOilField, this.selectPlatform, this.selectWellId];
       this.doSearch();
     },
     //根据井号id获取区块id
@@ -758,7 +765,7 @@ export default {
         if (res.data.code == 200) {
           this.wellData = res.data.data;
           this.selectWellId = this.wellData[0].wellId;
-          this.$refs.treeSelection.setCheckedKeys([this.selectPlatform, this.selectWellId]);
+          this.$refs.treeSelection.setCheckedKeys([this.selectOilField, this.selectPlatform, this.selectWellId]);
         }
       });
     },
@@ -766,7 +773,7 @@ export default {
     onChangeWell() {
       this.childParam = "";
       this.$refs.componentCustom.selectPosition = this.childParam;
-      this.$refs.treeSelection.setCheckedKeys([this.selectPlatform, this.selectWellId]);
+      this.$refs.treeSelection.setCheckedKeys([this.selectOilField, this.selectPlatform, this.selectWellId]);
       this.getBlockWellApi();
     },
     //主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象

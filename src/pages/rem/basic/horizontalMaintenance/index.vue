@@ -2,20 +2,11 @@
 <template>
   <div style="width: 100%; height: 100%" class="pageBox">
     <div style="display: flex; flex-direction: row; height: 100%">
-      <div style="height: 100%">
+      <!-- <div style="height: 100%">
         <tree-multiple-selection :level="'5'" @childinfo="childinfo" />
-      </div>
-      <div
-        style="
-          display: flex;
-          flex-direction: column;
-          height: calc(100%);
-          margin-left: 15px;
-          flex: 1;
-          right: 0;
-          overflow: hidden;
-        "
-      >
+      </div> 
+          margin-left: 15px;-->
+      <div style="display: flex; flex-direction: column; height: calc(100%); flex: 1; right: 0; overflow: hidden">
         <header-search class="g-w100 g-h100" style="height: auto">
           <div class="g-row-flex-V g-w100 g-h100">
             <div>
@@ -267,8 +258,28 @@ export default {
       };
     },
     childinfo(data) {
-      this.queryData.pt = data[3].value;
-      this.queryData.wellId = data[4].value;
+      this.queryData.ogfId = data[2]?.value || "";
+      this.queryData.pt = data[3]?.value || "";
+      this.queryData.wellId = data[4]?.value || "";
+      // 判断如果当前平台，调用获取平台接口
+      let isUpdata1 = this.platforms.map((item) => item.platformId).includes(this.queryData.pt);
+      if (!isUpdata1) {
+        this.platforms = [];
+        QueryPlatformDetail({ ogfId: this.queryData.ogfId }).then((res) => {
+          if (res.data.code == 200) {
+            this.platforms = res.data.data;
+          }
+        });
+      }
+      let isUpdata = this.wells.map((item) => item.wellId).includes(this.queryData.wellId);
+      if (!isUpdata) {
+        this.wells = [];
+        QueryWellDetail({ ogfId: this.queryData.ogfId, platformId: this.queryData.pt || undefined }).then((res) => {
+          if (res.data.code == 200) {
+            this.wells = res.data.data;
+          }
+        });
+      }
     },
   },
 };
