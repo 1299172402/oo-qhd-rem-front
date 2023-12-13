@@ -9,7 +9,6 @@
             class="f2"
             filterable
             style="width:180px"
-            @change="changeOil"
           >
             <el-option
               v-for="item in oilList"
@@ -107,7 +106,7 @@
           </el-table>
 
          <!-- 对比 table -->
-          <el-table v-show="isTableComp" id="exportCom" :data="tableData" style="width: 100%" height="calc(100% - 30px)" highlight>
+          <el-table v-show="isTableComp" id="exportCom" :data="tableData" style="width: 100%" height="calc(100%-30px)" highlight  show-summary  sum-text="总计">
             <el-table-column prop="date" label="层位" min-width="240" align="center">
                 <template slot-scope="scope">
                     <span v-if="scope.row.productionIntervalNo !== null && scope.row.productionIntervalNo !== ''">{{scope.row.productionIntervalNo}}</span>
@@ -116,7 +115,7 @@
             </el-table-column>
             <el-table-column prop="name" label="配注量（10⁴m³）" align="center">
               <!-- 对比标题 -->
-              <el-table-column v-for="(item, index) of columnList" :key="index" :label="item.label" min-width="160" align="center">
+              <el-table-column v-for="(item, index) of columnList" :key="index" :label="item.label" min-width="160" align="center" >
                   <template slot-scope="scope">
                       <span v-if="scope.row.injAlloc[item.key] !== null && scope.row.injAlloc[item.key] !== ''">{{scope.row.injAlloc[item.key]}}</span>
                       <span v-else>-</span>
@@ -168,6 +167,7 @@
                   </template>
               </el-table-column>
             </el-table-column>
+            
           </el-table>
 </page-panel>
   </div>
@@ -227,6 +227,17 @@ export default {
     }
   },
   methods: {
+    getSummaries(){
+      if (this.tableData.sum !== null) {
+        const { columns, data } = param;
+        const sums = [];
+        const arr = ['region', 'yearGoal', 'finish', 'ranking', 'all']
+        columns.forEach((column, index) => {
+          sums[index] = this.tableData.sum[arr[index]] === null ? 0 : this.tableData.sum[arr[index]];
+        })
+        return sums;
+      }
+    },
     queryBlockFeild1 () {
 
       getblockData({ogfId:this.queryData.ogfId}).then((res) => {
@@ -418,6 +429,7 @@ export default {
 
         });
         this.tableData = res
+        
       }).catch(()=>{
         this.tableData = []
       })
@@ -434,8 +446,8 @@ export default {
     doExportFile () {
       if (this.queryData.blockId) {
         let blockName = this.blockList.find(
-          (item) => item.blockId == this.queryData.blockId
-        ).blockName;
+          (item) => item.reservoirAnalyseUnitId == this.queryData.blockId
+        ).reservoirAnalyseUnitName;
         if(this.columnList.length){
           exportExcel('#exportCom', blockName + '分层注采量');
         } else {
