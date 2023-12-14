@@ -155,6 +155,17 @@ export default Vue.extend({
       dicts: {
         roleCodeOptions: []
       },
+      ipagination: {
+        current: 1,
+        pageSize: 10,
+        pageSizeOptions: ["10", "20", "30"],
+        maxPageBtn: 5,
+        foldedMaxPageBtn: 3,
+        showTotal: (total, range) => `${range[0]}-${range[1]} 共${total}条`,
+        showQuickJumper: true,
+        showSizeChanger: true,
+        total: 0
+      },
       afterMounted: false,
       mySetDefault: this.setDefault,
       tableHeight: 0,

@@ -10,10 +10,8 @@
     display: flex;
     align-items: center;
 
-    & > button {
-      &:not(&:last-child) {
-        margin-right: @default-padding;
-      }
+    & > button:not(:last-child) {
+      margin-right: @default-padding;
     }
   }
 }

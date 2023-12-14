@@ -201,7 +201,7 @@ export default Vue.extend({
               modalWidth={this.modalWidth}
               multi={this.multi}
               user-ids={this.value}
-              style="width: 440px"
+              style="width: 570px"
               visible={this.visible}
               onInitComp={this.initComp}
               onOk={this.selectOK}

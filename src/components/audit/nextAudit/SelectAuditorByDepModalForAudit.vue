@@ -30,7 +30,7 @@
     </t-popup> -->
     <t-card
       :bordered="false"
-      style="height: 280px;"
+      style="height: 330px; overflow: hidden;"
     >
       <div style="display: flex;">
         <t-select
@@ -575,7 +575,7 @@ export default Vue.extend({
     max-height: 200px;
 
     .t-table__content {
-      height: calc(100% - 40px);
+      height: calc(100%);
       overflow-y: auto;
     }
   }

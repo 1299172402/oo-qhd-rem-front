@@ -20,15 +20,29 @@
                 :label="item.name"
               />
             </t-select>
-            <select-auditor-by-dept
-              v-else-if="node.selectNextAuditSetting"
-              placeholder="请选择审批人"
-              :value="getUserIds(index)"
-              :select-users="parallelNodeModel[index].users.userName"
-              :query-params="node.selectNextAuditSetting"
-              :multi="node.selectNextAuditSetting.canMultiSelect"
-              @change="(e) => { handleParallelNodeModelSelectAuditorOk(e, index); }"
-            />
+            <div v-else-if="node.selectNextAuditSetting">
+              <select-user
+                v-if="startProcess"
+                :show-dept="true"
+                sw-organ-type=""
+                :set-init="setInit"
+                :init-data="initData"
+                :reset="reset"
+                :disable="disabled"
+                :query-params="setting(node)"
+                :set-default="setDefault"
+                @change="(e) => { handleParallelNodeModelSelectAuditorOk(e, index); }"
+              />
+              <select-auditor-by-dept
+                v-else
+                placeholder="请选择审批人"
+                :value="getUserIds(index)"
+                :select-users="parallelNodeModel[index].users.userName"
+                :query-params="node.selectNextAuditSetting"
+                :multi="node.selectNextAuditSetting.canMultiSelect"
+                @change="(e) => { handleParallelNodeModelSelectAuditorOk(e, index); }"
+              />
+            </div>
           </div>
         </div>
       </template>
@@ -104,11 +118,13 @@ import Vue from "vue";
 import { cloneDeep } from "lodash";
 import "./style/SelectNextAuditStyle.less";
 import SelectAuditorByDept from "./SelectAuditorByDept";
+import SelectUser from "@/components/audit/nextAudit/SelectUser";
 
 export default Vue.extend({
   name: "SelectNextAudit",
   components: {
-    SelectAuditorByDept
+    SelectAuditorByDept,
+    SelectUser
   },
   props: {
     nodeType: {
@@ -123,6 +139,33 @@ export default Vue.extend({
     watchValue: {
       type: Object,
       default: () => ({})
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    initData: {
+      type: Array,
+      default: () => []
+    },
+    reset: {
+      type: Boolean,
+      default: false
+    },
+    setInit: {
+      type: Object,
+      default: () => ({
+        refresh: false,
+        data: undefined
+      })
+    },
+    setDefault: {
+      type: Boolean,
+      default: false
+    },
+    startProcess: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -319,6 +362,9 @@ export default Vue.extend({
         this.nextAuditInfo = cloneDeep(this.nextActivities[0]);
         this.$emit("selectAuditorOk", { nextActId: this.nextAuditInfo.actId });
       }
+    },
+    setting(val) {
+      if (val.selectNextAuditSetting) return val.selectNextAuditSetting;
     },
     /**
      * 如果下节点活动数据大于0个，默认赋值第一个

@@ -1,5 +1,6 @@
 import { getUsersInitDataFromStringField } from "@/components/audit/utils";
 import SelectUser from "@/components/audit/nextAudit/SelectUser";
+import SelectNextAudit from "@/components/audit/nextAudit/SelectNextAudit.vue";
 import "./style/SelectAuditStyle.less";
 
 export default {
@@ -99,6 +100,13 @@ export default {
      */
     mySetDefault() {
       return this.setDefault && !this.$route.params.id;
+    },
+    /**
+     * 是否是并行节点
+     */
+    isParallelNode() {
+      const re = this.nextAuditInfosQueryParams.nextActivities?.length > 1 && !this.nextAuditInfosQueryParams.acceptActions.includes("SelectNextAct");
+      return re;
     }
   },
   watch: {
@@ -129,7 +137,16 @@ export default {
         this.setNextAuditUsers();
         return;
       }
-      this.pageModel.nextAuditInfos.push(this.setAuditUser(userArray, this.nextAuditInfosQueryParams.nextActivities?.[0]));
+      if (this.isParallelNode) {
+        if (userArray.nextAuditInfos) {
+          if (userArray.nextAuditInfos.some(info => !info.users.length)) {
+            return;
+          }
+          this.pageModel.nextAuditInfos = userArray.nextAuditInfos;
+        } else return;
+      } else {
+        this.pageModel.nextAuditInfos.push(this.setAuditUser(userArray, this.nextAuditInfosQueryParams.nextActivities?.[0]));
+      }
       this.$emit("change", this.pageModel.nextAuditInfos);
       this.setNextAuditUsers();
     },
@@ -217,6 +234,24 @@ export default {
   },
   render() {
     const getAuditComponent = () => {
+      if (this.isParallelNode) {
+        return <div>
+          <SelectNextAudit
+            nodeType={"default"}
+            dataSource={this.nextAuditInfosQueryParams}
+            set-init={this.setInit}
+            set-default={this.mySetDefault}
+            init-data={this.initData}
+            reset={this.reset}
+            start-process={true}
+            disable={this.disabled}
+            onChange={this.selectAuditorOk}
+            class={"select-next-audit"}
+            onSelectAuditorOk={this.selectAuditorOk}
+          />
+        </div>
+        ;
+      }
       if (this.blankTip) {
         const userOPtions = this.resources.map(item => ({
           label: item.name,

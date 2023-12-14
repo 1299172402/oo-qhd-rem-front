@@ -49,8 +49,16 @@
                 placeholder="请选择适用范围"
               >
                 <el-option
+                  class="group-option"
+                  label="全部(ALL)"
+                  value="ALL"
+                  @click.native="item.applyScopeId = 'ALL'; item.applyScopeName = '全部';"
+                />
+                <el-option
                   v-for="(subItem, subIndex) in applyScopesOptions"
                   :key="subIndex"
+                  class="group-option"
+                  :title="`${subItem.name}(${subItem.id})`"
                   :label="`${subItem.name}(${subItem.id})`"
                   :value="subItem.id"
                   @click.native="item.applyScopeId = subItem.id; item.applyScopeName = subItem.name;"
@@ -132,7 +140,7 @@
                       <el-option
                         v-for="(subItem, subIndex) in row.resourceType === 'user' ? assignResourcesUserSelectionsOptions : assignResourcesGroupSelectionsOptions"
                         :key="subIndex"
-                        :label="subItem.name"
+                        :label="row.resourceType === 'user' ? `${subItem.name}(${subItem.id})` : subItem.name"
                         :value="subItem.id"
                         @click.native="row.resourceName = subItem.name"
                       />
@@ -173,6 +181,8 @@
                     <el-option
                       v-for="(subItem, subIndex) in applyScopesOptions"
                       :key="subIndex"
+                      class="group-option"
+                      :title="`${subItem.name}(${subItem.id})`"
                       :label="`${subItem.name}(${subItem.id})`"
                       :value="subItem.id"
                       @click.native="row.applyScopeName = subItem.name"
@@ -284,6 +294,8 @@
                     <el-option
                       v-for="(subItem, subIndex) in applyScopesOptions"
                       :key="subIndex"
+                      class="group-option"
+                      :title="`${subItem.name}(${subItem.id})`"
                       :label="`${subItem.name}(${subItem.id})`"
                       :value="subItem.id"
                       @click.native="row.applyScopeName = subItem.name"
@@ -492,6 +504,8 @@
                     <el-option
                       v-for="(subItem, subIndex) in applyScopesOptions"
                       :key="subIndex"
+                      class="group-option"
+                      :title="`${subItem.name}(${subItem.id})`"
                       :label="`${subItem.name}(${subItem.id})`"
                       :value="subItem.id"
                       @click.native="row.applyScopeName = subItem.name"
@@ -634,6 +648,8 @@
                     <el-option
                       v-for="(subItem, subIndex) in applyScopesOptions"
                       :key="subIndex"
+                      class="group-option"
+                      :title="`${subItem.name}(${subItem.id})`"
                       :label="`${subItem.name}(${subItem.id})`"
                       :value="subItem.id"
                       @click.native="row.applyScopeName = subItem.name"
@@ -937,7 +953,7 @@ export default {
     getOptions() {
       // 使用范围下拉选项
       applyScopeSelections({ appId: this.appId }).then(v => {
-        this.applyScopesOptions = [{ id: "ALL", name: "全部" }].concat(v.data);
+        this.applyScopesOptions = v.data || [];
       });
       // 资源类型下拉项
       resourceTypeSelections().then(v => {
@@ -1082,9 +1098,14 @@ export default {
       return cloneModel;
     },
     changeResourceType: function(currentType, row) {
+      this.$set(row, "dataScope", "");
+      this.$set(row, "applyScope", "");
+      this.$set(row, "isMultiInstance", "");
       if (currentType === "manualAssign") {
         this.$set(row, "resourceId", "$CUR_ACT_KEY");
         this.$set(row, "resourceName", "当前节点");
+      } else {
+        this.$set(row, "resourceId", "");
       }
     },
     addApplyScopes() {
@@ -1145,5 +1166,12 @@ export default {
       border: 1px solid #f56c6c;
     }
   }
+}
+
+.group-option {
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
