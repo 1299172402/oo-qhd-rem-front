@@ -567,13 +567,14 @@ export default {
         },
         // 查看连通系数计算基础数据
         examine() {
+            5555
             if (this.queryData.blockId && this.queryData.dateTime && this.queryData.ogfId) {
                 let ogfName = this.oilList.length ? this.oilList.find(
                     (item) => item.ogfId == this.queryData.ogfId
                 ).ogfName : '';
                 let blockName = this.blockList.length ? this.blockList.find(
-                    (item) => item.blockId == this.queryData.blockId
-                ).blockName : '';
+                    (item) => item.reservoirAnalyseUnitId == this.queryData.blockId
+                ).reservoirAnalyseUnitName : '';
                 const params = {
                     blockId: this.queryData.blockId, //区块id
                     blockName: blockName,

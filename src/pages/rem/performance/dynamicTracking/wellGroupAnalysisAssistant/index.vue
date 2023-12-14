@@ -357,7 +357,10 @@ export default {
   methods: {
     //minIo-打开上传组件
     ljpmUploadDialogLast() {
-      if (this.childParam == "TRACER_INFORMATION" || !this.childParam) {
+      if (
+        (this.childParam == "TRACER_INFORMATION" || !this.childParam) &&
+        this.operationTypeList[this.currentModule].operationType == "SZJ"
+      ) {
         this.$message.error("请选择示踪剂结果或示踪剂报告后上传!");
         return;
       }

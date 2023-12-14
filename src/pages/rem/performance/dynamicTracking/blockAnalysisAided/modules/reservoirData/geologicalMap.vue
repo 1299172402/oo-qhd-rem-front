@@ -40,8 +40,8 @@
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
           >
             <el-table-column label="序号" type="index" align="center" width="80" fixed></el-table-column>
-            <el-table-column label="层位" prop="layer" align="center" width="200" fixed></el-table-column>
             <el-table-column label="井号" prop="wellbore" align="center" width="160" fixed></el-table-column>
+            <el-table-column label="层位" prop="layer" align="center" width="200" fixed></el-table-column>
             <el-table-column
               :label="`顶界斜深\n(m)`"
               prop="topMd"
