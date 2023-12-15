@@ -38,15 +38,23 @@
             :row-style="{ height: '0px' }"
             header-cell-class-name="table_header"
             :cell-style="{ padding: '6px', 'text-align': 'center' }"
-            style="width: 100%;"
+            style="width: 100%"
             height=""
             :default-sort="{ prop: 'date', order: 'descending' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
           >
             <el-table-column label="序号" type="index" align="center" width="80"></el-table-column>
-            <el-table-column :label="`含水饱和度\n (%)`" prop="" align="center"></el-table-column>
-            <el-table-column :label="`油相相对渗透率\n (mD)`" prop="" align="center"></el-table-column>
-            <el-table-column :label="`水相相对渗透率\n (mD)`" prop="" align="center"></el-table-column>
+            <el-table-column :label="`含水饱和度\n (Sw)`" prop="waterSaturation" align="center"></el-table-column>
+            <el-table-column
+              :label="`油相相对渗透率\n (Kro)`"
+              prop="oilRelativePermeability"
+              align="center"
+            ></el-table-column>
+            <el-table-column
+              :label="`水相相对渗透率\n (Krw)`"
+              prop="injRelativePermeability"
+              align="center"
+            ></el-table-column>
           </el-table>
         </page-panel-new>
       </div>
@@ -77,6 +85,7 @@ export default {
       position: [], //选中层位
       selectPosition: "",
       uploadTime: "", // 文件上传时间
+      tableData: [],
     };
   },
   async mounted() {
@@ -162,6 +171,17 @@ export default {
           }
         } else {
           this.$message.error("文件查询接口异常!");
+        }
+      });
+      reservoirDataPhasePermeabilityCurve({
+        oilFieldId: this.oilFieldId,
+        fieldId: this.blockId,
+        layerId: this.selectPosition,
+      }).then((res) => {
+        if (res.data.code == 200) {
+          this.tableData = res.data?.data?.relativePermeabilities || [];
+        } else {
+          this.tableData = [];
         }
       });
     },

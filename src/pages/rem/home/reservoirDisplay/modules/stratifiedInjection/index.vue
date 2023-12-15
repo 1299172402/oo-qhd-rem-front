@@ -107,7 +107,7 @@ export default {
       //分层注采量
       queryStratifiedInjectionDetails() {
           let params = {
-              blockId: 'YCFXDY8B643EDC9007F96F570600457D',
+              blockId: '83D33B89B0DAB7DFA440BD060746883A',
               startTime: new Date().getFullYear() + '-' + (new Date().getMonth()),
               // startTime: '2023-05',
               timeStatus: '1',
