@@ -74,7 +74,7 @@ export default {
         queryUltraShortShotStatistics() {
             let queryData = {
                 //区块
-                blockId: 'YCFXDY8B643EDC9007F96F570600457D',
+                blockId: '83D33B89B0DAB7DFA440BD060746883A',
                 //选择时间
                 // dateTime: new Date().format('YYYY-MM') ,
                 //修改取数的日期为5月
