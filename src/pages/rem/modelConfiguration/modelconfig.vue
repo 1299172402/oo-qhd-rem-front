@@ -527,6 +527,7 @@ export default {
       try {
         QueryWellDetail({
           ogfId: this.searchForm.ogfId,
+           blockId: this.searchForm.blockId,
         }).then((res) => {
           if (res.data.code == 200) {
             this.wellSelectList = res.data.data;
