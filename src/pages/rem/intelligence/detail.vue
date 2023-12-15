@@ -227,17 +227,6 @@ export default {
     }
   },
   methods: {
-    getSummaries(){
-      if (this.tableData.sum !== null) {
-        const { columns, data } = param;
-        const sums = [];
-        const arr = ['region', 'yearGoal', 'finish', 'ranking', 'all']
-        columns.forEach((column, index) => {
-          sums[index] = this.tableData.sum[arr[index]] === null ? 0 : this.tableData.sum[arr[index]];
-        })
-        return sums;
-      }
-    },
     queryBlockFeild1 () {
 
       getblockData({ogfId:this.queryData.ogfId}).then((res) => {
@@ -250,7 +239,7 @@ export default {
         }
 
 
-        this.searchList()
+        // this.searchList()
         // this.queryData.blockId=this.blockList[0].blockId
       });
     },
@@ -330,6 +319,7 @@ export default {
       }
       
       getStratifiedInjectionDetailsComp(params).then((res) => {
+        this.tableData=[];  
         res.forEach(item => {
           if(item.injAlloc.first){
             if(item.injAlloc.first == 'Infinity'){
@@ -428,7 +418,49 @@ export default {
           }
 
         });
-        this.tableData = res
+          this.tableData=res
+          var oilDataSum=0;
+          var overWaterInjSum=0;
+          var fluidProdSum=0;
+          var injSum=0;
+          var injAllocSum=0;
+          var layerRatioSum=0;
+          console.log(this.tableData)
+          for(var i=0;i<this.tableData.length;i++){
+              if(this.tableData[i].oilData.first){
+                  oilDataSum=oilDataSum+parseFloat(this.tableData[i].oilData.first)    
+              }
+              if(this.tableData[i].overWaterInj.first){
+                  overWaterInjSum=overWaterInjSum+parseFloat(this.tableData[i].overWaterInj.first)
+              }
+              if(this.tableData[i].fluidProd.first){
+                  fluidProdSum=fluidProdSum+parseFloat(this.tableData[i].fluidProd.first)
+              }
+              if(this.tableData[i].inj.first){
+                  injSum=injSum+parseFloat(this.tableData[i].inj.first)
+              }
+              if(this.tableData[i].injAlloc.first){
+                  injAllocSum=injAllocSum+parseFloat(this.tableData[i].injAlloc.first)
+              }
+              if(this.tableData[i].layerRatio.first){
+                  layerRatioSum=layerRatioSum+parseFloat(this.tableData[i].layerRatio.first)
+              }
+
+          }
+          console.log(oilDataSum)
+          const totalsum ={
+              fluidProd: {first:fluidProdSum.toFixed(2)},
+              inj:{first:injSum.toFixed(2)},
+              injAlloc:{first:injAllocSum.toFixed(2)},
+              layerRatio:{first:(injSum/fluidProdSum).toFixed(2)},
+              oilData:{first:oilDataSum.toFixed(2)},
+              overWaterInj:{first:(injSum/injAllocSum*100).toFixed(2)},
+              productionIntervalId:'888',
+              productionIntervalNo:'合计'
+
+          }
+          this.tableData.push(totalsum)
+          
         
       }).catch(()=>{
         this.tableData = []
