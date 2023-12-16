@@ -3,7 +3,12 @@
     <div class="app-container" style="height: 100%">
         <div style="display: flex;flex-direction: row; height: 100%;">
             <div style=" height: 100%">
-                <tree-multiple-selection :level="'3'" :end="3" @change="layoutChange"/>
+                <treeSelectionAll
+                    ref="treeSelectionAll"
+                    level="3"
+                    :defaultCheckedKeys="defaultCheckedKeys"
+                    @getSelectItems="getSelectItems"
+                />
             </div>
             <div
                 style="display: flex;flex-direction: column;  height:100%;margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
@@ -16,6 +21,7 @@
                                 clearable
                                 size="small"
                                 style="width: 240px"
+                                @change="changeOgf"
                             >
                                 <el-option
                                     v-for="(item, index) in ogfList"
@@ -294,15 +300,20 @@ import {queryDensityInfo, save} from "@/api/rem/density.js";
 import { QueryOgfDetail,userListByUserNames} from "@/api/basic/master";
 import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 import {exportExcel} from "@/lib/exportExcel";
+import treeSelectionAll from "@/pages/rem/basic/components/treeSelectionAllOgf.vue";
+import {QueryPlatformDetail, QueryWellDetail} from "@/api/rem/marster";
 
 export default {
     name: "Density",
     dicts: ["sys_normal_disable"],
     components: {
+        treeSelectionAll,
         treeMultipleSelection
     },
     data() {
         return {
+            // 主数据树结构默认选中的值
+            defaultCheckedKeys: [],
             dialogVisible: false, //运行计算展示弹窗
             producttype: [
                 {
@@ -329,6 +340,7 @@ export default {
             },
             year: '',
             isDisabled: [true, true, true, true, true, true, true, true, true, true, true, true],
+            selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
         };
     },
     created() {
@@ -344,6 +356,17 @@ export default {
         this.selectData();
     },
     methods: {
+        changeOgf(val) {
+            this.queryParams.ogfId= val
+            this.$refs.treeSelectionAll.setCheckedKeys([this.queryParams.ogfId]);
+        },
+        // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
+        getSelectItems(selectList, selectData) {
+            // 油田选中数据
+            this.queryParams.ogfId  = selectList.ogfId;
+            this.$refs.treeSelectionAll.setCheckedKeys([this.queryParams.ogfId]);
+            
+        },
         // 获取油田下拉数据  
         selectData() {
             let params = {
@@ -359,6 +382,7 @@ export default {
                     } else {
                         this.queryParams.ogfId = this.ogfList[0].ogfId
                     }
+                    this.defaultCheckedKeys = [this.queryParams.ogfId];
                     this.getInfo()
                 });
             })
