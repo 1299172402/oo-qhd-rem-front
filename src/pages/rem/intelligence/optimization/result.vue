@@ -2,7 +2,7 @@
     <div style="height:100%;">
         <div class="titleBox">
             <el-tabs v-model="activeName" class="g-pageHeader">
-                <el-tab-pane label="定产配12312注" name="first"></el-tab-pane>
+                <el-tab-pane label="定产配注" name="first"></el-tab-pane>
                 <el-tab-pane label="智能配注" name="second">
                     <!-- <a href="http://sea-oil-web-qhd32-6znyt.tjdevapp.cnooc/"></a> -->
                 </el-tab-pane>
@@ -23,9 +23,9 @@
                 <el-select v-model="queryData.blockId" disabled>
                     <el-option
                         v-for="item in blockList"
-                        :key="item.blockId"
-                        :label="item.blockName"
-                        :value="item.blockId"
+                        :key="item.reservoirAnalyseUnitId"
+                        :label="item.reservoirAnalyseUnitName"
+                        :value="item.reservoirAnalyseUnitId"
                     ></el-option>
                 </el-select>
                 <span style="margin-left:20px ">时间：</span>
@@ -218,7 +218,7 @@
     </div>
 </template>
 <script>
-import queryConditionMixin from "@/mixins/queryConditionMixin.js";
+// import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {
     getWellMonthAllocation,
     getWellMonthInj,
@@ -230,15 +230,17 @@ import {
 } from "@/api/rem/r-wellConnectEvaluate.js";
 import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";
 import Iframe from '@/components/rem/tools/iframe.vue'
+import {getblockData} from "@/api/basic/masterBycoderXu";
 
 export default {
     name:'optimizationResult',
     components: {
         Iframe
     },
-    mixins: [queryConditionMixin],
+    // mixins: [queryConditionMixin],
     data() {
         return {
+            blockList:[],
             oilField: [],
             queryData: {
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F',
@@ -274,7 +276,7 @@ export default {
     methods:{
         getOilFields() {
         let _this = this;
-        QueryOgfDetail({}).then((res) => {
+        QueryOgfDetail({operationZoneId: '715AD1CD60484BB59E737CD18A9DE44A'}).then((res) => {
             _this.oilField = res.data.data;
             //选择油田默认选秦皇岛32-6油田
             if (_this.oilField.length == 0) {
@@ -282,6 +284,7 @@ export default {
             } else {
             _this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
             }
+            this.selectblock()
         });
         },
         // 获取油田下拉数据
@@ -292,10 +295,14 @@ export default {
         },
         selectblock() {
             // if (!this.selectField) return;
-            getblock({
-                ogfId: this.queryData.ogfId
-            }).then(({blockList}) => {
-                this.blockList = blockList;
+            getblockData({ogfId:this.queryData.ogfId}).then((res) => {
+                this.blockList = res.data.data;
+                for(var i=0;i<this.blockList.length;i++){
+                    if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
+                        this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
+                    }
+                }
+                this.doSearch()
             });
             //   }
         },
