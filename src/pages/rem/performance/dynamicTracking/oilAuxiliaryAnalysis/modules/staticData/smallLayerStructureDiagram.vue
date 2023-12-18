@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import { fieldOilLayers } from '@/api/oilDeposit/rem-02/primaryinfo.js';
+// import { fieldOilLayers } from '@/api/oilDeposit/rem-02/primaryinfo.js';
+import { fieldLayers } from '@/api/oilDeposit/rem-02/primaryinfo.js';
 // miniIo
 import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
 import {filePreview,downFile} from "@/components/upload/utils/file";
@@ -59,10 +60,11 @@ export default {
     methods: {
         async doSearch() {
             //初始化获取层段关系
-            await fieldOilLayers({
+            await fieldLayers({
                 oilFieldId: this.oilFeildId,
                 wellId: this.wellId
             }).then((res) => {
+                // debugger
                 if (res.data.code == 200) {
                     //层段数据
                     if (res.data.data) {
