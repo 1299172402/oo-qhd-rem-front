@@ -808,6 +808,7 @@ export default {
           let wellData = res.data.data;
           this.wellData = wellData.filter((el) => el.wellName);
           this.selectWellId = this.wellData[0].wellId;
+          this.getBlockWellApi();
         }
         this.$refs.treeSelection.setCheckedKeys([this.selectOilField, this.selectPlatform, this.selectWellId]);
       });
