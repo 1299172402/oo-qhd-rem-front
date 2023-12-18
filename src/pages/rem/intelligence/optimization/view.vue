@@ -4,7 +4,7 @@
             <div class="my-5" style="margin-top:20px;margin-bottom:20px;">
                 <span>油田：</span>
                 <el-select
-                    v-model="this.selectOilField"
+                    v-model="selectOilField"
                     class="f2"
                     filterable
                     clearable
@@ -299,7 +299,7 @@ export default {
     // mixins: [queryConditionMixin],
     data() {
         return {
-            
+            selectOilField:'',
             blockList:[],
             oilField: [],
             queryData: {
@@ -342,6 +342,7 @@ export default {
         }
     },
     created() {
+        this.getuserListByUserNamesData();
         const params = JSON.parse(localStorage.getItem('OPTIMIZATION'))
         if (params && params.ogfId) {
             this.queryData.ogfId = params.ogfId
@@ -349,7 +350,7 @@ export default {
             this.queryData.dateTime = params.dateTime
         }
         this.queryWellAvgFluidProdAlloc();
-        this.getuserListByUserNamesData();
+        
     },
     methods: {
         getOilFields() {
