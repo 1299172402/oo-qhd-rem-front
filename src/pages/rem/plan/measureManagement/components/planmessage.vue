@@ -261,18 +261,25 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="190px"   label="起始平台名称" prop="fromPlatformName" align="center">
+                    <el-table-column  min-width="190px"   label="海管名称" prop="pipeline" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.fromPlatformName !== null && scope.row.fromPlatformName !== ''">{{scope.row.fromPlatformName}}</span>
+                            <el-tooltip class="item" effect="dark" :content="scope.row.pipeline" placement="top" v-if="scope.row.pipeline !== null && scope.row.pipeline !== ''">
+                                <div
+                                    class="name-wrapper"
+                                    style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; position: relative"
+                                >
+                                    <span>{{ scope.row.pipeline ? scope.row.pipeline : "-" }}</span>
+                                </div>
+                            </el-tooltip>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="200px"   label="终止平台名称" prop="toplatformName" align="center">
+                    <!-- <el-table-column sortable min-width="200px"   label="终止平台名称" prop="toplatformName" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.toplatformName !== null && scope.row.toplatformName !== ''">{{scope.row.toplatformName}}</span>
                             <span v-else>-</span>
                         </template>
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column sortable min-width="130px"   :label="`海管余量\n     (m³)`" prop="quantity" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.quantity !== null && scope.row.quantity !== ''"> {{Number(scope.row.quantity).toFixed(2)}}</span>
