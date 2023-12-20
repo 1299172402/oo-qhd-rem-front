@@ -92,7 +92,7 @@ export default {
                 { x: 4, y: 4, w: 4, h: 13, i: "2", name: "采油速度", show: true },
                 { x: 8, y: 16, w: 4, h: 26, i: "3", name: "秦皇岛32-6油田生产指标总览", show: true },
                 { x: 0, y: 32 ,w: 4, h: 13, i: "4", name: "采出程度与含水率关系图", show: true },
-                { x: 4, y: 40, w: 4, h: 13, i: "5", name: "含水上升", show: true },
+                { x: 4, y: 40, w: 4, h: 13, i: "5", name: "含水上升率", show: true },
                 
                
                 
