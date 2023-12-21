@@ -4,7 +4,13 @@
         <div style="display: flex;flex-direction: row; height: 100%;">
 
             <div style=" height: 100%">
-                <tree-multiple-selection :level="'5'" @childinfo='childinfo'/>
+                <!--                <tree-multiple-selection :level="'5'" @childinfo='childinfo'/>-->
+                <treeSelectionAll
+                    ref="treeSelectionAll"
+                    level="5"
+                    :defaultCheckedKeys="defaultCheckedKeys"
+                    @getSelectItems="getSelectItems"
+                />
             </div>
             <div
                 style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
@@ -24,14 +30,16 @@
                                 </el-form-item>
                                 <el-form-item label="平台：" prop="pt">
                                     <el-select v-model="queryData.pt" @change="onPlatfromChange">
-                                        <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformCode"
+                                        <el-option v-for="item in platforms" :key="item.platformId"
+                                                   :label="item.platformCode"
                                                    :value="item.platformId">
                                         </el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="井号：">
                                     <el-select v-model="queryData.wellId" @change="changewell">
-                                        <el-option v-for="(item,index) in wells" :key="item.wellId" :label="item.wellName"
+                                        <el-option v-for="(item,index) in wells" :key="item.wellId"
+                                                   :label="item.wellName"
                                                    :value="item.wellId">
                                         </el-option>
                                     </el-select>
@@ -78,7 +86,8 @@
                                         <el-col :span="2">&nbsp;</el-col>
                                         <el-col :span="10">
                                             <el-form-item label="有效厚度" prop="cw">
-                                                <el-input v-model="djclForm.thicknessEffe" type="number" :disabled="edit"><i
+                                                <el-input v-model="djclForm.thicknessEffe" type="number"
+                                                          :disabled="edit"><i
                                                     slot="suffix">m</i></el-input>
                                             </el-form-item>
                                         </el-col>
@@ -86,7 +95,8 @@
                                     <el-row>
                                         <el-col :span="10" style="padding-top:30px">
                                             <el-form-item label="控制储量" prop="kzcl">
-                                                <el-input v-model="djclForm.probReservesWell" type="number" :disabled="edit"><i
+                                                <el-input v-model="djclForm.probReservesWell" type="number"
+                                                          :disabled="edit"><i
                                                     slot="suffix">10⁴m³</i></el-input>
                                             </el-form-item>
                                         </el-col>
@@ -100,7 +110,8 @@
                                         </el-col>
                                         <el-col :span="10" style="padding-top:30px">
                                             <el-form-item label="可采储量" prop="kzmj">
-                                                <el-input v-model="djclForm.recoverableReserves" type="number" :disabled="edit">
+                                                <el-input v-model="djclForm.recoverableReserves" type="number"
+                                                          :disabled="edit">
                                                     <i slot="suffix">10⁴m³</i>
                                                 </el-input>
                                             </el-form-item>
@@ -138,15 +149,18 @@ import {
     QueryOgfDetail,
     QueryPlatformDetail,
     QueryWellDetail,
-    queryOilAndGasFieldQueryPositionDetail,userListByUserNames
+    queryOilAndGasFieldQueryPositionDetail, userListByUserNames
 } from "@/api/basic/master";
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
+import treeSelectionAll from "@/pages/rem/basic/components/treeSelectionAll.vue";
 
 export default {
     name: 'Reserves',
-    components: {treeMultipleSelection},
+    components: {treeSelectionAll, treeMultipleSelection},
     data() {
         return {
+            // 主数据树结构默认选中的值
+            defaultCheckedKeys: [],
             cwOptions: [],
             edit: true,
             queryData: {
@@ -175,7 +189,6 @@ export default {
     },
     mounted() {
         this.getList();
-        this.getData();
     },
     watch: {
         queryData: {
@@ -184,19 +197,39 @@ export default {
                 obj = this.wells.find((item) => {
                     return item.wellId === val.wellId;
                 });
-                this.wellName = obj.wellName
+                this.wellName = obj?.wellName
             },
             deep: true,
         }
     },
     methods: {
+        getSelectItems(selectList, selectData) {
+            let ogfId = selectList.ogfId;
+            let platformIds = selectList.platformIds;
+            let wellIds = selectList.wellIds;
+
+            let ogfIdOld = this.queryData.ogfId;
+            let platformIdsOld = this.queryData.pt;
+            let wellIdsOld = this.queryData.wellId;
+
+            if (ogfId != ogfIdOld) {
+                this.queryData.ogfId = ogfId;
+                this.choicepla(ogfId);
+            }else if (platformIds != platformIdsOld) {
+                this.queryData.pt = platformIds;
+                this.onPlatfromChange(platformIds);
+            }else if (wellIds != wellIdsOld) {
+                this.queryData.wellId = wellIds;
+                this.changewell(wellIds);
+            }
+        },
         getList() {
             //获取作业公司
             let params = {
-                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+                searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             }
-           
-            userListByUserNames(params).then((res)=>{
+
+            userListByUserNames(params).then((res) => {
                 this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
             })
             //根据作业公司查询油田
@@ -206,6 +239,16 @@ export default {
             //根据油田查询平台列表
             QueryPlatformDetail({ogfId: this.queryData.ogfId}).then(res => {
                 this.platforms = res.data.data
+                this.queryData.pt = this.platforms[0].platformId;
+                QueryWellDetail({platformId: this.queryData.pt}).then((res) => {
+                    this.wells = res.data.data
+                    this.queryData.wellId = this.wells[0].wellId
+                    queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
+                        this.cwOptions = res.data.data;
+                    });
+
+                    this.defaultCheckedKeys = [this.queryData.ogfId, this.queryData.pt, this.queryData.wellId];
+                })
             })
         },
         selectcw() {
@@ -225,27 +268,28 @@ export default {
                 }
             });
         },
-        choicepla(val){
+        choicepla(val) {
             QueryPlatformDetail({ogfId: val}).then(res => {
                 this.platforms = res.data.data
-                this.queryData.pt = ''
-            })
-            QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
-                this.wells = res.data.data
-                this.queryData.wellId = this.wells[0].wellId
-                queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
-                    this.cwOptions = res.data.data;
-                });
+                this.queryData.pt = this.platforms[0].platformId;
+                QueryWellDetail({platformId: this.queryData.pt}).then((res) => {
+                    this.wells = res.data.data
+                    this.queryData.wellId = this.wells[0].wellId
+                    queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
+                        this.cwOptions = res.data.data;
+                    });
+                    this.defaultCheckedKeys = [this.queryData.ogfId, this.queryData.pt, this.queryData.wellId];
+                })
             })
         },
         redact() {
-            if(this.djclForm.layerId ==''){
+            if (this.djclForm.layerId == '') {
                 this.$message.error('请选择层位！')
                 return
-            }else{
+            } else {
                 this.edit = false;
             }
-            
+
         },
         queryserch() {
             //获取层位
@@ -268,25 +312,19 @@ export default {
             });
         },
         getData() {
-            QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
-                this.wells = res.data.data
-                this.queryData.wellId = this.wells[0].wellId
-                queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
-                    this.cwOptions = res.data.data;
-                });
-            })
         },
         //平台下拉-change
         onPlatfromChange(val) {
             QueryWellDetail({platformId: val, ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = this.wells[0]?.wellId
+                this.defaultCheckedKeys = [this.queryData.ogfId, this.queryData.pt, this.queryData.wellId];
             })
         },
         refresh() {
-            if(this.queryData.orgId=='715AD1CD60484BB59E737CD18A9DE44A'){
+            if (this.queryData.orgId == '715AD1CD60484BB59E737CD18A9DE44A') {
                 this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
-            }else{
+            } else {
                 this.queryData.ogfId = this.oilFields[0].ogfId
             }
             QueryPlatformDetail({ogfId: this.queryData.ogfId}).then(res => {
@@ -313,6 +351,7 @@ export default {
         },
         changewell() {
             this.djclForm = []
+            this.defaultCheckedKeys = [this.queryData.ogfId, this.queryData.pt, this.queryData.wellId];
 
             this.queryserch()
         },
