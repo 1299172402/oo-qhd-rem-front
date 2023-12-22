@@ -3,7 +3,7 @@
         <div class="topBanner">智能注采调配</div>
         <linkageBoxBot @stopTimer="stopTimer" :style="item.style" :showFlag="item.showFlag" :remHome="true" :currentList="item" :key="index"
                        v-for="(item,index) in currentLists"></linkageBoxBot>
-        <div class="studySelf">
+        <div class="studySelf" style="cursor:pointer" @click="$router.push({ name: 'Modelconfig',query: { page: 'Linkage' } });">
             <div class="studySelfInside"></div>
             <span>模型自学习</span>
         </div>
