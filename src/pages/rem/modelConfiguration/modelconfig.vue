@@ -449,7 +449,7 @@ export default {
   methods: {
     //返回
     goBack() {
-      if ($route.query.page) {
+      if (this.$route.query.page) {
         this.$router.push({
           path: "/" + this.$route.query.page,
         });
