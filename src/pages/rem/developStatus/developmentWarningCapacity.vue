@@ -1,7 +1,11 @@
 <template>
   <div style="height: 100%; position: relative">
     <div class="btns" style="position: absolute; right: 0; top: 0px; z-index: 99">
-      <el-button type="primary" style="margin-left: auto !important" v-if="$route.query.page" @click="goBack"
+      <el-button
+        type="primary"
+        style="margin-left: auto !important"
+        v-if="$route.query.page || $route.query.name"
+        @click="goBack"
         >返回</el-button
       >
     </div>
@@ -1017,9 +1021,15 @@ export default {
     },
     //返回
     goBack() {
-      this.$router.push({
-        path: "/" + this.$route.query.page,
-      });
+      if ($route.query.page) {
+        this.$router.push({
+          path: "/" + this.$route.query.page,
+        });
+      } else if (this.$route.query.name) {
+        this.$router.push({
+          name: this.$route.query.name,
+        });
+      }
     },
     /**
      * hwh

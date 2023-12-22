@@ -78,10 +78,22 @@
 
     <page-panel-new style="height: calc(100% - 100px)">
       <div class="pagepanel-content" style="height: calc(100% - 60px)">
-        <div class="pagepanel-btns" style="height: 34px; margin-bottom: 10px; display: flex">
-          <el-button type="primary" @click="getModelOperate">模型配置</el-button>
-          <el-button type="primary" v-if="isModuleBtn" @click="moduleDialog = true">选定模型重算</el-button>
-          <el-button type="primary" @click="getModelInstructionManual">模型说明文档</el-button>
+        <div
+          class="pagepanel-btns"
+          style="height: 34px; margin-bottom: 10px; display: flex; justify-content: space-between"
+        >
+          <div>
+            <el-button type="primary" @click="getModelOperate">模型配置</el-button>
+            <el-button type="primary" v-if="isModuleBtn" @click="moduleDialog = true">选定模型重算</el-button>
+            <el-button type="primary" @click="getModelInstructionManual">模型说明文档</el-button>
+          </div>
+          <el-button
+            type="primary"
+            style="margin-left: auto !important"
+            v-if="$route.query.page || $route.query.name"
+            @click="goBack"
+            >返回</el-button
+          >
         </div>
         <div class="pagepanel-table" style="height: calc(100% - 44px)">
           <el-table
@@ -435,6 +447,18 @@ export default {
     this.queryTableDate();
   },
   methods: {
+    //返回
+    goBack() {
+      if ($route.query.page) {
+        this.$router.push({
+          path: "/" + this.$route.query.page,
+        });
+      } else if (this.$route.query.name) {
+        this.$router.push({
+          name: this.$route.query.name,
+        });
+      }
+    },
     //重置
     resetting() {
       this.$nextTick(() => {
@@ -451,10 +475,9 @@ export default {
         };
         await userListByUserNames(params).then((res) => {
           if (res.data.code == 200) {
-            this.searchForm.companyId =
-              res.data.data[0]?.currentTenantBindOrgId
-                ? res.data.data[0].currentTenantBindOrgId
-                : undefined;
+            this.searchForm.companyId = res.data.data[0]?.currentTenantBindOrgId
+              ? res.data.data[0].currentTenantBindOrgId
+              : undefined;
           }
         });
         await QueryOgfDetail({ operationZoneId: this.searchForm.companyId }).then((data) => {
@@ -527,7 +550,7 @@ export default {
       try {
         QueryWellDetail({
           ogfId: this.searchForm.ogfId,
-           blockId: this.searchForm.blockId,
+          blockId: this.searchForm.blockId,
         }).then((res) => {
           if (res.data.code == 200) {
             this.wellSelectList = res.data.data;
