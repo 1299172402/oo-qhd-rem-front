@@ -39,5 +39,7 @@ video::-webkit-media-controls-volume-control-container{display:none;}
     align-items: center;
     height: 100%;
 }
-
+video:focus {
+    outline: -webkit-focus-ring-color auto 0px;
+}
 </style>
