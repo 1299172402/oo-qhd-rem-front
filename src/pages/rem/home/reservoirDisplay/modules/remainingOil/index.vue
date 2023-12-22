@@ -3,9 +3,9 @@
         <video
             controls
            :src="videosrc"
-            height="90%"
-            width="90%"
-            style="margin-top: -5%"
+            height="100%"
+            width="100%"
+          
         >
         </video>
     </div>
