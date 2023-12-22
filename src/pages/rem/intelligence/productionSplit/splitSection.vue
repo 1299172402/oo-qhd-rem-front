@@ -4,27 +4,27 @@
             <el-form style="margin: 20px 0 10px 0" :inline="true">
                 <el-row>
                     <el-form-item label="油田：">
-                        <el-select v-model="params.ogfId.value">
+                        <el-select v-model="params.ogfId">
                             <el-option
-                                v-for="item in params.ogfList"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
+                                v-for="item in oilList"
+                                :key="item.ogfId"
+                                :label="item.ogfName"
+                                :value="item.ogfId"
                             ></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="区块：">
-                        <el-select v-model="params.blockId.value">
+                        <el-select v-model="params.blockId">
                             <el-option
-                                v-for="item in params.blockList"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
+                                v-for="item in blockList"
+                                :key="item.reservoirAnalyseUnitId"
+                                :label="item.reservoirAnalyseUnitName"
+                                :value="item.reservoirAnalyseUnitId"
                             ></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="井别：">
-                        <el-select v-model="params.wellCategory" class="f2" style="width: 100px" filterable>
+                        <el-select v-model="params.wellCategory" class="f2" style="width: 100px" filterable @change="queryWellData">
                             <el-option
                                 v-for="item  in wellCategoryList"
                                 :key="item.id"
@@ -34,16 +34,16 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="井号：">
-                        <el-select v-model="wellId" class="f2">
+                        <el-select v-model="wellId" class="f2"  @change="doSearch">
                             <el-option
-                                v-for="item in params.wellId"
+                                v-for="item in wellIdList"
                                 :key="item.wellId"
                                 :label="item.wellName"
                                 :value="item.wellId"
                             ></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="时间：">
+                    <el-form-item label="时间：" >
                         <el-date-picker
                             v-model="params.value"
                             type="daterange"
@@ -52,6 +52,7 @@
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"
                             value-format="yyyy-MM-dd"
+                            @change="doSearch"
                         ></el-date-picker>
                     </el-form-item>
                    
@@ -114,17 +115,17 @@
             style="position: relative; margin-top: 20px;height: calc(100% - 100px);" show-btn
         >
             <el-container class="layout">
-                <el-header height="auto" align="left">
-                    <span>井号：</span>
-                    <el-select v-model="wellId" @change="doSearch">
-                        <el-option
-                            v-for="item in params.wellId"
-                            :key="item.wellId"
-                            :label="item.wellName"
-                            :value="item.wellId"
-                        ></el-option>
-                    </el-select>
-                </el-header>
+<!--                <el-header height="auto" align="left">-->
+<!--                    <span>井号：</span>-->
+<!--                    <el-select v-model="wellId" @change="doSearch">-->
+<!--                        <el-option-->
+<!--                            v-for="item in params.wellId"-->
+<!--                            :key="item.wellId"-->
+<!--                            :label="item.wellName"-->
+<!--                            :value="item.wellId"-->
+<!--                        ></el-option>-->
+<!--                    </el-select>-->
+<!--                </el-header>-->
                 <el-main>
                     <div
                         v-if="data1"
@@ -176,6 +177,10 @@ export default {
     },
     data() {
         return {
+            orgId:[],
+            wellIdList:[],
+            blockList:[],
+            oilList:[],
             well: [],
             wellId: undefined, //井号
             //井别下拉框
@@ -193,72 +198,87 @@ export default {
                 ogfList: [],
                 blockList: [],
                 wellCategory: '',
+                value:''
             },
         };
     },
     mounted() {
-        const params = JSON.parse(localStorage.getItem('PRODUCTION_SPLIT'))
-        if(this.$route.query.link){
-            // 获取当前日期
-            var currentDate = new Date();
-
-// 获取当前日期的上一个月份
-            var previousMonth = currentDate.getMonth() - 1;
-
-// 创建一个新的日期对象，将月份设置为上一个月
-            var previousMonthDate = new Date(currentDate.getFullYear(), previousMonth, 1);
-
-// 获取上一个月份的最后一天日期
-            var lastDayOfPreviousMonth = new Date(previousMonthDate.getFullYear(), previousMonthDate.getMonth() + 1, 0);
-
-// 格式化日期
-            var firstDay = previousMonthDate.getFullYear() + '-' + (previousMonthDate.getMonth() + 1) + '-01';
-            var lastDay = lastDayOfPreviousMonth.getFullYear() + '-' + (lastDayOfPreviousMonth.getMonth() + 1) + '-' + lastDayOfPreviousMonth.getDate();
-            this.params = {
-                "ogfId": {
-                    "value": "3FC9A818F5BC43B88270DB80BBB3018F",
-                    "label": "秦皇岛32-6"
-                },
-                "blockId": {
-                    "value": "YCFXDY8B643EDC9007F96F570600457D",
-                    "label": "秦皇岛32-6南区"
-                },
-                "wellCategory": "01",
-                "wellId": [
-                    {
-                        "wellName": "QHD32-6-C1",
-                        "wellId": "DA0269628E74490ABDE198E7D1DBF3EA"
-                    }
-                ],
-                "value": [
-                    firstDay,
-                    lastDay
-                ],
-                "ogfList": [
-                    {
-                        "value": "3FC9A818F5BC43B88270DB80BBB3018F",
-                        "label": "秦皇岛32-6"
-                    }
-                ],
-                "blockList": [
-                    {
-                        "value": "YCFXDY8B643EDC9007F96F570600457D",
-                        "label": "秦皇岛32-6南区"
-                    }
-                ]
-            }
-            this.well = this.params.wellId
-            this.wellId = this.params.wellId[0].wellId
-        }else{
-            if (params) {
-                this.params = {...params, ogfList: [params.ogfId], blockList: [params.blockId]}
-                this.well = params.wellId
-                this.wellId = params.wellId[0].wellId
-                console.log(this.params);
-            }
-        }
+        // const params = JSON.parse(localStorage.getItem('PRODUCTION_SPLIT'))
+        // if(this.$route.query.link){
+        //     window.alert('6666666')
+        //    
+        //     // 获取当前日期
+        //     var currentDate = new Date();
+        //
+        //     // 获取当前日期的上一个月份
+        //     var previousMonth = currentDate.getMonth() - 1;
+        //
+        //     // 创建一个新的日期对象，将月份设置为上一个月
+        //     var previousMonthDate = new Date(currentDate.getFullYear(), previousMonth, 1);
+        //
+        //     // 获取上一个月份的最后一天日期
+        //     var lastDayOfPreviousMonth = new Date(previousMonthDate.getFullYear(), previousMonthDate.getMonth() + 1, 0);
+        //
+        //     // 格式化日期
+        //     var firstDay = previousMonthDate.getFullYear() + '-' + (previousMonthDate.getMonth() + 1) + '-01';
+        //     var lastDay = lastDayOfPreviousMonth.getFullYear() + '-' + (lastDayOfPreviousMonth.getMonth() + 1) + '-' + lastDayOfPreviousMonth.getDate();
+        //     this.params = {
+        //         "ogfId": {
+        //             "value": "3FC9A818F5BC43B88270DB80BBB3018F",
+        //             "label": "秦皇岛32-6"
+        //         },
+        //         "blockId": {
+        //             "value": "YCFXDY8B643EDC9007F96F570600457D",
+        //             "label": "秦皇岛32-6南区"
+        //         },
+        //         "wellCategory": "01",
+        //         "wellId": [
+        //             {
+        //                 "wellName": "QHD32-6-C1",
+        //                 "wellId": "DA0269628E74490ABDE198E7D1DBF3EA"
+        //             }
+        //         ],
+        //         "value": [
+        //             firstDay,
+        //             lastDay
+        //         ],
+        //         "ogfList": [
+        //             {
+        //                 "value": "3FC9A818F5BC43B88270DB80BBB3018F",
+        //                 "label": "秦皇岛32-6"
+        //             }
+        //         ],
+        //         "blockList": [
+        //             {
+        //                 "value": "YCFXDY8B643EDC9007F96F570600457D",
+        //                 "label": "秦皇岛32-6南区"
+        //             }
+        //         ]
+        //     }
+        //     this.well = this.params.wellId
+        //     this.wellId = this.params.wellId[0].wellId
+        // }else{
+        //     window.alert(params)
+        //     if (params) {
+        //         this.params = {...params, ogfList: this.oilList, blockList: [params.blockId]}
+        //         this.well = params.wellId
+        //         this.wellId = params.wellId[0].wellId
+        //         console.log(this.params);
+        //     }
+        // }
        
-        this.queryChopSection();
+        // this.queryChopSection();
+
+        this.params.wellCategory='01'
+        let timeNew = new Date();
+        timeNew.setMonth(timeNew.getMonth() - 1);
+        timeNew.setDate(1)
+        let lastDay = new Date(timeNew.getFullYear(), timeNew.getMonth() + 1, 0);
+        let stopTime = new Date('2020-1-1')
+        let filterTime = new Date();
+        this.params.value = [timeNew.format('YYYY-MM-DD'), lastDay.format('YYYY-MM-DD')]
+        
+        this.getuserListByUserNamesData();
     },
     methods: {
       getuserListByUserNamesData(){
@@ -274,29 +294,25 @@ export default {
       queryOilFeild() {
         getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
           this.oilList = res.data.data;
-          var list =res.data.data;
-          for(var i=0;i<list.length;i++){
-            if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
-              this.queryData.ogfId.value=list[i].ogfId
+          for(var i=0;i<this.oilList.length;i++){
+            if(this.oilList[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+              this.params.ogfId=this.oilList[i].ogfId
             }
           }
+          this.queryBlockFeild()
         });
-      },
-      //改变油田
-      changeOil() {
-        // this.queryData.blockId = "";
-        this.queryData.wellId = [];
-        this.queryBlockFeild();
       },
       /**
        * 获取区块
        */
       queryBlockFeild() {
-        getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
+        getblockData({ogfId:this.params.ogfId}).then((res) => {
           this.blockList = res.data.data;
+          console.log('ooppppp')
+            console.log(this.blockList)
           for(var i=0;i<this.blockList.length;i++){
             if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
-              this.queryData.blockId.value=this.blockList[i].reservoirAnalyseUnitId
+              this.params.blockId=this.blockList[i].reservoirAnalyseUnitId
             }
           }
           this.queryWellData();
@@ -332,17 +348,21 @@ export default {
         //     apprndixId: this.queryData.wellCategory,
         // };
         var welltypeName=null;
-        if(this.queryData.wellCategory==="01"){
+        if(this.params.wellCategory==="01"){
           welltypeName='采油井'
         }else {
           welltypeName='注水井'
         }
-        getWellData({blockId:this.queryData.blockId.value,ogfId:this.queryData.ogfId.value,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
-          this.wellList=res.data.data
-          console.log(this.wellList)
-          // this.queryData.wellId=this.wellList[27].wellId
-          this.doSearch()
-          // this.wellList = res.wellList;
+        getWellData({blockId:this.params.blockId,ogfId:this.params.ogfId,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
+            this.wellIdList=res.data.data
+                console.log(this.wellIdList)
+                for(var i=0;i<this.wellIdList.length;i++){
+                    if(this.wellIdList[i].wellId==='DA0269628E74490ABDE198E7D1DBF3EA'){
+                        this.wellId=this.wellIdList[i].wellId
+                    }
+                }
+            this.queryChopSection()
+         
         });
       },
         // 搜索
@@ -363,9 +383,9 @@ export default {
                 apprndixId: this.params.wellCategory,
                 beginTime: this.params.value[0],
                 endTime: this.params.value[1],
-                ogfId: this.params.ogfId.value,
+                ogfId: this.params.ogfId,
                 wellId: this.wellId,
-                blockId: this.params.blockId.value,
+                blockId: this.params.blockId,
             }
             getChopSection(params).then((res) => {
                 if (this.params.wellCategory == '02') {
