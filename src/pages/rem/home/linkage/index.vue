@@ -9,7 +9,7 @@
 <!--            src="@/pages/rem/home/linkage/liandong-bg.mp4"/>-->
         <linkageBox @stopTimer="stopTimer" @startTimer="startTimer" :style="item.style" :showFlag="item.showFlag"
                     :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
-        <div class="studySelf">
+        <div class="studySelf" style="cursor:pointer" @click="$router.push({ name: 'Modelconfig',query: { page: 'Linkage' } });">
             <div class="studySelfInside"></div>
             <span>模型自学习</span>
         </div>
@@ -57,6 +57,7 @@ export default {
         }, 100 * 50)
     },
     methods: {
+      
         getinfo() {
             this.currentLists = [
                 {

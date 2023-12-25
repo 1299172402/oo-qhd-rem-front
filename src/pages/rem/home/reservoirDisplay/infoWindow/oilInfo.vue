@@ -7,7 +7,7 @@
       header-title="剩余油情况"
       :is-show-max-btn="true"
     >
-      <div style="height: 90%;width: 90%">
+      <div style="height: 100%;width: 100%">
 <!--        <button class="detailLinkBtn" @click="linkroute('operationOverview')">详情</button>-->
         <remainingOil></remainingOil>
       </div>

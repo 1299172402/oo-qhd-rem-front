@@ -127,3 +127,10 @@ export function queryProblemWellStatisDetailsDownloadFile({ wellId, ogfId,pageSi
         responseType: "blob",
     });
 }
+export function getOilVideoFromMinIO() {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/getOilVideoFromMinIO`,
+        method: "get",
+        responseType: "blob",
+    });
+}
