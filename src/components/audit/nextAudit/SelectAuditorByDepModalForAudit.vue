@@ -131,7 +131,14 @@ export default Vue.extend({
           title: "姓名",
           align: "center",
           colKey: "nickName",
-          ellipsis: true },
+          ellipsis: true
+        },
+        {
+          title: "用户账号",
+          align: "center",
+          colKey: "userName",
+          ellipsis: true
+        },
         {
           title: "部门",
           align: "center",

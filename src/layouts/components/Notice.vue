@@ -9,7 +9,7 @@
       @closed="closeDialog"
     >
       <div style="height: 93%;padding-left: 13px;">
-        <station-message ref="messageRef" />
+        <station-message ref="messageRef" :unread-num="total" />
       </div>
       <div
         slot="footer"
@@ -32,7 +32,7 @@
       <template #content>
         <div class="header-msg">
           <div class="header-msg-top">
-            <p>通知（通知数目：{{ unreadMsg.length }}）</p>
+            <p>通知（通知数目：{{ total }}）</p>
             <t-button
               v-if="unreadMsg.length > 0"
               class="clear-btn"
@@ -43,7 +43,13 @@
               全部已读
             </t-button>
           </div>
-          <t-list v-if="unreadMsg.length > 0" class="narrow-scrollbar" :split="true">
+          <t-list
+            v-if="unreadMsg.length > 0"
+            class="narrow-scrollbar"
+            :split="true"
+            :async-loading="asyncLoading"
+            @scroll="scrollHandler"
+          >
             <t-list-item v-for="(item, index) in unreadMsg" :key="index">
               <div>
                 <p class="msg-content">
@@ -69,7 +75,6 @@
             <p>暂无通知</p>
           </div>
           <div class="header-msg-bottom">
-            <!-- v-if="unreadMsg.length > 0" -->
             <t-button
               class="header-msg-bottom-link"
               variant="text"
@@ -117,7 +122,10 @@ export default Vue.extend({
   data() {
     return {
       isNoticeVisible: false,
-      dialogVisible: false
+      dialogVisible: false,
+      total: 0,
+      asyncLoading: "",
+      pageNum: 1
     };
   },
   computed: {
@@ -125,15 +133,27 @@ export default Vue.extend({
     ...mapGetters("notification", ["unreadMsg"])
   },
   created() {
-    this.getList();
+    this.getList(true);
   },
   methods: {
-    getList() {
+    getList(init) {
+      if (init) {
+        this.pageNum = 1;
+      }
+      this.asyncLoading = "loading";
       getByTenantId({
-        userId: this.$store.getters["user/userDetail"].user.userId, status: "0", pageNum: 1,
-        pageSize: 100000
+        userId: this.$store.getters["user/userDetail"].user.userId, status: "0", pageNum: this.pageNum,
+        pageSize: 10
       }).then(res => {
-        this.$store.commit("notification/setMsgData", res.data.rows);
+        this.total = res.data.total;
+        this.pageNum += 1;
+        if (init) {
+          this.$store.commit("notification/setMsgData", res.data.rows);
+        } else {
+          this.$store.commit("notification/setMsgData", [...this.unreadMsg, ...res.data.rows]);
+        }
+      }).finally(() => {
+        this.asyncLoading = "";
       });
     },
     onPopupVisibleChange(visible: boolean, context) {
@@ -153,23 +173,19 @@ export default Vue.extend({
     },
     setRead(type: string, item?: NotificationItem) {
       if (type === "all") {
-        // changeMsg.forEach((e) => {
-        //   e.status = false;
-        // });
         updateAllStatus(this.$store.getters["user/userDetail"].user.userId).then(() => {
-          this.getList();
+          this.getList(true);
         });
       } else {
-        // changeMsg.forEach((e) => {
-        //   if (e.id === item.id) {
-        //     e.status = false;
-        //   }
-        // });
         updateOneStatus({ userId: this.$store.getters["user/userDetail"].user.userId, mailId: item.mailId }).then(() => {
-          this.getList();
+          this.getList(true);
         });
       }
-      // this.$store.commit('notification/setMsgData', changeMsg);
+    },
+    scrollHandler(e) {
+      if (e.scrollBottom === 0 && this.total > this.unreadMsg.length && !this.asyncLoading) {
+        this.getList();
+      }
     }
   }
 });

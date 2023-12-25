@@ -14,7 +14,7 @@
           size="mini"
           @click="updateAllStatus"
         >
-          全部已读({{ num }})
+          全部已读({{ unreadNum }})
         </el-button>
       </el-col>
     </el-row>
@@ -98,10 +98,15 @@ import { getByTenantId, updateAllStatus } from "@/api/intelligentOilfield/system
 
 export default {
   dicts: ["sys_normal_disable"],
+  props: {
+    unreadNum: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
       activeName: "first",
-      num: 4,
       size: [10, 20, 30, 50],
       // 遮罩层
       loading: true,
@@ -137,9 +142,6 @@ export default {
           this.dataList = response.data.rows;
           this.total = response.data.total;
           this.loading = false;
-        });
-        getByTenantId({ userId: this.$store.getters["user/userDetail"].user.userId }).then(res => {
-          this.num = res.data.rows.filter(item => Number(item.status) === 0).length;
         });
       } else {
         // 报警列表

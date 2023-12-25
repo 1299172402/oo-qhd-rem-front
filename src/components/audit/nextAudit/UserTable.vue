@@ -142,6 +142,7 @@ export default Vue.extend({
       columns: [
         this.multiple ? { colKey: "row-select", type: "multiple" } : { title: "#", colKey: "id", width: 60, align: "center", cell: "select" },
         { title: "用户名", width: 150, align: "center", colKey: "nickName" },
+        { title: "用户账号", width: 150, align: "center", colKey: "userName" },
         { title: "部门", align: "center", colKey: "deptName", ellipsis: true, cell: "deptName" }
       ],
       url: {
