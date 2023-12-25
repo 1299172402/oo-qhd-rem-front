@@ -86,15 +86,19 @@
         </header-search>
         <pagePanel v-if="link==1 || link==2 || link==3" :headerTitle="title" style="height: 120%" :show-btn="true">
             <Echart id="option2" :chart-data="option" style="height: 100%"></Echart>
+            <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link==4" :headerTitle="title" style="height: 120%" :show-btn="true">
             <Echart id="option2" :chart-data="option2" style="height: 100%"></Echart>
+            <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link==5" :headerTitle="title" style="height: 120%" :show-btn="true">
-            <Echart id="option2" :chart-data="option3" style="height: 100%"></Echart>
+            <Echart id="option2" :chart-data="option3" style="height: 100%;"></Echart>
+            <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link==6" :headerTitle="title" style="height: 120%" :show-btn="true">
             <Echart id="option2" :chart-data="option4" style="height: 100%"></Echart>
+            <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link=='5'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
@@ -401,6 +405,8 @@ export default {
     },
     data() {
         return {
+            //是否点击过表格
+            isTableClick: false,
             //全局变量 第几个节点
             dataIndex: 0,
             //所有路径代码对应的 dataIndex
@@ -1592,7 +1598,36 @@ export default {
                                                                             "level": 99,
                                                                             "name": "归因5：举升设备异常。\n下步措施：检泵",
                                                                             "code": "001005"
-                                                                        }
+                                                                        },
+                                                                        {
+                                                                            "level": 6,
+                                                                            "name": "判断月度含水率",
+                                                                            "code": "YDHSL",
+                                                                            "children": [
+                                                                                {
+                                                                                    "level": 99,
+                                                                                    "name": "归因8：数据问题。\n下步措施：数据排查",
+                                                                                    "code": "001008"
+                                                                                },
+                                                                                {
+                                                                                    "level": 7,
+                                                                                    "name": "关联水井注水量分析",
+                                                                                    "code": "ZSLFX",
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "level": 99,
+                                                                                            "name": "归因9：注水调配影响。\n下步措施：调整配注量",
+                                                                                            "code": "001009"
+                                                                                        },
+                                                                                        {
+                                                                                            "level": 99,
+                                                                                            "name": "归因10：①封隔器失效；②水线突进。\n下步措施：①卡封；②产液结构优化调整",
+                                                                                            "code": "001010"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        },
                                                                     ]
                                                                 }
                                                             ]
@@ -1920,62 +1955,65 @@ export default {
         };
     },
     mounted() {
-        // 在组件被激活时执行操作
-        this.getData();
-        //跳转路由中获取参数赋值给查询条件
-        this.queryData.month = this.$route.query.currentDate
-        //判断url上是否有井组参数 有则赋值
-        this.queryData.wellGroup = this.$route.query.searchKeys ? this.$route.query.searchKeys : ''
-        //平台若是等于油田ID 重置为空
-        if (this.$route.query.platform == '3FC9A818F5BC43B88270DB80BBB3018F') {
-            this.$route.query.platform = ''
-        }
-        //赋值平台ID
-        this.queryData.assetCode = this.$route.query.platform
-        //赋值井号ID
-        this.queryData.well = this.$route.query.wellId
-        //赋值编码ID
-        this.evalResult = this.$route.query.evalResult
-        //判断link跳转的来源
-        this.link = this.$route.query.link
-        this.tableData = []
-        this.chart = echarts.init(document.getElementById('option2'));
-        if (this.link == '1') {
-            this.initCodeDataIndex(this.option.series[0].data);
-            // this.option.series[0].data[0].name = '油井采液强度不合理'
-            this.chart.setOption(this.option);
-            this.title = '油井采液强度归因分析'
-        } else if (this.link == '2') {
-            this.initCodeDataIndex(this.option5.series[0].data);
-            // this.option5.series[0].data[0].name = '油井采液指数不合理'
-            this.chart.setOption(this.option5);
-            this.title = '油井采液指数归因分析'
-        } else if (this.link == '3') {
-            this.initCodeDataIndex(this.option6.series[0].data);
-            // this.option6.series[0].data[0].name = '油井米采液指数不合理'
-            this.chart.setOption(this.option6);
-            this.title = '油井米采液指数归因分析'
-        } else if (this.link == '4') {
-            this.initCodeDataIndex(this.option2.series[0].data);
-            this.chart.setOption(this.option2);
-            this.title = '注水强度归因分析'
-        } else if (this.link == '5') {
-            this.initCodeDataIndex(this.option3.series[0].data);
-            this.chart.setOption(this.option3);
-            this.title = '油井递减率归因分析'
-        } else if (this.link == '6') {
-            this.initCodeDataIndex(this.option4.series[0].data);
-            this.chart.setOption(this.option4);
-            //暂时默认为五月份 数据完整后删除该行即可
-            // this.queryData.wellGroup = 
-            this.title = '井组生产动态归因分析'
-        }
-        this.getFormData();
+        this.initData();
     },
     created() {
         this.link = this.$route.query.link
     },
     methods: {
+        initData() {
+            // 在组件被激活时执行操作
+            this.getData();
+            //跳转路由中获取参数赋值给查询条件
+            this.queryData.month = this.$route.query.currentDate
+            //判断url上是否有井组参数 有则赋值
+            this.queryData.wellGroup = this.$route.query.searchKeys ? this.$route.query.searchKeys : ''
+            //平台若是等于油田ID 重置为空
+            if (this.$route.query.platform == '3FC9A818F5BC43B88270DB80BBB3018F') {
+                this.$route.query.platform = ''
+            }
+            //赋值平台ID
+            this.queryData.assetCode = this.$route.query.platform
+            //赋值井号ID
+            this.queryData.well = this.$route.query.wellId
+            //赋值编码ID
+            this.evalResult = this.$route.query.evalResult
+            //判断link跳转的来源
+            this.link = this.$route.query.link
+            this.tableData = []
+            this.chart = echarts.init(document.getElementById('option2'));
+            if (this.link == '1') {
+                this.initCodeDataIndex(this.option.series[0].data);
+                // this.option.series[0].data[0].name = '油井采液强度不合理'
+                this.chart.setOption(this.option);
+                this.title = '油井采液强度归因分析'
+            } else if (this.link == '2') {
+                this.initCodeDataIndex(this.option5.series[0].data);
+                // this.option5.series[0].data[0].name = '油井采液指数不合理'
+                this.chart.setOption(this.option5);
+                this.title = '油井采液指数归因分析'
+            } else if (this.link == '3') {
+                this.initCodeDataIndex(this.option6.series[0].data);
+                // this.option6.series[0].data[0].name = '油井米采液指数不合理'
+                this.chart.setOption(this.option6);
+                this.title = '油井米采液指数归因分析'
+            } else if (this.link == '4') {
+                this.initCodeDataIndex(this.option2.series[0].data);
+                this.chart.setOption(this.option2);
+                this.title = '注水强度归因分析'
+            } else if (this.link == '5') {
+                this.initCodeDataIndex(this.option3.series[0].data);
+                this.chart.setOption(this.option3);
+                this.title = '油井递减率归因分析'
+            } else if (this.link == '6') {
+                this.initCodeDataIndex(this.option4.series[0].data);
+                this.chart.setOption(this.option4);
+                //暂时默认为五月份 数据完整后删除该行即可
+                // this.queryData.wellGroup = 
+                this.title = '井组生产动态归因分析'
+            }
+            this.getFormData();
+        },
         initCodeDataIndex(treeData) {
             this.codeDataIndexMap.clear()
             this.dataIndex = 0;
@@ -2176,21 +2214,7 @@ export default {
             this.getFormData()
         },
         result() {
-            if (this.queryData.orgId == '715AD1CD60484BB59E737CD18A9DE44A') {
-                this.queryData.ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
-            } else {
-                this.queryData.ogfId = this.oilFields[0].ogfId
-            }
-            this.choicepla(this.queryData.ogfId)
-
-            QueryWellDetail({ogfId: this.queryData.ogfId}).then((res) => {
-                this.wellList = res.data.data;
-                this.queryData.well = ''
-            });
-            if (this.link == 4) {
-                this.queryData.month = this.$route.query.currentDate
-            }
-            this.getFormData();
+            this.initData();
         },
         decreaseMonth(dateStr) {
             const date = new Date(dateStr);
@@ -2204,6 +2228,13 @@ export default {
         },
         //获取表格数据
         getFormData() {
+            this.isTableClick = false
+            //移除高亮
+            this.chart.dispatchAction({
+                type: 'highlight',
+                seriesIndex: 0,
+                dataIndex: undefined
+            })
             let resultDate = ''
             if (this.link == 4) {
                 resultDate = this.queryData.month
@@ -2272,8 +2303,10 @@ export default {
         },
         //表格鼠标悬浮事件
         handleCurrentChange(row) {
-            // debugger
-
+            if (row == null || row == undefined) {
+                return;
+            }
+            this.isTableClick = true;
             let dataIndex = this.codeDataIndexMap.get(row.attributionProcessResultCode);
             this.chart.dispatchAction({
                 type: 'highlight',
@@ -2286,6 +2319,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0); /* 设置透明度和背景颜色 */
+    z-index: 9999; /* 确保div位于其他元素的上方 */
+}
+
 .pageBox {
     color: var(--formText);
     position: relative;
