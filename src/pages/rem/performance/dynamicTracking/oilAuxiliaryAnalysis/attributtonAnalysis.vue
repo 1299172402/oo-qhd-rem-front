@@ -1305,6 +1305,7 @@ export default {
                                 {
                                     "level": 2,
                                     "name": "判断注入时长",
+                                    "code": "PDSCSC",
                                     "children": [
                                         {
                                             "level": 3,
@@ -1325,6 +1326,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因1：直接关联关停记录表或备注。\n下步措施：提高生产时率",
+                                                                            "code": "004001"
                                                                         }
                                                                     ]
                                                                 },
@@ -1337,6 +1339,7 @@ export default {
                                         {
                                             "level": 3,
                                             "name": "判断分层段配注量",
+                                            "code": "FCDPZL",
                                             "children": [
                                                 {
                                                     "level": 4,
@@ -1353,6 +1356,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因2：该井/层段/层位已超注。\n下步措施：控水调配注",
+                                                                            "code": "004002"
                                                                         }
                                                                     ]
                                                                 }
@@ -1367,6 +1371,7 @@ export default {
                                                         {
                                                             "level": 5,
                                                             "name": "判断分层段/分层井口压力",
+                                                            "code": "FCDJKYL",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -1375,20 +1380,24 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因4：井口压力过高。\n下步措施：建议分层酸化",
+                                                                            "code": "004004"
                                                                         }
                                                                     ]
                                                                 },
                                                                 {
                                                                     "level": 6,
                                                                     "name": "判断分层段/分层可配注的最大量",
+                                                                    "code": "FCDKPZZDL",
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因5：注采失调。\n下步措施：调整分层配注量",
+                                                                            "code": "004005"
                                                                         },
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因6：注采关系失调。\n下步措施：调整产液结构",
+                                                                            "code": "004006"
                                                                         }
                                                                     ]
                                                                 }
@@ -1399,6 +1408,7 @@ export default {
                                                 {
                                                     "level": 4,
                                                     "name": "判断注水强度",
+                                                    "code": "PDZSQD",
                                                     "children": [
                                                         {
                                                             "level": 5,
@@ -1411,10 +1421,12 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因3：①水线突破；②井组内产液变化。\n下步措施：注采调整",
+                                                                            "code": "004003"
                                                                         },
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因7：①地层污染；②吸水能力影响；③井组内产液变化。\n下步措施：观察调整",
+                                                                            "code": "004007"
                                                                         }
                                                                     ]
                                                                 },
