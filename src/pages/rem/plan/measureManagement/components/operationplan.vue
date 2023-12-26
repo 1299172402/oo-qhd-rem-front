@@ -252,7 +252,7 @@ export default {
             //根据平台获得井
             QueryWellDetail({platformId: val}).then((res) => {
                 this.wells = res.data.data
-                this.queryParams.wellId = this.wells[0].wellId
+                this.queryParams.wellId = this.wells[0].wellId ? this.wells[0].wellId :''
             })
         },
         returnrouter() {
@@ -317,7 +317,8 @@ export default {
             this.queryParams.asseCode = ''
             this.queryParams.wellId = ''
             this.queryParams.measureTypeCode = ''
-            this.retrieval()
+            this.queryParams.yeartime = new Date().format('YYYY')
+            this.retrieval() 
         },
         changepage() {
             this.retrieval()
