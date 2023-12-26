@@ -447,6 +447,7 @@ export default {
                                 {
                                     "level": 2,
                                     "name": "判断月度生产时率",
+                                    "code": "YDSCSL",
                                     "children": [
                                         {
                                             "level": 3,
@@ -467,7 +468,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因1：直接关联关停记录表。\n下步措施：提高生产时率",
-                                                                            "code": "YJCYQDGY-003001"
+                                                                            "code": "003001"
                                                                         }
                                                                     ]
                                                                 }
@@ -481,14 +482,17 @@ export default {
                                         {
                                             "level": 3,
                                             "name": "判断油嘴和泵频率",
+                                            "code": "YZBPL",
                                             "children": [
                                                 {
                                                     "level": 4,
                                                     "name": "判断排量效率",
+                                                    "code": "PLXL",
                                                     "children": [
                                                         {
                                                             "level": 5,
                                                             "name": "判断含水率",
+                                                            "code": "HSL",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -497,7 +501,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
-                                                                            "code": "YJCYQDGY-003003"
+                                                                            "code": "003003"
                                                                         }
                                                                     ]
                                                                 },
@@ -508,28 +512,29 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因6：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
-                                                                            "code": "YJCYQDGY-003006"
+                                                                            "code": "003006"
                                                                         }
                                                                     ]
                                                                 },
                                                                 {
                                                                     "level": 6,
                                                                     "name": "判断流压",
+                                                                    "code": "LY",
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因4：注采失调\n下步措施：排查周边井组状态",
-                                                                            "code": "YJCYQDGY-003004"
+                                                                            "code": "003004"
                                                                         },
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
-                                                                            "code": "YJCYQDGY-003005"
+                                                                            "code": "003005"
                                                                         },
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因7：地层能量不足。\n下步措施：优化注水",
-                                                                            "code": "YJCYQDGY-003007"
+                                                                            "code": "003007"
                                                                         }
                                                                     ]
                                                                 }
@@ -539,6 +544,7 @@ export default {
                                                         {
                                                             "level": 5,
                                                             "name": "判断流压",
+                                                            "code": "LY",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -547,7 +553,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因4：注采失调\n下步措施：排查周边井组状态",
-                                                                            "code": "YJCYQDGY-003004"
+                                                                            "code": "003004"
                                                                         }
                                                                     ]
                                                                 },
@@ -558,7 +564,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
-                                                                            "code": "YJCYQDGY-003005"
+                                                                            "code": "003005"
                                                                         }
                                                                     ]
                                                                 },
@@ -569,7 +575,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因7：地层能量不足。\n下步措施：优化注水",
-                                                                            "code": "YJCYQDGY-003007"
+                                                                            "code": "003007"
                                                                         }
                                                                     ]
                                                                 }
@@ -593,7 +599,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
-                                                                            "code": "YJCYQDGY-003002"
+                                                                            "code": "003002"
                                                                         }
                                                                     ]
                                                                 }
@@ -722,11 +728,12 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "油井采液指数不合理",
+                            "name": "油井采液强度不合理",
                             "children": [
                                 {
                                     "level": 2,
                                     "name": "判断月度生产时率",
+                                    "code": "YDSCSL",
                                     "children": [
                                         {
                                             "level": 3,
@@ -747,6 +754,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因1：直接关联关停记录表。\n下步措施：提高生产时率",
+                                                                            "code": "005001"
                                                                         }
                                                                     ]
                                                                 }
@@ -760,14 +768,17 @@ export default {
                                         {
                                             "level": 3,
                                             "name": "判断油嘴和泵频率",
+                                            "code": "YZBPL",
                                             "children": [
                                                 {
                                                     "level": 4,
                                                     "name": "判断排量效率",
+                                                    "code": "PLXL",
                                                     "children": [
                                                         {
                                                             "level": 5,
                                                             "name": "判断含水率",
+                                                            "code": "HSL",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -776,6 +787,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
+                                                                            "code": "005003"
                                                                         }
                                                                     ]
                                                                 },
@@ -786,24 +798,29 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因6：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
+                                                                            "code": "005006"
                                                                         }
                                                                     ]
                                                                 },
                                                                 {
                                                                     "level": 6,
                                                                     "name": "判断流压",
+                                                                    "code": "LY",
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                            "code": "005004"
                                                                         },
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                            "code": "005005"
                                                                         },
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                            "code": "005007"
                                                                         }
                                                                     ]
                                                                 }
@@ -813,6 +830,7 @@ export default {
                                                         {
                                                             "level": 5,
                                                             "name": "判断流压",
+                                                            "code": "LY",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -821,6 +839,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                            "code": "005004"
                                                                         }
                                                                     ]
                                                                 },
@@ -831,6 +850,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                            "code": "005005"
                                                                         }
                                                                     ]
                                                                 },
@@ -841,6 +861,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                            "code": "005007"
                                                                         }
                                                                     ]
                                                                 }
@@ -864,6 +885,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
+                                                                            "code": "005002"
                                                                         }
                                                                     ]
                                                                 }
@@ -992,11 +1014,12 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "油井米采液指数不合理",
+                            "name": "油井采液强度不合理",
                             "children": [
                                 {
                                     "level": 2,
                                     "name": "判断月度生产时率",
+                                    "code": "YDSCSL",
                                     "children": [
                                         {
                                             "level": 3,
@@ -1017,6 +1040,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因1：直接关联关停记录表。\n下步措施：提高生产时率",
+                                                                            "code": "002001"
                                                                         }
                                                                     ]
                                                                 }
@@ -1030,14 +1054,17 @@ export default {
                                         {
                                             "level": 3,
                                             "name": "判断油嘴和泵频率",
+                                            "code": "YZBPL",
                                             "children": [
                                                 {
                                                     "level": 4,
                                                     "name": "判断排量效率",
+                                                    "code": "PLXL",
                                                     "children": [
                                                         {
                                                             "level": 5,
                                                             "name": "判断含水率",
+                                                            "code": "HSL",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -1046,6 +1073,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
+                                                                            "code": "002003"
                                                                         }
                                                                     ]
                                                                 },
@@ -1056,24 +1084,29 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因6：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
+                                                                            "code": "002006"
                                                                         }
                                                                     ]
                                                                 },
                                                                 {
                                                                     "level": 6,
                                                                     "name": "判断流压",
+                                                                    "code": "LY",
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                            "code": "002004"
                                                                         },
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                            "code": "002005"
                                                                         },
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                            "code": "002007"
                                                                         }
                                                                     ]
                                                                 }
@@ -1083,6 +1116,7 @@ export default {
                                                         {
                                                             "level": 5,
                                                             "name": "判断流压",
+                                                            "code": "LY",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
@@ -1091,6 +1125,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                            "code": "002004"
                                                                         }
                                                                     ]
                                                                 },
@@ -1101,6 +1136,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                            "code": "002005"
                                                                         }
                                                                     ]
                                                                 },
@@ -1111,6 +1147,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                            "code": "002007"
                                                                         }
                                                                     ]
                                                                 }
@@ -1134,6 +1171,7 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
+                                                                            "code": "002002"
                                                                         }
                                                                     ]
                                                                 }
@@ -1761,32 +1799,32 @@ export default {
                                 {
                                     "level": 2,
                                     "name": "调用井组压力保持评价模型",
-                                    "code":"JZYLBCPJ",
+                                    "code": "JZYLBCPJ",
                                     "children": [
                                         {
                                             "level": 3,
                                             "name": "判断井组月度产液量",
-                                            "code":"JZYDCYL",
+                                            "code": "JZYDCYL",
                                             "children": [
                                                 {
                                                     "level": 4,
                                                     "name": "判断井组月度注水量",
-                                                    "code":"JZYDZSL",
+                                                    "code": "JZYDZSL",
                                                     "children": [
                                                         {
                                                             "level": 6,
                                                             "name": "归因5：①封隔器失效；②水线突进。\n下步措施：①卡封；②产液结构优化调整",
-                                                            "code":"006005"
+                                                            "code": "006005"
                                                         },
                                                         {
                                                             "level": 5,
                                                             "name": "分析示踪剂",
-                                                            "code":"FXSZJ",
+                                                            "code": "FXSZJ",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
                                                                     "name": "归因4：注水调配影响。\n下步措施：调整配注量",
-                                                                    "code":"006004"
+                                                                    "code": "006004"
                                                                 }
                                                             ]
                                                         }
@@ -1795,7 +1833,7 @@ export default {
                                                 {
                                                     "level": 4,
                                                     "name": "油井采液强度指标归因分析模型",
-                                                    "code":"YJCYQDGY",
+                                                    "code": "YJCYQDGY",
                                                     "children": [
                                                         {
                                                             "level": 6,
@@ -1809,39 +1847,39 @@ export default {
                                         {
                                             "level": 3,
                                             "name": "调用井组注采平衡分析模型",
-                                            "code":"JZZCPHFX",
+                                            "code": "JZZCPHFX",
                                             "children": [
                                                 {
                                                     "level": 4,
                                                     "name": "分析井组水井分层月注水量",
-                                                    "code":"JZSJFCYZSL",
+                                                    "code": "JZSJFCYZSL",
                                                     "children": [
                                                         {
                                                             "level": 5,
                                                             "name": "油井采液强度指标归因分析模型",
-                                                            "code":"YJCYQDGY",
+                                                            "code": "YJCYQDGY",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
                                                                     "name": "归因统计分析",
-                                                                    "code":"006006"
+                                                                    "code": "006006"
                                                                 }
                                                             ]
                                                         },
                                                         {
                                                             "level": 5,
                                                             "name": "分析井组内水井分层月注水量",
-                                                            "code":"SJFCZSL",
+                                                            "code": "SJFCZSL",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
                                                                     "name": "归因1：井组超注。\n下步措施：控水调配注",
-                                                                    "code":"006001"
+                                                                    "code": "006001"
                                                                 },
                                                                 {
                                                                     "level": 6,
                                                                     "name": "归因2：注采关系失调。\n下步措施：调整产液结构",
-                                                                    "code":"006002"
+                                                                    "code": "006002"
                                                                 }
                                                             ]
                                                         }
@@ -1854,7 +1892,7 @@ export default {
                                                         {
                                                             "level": 6,
                                                             "name": "归因3：层内非均质性强。\n下步措施：调剖堵水",
-                                                            "code":"006003"
+                                                            "code": "006003"
                                                         }
                                                     ]
                                                 }
