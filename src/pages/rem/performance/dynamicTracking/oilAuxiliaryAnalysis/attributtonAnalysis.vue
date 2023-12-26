@@ -1761,26 +1761,32 @@ export default {
                                 {
                                     "level": 2,
                                     "name": "调用井组压力保持评价模型",
+                                    "code":"JZYLBCPJ",
                                     "children": [
                                         {
                                             "level": 3,
                                             "name": "判断井组月度产液量",
+                                            "code":"JZYDCYL",
                                             "children": [
                                                 {
                                                     "level": 4,
                                                     "name": "判断井组月度注水量",
+                                                    "code":"JZYDZSL",
                                                     "children": [
                                                         {
                                                             "level": 6,
                                                             "name": "归因5：①封隔器失效；②水线突进。\n下步措施：①卡封；②产液结构优化调整",
+                                                            "code":"006005"
                                                         },
                                                         {
                                                             "level": 5,
                                                             "name": "分析示踪剂",
+                                                            "code":"FXSZJ",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
                                                                     "name": "归因4：注水调配影响。\n下步措施：调整配注量",
+                                                                    "code":"006004"
                                                                 }
                                                             ]
                                                         }
@@ -1789,11 +1795,12 @@ export default {
                                                 {
                                                     "level": 4,
                                                     "name": "油井采液强度指标归因分析模型",
+                                                    "code":"YJCYQDGY",
                                                     "children": [
                                                         {
                                                             "level": 6,
                                                             "name": "归因统计分析",
-                                                            "id": "123456789"
+                                                            "code": "006006"
                                                         }
                                                     ]
                                                 }
@@ -1802,32 +1809,39 @@ export default {
                                         {
                                             "level": 3,
                                             "name": "调用井组注采平衡分析模型",
+                                            "code":"JZZCPHFX",
                                             "children": [
                                                 {
                                                     "level": 4,
                                                     "name": "分析井组水井分层月注水量",
+                                                    "code":"JZSJFCYZSL",
                                                     "children": [
                                                         {
                                                             "level": 5,
                                                             "name": "油井采液强度指标归因分析模型",
+                                                            "code":"YJCYQDGY",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
                                                                     "name": "归因统计分析",
+                                                                    "code":"006006"
                                                                 }
                                                             ]
                                                         },
                                                         {
                                                             "level": 5,
                                                             "name": "分析井组内水井分层月注水量",
+                                                            "code":"SJFCZSL",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
                                                                     "name": "归因1：井组超注。\n下步措施：控水调配注",
+                                                                    "code":"006001"
                                                                 },
                                                                 {
                                                                     "level": 6,
                                                                     "name": "归因2：注采关系失调。\n下步措施：调整产液结构",
+                                                                    "code":"006002"
                                                                 }
                                                             ]
                                                         }
@@ -1840,6 +1854,7 @@ export default {
                                                         {
                                                             "level": 6,
                                                             "name": "归因3：层内非均质性强。\n下步措施：调剖堵水",
+                                                            "code":"006003"
                                                         }
                                                     ]
                                                 }
