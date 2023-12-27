@@ -5,7 +5,7 @@
             <el-form :model="queryParams" ref="queryForm" :inline="true" style="margin-top: 18px">
 
                 <el-form-item label="油田：">
-                    <el-select v-model="queryParams.selectOilField" >
+                    <el-select v-model="queryParams.selectOilField" @change="changepla">
                         <el-option
                             v-for="item in oilFields"
                             :key="item.oilFieldId"
@@ -32,17 +32,19 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="日期：">
-                    <el-date-picker v-model="queryParams.endTime" value-format="yyyy-MM-dd" type="date" placeholder="年/月/日">
+                    <el-date-picker v-model="queryParams.endTime" value-format="yyyy-MM-dd" type="date"
+                                    placeholder="年/月/日">
                     </el-date-picker>
                 </el-form-item>
-                <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search" style="margin-left: 10px"
-                >搜索</el-button
+                <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search"
+                           style="margin-left: 10px"
+                >搜索
+                </el-button
                 >
                 <el-button class="commonBtn" @click="reset" icon="el-icon-refresh"> 重置</el-button>
-                <el-button style="float: right" type="primary"  @click="returnrouter">返回</el-button>
+                <el-button style="float: right" type="primary" @click="returnrouter">返回</el-button>
             </el-form>
         </headerSearch>
-
 
 
         <pagePanel headerTitle="措施计划情况表" style="height: calc(100% - 20px)">
@@ -69,201 +71,311 @@
                 id="xczyjhb"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column   label="序号" prop="Nosort" width="50px" align="center"></el-table-column>
-                <el-table-column  label="井基本信息" prop="wellId" align="center">
-                    <el-table-column sortable  label="井号" prop="wellNo" min-width="200px" align="center">
+                <el-table-column label="序号" prop="Nosort" width="50px" align="center"></el-table-column>
+                <el-table-column label="井基本信息" prop="wellId" align="center">
+                    <el-table-column sortable label="井号" prop="wellNo" min-width="200px" align="center">
                     </el-table-column>
-                    <el-table-column sortable  label="推荐措施" prop="measType" min-width="120px" align="center" >
+                    <el-table-column sortable label="推荐措施" prop="measType" min-width="120px" align="center">
                     </el-table-column>
-                    <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center" class-name="cellWrap"  >
+                    <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center"
+                                     class-name="cellWrap">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.layerName !== null && scope.row.layerName !== ''" v-html="scope.row.layerName"></span>
+                            <span v-if="scope.row.layerName !== null && scope.row.layerName !== ''"
+                                  v-html="scope.row.layerName"></span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column label="所属区块" sortable prop="blockName" min-width="200px" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.blockName !== null && scope.row.blockName !== ''">{{scope.row.blockName}}</span>
+                            <span
+                                v-if="scope.row.blockName !== null && scope.row.blockName !== ''">{{
+                                    scope.row.blockName
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="`油层厚度 \n（m）`"  sortable width="130px" prop="reservoirThickness" align="center" class-name="cellWrap">
+                    <el-table-column :label="`油层厚度 \n（m）`" sortable width="130px" prop="reservoirThickness"
+                                     align="center" class-name="cellWrap">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.reservoirThickness !== null && scope.row.reservoirThickness !== ''" v-html="scope.row.reservoirThickness"></span>
+                            <span v-if="scope.row.reservoirThickness !== null && scope.row.reservoirThickness !== ''"
+                                  v-html="scope.row.reservoirThickness"></span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="`水平段长度 \n（m）`" sortable min-width="130px" prop="horizonIntervalLen" align="center">
+                    <el-table-column :label="`水平段长度 \n（m）`" sortable min-width="130px" prop="horizonIntervalLen"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.horizonIntervalLen !== null && scope.row.horizonIntervalLen !== ''">{{scope.row.horizonIntervalLen.toFixed(2)}}</span>
+                            <span
+                                v-if="scope.row.horizonIntervalLen !== null && scope.row.horizonIntervalLen !== ''">{{
+                                    scope.row.horizonIntervalLen.toFixed(2)
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column label="完井方式" sortable min-width="130px" prop="completionMethod" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.completionMethod !== null && scope.row.completionMethod !== ''">{{scope.row.completionMethod}}</span>
+                            <span
+                                v-if="scope.row.completionMethod !== null && scope.row.completionMethod !== ''">{{
+                                    scope.row.completionMethod
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="生产现状" prop="name" align="center">
-                    <el-table-column sortable :label="`投产日期\n    （yyyy-mm-dd）`" min-width="200" prop="startDate" align="center">
+                    <el-table-column sortable :label="`投产日期\n    （yyyy-mm-dd）`" min-width="200" prop="startDate"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.startDate !== null && scope.row.startDate !== ''">{{scope.row.startDate}}</span>
+                            <span
+                                v-if="scope.row.startDate !== null && scope.row.startDate !== ''">{{
+                                    scope.row.startDate
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`日产液\n（m³）`" min-width="130px" prop="fluidProdDaily" align="center">
+                    <el-table-column sortable :label="`日产液\n（m³）`" min-width="130px" prop="fluidProdDaily"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.fluidProdDaily !== null && scope.row.fluidProdDaily !== ''">{{scope.row.fluidProdDaily}}</span>
+                            <span
+                                v-if="scope.row.fluidProdDaily !== null && scope.row.fluidProdDaily !== ''">{{
+                                    scope.row.fluidProdDaily
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`日产油\n（m³）`" min-width="130px" prop="oilProdDaily" align="center">
+                    <el-table-column sortable :label="`日产油\n（m³）`" min-width="130px" prop="oilProdDaily"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.oilProdDaily !== null && scope.row.oilProdDaily !== ''">{{scope.row.oilProdDaily}}</span>
+                            <span
+                                v-if="scope.row.oilProdDaily !== null && scope.row.oilProdDaily !== ''">{{
+                                    scope.row.oilProdDaily
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`含水\n（%）`"  min-width="130px" prop="waterRatio" align="center">
+                    <el-table-column sortable :label="`含水\n（%）`" min-width="130px" prop="waterRatio" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.waterRatio !== null && scope.row.waterRatio !== ''">{{scope.row.waterRatio}}</span>
+                            <span
+                                v-if="scope.row.waterRatio !== null && scope.row.waterRatio !== ''">{{
+                                    scope.row.waterRatio
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`泵频\n（Hz）`"  min-width="100px" prop="pumpFrequency" align="center">
+                    <el-table-column sortable :label="`泵频\n（Hz）`" min-width="100px" prop="pumpFrequency"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.pumpFrequency !== null && scope.row.pumpFrequency !== ''">{{scope.row.pumpFrequency}}</span>
+                            <span
+                                v-if="scope.row.pumpFrequency !== null && scope.row.pumpFrequency !== ''">{{
+                                    scope.row.pumpFrequency
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`累产油\n（10⁴m³）`"  min-width="130px" prop="cumOilProdYearly" align="center">
+                    <el-table-column sortable :label="`累产油\n（10⁴m³）`" min-width="130px" prop="cumOilProdYearly"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.cumOilProdYearly !== null && scope.row.cumOilProdYearly !== ''">{{Number(scope.row.cumOilProdYearly/10000).toFixed(4)}}</span>
+                            <span
+                                v-if="scope.row.cumOilProdYearly !== null && scope.row.cumOilProdYearly !== ''">{{
+                                    Number(scope.row.cumOilProdYearly / 10000).toFixed(4)
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`地层压力测试时间\n （yyyy-mm-dd）`"  prop="testDate" min-width="200" align="center">
+                    <el-table-column sortable :label="`地层压力测试时间\n （yyyy-mm-dd）`" prop="testDate" min-width="200"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.testDate !== null && scope.row.testDate !== ''">{{(scope.row.testDate)}}</span>
+                            <span
+                                v-if="scope.row.testDate !== null && scope.row.testDate !== ''">{{
+                                    (scope.row.testDate)
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`测试压力值\n（MPa）`" min-width="130px" prop="basalLevelStaticPress" align="center">
+                    <el-table-column sortable :label="`测试压力值\n（MPa）`" min-width="130px"
+                                     prop="basalLevelStaticPress" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.basalLevelStaticPress !== null && scope.row.basalLevelStaticPress !== ''">{{(scope.row.basalLevelStaticPress)}}</span>
+                            <span
+                                v-if="scope.row.basalLevelStaticPress !== null && scope.row.basalLevelStaticPress !== ''">{{
+                                    (scope.row.basalLevelStaticPress)
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                     <el-table-column sortable :label="`流压\n（MPa）`" min-width="130px" prop="flowPress" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.flowPress !== null && scope.row.flowPress !== ''">{{scope.row.flowPress}}</span>
+                            <span
+                                v-if="scope.row.flowPress !== null && scope.row.flowPress !== ''">{{
+                                    scope.row.flowPress
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`生产压差\n（MPa）`" min-width="130px" prop="productPress" align="center">
+                    <el-table-column sortable :label="`生产压差\n（MPa）`" min-width="130px" prop="productPress"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.productPress !== null && scope.row.productPress !== ''">{{scope.row.productPress}}</span>
+                            <span
+                                v-if="scope.row.productPress !== null && scope.row.productPress !== ''">{{
+                                    scope.row.productPress
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="120px" :label="`井控储量\n(10⁴m³)`"  prop="probReservesWell" align="center">
+                    <el-table-column sortable min-width="120px" :label="`井控储量\n(10⁴m³)`" prop="probReservesWell"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.probReservesWell !== null && scope.row.probReservesWell !== ''">{{Number(scope.row.probReservesWell).toFixed(4)}}</span>
+                            <span
+                                v-if="scope.row.probReservesWell !== null && scope.row.probReservesWell !== ''">{{
+                                    Number(scope.row.probReservesWell).toFixed(4)
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable   :label="`剩余可采储量\n(10⁴m³)`" prop="remainingRecoverableReserves" min-width="130px" align="center">
+                    <el-table-column sortable :label="`剩余可采储量\n(10⁴m³)`" prop="remainingRecoverableReserves"
+                                     min-width="130px" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.remainingRecoverableReserves !== null && scope.row.remainingRecoverableReserves !== ''">{{!isNaN(Number(scope.row.remainingRecoverableReserves)) ? Number(scope.row.remainingRecoverableReserves).toFixed(4) : "-"}}</span>
+                            <span
+                                v-if="scope.row.remainingRecoverableReserves !== null && scope.row.remainingRecoverableReserves !== ''">{{
+                                    !isNaN(Number(scope.row.remainingRecoverableReserves)) ? Number(scope.row.remainingRecoverableReserves).toFixed(4) : "-"
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable  :label="`采液指数\n（m³/d.MPa）`" min-width="150px" prop="fluidProductionIndex" align="center">
+                    <el-table-column sortable :label="`采液指数\n（m³/d.MPa）`" min-width="150px"
+                                     prop="fluidProductionIndex" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.fluidProductionIndex !== null && scope.row.fluidProductionIndex !== ''">{{scope.row.fluidProductionIndex}}</span>
-                            <span v-else>-</span>
-                        </template>
-                    </el-table-column>
-                </el-table-column>
-                <el-table-column   label="预测值" prop="name" align="center">
-                    <el-table-column sortable min-width="120px" :label="`产液值\n（m³/d）`"  prop="forecastFluid" align="center">
-                        <template slot-scope="scope">
-                            <span v-if="scope.row.forecastFluid !== null && scope.row.forecastFluid !== ''">{{scope.row.forecastFluid}}</span>
-                            <span v-else>-</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column sortable min-width="100px" :label="`含水\n（%）`"  prop="forecastWaterRatio" align="center">
-                        <template slot-scope="scope">
-                            <span v-if="scope.row.forecastWaterRatio !== null && scope.row.forecastWaterRatio !== ''">{{scope.row.forecastWaterRatio}}</span>
-                            <span v-else>-</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column sortable min-width="120px" :label="`日增油\n（m³）`" prop="forecastOilInc" align="center">
-                        <template slot-scope="scope">
-                            <span v-if="scope.row.forecastOilInc !== null && scope.row.forecastOilInc !== ''">{{scope.row.forecastOilInc}}</span>
-                            <span v-else>-</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column sortable min-width="120px"  :label="`日产油\n（m³）`" prop="forecastOil" align="center">
-                        <template slot-scope="scope">
-                            <span v-if="scope.row.forecastOil !== null && scope.row.forecastOil !== ''">{{scope.row.forecastOil}}</span>
-                            <span v-else>-</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column sortable min-width="120px" :label="`生产压差\n（MPa）`"    prop="forecastProductPress" align="center">
-                        <template slot-scope="scope">
-                            <span v-if="scope.row.forecastProductPress !== null && scope.row.forecastProductPress !== ''">{{scope.row.forecastProductPress}}</span>
-                            <span v-else>-</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column sortable min-width="120px" :label="`流压\n（MPa）`"  prop="forecastFlowPress" align="center">
-                        <template slot-scope="scope">
-                            <span v-if="scope.row.forecastFlowPress !== null && scope.row.forecastFlowPress !== ''">{{scope.row.forecastFlowPress}}</span>
+                            <span
+                                v-if="scope.row.fluidProductionIndex !== null && scope.row.fluidProductionIndex !== ''">{{
+                                    scope.row.fluidProductionIndex
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
                 </el-table-column>
-                <el-table-column   label="其他因素" prop="name" align="center">
-                    <el-table-column sortable min-width="130px"   :label="`排量效率\n(%)`" prop="displacementEfficiency" align="center">
+                <el-table-column label="预测值" prop="name" align="center">
+                    <el-table-column sortable min-width="120px" :label="`产液值\n（m³/d）`" prop="forecastFluid"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.displacementEfficiency !== null && scope.row.displacementEfficiency !== ''">{{scope.row.displacementEfficiency}}</span>
+                            <span
+                                v-if="scope.row.forecastFluid !== null && scope.row.forecastFluid !== ''">{{
+                                    scope.row.forecastFluid
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px"  :label="`历史出砂(d)`" prop="historySandDay" align="center">
+                    <el-table-column sortable min-width="100px" :label="`含水\n（%）`" prop="forecastWaterRatio"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.historySandDay !== null && scope.row.historySandDay !== ''">{{scope.row.historySandDay}}</span>
+                            <span
+                                v-if="scope.row.forecastWaterRatio !== null && scope.row.forecastWaterRatio !== ''">{{
+                                    scope.row.forecastWaterRatio
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px"   :label="`近期出砂(d)`" prop="sandDay" align="center">
+                    <el-table-column sortable min-width="120px" :label="`日增油\n（m³）`" prop="forecastOilInc"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.sandDay !== null && scope.row.sandDay !== ''">{{scope.row.sandDay}}</span>
+                            <span
+                                v-if="scope.row.forecastOilInc !== null && scope.row.forecastOilInc !== ''">{{
+                                    scope.row.forecastOilInc
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px"   :label="`出砂量(%)`" prop="sandValue" align="center">
+                    <el-table-column sortable min-width="120px" :label="`日产油\n（m³）`" prop="forecastOil"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.sandValue !== null && scope.row.sandValue !== ''">{{scope.row.sandValue}}</span>
+                            <span
+                                v-if="scope.row.forecastOil !== null && scope.row.forecastOil !== ''">{{
+                                    scope.row.forecastOil
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px"   label="电泵情况" prop="pumpCondition" align="center">
+                    <el-table-column sortable min-width="120px" :label="`生产压差\n（MPa）`" prop="forecastProductPress"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.pumpCondition !== null && scope.row.pumpCondition !== ''">{{scope.row.pumpCondition}}</span>
+                            <span
+                                v-if="scope.row.forecastProductPress !== null && scope.row.forecastProductPress !== ''">{{
+                                    scope.row.forecastProductPress
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px"   label="管柱情况" prop="tubularColumnCondition" align="center">
+                    <el-table-column sortable min-width="120px" :label="`流压\n（MPa）`" prop="forecastFlowPress"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.tubularColumnCondition !== null && scope.row.tubularColumnCondition !== ''">{{scope.row.tubularColumnCondition}}</span>
+                            <span
+                                v-if="scope.row.forecastFlowPress !== null && scope.row.forecastFlowPress !== ''">{{
+                                    scope.row.forecastFlowPress
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column  min-width="190px"   label="海管名称" prop="pipeline" align="center">
+                </el-table-column>
+                <el-table-column label="其他因素" prop="name" align="center">
+                    <el-table-column sortable min-width="130px" :label="`排量效率\n(%)`" prop="displacementEfficiency"
+                                     align="center">
                         <template slot-scope="scope">
-                            <el-tooltip class="item" effect="dark" :content="scope.row.pipeline" placement="top" v-if="scope.row.pipeline !== null && scope.row.pipeline !== ''">
+                            <span
+                                v-if="scope.row.displacementEfficiency !== null && scope.row.displacementEfficiency !== ''">{{
+                                    scope.row.displacementEfficiency
+                                }}</span>
+                            <span v-else>-</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column sortable min-width="130px" :label="`历史出砂(d)`" prop="historySandDay"
+                                     align="center">
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.historySandDay !== null && scope.row.historySandDay !== ''">{{
+                                    scope.row.historySandDay
+                                }}</span>
+                            <span v-else>-</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column sortable min-width="130px" :label="`近期出砂(d)`" prop="sandDay" align="center">
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.sandDay !== null && scope.row.sandDay !== ''">{{
+                                    scope.row.sandDay
+                                }}</span>
+                            <span v-else>-</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column sortable min-width="130px" :label="`出砂量(%)`" prop="sandValue" align="center">
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.sandValue !== null && scope.row.sandValue !== ''">{{
+                                    scope.row.sandValue
+                                }}</span>
+                            <span v-else>-</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column sortable min-width="130px" label="电泵情况" prop="pumpCondition" align="center">
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.pumpCondition !== null && scope.row.pumpCondition !== ''">{{
+                                    scope.row.pumpCondition
+                                }}</span>
+                            <span v-else>-</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column sortable min-width="130px" label="管柱情况" prop="tubularColumnCondition"
+                                     align="center">
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.tubularColumnCondition !== null && scope.row.tubularColumnCondition !== ''">{{
+                                    scope.row.tubularColumnCondition
+                                }}</span>
+                            <span v-else>-</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column min-width="190px" label="海管名称" prop="pipeline" align="center">
+                        <template slot-scope="scope">
+                            <el-tooltip class="item" effect="dark" :content="scope.row.pipeline" placement="top"
+                                        v-if="scope.row.pipeline !== null && scope.row.pipeline !== ''">
                                 <div
                                     class="name-wrapper"
                                     style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; position: relative"
@@ -280,27 +392,41 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column> -->
-                    <el-table-column sortable min-width="130px"   :label="`海管余量\n     (m³)`" prop="quantity" align="center">
+                    <el-table-column sortable min-width="130px" :label="`海管余量\n     (m³)`" prop="quantity"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.quantity !== null && scope.row.quantity !== ''"> {{Number(scope.row.quantity).toFixed(2)}}</span>
+                            <span
+                                v-if="scope.row.quantity !== null && scope.row.quantity !== ''"> {{
+                                    Number(scope.row.quantity).toFixed(2)
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable   label="泵能耗预测" min-width="130px" prop="pumpEnergyConsumeForecast" align="center">
+                    <el-table-column sortable label="泵能耗预测" min-width="130px" prop="pumpEnergyConsumeForecast"
+                                     align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.pumpEnergyConsumeForecast !== null && scope.row.pumpEnergyConsumeForecast !== ''">{{scope.row.pumpEnergyConsumeForecast}}</span>
+                            <span
+                                v-if="scope.row.pumpEnergyConsumeForecast !== null && scope.row.pumpEnergyConsumeForecast !== ''">{{
+                                    scope.row.pumpEnergyConsumeForecast
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px"   label="变频器" prop="frequencyConverter" align="center">
+                    <el-table-column sortable min-width="130px" label="变频器" prop="frequencyConverter" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.frequencyConverter !== null && scope.row.frequencyConverter !== ''">{{scope.row.frequencyConverter}}</span>
+                            <span
+                                v-if="scope.row.frequencyConverter !== null && scope.row.frequencyConverter !== ''">{{
+                                    scope.row.frequencyConverter
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px"   label="变压器" prop="transformer" align="center">
+                    <el-table-column sortable min-width="130px" label="变压器" prop="transformer" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.transformer !== null && scope.row.transformer !== ''">{{scope.row.transformer}}</span>
+                            <span
+                                v-if="scope.row.transformer !== null && scope.row.transformer !== ''">{{
+                                    scope.row.transformer
+                                }}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
@@ -316,15 +442,16 @@ import {
     QueryOgfDetail,
     QueryPlatformDetail
 } from "@/api/basic/master";
-import { pumpReplaceDetail,pumpReplaceDetailSkip } from "@/api/rem/welldynamicanalysis";
+import {pumpReplaceDetail, pumpReplaceDetailSkip} from "@/api/rem/welldynamicanalysis";
 import {
     measureRecommend,
 } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import {exportExcel} from "@/lib/exportExcel";
-import { getOilFieldList } from "@/api/rem/workcompanydesignate.js";
+import {getOilFieldList} from "@/api/rem/workcompanydesignate.js";
 import {
     fetchPlatforms,
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+
 export default {
     data() {
         return {
@@ -345,21 +472,22 @@ export default {
             total: 0,
             // 选中数组
             ids: [],
-            date:'',
+            date: '',
             // 保存数组
             savelist: [],
             oilFields: [],
             platforms: [],
-            platform:[],
+            platform: [],
             queryParams: {
                 endTime: "",
                 selectPlatform: '',
-                selectOilField:"3FC9A818F5BC43B88270DB80BBB3018F"},
+                selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F"
+            },
         };
     },
     created() {
         this.getserch()
-        this.queryParams.endTime=this.$route.query.currentDate
+        this.queryParams.endTime = this.$route.query.currentDate
         this.getList();
         // this.choiceDepts(); // 获取组织机构
     },
@@ -370,8 +498,11 @@ export default {
         //     }).join('');
         //     return a;
         // },
+        changepla(){
+          this.getserch() 
+        },
         getserch() {
-            getOilFieldList({ orgId: "715AD1CD60484BB59E737CD18A9DE44A" }).then((res) => {
+            getOilFieldList({orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then((res) => {
                 if (res.data.code == 200) {
                     this.oilFields = res.data.data;
                     let paraPlatForm = {
@@ -380,8 +511,8 @@ export default {
                     fetchPlatforms(paraPlatForm).then((res) => {
                         if (res.data.code == 200) {
                             this.platform = res.data.data.platform;
-                            this.platform.map((n)=>{
-                                if(n.platName =='全部'){
+                            this.platform.map((n) => {
+                                if (n.platName == '全部') {
                                     n.platFormId = ''
                                 }
                             })
@@ -394,14 +525,14 @@ export default {
                 }
             });
         },
-        retrieval(){
+        retrieval() {
             if (this.$route.query.scourePage === "措施建议表详情") {
                 this.queryTableData();
             } else {
                 let selectPlatform = ''
-                if(this.queryParams.selectPlatform == ''){
+                if (this.queryParams.selectPlatform == '') {
                     selectPlatform = '3FC9A818F5BC43B88270DB80BBB3018F'
-                }else{
+                } else {
                     selectPlatform = this.queryParams.selectPlatform
                 }
                 let list =
@@ -409,55 +540,56 @@ export default {
                         oilFieldId: this.queryParams.selectOilField,
                         selectBlock: "3FC9A818F5BC43B88270DB80BBB3018F",
                         evaluationDate: this.queryParams.endTime,
-                        platformId:selectPlatform,
+                        platformId: selectPlatform,
                         timeGranularityCode: "",
                         wellId: "",
                         showNormal: true
                     }
-                measureRecommend(list).then((res)=>{
+                measureRecommend(list).then((res) => {
                     const wells = []
-                    res.data?.data?.indicatorAnalysisDetailInfos.map((n)=>{
-                        if(n.code == this.$route.query.measureCode){
-                            n?.basis?.map((j)=>{
+                    res.data?.data?.indicatorAnalysisDetailInfos.map((n) => {
+                        if (n.code == this.$route.query.measureCode) {
+                            n?.basis?.map((j) => {
                                 wells.push(j.id)
                             })
                         }
                     })
-                    if(wells.length > 0){
+                    if (wells.length > 0) {
                         let data = {
                             date: this.queryParams.endTime,
                             ogfId: this.queryParams.selectOilField,
                             platId: selectPlatform,
-                            measureCode:this.$route.query.measureCode,
-                            wellIds:wells,
+                            measureCode: this.$route.query.measureCode,
+                            wellIds: wells,
                         };
                         pumpReplaceDetail(data).then((res) => {
-                            if(res.data.code == 200){
+                            if (res.data.code == 200) {
                                 this.noticeList = res.data.data;
-                            }else{
+                            } else {
                                 this.noticeList = []
                             }
                         });
                     }
 
-                })}
+                })
+            }
 
         },
         doDownExcel() {
             exportExcel("#xczyjhb", "措施计划情况表");
         },
-        queryTableData(){
+        queryTableData() {
             //jgl
             let selectPlatform = '';
-            if(this.queryParams.selectPlatform == ''){
+            if (this.queryParams.selectPlatform == '') {
                 selectPlatform = '3FC9A818F5BC43B88270DB80BBB3018F'
-            }else{
+            } else {
                 selectPlatform = this.queryParams.selectPlatform
             }
             let ogfId = '';
-            if(this.queryParams.selectOilField == ''){
+            if (this.queryParams.selectOilField == '') {
                 ogfId = '3FC9A818F5BC43B88270DB80BBB3018F'
-            }else{
+            } else {
                 ogfId = this.queryParams.selectOilField
             }
             let params = {
@@ -465,10 +597,10 @@ export default {
                 ogfId: ogfId,
                 platId: selectPlatform
             };
-            pumpReplaceDetailSkip(params).then(res=>{
-                if(res.data.code == 200){
+            pumpReplaceDetailSkip(params).then(res => {
+                if (res.data.code == 200) {
                     this.noticeList = res.data.data;
-                }else{
+                } else {
                     this.noticeList = []
                 }
             })
@@ -488,73 +620,28 @@ export default {
                         showNormal: true
                     };
                 this.queryParams.endTime = this.$route.query.currentDate
-                measureRecommend(list).then((res)=>{
+                measureRecommend(list).then((res) => {
                     const wells = []
-                    res.data?.data?.indicatorAnalysisDetailInfos.map((n)=>{
-                        if(n.code == this.$route.query.measureCode){
-                            n.basis?.map((j)=>{
+                    res.data?.data?.indicatorAnalysisDetailInfos.map((n) => {
+                        if (n.code == this.$route.query.measureCode) {
+                            n.basis?.map((j) => {
                                 wells.push(j.id)
                             })
                         }
                     })
-                    if(wells.length>0){
+                    if (wells.length > 0) {
                         let data = {
                             date: this.$route.query.currentDate,
                             ogfId: this.queryParams.selectOilField,
                             platId: this.$route.query.platform,
-                            wellIds:wells,
-                            measureCode:this.$route.query.measureCode,
+                            wellIds: wells,
+                            measureCode: this.$route.query.measureCode,
                         };
                         pumpReplaceDetail(data).then((res) => {
-                            // this.noticeList=[{
-                            //     "wellId": "1E3522013117430FBDB893903542FD5D",
-                            //     "measType": "开层",
-                            //     "wellNo": "QHD32-6-A18",
-                            //     "layerName": "明化镇组下段Ⅳ油组3小层<br/>明化镇组下段Ⅲ油组2小层",
-                            //     "blockId": "83D33B89B0DAB7DFA440BD060746882A",
-                            //     "blockName": "秦皇岛32-6北区",
-                            //     "reservoirThickness": "0.57,1.22,1.75,2.17,2.48,2.64,5.96,7.57",
-                            //     "horizonIntervalLen": null,
-                            //     "completionMethod": null,
-                            //     "startDate": "2001-10-11",
-                            //     "fluidProdDaily": 0.0,
-                            //     "oilProdDaily": 0.0,
-                            //     "waterRatio": null,
-                            //     "pumpFrequency": 0.0,
-                            //     "cumOilProdYearly": 173170.36,
-                            //     "testDate": null,
-                            //     "basalLevelStaticPress": null,
-                            //     "flowPress": null,
-                            //     "productPress": null,
-                            //     "probReservesWell": null,
-                            //     "remainingRecoverableReserves": null,
-                            //     "fluidProductionIndex": null,
-                            //     "forecastFluid": 0.0,
-                            //     "forecastWaterRatio": null,
-                            //     "forecastOilInc": null,
-                            //     "forecastOil": 0.0,
-                            //     "forecastProductPress": null,
-                            //     "forecastFlowPress": null,
-                            //     "displacementEfficiency": null,
-                            //     "historySandDay": 0,
-                            //     "sandDay": 0,
-                            //     "sandValue": null,
-                            //     "pumpCondition": "日产液量波动,日度健康度异常AI",
-                            //     "tubularColumnCondition": null,
-                            //     "fromPlatform": "C099F9FAB82348FDB73B33EECCE20A08",
-                            //     "fromPlatformName": "QHD32-6WHPA",
-                            //     "toplatform": "5FFA69B3168C4596925315A30B137B46",
-                            //     "toplatformName": null,
-                            //     "quantity": "8579.413018",
-                            //     "pumpEnergyConsumeForecast": null,
-                            //     "frequencyConverter": null,
-                            //     "transformer": null,
-                            //     "yearMonth": null
-                            // }];
-                            if(res.data.code == 200){
+                            if (res.data.code == 200) {
                                 // debugger
                                 this.noticeList = res.data.data;
-                            }else{
+                            } else {
                                 this.noticeList = []
                             }
                         });
@@ -612,8 +699,9 @@ export default {
         returnrouter() {
             this.$router.go(-1);
         },
-        reset(){
-
+        reset() {
+            this.queryParams.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F'
+            this.getserch()
         },
         filterData(arr, colName, concatList) {
             let spanOneArr = [];
@@ -652,10 +740,10 @@ export default {
 
             // 表格序号
             let Nosort = 0;
-            for(const n in spanOneArr) {
-                if(spanOneArr[n] > 0) {
+            for (const n in spanOneArr) {
+                if (spanOneArr[n] > 0) {
                     Nosort += 1;
-                    this.$set(this.noticeList[n],'Nosort',Nosort);
+                    this.$set(this.noticeList[n], 'Nosort', Nosort);
                 }
             }
 
@@ -679,14 +767,17 @@ export default {
     max-height: 370px;
     overflow: scroll;
 }
+
 ::v-deep .el-table__header-wrapper {
     .cell {
         height: auto !important;
     }
 }
+
 .pertable thead .el-table-column--selection .cell {
     display: none;
 }
+
 #xczyjhb {
     ::v-deep .el-table__header-wrapper .cell {
         height: auto;
@@ -694,9 +785,10 @@ export default {
         white-space: pre;
     }
 }
- ::v-deep .cellWrap .cell{
-        height: auto !important;
-        line-height: 30px !important;
-        white-space: pre !important;
+
+::v-deep .cellWrap .cell {
+    height: auto !important;
+    line-height: 30px !important;
+    white-space: pre !important;
 }
 </style>
