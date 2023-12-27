@@ -82,6 +82,9 @@ export default {
     this.init();
     this.getTreeData();
   },
+  updated() {
+    this.init();
+  },
   methods: {
     normalizer(node) {
       if (node.children && !node.children.length) {
