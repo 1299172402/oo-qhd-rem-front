@@ -26,7 +26,7 @@
                     <el-form-item label="井别：">
                         <el-select v-model="params.wellCategory" class="f2" style="width: 100px" filterable @change="queryWellData">
                             <el-option
-                                v-for="item  in wellCategoryList"
+                                    v-for="item  in wellCategoryList"
                                 :key="item.id"
                                 :label="item.name"
                                 :value="item.id"
