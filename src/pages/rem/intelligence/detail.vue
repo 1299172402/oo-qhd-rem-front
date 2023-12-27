@@ -286,7 +286,7 @@ export default {
     },
     // 重置按钮
     refresh(){
-        this.queryData.blockId = 'YCFXDY8B643EDC9007F96F570600457D';
+        this.queryData.blockId = '83D33B89B0DAB7DFA440BD060746883A';
         let timeNew = new Date((new Date()).getFullYear(),(new Date()).getMonth(), 0);
         this.queryData.startTime = [timeNew.format('YYYY-MM'), timeNew.format('YYYY-MM')]
         this.queryData.timeStatus = false

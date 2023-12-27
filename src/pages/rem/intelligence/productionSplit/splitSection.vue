@@ -167,7 +167,7 @@ import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
 import {getChopSection} from '@/api/rem/r-intelligentIPA.js';
 // import { number } from 'echarts/lib/export';
-import {getuserListByUserNames,getFieldListsDetail,getblockData,getWellData} from "@/api/basic/masterBycoderXu.js"
+import {getuserListByUserNames,getFieldListsDetail,getblockData,getWellData,getWellDataForWellStyle} from "@/api/basic/masterBycoderXu.js"
 
 
 export default {
@@ -308,7 +308,6 @@ export default {
       queryBlockFeild() {
         getblockData({ogfId:this.params.ogfId}).then((res) => {
           this.blockList = res.data.data;
-          console.log('ooppppp')
             console.log(this.blockList)
           for(var i=0;i<this.blockList.length;i++){
             if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
@@ -339,6 +338,9 @@ export default {
 
         }
       },
+        getWellDataForWellStyle(){
+          
+        },
       /**
        * 井号下拉
        */
@@ -353,9 +355,8 @@ export default {
         }else {
           welltypeName='注水井'
         }
-        getWellData({blockId:this.params.blockId,ogfId:this.params.ogfId,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
-            this.wellIdList=res.data.data
-                console.log(this.wellIdList)
+        getWellDataForWellStyle({blockId:this.params.blockId,ogfId:this.params.ogfId,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
+                this.wellIdList=res.data.data
                 for(var i=0;i<this.wellIdList.length;i++){
                     if(this.wellIdList[i].wellId==='DA0269628E74490ABDE198E7D1DBF3EA'){
                         this.wellId=this.wellIdList[i].wellId

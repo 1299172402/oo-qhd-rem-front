@@ -167,7 +167,7 @@ export default {
           this.setDisabledRecursive(this.deptOptions, this.start, this.end)
           this.$nextTick(()=>{
               this.$refs.tree.setCheckedNodes([{
-                  value: "YCFXDY8B643EDC9007F96F570600457D",
+                  value: "83D33B89B0DAB7DFA440BD060746883A",
                   label: '秦皇岛32-6南区'
               }]);
           })

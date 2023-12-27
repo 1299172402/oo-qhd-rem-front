@@ -417,7 +417,7 @@ export default {
                     "label": "秦皇岛32-6"
                 },
                 "blockId": {
-                    "value": "YCFXDY8B643EDC9007F96F570600457D",
+                    "value": "83D33B89B0DAB7DFA440BD060746883A",
                     "label": "秦皇岛32-6南区"
                 },
                 "wellCategory": "01",
@@ -439,7 +439,7 @@ export default {
                 ],
                 "blockList": [
                     {
-                        "value": "YCFXDY8B643EDC9007F96F570600457D",
+                        "value": "83D33B89B0DAB7DFA440BD060746883A",
                         "label": "秦皇岛32-6南区"
                     }
                 ]

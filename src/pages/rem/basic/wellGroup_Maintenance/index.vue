@@ -272,7 +272,7 @@ export default {
             query: {
                 selectField: "3FC9A818F5BC43B88270DB80BBB3018F",
                 value2: '',
-                selectBlock: "YCFXDY8B643EDC9007F96F570600457D",
+                selectBlock: "83D33B89B0DAB7DFA440BD060746883A",
             },
             select: {
                 selectBlock: "",
@@ -334,6 +334,7 @@ export default {
                 wellGroupId: this.select.selectBlock,
                 blockId: this.query.selectBlock
             }).then(({wellGroup}) => {
+                console.log(wellGroup)
                 let data = [];
                 if (Array.isArray(wellGroup) && wellGroup.length) {
                     wellGroup.forEach(item => {
@@ -439,6 +440,7 @@ export default {
             this.select.layerBlock = ''
             this.select.selectBlock = ""
             this.transferData = []
+            
             this.getselectWell(data)
         },
         // 井组名称下拉事件
@@ -516,9 +518,12 @@ export default {
         },
         // 井组名称下拉
         getselectWell(data) {
+            
             if (!data.dateTime) {
                 return this.blockList = [{wellGroupId: '0', wellGroupName: "新增"}]
             }
+            console.log('ppoopp')
+            console.log(data)
             listGroupDataByBlockIdAndDate(data).then((res) => {
                 this.blockList = res
                 this.blockList.unshift({

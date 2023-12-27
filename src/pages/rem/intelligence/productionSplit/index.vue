@@ -285,7 +285,7 @@ export default {
                 }, //油田
                 blockId: {
                     // value: "6CD7342CA6DD418183A4B3BC38584F7C",
-                    value: "YCFXDY8B643EDC9007F96F570600457D",
+                    value: "83D33B89B0DAB7DFA440BD060746883A",
                     label: "秦皇岛32-6南区",
                 }, //区块
                 wellCategory: "01", //井别
@@ -341,7 +341,7 @@ export default {
         } else {
             this.queryData.ogfId.value = "3FC9A818F5BC43B88270DB80BBB3018F"
             this.queryData.ogfId.label = "秦皇岛32-6"
-            this.queryData.blockId.value = "YCFXDY8B643EDC9007F96F570600457D"
+            this.queryData.blockId.value = "83D33B89B0DAB7DFA440BD060746883A"
             this.queryData.blockId.label = "秦皇岛32-6南区"
             this.queryData.wellCategory = "01"
             this.queryData.wellId = ["DA0269628E74490ABDE198E7D1DBF3EA"]
