@@ -89,6 +89,7 @@
                 @expand-change="expandChange"
                 :cell-style="changeCellStyle"
                 :tree-props="{children: 'layerData', hasChildren: 'hasChildren'}"
+                default-expand-all
             >
                 <el-table-column prop="name" label="层段" width="250"></el-table-column>
                 <!-- <el-table-column prop="singleLAyer" label="小层"></el-table-column> -->
