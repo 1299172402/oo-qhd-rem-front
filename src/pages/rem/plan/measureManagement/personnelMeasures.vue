@@ -5,7 +5,7 @@
       <el-tabs v-model="activeName" class="g-pageHeader" @tab-click="selectBtn(activeName)">
         <el-tab-pane :label="item.name" :name="item.value" v-for="(item, index) in dataList" :key="index" />
       </el-tabs>
-      <components ref="modal" style="margin-top: -23px; height: 100%" :infodata="1" :is="currentTab" />
+      <components ref="modal" style="margin-top: -13px; height: 100%" :infodata="1" :is="currentTab" />
     </div>
   </div>
 </template>
@@ -38,7 +38,6 @@ export default {
     }
   },
   mounted() {
-
       if(this.$route.query.page){
           this.activeName = 'planmessage' 
           this.currentTab = 'planmessage'
