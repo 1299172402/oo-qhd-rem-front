@@ -91,6 +91,9 @@ export default {
     this.init();
     this.getTreeData();
   },
+  updated() {
+    this.init();
+  },
   methods: {
     // 初始化方法
     init() {
@@ -240,7 +243,11 @@ export default {
               let parentIds = parentList.filter((item) => item.level < 4).map((item) => item.value);
               this.$refs.tree.setCheckedKeys(parentIds);
             } else {
-              this.$refs.tree.setCheckedKeys([data.value, data.children[0]?.value, data.children[0]?.children[0]?.value]);
+              this.$refs.tree.setCheckedKeys([
+                data.value,
+                data.children[0]?.value,
+                data.children[0]?.children[0]?.value,
+              ]);
             }
           }
         } else if (data.level == 4) {
