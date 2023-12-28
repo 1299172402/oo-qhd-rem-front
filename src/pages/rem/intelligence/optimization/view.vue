@@ -548,6 +548,7 @@ export default {
                 wellInjRatioList: this.tableData1
             }
             getWellInjRatio(params).then((res) => {
+                console.log(res)
                 // 多添加的
                 let arr = eval(res.wellGroupData)
                 let WellIdObj = {}

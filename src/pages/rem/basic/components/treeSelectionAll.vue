@@ -82,6 +82,9 @@ export default {
     this.init();
     this.getTreeData();
   },
+  updated() {
+    this.init();
+  },
   methods: {
     // 初始化方法
     init() {
