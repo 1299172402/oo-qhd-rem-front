@@ -30,3 +30,11 @@ export function getWellData(data) {
         data
     });
 }
+
+export function getWellDataForWellStyle(data) {
+    return Axios({
+        url: `${baseUrl}/omc003d/QueryWellDetailForWellStyle`,
+        method: "post",
+        data
+    });
+}

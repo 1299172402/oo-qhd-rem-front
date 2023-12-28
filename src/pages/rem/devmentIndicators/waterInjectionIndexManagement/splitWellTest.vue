@@ -49,7 +49,7 @@
 
     <page-panel-new class="app-content">
       <pagePanel headerTitle="分注井测试率" style="height: 500px" show-btn>
-        <div class="g-row-flex-V" style="position: absolute; left: 20px">
+        <div class="g-row-flex-V" style="position: absolute; left: 20px; z-index: 99;">
           <div style="margin-right: 20px">
             平台：
             <el-select v-model="queryParams.platFormId" clearable="" style="width: 220px">

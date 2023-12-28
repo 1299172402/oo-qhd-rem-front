@@ -3,27 +3,27 @@
         <header-search style="height: auto;display: grid">
             <el-form style="margin: 20px 0 10px 0" :inline="true">
                 <el-form-item label="油田：">
-                    <el-select v-model="params.ogfId.value" disabled>
+                    <el-select v-model="params.ogfId.value" >
                         <el-option
                             v-for="item in params.ogfList"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
+                            :key="item.ogfId"
+                            :label="item.ogfName"
+                            :value="item.ogfId"
                         ></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区块：">
-                    <el-select v-model="params.blockId.value" disabled>
+                    <el-select v-model="params.blockId.value" >
                         <el-option
                             v-for="item in params.blockList"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
+                            :key="item.reservoirAnalyseUnitId"
+                            :label="item.reservoirAnalyseUnitName"
+                            :value="item.reservoirAnalyseUnitId"
                         ></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="井别：">
-                    <el-select v-model="params.wellCategory" class="f2" style="width: 100px" filterable disabled>
+                    <el-select v-model="params.wellCategory" class="f2" style="width: 100px" filterable @change="queryWellData">
                         <el-option
                             v-for="item  in wellCategoryList"
                             :key="item.id"
@@ -33,9 +33,9 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="井号：">
-                    <el-select v-model="wellId" class="f2" disabled>
+                    <el-select v-model="wellId" class="f2" @change="OilfieldBut">
                         <el-option
-                            v-for="item in params.wellId"
+                            v-for="item in params.wellIdList"
                             :key="item.wellId"
                             :label="item.wellName"
                             :value="item.wellId"
@@ -51,7 +51,6 @@
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
                         value-format="yyyy-MM-dd"
-                        disabled
                     ></el-date-picker>
                 </el-form-item>
                 <el-button type="primary" class="confirmBut" icon="el-icon-search" disabled>搜索</el-button>
@@ -61,24 +60,25 @@
         </header-search>
         <page-panel header-title="单井劈分系数结果" style="height:calc(100% - 100px)" show-btn>
             <el-form :inline="true">
-                <el-form-item label="井号：">
-                    <el-select v-model="wellId" @change="OilfieldBut">
-                        <el-option
-                            v-for="item in params.wellId"
-                            :key="item.wellId"
-                            :label="item.wellName"
-                            :value="item.wellId"
-                        ></el-option>
-                    </el-select>
-                    <el-button type="primary" style="margin-left: 20px" @click="handleAllSave">保存</el-button>
-                    <el-button type="primary" @click="handleOperation">运行计算</el-button>
-                </el-form-item>
+<!--                <el-form-item label="井号：">-->
+<!--                    <el-select v-model="wellId" @change="OilfieldBut">-->
+<!--                        <el-option-->
+<!--                            v-for="item in params.wellIdList"-->
+<!--                            :key="item.wellId"-->
+<!--                            :label="item.wellName"-->
+<!--                            :value="item.wellId"-->
+<!--                        ></el-option>-->
+<!--                    </el-select>-->
+<!--                    -->
+<!--                </el-form-item>-->
+                <el-button type="primary" style="margin-left: 0px" @click="handleAllSave">保存</el-button>
+                <el-button type="primary" @click="handleOperation">运行计算</el-button>
                 <el-button type="primary" icon="el-icon-download" style="float: right" @click="downloadTable">下载</el-button>
             </el-form>
             <el-table
                 v-show="params.wellCategory === '01'"
                 :data="tableData"
-                style="width: 100%;"
+                style="width: 100%;margin-top: 10px"
                 row-key="id"
                 highlight
                 height="calc(100% - 60px)"
@@ -89,6 +89,7 @@
                 @expand-change="expandChange"
                 :cell-style="changeCellStyle"
                 :tree-props="{children: 'layerData', hasChildren: 'hasChildren'}"
+                default-expand-all
             >
                 <el-table-column prop="name" label="层段" width="250"></el-table-column>
                 <!-- <el-table-column prop="singleLAyer" label="小层"></el-table-column> -->
@@ -270,7 +271,7 @@ import {
 import {getChopSection, exportChopSection} from '@/api/rem/r-intelligentIPA.js';
 import {v4 as uuidv4} from 'uuid';
 import FileSaver from "file-saver";
-
+import {getuserListByUserNames,getFieldListsDetail,getblockData,getWellData,getWellDataForWellStyle} from "@/api/basic/masterBycoderXu.js"
 export default {
     name:'DividingCoefficient',
     components: {},
@@ -384,79 +385,144 @@ export default {
                     }
                 ]
             },
+            orgId:'',
             params: {
                 ogfId: {value: '', label: ''},
-                blockId: [],
+                blockId: {value: '', label: ''},
                 ogfList: [],
                 blockList: [],
                 wellCategory: '',
+                value:'',
+                wellIdList:[]
             },
         }
     },
     mounted() {
-        const params = JSON.parse(localStorage.getItem('PRODUCTION_SPLIT'))
-        if(this.$route.query.link){
-            // 获取当前日期
-            var currentDate = new Date();
-
-// 获取当前日期的上一个月份
-            var previousMonth = currentDate.getMonth() - 1;
-
-// 创建一个新的日期对象，将月份设置为上一个月
-            var previousMonthDate = new Date(currentDate.getFullYear(), previousMonth, 1);
-
-// 获取上一个月份的最后一天日期
-            var lastDayOfPreviousMonth = new Date(previousMonthDate.getFullYear(), previousMonthDate.getMonth() + 1, 0);
-
-// 格式化日期
-            var firstDay = previousMonthDate.getFullYear() + '-' + (previousMonthDate.getMonth() + 1) + '-01';
-            var lastDay = lastDayOfPreviousMonth.getFullYear() + '-' + (lastDayOfPreviousMonth.getMonth() + 1) + '-' + lastDayOfPreviousMonth.getDate();
-            this.params = {
-                "ogfId": {
-                    "value": "3FC9A818F5BC43B88270DB80BBB3018F",
-                    "label": "秦皇岛32-6"
-                },
-                "blockId": {
-                    "value": "YCFXDY8B643EDC9007F96F570600457D",
-                    "label": "秦皇岛32-6南区"
-                },
-                "wellCategory": "01",
-                "wellId": [
-                    {
-                        "wellName": "QHD32-6-C1",
-                        "wellId": "DA0269628E74490ABDE198E7D1DBF3EA"
-                    }
-                ],
-                "value": [
-                    firstDay,
-                    lastDay
-                ],
-                "ogfList": [
-                    {
-                        "value": "3FC9A818F5BC43B88270DB80BBB3018F",
-                        "label": "秦皇岛32-6"
-                    }
-                ],
-                "blockList": [
-                    {
-                        "value": "YCFXDY8B643EDC9007F96F570600457D",
-                        "label": "秦皇岛32-6南区"
-                    }
-                ]
-            }
-            this.well = this.params.wellId
-            this.wellId = this.params.wellId[0].wellId
-        }else{
-            if (params) {
-                this.params = {...params, ogfList: [params.ogfId], blockList: [params.blockId]}
-                this.well = params.wellId
-                this.wellId = params.wellId[0].wellId
-            }  
-        }
+//         const params = JSON.parse(localStorage.getItem('PRODUCTION_SPLIT'))
+//         if(this.$route.query.link){
+//             // 获取当前日期
+//             var currentDate = new Date();
+//
+// // 获取当前日期的上一个月份
+//             var previousMonth = currentDate.getMonth() - 1;
+//
+// // 创建一个新的日期对象，将月份设置为上一个月
+//             var previousMonthDate = new Date(currentDate.getFullYear(), previousMonth, 1);
+//
+// // 获取上一个月份的最后一天日期
+//             var lastDayOfPreviousMonth = new Date(previousMonthDate.getFullYear(), previousMonthDate.getMonth() + 1, 0);
+//
+// // 格式化日期
+//             var firstDay = previousMonthDate.getFullYear() + '-' + (previousMonthDate.getMonth() + 1) + '-01';
+//             var lastDay = lastDayOfPreviousMonth.getFullYear() + '-' + (lastDayOfPreviousMonth.getMonth() + 1) + '-' + lastDayOfPreviousMonth.getDate();
+//             this.params = {
+//                 "ogfId": {
+//                     "value": "3FC9A818F5BC43B88270DB80BBB3018F",
+//                     "label": "秦皇岛32-6"
+//                 },
+//                 "blockId": {
+//                     "value": "83D33B89B0DAB7DFA440BD060746883A",
+//                     "label": "秦皇岛32-6南区"
+//                 },
+//                 "wellCategory": "01",
+//                 "wellId": [
+//                     {
+//                         "wellName": "QHD32-6-C1",
+//                         "wellId": "DA0269628E74490ABDE198E7D1DBF3EA"
+//                     }
+//                 ],
+//                 "value": [
+//                     firstDay,
+//                     lastDay
+//                 ],
+//                 "ogfList": [
+//                     {
+//                         "value": "3FC9A818F5BC43B88270DB80BBB3018F",
+//                         "label": "秦皇岛32-6"
+//                     }
+//                 ],
+//                 "blockList": [
+//                     {
+//                         "value": "83D33B89B0DAB7DFA440BD060746883A",
+//                         "label": "秦皇岛32-6南区"
+//                     }
+//                 ]
+//             }
+//             this.well = this.params.wellId
+//             this.wellId = this.params.wellId[0].wellId
+//         }else{
+//             if (params) {
+//                 this.params = {...params, ogfList: [params.ogfId], blockList: [params.blockId]}
+//                 this.well = params.wellId
+//                 this.wellId = params.wellId[0].wellId
+//             }  
+//         }
+        
        
-        this.OilfieldBut()
+        
+        this.params.wellCategory='01'
+        let timeNew = new Date();
+        timeNew.setMonth(timeNew.getMonth() - 1);
+        timeNew.setDate(1)
+        let lastDay = new Date(timeNew.getFullYear(), timeNew.getMonth() + 1, 0);
+        let stopTime = new Date('2020-1-1')
+        let filterTime = new Date();
+        this.params.value = [timeNew.format('YYYY-MM-DD'), lastDay.format('YYYY-MM-DD')]
+        this.getuserListByUserNamesData()
     },
     methods: {
+        getuserListByUserNamesData(){
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+            }
+            getuserListByUserNames(params).then((res)=>{
+                this.orgId=res.data.data[0].currentTenantBindOrgId
+                this.queryOilFeild()
+            })
+        },
+        queryOilFeild() {
+            getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
+                this.params.ogfList = res.data.data;
+                console.log(this.params.ogfList)
+                for(var i=0;i<this.params.ogfList.length;i++){
+                    if(this.params.ogfList[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+                        this.params.ogfId.value=this.params.ogfList[i].ogfId
+                    }
+                }
+                this.queryBlockFeild()
+            });
+        },
+        queryBlockFeild() {
+            getblockData({ogfId:this.params.ogfId.value}).then((res) => {
+                this.params.blockList = res.data.data;
+                console.log(this.blockList)
+                for(var i=0;i<this.params.blockList.length;i++){
+                    if(this.params.blockList[i].reservoirAnalyseUnitId==="83D33B89B0DAB7DFA440BD060746883A"){
+                        this.params.blockId.value=this.params.blockList[i].reservoirAnalyseUnitId
+                    }
+                }
+                this.queryWellData();
+            });
+        },
+        queryWellData() {
+            
+            var welltypeName=null;
+            if(this.params.wellCategory==="01"){
+                welltypeName='采油井'
+            }else {
+                welltypeName='注水井'
+            }
+            getWellDataForWellStyle({blockId:this.params.blockId.value,ogfId:this.params.ogfId.value,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
+                this.params.wellIdList=res.data.data
+                for(var i=0;i<this.params.wellIdList.length;i++){
+                    if(this.params.wellIdList[i].wellId==='DA0269628E74490ABDE198E7D1DBF3EA'){
+                        this.wellId=this.params.wellIdList[i].wellId
+                    }
+                }
+                this.OilfieldBut()
+
+            });
+        },
         getdata() {
             var arr = this.tableData
             const num = arr.reduce((acc, item) => {
@@ -706,8 +772,6 @@ export default {
                         // item.airPermeability = Math.floor(item.airPermeability)
                         // item.ratio = Number(item.ratio).toFixed(2)
                         item.waterLayerData.forEach(layer => {
-                            //   layer.airPermeability = Math.floor(layer.airPermeability)
-                            //   layer.ratio = Number(layer.ratio).toFixed(2)
                             layer.id = layer.layerId;
                             layer.name = layer.layerName;
                         })
