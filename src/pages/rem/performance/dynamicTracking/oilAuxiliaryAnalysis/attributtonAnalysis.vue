@@ -105,7 +105,7 @@
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
             <el-table
-                height="calc(100% - 50px)"
+                height="calc(100% - 90px)"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
@@ -189,7 +189,7 @@
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
             <el-table
-                height="calc(100% - 50px)"
+                height="calc(100% - 90px)"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
@@ -229,7 +229,7 @@
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
             <el-table
-                height="calc(100% - 50px)"
+                height="calc(100% - 90px)"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 :cell-style="{ padding: '3px', 'text-align': 'center' }"
@@ -278,7 +278,7 @@
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
             <el-table
-                height="calc(100% - 50px)"
+                height="calc(100% - 90px)"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
@@ -467,7 +467,7 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因1：直接关联关停记录表。\n下步措施：提高生产时率",
+                                                                            "name": "归因1：关停原因(直接关联关停记录表)。\n下步措施：提高生产时率",
                                                                             "code": "003001"
                                                                         }
                                                                     ]
@@ -753,7 +753,7 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因1：直接关联关停记录表。\n下步措施：提高生产时率",
+                                                                            "name": "归因1：关停原因(直接关联关停记录表)。\n下步措施：提高生产时率",
                                                                             "code": "005001"
                                                                         }
                                                                     ]
@@ -1039,7 +1039,7 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因1：直接关联关停记录表。\n下步措施：提高生产时率",
+                                                                            "name": "归因1：关停原因(直接关联关停记录表)。\n下步措施：提高生产时率",
                                                                             "code": "002001"
                                                                         }
                                                                     ]
@@ -1710,7 +1710,7 @@ export default {
                                                 },
                                                 {
                                                     "level": 99,
-                                                    "name": "归因1：直接关联关停记录表。\n下步措施：提高生产时率",
+                                                    "name": "归因1：关停原因(直接关联关停记录表)。\n下步措施：提高生产时率",
                                                     "code": "001001"
                                                 },
                                             ]
