@@ -21,10 +21,16 @@
   min-height: 1px;
 }
 
+// 全局滚动条的宽度
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
 // 该样式用于修复在使用elementui的表格时，当同时存在固定列、横向和竖向滚动条时，滚动到最后一条会出现表格错位的问题。
 .el-table__body-wrapper {
   &::-webkit-scrollbar {
-    height: 5px;
+    height: 6px;
   }
 }
 
