@@ -88,7 +88,6 @@ import {
   indicatorResult,
 } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
-import { number } from "echarts";
 
 export default {
   components: {
