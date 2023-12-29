@@ -80,7 +80,7 @@
 
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import { fetchFields, fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo";
+
 import {
   waterContainRaiseChart,
   waterIndicatorChart,
