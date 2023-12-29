@@ -17,8 +17,6 @@
                         <el-form-item label="油田：">
                             <el-select
                                 v-model="queryParams.ogfId"
-                                placeholder="请选择产品类型"
-                                clearable
                                 size="small"
                                 style="width: 240px"
                                 @change="changeOgf"
@@ -35,7 +33,6 @@
                             <el-select
                                 v-model="queryParams.productTypeCode"
                                 placeholder="请选择产品类型"
-                                clearable
                                 size="small"
                                 style="width: 240px"
                             >
