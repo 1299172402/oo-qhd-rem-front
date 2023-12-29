@@ -785,7 +785,7 @@ export default {
                 this.echartsListaa.series[0].data = this.startList;
                 this.echartsListaa.series[1].data = this.endList;
                 this.echartsListaa.series[0].markLine.data = this.markLineData;
-                this.echartsListaa = this.echartsListaa
+                // this.echartsListaa = this.echartsListaa
             });
         },
         changeSelectImage(item) {

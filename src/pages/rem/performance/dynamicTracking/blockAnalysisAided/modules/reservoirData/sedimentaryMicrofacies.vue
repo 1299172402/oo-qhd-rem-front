@@ -59,7 +59,7 @@
                         if (res.data.data) {
                             this.position = res.data.data.fieldLayers;
                             if (!this.selectPosition && this.position[0]) {
-                                if (this.blockId == '83D33B89B0DAB7DFA440BD060746883A' || this.blockId == '83D33B89B0DAB7DFA440BD060746883A') {
+                                if (this.blockId == '83D33B89B0DAB7DFA440BD060746883A') {
                                     if (this.position.find((item) => {
                                             return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'
                                         })) {

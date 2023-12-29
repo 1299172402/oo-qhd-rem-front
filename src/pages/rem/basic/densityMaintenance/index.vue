@@ -292,13 +292,13 @@
 </template>
 
 <script>
-import {queryProductList} from "@/api/rem/workcompanydesignate";
+
 import {queryDensityInfo, save} from "@/api/rem/density.js";
 import { QueryOgfDetail,userListByUserNames} from "@/api/basic/master";
 import treeMultipleSelection from "@/components/intelligentOilfield/tree_multiple_selection/index.vue";
 import {exportExcel} from "@/lib/exportExcel";
 import treeSelectionAll from "@/pages/rem/basic/components/treeSelectionAllOgf.vue";
-import {QueryPlatformDetail, QueryWellDetail} from "@/api/rem/marster";
+
 
 export default {
     name: "Density",

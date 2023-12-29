@@ -39,20 +39,11 @@
 </template>
 
 <script>
-import { keys } from "lodash";
 import {
-  fetchFields,
-  fetchOilFields,
   fetchPlatforms,
-  fetchProductionWells,
-  fetchProductionWellsByPlatform,
-  fetchInjectionWells,
-  fetchInjectionWellsByPlatform,
-  selectWellGroup,
+  selectWellGroup
 } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { QueryOgfDetail, QueryReservoirAnalyseUnit, QueryPlatformDetail, QueryWellDetail } from "@/api/rem/marster.js";
-// import { wellGroupList } from "@/api/rem/wellgroupinformaintenance";
-
+import { QueryOgfDetail, QueryReservoirAnalyseUnit,QueryWellDetail} from "@/api/rem/marster.js";
 export default {
   props: {
     // 树结构类型1：油井，2：水井，3：水井井组，4：井组
