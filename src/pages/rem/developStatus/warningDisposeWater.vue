@@ -60,7 +60,7 @@
                   ></el-table-column>
                   <el-table-column
                     prop="whInjPress"
-                    :label="`井口注入压力\n(MPa)`"
+                    :label="`月度注入压力变化\n(MPa)`"
                     align="center"
                     :formatter="toPrecise2"
                   ></el-table-column>
