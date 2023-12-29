@@ -230,6 +230,7 @@
                         :data="queryData"
                         height="calc(100% - 30px)"
                         border
+                        id="zdycxtab"
                         header-cell-class-name="table_header"
                         :cell-style="{ padding: '6px', 'text-align': 'center' }"
                         style="margin: 20px 0; height: calc(100% - 125px)"
@@ -401,7 +402,7 @@ export default {
                 {val: "CSG_PRESS", name: "套压", unit: "MPa"},
                 {val: "BACK_PRESS", name: "回压", unit: "MPa"},
                 {val: "DH_FLOWING_PRESS", name: "井底流压", unit: "MPa"},
-                {val: "PUMP_FREQUENCY", name: "泵频率", unit: "HZ"},
+                {val: "PUMP_FREQUENCY", name: "泵频率", unit: "Hz"},
                 {val: "PUMP_CURRENT", name: "泵电流", unit: "A"},
                 {val: "PUMP_VOLTAGE", name: "泵电压", unit: "V"},
                 {val: "PUMP_INLET_PRESS", name: "泵吸入口压力", unit: "MPa"},
@@ -416,8 +417,8 @@ export default {
                 {val: "OIL_GAS_RATIO", name: "气油比", unit: "m³/m³"},
             ],
             totalList: [
-                {val: "MONTH_PROD_DURATION", name: "月累生产时间", unit: "h"},
-                {val: "YEAR_PROD_DURATION", name: "年累生产时间", unit: "h"},
+                {val: "MONTH_PROD_DURATION", name: "月累生产时长", unit: "h"},
+                {val: "YEAR_PROD_DURATION", name: "年累生产时长", unit: "h"},
                 {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "m³"},
                 {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "m³"},
                 {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "m³"},
@@ -570,9 +571,7 @@ export default {
             // }
             // let ttt=this.$refs.treeSelectionAll.deptOptions;
         },
-        layoutChange() {
-            // this.$refs.table.doLayout()
-        },
+       
         changetype(val) {
             if (val == 1) {
                 let ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
@@ -739,7 +738,7 @@ export default {
                     {val: "CSG_PRESS", name: "套压", unit: "MPa"},
                     {val: "BACK_PRESS", name: "回压", unit: "MPa"},
                     {val: "DH_FLOWING_PRESS", name: "井底流压", unit: "MPa"},
-                    {val: "PUMP_FREQUENCY", name: "泵频率", unit: "HZ"},
+                    {val: "PUMP_FREQUENCY", name: "泵频率", unit: "Hz"},
                     {val: "PUMP_CURRENT", name: "泵电流", unit: "A"},
                     {val: "PUMP_VOLTAGE", name: "泵电压", unit: "V"},
                     {val: "PUMP_INLET_PRESS", name: "泵吸入口压力", unit: "MPa"},
@@ -754,8 +753,8 @@ export default {
                         {val: "OIL_GAS_RATIO", name: "气油比", unit: "m³/m³"},
                     ]),
                     (this.totalList = [
-                        {val: "MONTH_PROD_DURATION", name: "月累生产时间", unit: "h"},
-                        {val: "YEAR_PROD_DURATION", name: "年累生产时间", unit: "h"},
+                        {val: "MONTH_PROD_DURATION", name: "月累生产时长", unit: "h"},
+                        {val: "YEAR_PROD_DURATION", name: "年累生产时长", unit: "h"},
                         {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "m³"},
                         {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "m³"},
                         {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "m³"},
@@ -779,7 +778,7 @@ export default {
                     {val: "CSG_PRESS", name: "套压", unit: "MPa"},
                     {val: "DH_FLOWING_TEMP", name: "井底流温", unit: "℃"},
                     {val: "DH_FLOWING_PRESS", name: "井底流压", unit: "MPa"},
-                    {val: "PUMP_FREQUENCY", name: "泵频率", unit: "HZ"},
+                    {val: "PUMP_FREQUENCY", name: "泵频率", unit: "Hz"},
                     {val: "PUMP_CURRENT", name: "泵电流", unit: "A"},
                     {val: "PUMP_VOLTAGE", name: "泵电压", unit: "V"},
                     {val: "PUMP_INLET_TEMP", name: "泵入口温度", unit: "℃"},
@@ -844,7 +843,7 @@ export default {
 
             case "inject": //'注入指标':
                 (this.stateList = [
-                    {val: "PROD_DATE", name: "生产时间", unit: "h"},
+                    {val: "PROD_DATE", name: "生产时间", unit: "yyyy-mm-dd"},
                     {val: "WATER_NOZZLE_DIAMETER", name: "水嘴直径", unit: "mm"},
                     {val: "MAINLINE_PRESSURE", name: "干线压力", unit: "MPa"},
                     {val: "DH_FLOWING_TEMP", name: "油压", unit: "MPa"},
@@ -855,8 +854,8 @@ export default {
                     {val: "DAILY_INJECTION_VOLUME", name: "日配注量", unit: "m³"},
                 ]),
                     (this.productList = [
-                        {val: "MONTHLY_CUMULATIVE_PRODUCTION_TIME", name: "月累生产时间", unit: "h"},
-                        {val: "YEAR_CUMULATIVE_PRODUCTION_TIME", name: "年累生产时间", unit: "h"},
+                        {val: "MONTHLY_CUMULATIVE_PRODUCTION_TIME", name: "月累生产时长", unit: "h"},
+                        {val: "YEAR_CUMULATIVE_PRODUCTION_TIME", name: "年累生产时长", unit: "h"},
                         {val: "MONTHLY_CUMULATIVE_INJECTION_VOLUME", name: "月累注入量", unit: "m³"},
                         {val: "YEAR_CUMULATIVE_INJECTION_VOLUME", name: "年累注入量", unit: "m³"},
                         {val: "REMARK", name: "备注", unit: ""},
@@ -974,10 +973,10 @@ export default {
                     (this.stateList = []),
                         (this.productList = [
                             {val: "YEAR_CUMU_PROD_DAILY", name: "年累生产天数", unit: "d"},
-                            {val: "FLUID_PROD_YEAR", name: "年产液", unit: "m3"},
-                            {val: "OIL_PROD_YEAR", name: "年产油", unit: "m3"},
-                            {val: "WATER_PROD_YEAR", name: "年产水", unit: "m3"},
-                            {val: "GAS_PROD_YEAR", name: "年产气", unit: "m3"},
+                            {val: "FLUID_PROD_YEAR", name: "年产液", unit: "m³"},
+                            {val: "OIL_PROD_YEAR", name: "年产油", unit: "m³"},
+                            {val: "WATER_PROD_YEAR", name: "年产水", unit: "m³"},
+                            {val: "GAS_PROD_YEAR", name: "年产气", unit: "m³"},
                         ]),
                         (this.totalList = []),
                         (this.injectList = []),
@@ -1012,7 +1011,7 @@ export default {
                 (this.stateList = []),
                     (this.productList = [
                         {val: "YEAR_CUMU_PROD_DAILY", name: "年累生产天数", unit: "d"},
-                        {val: "YEAR_CUMUL_INJ_VOLUME", name: "年累注入量", unit: "m3"},
+                        {val: "YEAR_CUMUL_INJ_VOLUME", name: "年累注入量", unit: "m³"},
                     ]),
                     (this.totalList = []),
                     (this.injectList = []),
@@ -1139,12 +1138,12 @@ export default {
                 this.headerTextLower = [];
                 this.headerText.forEach((item) => {
                     this.headerTextLower.push({
-                        val: isNaN(item.val.toLowerCase().replace(/_/g, "")) ? item.val.toLowerCase().replace(/_/g, "") : (item.val.toLowerCase().replace(/_/g, "")).toFixed(2),
-                        name: `${item.name}${item.unit ? "(" + item.unit + ")" : ""}`,
+                        val: isNaN(item.val.toLowerCase().replace(/_/g, ""))?item.val.toLowerCase().replace(/_/g, ""):(item.val.toLowerCase().replace(/_/g, "")).toFixed(2) ,
+                        name: `${item.name}${item.unit ? `\n(${item.unit})` : ""}`,
                     });
                 });
                 //添加固定的两个字段 井名 生产时间
-                this.headerTextLower.unshift({name: "井名", val: "name"}, {name: "生产时间(h)", val: "proddate"});
+                this.headerTextLower.unshift({name: "井名", val: "name"}, {name: `生产时间\n(yyyy-mm-dd)`, val: "proddate"});
                 this.tableData = tableArr;
             }
         },
@@ -1298,12 +1297,20 @@ export default {
     },
 };
 </script>
+<style lang="scss" scoped>
+#zdycxtab {
+    ::v-deep .el-table__header-wrapper .cell {
+        height: auto;
+        line-height: 35px;
+        white-space: pre;
+    }
+}
+</style>
 <style lang="less" scoped>
 ::v-deep .el-table .cell {
     height: 48px !important;
-    line-height: 40px !important;
+    line-height: 25px !important;
 }
-
 .app-container {
     height: 100%;
 
