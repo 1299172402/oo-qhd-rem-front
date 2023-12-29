@@ -240,10 +240,7 @@
 <script>
 import {exportExcel} from "@/lib/exportExcel";
 import {
-    getoilfield, //油田下拉
-    getblock, //区块下拉
     postCoefficientconnectivityList,
-    postCoefficientconnectivity, //获取表格
     wellGroupDataById,
     listGroupDataByBlockIdAndDate,
     postselectProWellByGroup,
@@ -253,7 +250,6 @@ import {
 } from "@/api/rem/r-wellConnectEvaluate.js"
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 import {wellGroupEvaluation} from "@/api/rem/model";
-import {fetchOilFields} from "@/api/oilDeposit/rem-02/primaryinfo";
 import {
     QueryOgfDetail,
     userListByUserNames

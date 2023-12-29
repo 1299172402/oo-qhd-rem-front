@@ -37,8 +37,6 @@
 
 <script>
 import { getYczcTree } from "@/api/rem/marster.js";
-import { keys } from "lodash";
-
 export default {
     props: {
         level: {

@@ -554,7 +554,6 @@
 <script>
 import { fetchOilFields, fetchFields } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { oilFieldDevWarnings, fieldDevWarnings } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
-import { getWidgetByAreaUser } from "@/api/oilDeposit/rmm-01/rmm01";
 import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import { getWarningsDate } from "@/api/oilDeposit/rem-04/developStatus.js";
 import { exportExcelFromJson } from "@/lib/exportExcel.js";
