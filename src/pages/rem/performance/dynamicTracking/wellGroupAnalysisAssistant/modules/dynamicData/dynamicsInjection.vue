@@ -164,32 +164,32 @@ export default {
   },
   mounted() {
     this.wellGroupname = this.wellGrouplist?.find((obj) => obj.wellGroupId == this.wellGroupId)?.wellGroupName;
-    var date = new Date();
-    var months = date.getMonth() + 1;
-    var m = "0" + (months - 1);
-    var x = "0" + (months - 2);
-    var y = date.getFullYear();
-    if (months == 1) {
-      y--;
-      m = "12";
-    }
-    if (months == 1) {
-      y--;
-      m = "11";
-    }
-    this.queryData.secondMonth = y + "-" + m.substr(m.length - 2, 2);
-    this.queryData.firstMonth = y + "-" + x.substr(m.length - 2, 2);
-    this.secondMonth = y + "-" + m.substr(m.length - 2, 2);
-    this.firstMonth = y + "-" + x.substr(m.length - 2, 2);
+    this.queryData.secondMonth = this.getLastMonth()
+    this.queryData.firstMonth = new Date().format('yyyy-MM');
+    this.secondMonth = this.getLastMonth()
+    this.firstMonth = new Date().format('yyyy-MM');
     this.doSearch();
   },
   methods: {
     doSearch() {
       this.getdata();
     },
+      getLastMonth() {
+          var date = new Date();
+          var year = date.getFullYear();   //当前年：四位数字
+          var month = date.getMonth();     //当前月：0-11
+          if (month == 0) {   //如果是0，则说明是1月份，上一个月就是去年的12月
+              year -= 1;
+              month = 12;
+          }
+          month = month < 10 ? ('0' + month) : month;   //月份格式化：月份小于10则追加个0
+          let lastYearMonth = year + '-' + month;
+          return lastYearMonth;
+      },
     async getdata() {
       this.wellGroupname = this.wellGrouplist?.find((obj) => obj.wellGroupId == this.wellGroupId)?.wellGroupName;
       this.tableData = [];
+        console.log(this.queryData)
       this.secondMonth = this.queryData.secondMonth;
       this.firstMonth = this.queryData.firstMonth;
       this.itemKey++;
