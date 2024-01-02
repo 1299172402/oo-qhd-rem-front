@@ -159,7 +159,7 @@ export default {
       getData(){
           let params = {
               blockId: '83D33B89B0DAB7DFA440BD060746883A',
-              yearMonth: new Date().getFullYear() + '-' + (new Date().getMonth()),
+              yearMonth: new Date().getFullYear() + '-' + (new Date().getMonth() + 1),
               //修改取数的日期为5月
               // yearMonth: '2023-05',
           }

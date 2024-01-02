@@ -108,7 +108,7 @@ export default {
       queryStratifiedInjectionDetails() {
           let params = {
               blockId: '83D33B89B0DAB7DFA440BD060746883A',
-              startTime: new Date().getFullYear() + '-' + (new Date().getMonth()),
+              startTime: new Date().getFullYear() + '-' + (new Date().getMonth()+ 1),
               // startTime: '2023-05',
               timeStatus: '1',
               type: 1
