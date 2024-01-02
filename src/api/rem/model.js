@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
 export function wellGroupEvaluation(data) {
@@ -7,5 +8,12 @@ export function wellGroupEvaluation(data) {
         method: "post",
         timeout: 30000,
         data
+    });
+}
+
+export function updateDateByCode({code} = {}) {
+    return request({
+        url: `${baseUrl}/modelController/updateDateByCode?code=${code || ""}`,
+        method: "get",
     });
 }
