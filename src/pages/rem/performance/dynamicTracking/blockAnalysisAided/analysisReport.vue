@@ -502,7 +502,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+
 import { fieldOilLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import H5Chart from "@/components/tools/H5Chart/index.vue";
 import H5Chart2 from "@/components/tools/H5Chart/index.vue";
@@ -520,7 +520,7 @@ import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 // Minio
 import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
 import { addRemUploadFileMinio, queryRemUploadFileMinio } from "@/api/rem/remuploadfileminio";
-import { filePreview, downFile } from "@/components/upload/utils/file";
+import {  downFile } from "@/components/upload/utils/file";
 export default {
   name: "blockAnalysisReport",
   components: { H5Chart, H5Chart2, FileUpload },

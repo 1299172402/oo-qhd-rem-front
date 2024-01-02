@@ -567,7 +567,6 @@ export default {
         },
         // 查看连通系数计算基础数据
         examine() {
-            5555
             if (this.queryData.blockId && this.queryData.dateTime && this.queryData.ogfId) {
                 let ogfName = this.oilList.length ? this.oilList.find(
                     (item) => item.ogfId == this.queryData.ogfId

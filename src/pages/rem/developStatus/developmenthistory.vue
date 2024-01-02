@@ -548,7 +548,6 @@
 </template>
 
 <script>
-import moment from "dayjs";
 import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
 import { QueryOgfDetail, QueryReservoirAnalyseUnit, userListByUserNames } from "@/api/rem/marster.js";

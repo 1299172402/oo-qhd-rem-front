@@ -19,7 +19,6 @@
 <script>
 import Echarts from "@/components/tools/Echarts/index.vue";
 import {produceData} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-import {produceTableData} from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 import FileSaver from 'file-saver';
 import {exportExcel} from "@/lib/exportExcel.js";
 export default { 

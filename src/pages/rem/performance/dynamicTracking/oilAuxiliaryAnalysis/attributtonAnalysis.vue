@@ -104,6 +104,9 @@
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
+            <el-button size="mini" @click="executeModel()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px;margin-right: 10px">执行
+            </el-button>
             <el-table
                 height="calc(100% - 90px)"
                 :row-style="{ height: '0px' }"
@@ -188,6 +191,9 @@
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
+            <el-button size="mini" @click="executeModel()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px;margin-right: 10px">执行
+            </el-button>
             <el-table
                 height="calc(100% - 90px)"
                 :row-style="{ height: '0px' }"
@@ -227,6 +233,9 @@
         <pagePanel v-if="link=='4'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
+            </el-button>
+            <el-button size="mini" @click="executeModel()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px;margin-right: 10px">执行
             </el-button>
             <el-table
                 height="calc(100% - 90px)"
@@ -276,6 +285,9 @@
                    :show-btn="true">
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
+            </el-button>
+            <el-button size="mini" @click="executeModel()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px;margin-right: 10px">执行
             </el-button>
             <el-table
                 height="calc(100% - 90px)"
@@ -398,6 +410,7 @@ import {selectWellGroup} from "@/api/oilDeposit/rem-02/primaryinfo";
 import {queryProductionAnalysisList, queryProductionDownExcel} from "@/api/rem/productionanalysis";
 import toFixed from "xe-utils/toFixed";
 import FileSaver from 'file-saver'
+import {updateDateByCode} from "@/api/rem/model"
 
 export default {
     components: {
@@ -405,6 +418,8 @@ export default {
     },
     data() {
         return {
+            //模型代码
+            modelCode: "",
             //是否点击过表格
             isTableClick: false,
             //全局变量 第几个节点
@@ -1639,9 +1654,9 @@ export default {
                                                                             "code": "LY",
                                                                             "children": [
                                                                                 {
-                                                                                    "level":3,
-                                                                                    "name":"",
-                                                                                    "children":[
+                                                                                    "level": 3,
+                                                                                    "name": "",
+                                                                                    "children": [
                                                                                         {
                                                                                             "level": 99,
                                                                                             "name": "归因3：注采失调。\n下步措施：排查周边井组状态",
@@ -2055,6 +2070,10 @@ export default {
         this.link = this.$route.query.link
     },
     methods: {
+        executeModel() {
+            updateDateByCode({code: this.modelCode});
+            this.$message.success("执行成功")
+        },
         initData() {
             // 在组件被激活时执行操作
             this.getData();
@@ -2077,29 +2096,35 @@ export default {
             this.tableData = []
             this.chart = echarts.init(document.getElementById('option2'));
             if (this.link == '1') {
+                this.modelCode = "YJCYQD";
                 this.initCodeDataIndex(this.option.series[0].data);
                 // this.option.series[0].data[0].name = '油井采液强度不合理'
                 this.chart.setOption(this.option);
                 this.title = '油井采液强度归因分析'
             } else if (this.link == '2') {
+                this.modelCode = "YJCYZS";
                 this.initCodeDataIndex(this.option5.series[0].data);
                 // this.option5.series[0].data[0].name = '油井采液指数不合理'
                 this.chart.setOption(this.option5);
                 this.title = '油井采液指数归因分析'
             } else if (this.link == '3') {
+                this.modelCode = "YJMCYZS";
                 this.initCodeDataIndex(this.option6.series[0].data);
                 // this.option6.series[0].data[0].name = '油井米采液指数不合理'
                 this.chart.setOption(this.option6);
                 this.title = '油井米采液指数归因分析'
             } else if (this.link == '4') {
+                this.modelCode = "ZSQD";
                 this.initCodeDataIndex(this.option2.series[0].data);
                 this.chart.setOption(this.option2);
                 this.title = '注水强度归因分析'
             } else if (this.link == '5') {
+                this.modelCode = "YJDJL";
                 this.initCodeDataIndex(this.option3.series[0].data);
                 this.chart.setOption(this.option3);
                 this.title = '油井递减率归因分析'
             } else if (this.link == '6') {
+                this.modelCode = "JZSCDT";
                 this.initCodeDataIndex(this.option4.series[0].data);
                 this.chart.setOption(this.option4);
                 //暂时默认为五月份 数据完整后删除该行即可

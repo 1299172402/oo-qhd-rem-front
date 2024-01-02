@@ -1989,7 +1989,7 @@ export default {
       let request = {
         oilFieldId: oilFieldId,
         fileId: blockId,
-        year: this.year,
+        // year: this.year,
       };
       waterCutRaiseRate(request).then((res) => {
         if (res.data.code == 200) {

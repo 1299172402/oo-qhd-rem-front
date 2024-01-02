@@ -138,18 +138,15 @@
     </div>
 </template>
 <script>
-import {queryLayerList, getOilFieldList} from "@/api/rem/workcompanydesignate";
 import {
     addWellControlReserves,
-    queryWellControlReservesWell,
     queryWellControlReservesLayer,
     queryWellControlReserves
 } from "@/api/rem/welldetailedevaluationresult";
 import {
     QueryOgfDetail,
     QueryPlatformDetail,
-    QueryWellDetail,
-    queryOilAndGasFieldQueryPositionDetail, userListByUserNames
+    QueryWellDetail,userListByUserNames
 } from "@/api/basic/master";
 import treeMultipleSelection from "@/pages/rem/basic/components/index.vue";
 import treeSelectionAll from "@/pages/rem/basic/components/treeSelectionAll.vue";
