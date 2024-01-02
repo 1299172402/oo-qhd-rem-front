@@ -104,7 +104,7 @@
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
-            <el-button size="mini" @click="executeModel()" type="primary" icon="el-icon-download"
+            <el-button size="mini" @click="executeModel()" type="primary" 
                        style="float: right;margin-bottom: 10px;margin-right: 10px">执行
             </el-button>
             <el-table
@@ -191,7 +191,7 @@
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
-            <el-button size="mini" @click="executeModel()" type="primary" icon="el-icon-download"
+            <el-button size="mini" @click="executeModel()" type="primary" 
                        style="float: right;margin-bottom: 10px;margin-right: 10px">执行
             </el-button>
             <el-table
@@ -234,7 +234,7 @@
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
-            <el-button size="mini" @click="executeModel()" type="primary" icon="el-icon-download"
+            <el-button size="mini" @click="executeModel()" type="primary" 
                        style="float: right;margin-bottom: 10px;margin-right: 10px">执行
             </el-button>
             <el-table
@@ -286,7 +286,7 @@
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
-            <el-button size="mini" @click="executeModel()" type="primary" icon="el-icon-download"
+            <el-button size="mini" @click="executeModel()" type="primary" 
                        style="float: right;margin-bottom: 10px;margin-right: 10px">执行
             </el-button>
             <el-table
