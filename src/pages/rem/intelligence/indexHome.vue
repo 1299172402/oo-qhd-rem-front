@@ -517,7 +517,12 @@ export default {
         eeee() {
             let data = new Date()
             if (data.getMonth() < 10) {
-                return data.getFullYear() + '-0' + (data.getMonth())
+                if(data.getMonth()===0){
+                    return data.getFullYear() + '-0' + (data.getMonth()+1)
+                }else {
+                    return data.getFullYear() + '-0' + (data.getMonth())
+                }
+                
             } else {
                 return data.getFullYear() + '-' + (data.getMonth())
             }

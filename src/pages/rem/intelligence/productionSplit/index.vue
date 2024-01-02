@@ -267,11 +267,17 @@ import {getuserListByUserNames,getFieldListsDetail,getblockData,getWellData} fro
 import FileSaver from "file-saver";
 
 let timeNew = new Date();
-timeNew.setMonth(timeNew.getMonth() - 1);
+if(timeNew.getMonth()===0){
+  timeNew.setMonth(timeNew.getMonth());
+}else {
+  timeNew.setMonth(timeNew.getMonth() - 1);
+}
+
 timeNew.setDate(1)
 let lastDay = new Date(timeNew.getFullYear(), timeNew.getMonth() + 1, 0);
 let stopTime = new Date('2020-1-1')
 let filterTime = new Date();
+
 export default {
     name: 'productionSplit',
     components: {},
@@ -355,6 +361,7 @@ export default {
     //方法
     methods: {
         createChange(dates) {
+            
             if (dates && dates.length == 2) {
                 this.queryData.startTime = dates[0];
                 this.queryData.endTime = dates[1];
@@ -453,6 +460,7 @@ export default {
          * 获取表格数据
          */
         queryProductionSplit() {
+              
             let params = {
                 endTime: this.queryData.endTime,
                 startTime: this.queryData.startTime,

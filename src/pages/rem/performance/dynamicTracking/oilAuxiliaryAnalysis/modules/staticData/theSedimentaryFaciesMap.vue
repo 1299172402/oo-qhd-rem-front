@@ -65,15 +65,17 @@
                         if (res.data.data) {
                             this.position = res.data.data.fieldLayers;
                             if (!this.selectPosition && this.position[0]) {
-                                if (this.blockId == '83D33B89B0DAB7DFA440BD060746883A' || this.blockId == '83D33B89B0DAB7DFA440BD060746883A') {
-                                    if (this.position.find((item) => {
-                                            return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'
-                                        })) {
-                                        this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
-                                    } else {
-                                        this.selectPosition = this.position[0].fieldLayerId;
-                                    }
-                                }else if (this.blockId == '83D33B89B0DAB7DFA440BD060746883A') {
+                                // if (this.blockId == '83D33B89B0DAB7DFA440BD060746883A') {
+                                //     if (this.position.find((item) => {
+                                //             return item.fieldLayerId == '263518079CED49AE8B6C9FE5CEBDD26A'
+                                //         })) {
+                                //         this.selectPosition = '263518079CED49AE8B6C9FE5CEBDD26A';
+                                //     } else {
+                                //         this.selectPosition = this.position[0].fieldLayerId;
+                                //     }
+                                // }
+                                // else 
+                                  if (this.blockId == '83D33B89B0DAB7DFA440BD060746883A') {
                                     if (this.position.find((item) => {
                                             return item.fieldLayerId == '87795A3E6BBC4469BC9AC5AE0BBE759C'
                                         })) {
@@ -85,7 +87,8 @@
                                     } else {
                                         this.selectPosition = this.position[0].fieldLayerId;
                                     }
-                                } else {
+                                } 
+                                else {
                                     this.selectPosition = this.position[0].fieldLayerId;
                                 } 
                                 this.$emit('childPara', this.selectPosition);

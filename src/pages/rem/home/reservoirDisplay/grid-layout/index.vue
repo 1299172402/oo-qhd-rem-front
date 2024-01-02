@@ -248,8 +248,8 @@ export default {
                     for (var i = 0; i < byteCharacters.length; i++) {
                         byteArray[i] = byteCharacters.charCodeAt(i);
                     }
-
-                    let environment = "dev"
+                    let environment;
+                    // let environment = "dev"
                     if (window.location.origin.includes('test')) {
                         environment = "test"
                     } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {

@@ -170,7 +170,10 @@ export default {
 
             },
             total: 0,
-            month: [], //开始与结束时间中转字段
+            month: [ 
+                new Date().format('YYYY') + '-01-01',
+                new Date().format('YYYY-MM-dd')
+            ], //开始与结束时间中转字段
             tableData: [],
             selectOilFieldL: '',
             oilFields: [],
@@ -184,42 +187,10 @@ export default {
         };
     },
     async mounted() {
-        await this.initializeDate();
         await this.getData();
         await this.queryinfo();
     },
     methods: {
-        initializeDate() {
-            let now = new Date();
-            // 当前年月的日
-            let nowDay = now.getDate();
-            //当前月份完整日期 (Thu Jul 07 2022 12:03:37 GMT+0800 (中国标准时间))
-            let lastMonth = new Date(now.getTime());
-            // 设置上一个月（这里不需要减1） getMonth()返回表示月份的数字 setMonth()设置月份参数
-            lastMonth.setMonth(lastMonth.getMonth());
-            // 设置为0，默认为当前月的最后一天
-            lastMonth.setDate(0);
-            // 上一个月的天数
-            let daysOflastMonth = lastMonth.getDate();
-            // 设置上一个月的日期，如果当前月的日期大于上个月的总天数，则为最后一天
-            // 例如当前是3月31，而2月只有28或29天，则取2月的最后一天
-            lastMonth.setDate(nowDay > daysOflastMonth ? daysOflastMonth : nowDay);
-            var startDate =
-                lastMonth.getFullYear() +
-                "-01" +
-                "-01"
-            
-            var endDate =
-                now.getFullYear() +
-                "-" +
-                (now.getMonth() + 1 >= 10 ? now.getMonth() + 1 : "0" + (now.getMonth() + 1)) +//月份从0开始
-                "-" +
-                (now.getDate() >= 10 ? now.getDate() : "0" + now.getDate());
-
-            this.$set(this.month, 0, startDate);
-            this.$set(this.month, 1, endDate);
-
-        },
         //获取当前作业公司
         async getCurrentJobCompany() {
             let params = {

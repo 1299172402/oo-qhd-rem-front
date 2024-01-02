@@ -80,7 +80,7 @@
 
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import { fetchFields, fetchOilFields } from "@/api/oilDeposit/rem-02/primaryinfo";
+
 import {
   waterContainRaiseChart,
   waterIndicatorChart,
@@ -88,7 +88,6 @@ import {
   indicatorResult,
 } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
-import { number } from "echarts";
 
 export default {
   components: {
