@@ -101,11 +101,11 @@
             <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link=='5'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
+            <el-button size="mini" @click="executeModel()" type="primary"
+                       style="float: left;margin-bottom: 10px;">执行
+            </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
-            </el-button>
-            <el-button size="mini" @click="executeModel()" type="primary" 
-                       style="float: right;margin-bottom: 10px;margin-right: 10px">执行
             </el-button>
             <el-table
                 height="calc(100% - 90px)"
@@ -188,11 +188,11 @@
             />
         </pagePanel>
         <pagePanel v-if="link=='6'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
+            <el-button size="mini" @click="executeModel()" type="primary"
+                       style="float: left;margin-bottom: 10px;">执行
+            </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
-            </el-button>
-            <el-button size="mini" @click="executeModel()" type="primary" 
-                       style="float: right;margin-bottom: 10px;margin-right: 10px">执行
             </el-button>
             <el-table
                 height="calc(100% - 90px)"
@@ -231,11 +231,11 @@
             />
         </pagePanel>
         <pagePanel v-if="link=='4'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
+            <el-button size="mini" @click="executeModel()" type="primary"
+                       style="float: left;margin-bottom: 10px;">执行
+            </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
-            </el-button>
-            <el-button size="mini" @click="executeModel()" type="primary" 
-                       style="float: right;margin-bottom: 10px;margin-right: 10px">执行
             </el-button>
             <el-table
                 height="calc(100% - 90px)"
@@ -283,11 +283,11 @@
         </pagePanel>
         <pagePanel v-if="link=='1' || link=='2' || link=='3'" :headerTitle="title+'明细表'" style="height: 100%"
                    :show-btn="true">
+            <el-button size="mini" @click="executeModel()" type="primary"
+                       style="float: left;margin-bottom: 10px;">执行
+            </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
-            </el-button>
-            <el-button size="mini" @click="executeModel()" type="primary" 
-                       style="float: right;margin-bottom: 10px;margin-right: 10px">执行
             </el-button>
             <el-table
                 height="calc(100% - 90px)"
