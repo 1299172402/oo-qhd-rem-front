@@ -1,7 +1,7 @@
 <template>
     <div style="height: calc(100vh - 160px)">
         <header-search>
-            <el-form inline ref="ruleForm" style="margin-top: unset">
+            <el-form ref="ruleForm" inline style="margin-top: unset">
                 <el-form-item label="油田：">
                     <el-select v-model="selectOilField" @change="changeyt">
                         <el-option
@@ -45,8 +45,8 @@
                         type="primary"
                         icon="el-icon-search"
                         class="buttonActive_primary"
-                        @click="doSearch"
                         style="margin-left: 10px;"
+                        @click="doSearch"
                     >
                         搜索
                     </el-button>
@@ -54,17 +54,16 @@
                         重置
                     </el-button>
                 </el-form-item>
-                <el-form-item style="float: right"> <el-button  type="primary" @click="returnrouter">返回</el-button></el-form-item>
-               
             </el-form>
         </header-search>
-        <page-panel-new :show-btn="true"
-                        style="height:calc(100% - 50px);min-height: 300px"
+        <page-panel-new
+            :show-btn="true"
+            style="height:calc(100% - 50px);min-height: 300px"
         >
             <el-row :gutter="15" style="height: 280px">
                 <el-col :span="24">
                     <page-panel :show-btn="true" header-title="平台人数对比" style="margin-top: 0;">
-                        <echart :chart-data="histogram" :height="chartHeight"/>
+                        <echart :chart-data="histogram" :height="chartHeight" />
                     </page-panel>
                 </el-col>
                 <!--        <el-col :span="12">-->
@@ -165,18 +164,56 @@
             <!--          </page-panel>-->
             <!--        </el-col>-->
             <!--      </el-row>-->
-<!--            :summary-method="getSummaries"-->
-<!--            show-summary-->
-<!--            合计行注释-->
             <el-row style="height:calc(100% - 280px) ">
                 <el-col :span="24" style="height: 100%">
                     <page-panel :show-btn="true" header-title="人员类型概况" style="height: calc(100% - 20px)">
+                        <el-form>
+                            <el-form-item label="请选择：">
+                                <el-radio v-model="radio" label="4">
+                                    近三月
+                                </el-radio>
+                                <el-radio v-model="radio" label="1">
+                                    上月
+                                </el-radio>
+                                <el-radio v-model="radio" label="2">
+                                    当月
+                                </el-radio>
+                                <el-radio v-model="radio" label="3">
+                                    近七天
+                                </el-radio>
+                                <el-date-picker
+                                    v-model="currentTimeStart"
+                                    style="width: 150px"
+                                    type="date"
+                                    value-format="yyyy-MM-dd"
+                                    placeholder="请选择"
+                                />
+                                至
+                                <el-date-picker
+                                    v-model="currentTimeEnd"
+                                    style="width: 150px"
+                                    type="date"
+                                    value-format="yyyy-MM-dd"
+                                    placeholder="请选择"
+                                />
+                                <el-button
+                                    icon="el-icon-search"
+                                    style="margin-left: 10px"
+                                    type="primary"
+                                    @click="doSearch2"
+                                >
+                                    搜索
+                                </el-button>
+                            </el-form-item>
+                        </el-form>
                         <el-table
+                            ref="table"
                             highlight
-                            height="calc(100% - 20px)"
+                            height="calc(100% - 40px)"
                             :data="tableData2"
                             style="width: 100%"
-                     
+                            :summary-method="getSummaries"
+                            show-summary
                             :border="false"
                             :row-style="{ height: '0px' }"
                             header-cell-class-name="table_header"
@@ -189,80 +226,247 @@
                                 type="index"
                                 width="50"
                                 align="center"
-                            >
-                            </el-table-column>
+                            />
                             <el-table-column
                                 prop="prodPlatFormName"
                                 label="平台"
-                                min-width="200px"
+                                min-width="130px"
                                 align="center"
                             />
                             <el-table-column
-                                prop="newsPapering"
-                                label="报务"
-                                min-width="80px"
-                                align="center"
-                            />
-                            <el-table-column
-                                prop="mineStaff"
                                 min-width="120px"
                                 label="定员"
                                 align="center"
-                            />
+                            >
+                                <el-table-column
+                                    prop="mineStaff"
+                                    min-width="60px"
+                                    label="人数"
+                                    align="center"
+                                />
+                                <el-table-column
+                                    prop="mineStaff"
+                                    min-width="60px"
+                                    label="工时"
+                                    align="center"
+                                    :formatter="getWorkTime"
+                                />
+                            </el-table-column>
                             <el-table-column
-                                prop="routineMaintenance"
-                                min-width="180px"
-                                label="常规维修"
-                                align="center"
-                            />
-                            <el-table-column
-                                prop="conventionalOilAndGasWellOperation"
-                                min-width="180px"
-                                label="常规油水井作业"
-                                align="center"
-                            />
-                            <el-table-column
-                                prop="largeScaleEngineeringAndOperation"
-                                min-width="180px"
-                                label="大型工程及作业"
-                                align="center"
-                            />
-                            <el-table-column
-                                prop="logistics"
-                                min-width="80px"
-                                label="后勤"
-                                align="center"
-                            />
-                            <el-table-column
-                                prop="others"
-                                min-width="80px"
-                                label="其他"
-                                align="center"
-                            />
-                            <el-table-column
-                                prop="maintenanceAndRenovationOfFacilities"
-                                min-width="180px"
-                                label="设施维修改造"
-                                align="center"
-                            />
-                            <el-table-column
-                                prop="medicalMatters"
-                                min-width="80px"
-                                label="医务"
-                                align="center"
-                            />
-                            <el-table-column
-                                prop="operationOfStimulationMeasures"
-                                label="增产措施作业"
                                 min-width="120px"
+                                label="非定员"
                                 align="center"
-                            />
+                            >
+                                <el-table-column
+                                    label="报务"
+                                    min-width="80px"
+                                    align="center"
+                                >
+                                    <el-table-column
+                                        prop="newsPapering"
+                                        min-width="60px"
+                                        label="人数"
+                                        align="center"
+                                    />
+                                    <el-table-column
+                                        prop="newsPapering"
+                                        min-width="60px"
+                                        label="工时"
+                                        align="center"
+                                        :formatter="getWorkTime"
+                                    />
+                                </el-table-column>
+                                <el-table-column
+                                    min-width="180px"
+                                    label="常规维修"
+                                    align="center"
+                                >
+                                    <el-table-column
+                                        prop="routineMaintenance"
+                                        min-width="60px"
+                                        label="人数"
+                                        align="center"
+                                    />
+                                    <el-table-column
+                                        prop="routineMaintenance"
+                                        min-width="60px"
+                                        label="工时"
+                                        align="center"
+                                        :formatter="getWorkTime"
+                                    />
+                                </el-table-column>
+                                <el-table-column
+                                    min-width="180px"
+                                    label="常规油水井作业"
+                                    align="center"
+                                >
+                                    <el-table-column
+                                        prop="conventionalOilAndGasWellOperation"
+                                        min-width="60px"
+                                        label="人数"
+                                        align="center"
+                                    />
+                                    <el-table-column
+                                        prop="conventionalOilAndGasWellOperation"
+                                        min-width="60px"
+                                        label="工时"
+                                        align="center"
+                                        :formatter="getWorkTime"
+                                    />
+                                </el-table-column>
+                                <el-table-column
+                                    min-width="180px"
+                                    label="大型工程及作业"
+                                    align="center"
+                                >
+                                    <el-table-column
+                                        prop="largeScaleEngineeringAndOperation"
+                                        min-width="60px"
+                                        label="人数"
+                                        align="center"
+                                    />
+                                    <el-table-column
+                                        prop="largeScaleEngineeringAndOperation"
+                                        min-width="60px"
+                                        label="工时"
+                                        align="center"
+                                        :formatter="getWorkTime"
+                                    />
+                                </el-table-column>
+                                <el-table-column
+                                    min-width="80px"
+                                    label="后勤"
+                                    align="center"
+                                >
+                                    <el-table-column
+                                        prop="logistics"
+                                        min-width="60px"
+                                        label="人数"
+                                        align="center"
+                                    />
+                                    <el-table-column
+                                        prop="logistics"
+                                        min-width="60px"
+                                        label="工时"
+                                        align="center"
+                                        :formatter="getWorkTime"
+                                    />
+                                </el-table-column>
+                                <el-table-column
+                                    min-width="80px"
+                                    label="其他"
+                                    align="center"
+                                >
+                                    <el-table-column
+                                        prop="others"
+                                        min-width="60px"
+                                        label="人数"
+                                        align="center"
+                                    />
+                                    <el-table-column
+                                        prop="others"
+                                        min-width="60px"
+                                        label="工时"
+                                        align="center"
+                                        :formatter="getWorkTime"
+                                    />
+                                </el-table-column>
+                                <el-table-column
+                                    min-width="180px"
+                                    label="设施维修改造"
+                                    align="center"
+                                >
+                                    <el-table-column
+                                        prop="maintenanceAndRenovationOfFacilities"
+                                        min-width="60px"
+                                        label="人数"
+                                        align="center"
+                                    />
+                                    <el-table-column
+                                        prop="maintenanceAndRenovationOfFacilities"
+                                        min-width="60px"
+                                        label="工时"
+                                        align="center"
+                                        :formatter="getWorkTime"
+                                    />
+                                </el-table-column>
+                                <el-table-column
+                                    min-width="80px"
+                                    label="医务"
+                                    align="center"
+                                >
+                                    <el-table-column
+                                        prop="medicalMatters"
+                                        min-width="60px"
+                                        label="人数"
+                                        align="center"
+                                    />
+                                    <el-table-column
+                                        prop="medicalMatters"
+                                        min-width="60px"
+                                        label="工时"
+                                        align="center"
+                                        :formatter="getWorkTime"
+                                    />
+                                </el-table-column>
+                                <el-table-column
+                                    label="增产措施作业"
+                                    min-width="120px"
+                                    align="center"
+                                >
+                                    <el-table-column
+                                        prop="operationOfStimulationMeasures"
+                                        min-width="60px"
+                                        label="人数"
+                                        align="center"
+                                    />
+                                    <el-table-column
+                                        prop="operationOfStimulationMeasures"
+                                        min-width="60px"
+                                        label="工时"
+                                        align="center"
+                                        :formatter="getWorkTime"
+                                    />
+                                </el-table-column>
+                                <el-table-column
+                                    min-width="80px"
+                                    label="小计"
+                                    align="center"
+                                >
+                                    <el-table-column
+                                        prop="sum"
+                                        min-width="60px"
+                                        label="人数"
+                                        align="center"
+                                    />
+                                    <el-table-column
+                                        prop="sum"
+                                        min-width="60px"
+                                        label="工时"
+                                        align="center"
+                                        :formatter="getWorkTime"
+                                    />
+                                </el-table-column>
+                            </el-table-column>
                             <el-table-column
-                                prop="littleSum"
                                 min-width="80px"
-                                label="小计"
+                                label="合计"
                                 align="center"
-                            />
+                            >
+                                <el-table-column
+                                    prop="littleSum"
+                                    min-width="60px"
+                                    label="人数"
+                                    align="center"
+                                />
+                                <el-table-column
+                                    prop="littleSum"
+                                    min-width="60px"
+                                    label="工时"
+                                    align="center"
+                                    :formatter="getWorkTime"
+                                />
+                            </el-table-column>
                         </el-table>
                     </page-panel>
                 </el-col>
@@ -273,19 +477,19 @@
 <script>
 import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
-import {queryPlatformPob, queryPOBProjectPeople,QueryAdministrationCenter,getPlatform} from "@/api/prm/pobapi";
-import {
-    userListByUserNames,
-    QueryOgfDetail,
-    QueryPlatformDetail
-} from "@/api/basic/master";
+import {queryPlatformPob, queryPOBProjectPeople,QueryAdministrationCenter,getPlatform} from "@/api/prm/pobapi"
+import {userListByUserNames,QueryOgfDetail,QueryPlatformDetail} from "@/api/basic/master"
+
 export default {
     components: {
         Echart
     },
     data() {
         return {
-            companyId: '',
+            radio: "3",
+            currentTimeStart: new Date().addDays(-7).format("yyyy-MM-dd"),
+            currentTimeEnd: new Date().format("yyyy-MM-dd"),
+            companyId: "",
             // 单选下拉框 油田
             oilFields: [],
             // 单选下拉框 平台
@@ -392,12 +596,12 @@ export default {
                             }, {
                                 offset: 1,
                                 color: "#0F65EA"
-                            }]),
+                            }])
                     },
                     label: {
                         normal: {
                             show: true,
-                            position: 'top',
+                            position: "top",
                             textStyle: {
                                 fontSize: 14,
                                 color: "#979797"
@@ -426,7 +630,7 @@ export default {
                     label: {
                         normal: {
                             show: true,
-                            position: 'top',
+                            position: "top",
                             textStyle: {
                                 fontSize: 14,
                                 color: "#979797"
@@ -523,11 +727,19 @@ export default {
         //   this.getFetchWells(this.selectOilField, val);
         // }
     },
+    updated() {
+        this.$nextTick(() => {
+            this.$refs.table.doLayout();
+        });
+    },
     mounted() {
         // 初始化下拉框数据
         this.initData();
     },
     methods: {
+        getWorkTime(row, column) {
+            return parseFloat(row[column.property]) * 12;
+        },
         // 通过油田查询管理中心
         changeyt() {
             this.nplatforms = [];// 清空管理中心
@@ -580,7 +792,7 @@ export default {
                     }
                 });
                 this.platforms = platforms;
-                if (val === "") { //管理中心选全部
+                if (val === "") { // 管理中心选全部
                     this.platforms.unshift(params);
                     this.selectPlatform = this.platforms[0].facilityId;
                 } else {
@@ -589,56 +801,58 @@ export default {
             });
         },
         glzxIdRel(val) {
-            if (val === '8360BBA7B269083BC3C230C5DF854558') {
-                val = 'CEPI';
-            } else if (val === '96DF270D217D14D6976AB05B6FEC7419') {
-                val = 'CEPJ';
-            } else if (val === 'C91967964843712A96F0356D59076951') {
-                val = 'FPSO';
+            if (val === "8360BBA7B269083BC3C230C5DF854558") {
+                val = "CEPI";
+            } else if (val === "96DF270D217D14D6976AB05B6FEC7419") {
+                val = "CEPJ";
+            } else if (val === "C91967964843712A96F0356D59076951") {
+                val = "FPSO";
             }
             return val;
         },
 
         resetForm(formName) {
-            this.selectglzxId = '';
+            this.selectglzxId = "";
             this.$refs[formName].resetFields();
             this.endTime = new Date().addDays(-1).format("yyyy-MM-dd");
-            this.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F';
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F";
             this.selectPlatform = this.platforms[0]?.platFormId;
             this.doSearch();
         },
-        returnrouter() {
-            this.$router.go(-1);
-        },
         // 搜索数据
         doSearch() {
-            //const glzxId = this.glzxIdRel(this.selectglzxId);
             const queryParams = {
                 glzxId: this.selectglzxId,
                 endTime: this.endTime,
+                startTime: this.endTime,
                 oilFieldId: this.selectOilField,
                 platformId: this.selectPlatform,
                 pageNum: this.page,
                 pageSize: this.pageSize
             };
-            const queryParamsPOB = {
-                endTime: this.endTime,
-                prodPlatformId: this.selectPlatform,
+            this.selectPlatformPob(queryParams);
+        },
+
+        doSearch2() {
+            const queryParams = {
+                glzxId: this.selectglzxId,
+                endTime: this.currentTimeEnd,
+                startTime: this.currentTimeStart,
+                oilFieldId: this.selectOilField,
+                platformId: this.selectPlatform,
                 pageNum: this.page,
                 pageSize: this.pageSize
             };
-            this.selectPlatformPob(queryParams);
-            this.selectPOBProjectPeopleOthers(queryParamsPOB);
-            this.doGetReloadOperating(this.selectPlatform, "", this.endTime);
+            this.selectPlatformPob2(queryParams);
         },
         // 页面初始化信息
         async initData() {
             let searchKeys = {
                 searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             };
-                await userListByUserNames(searchKeys).then((res) => {
-                    this.companyId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-                })
+            await userListByUserNames(searchKeys).then((res) => {
+                this.companyId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
+            })
             //获取油田信息
             await QueryOgfDetail({operationZoneId: this.companyId}).then((data) => {
                 let code = data.data.code;
@@ -652,7 +866,7 @@ export default {
                 }
             });
 
-            /*const data = {};
+            /* const data = {};
             await fetchOilFields(data).then(res => {
               if (res.data.code === 200) {
                 this.oilFields = res.data.data;
@@ -663,7 +877,7 @@ export default {
                 }
               }
             });
-            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F"; // 32-6油田*/
+            this.selectOilField = "3FC9A818F5BC43B88270DB80BBB3018F"; // 32-6油田 */
             const requestPlat = {
                 ogfId: this.selectOilField
             };
@@ -684,6 +898,7 @@ export default {
                 facilityCode: "全部"
             };
             await getPlatform(requestPlat).then(res => {
+                console.log(res);
                 if (res.data.code === 200) {
                     const platforms = res.data.data;
                     platforms.forEach(item => {
@@ -694,24 +909,30 @@ export default {
                     this.platforms = platforms;
                     this.platforms.unshift(params);
                     this.selectPlatform = this.platforms[0]?.facilityId;
+                    console.log("======this.platforms==", this.platforms);
                 }
             });
             const queryParams = {
                 endTime: this.endTime,
+                startTime: this.endTime,
                 oilFieldId: this.selectOilField,
                 platformId: this.selectPlatform,
                 pageNum: this.page,
                 pageSize: this.pageSize
             };
-            const queryParamsPOB = {
-                endTime: this.endTime,
-                prodPlatformId: this.selectPlatform,
+            const queryParams2 = {
+                endTime: this.currentTimeEnd,
+                startTime: this.currentTimeStart,
+                oilFieldId: this.selectOilField,
+                platformId: this.selectPlatform,
                 pageNum: this.page,
                 pageSize: this.pageSize
             };
+
             this.selectPlatformPob(queryParams);
-            //this.selectPOBProjectPeopleOthers(queryParamsPOB); 废弃
-            //this.doGetReloadOperating(this.selectPlatform, "", this.endTime);
+            this.selectPlatformPob2(queryParams2);
+            // this.selectPOBProjectPeopleOthers(queryParamsPOB); 废弃
+            // this.doGetReloadOperating(this.selectPlatform, "", this.endTime);
         },
 
         /**
@@ -764,13 +985,13 @@ export default {
                         item.prodPlatFormName = "HYSY109FPSO";
                     }
                 });
-                this.tableData2 = data;
-                // this.total=data.total;
                 let list;
+                // eslint-disable-next-line prefer-const
                 list = data;
                 const x = [];
                 const y = [];
                 const y1 = [];
+                // eslint-disable-next-line no-restricted-syntax
                 for (const i in list) {
                     if (list.hasOwnProperty(i)) {
                         if (list[i].prodPlatFormName === "海洋石油109(渤海世纪)") { // 14DD407DE9DA45CAA4EF58FD4AAD11B8
@@ -780,7 +1001,7 @@ export default {
                             y1.push(list[i].littleSum);
                         } else {
                             // 折线图
-                            //x.push(list[i].prodPlatFormName.substr(7, 4));
+                            // x.push(list[i].prodPlatFormName.substr(7, 4));
                             x.push(list[i].prodPlatFormName);
                             y.push(list[i].mineStaff);// waterTimeRate
                             y1.push(list[i].littleSum);
@@ -794,9 +1015,25 @@ export default {
                 this.histogram.xAxis[0].data = x;
             });
         },
+        selectPlatformPob2(queryParams) {
+            queryPlatformPob(queryParams).then(data => {
+                data = data.data;
+                if (data === null) {
+                    return;
+                }
+                data.forEach(item => {
+                    if (item.prodPlatFormName === "海洋石油109(渤海世纪)") {
+                        item.prodPlatFormName = "HYSY109FPSO";
+                    }
+                    item.sum =Number(item.littleSum)- Number(item.mineStaff) ;
+                });
+                this.tableData2 = data;
+            });
+        },
         // 查询POB施工项目情况
         selectPOBProjectPeople(queryParams) {
             queryPOBProjectPeople(queryParams).then(data => {
+                console.log("queryPOBProjectPeople", queryPOBProjectPeople);
                 data = data.data;
                 const list = data;
                 this.tableData1 = data;
@@ -818,29 +1055,30 @@ export default {
             });
         },
         // 查询POB施工项目情况
-        selectPOBProjectPeopleOthers(queryParams) {
-            return
-            dailyList(queryParams).then(data => {
-                data = data.data.records;
-                const list = data;
-                this.tableData1 = data;
-                // this.total=data.total;
-                // 查询图形
-                const x = [];
-                const y = [];
-                // let y1=[];
-                for (const i in list) {
-                    if (list.hasOwnProperty(i)) {
-                        // 折线图
-                        x.push(list[i].prodPlatform);
-                        y.push(list[i].projectUser.slice(0, 1));// waterTimeRate
-                    }
-                }
-                // 柱图
-                this.histogram2.series[0].data = y;
-                this.histogram2.xAxis.data = x;
-            });
-        },
+        // selectPOBProjectPeopleOthers(queryParams) {
+        //     return;
+        //     dailyList(queryParams).then(data => {
+        //         console.log("selectPOBProjectPeopleOthers", data);
+        //         data = data.data.records;
+        //         const list = data;
+        //         this.tableData1 = data;
+        //         // this.total=data.total;
+        //         // 查询图形
+        //         const x = [];
+        //         const y = [];
+        //         // let y1=[];
+        //         for (const i in list) {
+        //             if (list.hasOwnProperty(i)) {
+        //                 // 折线图
+        //                 x.push(list[i].prodPlatform);
+        //                 y.push(list[i].projectUser.slice(0, 1));// waterTimeRate
+        //             }
+        //         }
+        //         // 柱图
+        //         this.histogram2.series[0].data = y;
+        //         this.histogram2.xAxis.data = x;
+        //     });
+        // },
         getSummaries(param) {
             const { columns, data } = param;
             const sums = [];
@@ -858,8 +1096,11 @@ export default {
                         }
                         return prev;
                     }, 0);
-                    sums[index] = Number(sums[index]);
-                    // sums[index];
+                    if (index == 3 || index == 5 || index == 7 || index == 9 || index == 11 || index == 13 || index == 15 || index == 17 || index == 19 || index == 21 || index == 23 || index == 25) {
+                        sums[index] = Number(sums[index - 1] * 12);
+                    } else {
+                        sums[index] = Number(sums[index]);
+                    }
                 } else {
                     sums[index] = "";
                 }
@@ -873,21 +1114,21 @@ export default {
          * @param startTime 开始时间
          * @param endTime 结束时间
          */
-        doGetReloadOperating(platformId, startTime, endTime) {
-            return
-            // 如果平台id等于油田id为空
-            if (platformId == "3FC9A818F5BC43B88270DB80BBB3018F") {
-                platformId = "";
-            }
-            getReloadOperating(platformId, startTime, endTime).then(res => {
-                if (res.data.code == 0) {
-                    this.tableData1 = res.data;
-                    this.changeEchartsOption(this.tableData1);
-                } else {
-                    this.tableData1 = [];
-                }
-            });
-        },
+        // doGetReloadOperating(platformId, startTime, endTime) {
+        //     return;
+        //     // 如果平台id等于油田id为空
+        //     if (platformId == "3FC9A818F5BC43B88270DB80BBB3018F") {
+        //         platformId = "";
+        //     }
+        //     getReloadOperating(platformId, startTime, endTime).then(res => {
+        //         if (res.data.code == 0) {
+        //             this.f = res.data;
+        //             // this.changeEchartsOption(this.tableData1);
+        //         } else {
+        //             this.tableData1 = [];
+        //         }
+        //     });
+        // },
         /**
          * hwh
          * 根据当日施工日报表格内容信息 画图
@@ -941,5 +1182,9 @@ export default {
 }
 .el-pagination {
     text-align: right;
+}
+::v-deep.el-table .el-table__footer-wrapper .cell {
+    color: rgb(174, 178, 179);
+    font-weight: bolder;
 }
 </style>
