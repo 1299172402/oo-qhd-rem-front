@@ -121,9 +121,9 @@
                 id="cjyzsj"
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
-                <el-table-column prop="date" min-width="150" label="日期">
+                <el-table-column prop="date" min-width="210" label="日期">
                     <template slot-scope="scope">
-                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g, '') : '' }} </span>
+                        <span> {{ scope.row.date }} </span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="declineRate" min-width="150" :label="`递减率\n(%)`">
