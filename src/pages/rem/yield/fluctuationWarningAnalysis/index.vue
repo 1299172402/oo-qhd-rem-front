@@ -53,8 +53,8 @@
               <pagePanel :headerTitle="oilFieldName + '产量跟踪预警分析'" style="height: 456px; margin-top: 0" show-btn>
                 <div style="position: absolute; z-index: 1">
                   <el-button type="primary" @click="openDetailedChick('红色预警')">红色预警</el-button>
-                  <el-button type="primary" @click="openDetailedChick('蓝色预警')">蓝色预警</el-button>
-                  <el-button type="primary" @click="openDetailedChick('黄色预警')">黄色预警</el-button>
+                    <el-button type="primary" @click="openDetailedChick('黄色预警')">黄色预警</el-button>
+                    <el-button type="primary" @click="openDetailedChick('蓝色预警')">蓝色预警</el-button>
                 </div>
                 <Echart
                   :chart-data="echartOption"
@@ -1214,6 +1214,18 @@ export default {
               fontSize: 14,
             },
           });
+        legendData.push({
+            name: "黄色预警",
+            icon: "circle",
+            itemGap: 14,
+            itemStyle: {
+                color: "#F5BE43",
+            },
+            textStyle: {
+                color: "#8FA4CC",
+                fontSize: 14,
+            },
+        });
           legendData.push({
             name: "蓝色预警",
             icon: "circle",
@@ -1226,21 +1238,9 @@ export default {
               fontSize: 14,
             },
           });
-          legendData.push({
-            name: "黄色预警",
-            icon: "circle",
-            itemGap: 14,
-            itemStyle: {
-              color: "#F5BE43",
-            },
-            textStyle: {
-              color: "#8FA4CC",
-              fontSize: 14,
-            },
-          });
           series.push({ name: "蓝色预警", data: [], type: "line" });
-          series.push({ name: "红色预警", data: [], type: "line" });
           series.push({ name: "黄色预警", data: [], type: "line" });
+          series.push({ name: "红色预警", data: [], type: "line" });
         }
         _this.echartOption.legend.data = legendData;
         _this.echartOption.series = series;

@@ -1096,7 +1096,7 @@ export default {
         this.currentDate = this.$route.query.alarmTime;
         this.queryOilFeildList();
       } else {
-        await getDate({ wellMenu: "WELL_INJ" }).then((res) => {
+        await getDate({ wellMenu: "WELL_GROUP" }).then((res) => {
           if (res.data.code == 200) {
             this.currentDate = res.data.data;
           }
