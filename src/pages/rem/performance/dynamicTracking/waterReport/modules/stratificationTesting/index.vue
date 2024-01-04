@@ -171,7 +171,7 @@ export default {
                     platformId: this.queryData.platform,
                     wellId: this.queryData.selectWellId,
                     layerId:this.selectPosition,
-                    dateTime:new Date().getFullYear() + '-' + (new Date().getMonth() +1)
+                    dateTime:new Date().format('yyyy-MM')
                 };
                 this.getForecast(request)
             },
@@ -185,7 +185,7 @@ export default {
                 platformId: this.queryData.platform,
                 wellId: this.queryData.selectWellId,
                 layerId:this.selectPosition,
-                dateTime:new Date().getFullYear() + '-' + (new Date().getMonth() +1)
+                dateTime:new Date().format('yyyy-MM')
             };
             this.getForecast(request)
         },
@@ -201,7 +201,7 @@ export default {
                         platformId: this.queryData.platform,
                         wellId: this.queryData.selectWellId,
                         layerId:this.selectPosition,
-                        dateTime:new Date().getFullYear() + '-' + (new Date().getMonth() +1)
+                        dateTime:new Date().format('yyyy-MM')
                     }
                     this.tableData.forEach((item) => {
                         const tempList = []

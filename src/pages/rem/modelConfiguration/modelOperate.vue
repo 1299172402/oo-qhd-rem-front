@@ -211,6 +211,8 @@ export default {
           this.searchForm.blockName = this.blockSelectList[i].label;
         }
       }
+      this.getProdDailyTableApi();
+      this.getWellListApi();
     },
     //获取井型数据
     async getProdDailyTableApi() {
@@ -231,6 +233,7 @@ export default {
           this.searchForm.wellTypeName = this.wellTypeSelectList[i].label;
         }
       }
+      this.getWellListApi();
     },
     //获取井号数据源
     getWellListApi() {

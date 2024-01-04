@@ -203,7 +203,7 @@ export default {
         companyId: "",
         oilFieldName: "秦皇岛32-6油田", //油田名称
         selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F", //油田绑定值
-        selectDate: ["2023-01-01", "2023-12-31"], //日期
+        selectDate: [new Date().format('YYYY-01-01'), new Date().format('YYYY-12-31')], //日期
         planTypeCode: "002003", //产量计划类型绑定值
         theYieldComponentsValue: 1, //产量构成绑定值
         rollForecastVersion: "", //滚动预测绑定值
