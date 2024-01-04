@@ -308,8 +308,8 @@ export default {
           this.devWellLineChart.legend.data = legendData;
           this.devWellLineChart.series = seriesData;
           this.devWellLineChart.xAxis[0].data = this.getDay(
-            this.searchForm.selectDate[0] || "2023-01-01",
-            this.searchForm.selectDate[1] || "2023-12-31",
+            this.searchForm.selectDate[0] || new Date().format('YYYY-01-01'),
+            this.searchForm.selectDate[1] || new Date().format('YYYY-12-31'),
           );
           //井口次
           this.devWellCount = res.data.data.times;

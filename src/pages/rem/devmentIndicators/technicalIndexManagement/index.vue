@@ -1765,8 +1765,10 @@ export default {
     doOilYear(oilFieldId) {
       //现在用的是这个
       let request = {
-        beginDate: "2023-01-01",
-        endDate: "2023-12-31",
+        // beginDate: "2023-01-01",
+        // endDate: "2023-12-31",
+        beginDate: new Date().format('YYYY-01-01'),
+        endDate: new Date().format('YYYY-12-31'),
         oilFieldId,
         planTypeCode: "002003",
         rollForecastVersion: "202301",
