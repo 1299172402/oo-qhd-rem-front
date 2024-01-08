@@ -686,7 +686,7 @@ export default {
           this.pageTotal = this.tableData.length;
           this.initData2();
           this.mcMarginLeft();
-          if (this.dateTime.split("-")[0] == "2023" && this.pageTotal) {
+          if (this.dateTime.split("-")[0] == new Date().format("yyyy") && this.pageTotal) {
             this.isShowMC = true;
           } else {
             this.isShowMC = false;
