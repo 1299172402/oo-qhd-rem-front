@@ -538,7 +538,6 @@ export default {
       this.spacing = Math.floor((this.width - 936 - 44 - 20) / 11);
       this.initData2();
       this.mcMarginLeft();
-      console.log(this.screenWidth); //浏览器窗口变化时，打印宽度。
     },
   },
   methods: {
@@ -549,9 +548,7 @@ export default {
         let width = document.getElementById("tableBox").clientWidth - 500;
         this.width = width; //table最后一列的宽度
         //计算日期 间距
-        console.log("日期宽度", Math.floor(this.width - 44 - 20));
         this.spacing = Math.floor((this.width - 936 - 44 - 20) / 11);
-        console.log("日期间距", this.spacing);
         this.initData();
         //监听页面缩放
         this.screenWidth = document.body.clientWidth;
@@ -702,15 +699,10 @@ export default {
       let newDate = moment().format("YYYY-MM-DD");
       let diffObject = this.leftDiff(newDate);
       let marginLeft = diffObject.month * 78 + diffObject.month * this.spacing + (78 / 30) * diffObject.day - 4;
-      console.log("marginLeft", marginLeft);
       this.mcWidth = this.width - 10 - 40 - marginLeft + "px";
       this.mcMgLeft = marginLeft + 560 + "px";
-      console.log("this.mcWidth", this.mcWidth);
-      console.log("this.mcMgLeft", this.mcMgLeft);
     },
     initData2() {
-      console.log("没执行吗？", this.tableData);
-
       if (this.tableData.length) {
         this.tableData.forEach((el, i) => {
           if (el.realityMeasuresStartTime) {
@@ -893,7 +885,6 @@ export default {
       planMeasuresEndTime,
       realityMeasuresEndTime,
     ) {
-      console.log(1111, selectWellId);
       // if (this.dateTime == '2023' && index == 1) {
       if (!realityMeasuresEndTime && planMeasuresStartTime && moment().isBefore(moment(planMeasuresStartTime))) {
         this.$router.push({
@@ -941,7 +932,7 @@ export default {
         try {
           FileSaver.saveAs(new Blob([wbout], { type: "application/octet-stream" }), "措施管理.xlsx");
         } catch (e) {
-          if (typeof console !== "undefined") console.log(e, wbout);
+          // if (typeof console !== "undefined") console.log(e, wbout);
         }
         this.queryParams = JSON.parse(JSON.stringify(queryParams));
         return wbout;

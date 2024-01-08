@@ -170,7 +170,6 @@ export default {
       getHorizonSection({
         wellId: this.queryData.wellId,
       }).then((res) => {
-        console.log(res.data);
         if (res.data.code == 200) {
           this.djclForm.remHorizonSectionId = res.data.data.remHorizonSectionId;
           this.djclForm.horizonIntervalLen = res.data.data.horizonIntervalLen;

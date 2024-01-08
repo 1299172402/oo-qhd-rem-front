@@ -268,7 +268,6 @@ export default {
     save() {
       // this.$message.info("保存中...");
       insertWellDailyMeasureInfo(this.tableData).then((res) => {
-        console.log(res);
         this.$message.info("保存成功...");
       });
     },
@@ -285,7 +284,6 @@ export default {
       params.timeEfficieincy = row.timeEfficieincy;
       // 见效天数
       params.effectDays = row.effectDays;
-      console.log(params);
       calcSingleWellMeasureStatInfos(params)
         .then((res) => {
           this.tableData.forEach((obj) => {
@@ -306,7 +304,6 @@ export default {
         array.push(row.wellMeasureImprovementId);
         // 删除信息
         deleteWellDailyMeasureInfoByIds(array).then((res) => {
-          console.log(res);
         });
       }
       this.tableData.splice(index, 1);

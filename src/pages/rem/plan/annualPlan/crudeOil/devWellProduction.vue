@@ -338,7 +338,6 @@ export default {
         result.push(this.formatDate(new Date(parseInt(k)), "yyyy-MM-dd"));
         k = k + 24 * 60 * 60 * 1000;
       }
-      console.log(result);
       return result;
     },
 

@@ -78,20 +78,16 @@ export default {
   methods: {
 
     getUserIP(){
-      console.log("getUserIP-->")
       const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-      console.log("getUserIP-->RTCPeerConnection",RTCPeerConnection);
       if(RTCPeerConnection) (()=>{
         const rtc = new RTCPeerConnection();
         rtc.createDataChannel("");// 创建通道
         rtc.createOffer( offerDesc=>{// 创建并存储sdp数据
           rtc.setLocalDescription(offerDesc);
         }, e=>{
-          console.log(e);
+          // console.log(e);
         });
-        console.log("getUserIP-->RTCPeerConnection:trc",rtc);
         rtc.onicecandidate = (evt)=>{// 监听candiDate事件
-          console.log("rtc.onicecandidate-->",evt);
           if(evt.candidate){
             this.ip = evt.candidate.address;
           }
@@ -101,7 +97,6 @@ export default {
     handleOpen(key, keyPath) {},
     handleClose(key, keyPath) {},
     handleSelect(key, keyPath) {
-      console.log(key,keyPath,this.$route.matched);
       let resId; let path;
       if (key) {
         try {
@@ -113,7 +108,6 @@ export default {
           }
           this.$router.push({ path });
         } catch (e) {
-          console.log("处理路径失败", key, e)
         }
       }
       // if (

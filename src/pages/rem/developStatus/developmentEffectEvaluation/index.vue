@@ -211,7 +211,6 @@ export default {
       }
       if (this.$route.query.link) {
         this.tabsValue = this.$route.query.link;
-        console.log(this.tabsValue);
         setTimeout(() => {
           this.$refs.childComponents.doSearch();
         }, 1000);

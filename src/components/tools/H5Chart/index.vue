@@ -107,7 +107,7 @@
              * @Date: 2020-04-01 14:25:00
              */
             handlerZoomHeight() {
-                console.log("全图刷新",this.w, this.w.fView)
+                // console.log("全图刷新",this.w, this.w.fView)
                 if (this.w && this.w.fView) {
                     this.w.fView.ZoomHeight();
                     this.w.fView.ZoomAll();//全图
@@ -122,7 +122,6 @@
              * @Date: 2020-04-01 14:25:00
              */
              handlerZoomHeight1() {
-                console.log("全图刷新1",this.w, this.w.fView)
                 if (this.w && this.w.fView) {
                     // this.w.fView.ZoomHeight();
                     this.w.fView.ZoomAll();//全图
@@ -138,10 +137,8 @@
              */
             setSampleDate(data) {
                 // this.data = data;
-                console.log(data, this.loadKey)
                 if (this.loadKey) {
                     if (this.w && this.w.fView && this.w.fView.RefreshData) {
-                        console.log('setSampleDate')
                         // this.w.fCommon.Delete()
                         // this.w.fView.View.Delete()
                         this.w.fView.RefreshData(data, true, true);
@@ -153,13 +150,11 @@
                 } else {
                     this.time = new Date().getTime()
                 }
-                console.log('index-data', data, this.w)
                 // if(this.w && this.w.setProfessionalChart){
                 //   this.w.setProfessionalChart(data)
                 // }
             },
             setProminentWell(data){
-                console.log('子组件',data)
                 this.w.fView.SetFrameData(data);
                 this.w.fView.View.MakeAviod();//井号避让，根据情况自决定是否选用
                 this.w.fView.ZoomAll();//全图

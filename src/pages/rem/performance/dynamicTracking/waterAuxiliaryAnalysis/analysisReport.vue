@@ -1466,7 +1466,6 @@ export default {
       }
     },
     queryTableData(myData, val = "123") {
-      console.log("myData", myData);
       let myWellCount = {}; //计算各项目的井数
       let t_count = 0; //计数器
       //2、按照顺序初始化计数器、生成数据体
@@ -1982,8 +1981,6 @@ export default {
       //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
       this.tableData = myData; //加载数据
       this.oldTableData = cloneDeep(myData); //加载数据
-      console.log("this.tableData", this.tableData);
-
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
       });

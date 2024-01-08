@@ -220,7 +220,6 @@
             if(wellIds.length){
                 this.wellIds=wellIds.map(el=>el.borepipeId);
             }
-            console.log('this.wellIds',this.wellIds)
             //平台产量贡献分析
             this.getContributeAnalysis(
                 this.block,

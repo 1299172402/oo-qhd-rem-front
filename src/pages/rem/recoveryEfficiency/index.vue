@@ -1534,7 +1534,7 @@ export default {
     },
     //切换tabs
     handleClick() {
-      console.log(this.activeName);
+      // console.log(this.activeName);
     },
     //初始化日期
     initDate() {
@@ -1784,7 +1784,6 @@ export default {
           ];
           this.optionThree.series[0].name = data.bubbleDataSets[0].label;
           let charlen = data.lineChartDataSets.length;
-          console.log(charlen);
           for (var j = 0; j < charlen; j++) {
             this.optionThree.series[j + 1].name = data.lineChartDataSets[j].label;
           }
