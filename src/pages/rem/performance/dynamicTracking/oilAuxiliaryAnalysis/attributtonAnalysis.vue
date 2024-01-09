@@ -1319,135 +1319,214 @@ export default {
                             "children": [
                                 {
                                     "level": 2,
-                                    "name": "判断注入时长",
-                                    "code": "PDSCSC",
+                                    "name": "分层段日注量",
+                                    "code": "FCDRZL",
                                     "children": [
                                         {
                                             "level": 3,
-                                            "name": "",
+                                            "name": "稳定",
                                             "children": [
                                                 {
+                                                    "code": "004012",
                                                     "level": 4,
-                                                    "name": "",
-                                                    "children": [
-                                                        {
-                                                            "level": 5,
-                                                            "name": "",
-                                                            "children": [
-                                                                {
-                                                                    "level": 6,
-                                                                    "name": "",
-                                                                    "children": [
-                                                                        {
-                                                                            "level": 7,
-                                                                            "name": "归因1：直接关联关停记录表或备注。\n下步措施：提高生产时率",
-                                                                            "code": "004001"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                            ]
-                                                        },
-                                                    ]
+                                                    "name": "归因12：注水强度计算有误。\n" +
+                                                        "建议措施：排查注水强度评价结果。",
                                                 },
                                             ]
                                         },
                                         {
                                             "level": 3,
-                                            "name": "判断分层段配注量",
-                                            "code": "FCDPZL",
+                                            "name": "变化",
                                             "children": [
                                                 {
+                                                    "code": "FCDPZL",
                                                     "level": 4,
-                                                    "name": "",
+                                                    "name": "分层段配注量",
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "",
+                                                            "name": "上升",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
-                                                                    "name": "",
+                                                                    "name": "对比前数值为0",
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因2：该井/层段/层位已超注。\n下步措施：控水调配注",
-                                                                            "code": "004002"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "level": 4,
-                                                    "name": "",
-                                                    "children": [
-                                                        {
-                                                            "level": 5,
-                                                            "name": "判断分层段/分层井口压力",
-                                                            "code": "FCDJKYL",
-                                                            "children": [
-                                                                {
-                                                                    "level": 6,
-                                                                    "name": "",
-                                                                    "children": [
-                                                                        {
-                                                                            "level": 7,
-                                                                            "name": "归因4：井口压力过高。\n下步措施：建议分层酸化",
-                                                                            "code": "004004"
-                                                                        }
+                                                                            "code": "004001",
+                                                                            "name": "归因1：开井影响。\n" +
+                                                                                "建议措施：维持。",
+                                                                        },
                                                                     ]
                                                                 },
                                                                 {
                                                                     "level": 6,
-                                                                    "name": "判断分层段/分层可配注的最大量",
-                                                                    "code": "FCDKPZZDL",
+                                                                    "name": "对比前数值不为0",
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因5：注采失调。\n下步措施：调整分层配注量",
-                                                                            "code": "004005"
+                                                                            "code": "004002",
+                                                                            "name":
+                                                                                "归因2：调配提水影响。\n" +
+                                                                                "建议措施：①下调水量；②维持",
                                                                         },
-                                                                        {
-                                                                            "level": 7,
-                                                                            "name": "归因6：注采关系失调。\n下步措施：调整产液结构",
-                                                                            "code": "004006"
-                                                                        }
                                                                     ]
-                                                                }
+                                                                },
                                                             ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "level": 4,
-                                                    "name": "判断注水强度",
-                                                    "code": "PDZSQD",
-                                                    "children": [
+
+                                                        },
                                                         {
                                                             "level": 5,
-                                                            "name": "",
+                                                            "name": "下降",
                                                             "children": [
                                                                 {
                                                                     "level": 6,
-                                                                    "name": "",
+                                                                    "name": "当前值为0",
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因3：①水线突破；②井组内产液变化。\n下步措施：注采调整",
-                                                                            "code": "004003"
+                                                                            "code": "004003",
+                                                                            "name": "归因3：关井影响。\n" +
+                                                                                "建议措施：维持。",
+                                                                        },
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "level": 6,
+                                                                    "name": "当前值为0",
+                                                                    "children": [
+                                                                        {
+                                                                            "level": 7,
+                                                                            "code": "004002",
+                                                                            "name": "归因4：调配降水影响。\n"+
+                                                                            "建议措施：①上调水量；②维持",
+                                                                        },
+                                                                    ]
+                                                                },
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 5,
+                                                            "name": "稳定",
+                                                            "children": [
+                                                                {
+                                                                    "code": "ZSSC",
+                                                                    "level": 6,
+                                                                    "name": "注水时长",
+                                                                    "children": [
+                                                                        {
+                                                                            "level": 7,
+                                                                            "name": "上升",
+                                                                            "children": [
+                                                                                {
+                                                                                    "level": 7,
+                                                                                    "name": "归因5：提高注水时率影响。\n" +
+                                                                                        "建议措施：维持。",
+                                                                                },
+                                                                            ]
                                                                         },
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "归因7：①地层污染；②吸水能力影响；③井组内产液变化。\n下步措施：观察调整",
-                                                                            "code": "004007"
-                                                                        }
+                                                                            "name": "下降",
+                                                                            "children": [
+                                                                                {
+                                                                                    "level": 7,
+                                                                                    "name": "归因6：直接关联关停记录表的停井原因。\n"+
+                                                                                    "建议措施：提高注水时率。",
+                                                                                },
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "level": 7,
+                                                                            "name": "稳定",
+                                                                            "children": [
+                                                                                {
+                                                                                    "level": 7,
+                                                                                    "name": "井口注水压力",
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "level": 7,
+                                                                                            "name": "上升",
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "level": 7,
+                                                                                                    "code": "004007",
+                                                                                                    "name": "归因7：①地层出砂/地层污染等；②注采失调：周围油井采液量下降或周围注水井注入量上升等影响 \n"+
+                                                                                                     "建议措施：①作业防砂/酸化处理地层等。② 维持/注采调整：调整周围井的采液量或注水量等。"
+                                                                                                },
+                                                                                            ]
+                                                                                        },
+                                                                                        {
+                                                                                            "level": 7,
+                                                                                            "name": "下降",
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "level": 7,
+                                                                                                    "code": "004008",
+                                                                                                    "name": "归因8：①封隔器失效/管柱漏失/配水器冲蚀等；②出现大孔道等。\n"+
+                                                                                                    "建议措施：①作业换管柱；②调剖。",
+                                                                                                },
+                                                                                            ]
+                                                                                        },
+                                                                                        {
+                                                                                            "level": 7,
+                                                                                            "name": "稳定",
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "level": 7,
+                                                                                                    "name": "套压",
+                                                                                                    "children": [
+                                                                                                        {
+                                                                                                            "level": 7,
+                                                                                                            "name": "上升",
+                                                                                                            "children": [
+                                                                                                                {
+                                                                                                                    "level": 7,
+                                                                                                                    "code": "004009",
+                                                                                                                    "name": "归因9：管柱堵/配水器堵等。\n"+
+                                                                                                                        "建议措施：洗井/作业换管柱。",
+                                                                                                                },
+                                                                                                            ]
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "level": 7,
+                                                                                                            "name": "下降",
+                                                                                                            "children": [
+                                                                                                                {
+                                                                                                                    "level": 7,
+                                                                                                                    "code": "004010",
+                                                                                                                    "name": "归因10：①封隔器失效/管柱漏失/配水器冲蚀等；②出现大孔道等。\n" +
+                                                                                                                        "建议措施：①作业换管柱；②调剖。",
+                                                                                                                },
+                                                                                                            ]
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "level": 7,
+                                                                                                            "name": "稳定",
+                                                                                                            "children": [
+                                                                                                                {
+                                                                                                                    "level": 7,
+                                                                                                                    "code": "004011",
+                                                                                                                    "name": "归因11：怀疑仪表故障：分层段日注数据问题。\n"+
+                                                                                                                        "建议措施：维护/更换仪表。",
+                                                                                                                },
+                                                                                                            ]
+                                                                                                        },
+                                                                                                    ]
+                                                                                                },
+                                                                                            ]
+                                                                                        },
+                                                                                    ]
+                                                                                },
+
+                                                                            ]
+                                                                        },
                                                                     ]
                                                                 },
                                                             ]
                                                         },
                                                     ]
+
                                                 },
                                             ]
                                         },
@@ -2402,22 +2481,6 @@ export default {
                     this.tableData = res.data.data.rows
                     this.pageTotal = res.data.data.total
                 })
-            }
-        },
-        getTreeName(list, name) {
-            let _this = this
-            for (let i = 0; i < list.length; i++) {
-                let a = list[i]
-                if (a.name.includes(name)) {
-                    return a.name
-                } else {
-                    if (a.children && a.children.length > 0) {
-                        let res = _this.getTreeName(a.children, name)
-                        if (res) {
-                            return res
-                        }
-                    }
-                }
             }
         },
         //表格鼠标悬浮事件
