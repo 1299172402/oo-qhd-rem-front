@@ -786,7 +786,7 @@ export default {
     //油田下拉-change
     async onFieldChange(val) {
       await this.getFetchPlatforms(val);
-      this.getFetchWells(this.selectOilField, this.selectPlatform);
+      await this.getFetchWells(this.selectOilField, this.selectPlatform);
       this.getMeasureNameAndCode();
     },
     //通过油田查询平台
@@ -799,8 +799,8 @@ export default {
       });
     },
     //平台下拉-change
-    onPlatfromChange(val) {
-      this.getFetchWells(this.selectOilField, val);
+    async onPlatfromChange(val) {
+      await this.getFetchWells(this.selectOilField, val);
       this.getMeasureNameAndCode();
     },
     changeWell(val) {
@@ -845,10 +845,10 @@ export default {
             this.wells = res.data.data;
           }
         });
-        // this.wells.unshift({
-        //   wellId: "",
-        //   wellName: "全部",
-        // });
+        this.wells.unshift({
+          wellId: "",
+          wellName: "全部",
+        });
       }
     },
     //通过油田 或 平台 获得井
