@@ -644,7 +644,6 @@ export default {
                 tableData[i].comparisonOilWidth = linearScale(Math.abs(el.comparisonOilProduction));
               }
             });
-            console.log("table数据", tableData);
             this.tableData = tableData;
           } else {
             this.tableData = [];

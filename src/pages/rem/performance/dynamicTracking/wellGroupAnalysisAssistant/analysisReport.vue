@@ -1187,7 +1187,6 @@ export default {
     changeWellGroup() {
       this.$refs.treeSelectionCustom.setCheckedKeys([this.selBlock, this.searchKeys]);
       let wellItem = this.wellGroupList.find((e) => e.wellGroupId == this.searchKeys);
-      console.log(wellItem, this.searchKeys);
       this.searchNames = wellItem?.wellGroupName || "";
     },
     // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
@@ -1297,7 +1296,6 @@ export default {
             let key2 = t_data.code;
             let groupEvalBases = messData.groupEvalBases; //层位数据
             let children = myData[i].children;
-            console.log("children信息", myData,children,i,messData)
             if (children.length) {
               for (let a = 0; a < groupEvalBases.length; a++) {
                 let isFindOut = false; //默认没有查到
@@ -1742,7 +1740,6 @@ export default {
               this.trendOfIndicatorsNum.zcnum = Number(el.value);
               this.trendOfIndicatorsNum.ycnum = Number(el.exeValue);
             } else {
-              console.log(Number(el.value), !!Number(el.value));
               myData[i].isShow = Number(el.value) ? true : false;
               // this.trendOfIndicatorsNum.ycnum+=Number(el.value);
             }

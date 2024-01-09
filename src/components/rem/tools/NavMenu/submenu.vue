@@ -146,27 +146,22 @@ export default {
         insertSysLogInfo(item.resId, this.ip);
       }
       if (item[this.pathName]) {
-        console.log('item[this.pathName',item[this.pathName])
         this.$router.push({ path: item[this.pathName] });
       } else {
         return true;
       }
     },
     getUserIP(){
-      console.log("getUserIP-->")
       const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-      console.log("getUserIP-->RTCPeerConnection",RTCPeerConnection);
       if(RTCPeerConnection) (()=>{
         const rtc = new RTCPeerConnection();
         rtc.createDataChannel("");// 创建通道
         rtc.createOffer( offerDesc=>{// 创建并存储sdp数据
           rtc.setLocalDescription(offerDesc);
         }, e=>{
-          console.log(e);
+          // console.log(e);
         });
-        console.log("getUserIP-->RTCPeerConnection:trc",rtc);
         rtc.onicecandidate = (evt)=>{// 监听candiDate事件
-          console.log("rtc.onicecandidate-->",evt);
           if(evt.candidate){
             this.ip = evt.candidate.address;
           }

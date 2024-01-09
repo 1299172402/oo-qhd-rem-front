@@ -137,7 +137,6 @@
                         let sum = 0;
                         values.forEach((item, index1) => {
                             if (index1 == 0 || index1 > 3) {
-                                console.log(index1 + ": " + item)
                                 sum = sum + item;
                             }
                         })

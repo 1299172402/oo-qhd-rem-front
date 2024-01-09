@@ -84,7 +84,6 @@
             //获取图片
             async doSearch(isBoolean=true) {
                 if(isBoolean){
-                    console.log(123)
                     await this.fieldLayersApi();
                 }
                 this.imageList=[];

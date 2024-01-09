@@ -170,7 +170,6 @@ export default {
       getSinglePress({
         wellId: this.queryData.wellId,
       }).then((res) => {
-        console.log(res.data);
         if (res.data.code == 200) {
           this.djclForm.remSigngWellPressId = res.data.data.remSigngWellPressId;
           this.djclForm.staticPress = res.data.data.staticPress;

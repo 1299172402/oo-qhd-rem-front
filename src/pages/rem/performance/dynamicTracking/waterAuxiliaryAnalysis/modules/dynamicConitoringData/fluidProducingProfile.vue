@@ -187,10 +187,6 @@ export default {
               }
             }
           }
-          console.log("绝对吸入量总数", this.absoluteIntakeAllNum);
-          console.log("相对吸入量", this.relativeIntakeAllNum);
-          console.log("日总注入量", this.injTotalAllNum);
-          console.log("绘图数据", this.chartData);
         }
       });
     },
@@ -213,7 +209,6 @@ export default {
       } else if (index == 2) {
         allNum = this.injTotalAllNum;
       }
-      console.log((Math.round(num) / allNum) * 100);
       return (Math.round(num) / allNum) * 100;
     },
   },

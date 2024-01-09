@@ -72,7 +72,6 @@ export default {
     };
   },
   mounted() {
-    console.log("baseUrl",this.baseUrl);
     window.initSampleData = (commonJs, $, w) => {
       this.initSampleData(commonJs, $, w);
     };
@@ -151,10 +150,8 @@ export default {
      */
     setSampleDate(data){
       // this.data = data;
-      console.log(data,this.loadKey)
       if(this.loadKey){
         if(this.w && this.w.fView && this.w.fView.RefreshData){
-          console.log('setSampleDate')
           this.w.fView.RefreshData(data,true,true)
           // this.w.fView.View.ScrollView(this.w.fView.View.HScrollValue, this.w.fView.View.VScrollValue);
           // this.w.fView.ZoomPicture();
@@ -164,7 +161,6 @@ export default {
       }else{
         this.time = new Date().getTime()
       }
-      console.log('index-data',data,this.w)
       // if(this.w && this.w.setProfessionalChart){
       //   this.w.setProfessionalChart(data)
       // }

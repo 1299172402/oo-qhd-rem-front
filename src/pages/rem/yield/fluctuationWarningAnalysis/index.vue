@@ -694,7 +694,6 @@ export default {
             type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
           },
           formatter(params) {
-            console.log(params)
             params.forEach((item) => {
               relVal += "<br/>" + item.marker + " : " + parseFloat(item.value || 0).toFixed(2);
             });
@@ -1244,7 +1243,6 @@ export default {
         }
         _this.echartOption.legend.data = legendData;
         _this.echartOption.series = series;
-        console.log("_this.echartOption", _this.echartOption);
         if (this.lineMin) {
           if (this.lineMin > 1000) {
             this.lineMin = this.lineMin - 50;
@@ -1526,7 +1524,6 @@ export default {
         }
 
         getWellOutputWaveAnalysisNum().then((res) => {
-          console.log(res);
           if (res.data.code == 200) {
             let data = res.data.data;
             this.wellAllNum = data;
@@ -1800,7 +1797,6 @@ export default {
       let yesterday = reList.find((item) => {
         return item.code == "baoBiaoYesterday";
       });
-      console.log(today, yesterday);
       var obj = {
         type: "当日-前一日产量",
         zygsjc:
@@ -1840,7 +1836,6 @@ export default {
       var finalList = [];
       this.allOutputTrackingTableData.forEach((item, index) => {
         var lineTitle = this.dealLineTitle(item.code);
-        console.log(lineTitle, item.code);
         var obj = reList.find((item1) => {
           return item1.type == lineTitle;
         });

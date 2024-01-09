@@ -675,7 +675,6 @@ define(['WGAD/Scripts/WGADPlatConfig/WGADPlatConfig',
             var height = this.View.MapCanvas.height;
             this.View.MapData.ZoomAll(width, height);
             this.View.Repaint();
-            console.log(this.View.MapData.ViewScale);
         }
 
         //图元置顶
@@ -1877,7 +1876,7 @@ define(['WGAD/Scripts/WGADPlatConfig/WGADPlatConfig',
                     }
                 },
                 error: function (data) {
-                    console.log(data);
+                    // console.log(data);
                 }
             });
 

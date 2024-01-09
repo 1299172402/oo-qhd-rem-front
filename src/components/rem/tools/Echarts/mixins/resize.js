@@ -24,7 +24,6 @@ export default {
   },
   methods: {
     $_sidebarResizeHandler(e) {
-        console.log(e,888)
       if (e.propertyName === 'width') {
         this.__resizeHandler()
       }

@@ -1254,7 +1254,7 @@ export default {
             }
           })
           .catch(error => {
-            console.log(error);
+            // console.log(error);
           });
       }
     },
@@ -1371,7 +1371,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
         });
     },
     handleCreate() {
@@ -1734,7 +1734,7 @@ export default {
                   }
                 })
                 .catch(response => {
-                  console.log(response);
+                  // console.log(response);
                 });
             } else {
               this.$message({
@@ -1750,7 +1750,7 @@ export default {
           }
         })
         .catch(response => {
-          console.log(response);
+          // console.log(response);
         });
     },
     recursive: function(_data) {
@@ -1774,7 +1774,7 @@ export default {
       return data;
     },
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     edit() {
       this.flag = false;
@@ -1857,7 +1857,7 @@ export default {
             }
           })
           .catch(response => {
-            console.log(response);
+            // console.log(response);
           });
     },
     //获取 CloudSideBar 子组件返回的点击事件 当前点击的参数
@@ -2127,7 +2127,7 @@ export default {
           }
         })
         .catch(response => {
-          console.log(response);
+          // console.log(response);
         });
     },
     updateWellTemplate(type) {
@@ -2221,7 +2221,7 @@ export default {
           loading.close();
         })
         .catch(error => {
-          console.log(error);
+          // console.log(error);
           this.$message({
             type: "warning",
             message: "与后方沟通超时"
@@ -2882,7 +2882,7 @@ export default {
               loading.close();
             })
             .catch(response => {
-              console.log(response);
+              // console.log(response);
               this.$message({
                 type: "warning",
                 message: "与后方沟通超时"
@@ -2899,7 +2899,7 @@ export default {
               loading.close();
             })
             .catch(response => {
-              console.log(response);
+              // console.log(response);
               this.$message({
                 type: "warning",
                 message: "与后方沟通超时"
@@ -3011,7 +3011,7 @@ export default {
               }
             })
             .catch(response => {
-              console.log(response);
+              // console.log(response);
             });
         } else {
           params.WellTCID = WellTCID;
@@ -3029,7 +3029,7 @@ export default {
               }
             })
             .catch(response => {
-              console.log(response);
+              // console.log(response);
             });
         }
       }
@@ -3144,7 +3144,7 @@ export default {
             }
           })
           .catch(response => {
-            console.log(response);
+            // console.log(response);
           });
       } else if (Number(data.Style) == 100) {
         let params = {
@@ -3163,7 +3163,7 @@ export default {
             }
           })
           .catch(response => {
-            console.log(response);
+            // console.log(response);
           });
       } else if (Number(data.Style) == 103) {
         let params = {
@@ -3190,7 +3190,7 @@ export default {
             }
           })
           .catch(response => {
-            console.log(response);
+            // console.log(response);
           });
       } else {
       }
@@ -3231,7 +3231,7 @@ export default {
             }
           })
           .catch(response => {
-            console.log(response);
+            // console.log(response);
             this.$message({
               type: "error",
               message: "删除失败"
@@ -3245,7 +3245,7 @@ export default {
     },
     //可能用到的图件 行点击
     probablyClick(row) {
-      console.log(row);
+      // console.log(row);
       debugger;
       var path = "";
       var type = "";

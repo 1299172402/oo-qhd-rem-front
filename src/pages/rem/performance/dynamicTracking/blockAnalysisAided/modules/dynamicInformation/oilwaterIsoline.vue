@@ -436,7 +436,6 @@
                 //this.$refs.H5Chart.downLoadAllPicture();
                 this.dialogVisible1 = true;
                 setTimeout(() => {
-                    console.log(this.$refs.downH5Chart1);
                     this.sjcl(this.layerData, this.$refs.downH5Chart1);
                     //this.sjcl(this.layerData, this.$refs.downH5Chart1)
                     this.dialogVisible1 = false;
@@ -466,7 +465,6 @@
             },
             //上传底图
             async useUploadPic(file, fileList) {
-                console.log(file);
                 // return 
                 //获得油田参数 展示不用
                 let oilFieldid = this.oilFieldId;
@@ -556,7 +554,6 @@
             sureContourLine(){
                 let colorList=[];
                 let form=JSON.parse(JSON.stringify(this.form));
-                console.log(form,88);
                 let colorNum=0;
                 for(let key in form){
                     if(key.includes('color')&&form[key]){
@@ -572,7 +569,6 @@
                     this.$message.warning(`最少输入两个线条颜色`);
                     return false;
                 }
-                console.log(colorList);
                 if(form.interval!==''){
                     if(form.interval==='0'){
                         this.$message.warning(`可设区间：大于0 且 小于${this.intervalNum}`);
@@ -599,10 +595,7 @@
                                 let list=res.data.data.areaLine;
                                 let max = Math.max.apply(Math, list.map(i => {return Number(i.isolineValue) }));
                                 let min = Math.min.apply(Math, list.map(i => {return Number(i.isolineValue) }));
-                                console.log('max',max)
-                                console.log('min',min)
                                 this.intervalNum=this.numSub(max,min);
-                                console.log('间隔',this.intervalNum);
                             }
                             this.layerData = res.data.data;
                             this.sjcl(res.data.data, this.$refs.H5Chart);

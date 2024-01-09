@@ -645,7 +645,6 @@ export default {
             remUploadFileMinioId: "",
           };
           await addRemUploadFileMinio(params).then((res) => res);
-          console.log(`这是第${i + 1}个`);
         }
         this.$message.success("文件上传成功!");
         this.ljpmDialog = false;
@@ -672,7 +671,7 @@ export default {
       });
     },
     queryInfo(queryString) {
-      console.log(queryString);
+      // console.log(queryString);
     },
     //点击一级
     handleClick(tab) {
@@ -752,7 +751,6 @@ export default {
           this.wellData = wellData.filter((el) => el.wellName);
         }
       });
-      console.log(!wellId, wellId, this.$route, "井号ID");
       if (!wellId) {
         if (this.wellData && this.wellData.length > 0) {
           this.selectWellId = this.wellData[0].wellId;
@@ -828,7 +826,6 @@ export default {
     //zxb大事简要下拉框change事件
     majorEventsBrieflyChange(e) {
       this.majorEventsBrieflyValue = e;
-      console.log("this.majorEventsBrieflyValue", this.majorEventsBrieflyValue);
       this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
     },
 

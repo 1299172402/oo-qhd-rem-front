@@ -692,7 +692,6 @@ export default {
   },
   mounted() {
     this.height = document.getElementsByClassName("z-main")[0].offsetHeight - 40 - 50 - 10;
-    console.log("this.height", this.height);
     let year = new Date().getFullYear();
     this.selectData = [new Date(year + "-01-01").format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
     this.doSearch();
@@ -804,7 +803,6 @@ export default {
           this.option.xAxis[1].data = xData;
           this.option.xAxis[2].data = xData;
           this.option.series = seriesData;
-          console.log("生产数据echart配置", this.option);
         }
       });
       produceTableData(request).then((res) => {
@@ -855,7 +853,6 @@ export default {
         pixelRatio: 14,
         backgroundColor: "#022644",
       });
-      console.log(res, 88);
       let fileName = "生产数据";
       if (this.wellName) {
         fileName = this.wellName + fileName;

@@ -493,7 +493,7 @@ export default {
           }
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
     //根据油田id-获取区块数据源
@@ -507,7 +507,7 @@ export default {
           }
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
     //区块下拉框数据获取
@@ -539,7 +539,7 @@ export default {
           }
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
     wellTypeChange() {
@@ -557,7 +557,7 @@ export default {
           }
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
     //根据井号id-获取上级井型，区块，油田
@@ -640,7 +640,6 @@ export default {
     editConfigValue() {
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
-          console.log(this.editForm);
           if (this.editForm.id == 0) {
             let obj = {
               configurationModelName: this.editForm.modelName,
