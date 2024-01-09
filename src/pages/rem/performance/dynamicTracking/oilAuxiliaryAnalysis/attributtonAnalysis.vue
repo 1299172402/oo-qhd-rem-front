@@ -256,18 +256,18 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="layerName" min-width="200" show-overflow-tooltip label="层位"></el-table-column>
-                <el-table-column prop="itemValue" min-width="150" :label="`注水强度\n(m³/d·m)`"></el-table-column>
-                <el-table-column prop="evalResult" min-width="200" show-overflow-tooltip
-                                 label="评价结论"></el-table-column>
-                <el-table-column prop="injDuration" min-width="150" :label="`注入时长\n(h)`"></el-table-column>
-                <el-table-column prop="injDaily" min-width="150" :label="`注入量\n(m³)`"></el-table-column>
-                <el-table-column prop="whInjPress" min-width="150" :label="`注入压力\n(MPa)`"
+                
+                <el-table-column prop="segmentedDailyInjVol" min-width="150" :label="`分层段日注量\n(m³)`"
                                  :formatter="formatAmount"></el-table-column>
-                <el-table-column prop="injAllocationRate" min-width="150" :label="`配注量\n(m³/d)`">
-                    <template slot-scope="scope">
-                        {{ Number(scope.row.injAllocationRate).toFixed(2) }}
-                    </template>
-                </el-table-column>
+                <el-table-column prop="dailyInjectionVolume" min-width="150" :label="`分层段配注量\n(m³)`"
+                                 :formatter="formatAmount"></el-table-column>
+                <el-table-column prop="injectionDuration" min-width="150" :label="`注水时长\n(h)`"
+                                 :formatter="formatAmount"></el-table-column>
+                <el-table-column prop="wellHeadWaterPressure" min-width="150" :label="`井口注水压力\n(MPa)`"
+                                 :formatter="formatAmount"></el-table-column>
+                <el-table-column prop="casingPressure" min-width="150" :label="`套压\n(MPa)`"
+                                 :formatter="formatAmount"></el-table-column>
+                
                 <el-table-column prop="valueAttribution" min-width="200" show-overflow-tooltip
                                  label="归因"></el-table-column>
                 <el-table-column prop="vauleMeasure" min-width="200" show-overflow-tooltip
