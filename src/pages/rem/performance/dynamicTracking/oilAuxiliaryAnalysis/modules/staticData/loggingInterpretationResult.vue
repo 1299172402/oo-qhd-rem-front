@@ -62,7 +62,6 @@
                     wellId: this.wellId,
                 };
                 loggingInterpretation(request).then((res) => {
-                    console.log('res',res)
                     if (res&&res.data.code == 200) {
                         this.tableData = res.data.data.loggingInterceptResult;
                     }

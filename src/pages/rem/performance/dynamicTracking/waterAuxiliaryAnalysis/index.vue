@@ -527,13 +527,11 @@ export default {
             this.component = () => this.loader();
           })
           .catch(() => {
-            console.log("走catch");
           });
       },
     },
     "$route.query.wellId"() {
       // 监听路由变化
-      console.log("id 变化了", this.$route.query.wellId);
       this.initData();
       this.doSearch();
     },
@@ -832,7 +830,6 @@ export default {
     //zxb大事简要下拉框change事件
     majorEventsBrieflyChange(e) {
       this.majorEventsBrieflyValue = e;
-      console.log("this.majorEventsBrieflyValue", this.majorEventsBrieflyValue);
       this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
     },
     //子组件传递参数

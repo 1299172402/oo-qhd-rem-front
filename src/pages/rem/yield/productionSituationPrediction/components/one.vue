@@ -276,7 +276,6 @@ export default {
       //     unitType: this.searchForm.unitType,
       // };
       getReportFroms(this.searchForm).then((res) => {
-        console.log(res, 888);
         if (res.data.code == "200") {
           this.tableData = this.dealOutputTrackingData(res.data.data);
           this.outputTrackingTableDate = this.searchForm.date;
@@ -438,7 +437,6 @@ export default {
       let yesterday = reList.find((item) => {
         return item.code == "baoBiaoYesterday";
       });
-      console.log(today, yesterday);
       var obj = {
         type: "当日-前一日产量",
         zygsjc:

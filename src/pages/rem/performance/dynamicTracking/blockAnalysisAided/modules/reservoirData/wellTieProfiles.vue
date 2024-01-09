@@ -154,7 +154,6 @@
             //下载功能
             doDownLoad() {
                 let fileName = '连井剖面图';
-                console.log("doDownLoad" + fileName, this.selectPosition);
                 let layerMess = this.position.find((item) => item.fieldLayerId == this.selectPosition);
                 if (layerMess) {
                     fileName = (layerMess.layerName ? layerMess.layerName : '') + fileName;

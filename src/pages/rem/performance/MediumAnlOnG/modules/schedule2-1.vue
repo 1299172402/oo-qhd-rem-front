@@ -134,7 +134,6 @@ export default {
     },
     // 因为要合并的行数是不固定的，此函数是实现合并随意行数的功能
     getSpanArrOne(data) {
-      console.log("zmmm--", data); //从后台获取的数据
       this.spanArrOne = [];
       this.pos = 0;
       for (var i = 0; i < data.length; i++) {

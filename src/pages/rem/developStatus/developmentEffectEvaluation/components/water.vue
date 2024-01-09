@@ -514,7 +514,6 @@ export default {
   methods: {
     //设置页面初始化
     doSearch() {
-      console.log(this.selectOilField, this.selectBlock);
       this.getWaterContainRaiseChart(this.selectOilField, this.selectBlock);
       this.getWaterIndicatorChart(this.selectOilField, this.selectBlock);
       this.getWaterSotreRateChart(this.selectOilField, this.selectBlock);

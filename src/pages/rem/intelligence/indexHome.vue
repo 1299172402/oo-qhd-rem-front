@@ -518,14 +518,16 @@ export default {
             let data = new Date()
             if (data.getMonth() < 10) {
                 if(data.getMonth()===0){
-                    return data.getFullYear() + '-0' + (data.getMonth()+1)
-                }else {
-                    return data.getFullYear() + '-0' + (data.getMonth())
+                    return data.getFullYear()-1 + '-12'
                 }
-                
+                if(data.getMonth()===1){
+                    return data.getFullYear() + '-01'
+                }
+                return data.getFullYear() + '-0' + (data.getMonth()-1)
             } else {
-                return data.getFullYear() + '-' + (data.getMonth())
+                return data.getFullYear() + '-' + (data.getMonth()-1)
             }
+            
         },
         headerColor({row, column, rowIndex, columnIndex}) {
             if (rowIndex === 0) {

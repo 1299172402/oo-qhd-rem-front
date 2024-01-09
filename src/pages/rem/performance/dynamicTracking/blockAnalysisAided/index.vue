@@ -479,11 +479,11 @@ export default {
       handler(newName, oldName) {
         this.loader()
           .then(() => {
-            console.log("走then");
+            // console.log("走then");
             this.component = () => this.loader();
           })
           .catch(() => {
-            console.log("走catch");
+            // console.log("走catch");
           });
       },
     },
@@ -653,11 +653,11 @@ export default {
       //调用子组件的事件
       this.loader()
         .then(() => {
-          console.log("走then");
+          // console.log("走then");
           this.$refs.componentCustom.doSearch();
         })
         .catch(() => {
-          console.log("走catch");
+          // console.log("走catch");
         });
     },
   },

@@ -771,7 +771,7 @@ export default {
           }
         })
         .catch((err) => {
-          console.log("初始化接口报错!");
+          // console.log("初始化接口报错!");
         });
     },
 
@@ -1013,7 +1013,7 @@ export default {
     },
     //点击
     async selRadioIterm(val, tag) {
-      console.log(val, tag, this.indexChangeTrend);
+      // console.log(val, tag, this.indexChangeTrend);
       let myData = []; //我的数据
       let myWellCount = {}; //计算各项目的井数
       let t_count = 0; //计数器

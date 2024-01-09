@@ -156,7 +156,6 @@
             },
             //change模型名称
             modelOptionChange(e,index){
-                console.log(e,index)
                 this.$set(this.tableData[index],'modelId',e);
                 this.$set(this.tableData[index],'modelName',this.modeSelectList.find(item=>item.modelId === e).modelName);
 

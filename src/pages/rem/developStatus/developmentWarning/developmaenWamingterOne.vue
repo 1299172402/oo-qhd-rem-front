@@ -218,7 +218,6 @@ export default {
   //方法
   methods: {
     handleClick(tab) {
-      console.log(tab);
       this.radio1 = tab.name;
     },
 

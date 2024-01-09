@@ -625,7 +625,6 @@ export default {
       };
       proWellIndicatorWarningAssosiationAnalysisForInjectionWell(queryParams).then((data) => {
         let rows = data.data.data.wellGroupForInjectionWells;
-        console.log(rows);
         this.tableDataWater = rows;
       });
     },
@@ -640,7 +639,6 @@ export default {
       };
       proWellIndicatorWarningAssosiationAnalysisForProWell(queryParams).then((data) => {
         let rows = data.data.data.wellGroupForProWells;
-        console.log(rows);
         this.tableDataOil = rows;
       });
     },
@@ -654,10 +652,8 @@ export default {
         warningTypeCode: this.$route.query.warningCode,
       };
       oilFieldOutputVaryChart(queryParams).then((data) => {
-        console.log(data, "12122133333333333");
         //产液
         let liquidChart = data.data.data.charts[0].linearDataSets[0];
-        console.log(liquidChart);
         //产油
         let oilChart = data.data.data.charts[1].linearDataSets[0];
         //含水率
@@ -684,7 +680,6 @@ export default {
       let list = liquidChart.linearData;
       let x = [];
       let y = [];
-      console.log(list);
       list.forEach((ent, index) => {
         x.push(ent.label.substring(0, 7));
         y.push(ent.value);

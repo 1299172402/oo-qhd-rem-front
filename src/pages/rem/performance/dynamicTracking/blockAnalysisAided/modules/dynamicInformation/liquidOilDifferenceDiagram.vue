@@ -319,7 +319,6 @@
                 };
                 Layers[1] = layer3;
                 data.Layers = Layers;
-                console.log('应该刷新');
                 refObj.setSampleDate(data);
             },
             //下载功能
