@@ -845,16 +845,16 @@ export default {
             this.wells = res.data.data;
           }
         });
-        this.wells.unshift({
-          wellId: "",
-          wellName: "全部",
-        });
+        // this.wells.unshift({
+        //   wellId: "",
+        //   wellName: "全部",
+        // });
       }
     },
     //通过油田 或 平台 获得井
-    getFetchWells(oilFieldId, platformId) {
+    async getFetchWells(oilFieldId, platformId) {
       this.wells = [];
-      QueryWellDetail({
+      await QueryWellDetail({
         ogfId: oilFieldId,
         platformId: platformId,
       }).then((res) => {
