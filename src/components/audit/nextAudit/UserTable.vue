@@ -176,10 +176,9 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapGetters(["userInfo"])
-    /**
-     * 用于重置默认选中数据
-     */
+    ...mapGetters({
+      userInfo: "user/userInfo"
+    })
   },
   watch: {
     /**

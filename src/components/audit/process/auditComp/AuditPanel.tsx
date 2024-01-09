@@ -1,10 +1,12 @@
 import "../styles/AuditPanelStyle.less";
 import Vue from "vue";
 import { cloneDeep } from "lodash";
+import { mapGetters } from "vuex";
 import ActionType from "@/components/audit/process/auditSave/ActionType";
 import { FLOW_AUDIT } from "@/components/audit/process/constant";
 import rules from "@/components/audit/process/constant/rules";
 import SelectNextAudit from "@/components/audit/nextAudit/SelectNextAudit.vue";
+import SelectNotifyUser from "@/components/audit/nextAudit/SelectNotifyUser.vue";
 
 export interface ActionMap {
     Delegate: string,
@@ -27,7 +29,8 @@ const actionMap: Readonly<ActionMap> = {
 export default Vue.extend({
   name: "AuditPanel",
   components: {
-    SelectNextAudit
+    SelectNextAudit,
+    SelectNotifyUser
   },
   inject: ["auditContext"],
   props: {
@@ -88,10 +91,15 @@ export default Vue.extend({
       ],
       selectNextAuditWatch: {
         assignMode: ""
-      }
+      },
+      // 需要告知的用户
+      notifyUser: []
     };
   },
   computed: {
+    ...mapGetters({
+      userInfo: "user/userInfo"
+    }),
     opinionRequired() {
       let res = false;
       (this.dataSource.extendProperties || []).forEach(x => {
@@ -160,6 +168,12 @@ export default Vue.extend({
         this.$set(this.auditInfo, "currentAction", this.acceptActions.find(item => item.key === key));
       }
       return re;
+    },
+    /**
+     * 是否需要告知他人
+     */
+    isNotify() {
+      return (this.dataSource.acceptActions || []).includes("Notify");
     },
     /**
      * 只选择到节点不用选人
@@ -235,6 +249,17 @@ export default Vue.extend({
     },
     currentAction() {
       return this.auditInfo?.currentAction?.key;
+    },
+    /**
+     * 需要告知的用户信息
+     */
+    notifyInfo() {
+      const { userName, nickName } = this.userInfo;
+      return {
+        senderId: userName,
+        senderName: nickName,
+        receivers: this.notifyUser
+      };
     }
   },
   watch: {
@@ -402,7 +427,6 @@ export default Vue.extend({
 
     const nextAuditUserEl = <t-form-item
       label="下一处理节点"
-      class="next-node"
       name={this.nextAuditInfoProp}
       initialData="['1']"
       requiredMark={true}
@@ -422,6 +446,19 @@ export default Vue.extend({
           class={"select-next-audit"}
           on-parallel-node={val => { this.isParallelNode = val; }}
           onSelectAuditorOk={this.selectAuditorOk}
+        />
+      </div>
+    </t-form-item>;
+
+    const notifyUserEl = <t-form-item
+      label="告知"
+      class="next-node"
+      name="notifyInfo"
+    >
+      <div class={"audit-panel-next-node"}>
+        <SelectNotifyUser
+          notify-user-setting={this.dataSource.selectCCSettings}
+          on-ok={val => { this.notifyUser = val; }}
         />
       </div>
     </t-form-item>;
@@ -460,6 +497,9 @@ export default Vue.extend({
         }
         {
           this.nodeType === "Delegate" && this.curFlowBackToMeMode !== "go" ? curFlowBackToMeModeEl : null
+        }
+        {
+          this.isNotify ? notifyUserEl : null
         }
       </t-form>
     );

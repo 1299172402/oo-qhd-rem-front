@@ -43,7 +43,7 @@
           <!-- <t-option :value="2" label="最近" /> -->
         </t-select>
         <t-input
-          v-model="queryParam.userName"
+          v-model="queryParam.nickName"
           :style="{display: selectModule !== 2 ? 'inline-block': 'none', width: '250px', marginBottom: '15px', marginLeft: '10px' }"
           placeholder="请输入用户名"
           clearable
@@ -236,7 +236,7 @@ export default Vue.extend({
       if (this.userIds) {
         // 这里最后加一个 , 的原因是因为无论如何都要使用 in 查询，防止后台进行了模糊匹配，导致查询结果不准确
         this.dataSource.forEach(v => {
-          if (this.userIds.search(v.userId) !== -1) {
+          if (this.userIds.search(v.userId) !== -1 && !this.selectedRowKeys.includes(v.userId)) {
             this.selectedRowKeys.push(v.userId);
           }
         });
@@ -419,8 +419,6 @@ export default Vue.extend({
         if (this.param.applyScope !== "ALL") {
           deptIds = this.param.applyScope;
         }
-      } else if (this.param.auditUserSearchCallBackData) {
-        deptIds = this.param.auditUserSearchCallBackData;
       }
       this.initQueryUserByDepId(deptIds); // 调用方法根据选选择的id查询用户信息
       this.loadUserIds();
@@ -442,7 +440,7 @@ export default Vue.extend({
       };
       if (!this.canBreakScope) {
         params.deptId = selectedDepIds.toString();
-        params.roleCode = this.role;
+        params.roleKey = this.role;
       }
       return getUserList(params).then(res => {
         if (res.data.code === 200) {
@@ -483,7 +481,7 @@ export default Vue.extend({
       };
       if (!this.canBreakScope) {
         params.deptId = this.selectedDepIds?.toString();
-        params.roleCode = this.role;
+        params.roleKey = this.role;
       }
       return getUserList(params).then(res => {
         if (res.data.code === 200) {

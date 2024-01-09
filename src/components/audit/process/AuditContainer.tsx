@@ -168,7 +168,7 @@ export default Vue.extend({
                 _this.outsideAuditModel.action = first;
               }
             }
-            _this.infos.editableFormFields = v.editableFormFields;
+            _this.$set(_this.infos, "editableFormFields", v.editableFormFields);
             _this.infos.extendProperties = v.extendProperties;
             _this.infos.applyScope = v.applyScope || "";
             _this.infos.processDefinitionKey = v.processDefinitionKey || ""; // 当前节点key

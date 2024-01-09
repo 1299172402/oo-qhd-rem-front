@@ -76,8 +76,8 @@ export default Vue.extend({
   },
   computed: {
     /**
-         * 弹窗外部已确定操作类型
-         */
+     * 弹窗外部已确定操作类型
+     */
     defaultAction() {
       return this.outsideAuditModel?.action;
     }
@@ -158,6 +158,13 @@ export default Vue.extend({
 
       const _data = { ..._this.dataSource, procInstId: this.auditContext._processInstanceId };
       const data = Object.assign(_data, dataReturned);
+
+      if (_this.info.acceptActions && _this.info.acceptActions.includes("Notify")) {
+        // 存在告知规则时需要传递选择的告知用户
+        const notifyInfo = _this.$refs.auditInfo.notifyInfo;
+        this.$set(data, "hasNotify", true);
+        this.$set(data, "notifyInfo", notifyInfo);
+      }
 
       await this.saveData(data)
         .catch(() => {

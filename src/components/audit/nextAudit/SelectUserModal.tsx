@@ -135,7 +135,9 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapGetters(["userInfo"]),
+    ...mapGetters({
+      userInfo: "user/userInfo"
+    }),
     /**
      * 本组件内部使用的是否打开弹窗
      */
