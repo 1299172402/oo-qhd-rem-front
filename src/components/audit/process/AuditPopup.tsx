@@ -333,7 +333,7 @@ export default Vue.extend({
           <AuditPanel ref={"auditInfo"} dataSource={this.info} flow-back-to-me-mode={this.dataSource && this.dataSource.flowBackToMeMode}/>
         </t-tab-panel>
         <t-tab-panel style={"display: flex"} value="2" label="审批信息">
-          <AuditFlowPanel style={"flex: 1"} dataSource={this.commentList} />
+          <AuditFlowPanel style={"flex: 1; max-height: 568px; overflow-y: auto;"} dataSource={this.commentList} />
           <t-divider style={"min-height: 568px"} layout="vertical" />
           <AuditMapPanel style={"flex: 2; min-height: 568px"} procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
         </t-tab-panel>
@@ -342,7 +342,7 @@ export default Vue.extend({
     const ViewContent = (
       <t-tabs class="audit-content" value={this.tabIndex} onChange={val => { this.tabIndex = val; }}>
         <t-tab-panel style={"display: flex"} value="1" label="审批信息">
-          <AuditFlowPanel style={"flex: 1"} dataSource={this.commentList} />
+          <AuditFlowPanel style={"flex: 1; max-height: 568px; overflow-y: auto;"} dataSource={this.commentList} />
           <t-divider style={"min-height: 568px"} layout="vertical" />
           <AuditMapPanel style={"flex: 2; min-height: 568px"} procInstId={this.dataSource?.procInstId} dataSource={this.diagram} />
         </t-tab-panel>

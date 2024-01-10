@@ -64,9 +64,12 @@ export default Vue.extend({
               </div>
               <t-timeline-item class={"audit-flow-item-right"}>
                 <div class={"audit-flow-item-right-title"}>{getActionDesc(item)}</div>
-                <div>
-                  <t-tag theme="primary" variant="light">{ item.assigneeDeptName || item.candidateDepts || "未指定部门" }</t-tag>
-                </div>
+                {
+                    !!(item.assigneeDeptName || item.candidateDepts) ? 
+                    <div>
+                      <t-tag theme="primary" variant="light">{ item.assigneeDeptName || item.candidateDepts }</t-tag>
+                    </div> : null
+                }
                 <p class="audit-flow-item-description">
                   {
                     item.operation !== "3" ? <span>审批意见：</span> : null
