@@ -33,7 +33,7 @@
 
 <script>
 // import { fieldOilLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
-import { fieldLayers } from '@/api/oilDeposit/rem-02/primaryinfo.js';
+import { fieldLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 // miniIo
 import { queryRemUploadFileMinio } from "@/api/rem/remuploadfileminio";
 import { filePreview, downFile } from "@/components/upload/utils/file";
@@ -60,6 +60,60 @@ export default {
       selectPosition: "",
       uploadTime: "", // 文件上传时间
     };
+  },
+  watch: {
+    wellId(newVal) {
+      if (newVal) {
+        fieldLayers({ oilFieldId: this.oilFeildId, wellId: this.wellId }).then((res) => {
+          if (res.data.code == 200) {
+            //层段数据
+            if (res.data.data) {
+              this.position = res.data.data.fieldLayers;
+              if (!this.selectPosition && this.position[0]) {
+                if (
+                  this.blockId == "83D33B89B0DAB7DFA440BD060746883A" ||
+                  this.blockId == "83D33B89B0DAB7DFA440BD060746883A"
+                ) {
+                  if (
+                    this.position.find((item) => {
+                      return item.fieldLayerId == "263518079CED49AE8B6C9FE5CEBDD26A";
+                    })
+                  ) {
+                    this.selectPosition = "263518079CED49AE8B6C9FE5CEBDD26A";
+                  } else {
+                    this.selectPosition = this.position[0].fieldLayerId;
+                  }
+                } else if (this.blockId == "YCFXDY8B643EDC9007F96F570600458D") {
+                  if (
+                    this.position.find((item) => {
+                      return item.fieldLayerId == "87795A3E6BBC4469BC9AC5AE0BBE759C";
+                    })
+                  ) {
+                    this.selectPosition = "87795A3E6BBC4469BC9AC5AE0BBE759C";
+                  } else if (
+                    this.position.find((item) => {
+                      return item.fieldLayerId == "02398139A19A4F62BEFAC658E870D487";
+                    })
+                  ) {
+                    this.selectPosition = "02398139A19A4F62BEFAC658E870D487";
+                  } else {
+                    this.selectPosition = this.position[0].fieldLayerId;
+                  }
+                } else {
+                  this.selectPosition = this.position[0].fieldLayerId;
+                }
+                this.$emit("childPara", this.selectPosition);
+              }
+            } else {
+              this.position = [];
+            }
+            this.$emit("childPara", this.selectPosition);
+          }
+        });
+      } else {
+        this.position = [];
+      }
+    },
   },
   async mounted() {
     await this.doSearch();
