@@ -96,7 +96,7 @@ export default {
           axisPointer: {
             type: "shadow",
           },
-           formatter(params) {
+          formatter(params) {
             var relVal = params[0].name;
             params.forEach((item) => {
               relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
@@ -422,6 +422,19 @@ export default {
     let year = new Date().getFullYear();
     this.selectData = [new Date(year + "-01-01").format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
     this.fieldLayersApi();
+  },
+  watch: {
+    wellId(newVal) {
+      if (newVal) {
+        fieldLayers({ oilFieldId: this.oilFeildId, wellId: this.wellId }).then((res) => {
+          if (res.data.code == 200 && res.data.data && res.data.data.fieldLayers && res.data.data.fieldLayers.length) {
+            this.position = res.data.data.fieldLayers;
+          }
+        });
+      } else {
+        this.position = [];
+      }
+    },
   },
   methods: {
     async fieldLayersApi() {
