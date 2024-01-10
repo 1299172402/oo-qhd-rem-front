@@ -1247,7 +1247,7 @@ export default {
             symbolSize: 10,
             name: "",
             itemStyle: {
-              color: "#00FFD4	",
+              color: "#00FFD4",
             },
           },
         ],
