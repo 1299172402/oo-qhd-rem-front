@@ -101,8 +101,8 @@
             <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link=='5'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
-            <el-button size="mini" @click="executeModel()" type="primary"
-                       style="float: left;margin-bottom: 10px;">执行
+            <el-button size="mini" @click="executeModel(modelCode)" type="primary"
+                       style="float: left;margin-bottom: 10px;">执行归因计算
             </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
@@ -188,8 +188,8 @@
             />
         </pagePanel>
         <pagePanel v-if="link=='6'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
-            <el-button size="mini" @click="executeModel()" type="primary"
-                       style="float: left;margin-bottom: 10px;">执行
+            <el-button size="mini" @click="executeModel(modelCode)" type="primary"
+                       style="float: left;margin-bottom: 10px;">执行归因计算
             </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
@@ -231,8 +231,11 @@
             />
         </pagePanel>
         <pagePanel v-if="link=='4'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
-            <el-button size="mini" @click="executeModel()" type="primary"
-                       style="float: left;margin-bottom: 10px;">执行
+            <el-button size="mini" @click="executeModel(modelCode)" type="primary"
+                       style="float: left;margin-bottom: 10px;">执行归因计算
+            </el-button>
+            <el-button size="mini" @click="executeModel('ZSQDPJ')" type="primary"
+                       style="float: left;margin-bottom: 10px;margin-left: 10px">执行评价计算
             </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
@@ -283,8 +286,8 @@
         </pagePanel>
         <pagePanel v-if="link=='1' || link=='2' || link=='3'" :headerTitle="title+'明细表'" style="height: 100%"
                    :show-btn="true">
-            <el-button size="mini" @click="executeModel()" type="primary"
-                       style="float: left;margin-bottom: 10px;">执行
+            <el-button size="mini" @click="executeModel(modelCode)" type="primary"
+                       style="float: left;margin-bottom: 10px;">执行归因计算
             </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
@@ -2163,12 +2166,12 @@ export default {
         this.link = this.$route.query.link
     },
     methods: {
-        executeModel() {
-            updateDateByCode({code: this.modelCode});
-            this.$message.success("执行成功")
+        executeModel(code) {
+            updateDateByCode({code: code});
+            this.$message.success("执行归因计算成功")
         },
         initData() {
-            // 在组件被激活时执行操作
+            // 在组件被激活时执行归因计算操作
             this.getData();
             //跳转路由中获取参数赋值给查询条件
             this.queryData.month = this.$route.query.currentDate
