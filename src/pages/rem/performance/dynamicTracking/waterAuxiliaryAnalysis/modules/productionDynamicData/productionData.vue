@@ -28,9 +28,11 @@
       </el-select>
       <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
     </div>
-    <page-panel-new :style="{ height: height + 'px', marginTop: 0 }" show-btn>
-      <Echarts ref="echartDown" :chart-data="option" style="height: 100%"></Echarts>
-    </page-panel-new>
+    <div class="z-echarts">
+      <page-panel-new style="margin-top: 0; height: 100%" show-btn>
+        <Echarts ref="echartDown" :chart-data="option" style="height: 100%"></Echarts>
+      </page-panel-new>
+    </div>
     <div class="develop">
       <span :class="[isDevelop ? 'top-span' : 'active-span']" @click="tapDevelop"></span>
     </div>
@@ -418,7 +420,7 @@ export default {
     };
   },
   mounted() {
-    this.height = document.getElementsByClassName("z-main")[0].offsetHeight - 40 - 60 - 10;
+    // this.height = document.getElementsByClassName("z-main")[0].offsetHeight - 40 - 60 - 10;
     let year = new Date().getFullYear();
     this.selectData = [new Date(year + "-01-01").format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
     this.fieldLayersApi();
@@ -628,8 +630,10 @@ export default {
     align-items: center;
   }
   .z-echarts {
+    height: calc(100% - 110px);
     width: 100%;
-    height: 500px;
+    // overflow-y: scroll;
+    padding-right: 20px;
   }
 
   #tableData {
