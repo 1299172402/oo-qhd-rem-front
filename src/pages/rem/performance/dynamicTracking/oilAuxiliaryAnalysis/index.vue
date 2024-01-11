@@ -549,8 +549,26 @@ export default {
       // 监听路由变化
       this.initData();
     },
+    "$route.query.wellNo"() {
+      // 监听路由变化
+      this.initData();
+    },
+    "$route.query.activeName"() {
+      // 监听路由变化
+      this.activeName = this.$route.query.activeName;
+    },
+    "$route.query.currentModule"() {
+      // 监听路由变化
+      this.currentModule = this.$route.query.currentModule;
+    },
   },
   mounted() {
+    if (this.$route.query.activeName) {
+      this.activeName = this.$route.query.activeName;
+    }
+    if (this.$route.query.currentModule) {
+      this.currentModule = this.$route.query.currentModule;
+    }
     this.initData();
   },
   methods: {
@@ -720,8 +738,6 @@ export default {
           }
         }
       });
-
-      let wellId = this.$route.query.wellId;
       if (this.$route.query.oilField) {
         this.selectOilField = this.$route.query.oilField;
       }
@@ -751,17 +767,16 @@ export default {
           this.wellData = wellData.filter((el) => el.wellName);
         }
       });
-      if (!wellId) {
+      if (this.$route.query.wellNo) {
+        let wellItem = this.wellData.find((e) => e.wellName == this.$route.query.wellNo);
+        this.selectWellId = wellItem.wellId;
+      } else if (this.$route.query.wellId) {
+        this.selectWellId = this.$route.query.wellId;
+      } else {
         if (this.wellData && this.wellData.length > 0) {
           this.selectWellId = this.wellData[0].wellId;
         }
-      } else {
-        let wellMess = this.wellData.find((item) => {
-          return item.wellId == wellId;
-        });
-        this.selectWellId = wellMess.wellId;
       }
-
       await this.getBlockWellApi();
       this.defaultCheckedKeys = [this.selectOilField, this.selectPlatform, this.selectWellId];
       this.getLjpmWells();
