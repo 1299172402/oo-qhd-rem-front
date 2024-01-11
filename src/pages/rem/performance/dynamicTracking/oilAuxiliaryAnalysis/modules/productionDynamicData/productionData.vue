@@ -26,7 +26,7 @@
       </el-select>
     </div>
     <div class="z-echarts">
-      <pagePanel headerTitle="油井生产数据曲线图" :style="{ height: height + 'px', marginTop: 0 }" show-btn>
+      <pagePanel headerTitle="油井生产数据曲线图" style="margin-top: 0; height: 100%;" show-btn>
         <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
       </pagePanel>
     </div>
@@ -691,7 +691,7 @@ export default {
     };
   },
   mounted() {
-    this.height = document.getElementsByClassName("z-main")[0].offsetHeight - 40 - 50 - 10;
+    // this.height = document.getElementsByClassName("z-main")[0].offsetHeight - 40 - 50 - 10;
     let year = new Date().getFullYear();
     this.selectData = [new Date(year + "-01-01").format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
     this.doSearch();
@@ -902,6 +902,7 @@ export default {
   }
 
   .z-echarts {
+    height: calc(100% - 85px);
     width: 100%;
     overflow-y: scroll;
     padding-right: 20px;
