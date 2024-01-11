@@ -261,7 +261,14 @@ export default {
                     this.djclForm.controlArea = res.data.data[0].controlArea
                     this.djclForm.recoverableReserves = res.data.data[0].recoverableReserves
                 } else {
-                    this.djclForm = [];
+                    this.djclForm =  {
+                        layerId: '',
+                            controlArea: '',
+                            evalDetailId: "",
+                            probReservesWell: "",
+                            recoverableReserves: "",
+                            thicknessEffe: "",
+                    }
                 }
             });
         },
@@ -311,12 +318,21 @@ export default {
         getData() {
         },
         //平台下拉-change
-        onPlatfromChange(val) {
-            QueryWellDetail({platformId: val, ogfId: this.queryData.ogfId}).then((res) => {
+       async onPlatfromChange(val) {
+          await  QueryWellDetail({platformId: val, ogfId: this.queryData.ogfId}).then((res) => {
                 this.wells = res.data.data
                 this.queryData.wellId = this.wells[0]?.wellId
                 this.defaultCheckedKeys = [this.queryData.ogfId, this.queryData.pt, this.queryData.wellId];
             })
+            this.djclForm = {
+                layerId: '',
+                controlArea: '',
+                evalDetailId: "",
+                probReservesWell: "",
+                recoverableReserves: "",
+                thicknessEffe: ""
+            }
+           await this.queryserch()
         },
         refresh() {
             if (this.queryData.orgId == '715AD1CD60484BB59E737CD18A9DE44A') {
@@ -347,9 +363,15 @@ export default {
             }
         },
         changewell() {
-            this.djclForm = []
+            this.djclForm = {
+                layerId: '',
+                    controlArea: '',
+                    evalDetailId: "",
+                    probReservesWell: "",
+                    recoverableReserves: "",
+                    thicknessEffe: ""
+            }
             this.defaultCheckedKeys = [this.queryData.ogfId, this.queryData.pt, this.queryData.wellId];
-
             this.queryserch()
         },
         childinfo(data) {
