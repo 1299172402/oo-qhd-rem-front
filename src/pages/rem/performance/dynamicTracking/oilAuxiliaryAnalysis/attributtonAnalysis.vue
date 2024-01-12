@@ -1410,7 +1410,7 @@ export default {
                                                                             "children": [
                                                                                 {
                                                                                     "level": 7,
-                                                                                    "code": "004002",
+                                                                                    "code": "004004",
                                                                                     "name": "归因4：调配降水影响。\n" +
                                                                                         "建议措施：①上调水量；②维持",
                                                                                 },
@@ -1438,6 +1438,7 @@ export default {
                                                                             "children": [
                                                                                 {
                                                                                     "level": 7,
+                                                                                    "code": "004005",
                                                                                     "name": "归因5：提高注水时率影响。\n" +
                                                                                         "建议措施：维持。",
                                                                                 },
@@ -1457,6 +1458,7 @@ export default {
                                                                             "children": [
                                                                                 {
                                                                                     "level": 7,
+                                                                                    "code": "004006",
                                                                                     "name": "归因6：直接关联关停记录表的停井原因。\n" +
                                                                                         "建议措施：提高注水时率。",
                                                                                 },
@@ -1470,6 +1472,7 @@ export default {
 
                                                             "level": 7,
                                                             "name": "(稳定)井口注水压力",
+                                                            "code": "JKZSYL",
                                                             "children": [
                                                                 {
                                                                     "level": 7,
@@ -1499,6 +1502,7 @@ export default {
 
                                                                     "level": 7,
                                                                     "name": "(稳定)套压",
+                                                                    "code": "TY",
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
