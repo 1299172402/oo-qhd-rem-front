@@ -194,11 +194,16 @@
                 this.$set(this.tableData[index],'configId',e);
                 let item = this.configList.find(item=>item.configId === e);
                 if(item){
-                    this.$set(this.tableData[index],'modelId',item.modelId);
                     this.$set(this.tableData[index],'modelName',item.modelName);
+                    this.$set(this.tableData[index],'modelId',item.modelId);
                     this.$set(this.tableData[index],'configDescribe',item.configDescribe);
                     this.$set(this.tableData[index],'configValue',item.configValue);
                     this.$set(this.tableData[index],'configUnit',item. configUnit);
+                } else {
+                // this.$set(this.tableData[index],'modelName',item.modelName);
+                this.$set(this.tableData[index],'configDescribe',"");
+                this.$set(this.tableData[index],'configValue',"");
+                this.$set(this.tableData[index],'configUnit',"");
                 }
             },
             //新增
