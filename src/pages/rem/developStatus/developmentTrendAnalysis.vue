@@ -671,6 +671,7 @@ export default {
     //重置
     resetting() {
       Object.assign(this.$data, this.$options.data());
+      this.getSearchDevTrendAnalysisDateApi();
       this.initData();
     },
     //获取搜索时间-最大日期
