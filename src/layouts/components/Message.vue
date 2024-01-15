@@ -367,7 +367,7 @@ export default Vue.extend({
         .msg-time {
           bottom: -6px;
           opacity: 0;
-          font-size: 10px;
+          font-size: 12px;
         }
       }
 
@@ -379,15 +379,15 @@ export default Vue.extend({
 
       .msg-type {
         color: var(--td-text-color-secondary);
-        font-size: 10px;
-        width: 289px;
+        font-size: 12px;
+        width: 275px;
       }
 
       .msg-level {
         color: #fff;
         width: fit-content;
         border-radius: 4px;
-        font-size: 10px;
+        font-size: 12px;
         padding: 1px 10px;
         margin-right: 5px;
         transform: scale(0.83);
@@ -406,7 +406,7 @@ export default Vue.extend({
         transition: all 0.2s ease;
         opacity: 1;
         color: var(--td-text-color-secondary);
-        font-size: 10px;
+        font-size: 12px;
       }
     }
   }

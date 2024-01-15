@@ -331,7 +331,6 @@ export default Vue.extend({
     clearSelected() {
       this.selectedRowKeys = [];
       this.selectUserIds = [];
-      this.selectedDepIds = [];
     },
     close() {
       this.visible = false;
