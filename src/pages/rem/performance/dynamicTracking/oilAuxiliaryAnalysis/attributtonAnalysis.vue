@@ -2312,7 +2312,11 @@ export default {
             //有name才设置leval
             if (treeData?.name != null && treeData?.name != undefined && treeData?.name != "") {
                 leval++;
-                let l = leval % 7;
+                let l = leval % 6;
+
+                if (l === 0) {
+                    l = 6
+                }
 
                 treeData.level = l;
 
