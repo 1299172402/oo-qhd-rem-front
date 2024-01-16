@@ -54,7 +54,7 @@
             ></el-option>
           </el-select>
           <el-button type="primary" icon="el-icon-search" @click="getPageBySelectTypeApi">搜索</el-button>
-          <el-button type="primary" style="margin-left: 15px !important" @click="addTable">新增</el-button>
+          <el-button v-if="this.selectType !== '按井配置'" type="primary" style="margin-left: 15px !important" @click="addTable">新增</el-button>
         </div>
         <div
           class="childComponents"
@@ -187,7 +187,7 @@ export default {
           }
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
     //根据油田id-获取区块数据源
@@ -200,7 +200,7 @@ export default {
           }
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
     blockChange() {
@@ -223,7 +223,7 @@ export default {
           }
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
     wellTypeChange() {
@@ -244,7 +244,7 @@ export default {
           }
         });
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
     //根据井号id-获取上级井型，区块，油田
@@ -260,7 +260,6 @@ export default {
           let data = res.data.data;
           this.searchForm.blockId = data.blockId;
           this.searchForm.wellType = data.wellType;
-          console.log("this.searchForm", this.searchForm);
         }
       });
     },
@@ -306,16 +305,14 @@ export default {
             this.tableList = [];
           }
         });
-        console.log("大分页接口请求完毕");
         await this.$nextTick();
         for (let i = 0; i < this.tableList.length; i++) {
           let el = this.tableList[i];
           let searchForm = { ...el, selectType };
           await this.$refs["tableComponents" + i][0].queryTableDate(searchForm);
-          console.log(`列表${i}接口请求完毕`);
         }
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
     //切换分页
@@ -351,9 +348,7 @@ export default {
           return false;
         }
       }
-      console.log("开始请求大分页接口");
       await this.getPageBySelectTypeApi();
-      console.log(2);
       let selectType = this.selectType.includes("按") ? this.selectType.substring(1) : this.selectType;
       this.$nextTick(() => {
         let isExist = false; //新增数据时，是否存在该分类，默认不存在。

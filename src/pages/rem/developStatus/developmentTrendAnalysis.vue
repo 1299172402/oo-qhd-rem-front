@@ -42,6 +42,11 @@
     </headerSearch>
     <pagePanelNew style="height: calc(100% - 180px)" class="z-main" show-btn>
       <div style="position: absolute; top: 31px; right: 111px; z-index: 99">
+        <span style="margin-left: auto">拟合月份：</span>
+        <el-select v-model="selectMonth" placeholder="请选择" style="width: 100px; margin-right: 20px">
+          <el-option :label="2" :value="2"></el-option>
+          <el-option :label="3" :value="3"></el-option>
+        </el-select>
         <span style="margin-left: auto">单位选择：</span>
         <el-select v-model="selectUnitOfProduction" placeholder="请选择" style="width: 100px; margin-right: 20px">
           <el-option
@@ -62,7 +67,7 @@
     </pagePanelNew>
     <pagePanelNew style="height: 300px" class="z-main" show-btn>
       <el-table :data="messageResult" border highlight height="100%" style="width: 100%">
-        <el-table-column prop="message" label="根据历史数据，拟合预测各生产数据后两个月的趋势"> </el-table-column>
+        <el-table-column prop="message" :label="`根据历史数据，拟合预测各生产数据后${selectMonth === 3 ? '三' : '两'}个月的趋势`"> </el-table-column>
       </el-table>
     </pagePanelNew>
   </div>
@@ -99,6 +104,7 @@ export default {
           value: "t",
         },
       ],
+      selectMonth: 2,
       //产量单位选择值
       selectUnitOfProduction: "m",
       warnings: [
@@ -191,11 +197,10 @@ export default {
                 isAxisIndex = val.axisIndex;
                 res = res + "<br>";
               }
-              if (val.seriesName == '产液量' || val.seriesName == '产油量'){
+              if (val.seriesName == "产液量" || val.seriesName == "产油量") {
                 res = res + val.marker + val.seriesName + ": " + parseFloat(val.value || 0).toFixed(4) + "<br>";
               } else {
                 res = res + val.marker + val.seriesName + ": " + parseFloat(val.value || 0).toFixed(2) + "<br>";
-
               }
             }
             return res;
@@ -666,6 +671,7 @@ export default {
     //重置
     resetting() {
       Object.assign(this.$data, this.$options.data());
+      this.getSearchDevTrendAnalysisDateApi();
       this.initData();
     },
     //获取搜索时间-最大日期
@@ -720,6 +726,7 @@ export default {
         fieldId: fieldId,
         oilFieldId: oilFieldId,
         unitType: unitType,
+        month: this.selectMonth
       };
       searchDevTrendAnalysis(queryParams).then((data) => {
         if (data.status == 200) {

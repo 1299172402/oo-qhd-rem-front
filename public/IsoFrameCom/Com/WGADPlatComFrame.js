@@ -2745,7 +2745,7 @@ define([
             var p = this.View.MapData.toPngDataURLFitAll();
             //删除字符串前的提示信息 "data:image/png;base64,"
             var b64 = p.substring(22);
-            console.log(b64);
+            // console.log(b64);
             var filename = new Date().toLocaleDateString() + "." + "png";
 
             downloadFile(filename, p);
@@ -2756,7 +2756,7 @@ define([
             var p = this.View.MapData.toPngDataURLPicture(0, 0);
             //删除字符串前的提示信息 "data:image/png;base64,"
             var b64 = p.substring(22);
-            console.log(b64);
+            // console.log(b64);
             var filename = new Date().toLocaleDateString() + "." + "png";
 
             downloadFile(filename, p);
@@ -2769,7 +2769,7 @@ define([
             var p = this.View.toPngDataURL(0, 0);
             //删除字符串前的提示信息 "data:image/png;base64,"
             var b64 = p.substring(22);
-            console.log(b64);
+            // console.log(b64);
             return b64;
         };
 
@@ -2815,7 +2815,7 @@ define([
             // str.push(JSON.stringify(JsonObj));
             // str.push(JSON.stringify(returnJson));
             var str = JSON.stringify(JsonObj);
-            console.log(str);
+            // console.log(str);
             this.View.MapData.IsChanged = false;
             return str;
         };
@@ -3717,7 +3717,7 @@ define([
         };
 
         this.View.EventPLineDistance = function (event) {
-            console.log(event);
+            // console.log(event);
             alert(event.Area.TransformData(event.MapData.Transform.GetViewToEarthMatrix()).Length() + "(M)");
         };
 
@@ -3959,8 +3959,8 @@ define([
                             tempattr.type = WGADPlatGraph2D.WEGPropEditorType.pemColor;
                             objProperty.push(tempattr);
                             returnObj[attr1] = tempJson;
-                            console.log(objProperty);
-                            console.log(returnObj);
+                            // console.log(objProperty);
+                            // console.log(returnObj);
                         }
                         break;
                         //console.log(attr1+"="+obj[attr1]);
@@ -5159,10 +5159,10 @@ define([
                 async: true,
                 dataType: "text",
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                 },
                 error: function (data) {
-                    console.log(data);
+                    // console.log(data);
                 }
             });
         };
@@ -5176,10 +5176,10 @@ define([
                 async: false,
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                 },
                 error: function (data) {
-                    console.log(data);
+                    // console.log(data);
                 }
             });
         };

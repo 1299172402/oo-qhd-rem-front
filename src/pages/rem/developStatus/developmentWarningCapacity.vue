@@ -743,7 +743,6 @@ export default {
           this.historyDateTime.push(res.data.data.beginTime);
           this.historyDateTime.push(res.data.data.endTime);
         }
-        console.log("this.historyDateTime", this.historyDateTime);
       });
     },
     //获取油田信息
@@ -804,7 +803,6 @@ export default {
       }
     },
     switchParam(row) {
-      /*console.log(row);*/
       this.tempRadio = this.radioValue;
       this.tempSwitchNumber = this.switchNumber;
       //1级选择重置
@@ -852,7 +850,6 @@ export default {
       }
     },
     selectBtn(item) {
-      console.log(item);
       this.switchNumber = item.key;
       this.switchParam(this.switchNumber);
     },
@@ -884,8 +881,6 @@ export default {
         warningTypeCode: this.warningTypeCode,
       };
       oilFieldDevWarnings(queryParams).then((data) => {
-        console.log(data?.data?.data);
-
         this.tableData = data?.data?.data?.indicatorWarnings || {};
         this.total = data?.data?.data?.total || 0;
         if (warningCode == "WARNING") {
@@ -907,7 +902,6 @@ export default {
         warningTypeCode: this.warningTypeCode,
       };
       fieldDevWarnings(queryParams).then((data) => {
-        console.log(data?.data?.data);
         this.tableData = data?.data?.data?.indicatorWarnings || [];
         this.total = data?.data?.data?.total || 0;
         if (warningCode == "WARNING") {

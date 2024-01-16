@@ -142,14 +142,12 @@ export default {
           this.$message.error("文件查询接口异常!");
         }
       });
-      console.log(fileId, 123);
 
       if (!fileId) {
         return false;
       }
       await minioDownFile(fileId).then((res) => {
         let src = window.URL.createObjectURL(res);
-        console.log(src);
         const image = new Image();
         image.src = src;
         image.onload = () => {

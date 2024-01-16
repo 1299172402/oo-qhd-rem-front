@@ -24,7 +24,7 @@ function exportExcel (tableId,fileName) {
     try {
         FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName+'.xlsx')
     } catch (e) {
-        if (typeof console !== 'undefined') console.log(e, wbout)
+        // if (typeof console !== 'undefined') console.log(e, wbout)
     }
     return wbout
 }
@@ -76,7 +76,7 @@ function exportExcelFromJson(headTitle, dataList ,fileName) {
     try {
         FileSaver.saveAs(new Blob([wbout],{type: 'application/octet-stream'}),fileName+'.xlsx')
     } catch (e) {
-        if(typeof console !== 'undefined') console.log(e,wbout);
+        // if(typeof console !== 'undefined') console.log(e,wbout);
     }
 }
 function exportComplexHeaderExcelFromJson(headers, merges, jsonData,fileName) {
@@ -98,7 +98,7 @@ function exportComplexHeaderExcelFromJson(headers, merges, jsonData,fileName) {
     try {
         FileSaver.saveAs(new Blob([wbout],{type: 'application/octet-stream'}),fileName+'.xlsx')
     } catch (e) {
-        if(typeof console !== 'undefined') console.log(e,wbout);
+        // if(typeof console !== 'undefined') console.log(e,wbout);
     }
     //XLSX.writeFile(wb, fileName+'.xlsx')
 }

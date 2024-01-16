@@ -16,8 +16,8 @@ export default {
       isUseTabsRouter: "setting/isUseTabsRouter"
     }),
     aliveViews() {
-        console.log(this.isRefreshing,999)
-      console.log(this.tabRouterList?.filter(route => route.isAlive).map(route => route.name),888)
+        // console.log(this.isRefreshing,999)
+      // console.log(this.tabRouterList?.filter(route => route.isAlive).map(route => route.name),888)
       return this.tabRouterList?.filter(route => route.isAlive).map(route => route.name);
     }
   }

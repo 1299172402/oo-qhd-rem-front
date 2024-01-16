@@ -549,8 +549,26 @@ export default {
       // 监听路由变化
       this.initData();
     },
+    "$route.query.wellNo"() {
+      // 监听路由变化
+      this.initData();
+    },
+    "$route.query.activeName"() {
+      // 监听路由变化
+      this.activeName = this.$route.query.activeName;
+    },
+    "$route.query.currentModule"() {
+      // 监听路由变化
+      this.currentModule = this.$route.query.currentModule;
+    },
   },
   mounted() {
+    if (this.$route.query.activeName) {
+      this.activeName = this.$route.query.activeName;
+    }
+    if (this.$route.query.currentModule) {
+      this.currentModule = this.$route.query.currentModule;
+    }
     this.initData();
   },
   methods: {
@@ -645,7 +663,6 @@ export default {
             remUploadFileMinioId: "",
           };
           await addRemUploadFileMinio(params).then((res) => res);
-          console.log(`这是第${i + 1}个`);
         }
         this.$message.success("文件上传成功!");
         this.ljpmDialog = false;
@@ -672,7 +689,7 @@ export default {
       });
     },
     queryInfo(queryString) {
-      console.log(queryString);
+      // console.log(queryString);
     },
     //点击一级
     handleClick(tab) {
@@ -721,8 +738,6 @@ export default {
           }
         }
       });
-
-      let wellId = this.$route.query.wellId;
       if (this.$route.query.oilField) {
         this.selectOilField = this.$route.query.oilField;
       }
@@ -752,18 +767,16 @@ export default {
           this.wellData = wellData.filter((el) => el.wellName);
         }
       });
-      console.log(!wellId, wellId, this.$route, "井号ID");
-      if (!wellId) {
+      if (this.$route.query.wellNo) {
+        let wellItem = this.wellData.find((e) => e.wellName == this.$route.query.wellNo);
+        this.selectWellId = wellItem.wellId;
+      } else if (this.$route.query.wellId) {
+        this.selectWellId = this.$route.query.wellId;
+      } else {
         if (this.wellData && this.wellData.length > 0) {
           this.selectWellId = this.wellData[0].wellId;
         }
-      } else {
-        let wellMess = this.wellData.find((item) => {
-          return item.wellId == wellId;
-        });
-        this.selectWellId = wellMess.wellId;
       }
-
       await this.getBlockWellApi();
       this.defaultCheckedKeys = [this.selectOilField, this.selectPlatform, this.selectWellId];
       this.getLjpmWells();
@@ -828,7 +841,6 @@ export default {
     //zxb大事简要下拉框change事件
     majorEventsBrieflyChange(e) {
       this.majorEventsBrieflyValue = e;
-      console.log("this.majorEventsBrieflyValue", this.majorEventsBrieflyValue);
       this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
     },
 

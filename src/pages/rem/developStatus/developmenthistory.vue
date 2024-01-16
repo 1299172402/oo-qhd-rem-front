@@ -1628,7 +1628,6 @@ export default {
       let request = { oilFieldId, fieldId };
       chart(request)
         .then((res) => {
-          console.log("chartsData", res.data);
           if (res.data.code == 200) {
             //油井总井数和油井开井数
             let proWellCountChart = res.data.data.proWellCountChart;
@@ -1669,7 +1668,6 @@ export default {
             let oilYearChart = res.data.data.oilYearChart;
             //if (oilYearChart!=null)
             this.getOilYearChart(oilYearChart);
-            console.log("图表格式化数据", this.option);
           } else {
             this.emptyChart();
           }

@@ -601,8 +601,6 @@ export default {
   },
   mounted() {
     this.height = document.getElementsByClassName("z-echarts")[0].scrollHeight - 50;
-    console.log(this.height);
-
     let year = new Date().getFullYear();
     this.selectData = [new Date(year + "-01-01").format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
     this.doSearch();

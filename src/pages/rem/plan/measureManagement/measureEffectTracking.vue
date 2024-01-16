@@ -2065,7 +2065,6 @@ export default {
       const { wellNameNano } = this.$route.query;
       const { wellBoreName } = this.$route.query;
       this.canDownload = this.$route.query.canDownload;
-      console.log(this.$route.query.wellType);
       const { wellType } = this.$route.query;
       if (wellType == "002002001" || wellType == "003002001") {
         this.type = 0;
@@ -2270,7 +2269,6 @@ export default {
       wellType,
       wellBoreName,
     ) {
-      console.log("wellBoreName", wellBoreName);
       const wellArray = [];
       wellArray.push(wellId);
       const wellBoreArray = [];
@@ -2288,7 +2286,6 @@ export default {
       };
       this.chemicalTableData = [];
       fetchMeasureStatInfos(request).then((res) => {
-        console.log(res, 99);
         if (res.data.code == 200) {
           this.tableData = res.data.data.measureResultStat;
           if (this.type == 0) {
@@ -2325,7 +2322,6 @@ export default {
         pageSize: this.queryParams2.pageSize,
       };
       getWorkProgress(request).then((res) => {
-        console.log(res, 777);
         if (res.data.code == 200) {
           this.pageTotal2 = res.data.data.total;
           this.getWorkProgressData = res.data.data.rows;
@@ -2378,7 +2374,6 @@ export default {
         wellId,
         wellTypeCode: "",
       };
-      console.log(request);
       uploadFile(request).then((res) => {
         if (res.data.code == 200) {
           this.$message.success("文件上传成功");
@@ -2503,8 +2498,6 @@ export default {
           this.oilOption.xAxis[1].data = xData;
           this.oilOption.xAxis[2].data = xData;
           this.oilOption.series = seriesData;
-
-          console.log(this.oilOption, 7788);
         }
       });
     },
@@ -2520,7 +2513,6 @@ export default {
         wellId: this.selectWellId,
       };
       produceData(request).then((res) => {
-        console.log("res", res);
         const seriesData = [];
         const legendData = [];
         // 获取x轴数据信息
@@ -2590,7 +2582,6 @@ export default {
         this.waterOption.xAxis[1].data = xData;
         this.waterOption.series = seriesData;
         this.waterOption.legend.data = legendData;
-        console.log("this.waterOption", this.waterOption);
       });
     },
     //搜索图形
@@ -2696,9 +2687,8 @@ export default {
           this.checkList
             .map((item) => item.childParams)
             .flat(Infinity)
-            .forEach((item) => {
-              console.log(item.paramName, " : ", item.paramCode);
-            });
+            // .forEach((item) => {
+            // });
         }
       });
     },
@@ -2744,7 +2734,6 @@ export default {
               }
             }
           }
-          console.log("this.realTimeData", this.realTimeData);
           this.$nextTick(() => {
             this.getChartsOption();
           });

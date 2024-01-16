@@ -1129,8 +1129,6 @@ export default {
       resOption.xAxis[1].data = xData;
       resOption.xAxis[2].data = xData;
       resOption.series = seriesDataOil;
-
-      console.log(resOption, 888);
       return resOption;
     },
     //生成水井图表信息

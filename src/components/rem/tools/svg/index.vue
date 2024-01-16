@@ -104,7 +104,6 @@ export default {
   beforeMount(){
     this.autoResizeHeight = !this.height.toLocaleLowerCase().includes('px')
     this.autoResizeWidth = !this.width.toLocaleLowerCase().includes('px')
-    console.log('this.autoResizeHeight:',this.autoResizeHeight,'this.autoResizeWidth',this.autoResizeWidth)
   },
   mounted() {
     this.boxOffsetWidth = this.$el.offsetWidth;

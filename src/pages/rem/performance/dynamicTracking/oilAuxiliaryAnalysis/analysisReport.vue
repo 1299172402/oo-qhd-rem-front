@@ -1924,7 +1924,6 @@ export default {
     },
     // 井号切换事件
     changeWell(val) {
-      console.log("是否执行我了");
       this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform, this.wellId]);
     },
     // 主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象
@@ -2004,7 +2003,7 @@ export default {
           this.dealInitData();
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
         });
       this.queryOilWellCondition(); //油井工况
       this.queryRelationship(); //供排关系
@@ -2054,7 +2053,6 @@ export default {
           if (titleName.lastIndexOf("m3") > -1) {
             titleName = titleName.replace("m3", "m³");
           }
-          console.log("titleName", titleName);
           if (t_data.name != "正常") {
             this.productionTrendsTab.push({
               code: this.changeToVueCode(t_data.code, t_data.name),
@@ -2063,8 +2061,6 @@ export default {
           }
         }
       }
-      console.log("this.productionTrendsTab", this.productionTrendsTab);
-      console.log("this.tableData", this.tableData);
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
       });
@@ -2081,7 +2077,6 @@ export default {
           if (msg == "200") {
             this.initTableData = JSON.parse(JSON.stringify(res.data.data));
             this.dealTableData = res.data.data;
-            console.log(this.initTableData, 789789789);
           } else {
             this.$message.error("综合信息查询失败");
           }
@@ -2185,7 +2180,6 @@ export default {
       return new Promise((resolve, reject) => {
         dynamicProd(this.paramMap)
           .then((res) => {
-            console.log(res, 999);
             let msg = res.data.msg;
             if (msg == "success") {
               let myData = res.data.data.indicatorAnalysisDetailInfos;
@@ -2195,7 +2189,6 @@ export default {
               myData.forEach((el, i) => {
                 this.productionNum.allnum += Number(el.value);
                 if (el.name == "正常") {
-                  console.log("正常", el);
                   this.productionNum.zcnum = Number(el.value);
                   this.productionNum.ycnum = Number(el.exeValue);
                   this.productionCode = el.code;
@@ -2207,12 +2200,11 @@ export default {
               this.productionNum.zczb = (this.productionNum.zcnum / this.productionNum.allnum) * 100;
               this.productionNum.yczb = (this.productionNum.yczb / this.productionNum.allnum) * 100;
               this.productionTrendsOptions = myData;
-              console.log("this.productionTrendsOptions", this.productionTrendsOptions);
             }
             resolve("success");
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
           });
       });
     },
@@ -2478,14 +2470,12 @@ export default {
             let tData = this.recommendedMeasuresData[i];
             this.recommendedMeasuresWells[tData.wellName] = i;
           }
-          console.log(this.recommendedMeasuresWells);
         }
         resolve("success");
       });
     },
     //选中项目
     selRadioIterm(val, tag, item) {
-      console.log(item);
       this.scrollFlag = false;
       let myData = []; //我的数据
       let myWellCount = {}; //计算各项目的井数
@@ -2545,7 +2535,6 @@ export default {
       }
       for (let i = 0; i < myData.length; i++) {
         let myWellId = myData[i].wellId; //井号
-        console.log("myData[i]", myData[i]);
         let forEachDataList = [
           { key: "生产动态", name: "productionTrendsOptions" },
           { key: "油井工况", name: "oilWellConditionOptions" },
@@ -2636,7 +2625,6 @@ export default {
       }
       this.tableData = reData; //加载数据
       this.oldTableData = cloneDeep(this.tableData); //加载数据
-      console.log("this.tableData", this.tableData, this.oldTableData);
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
       });

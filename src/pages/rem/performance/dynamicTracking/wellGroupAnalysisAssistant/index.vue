@@ -341,8 +341,8 @@ export default {
             this.component = () => this.loader();
           })
           .catch((error) => {
-            console.error(error);
-            console.log("走catch");
+            // console.error(error);
+            // console.log("走catch");
           });
       },
     },
@@ -504,7 +504,6 @@ export default {
           this.newWellGroup = res.data.data;
           if (this.$route.query.wellId) {
             let item = this.newWellGroup.find((el) => el.wellGroupName == this.$route.query.wellId);
-            console.log(item, 88);
             this.selectWellGroup = item.wellGroupId;
           } else {
             this.selectWellGroup = this.newWellGroup[0].wellGroupId;

@@ -189,7 +189,6 @@ export default {
     async getdata() {
       this.wellGroupname = this.wellGrouplist?.find((obj) => obj.wellGroupId == this.wellGroupId)?.wellGroupName;
       this.tableData = [];
-        console.log(this.queryData)
       this.secondMonth = this.queryData.secondMonth;
       this.firstMonth = this.queryData.firstMonth;
       this.itemKey++;
@@ -231,7 +230,7 @@ export default {
         });
       } catch (error) {
         // 处理错误
-        console.error(error);
+        // console.error(error);
       }
     },
     choiceendtime() {

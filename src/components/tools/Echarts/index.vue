@@ -234,7 +234,6 @@
                     backgroundColor: this.$store.state.setting.mode == "dark"? '#022644':'#fff',
                 });
                 let name =  typeof(fileName)  == 'string' ? fileName : this.chartData.toolbox.feature.saveAsImage.name;
-                console.log(typeof(fileName)  == 'string', fileName)
                 FileSaver.saveAs(res, name);
             },
         },

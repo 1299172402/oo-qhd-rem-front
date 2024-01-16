@@ -527,18 +527,35 @@ export default {
             this.component = () => this.loader();
           })
           .catch(() => {
-            console.log("走catch");
           });
       },
     },
     "$route.query.wellId"() {
       // 监听路由变化
-      console.log("id 变化了", this.$route.query.wellId);
       this.initData();
       this.doSearch();
     },
+    "$route.query.wellNo"() {
+      // 监听路由变化
+      this.initData();
+      this.doSearch();
+    },
+    "$route.query.activeName"() {
+      // 监听路由变化
+      this.activeName = this.$route.query.activeName;
+    },
+    "$route.query.currentModule"() {
+      // 监听路由变化
+      this.currentModule = this.$route.query.currentModule;
+    },
   },
   mounted() {
+    if (this.$route.query.activeName) {
+      this.activeName = this.$route.query.activeName;
+    }
+    if (this.$route.query.currentModule) {
+      this.currentModule = this.$route.query.currentModule;
+    }
     this.initData();
     this.doSearch();
   },
@@ -638,7 +655,6 @@ export default {
     },
     //初始化 数据
     async initData() {
-      let wellId = this.$route.query.wellId;
       let params = {
         searchKeys: [this.$store.getters["user/userDetail"].user.userName],
       };
@@ -687,15 +703,15 @@ export default {
           this.wellData = res.data.data;
         }
       });
-      if (!wellId) {
+      if (this.$route.query.wellNo) {
+        let wellItem = this.wellData.find((e) => e.wellName == this.$route.query.wellNo);
+        this.selectWellId = wellItem.wellId;
+      } else if (this.$route.query.wellId) {
+        this.selectWellId = this.$route.query.wellId;
+      } else {
         if (this.wellData && this.wellData.length > 0) {
           this.selectWellId = this.wellData[0].wellId;
         }
-      } else {
-        let wellMess = this.wellData.find((item) => {
-          return item.wellName == wellId;
-        });
-        this.selectWellId = wellMess.wellId;
       }
       await this.getBlockWellApi();
       this.defaultCheckedKeys = [this.selectOilField, this.selectPlatform, this.selectWellId];
@@ -832,7 +848,6 @@ export default {
     //zxb大事简要下拉框change事件
     majorEventsBrieflyChange(e) {
       this.majorEventsBrieflyValue = e;
-      console.log("this.majorEventsBrieflyValue", this.majorEventsBrieflyValue);
       this.$refs.componentCustom.doSearch(this.majorEventsBrieflyValue);
     },
     //子组件传递参数
