@@ -259,7 +259,8 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="layerName" min-width="200" show-overflow-tooltip label="层位"></el-table-column>
-
+                <el-table-column prop="itemValue" min-width="150" :label="`注水强度`"
+                                 :formatter="formatAmount"></el-table-column>
                 <el-table-column prop="segmentedDailyInjVol" min-width="150" :label="`分层段日注量\n(m³)`"
                                  :formatter="formatAmount"></el-table-column>
                 <el-table-column prop="dailyInjectionVolume" min-width="150" :label="`分层段配注量\n(m³)`"

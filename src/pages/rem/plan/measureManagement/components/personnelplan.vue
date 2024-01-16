@@ -54,6 +54,9 @@
                         重置
                     </el-button>
                 </el-form-item>
+                <el-form-item style="float: right">
+                    <el-button style="float: right" type="primary" @click="returnrouter">返回</el-button>
+                </el-form-item>
             </el-form>
         </header-search>
         <page-panel-new
@@ -715,7 +718,8 @@ export default {
             },
             // 表格数据1  当日施工概况数据展示
             tableData1: [],
-            tableData2: []
+            tableData2: [],
+         
         };
     },
     watch: {
@@ -739,6 +743,9 @@ export default {
     methods: {
         getWorkTime(row, column) {
             return parseFloat(row[column.property]) * 12;
+        },
+        returnrouter(){
+            this.$router.go(-1);
         },
         // 通过油田查询管理中心
         changeyt() {
