@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 100%">
+    <div class="fixed">
         <header-search style="height: auto">
             <el-form style="margin: 20px 0 10px 0" :inline="true">
                 <el-row>
@@ -77,8 +77,8 @@
                             <div class="step" style="width: 100%;">{{ key }}</div>
                         </div>
                         <div style="width: 46%;">
-                            <page-panel-new style="margin-bottom: 20px; height: 400px ;width: 100%;">
-                                <el-table highlight :data="item" height="340" style="width: 100%;">
+                            <page-panel-new style="margin-bottom: 20px; height: 100% ;width: 100%;">
+                                <el-table highlight :data="item" style="width: 100%; height:100%">
                                     <el-table-column width="150" prop="wellName" align="center"
                                                      label="井号">
                                         <template slot-scope="scope">
@@ -101,8 +101,8 @@
                             </page-panel-new>
                         </div>
                         <div style="width: 46%;">
-                            <page-panel-new style="width: 550px; height: 400px;width: 100%;">
-                                <Echart :chart-data="getEchart(item)" style="height:90%"></Echart>
+                            <page-panel-new style="height: 100%;width: 100%;">
+                                <Echart :chart-data="getEchart(item)" style="height:calc(100% + 100px)"></Echart>
                             </page-panel-new>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
         <page-panel
             header-title="单井劈产剖面"
             v-if="params.wellCategory == '02'"
-            style="position: relative; margin-top: 20px;height: calc(100% - 100px);" show-btn
+            style="position: relative; margin-top: 20px;height: 100%;" show-btn
         >
             <el-container class="layout">
 <!--                <el-header height="auto" align="left">-->
@@ -134,7 +134,7 @@
                         :key="key"
                     >
                         <div style="width: 49%;">
-                            <page-panel-new style="margin-bottom: 20px; height: 400px ;width: 100%;">
+                            <page-panel-new style="margin-bottom: 20px; height: 100% ;width: 100%;">
                                 <el-table highlight :data="item" height="340" style="width: 100%;">
                                     <el-table-column width="150" prop="wellName" align="center"
                                                      label="井号"></el-table-column>
@@ -152,8 +152,8 @@
                             </page-panel-new>
                         </div>
                         <div style="width: 49%;">
-                            <page-panel-new style="width: 550px; height: 400px;width: 100%;">
-                                <Echart :chart-data="getEchart1(item)" style="height: 90%;"></Echart>
+                            <page-panel-new style=" height: 100%;width: 100%;">
+                                <Echart :chart-data="getEchart1(item)" style="height: 100%;"></Echart>
                             </page-panel-new>
                         </div>
                     </div>
@@ -1102,6 +1102,14 @@ export default {
         position: absolute;
         left: 50%;
         top: -80px;
+    }
+    .fixed {
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid #ccc;
     }
 
     &::after {
