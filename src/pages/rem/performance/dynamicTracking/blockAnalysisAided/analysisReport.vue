@@ -1767,7 +1767,8 @@ export default {
           } else if (data == 3) {
             //井组
             this.$router.push({
-              path: `/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport?wellId=${wellNo}`,
+              // path: `/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisReport?wellId=${wellNo}`,
+              path: `/dynamicManagement/dynamicTrackingWellGroup/wellGroupAnalysisAssistant?wellId=${wellNo}&activeName=dynamicData&currentModule=wellGroupDevelopment`,
             });
           }
         }
