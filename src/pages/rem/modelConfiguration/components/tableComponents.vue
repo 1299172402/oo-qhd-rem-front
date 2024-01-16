@@ -34,7 +34,22 @@
                 <el-table-column prop="configId" label="配置项代码"  width="180">
                     <template slot-scope="scope">
                         <div>
-                            <el-input  placeholder="输入配置项代码" v-model="scope.row.configId" v-if="scope.row.state!=3"></el-input>
+                            <!-- <el-input  placeholder="输入配置项代码" v-model="scope.row.configId" v-if="scope.row.state!=3"></el-input> -->
+                            <el-select
+                                v-if="scope.row.state!=3"
+                                v-model="scope.row.configId"
+                                filterable
+                                allow-create
+                                default-first-option
+                                @change="configIdChange($event,scope.$index)" 
+                                placeholder="请选择或输入配置项代码">
+                                <el-option
+                                v-for="item in configList"
+                                :key="item.configId + scope.$index + scope.row.modelId"
+                                :label="item.configId"
+                                :value="item.configId">
+                                </el-option>
+                            </el-select>
                             <span v-else>{{scope.row.configId}}</span>
                         </div>
                     </template>
@@ -84,7 +99,7 @@
 </template>
 
 <script>
-    import {queryTableData} from '@/api/modelConfiguration/config/modelConfigAPI';
+    import {queryTableData, getConfig} from '@/api/modelConfiguration/config/modelConfigAPI';
     import {addGeneralConfig,editGeneralConfig,delGeneralConfig} from '@/api/oilDeposit/rem-04/modelConfiguration.js';
     export default{
         props:{
@@ -114,6 +129,8 @@
                     currentPage: 1, // 当前页数
                     pageSize: 10 // 每页显示多少条
                 },
+                configList: [], // 配置项下拉框列表
+                editItemOld: {}, // 编辑时记录当前行数据，取消时还原
             }
         },
         created(){
@@ -148,6 +165,13 @@
                     }
                 })
             },
+            getConfig(modelName="") {
+                getConfig({modelName: modelName ? modelName : "",}).then(response => {
+                    if( response.data.code==200){
+                        this.configList = response.data.data;
+                    }
+                })
+            },
             //切换分页
             pagination(e) {
                 this.page.currentPage = e.page;
@@ -159,11 +183,33 @@
                 this.$set(this.tableData[index],'modelId',e);
                 this.$set(this.tableData[index],'modelName',this.modeSelectList.find(item=>item.modelId === e).modelName);
 
+                this.$set(this.tableData[index],'configId',"");
+                this.$set(this.tableData[index],'configDescribe',"");
+                this.$set(this.tableData[index],'configValue',"");
+                this.$set(this.tableData[index],'configUnit',"");
+                this.getConfig(this.modeSelectList.find(item=>item.modelId === e).modelName);
+            },
+            //配置项代码切换
+            configIdChange(e,index){
+                this.$set(this.tableData[index],'configId',e);
+                let item = this.configList.find(item=>item.configId === e);
+                if(item){
+                    this.$set(this.tableData[index],'modelName',item.modelName);
+                    this.$set(this.tableData[index],'modelId',item.modelId);
+                    this.$set(this.tableData[index],'configDescribe',item.configDescribe);
+                    this.$set(this.tableData[index],'configValue',item.configValue);
+                    this.$set(this.tableData[index],'configUnit',item. configUnit);
+                } else {
+                // this.$set(this.tableData[index],'modelName',item.modelName);
+                this.$set(this.tableData[index],'configDescribe',"");
+                this.$set(this.tableData[index],'configValue',"");
+                this.$set(this.tableData[index],'configUnit',"");
+                }
             },
             //新增
             addTableRow(){
-                
                 this.tableData.unshift({state:1,modelName:'',modelId:'',configDescribe:'',configId:'',configValue:'',configUnit:''})
+                this.getConfig();
             },
             //保存
             saveTableRow(row,index){
@@ -185,7 +231,9 @@
             //编辑
             openEditRow(row,index){
                 let state=row.state==2?3:2;
+                // this.editItemOld = row;
                 this.$set(this.tableData[index],'state',state);
+                this.getConfig(row.modelName);
             },
             //提交编辑
             openEditRowSubmit(row,index){

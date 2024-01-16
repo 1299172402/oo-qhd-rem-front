@@ -13,6 +13,13 @@ export function getAllModelName(){
     });
 }
 
+export function getConfig(params){
+    return Axios({
+        url: `${baseUrl}/generalConfigMt/getConfig`,
+        method: "get",
+        params,
+    });
+}
 
 export function queryTableData(query){
     return Axios({

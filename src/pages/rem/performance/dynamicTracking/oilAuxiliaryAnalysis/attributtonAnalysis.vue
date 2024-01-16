@@ -259,7 +259,8 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="layerName" min-width="200" show-overflow-tooltip label="层位"></el-table-column>
-
+                <el-table-column prop="itemValue" min-width="150" :label="`注水强度`"
+                                 :formatter="formatAmount"></el-table-column>
                 <el-table-column prop="segmentedDailyInjVol" min-width="150" :label="`分层段日注量\n(m³)`"
                                  :formatter="formatAmount"></el-table-column>
                 <el-table-column prop="dailyInjectionVolume" min-width="150" :label="`分层段配注量\n(m³)`"
@@ -2312,7 +2313,11 @@ export default {
             //有name才设置leval
             if (treeData?.name != null && treeData?.name != undefined && treeData?.name != "") {
                 leval++;
-                let l = leval % 7;
+                let l = leval % 6;
+
+                if (l === 0) {
+                    l = 6
+                }
 
                 treeData.level = l;
 
