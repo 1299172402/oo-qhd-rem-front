@@ -108,6 +108,7 @@
           >
             <el-table-column prop="modelName" label="模型名称" sortable width="250"></el-table-column>
             <el-table-column prop="configId" label="配置项代码" sortable width="150"></el-table-column>
+            <el-table-column prop="evalName" label="评价项名称" width="150"></el-table-column>
             <el-table-column prop="configDescribe" label="配置项描述" min-width="760"></el-table-column>
             <el-table-column prop="configValue" label="配置项值" width="100"></el-table-column>
             <el-table-column prop="configUnit" label="配置项单位" width="100"></el-table-column>
