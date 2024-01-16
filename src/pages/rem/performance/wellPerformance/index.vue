@@ -149,7 +149,6 @@ export default {
   methods: {
      selectBtn(item) {
       if (item.name === '静态资料') {
-        console.log(item)
         this.tableshow = true;
       }
     },
