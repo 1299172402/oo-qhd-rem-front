@@ -102,7 +102,7 @@
                         </div>
                         <div style="width: 46%;">
                             <page-panel-new style="height: 100%;width: 100%;">
-                                <Echart :chart-data="getEchart(item)" style="height:90%"></Echart>
+                                <Echart :chart-data="getEchart(item)" style="height:calc(100% + 100px)"></Echart>
                             </page-panel-new>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                         </div>
                         <div style="width: 49%;">
                             <page-panel-new style=" height: 100%;width: 100%;">
-                                <Echart :chart-data="getEchart1(item)" style="height: 90%;"></Echart>
+                                <Echart :chart-data="getEchart1(item)" style="height: 100%;"></Echart>
                             </page-panel-new>
                         </div>
                     </div>
