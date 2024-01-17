@@ -2409,13 +2409,13 @@ export default {
             } else if (this.link == '4') {
                 this.modelCode = "ZSQD";
                 if( this.link==4 && this.$route.query.evalResult=='注水强度变高'){
-                    this.chart.setOption(this.option2);
                     this.initCodeDataIndex(this.option2.series[0].data);
                     this.initTreeStyle(this.option2.series[0]);
+                    this.chart.setOption(this.option2);
                 }else if (this.link==4 && this.$route.query.evalResult=='注水强度变低'){
-                    this.chart.setOption(this.optionzc);
                     this.initCodeDataIndex(this.optionzc.series[0].data);
                     this.initTreeStyle(this.optionzc.series[0]);
+                    this.chart.setOption(this.optionzc);
                 }
                 this.title = '注水强度归因分析'
             } else if (this.link == '5') {
