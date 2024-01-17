@@ -54,7 +54,7 @@
             ></el-option>
           </el-select>
           <el-button type="primary" icon="el-icon-search" @click="getPageBySelectTypeApi">搜索</el-button>
-          <el-button type="primary" style="margin-left: 15px !important" @click="addTable">新增</el-button>
+          <el-button v-if="this.selectType !== '按井配置'" type="primary" style="margin-left: 15px !important" @click="addTable">新增</el-button>
         </div>
         <div
           class="childComponents"

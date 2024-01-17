@@ -330,7 +330,7 @@ export default {
                 wellGroupId: this.select.selectBlock,
                 blockId: this.query.selectBlock
             }).then(({wellGroup}) => {
-                console.log(wellGroup)
+                // console.log(wellGroup)
                 let data = [];
                 if (Array.isArray(wellGroup) && wellGroup.length) {
                     wellGroup.forEach(item => {
@@ -518,8 +518,6 @@ export default {
             if (!data.dateTime) {
                 return this.blockList = [{wellGroupId: '0', wellGroupName: "新增"}]
             }
-            console.log('ppoopp')
-            console.log(data)
             listGroupDataByBlockIdAndDate(data).then((res) => {
                 this.blockList = res
                 this.blockList.unshift({

@@ -495,7 +495,6 @@ export default {
         queryBlockFeild() {
             getblockData({ogfId:this.params.ogfId.value}).then((res) => {
                 this.params.blockList = res.data.data;
-                console.log(this.blockList)
                 for(var i=0;i<this.params.blockList.length;i++){
                     if(this.params.blockList[i].reservoirAnalyseUnitId==="83D33B89B0DAB7DFA440BD060746883A"){
                         this.params.blockId.value=this.params.blockList[i].reservoirAnalyseUnitId
@@ -590,7 +589,6 @@ export default {
                 } else {
                     this.childrenArr1 = this.childrenArr1 - row.waterLayerData.length
                 }
-                console.log(this.childrenArr1)
             }
         },
         // 编辑

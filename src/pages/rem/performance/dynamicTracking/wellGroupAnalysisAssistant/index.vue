@@ -352,6 +352,12 @@ export default {
     },
   },
   async mounted() {
+    if (this.$route.query.activeName) {
+      this.activeName = this.$route.query.activeName;
+    }
+    if (this.$route.query.currentModule) {
+      this.currentModule = this.$route.query.currentModule;
+    }
     await this.initData();
   },
   methods: {

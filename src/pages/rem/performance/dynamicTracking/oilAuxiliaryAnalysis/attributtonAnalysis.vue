@@ -259,7 +259,8 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="layerName" min-width="200" show-overflow-tooltip label="层位"></el-table-column>
-
+                <el-table-column prop="itemValue" min-width="150" :label="`注水强度`"
+                                 :formatter="formatAmount"></el-table-column>
                 <el-table-column prop="segmentedDailyInjVol" min-width="150" :label="`分层段日注量\n(m³)`"
                                  :formatter="formatAmount"></el-table-column>
                 <el-table-column prop="dailyInjectionVolume" min-width="150" :label="`分层段配注量\n(m³)`"
@@ -1494,7 +1495,7 @@ export default {
                                                                             "level": 7,
                                                                             "code": "004008",
                                                                             "name": "归因8：①封隔器失效/管柱漏失/配水器冲蚀等；②出现大孔道等。\n" +
-                                                                                "建议措施：①作业换管柱；②调剖。",
+                                                                                "建议措施：①洗井;②作业换管柱;③调剖等。",
                                                                         },
                                                                     ]
                                                                 },
@@ -1506,24 +1507,12 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "上升",
+                                                                            "name": "变化",
                                                                             "children": [
                                                                                 {
                                                                                     "level": 7,
                                                                                     "code": "004009",
-                                                                                    "name": "归因9：管柱堵/配水器堵等。\n" +
-                                                                                        "建议措施：洗井/作业换管柱。",
-                                                                                },
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "level": 7,
-                                                                            "name": "下降",
-                                                                            "children": [
-                                                                                {
-                                                                                    "level": 7,
-                                                                                    "code": "004010",
-                                                                                    "name": "归因10：①封隔器失效/管柱漏失/配水器冲蚀等；②出现大孔道等。\n" +
+                                                                                    "name": "归因9：①封隔器失效/管柱漏失/配水器冲蚀等；②出现大孔道等。\n" +
                                                                                         "建议措施：①作业换管柱；②调剖。",
                                                                                 },
                                                                             ]
@@ -1534,9 +1523,9 @@ export default {
                                                                             "children": [
                                                                                 {
                                                                                     "level": 7,
-                                                                                    "code": "004011",
-                                                                                    "name": "归因11：怀疑仪表故障：分层段日注数据问题。\n" +
-                                                                                        "建议措施：维护/更换仪表。",
+                                                                                    "code": "004010",
+                                                                                    "name": "归因10：配水器开度调整/其他层吸水量调整等影响。\n" +
+                                                                                        "建议措施：维护。",
                                                                                 },
                                                                             ]
                                                                         },
