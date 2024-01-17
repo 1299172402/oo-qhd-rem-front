@@ -89,7 +89,7 @@
             <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link==4" :headerTitle="title" style="height: 120%" :show-btn="true">
-            <Echart id="option2" :chart-data="option2" style="height: 100%"></Echart>
+            <Echart id="option2"  :chart-data="option2" style="height: 100%"></Echart>
             <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link==5" :headerTitle="title" style="height: 120%" :show-btn="true">
@@ -1319,7 +1319,8 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "注水强度不合理",
+                            "name": "注水强度归因分析 \n" + 
+                                '(注水井/日度/变高)',
                             "children": [
                                 {
                                     "level": 2,
@@ -1328,12 +1329,12 @@ export default {
                                     "children": [
                                         {
                                             "level": 3,
-                                            "name": "稳定",
+                                            "name": "稳定/下降",
                                             "children": [
                                                 {
-                                                    "code": "004012",
+                                                    "code": "004108",
                                                     "level": 6,
-                                                    "name": "归因12：注水强度计算有误。\n" +
+                                                    "name": "归因8：注水强度计算有误。\n" +
                                                         "建议措施：排查注水强度评价结果。",
                                                 },
                                             ]
@@ -1341,7 +1342,7 @@ export default {
                                         {
                                             "code": "FCDPZL",
                                             "level": 4,
-                                            "name": "(变化)分层段配注量",
+                                            "name": "(上升)分层段配注量",
                                             "children": [
                                                 {
                                                     "level": 5,
@@ -1357,7 +1358,7 @@ export default {
                                                                             "children": [
                                                                                 {
                                                                                     "level": 7,
-                                                                                    "code": "004001",
+                                                                                    "code": "004101",
                                                                                     "name": "归因1：开井影响。\n" +
                                                                                         "建议措施：维持。",
                                                                                 },
@@ -1369,7 +1370,7 @@ export default {
                                                                             "children": [
                                                                                 {
                                                                                     "level": 7,
-                                                                                    "code": "004002",
+                                                                                    "code": "004102",
                                                                                     "name":
                                                                                         "归因2：调配提水影响。\n" +
                                                                                         "建议措施：①下调水量；②维持",
@@ -1384,50 +1385,9 @@ export default {
 
                                                 },
                                                 {
-                                                    "level": 5,
-                                                    "name": "下降",
-                                                    "children": [
-                                                        {
-                                                            "level": 6,
-                                                            "name": "",
-                                                            "children": [
-                                                                {
-                                                                    "children": [
-                                                                        {
-                                                                            "level": 6,
-                                                                            "name": "当前值为0",
-                                                                            "children": [
-                                                                                {
-                                                                                    "level": 7,
-                                                                                    "code": "004003",
-                                                                                    "name": "归因3：关井影响。\n" +
-                                                                                        "建议措施：维持。",
-                                                                                },
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "level": 6,
-                                                                            "name": "当前值为0",
-                                                                            "children": [
-                                                                                {
-                                                                                    "level": 7,
-                                                                                    "code": "004004",
-                                                                                    "name": "归因4：调配降水影响。\n" +
-                                                                                        "建议措施：①上调水量；②维持",
-                                                                                },
-                                                                            ]
-                                                                        },
-                                                                    ]
-                                                                },
-                                                            ]
-                                                        },
-
-                                                    ]
-                                                },
-                                                {
                                                     "code": "ZSSC",
                                                     "level": 6,
-                                                    "name": "(稳定)注水时长",
+                                                    "name": "稳定/下降(注水时长)",
                                                     "children": [
                                                         {
                                                             "level": 7,
@@ -1439,8 +1399,8 @@ export default {
                                                                             "children": [
                                                                                 {
                                                                                     "level": 7,
-                                                                                    "code": "004005",
-                                                                                    "name": "归因5：提高注水时率影响。\n" +
+                                                                                    "code": "004103",
+                                                                                    "name": "归因3：提高注水时率影响。\n" +
                                                                                         "建议措施：维持。",
                                                                                 },
                                                                             ]
@@ -1450,29 +1410,9 @@ export default {
                                                             ]
                                                         },
                                                         {
-                                                            "level": 7,
-                                                            "name": "下降",
-                                                            "children": [
-                                                                {
-                                                                    "children": [
-                                                                        {
-                                                                            "children": [
-                                                                                {
-                                                                                    "level": 7,
-                                                                                    "code": "004006",
-                                                                                    "name": "归因6：直接关联关停记录表的停井原因。\n" +
-                                                                                        "建议措施：提高注水时率。",
-                                                                                },
-                                                                            ]
-                                                                        },
-                                                                    ]
-                                                                },
-                                                            ]
-                                                        },
-                                                        {
 
                                                             "level": 7,
-                                                            "name": "(稳定)井口注水压力",
+                                                            "name": "稳定/下降(井口注水压力)",
                                                             "code": "JKZSYL",
                                                             "children": [
                                                                 {
@@ -1481,39 +1421,39 @@ export default {
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "code": "004007",
-                                                                            "name": "归因7：①地层出砂/地层污染等；②注采失调：周围油井采液量下降或周围注水井注入量上升等影响 \n" +
-                                                                                "建议措施：①作业防砂/酸化处理地层等。② 维持/注采调整：调整周围井的采液量或注水量等。"
-                                                                        },
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "level": 7,
-                                                                    "name": "下降",
-                                                                    "children": [
-                                                                        {
-                                                                            "level": 7,
-                                                                            "code": "004008",
-                                                                            "name": "归因8：①封隔器失效/管柱漏失/配水器冲蚀等；②出现大孔道等。\n" +
-                                                                                "建议措施：①洗井;②作业换管柱;③调剖等。",
+                                                                            "code": "004104",
+                                                                            "name": "归因4：配水器开度调大/对应油井提液/对应水井注水量下降等影响。\n" +
+                                                                                "建议措施：维持/调小配水器开度等。"
                                                                         },
                                                                     ]
                                                                 },
                                                                 {
 
                                                                     "level": 7,
-                                                                    "name": "(稳定)套压",
+                                                                    "name": "稳定/下降(套压)",
                                                                     "code": "TY",
                                                                     "children": [
                                                                         {
                                                                             "level": 7,
-                                                                            "name": "变化",
+                                                                            "name": "上升",
                                                                             "children": [
                                                                                 {
                                                                                     "level": 7,
-                                                                                    "code": "004009",
-                                                                                    "name": "归因9：①封隔器失效/管柱漏失/配水器冲蚀等；②出现大孔道等。\n" +
-                                                                                        "建议措施：①作业换管柱；②调剖。",
+                                                                                    "code": "004105",
+                                                                                    "name": "归因5：配水器开度调大/对应油井提液/对应水井注水量下降等影响 \n" +
+                                                                                    "建议措施：维持/调小配水器开度等。",
+                                                                                },
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "level": 7,
+                                                                            "name": "下降",
+                                                                            "children": [
+                                                                                {
+                                                                                    "level": 7,
+                                                                                    "code": "004106",
+                                                                                    "name": "归因6：①配水器冲蚀/封隔器失效/管柱漏失等；②大孔道等影响。\n"+
+                                                                                    "建议措施：①洗井；②作业换管柱；③调剖等。",
                                                                                 },
                                                                             ]
                                                                         },
@@ -1523,9 +1463,9 @@ export default {
                                                                             "children": [
                                                                                 {
                                                                                     "level": 7,
-                                                                                    "code": "004010",
-                                                                                    "name": "归因10：配水器开度调整/其他层吸水量调整等影响。\n" +
-                                                                                        "建议措施：维护。",
+                                                                                    "code": "004107",
+                                                                                    "name": "归因7：配水器开度调整等影响。\n"+
+                                                                                    "建议措施：维护。",
                                                                                 },
                                                                             ]
                                                                         },
@@ -1548,9 +1488,273 @@ export default {
                         }
                     ],
                     top: '1%',
-                    left: '7%',
+                    left: '8%',
                     bottom: '1%',
-                    right: '29%',
+                    right: '25%',
+                    symbol: 'none',
+                    symbolSize: 7,
+                    label: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 12,
+                        lineHeight: 24,
+                        // width: 100,
+                        // ellipsis: false,
+                        formatter: function (params) {
+                            if (params.data.level === 1 && params.data.name) {
+                                return '{a|' + params.name + '}'
+                            } else if (params.data.level === 2 && params.data.name) {
+                                return '{b|' + params.name + '}'
+                            } else if (params.data.level === 3 && params.data.name) {
+                                return '{c|' + params.name + '}'
+                            } else if (params.data.level === 4 && params.data.name) {
+                                return '{d|' + params.name + '}'
+                            } else if (params.data.level === 5 && params.data.name) {
+                                return '{e|' + params.name + '}'
+                            } else if (params.data.level === 6 && params.data.name) {
+                                return '{f|' + params.name + '}'
+                            } else if (params.data.level === 7 && params.data.name) {
+                                return '{a|' + params.name + '}'
+                            } else {
+                                return ''
+                            }
+                        },
+                        rich: {
+                            a: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#546fc6'
+                            },
+                            b: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#7ab1a6'
+                            },
+                            c: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#446dd3'
+                            },
+                            d: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#904a9b'
+                            },
+                            e: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#1ca3c1',
+                            },
+                            f: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#9e2f5d',
+                            },
+                            z: {
+                                color: '#ec1111',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    lineStyle: {
+                        color: '#91cd75'
+                    },
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+                    emphasis: {
+                        focus: 'ancestor',
+                    },
+                    select: {
+                        disabled: true
+                    },
+                    selectedMode: "multiple",
+                    expandAndCollapse: false,
+                    animationDuration: 550,
+                    animationDurationUpdate: 750
+                }]
+            },
+            optionzc: {
+                tooltip: {
+                    trigger: 'item',
+                    triggerOn: 'mousemove'
+                },
+                series: [{
+                    type: 'tree',
+                    data: [
+                        {
+                            "level": 1,
+                            "name": "注水强度归因分析 \n" +
+                                '(注水井/日度/变低)',
+                            "children": [
+                                {
+                                    "level": 2,
+                                    "name": "分层段日注量",
+                                    "code": "FCDRZL",
+                                    "children": [
+                                        {
+                                            "level": 3,
+                                            "name": "稳定/上升",
+                                            "children": [
+                                                {
+                                                    "code": "004007",
+                                                    "level": 6,
+                                                    "name": "归因7：注水强度计算有误。\n" +
+                                                        "建议措施：排查注水强度评价结果。",
+                                                },
+                                            ]
+                                        },
+                                        {
+                                            "code": "FCDPZL",
+                                            "level": 4,
+                                            "name": "(下降)分层段配注量",
+                                            "children": [
+                                                {
+                                                    "level": 5,
+                                                    "name": "下降",
+                                                    "children": [
+                                                        {
+                                                            "children": [
+                                                                {
+                                                                    "children": [
+                                                                        {
+                                                                            "level": 6,
+                                                                            "name": "当前值为0",
+                                                                            "children": [
+                                                                                {
+                                                                                    "level": 7,
+                                                                                    "code": "004001",
+                                                                                    "name": "归因1：开井影响。\n" +
+                                                                                        "建议措施：开井/作业扶井等。",
+                                                                                },
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "level": 6,
+                                                                            "name": "当前值不为0",
+                                                                            "children": [
+                                                                                {
+                                                                                    "level": 7,
+                                                                                    "code": "004002",
+                                                                                    "name":
+                                                                                        "归因2：调配提水影响。\n" +
+                                                                                        "建议措施：①上调水量；②维持",
+                                                                                },
+                                                                            ]
+                                                                        },
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
+                                                    ]
+
+                                                },
+                                                {
+                                                    "code": "ZSSC",
+                                                    "level": 6,
+                                                    "name": "稳定/上升(注水时长)",
+                                                    "children": [
+                                                        {
+                                                            "level": 7,
+                                                            "name": "下降",
+                                                            "children": [
+                                                                {
+                                                                    "children": [
+                                                                        {
+                                                                            "children": [
+                                                                                {
+                                                                                    "level": 7,
+                                                                                    "code": "004003",
+                                                                                    "name": "归因3：直接关联关停记录表的停井原因。\n"+
+                                                                                    "建议措施：提高注水时率。",
+                                                                                },
+                                                                            ]
+                                                                        },
+                                                                    ]
+                                                                },
+                                                            ]
+                                                        },
+                                                        {
+
+                                                            "level": 7,
+                                                            "name": "稳定/上升(井口注水压力)",
+                                                            "code": "JKZSYL",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "上升",
+                                                                    "children": [
+                                                                        {
+                                                                            "level": 7,
+                                                                            "code": "004004",
+                                                                            "name": "归因4：①地层出砂/地层污染等；②注采失调：周围油井采液量下降或周围注水井注入量上升等影响。\n"+
+                                                                            "建议措施：①作业防砂/酸化处理地层等。② 维持/注采调整：调整周围井的采液量或注水量等。"
+                                                                        },
+                                                                    ]
+                                                                },
+                                                                {
+
+                                                                    "level": 7,
+                                                                    "name": "稳定/下降(套压)",
+                                                                    "code": "TY",
+                                                                    "children": [
+                                                                        {
+                                                                            "level": 7,
+                                                                            "name": "上升",
+                                                                            "children": [
+                                                                                {
+                                                                                    "level": 7,
+                                                                                    "code": "004005",
+                                                                                    "name": "归因5：封隔器失效/管柱漏失等；\n"+
+                                                                                    "建议措施：①洗井；②作业换管柱等。",
+                                                                                },
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "level": 7,
+                                                                            "name": "稳定/下降",
+                                                                            "children": [
+                                                                                {
+                                                                                    "level": 7,
+                                                                                    "code": "004006",
+                                                                                    "name": "归因6：配水器开度调整等影响。\n" +
+                                                                                    "建议措施：调整配水器开度/维持。",
+                                                                                },
+                                                                            ]
+                                                                        },
+                                                                    ]
+
+                                                                },
+                                                            ]
+
+                                                        },
+                                                    ]
+
+                                                },
+                                            ]
+
+
+                                        },
+                                    ]
+                                },
+                            ]
+                        }
+                    ],
+                    top: '1%',
+                    left: '8%',
+                    bottom: '1%',
+                    right: '25%',
                     symbol: 'none',
                     symbolSize: 7,
                     label: {
@@ -2204,9 +2408,15 @@ export default {
                 this.title = '油井米采液指数归因分析'
             } else if (this.link == '4') {
                 this.modelCode = "ZSQD";
-                this.initCodeDataIndex(this.option2.series[0].data);
-                this.initTreeStyle(this.option2.series[0]);
-                this.chart.setOption(this.option2);
+                if( this.link==4 && this.$route.query.evalResult=='注水强度变高'){
+                    this.chart.setOption(this.option2);
+                    this.initCodeDataIndex(this.option2.series[0].data);
+                    this.initTreeStyle(this.option2.series[0]);
+                }else if (this.link==4 && this.$route.query.evalResult=='注水强度变低'){
+                    this.chart.setOption(this.optionzc);
+                    this.initCodeDataIndex(this.optionzc.series[0].data);
+                    this.initTreeStyle(this.optionzc.series[0]);
+                }
                 this.title = '注水强度归因分析'
             } else if (this.link == '5') {
                 this.modelCode = "YJDJL";
