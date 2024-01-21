@@ -23,6 +23,9 @@ export function getYczcTree(data) {
     // url: `${masterUrl}/getYczcTree`,
     url: `${baseUrl}/omc003d/getYczcTree`,
     method: "post",
+      headers: {
+          showLoading: false
+      },
     data,
   });
 }
@@ -31,6 +34,9 @@ export function QueryOrganizationDetail(data) {
   return request({
     url: `${masterUrl}/QueryOrganizationDetail`,
     method: "post",
+      headers: {
+          showLoading: false
+      },
     data,
   });
 }
@@ -39,6 +45,10 @@ export function QueryOgfDetail(data) {
     return request({
         url: `/rem/api/omc003d/QueryOgfDetail`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
+        
         data,
     });
 }
@@ -47,6 +57,9 @@ export function QueryPlatformDetail(data) {
     return request({
         url: `/rem/api/omc003d/QueryPlatformDetail`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data,
     });
 }
@@ -55,6 +68,9 @@ export function QuertProductionPlatformDetail(data) {
   return request({
     url: `${masterUrl}/QuertProductionPlatformDetail`,
     method: "post",
+      headers: {
+          showLoading: false
+      },
     data,
   });
 }
@@ -63,6 +79,9 @@ export function QueryWellDetail(data) {
     return request({
         url: `/rem/api/omc003d/QueryWellDetail`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data,
     });
 }
@@ -71,6 +90,9 @@ export function QueryReservoirAnalyseUnit(data) {
     return request({
         url: `/rem/api/omc003d/QueryReservoirAnalyseUnit`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data,
     });
 }
@@ -79,6 +101,9 @@ export function userListByUserNames(data) {
         // url: `${masterUrl}/system/syncData/userListByUserNames`,
         url: `${baseUrl}/omc003d/userListByUserNames`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data,
     });
 }

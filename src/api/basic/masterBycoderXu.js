@@ -5,6 +5,9 @@ export function getuserListByUserNames(data) {
     return Axios({
         url: `${baseUrl}/omc003d/userListByUserNames`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data
     });
 }
@@ -13,6 +16,9 @@ export function getFieldListsDetail(data) {
     return Axios({
         url: `${baseUrl}/omc003d/QueryOgfDetail`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data
     });
 }
@@ -20,6 +26,9 @@ export function getblockData(data) {
     return Axios({
         url: `${baseUrl}/omc003d/QueryReservoirAnalyseUnit`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data
     });
 }
@@ -27,6 +36,9 @@ export function getWellData(data) {
     return Axios({
         url: `${baseUrl}/omc003d/QueryWellDetail`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data
     });
 }
@@ -35,6 +47,9 @@ export function getWellDataForWellStyle(data) {
     return Axios({
         url: `${baseUrl}/omc003d/QueryWellDetailForWellStyle`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data
     });
 }
