@@ -40,9 +40,9 @@
         >
           <el-option
             v-for="(item, index) in wellSelectList"
-            :key="item.wellId"
-            :label="item.wellName"
-            :value="item.wellId"
+            :key="index"
+            :label="item.label"
+            :value="item.id"
           ></el-option>
         </el-select>
 
@@ -529,6 +529,12 @@ export default {
     blockChange() {
       this.searchForm.wellType = "";
       this.searchForm.wellId = "";
+      for (let i = 0; i < this.blockSelectList.length; i++) {
+        if (this.searchForm.blockId == this.blockSelectList[i].id) {
+          this.searchForm.blockName = this.blockSelectList[i].label;
+        }
+      }
+      this.getProdDailyTableApi();
       this.getWellListApi();
     },
     //获取井型数据
@@ -545,14 +551,17 @@ export default {
     },
     wellTypeChange() {
       this.searchForm.wellId = "";
+      for (let i = 0; i < this.wellTypeSelectList.length; i++) {
+        if (this.searchForm.wellType == this.wellTypeSelectList[i].id) {
+          this.searchForm.wellTypeName = this.wellTypeSelectList[i].label;
+        }
+      }
+      this.getWellListApi();
     },
     //获取井号数据源
     getWellListApi() {
       try {
-        QueryWellDetail({
-          ogfId: this.searchForm.ogfId,
-          blockId: this.searchForm.blockId,
-        }).then((res) => {
+        getWellList(this.searchForm).then((res) => {
           if (res.data.code == 200) {
             this.wellSelectList = res.data.data;
           }
@@ -560,6 +569,18 @@ export default {
       } catch (err) {
         // console.log(err);
       }
+      // try {
+      //   QueryWellDetail({
+      //     ogfId: this.searchForm.ogfId,
+      //     blockId: this.searchForm.blockId,
+      //   }).then((res) => {
+      //     if (res.data.code == 200) {
+      //       this.wellSelectList = res.data.data;
+      //     }
+      //   });
+      // } catch (err) {
+      // console.log(err);
+      // }
     },
     //根据井号id-获取上级井型，区块，油田
     wellIdChange() {
