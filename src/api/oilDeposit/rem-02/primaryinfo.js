@@ -13,6 +13,9 @@ export function fetchFieldEvaluationResult(request) {
     url: `${baseUrl}/primaryInfo/fetchFieldEvaluationResult`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 // 02-获取区块选项（SC-03-02）
@@ -21,6 +24,9 @@ export function fetchFields(request) {
     url: `${baseUrl}/primaryInfo/fetchFields`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 // 获取油田水井选项（SC-03-01）
@@ -29,6 +35,9 @@ export function fetchInjectionWells(request) {
     url: `${baseUrl}/primaryInfo/fetchInjectionWells`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 // 通过平台获取水井选项
@@ -37,6 +46,9 @@ export function fetchInjectionWellsByPlatform(request) {
     url: `${baseUrl}/primaryInfo/fetchInjectionWellsByPlatform`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 // 获取油田选项（SC-03-01）
@@ -44,6 +56,9 @@ export function fetchOilFields() {
   return Axios({
     url: `${baseUrl}/primaryInfo/fetchOilFields`,
     method: "get",
+    headers: {
+      showLoading: false,
+    },
   });
 }
 // 获取平台选项（SC-03-03）(request{"oilFieldId":"string"})
@@ -52,6 +67,9 @@ export function fetchPlatforms(request) {
     url: `${baseUrl}/primaryInfo/fetchPlatforms`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 // 通过油田获取采油井选项（SC-03-04）(request{"oilFieldId":"string"})
@@ -60,6 +78,9 @@ export function fetchProductionWells(request) {
     url: `${baseUrl}/primaryInfo/fetchProductionWells`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 // 通过平台获取采油井选项（SC-03-06）(request{"platformId":"string"})
@@ -68,6 +89,9 @@ export function fetchProductionWellsByPlatform(request) {
     url: `${baseUrl}/primaryInfo/fetchProductionWellsByPlatform`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 export function fetchWellGroupEvaluationResult(request) {
@@ -75,6 +99,9 @@ export function fetchWellGroupEvaluationResult(request) {
     url: `${baseUrl}/primaryInfo/fetchWellGroupEvaluationResult`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 
@@ -88,6 +115,9 @@ export function fieldLayers(request) {
     url: `${baseUrl}/primaryInfo/fieldLayers`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 
@@ -102,6 +132,9 @@ export function fieldOilLayers(request) {
     url: `${baseUrl}/primaryInfo/fieldOilLayers`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 export function uploadFile(request) {
@@ -129,6 +162,9 @@ export function wellGroups(request) {
     url: `${baseUrl}/primaryInfo/wellGroups`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 /**
@@ -142,6 +178,9 @@ export function selectWellGroup(params) {
     url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/selectWellGroupNew`,
     method: "get",
     params,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 export function getLjpmWells(params) {
@@ -157,6 +196,9 @@ export function fetchALLOilFields() {
   return Axios({
     url: `${baseUrl}/primaryInfo/fetchALLOilFields`,
     method: "get",
+    headers: {
+      showLoading: false,
+    },
   });
 }
 export function getinjWellByGroupId(data) {

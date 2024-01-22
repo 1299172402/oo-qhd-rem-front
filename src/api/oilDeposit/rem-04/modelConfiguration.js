@@ -3,24 +3,29 @@
  * @User: zxb
  * @Date: 2023-06-05
  */
-import Axios from '@/utils/request';
-const baseUrl = process.env.NODE_ENV == 'production' ? '/rem/api' : '/rem/api';
+import Axios from "@/utils/request";
+const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api";
 
 //根据油田数据源
 export function getOgfList() {
   return Axios({
     url: `${baseUrl}/selectMt/getOgfList`,
     method: "get",
+    headers: {
+      showLoading: false,
+    },
   });
 }
-
 
 //根据油田id-获取区块数据源
 export function getBlockList(request) {
   return Axios({
     url: `${baseUrl}/selectMt/getBlockList`,
     method: "get",
-    params: request
+    params: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 
@@ -29,7 +34,10 @@ export function getProdDailyTable(request) {
   return Axios({
     url: `${baseUrl}/selectMt/getWellTypeList`,
     method: "get",
-    params: request
+    params: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 
@@ -38,22 +46,26 @@ export function getWellList(request) {
   return Axios({
     url: `${baseUrl}/selectMt/getWellList`,
     method: "get",
-    params: request
+    params: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
-
 
 //根据井号id-获取上级井型，区块，油田
 export function getWell(request) {
   return Axios({
     url: `${baseUrl}/selectMt/getWell`,
     method: "get",
-    params: request
+    params: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
 
-
-//添加模型数据   
+//添加模型数据
 export function addGeneralConfig(request) {
   return Axios({
     url: `${baseUrl}/generalConfigMt/addGeneralConfig`,
@@ -67,7 +79,7 @@ export function editGeneralConfig(request) {
   return Axios({
     url: `${baseUrl}/generalConfigMt/editModelConfigValue`,
     method: "post",
-    data: request,  
+    data: request,
   });
 }
 
@@ -79,15 +91,11 @@ export function delGeneralConfig(request) {
   });
 }
 
-
 //大分页接口
 export function getPageBySelectType(request) {
   return Axios({
     url: `${baseUrl}/generalConfigMt/getPageBySelectType`,
     method: "get",
-    params: request
+    params: request,
   });
 }
-
-
-
