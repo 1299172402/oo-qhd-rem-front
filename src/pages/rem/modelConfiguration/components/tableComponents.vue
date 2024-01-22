@@ -73,7 +73,7 @@
                 <el-table-column prop="configUnit" label="对齐方式" width="150">
                     <template slot-scope="scope">
                         <div>
-                            <el-select v-model="scope.row.contrastMode" v-if="scope.row.state!=3">
+                            <el-select v-model="scope.row.contrastMode" v-if="scope.row.state!=3" disabled>
                                 <el-option label="相对值" value="相对值"></el-option>=
                                 <el-option label="绝对值" value="绝对值"></el-option>
                             </el-select>
@@ -150,6 +150,7 @@
                 let params={
                     current: this.page.currentPage,
                     size: this.page.pageSize,
+                    selectType: this.selectType.replace('按', ''),
                     ...this.queryData
                 }
                 await queryTableData(params).then(response => {
@@ -187,6 +188,7 @@
                 this.$set(this.tableData[index],'configDescribe',"");
                 this.$set(this.tableData[index],'configValue',"");
                 this.$set(this.tableData[index],'configUnit',"");
+                this.$set(this.tableData[index],'contrastMode',"");
                 this.getConfig(this.modeSelectList.find(item=>item.modelId === e).modelName);
             },
             //配置项代码切换
@@ -199,6 +201,7 @@
                     this.$set(this.tableData[index],'configDescribe',item.configDescribe);
                     this.$set(this.tableData[index],'configValue',item.configValue);
                     this.$set(this.tableData[index],'configUnit',item. configUnit);
+                    this.$set(this.tableData[index],'contrastMode',item. contrastMode);
                 } else {
                 // this.$set(this.tableData[index],'modelName',item.modelName);
                 this.$set(this.tableData[index],'configDescribe',"");
