@@ -110,25 +110,7 @@ export default {
         },
         linkTopage: function (url,currentList) {
             if(currentList.alarmPageCode =='OSTOPF'){
-                const data = {
-                    authorizedPersonnel:this.$store.getters["user/name"],
-                    alarmTime:new Date().format('YYYY-MM-dd'),
-                    alarmPageCode:['OSTOPF']
-                }
-                addLinkageAlarmInfo(data).then(()=>{
-                    this.warningShowFlag = false
-                }).then(()=>{
-                    if (!url) return
-                    const env = import.meta.env.MODE;
-                    if (window.location.origin.includes('test')) {
-                        this.baseUrl = 'tjioms-test.tjltd.cnooc'
-                    } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
-                        this.baseUrl = 'tjioms-dev.tjltd.cnooc'
-                    }else if (window.location.origin.includes('tpro')) {
-                        this.baseUrl = 'tjioms-tpro.tjltd.cnooc'
-                    }
                     window.open(`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage`, '_parent');
-                })
             }
             else{
                 let linkurl = currentList.boxBottomText.find((n)=>{
