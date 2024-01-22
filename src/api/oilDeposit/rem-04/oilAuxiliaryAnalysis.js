@@ -3,8 +3,8 @@
  * @User: zxb
  * @Date: 2023-03-22
  */
-import Axios from '@/utils/request';
-const baseUrl = process.env.NODE_ENV == 'production' ? '/rem/api' : '/rem/api';
+import Axios from "@/utils/request";
+const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api";
 
 //大师简要-下拉框数据源
 export function getMajorEventsBriefly(request) {
@@ -12,19 +12,22 @@ export function getMajorEventsBriefly(request) {
     url: `${baseUrl}/dynamicAnalysis/getMajorEventsBriefly`,
     method: "post",
     data: request,
+    headers: {
+      showLoading: false,
+    },
   });
 }
- 
+
 //生产状态列表接口
 export function getProductionStatus(request) {
   return Axios({
     url: `${baseUrl}/dynamicAnalysis/getProductionStatus`,
     method: "get",
-    params: request
+    params: request,
   });
 }
 
-//区块辅助分析-动态资料-液油含水等值线图-查询上传的文件列表 
+//区块辅助分析-动态资料-液油含水等值线图-查询上传的文件列表
 export function getFilePathList(request) {
   return Axios({
     url: `${baseUrl}/primaryInfo/getFilePathList`,
@@ -70,12 +73,14 @@ export function getDate(params) {
   });
 }
 
-
 //根据井号id获取区块id
 export function getBlockWell(params) {
   return Axios({
     url: `${baseUrl}/primaryInfo/getBlockWell`,
     method: "get",
     params,
+    headers: {
+      showLoading: false,
+    },
   });
 }

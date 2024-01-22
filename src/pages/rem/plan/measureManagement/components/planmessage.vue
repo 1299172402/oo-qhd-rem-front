@@ -353,6 +353,24 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
+                    <el-table-column sortable min-width="150px" :label="`防砂措施`" prop="sandMeasure" align="center">
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.sandMeasure !== null && scope.row.sandMeasure !== ''">{{
+                                    scope.row.sandMeasure
+                                }}</span>
+                            <span v-else>-</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column sortable min-width="150px" :label="`措施时间\n(yyyy-mm-dd)`" prop="measureTime" align="center">
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.measureTime !== null && scope.row.measureTime !== ''">{{
+                                    scope.row.measureTime
+                                }}</span>
+                            <span v-else>-</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column sortable min-width="130px" label="电泵情况" prop="pumpCondition" align="center">
                         <template slot-scope="scope">
                             <span
