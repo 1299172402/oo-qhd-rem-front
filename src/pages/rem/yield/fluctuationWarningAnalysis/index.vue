@@ -687,19 +687,25 @@ export default {
             end: 100, //滚动条结束位置
           },
         ],
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
+          tooltip: {
+              trigger: "axis",
+              axisPointer: {
+                  type: "shadow",
+              },
           },
-          formatter(params) {
-            params.forEach((item) => {
-              relVal += "<br/>" + item.marker + " : " + parseFloat(item.value || 0).toFixed(2);
-            });
-            return relVal;
-          },
-        },
+        // tooltip: {
+        //   trigger: "axis",
+        //   axisPointer: {
+        //     // 坐标轴指示器，坐标轴触发有效
+        //     type: "shadow", // 默认为直线，可选为：'line' | 'shadow'
+        //   },
+        //   formatter(params) {
+        //     params.forEach((item) => {
+        //       relVal += "<br/>" + item.marker + " : " + parseFloat(item.value || 0).toFixed(2);
+        //     });
+        //     return relVal;
+        //   },
+        // },
         grid: {
           x: 50,
           y: 100,
