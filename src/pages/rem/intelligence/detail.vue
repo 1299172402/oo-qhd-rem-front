@@ -106,7 +106,7 @@
           </el-table>
 
          <!-- 对比 table -->
-          <el-table v-show="isTableComp" id="exportCom" :data="tableData" style="width: 100%" height="calc(100%-30px)" highlight  show-summary  sum-text="总计">
+          <el-table v-show="isTableComp" id="exportCom" :data="tableData" style="width: 100%" height="calc(100%-30px)" highlight>
             <el-table-column prop="date" label="层位" min-width="240" align="center">
                 <template slot-scope="scope">
                     <span v-if="scope.row.productionIntervalNo !== null && scope.row.productionIntervalNo !== ''">{{scope.row.productionIntervalNo}}</span>
@@ -293,7 +293,7 @@ export default {
         this.queryData.endTime = []
         this.queryStratifiedInjectionDetails()
       },
-    queryStratifiedInjectionDetails () {
+      queryStratifiedInjectionDetails () {
       if(!this.queryData.startTime){
         this.$message.error('请选择日期!')
       }
@@ -427,6 +427,7 @@ export default {
           var layerRatioSum=0;
           console.log(this.tableData)
           for(var i=0;i<this.tableData.length;i++){
+             
               if(this.tableData[i].oilData.first){
                   oilDataSum=oilDataSum+parseFloat(this.tableData[i].oilData.first)    
               }
@@ -457,7 +458,6 @@ export default {
               overWaterInj:{first:(injSum/injAllocSum*100).toFixed(2)},
               productionIntervalId:'888',
               productionIntervalNo:'合计'
-
           }
           this.tableData.push(totalsum)
           
