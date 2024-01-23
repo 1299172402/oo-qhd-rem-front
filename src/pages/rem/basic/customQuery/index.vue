@@ -961,8 +961,8 @@ export default {
                         {val: "YEAR_CUMUL_WATER_INJECT_AMOUNT", name: "年累注水聚总量", unit: "m³"},
                     ]),
                     (this.managerList = [
-                        {val: "DAY_TOTAL_NUMBER_WELLS_PER", name: "日总井数", unit: "口"},
-                        {val: "DAY_NUMBER_WELLS_OPENED_PER", name: "日开井数", unit: "口"},
+                        {val: "DAY_TOTAL_NUMBER_WELLS_PER", name: "日生产总井数", unit: "口"},
+                        {val: "DAY_NUMBER_WELLS_OPENED_PER", name: "日生产开井数", unit: "口"},
                         {val: "TOTAL_DAILY_INJECTION_WELLS", name: "日注入总井数", unit: "口"},
                         {val: "NUMBER_DAILY_INJECTION_WELLS_OPENED", name: "日注入开井数", unit: "口"},
                     ]);
