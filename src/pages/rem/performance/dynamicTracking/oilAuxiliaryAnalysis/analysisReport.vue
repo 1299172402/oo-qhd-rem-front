@@ -1253,7 +1253,7 @@
                                 selCode == '0060102' ||
                                 selCode == '0070101' ||
                                 selCode == '0070102' ||
-                                selCode == '0040101')
+                                selCode == '0040103')
                             "
                             @click="
                               $router.push({
@@ -2703,7 +2703,7 @@ export default {
         "0060101": 2,
         "0070102": 3,
         "0070101": 3,
-        "0040101": 5,
+        "0040103": 5,
       };
       return codeMapping[this.selCode] || 0;
     },

@@ -40,9 +40,9 @@
         >
           <el-option
             v-for="(item, index) in wellSelectList"
-            :key="item.wellId"
-            :label="item.wellName"
-            :value="item.wellId"
+            :key="index"
+            :label="item.label"
+            :value="item.id"
           ></el-option>
         </el-select>
 
@@ -97,6 +97,8 @@
         </div>
         <div class="pagepanel-table" style="height: calc(100% - 44px)">
           <el-table
+            key="modelConfig-table1"
+            ref="table"
             width="100%"
             height="100%"
             border
@@ -108,14 +110,33 @@
           >
             <el-table-column prop="modelName" label="模型名称" sortable width="250"></el-table-column>
             <el-table-column prop="configId" label="配置项代码" sortable width="150"></el-table-column>
+            <el-table-column prop="evalName" label="评价项名称" width="150"></el-table-column>
             <el-table-column prop="configDescribe" label="配置项描述" min-width="760"></el-table-column>
-            <el-table-column prop="configValue" label="配置项值" width="100"></el-table-column>
+            <el-table-column prop="configValue" label="配置项值" width="150">
+              <template slot-scope="scope">
+                <div>
+                  <el-input
+                    type="number"
+                    placeholder="输入配置项值"
+                    v-model="scope.row.configValue"
+                    v-if="scope.row.state !== 3"
+                  ></el-input>
+                  <span v-else>{{ scope.row.configValue }}</span>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column prop="configUnit" label="配置项单位" width="100"></el-table-column>
             <el-table-column prop="contrastMode" label="对比方式" width="100"></el-table-column>
             <el-table-column prop="selectType" label="选值方式" width="100"></el-table-column>
             <el-table-column label="操作" width="150">
               <template slot-scope="scope">
-                <el-button type="text" size="small" @click="openEditDialog(scope.row)">编辑</el-button>
+                <el-button type="text" @click="openEditRowSubmit(scope.row, scope.$index)" v-if="scope.row.state == 2"
+                  >提交</el-button
+                >
+                <el-button type="text" @click="openEditRow(scope.row, scope.$index)" v-if="scope.row.state != 1">{{
+                  scope.row.state == 2 ? "取消" : "编辑"
+                }}</el-button>
+                <!-- <el-button type="text" size="small" @click="openEditDialog(scope.row)">编辑</el-button> -->
               </template>
             </el-table-column>
           </el-table>
@@ -528,6 +549,12 @@ export default {
     blockChange() {
       this.searchForm.wellType = "";
       this.searchForm.wellId = "";
+      for (let i = 0; i < this.blockSelectList.length; i++) {
+        if (this.searchForm.blockId == this.blockSelectList[i].id) {
+          this.searchForm.blockName = this.blockSelectList[i].label;
+        }
+      }
+      this.getProdDailyTableApi();
       this.getWellListApi();
     },
     //获取井型数据
@@ -544,14 +571,17 @@ export default {
     },
     wellTypeChange() {
       this.searchForm.wellId = "";
+      for (let i = 0; i < this.wellTypeSelectList.length; i++) {
+        if (this.searchForm.wellType == this.wellTypeSelectList[i].id) {
+          this.searchForm.wellTypeName = this.wellTypeSelectList[i].label;
+        }
+      }
+      this.getWellListApi();
     },
     //获取井号数据源
     getWellListApi() {
       try {
-        QueryWellDetail({
-          ogfId: this.searchForm.ogfId,
-          blockId: this.searchForm.blockId,
-        }).then((res) => {
+        getWellList(this.searchForm).then((res) => {
           if (res.data.code == 200) {
             this.wellSelectList = res.data.data;
           }
@@ -559,6 +589,18 @@ export default {
       } catch (err) {
         // console.log(err);
       }
+      // try {
+      //   QueryWellDetail({
+      //     ogfId: this.searchForm.ogfId,
+      //     blockId: this.searchForm.blockId,
+      //   }).then((res) => {
+      //     if (res.data.code == 200) {
+      //       this.wellSelectList = res.data.data;
+      //     }
+      //   });
+      // } catch (err) {
+      // console.log(err);
+      // }
     },
     //根据井号id-获取上级井型，区块，油田
     wellIdChange() {
@@ -596,6 +638,11 @@ export default {
           this.tableData = response.data.data.records;
           this.page.total = response.data.data.total;
           this.tableLoading = false;
+          if (this.tableData.length) {
+            this.tableData.forEach((item) => {
+              item.state = 3;
+            });
+          }
           //是否显示选定模型重算按钮
           this.isModuleBtn = false;
           if (this.tableData.length) {
@@ -625,7 +672,55 @@ export default {
       this.page.pageSize = e.limit;
       this.queryTableDate();
     },
-
+    //编辑
+    openEditRow(row, index) {
+      let state = row.state == 2 ? 3 : 2;
+      this.$set(this.tableData[index], "state", state);
+      this.$refs.table.doLayout();
+      this.$forceUpdate();
+    },
+    //提交编辑
+    openEditRowSubmit(row, index) {
+      this.$confirm("是否确定提交该条信息？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          if (row.id == 0) {
+            let obj = {
+              configurationModelName: row.modelName,
+              configurationModelItemCode: row.configId,
+              configDescribe: row.configDescribe,
+              configurationModelParam: row.configValue,
+              configurationModelParamUnit: row.configUnit,
+              configurationModelParamType: row.contrastMode,
+              configurationModelType: row.selectType,
+              configurationModelId: row.modelId,
+              configurationModelCode: row.configurationModelCode,
+              id: 0,
+            };
+            updateModelConfigurationByCode(obj).then((res) => {
+              if (res.data.code == 200) {
+                this.queryTableDate();
+                this.dialogVisible = false;
+              } else {
+                this.$message.error(res.data.msg);
+              }
+            });
+          } else {
+            editModelConfigValue(row).then((response) => {
+              if (response.data.code == 200) {
+                this.queryTableDate();
+                this.dialogVisible = false;
+              } else {
+                this.$message.error(response.data.msg);
+              }
+            });
+          }
+        })
+        .catch(() => {});
+    },
     //打开弹出框
     openEditDialog(row) {
       this.$nextTick(() => {

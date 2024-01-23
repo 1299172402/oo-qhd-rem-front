@@ -315,8 +315,6 @@ export default {
                 }
             });
         },
-        getData() {
-        },
         //平台下拉-change
        async onPlatfromChange(val) {
           await  QueryWellDetail({platformId: val, ogfId: this.queryData.ogfId}).then((res) => {

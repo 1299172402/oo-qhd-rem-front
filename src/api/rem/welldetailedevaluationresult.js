@@ -24,6 +24,9 @@ export function queryWellControlReservesLayer({wellId } = {}) {
     return request({
         url: `${baseUrl}/wellControlReservesData/queryWellControlReservesLayer?wellId=${ wellId || "" }`,
         method: "get",
+        headers: {
+            showLoading: false
+        },
     });
 }
 // 水平段维护 - 获取水平井水平段信息 

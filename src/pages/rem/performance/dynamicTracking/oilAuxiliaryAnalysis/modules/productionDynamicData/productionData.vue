@@ -419,7 +419,7 @@ export default {
             position: "right",
             offset: 80,
             // scale: true,
-            max: 50,
+            max: 60,
             min: 0,
             axisLabel: {
               show: true,
@@ -791,7 +791,7 @@ export default {
               let point = [];
               point.push(lineData[i].label);
               xSet.add(lineData[i].label);
-              point.push(lineData[i].value);
+              point.push(lineData[i].value ==0 ||lineData[i].value ==null?0:lineData[i].value );
               pointData.push(point);
             }
             series.data = pointData;
@@ -803,6 +803,7 @@ export default {
           this.option.xAxis[1].data = xData;
           this.option.xAxis[2].data = xData;
           this.option.series = seriesData;
+            console.log(this.option)
         }
       });
       produceTableData(request).then((res) => {

@@ -1143,7 +1143,7 @@ export default {
                     });
                 });
                 //添加固定的两个字段 井名 生产时间
-                this.headerTextLower.unshift({name: "井名", val: "name"}, {name: `生产时间\n(yyyy-mm-dd)`, val: "proddate"});
+                this.headerTextLower.unshift({name: "井名", val: "name"}, {name:this.activeTabIndexDate==3? `生产时间\n(yyyy-mm-dd)`: this.activeTabIndexDate==2? `生产时间\n(yyyy-mm)`:`生产时间\n(yyyy)` , val: "proddate"});
                 this.tableData = tableArr;
             }
         },

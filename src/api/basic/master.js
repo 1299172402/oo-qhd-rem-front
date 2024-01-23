@@ -13,6 +13,9 @@ export function QueryPlatformDetail(data) {
     return request({
         url: `/rem/api/omc003d/QueryPlatformDetail`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data
     });
 }
@@ -30,6 +33,9 @@ export function userListByUserNames(data) {
         // url: `${masterUrl}/system/syncData/userListByUserNames`,
         url: `${baseUrl}/omc003d/userListByUserNames`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data,
     });
 }
@@ -37,6 +43,9 @@ export function QueryBlockDetail(data) {
     return request({
         url: `${masterUrl}/QueryBlockDetail`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data
     });
 }
@@ -44,6 +53,9 @@ export function QueryWellDetail(data) {
     return request({
         url: `/rem/api/omc003d/QueryWellDetail`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data,
     });
 }
@@ -51,6 +63,9 @@ export function QueryOgfDetail(data) {
     return request({
         url: `/rem/api/omc003d/QueryOgfDetail`,
         method: "post",
+        headers: {
+            showLoading: false
+        },
         data,
     });
 }

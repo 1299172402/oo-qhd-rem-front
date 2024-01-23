@@ -308,7 +308,6 @@ export default {
       queryBlockFeild() {
         getblockData({ogfId:this.params.ogfId}).then((res) => {
           this.blockList = res.data.data;
-            console.log(this.blockList)
           for(var i=0;i<this.blockList.length;i++){
             if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
               this.params.blockId=this.blockList[i].reservoirAnalyseUnitId
@@ -321,7 +320,6 @@ export default {
        * 改变区块
        */
       changeBlock(e) {
-        console.log(e)
         this.queryData.wellId = [];
         if (this.queryData.wellCategory) {
           this.queryWellData();
