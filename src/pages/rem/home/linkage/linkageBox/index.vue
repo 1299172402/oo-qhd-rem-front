@@ -58,6 +58,7 @@ export default {
             default: false
         }
     },
+    
     computed:{
         getWarningShowFlag(){
             return this.currentList.warningShowFlag
@@ -76,6 +77,7 @@ export default {
             show: false,
             content: false,
             selectIndex: 0,
+            linkurl:'',
             baseUrl:'',
             selectObj: this.currentList.boxBottomContent ? this.currentList.boxBottomContent : []
         }
@@ -120,21 +122,25 @@ export default {
                     window.open(`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage`, '_parent');
             }
             else{
-                let linkurl = currentList.boxBottomText.find((n)=>{
+                console.log(currentList.boxBottomText)
+                this.linkurl = currentList.boxBottomText.find((n)=>{
                     if(n.warningShowFlag == true){
+                        console.log(n)
                         return n
                     }
                 })
+                console.log(this.linkurl)
                 const data = {
                     authorizedPersonnel:this.$store.getters["user/name"],
                     alarmTime:new Date().format('YYYY-MM-dd'),
-                    alarmPageCode:[linkurl?.alarmPageCode]
+                    alarmPageCode:[this.linkurl.alarmPageCode]
                 }
+                console.log(currentList,linkurl)
                 addLinkageAlarmInfo(data).then(()=>{
                     this.warningShowFlag = false
                 }).then(()=>{
                     if (!url) return
-                    if(currentList?.warningurl){
+                    if(currentList.warningurl){
                         window.open(currentList.warningurl, '_parent');
                     }else{
                         window.open(linkurl.url, '_parent'); 

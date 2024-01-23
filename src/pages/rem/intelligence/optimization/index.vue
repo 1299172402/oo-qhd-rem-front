@@ -475,7 +475,16 @@ export default {
     },
     // 时间处理
     eeee() {
-      return new Date().format("YYYY-MM");
+        let data = new Date()
+        if (data.getMonth() < 10) {
+            if(data.getMonth()===0){
+                return data.getFullYear() + '-01'
+            }else {
+                return data.getFullYear() + '-0' + (data.getMonth()-1)
+            }
+        } else {
+            return data.getFullYear() + '-' + (data.getMonth()-1)
+        }
     },
     refresh() {
       this.queryData.blockId = "6CD7342CA6DD418183A4B3BC38584F7C";
