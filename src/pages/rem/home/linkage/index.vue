@@ -274,7 +274,8 @@ export default {
                     boxBottomText: [
                         {
                             name: '动设备健康管理模型',
-                            warningShowFlag: false, alarmTime: "",
+                            warningShowFlag: false,
+                            alarmTime: "",
                             url: `https://efm.${this.baseUrl}/#/equipment/mechanical?page=Linkage`
                         }
                     ],
