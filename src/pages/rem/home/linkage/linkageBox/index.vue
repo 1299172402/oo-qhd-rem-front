@@ -109,6 +109,13 @@ export default {
 
         },
         linkTopage: function (url,currentList) {
+            if (window.location.origin.includes('test')) {
+                this.baseUrl = 'tjioms-test.tjltd.cnooc'
+            } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
+                this.baseUrl = 'tjioms-dev.tjltd.cnooc'
+            }else if (window.location.origin.includes('tpro')) {
+                this.baseUrl = 'tjioms-tpro.tjltd.cnooc'
+            }
             if(currentList.alarmPageCode =='OSTOPF'){
                     window.open(`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage`, '_parent');
             }
