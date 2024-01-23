@@ -58,9 +58,9 @@
         </div>
       </div>
     </header-search>
-    <page-panel header-title="分层注采详情" style="height:calc(100% - 80px);">
+    <page-panel header-title="分层注采详情" style="height:calc(100% - 95px);">
         <el-button style="float: right;margin-top:-5px " @click="doExportFile" icon="el-icon-download" type="primary">下载</el-button>
-          <el-table v-show="!isTableComp" id="export1" :data="tableData" style="width: 100%;" height="calc(100% - 30px)" highlight>
+          <el-table v-show="!isTableComp" id="export1" :data="tableData" style="width: 100% ;" height="95%" highlight>
             <el-table-column prop="date" label="层位" align="center">
                 <template slot-scope="scope">
                     <span v-if="scope.row.productionIntervalNo !== null && scope.row.productionIntervalNo !== ''">{{scope.row.productionIntervalNo}}</span>
@@ -106,7 +106,7 @@
           </el-table>
 
          <!-- 对比 table -->
-          <el-table v-show="isTableComp" id="exportCom" :data="tableData" style="width: 100%" height="calc(100%-30px)" highlight>
+          <el-table v-show="isTableComp" id="exportCom" :data="tableData" style="width: 100% ;" height="95%"  highlight>
             <el-table-column prop="date" label="层位" min-width="240" align="center">
                 <template slot-scope="scope">
                     <span v-if="scope.row.productionIntervalNo !== null && scope.row.productionIntervalNo !== ''">{{scope.row.productionIntervalNo}}</span>
@@ -425,37 +425,63 @@ export default {
           var injSum=0;
           var injAllocSum=0;
           var layerRatioSum=0;
+
+          var oilDataSumSecond=0;
+          var overWaterInjSumSecond=0;
+          var fluidProdSumSecond=0;
+          var injSumSecond=0;
+          var injAllocSumSecond=0;
+          var layerRatioSumSecond=0;
           console.log(this.tableData)
+          
           for(var i=0;i<this.tableData.length;i++){
              
               if(this.tableData[i].oilData.first){
                   oilDataSum=oilDataSum+parseFloat(this.tableData[i].oilData.first)    
               }
+              if(this.tableData[i].oilData.second){
+                  oilDataSumSecond=oilDataSumSecond+parseFloat(this.tableData[i].oilData.second)
+              }
               if(this.tableData[i].overWaterInj.first){
                   overWaterInjSum=overWaterInjSum+parseFloat(this.tableData[i].overWaterInj.first)
+              }
+              if(this.tableData[i].overWaterInj.second){
+                  overWaterInjSumSecond=overWaterInjSumSecond+parseFloat(this.tableData[i].overWaterInj.second)
               }
               if(this.tableData[i].fluidProd.first){
                   fluidProdSum=fluidProdSum+parseFloat(this.tableData[i].fluidProd.first)
               }
+              if(this.tableData[i].fluidProd.second){
+                  fluidProdSumSecond=fluidProdSumSecond+parseFloat(this.tableData[i].fluidProd.second)
+              }
               if(this.tableData[i].inj.first){
                   injSum=injSum+parseFloat(this.tableData[i].inj.first)
+              }
+              if(this.tableData[i].inj.second){
+                  injSumSecond=injSumSecond+parseFloat(this.tableData[i].inj.second)
               }
               if(this.tableData[i].injAlloc.first){
                   injAllocSum=injAllocSum+parseFloat(this.tableData[i].injAlloc.first)
               }
+              if(this.tableData[i].injAlloc.second){
+                  injAllocSumSecond=injAllocSumSecond+parseFloat(this.tableData[i].injAlloc.second)
+              }
               if(this.tableData[i].layerRatio.first){
                   layerRatioSum=layerRatioSum+parseFloat(this.tableData[i].layerRatio.first)
+              }
+              if(this.tableData[i].layerRatio.second){
+                  layerRatioSumSecond=layerRatioSumSecond+parseFloat(this.tableData[i].layerRatio.second)
               }
 
           }
           console.log(oilDataSum)
           const totalsum ={
-              fluidProd: {first:fluidProdSum.toFixed(2)},
-              inj:{first:injSum.toFixed(2)},
-              injAlloc:{first:injAllocSum.toFixed(2)},
-              layerRatio:{first:(injSum/fluidProdSum).toFixed(2)},
-              oilData:{first:oilDataSum.toFixed(2)},
-              overWaterInj:{first:(injSum/injAllocSum*100).toFixed(2)},
+              fluidProd: {first:fluidProdSum.toFixed(2),second:fluidProdSumSecond.toFixed(2)},
+              inj:{first:injSum.toFixed(2),second:injSumSecond.toFixed(2)},
+              injAlloc:{first:injAllocSum.toFixed(2),second:injAllocSumSecond.toFixed(2)},
+              layerRatio:{first:(injSum/fluidProdSum).toFixed(2),second:(injSumSecond/fluidProdSumSecond).toFixed(2)},
+              oilData:{first:oilDataSum.toFixed(2),second:oilDataSumSecond.toFixed(2)},
+              overWaterInj:{first:(injSum/injAllocSum*100).toFixed(2),second:(injSumSecond/injAllocSumSecond*100).toFixed(2)},
               productionIntervalId:'888',
               productionIntervalNo:'合计'
           }
