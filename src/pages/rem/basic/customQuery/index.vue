@@ -1212,7 +1212,17 @@ export default {
             this.params = params;
             this.queryData = [];
             queryCustomQueryList(params).then((res) => {
-                this.queryData = res.data.data.rows;
+                let dataArray =  res.data.data.rows;
+                dataArray.forEach((data)=>{
+                    for (var key in data) {
+                        console.log(key)
+                        if (key == 'monthprodduration' || key == 'yearprodduration'
+                            || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily') {
+                            data[key] = parseFloat(data[key]).toFixed(0);
+                        }
+                    }
+                })
+                this.queryData = dataArray
                 this.pageTotal = res.data.data.total;
             });
         },
