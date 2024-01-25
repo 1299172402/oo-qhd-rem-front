@@ -1327,4 +1327,11 @@ export default {
 .pertable thead .el-table-column--selection .cell {
     display: none;
 }
+#zdycx {
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
+}
 </style>
