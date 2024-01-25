@@ -273,12 +273,12 @@
                 style="margin-left: 20px"
                 v-if="
                   selCode &&
-                  (selCode == '0050102' ||
-                    selCode == '0050101' ||
+                  (selCode == '0050104' ||
+                    selCode == '0050103' ||
                     selCode == '0060101' ||
                     selCode == '0060102' ||
-                    selCode == '0070101' ||
-                    selCode == '0070102')
+                    selCode == '0070103' ||
+                    selCode == '0070104')
                 "
                 @click="
                   $router.push({
@@ -1247,13 +1247,13 @@
                             style="margin-left: 20px"
                             v-if="
                               selCode &&
-                              (selCode == '0050102' ||
-                                selCode == '0050101' ||
+                              (selCode == '0050104' ||
+                                selCode == '0050103' ||
                                 selCode == '0060101' ||
                                 selCode == '0060102' ||
-                                selCode == '0070101' ||
-                                selCode == '0070102' ||
-                                selCode == '0040101')
+                                selCode == '0070103' ||
+                                selCode == '0070104' ||
+                                selCode == '0040103')
                             "
                             @click="
                               $router.push({
@@ -2697,13 +2697,13 @@ export default {
     // 判断数据
     linkdata() {
       const codeMapping = {
-        "0050102": 1,
-        "0050101": 1,
+        "0050104": 1,
+        "0050103": 1,
         "0060102": 2,
         "0060101": 2,
-        "0070102": 3,
-        "0070101": 3,
-        "0040101": 5,
+        "0070104": 3,
+        "0070103": 3,
+        "0040103": 5,
       };
       return codeMapping[this.selCode] || 0;
     },

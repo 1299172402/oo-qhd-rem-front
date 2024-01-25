@@ -769,38 +769,39 @@ export default {
                     (this.managerList = []);
                 break;
 
-            case "proProDic": //'计量生产指标':
-                (this.stateList = [
-                    {val: "CALCUL_DATE", name: "计量时间", unit: "h"},
-                    {val: "NOZZLE_DIAMETER", name: "油嘴直径", unit: "mm"},
-                    {val: "WH_TEMP", name: "井口温度", unit: "℃"},
-                    {val: "DH_FLOWING_TEMP", name: "油压", unit: "MPa"},
-                    {val: "CSG_PRESS", name: "套压", unit: "MPa"},
-                    {val: "DH_FLOWING_TEMP", name: "井底流温", unit: "℃"},
-                    {val: "DH_FLOWING_PRESS", name: "井底流压", unit: "MPa"},
-                    {val: "PUMP_FREQUENCY", name: "泵频率", unit: "Hz"},
-                    {val: "PUMP_CURRENT", name: "泵电流", unit: "A"},
-                    {val: "PUMP_VOLTAGE", name: "泵电压", unit: "V"},
-                    {val: "PUMP_INLET_TEMP", name: "泵入口温度", unit: "℃"},
-                    {val: "PUMP_MOTOR_TEMP", name: "泵马达温度", unit: "℃"},
-                    {val: "PUMP_INLET_PRESS", name: "泵入口压力", unit: "MPa"},
-                    {val: "PUMP_OUTLET_PRESS", name: "泵出口压力", unit: "MPa"},
-                    {val: "GAS_LIFT_CHOKE_DIAMETER", name: "气举嘴直径", unit: "mm"},
-                    {val: "GAS_LIFT_PRESS", name: "气举压力", unit: "MPa"},
-                ]),
+            case "YTproProDic": //'计量生产指标':
+                (this.stateList = []),
                     (this.productList = [
-                        {val: "ACTUAL_DAILY_LIQUID_PROD", name: "实际日产液", unit: "m³"},
-                        {val: "ACTUAL_DAILY_OIL_PROD", name: "实际日产油", unit: "m³"},
-                        {val: "ACTUAL_DAILY_WATER_PROD", name: "实际日产水", unit: "m³"},
-                        {val: "ACTUAL_DAILY_GAS_PROD", name: "实际日产气", unit: "m³"},
+                        {val: "DAILY_LIQUID_PROD", name: "日产液", unit: "m³"},
+                        {val: "DAILY_OIL_PROD", name: "日产油", unit: "m³"},
+                        {val: "DAILY_WATER_PROD", name: "日产水", unit: "m³"},
+                        {val: "DAILY_GAS_PROD", name: "日产气", unit: "m³"},
                         {val: "WATER_RATIO", name: "含水", unit: "%"},
-                        {val: "GAS_OIL_RATIO", name: "气油比", unit: "m³/m³"},
-                        {val: "OIL_GAS_RATIO", name: "油气比", unit: "m³/m³"},
-                        {val: "WATER_GAS_RATIO", name: "水气比", unit: "m³/m³"},
+                        {val: "OIL_GAS_RATIO", name: "气油比", unit: "m³/m³"},
+                        {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "m³"},
+                        {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "m³"},
+                        {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "m³"},
+                        {val: "MONTHLY_CUMU_GAS_PROD", name: "月累产气", unit: "m³"},
                     ]),
-                    (this.totalList = []),
-                    (this.injectList = []),
-                    (this.managerList = []);
+                    (this.totalList = [
+                        {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "m³"},
+                        {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "m³"},
+                        {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "m³"},
+                        {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "m³"},
+                    ]),
+                    (this.injectList = [
+                        {val: "AVERAGE_OIL_PRESS", name: "平均油压", unit: "MPa"},
+                        {val: "AVERAGE_MAINLINE_PRESS", name: "平均干线压力", unit: "MPa"},
+                        {val: "DAILY_WATER_INJECT_AMOUNT", name: "日注水聚总量", unit: "m³"},
+                        {val: "MONTHLY_CUMUL_WATER_INJECT_AMOUNT", name: "月累注水聚总量", unit: "m³"},
+                        {val: "YEAR_CUMUL_WATER_INJECT_AMOUNT", name: "年累注水聚总量", unit: "m³"},
+                    ]),
+                    (this.managerList = [
+                        {val: "DAY_TOTAL_NUMBER_WELLS_PER", name: "日生产总井数", unit: "口"},
+                        {val: "DAY_NUMBER_WELLS_OPENED_PER", name: "日生产开井数", unit: "口"},
+                        {val: "TOTAL_DAILY_INJECTION_WELLS", name: "日注入总井数", unit: "口"},
+                        {val: "NUMBER_DAILY_INJECTION_WELLS_OPENED", name: "日注入开井数", unit: "口"},
+                    ]);
                 break;
             case "verifyPro": //'核实生产指标':
                 if (this.activeTabIndex == "1") {
@@ -961,8 +962,8 @@ export default {
                         {val: "YEAR_CUMUL_WATER_INJECT_AMOUNT", name: "年累注水聚总量", unit: "m³"},
                     ]),
                     (this.managerList = [
-                        {val: "DAY_TOTAL_NUMBER_WELLS_PER", name: "日总井数", unit: "口"},
-                        {val: "DAY_NUMBER_WELLS_OPENED_PER", name: "日开井数", unit: "口"},
+                        {val: "DAY_TOTAL_NUMBER_WELLS_PER", name: "日生产总井数", unit: "口"},
+                        {val: "DAY_NUMBER_WELLS_OPENED_PER", name: "日生产开井数", unit: "口"},
                         {val: "TOTAL_DAILY_INJECTION_WELLS", name: "日注入总井数", unit: "口"},
                         {val: "NUMBER_DAILY_INJECTION_WELLS_OPENED", name: "日注入开井数", unit: "口"},
                     ]);
@@ -1143,7 +1144,7 @@ export default {
                     });
                 });
                 //添加固定的两个字段 井名 生产时间
-                this.headerTextLower.unshift({name: "井名", val: "name"}, {name: `生产时间\n(yyyy-mm-dd)`, val: "proddate"});
+                this.headerTextLower.unshift({name: "井名", val: "name"}, {name:this.activeTabIndexDate==3? `生产时间\n(yyyy-mm-dd)`: this.activeTabIndexDate==2? `生产时间\n(yyyy-mm)`:`生产时间\n(yyyy)` , val: "proddate"});
                 this.tableData = tableArr;
             }
         },
@@ -1212,7 +1213,19 @@ export default {
             this.params = params;
             this.queryData = [];
             queryCustomQueryList(params).then((res) => {
-                this.queryData = res.data.data.rows;
+                let dataArray =  res.data.data.rows;
+                dataArray.forEach((data)=>{
+                    for (var key in data) {
+                        console.log(key)
+                        if (key == 'monthprodduration' || key == 'yearprodduration'
+                            || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily'|| key == 'daynumberwellsopenedper'|| 
+                            key == 'daytotalnumberwellsper'|| key == 'numberdailyinjectionwellsopened'|| key == 'totaldailyinjectionwells'|| key == 'dailymeasurewells'
+                            || key == 'monthlycumulcount'|| key == 'yearcumulcount') {
+                            data[key] = parseFloat(data[key]).toFixed(0);
+                        }
+                    }
+                })
+                this.queryData = dataArray
                 this.pageTotal = res.data.data.total;
             });
         },
