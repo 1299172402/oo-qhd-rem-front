@@ -147,7 +147,7 @@
                                 <el-table-column
                                     prop="afterInjDaily"
                                     :render-header="renderheader"
-                                    label="上月日配注水量?(m³)"
+                                    label="上月实际配注?(m³)"
                                     min-width="120"
                                     align="center"
                                 ></el-table-column>

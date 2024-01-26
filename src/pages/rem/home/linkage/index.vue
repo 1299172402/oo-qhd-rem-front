@@ -39,10 +39,13 @@ export default {
         const env = import.meta.env.MODE;
         if (window.location.origin.includes('test')) {
             this.baseUrl = 'tjioms-test.tjltd.cnooc'
+            this.env='test'
         } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
             this.baseUrl = 'tjioms-dev.tjltd.cnooc'
+            this.env='dev'
         }else if (window.location.origin.includes('tpro')) {
             this.baseUrl = 'tjioms-tpro.tjltd.cnooc'
+            this.env='tpro'
         }
         this.getWarningInfo()
         this.getinfo()
@@ -317,11 +320,11 @@ export default {
                             name: '混输海管设计输量',
                             warningShowFlag: false, alarmTime: "",
                             // https://prm.tjioms-dev.tjltd.cnooc/#/manage/optimize
-                            url: `https://prm.${this.baseUrl}/#/manage/optimize?page=Linkage`
+                            url: `https://prm.${this.baseUrl}/#/manage/optimize?env=${this.env}`
                         },
                         {
                             name: '注水海管设计输量', alarmTime: "",
-                            url: `https://prm.${this.baseUrl}/#/manage/optimize?page=Linkage`
+                            url: `https://prm.${this.baseUrl}/#/manage/optimize?env=${this.env}`
                         }
                     ],
                     boxBottomContent: [
@@ -352,12 +355,12 @@ export default {
                         {
                             name: '混输液处理能力',
                             warningShowFlag: false, alarmTime: "",
-                            url: `https://prm.${this.baseUrl}/#/manage/optimize?page=Linkage`
+                            url: `https://prm.${this.baseUrl}/#/manage/optimize?env=${this.env}`
                         },
                         {
                             name: '生产水处理能力',
                             warningShowFlag: false, alarmTime: "",
-                            url: `https://prm.${this.baseUrl}/#/manage/optimize?page=Linkage`
+                            url: `https://prm.${this.baseUrl}/#/manage/optimize?env=${this.env}e`
                         }
                     ],
                     boxBottomContent: [
@@ -527,6 +530,7 @@ export default {
     data() {
         return {
             timmer: '',//定时器
+            env:'',
             timmerWarning: '',//获取报警信息轮询
             baseUrl: '',//判断环境
             loopNum: 0,//循环显示图片的loop

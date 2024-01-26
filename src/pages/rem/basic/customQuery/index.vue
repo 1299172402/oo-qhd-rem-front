@@ -769,7 +769,7 @@ export default {
                     (this.managerList = []);
                 break;
 
-            case "proProDic": //'计量生产指标':
+            case "YTproProDic": //'计量生产指标':
                 (this.stateList = []),
                     (this.productList = [
                         {val: "DAILY_LIQUID_PROD", name: "日产液", unit: "m³"},
@@ -1219,7 +1219,8 @@ export default {
                         console.log(key)
                         if (key == 'monthprodduration' || key == 'yearprodduration'
                             || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily'|| key == 'daynumberwellsopenedper'|| 
-                            key == 'daytotalnumberwellsper'|| key == 'numberdailyinjectionwellsopened'|| key == 'totaldailyinjectionwells') {
+                            key == 'daytotalnumberwellsper'|| key == 'numberdailyinjectionwellsopened'|| key == 'totaldailyinjectionwells'|| key == 'dailymeasurewells'
+                            || key == 'monthlycumulcount'|| key == 'yearcumulcount') {
                             data[key] = parseFloat(data[key]).toFixed(0);
                         }
                     }
@@ -1338,5 +1339,12 @@ export default {
 
 .pertable thead .el-table-column--selection .cell {
     display: none;
+}
+#zdycx {
+    ::v-deep .cell:empty {
+        &::before {
+            content: "-";
+        }
+    }
 }
 </style>
