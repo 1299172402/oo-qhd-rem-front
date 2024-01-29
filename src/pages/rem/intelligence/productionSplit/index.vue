@@ -390,6 +390,8 @@ export default {
             for(var i=0;i<list.length;i++){
               if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
                 this.queryData.ogfId.value=list[i].ogfId
+              }else {
+                this.queryData.ogfId.value=list[0].ogfId
               }
             }
             this.queryBlockFeild()
@@ -452,6 +454,10 @@ export default {
             }
             getWellData({blockId:this.queryData.blockId.value,ogfId:this.queryData.ogfId.value,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
                 this.wellList=res.data.data
+                console.log("排序前")
+                console.log(this.wellList)
+                console.log("排序后")
+                
                 this.queryProductionSplit()
                 // this.wellList = res.wellList;
             });

@@ -201,9 +201,9 @@ export default {
       //搜索对象
       searchForm: {
         companyId: "",
-        oilFieldName: "秦皇岛32-6油田", //油田名称
-        selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F", //油田绑定值
-        selectDate: [new Date().format('YYYY-01-01'), new Date().format('YYYY-12-31')], //日期
+        oilFieldName: "", //油田名称
+        selectOilField: "", //油田绑定值
+        selectDate: [new Date().format("YYYY-01-01"), new Date().format("YYYY-12-31")], //日期
         planTypeCode: "002003", //产量计划类型绑定值
         theYieldComponentsValue: 1, //产量构成绑定值
         rollForecastVersion: "", //滚动预测绑定值
@@ -233,10 +233,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.searchForm.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.searchForm.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.searchForm.companyId }).then((data) => {
@@ -248,6 +247,8 @@ export default {
           } else {
             this.searchForm.selectOilField = this.oilField[0].ogfId ? this.oilField[0].ogfId : undefined;
           }
+          this.searchForm.oilFieldName =
+            this.oilField.filter((item) => item.ogfId === this.searchForm.selectOilField)[0].ogfName || "";
         }
       });
       //获取滚动预测版本
@@ -266,7 +267,8 @@ export default {
     },
     //查询事件
     doSearch() {
-      this.searchForm.oilFieldName = this.oilField.filter(item => item.ogfId === this.searchForm.selectOilField)[0].ogfName || "";
+      this.searchForm.oilFieldName =
+        this.oilField.filter((item) => item.ogfId === this.searchForm.selectOilField)[0].ogfName || "";
       this.$refs.childComponent.initData();
     },
   },

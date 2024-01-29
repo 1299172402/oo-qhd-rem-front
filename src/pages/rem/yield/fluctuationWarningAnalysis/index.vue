@@ -448,7 +448,7 @@ export default {
       //油田名字
       oilFieldName: "秦皇岛32-6油田",
       //油田选中值
-      selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
+      selectOilField: "",
       //区块
       block: [{ fieldId: "", name: "" }],
       //区块选中值

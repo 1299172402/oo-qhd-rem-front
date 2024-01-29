@@ -157,6 +157,8 @@ export default {
     layerId: {},
     //井组id
     wellGroupId: {},
+    //井组名称
+    wellGroupName: {}
   },
   data() {
     return {
@@ -244,7 +246,7 @@ export default {
         oilFieldId: this.oilFieldId,
         fieldLayerId: this.layerId,
         blockId: this.blockId,
-        wellGroupId: this.wellGroupId,
+        wellGroupName: this.wellGroupName,
         secondMonth: this.queryData.secondMonth,
         firstMonth: this.queryData.firstMonth,
       };

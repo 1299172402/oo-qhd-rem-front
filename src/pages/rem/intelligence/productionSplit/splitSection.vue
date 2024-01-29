@@ -297,6 +297,8 @@ export default {
           for(var i=0;i<this.oilList.length;i++){
             if(this.oilList[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
               this.params.ogfId=this.oilList[i].ogfId
+            }else {
+              this.params.ogfId=this.oilList[0].ogfId
             }
           }
           this.queryBlockFeild()
