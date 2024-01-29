@@ -366,7 +366,7 @@ export default {
       //查询参数
       queryParams: {
         companyId: "715AD1CD60484BB59E737CD18A9DE44A", // 作业公司
-        oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 油田
+        oilFieldId: "", // 油田
         targetOilFieldId: "", // 对标油田
         platFormId: "", // 平台
         fileId: "", // 区块id
@@ -1278,8 +1278,27 @@ export default {
   },
   methods: {
     //重置
+    // resetting() {
+    //   Object.assign(this.$data, this.$options.data());
+    //   this.initData();
+    // },
+    // 重置搜索条件
     resetting() {
-      Object.assign(this.$data, this.$options.data());
+      this.queryParams = {
+        oilFieldId: "", // 油田
+        targetOilFieldId: "", // 对标油田
+        platFormId: "", // 平台
+        fileId: "", // 区块id
+        layerId: "", // 层系id
+        year: dayjs().format("YYYY-12-31"),
+        devPhaseCode: "", // 开发阶段代码
+        outputDegreeCode: "", // 采出程度代码
+        reservoirsTypeCode: "", // 油藏类型代码
+        // pageNum: 1,
+        // pageSize: 9999,
+      };
+      this.page = 1;
+      this.pageSize = 10;
       this.initData();
     },
     //点击事件

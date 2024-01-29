@@ -320,7 +320,7 @@ export default {
         beginMonth: "", //月度开始
         endMonth: "", //月度结束
         modelId: "", //模型代码
-        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F", //油田区块标识
+        ogfId: "", //油田区块标识
         beginDate: "", //日度开始
         endDate: "", //日度结束
       },
@@ -481,12 +481,13 @@ export default {
       }
     },
     //重置
-    resetting() {
-      this.$nextTick(() => {
+    async resetting() {
+      // this.$nextTick(() => {
         Object.assign(this.$data, this.$options.data());
+        await this.getOgfListApi();
         this.getAllModelName();
         this.queryTableDate();
-      });
+      // });
     },
     //获取油田下拉框数据源
     async getOgfListApi() {

@@ -124,7 +124,7 @@ export default {
     return {
       queryParams: {
         companyId: "715AD1CD60484BB59E737CD18A9DE44A", // 作业公司
-        oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F", // 油田
+        oilFieldId: "", // 油田
         year: dayjs().format("YYYY-MM-DD"), // 时间年份
         // dates: [dayjs().subtract(7, "day").format("YYYY-MM-DD"), dayjs().format("YYYY-MM-DD")], // 时间范围集合
         // beginDate: dayjs().subtract(7, "day").format("YYYY-MM-DD"), // 开始时间

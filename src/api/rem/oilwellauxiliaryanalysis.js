@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
-export function getWellGroupCommunicateDynamic({ blockId, firstMonth, secondMonth, wellGroupId } = {}) {
+export function getWellGroupCommunicateDynamic({ blockId, firstMonth, secondMonth, wellGroupName } = {}) {
   return request({
-    url: `${baseUrl}/oilWellAuxiliaryAnalysis/getWellGroupCommunicateDynamic?blockId=${ blockId || "" }&firstMonth=${ firstMonth || "" }&secondMonth=${ secondMonth || "" }&wellGroupId=${ wellGroupId || "" }`,
+    url: `${baseUrl}/oilWellAuxiliaryAnalysis/getWellGroupCommunicateDynamic?blockId=${ blockId || "" }&firstMonth=${ firstMonth || "" }&secondMonth=${ secondMonth || "" }&wellGroupName=${ wellGroupName || "" }`,
     method: "get",
   });
 }

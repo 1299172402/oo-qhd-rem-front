@@ -383,6 +383,8 @@ export default {
             for(var i=0;i<list.length;i++){
               if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
                 this.selectOilField=list[i].ogfId
+              }else {
+                this.selectOilField=list[0].ogfId
               }
             }
             this.selectblock()

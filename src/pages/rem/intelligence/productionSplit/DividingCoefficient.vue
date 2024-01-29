@@ -487,6 +487,8 @@ export default {
                 for(var i=0;i<this.params.ogfList.length;i++){
                     if(this.params.ogfList[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
                         this.params.ogfId.value=this.params.ogfList[i].ogfId
+                    }else {
+                      this.params.ogfId.value=this.params.ogfList[0].ogfId
                     }
                 }
                 this.queryBlockFeild()
