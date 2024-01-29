@@ -603,7 +603,7 @@ export default {
       oilFields: [],
       companyId: "",
       //油田id
-      selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
+      selectOilField: "",
       //平台下拉框
       platforms: [],
       //平台id
@@ -666,7 +666,7 @@ export default {
         endDate: new Date().format("yyyy-MM-dd"),
         companyId: "29053E229AC34E70954249E0F084A20B",
         platId: "",
-        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+        ogfId: "",
         paramCodes: [
           "001001",
           "001002",

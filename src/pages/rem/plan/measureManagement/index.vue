@@ -433,7 +433,7 @@ export default {
       pageTotal: 0,
       companyId: "",
       // 油田
-      selectOilField: "3FC9A818F5BC43B88270DB80BBB3018F",
+      selectOilField: "",
       selectOilFieldName: "",
       // 油田下拉框
       oilFields: [],
