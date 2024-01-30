@@ -1,5 +1,6 @@
 // 井间连通性评价 api
 import request from "@/utils/request";
+import Axios from "@/utils/request";
 const baseUrl = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 const baseUrlIpm = process.env.NODE_ENV == "production" ? "/ipm/api" : "/ipm/api"
 
@@ -100,9 +101,13 @@ export function getselectWellGroup (params) {
  *         operUnicomRatio:'连调系数动态调整'，oilWellNo:'油井井号',injWellNo:'水井井号'} params
  */
 export function getCorrectionOperation (params) {
-    return request({
+    return Axios({
         url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/unicomModelOperation`,
         method: "post",
+        timeout:30000,
+        headers:{
+            showloading:false
+        },
         params,
     }).then((res) => {
         if (res.data) {
