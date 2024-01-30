@@ -455,9 +455,9 @@ export default {
                         {val: "inject", name: "注入指标"},
                     ];
                 } else {
-                    this.activeTabIndexData = "proProDic"; //'生产指标'
+                    this.activeTabIndexData = "YTproProDic"; //'生产指标'
                     this.dataTypes = [
-                        {val: "proProDic", name: "生产指标"},
+                        {val: "YTproProDic", name: "生产指标"},
                         {val: "verifyPro", name: "核实生产指标"},
                         {val: "measure", name: "油田措施日指标"},
                     ];
@@ -768,41 +768,40 @@ export default {
                     (this.injectList = []),
                     (this.managerList = []);
                 break;
-
-            case "YTproProDic": //'计量生产指标':
-                (this.stateList = []),
-                    (this.productList = [
-                        {val: "DAILY_LIQUID_PROD", name: "日产液", unit: "m³"},
-                        {val: "DAILY_OIL_PROD", name: "日产油", unit: "m³"},
-                        {val: "DAILY_WATER_PROD", name: "日产水", unit: "m³"},
-                        {val: "DAILY_GAS_PROD", name: "日产气", unit: "m³"},
-                        {val: "WATER_RATIO", name: "含水", unit: "%"},
-                        {val: "OIL_GAS_RATIO", name: "气油比", unit: "m³/m³"},
-                        {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "m³"},
-                        {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "m³"},
-                        {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "m³"},
-                        {val: "MONTHLY_CUMU_GAS_PROD", name: "月累产气", unit: "m³"},
-                    ]),
-                    (this.totalList = [
-                        {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "m³"},
-                        {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "m³"},
-                        {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "m³"},
-                        {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "m³"},
-                    ]),
-                    (this.injectList = [
-                        {val: "AVERAGE_OIL_PRESS", name: "平均油压", unit: "MPa"},
-                        {val: "AVERAGE_MAINLINE_PRESS", name: "平均干线压力", unit: "MPa"},
-                        {val: "DAILY_WATER_INJECT_AMOUNT", name: "日注水聚总量", unit: "m³"},
-                        {val: "MONTHLY_CUMUL_WATER_INJECT_AMOUNT", name: "月累注水聚总量", unit: "m³"},
-                        {val: "YEAR_CUMUL_WATER_INJECT_AMOUNT", name: "年累注水聚总量", unit: "m³"},
-                    ]),
-                    (this.managerList = [
-                        {val: "DAY_TOTAL_NUMBER_WELLS_PER", name: "日生产总井数", unit: "口"},
-                        {val: "DAY_NUMBER_WELLS_OPENED_PER", name: "日生产开井数", unit: "口"},
-                        {val: "TOTAL_DAILY_INJECTION_WELLS", name: "日注入总井数", unit: "口"},
-                        {val: "NUMBER_DAILY_INJECTION_WELLS_OPENED", name: "日注入开井数", unit: "口"},
-                    ]);
-                break;
+                case "YTproProDic": //'计量生产指标':
+                    (this.stateList = []),
+                        (this.productList = [
+                            {val: "DAILY_LIQUID_PROD", name: "日产液", unit: "m³"},
+                            {val: "DAILY_OIL_PROD", name: "日产油", unit: "m³"},
+                            {val: "DAILY_WATER_PROD", name: "日产水", unit: "m³"},
+                            {val: "DAILY_GAS_PROD", name: "日产气", unit: "m³"},
+                            {val: "WATER_RATIO", name: "含水", unit: "%"},
+                            {val: "OIL_GAS_RATIO", name: "气油比", unit: "m³/m³"},
+                            {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "m³"},
+                            {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "m³"},
+                            {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "m³"},
+                            {val: "MONTHLY_CUMU_GAS_PROD", name: "月累产气", unit: "m³"},
+                        ]),
+                        (this.totalList = [
+                            {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "m³"},
+                            {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "m³"},
+                            {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "m³"},
+                            {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "m³"},
+                        ]),
+                        (this.injectList = [
+                            {val: "AVERAGE_OIL_PRESS", name: "平均油压", unit: "MPa"},
+                            {val: "AVERAGE_MAINLINE_PRESS", name: "平均干线压力", unit: "MPa"},
+                            {val: "DAILY_WATER_INJECT_AMOUNT", name: "日注水聚总量", unit: "m³"},
+                            {val: "MONTHLY_CUMUL_WATER_INJECT_AMOUNT", name: "月累注水聚总量", unit: "m³"},
+                            {val: "YEAR_CUMUL_WATER_INJECT_AMOUNT", name: "年累注水聚总量", unit: "m³"},
+                        ]),
+                        (this.managerList = [
+                            {val: "DAY_TOTAL_NUMBER_WELLS_PER", name: "日生产总井数", unit: "口"},
+                            {val: "DAY_NUMBER_WELLS_OPENED_PER", name: "日生产开井数", unit: "口"},
+                            {val: "TOTAL_DAILY_INJECTION_WELLS", name: "日注入总井数", unit: "口"},
+                            {val: "NUMBER_DAILY_INJECTION_WELLS_OPENED", name: "日注入开井数", unit: "口"},
+                        ]);
+                    break;
             case "verifyPro": //'核实生产指标':
                 if (this.activeTabIndex == "1") {
                     (this.stateList = []),
@@ -1216,7 +1215,6 @@ export default {
                 let dataArray =  res.data.data.rows;
                 dataArray.forEach((data)=>{
                     for (var key in data) {
-                        console.log(key)
                         if (key == 'monthprodduration' || key == 'yearprodduration'
                             || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily'|| key == 'daynumberwellsopenedper'|| 
                             key == 'daytotalnumberwellsper'|| key == 'numberdailyinjectionwellsopened'|| key == 'totaldailyinjectionwells'|| key == 'dailymeasurewells'
