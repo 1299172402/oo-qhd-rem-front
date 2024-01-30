@@ -63,10 +63,11 @@
             :show-btn="true"
             style="height:calc(100% - 50px);min-height: 300px"
         >
-            <el-row :gutter="15" style="height: 280px">
+            <el-row  style="height: 40%">
                 <el-col :span="24">
                     <page-panel :show-btn="true" header-title="平台人数对比" style="margin-top: 0;">
-                        <echart :chart-data="histogram" :height="chartHeight" />
+                        <el-button type="primary" class="buttonActive_primary detailLinkBtn"    @click="downEcharts">下载</el-button>
+                        <echart ref="echartChart" :chart-data="histogram" :height="chartHeight" />
                     </page-panel>
                 </el-col>
                 <!--        <el-col :span="12">-->
@@ -167,7 +168,7 @@
             <!--          </page-panel>-->
             <!--        </el-col>-->
             <!--      </el-row>-->
-            <el-row style="height:calc(100% - 280px) ">
+            <el-row style="height:60% ">
                 <el-col :span="24" style="height: 100%">
                     <page-panel :show-btn="true" header-title="人员类型概况" style="height: calc(100% - 20px)">
                         <el-form>
@@ -207,6 +208,13 @@
                                 >
                                     搜索
                                 </el-button>
+                                <el-button
+                                    style="margin-left: 10px"
+                                    type="primary"
+                                    @click="downtable"
+                                >
+                                    下载
+                                </el-button>
                             </el-form-item>
                         </el-form>
                         <el-table
@@ -217,6 +225,7 @@
                             style="width: 100%"
                             :summary-method="getSummaries"
                             show-summary
+                            id="rylxgk"
                             :border="false"
                             :row-style="{ height: '0px' }"
                             header-cell-class-name="table_header"
@@ -482,7 +491,7 @@ import * as echarts from "echarts";
 import Echart from "@/components/tools/Echarts/index.vue";
 import {queryPlatformPob, queryPOBProjectPeople,QueryAdministrationCenter,getPlatform} from "@/api/prm/pobapi"
 import {userListByUserNames,QueryOgfDetail,QueryPlatformDetail} from "@/api/basic/master"
-
+import {exportExcel} from "@/lib/exportExcel";
 export default {
     components: {
         Echart
@@ -746,6 +755,12 @@ export default {
         },
         returnrouter(){
             this.$router.go(-1);
+        },
+        downEcharts(){
+            this.$refs.echartChart.chartDownLoad( '平台人数对比');
+        },
+        downtable(){
+            exportExcel("#rylxgk", "人员类型概况");
         },
         // 通过油田查询管理中心
         changeyt() {
@@ -1165,23 +1180,16 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
-.cont {
-    & > div {
-        margin-top: 20px;
-    }
-}
-
-.m1 {
-    margin-top: 10px;
-}
-
-.f1 {
-    margin-left: 10px;
-}
-
-.commonHeader {
-    height: unset !important;
+.detailLinkBtn {
+    position: absolute;
+    right: 50px;
+    top:6px;
+    width: 50px;
+    line-height: 20px;
+    padding: 0 !important;
+    height: 20px !important;
+    font-size: smaller !important;
+    text-align: center !important;
 }
 
 ::v-deep .el-form--inline .el-form-item {

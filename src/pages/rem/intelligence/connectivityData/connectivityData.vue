@@ -61,7 +61,11 @@
                 </el-button>
             </el-form>
         </header-search>
-        <page-panel
+        <div v-show="this.ifNotShow">
+            模型正在运算。。。。。
+        </div>
+        <page-panel 
+                v-show="this.ifShow"
             :show-btn="true"
             header-title="连通系数计算"
             class="normalCard"
@@ -305,6 +309,8 @@ export default {
             }
         }
         return {
+            ifNotShow:false,
+            ifShow:true,
             blockList:[],
             oilList:[],
             selectOilField:"",
@@ -512,6 +518,8 @@ export default {
         // 运算、修正: type = 1 运算，type = 2 修正
         Correction(type) {
             this.btnLoad = true
+            this.ifShow= false
+            this.ifNotShow=true
             let params = {
                 blockId: this.queryData.blockId,
                 type: type,
@@ -519,6 +527,8 @@ export default {
             };
             let existsList = []
             getCorrectionOperation(params).then((res) => {
+                this.ifShow= true
+                this.ifNotShow=false
                 if(Array.isArray(this.form.tableData) && this.form.tableData.length){
                     this.form.tableData.forEach((el) => {
                         for (const item of res) {
