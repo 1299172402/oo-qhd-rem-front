@@ -48,6 +48,11 @@
             </el-form>
         </header-search>
         <page-panel :header-title=title style="height: calc(100% - 145px)" :show-btn="true">
+            <el-form>
+                <el-form-item>
+                    <el-button style="float:right" type="primary"  @click="downtable">下载</el-button>
+                </el-form-item>
+            </el-form>
             <el-table
                 :data="tableData.slice((queryData.page - 1) * queryData.pageSize, queryData.page * queryData.pageSize)"
                 highlight-current-row
@@ -60,7 +65,7 @@
                 header-cell-class-name="table_header"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column label="序号" min-width="40px" prop="ogfName" align="center">
+                <el-table-column label="序号" width="50px" prop="ogfName" align="center">
                     <template slot-scope="scope">
                         {{ scope.$index + 1 }}
                     </template>
@@ -117,8 +122,8 @@ import {
     queryOilAndGasFieldQueryPositionDetail,
     userListByUserNames
 } from "@/api/basic/master";
-import {queryOilFieldIncident, queryOilFieldIncidentType} from "@/api/rem/reservoirbillboards";
-
+import {queryOilFieldIncident,queryOilFieldIncidentDownloadFile, queryOilFieldIncidentType} from "@/api/rem/reservoirbillboards";
+import FileSaver from 'file-saver'
 export default {
     name: 'OilEventDetail',
     data() {
@@ -163,7 +168,20 @@ export default {
             this.$set(this.queryData.selectDate, 0, startTime);
             this.$set(this.queryData.selectDate, 1, endTime);
         },
-        
+        downtable(){
+            let params = {
+                ogfId: this.queryData.ogfId,
+                platformId: this.queryData.platformId,
+                wellId: this.queryData.wellId,
+                chronicleTypeCode: this.queryData.event,
+                startTime: this.queryData.selectDate ? this.queryData.selectDate[0] : '',
+                endTime: this.queryData.selectDate ? this.queryData.selectDate[1] : ''
+            }
+            queryOilFieldIncidentDownloadFile(params).then(res => {
+                const aBlob = new Blob([res]);
+                FileSaver.saveAs(aBlob, `油田单井大事件详情.xls`);
+            })
+        },
         goBack() {
             this.$router.push({name: 'Oilexhibition'})
         },

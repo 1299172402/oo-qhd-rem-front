@@ -48,16 +48,18 @@
 
 
         <pagePanel headerTitle="措施计划情况表" style="height: calc(100% - 20px)">
-            <el-row>
-                <el-button
-                    type="primary"
-                    style="float: right"
-                    icon="el-icon-download"
-                    @click="doDownExcel()"
-                >
-                    下载
-                </el-button>
-            </el-row>
+            <el-form>
+                <el-form-item>
+                    <el-button
+                        type="primary"
+                        style="float: right"
+                        icon="el-icon-download"
+                        @click="doDownExcel()"
+                    >
+                        下载
+                    </el-button> 
+                </el-form-item>
+            </el-form>
             <el-table
                 :data="noticeList"
                 highlight-current-row
@@ -66,8 +68,8 @@
                 :header-cell-style="{ 'text-align': 'center', padding: '0px' }"
                 header-cell-class-name="table_header"
                 :cell-style="{ 'text-align': 'center', padding: '2px' }"
-                style="width: 100%; height: 100%"
-                height="calc(100% - 30px)"
+                height="calc(100% - 50px)"
+                style="overflow-y:hidden"
                 id="xczyjhb"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
@@ -719,7 +721,8 @@ export default {
         },
         reset() {
             this.queryParams.selectOilField = '3FC9A818F5BC43B88270DB80BBB3018F'
-            this.getserch()
+            this.queryParams.endTime = this.$route.query.currentDate
+            this.retrieval()
         },
         filterData(arr, colName, concatList) {
             let spanOneArr = [];

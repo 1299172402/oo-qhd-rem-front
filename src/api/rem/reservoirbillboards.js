@@ -50,6 +50,14 @@ export function queryOilFieldIncident({ chronicleTypeCode, endTime, ogfId, platf
     method: "get",
   });
 }
+export function queryOilFieldIncidentDownloadFile({ chronicleTypeCode, endTime, ogfId, platformId, startTime, wellId } = {}) {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/queryOilFieldIncidentDownloadFile?chronicleTypeCode=${ chronicleTypeCode || "" }&endTime=${ endTime || "" }&ogfId=${ ogfId || "" }&platformId=${ platformId || "" }&startTime=${ startTime || "" }&wellId=${ wellId || "" }`,
+        method: "get",
+        responseType:'blob',
+    });
+}
+
 export function queryOilFieldIncidentType() {
   return request({
     url: `${baseUrl}/reservoirBillboards/queryOilFieldIncidentType`,
