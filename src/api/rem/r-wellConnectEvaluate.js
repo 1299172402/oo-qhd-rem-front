@@ -101,8 +101,6 @@ export function getselectWellGroup (params) {
  *         operUnicomRatio:'连调系数动态调整'，oilWellNo:'油井井号',injWellNo:'水井井号'} params
  */
 export function getCorrectionOperation (params) {
-    console.log("88997766")
-    console.log(params)
     var ifshow=true;
     if(params.type===1){
         ifshow=false
