@@ -518,6 +518,8 @@ export default {
         // 运算、修正: type = 1 运算，type = 2 修正
         Correction(type) {
             this.btnLoad = true
+            this.ifShow= false
+            this.ifNotShow=true
             let params = {
                 blockId: this.queryData.blockId,
                 type: type,
@@ -525,6 +527,8 @@ export default {
             };
             let existsList = []
             getCorrectionOperation(params).then((res) => {
+                this.ifShow= true
+                this.ifNotShow=false
                 if(Array.isArray(this.form.tableData) && this.form.tableData.length){
                     this.form.tableData.forEach((el) => {
                         for (const item of res) {
