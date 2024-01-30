@@ -61,7 +61,11 @@
                 </el-button>
             </el-form>
         </header-search>
-        <page-panel
+        <div v-show="this.ifNotShow">
+            模型正在运算。。。。。
+        </div>
+        <page-panel 
+                v-show="this.ifShow"
             :show-btn="true"
             header-title="连通系数计算"
             class="normalCard"
@@ -305,6 +309,8 @@ export default {
             }
         }
         return {
+            ifNotShow:false,
+            ifShow:true,
             blockList:[],
             oilList:[],
             selectOilField:"",
