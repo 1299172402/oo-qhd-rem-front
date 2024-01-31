@@ -662,14 +662,39 @@ export default {
       },
       //地层压力保持水平
       totalFormationPressureDrop: {
-        // dataZoom: [
-        //   {
-        //     type: "inside",
-        //     xAxisIndex: [0],
-        //     start: 0, //滚动条开始位置（共100等份）
-        //     end: 100, //滚动条结束位置
-        //   },
-        // ],
+        dataZoom: [
+          {
+            type: "inside",
+            xAxisIndex: [0],
+            start: 40, //滚动条开始位置（共100等份）
+            end: 100, //滚动条结束位置
+          },
+          {
+            type: "slider",
+            realtime: true, //拖动滚动条时是否动态的更新图表数据
+            height: 10, //滚动条高度
+            startValue: 40, //滚动条开始位置
+            endValue: 100, //结束位置
+            zoomLock: true,
+            showDetail: false,
+            brushSelect: false,
+            backgroundColor: "rgba(0,0,0,0)",
+            dataBackground: {
+              lineStyle: {
+                color: "rgba(0,0,0,0)",
+              },
+              areaStyle: {
+                color: "rgba(0,0,0,0)",
+                opacity: 1,
+              },
+            },
+            selectedDataBackground: {
+              areaStyle: {
+                color: "rgba(0,0,0,0)",
+              },
+            },
+          },
+        ],
         grid: {
           top: 50,
           right: 120,
@@ -769,6 +794,7 @@ export default {
             ],
             type: "bar",
             barWidth: "20",
+            barGap: 5, //柱子之间间距
             label: {
               show: true,
               position: "top",
