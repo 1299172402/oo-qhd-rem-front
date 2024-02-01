@@ -6,7 +6,7 @@
                   style="width:100%;" height="100%" :default-sort="{ prop: 'date', order: 'descending' }"
                   :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }">
             <el-table-column prop="wellNo" label="井号"></el-table-column>
-            <el-table-column prop="fieldName" label="区块"></el-table-column>
+            <el-table-column prop="fieldName" min-width="90px" label="区块"></el-table-column>
             <el-table-column prop="coordX" label="井坐标位置" min-width="250px">
                 <template slot-scope="scope">
                     <span>{{ 'X：' + scope.row.coordX + ' , Y：' + scope.row.coordY }}</span>
@@ -74,25 +74,20 @@ export default {
         };
     },
     mounted() {
-        let params = {
-            ogfId: this.queryData.ogfId,
-            platformId: this.queryData.platform,
-            wellId: this.queryData.selectWellId
-        }
-        this.doSearch(params);
+        this.doSearch();
     },
     methods: {
         //根据父组件传递过来的参数进行查询
         async doSearch() {
-            const request = {
-                ogfId: this.oilFeildId,
-                platformId: this.platform,
-                wellId: this.wellId,
-            };
-
             try {
+                const request = {
+                    ogfId: this.queryData.ogfId,
+                    platformId: this.queryData.platform,
+                    wellId: this.queryData.selectWellId
+                };
+                console.log(request)
                 const [basicData, wellInfo] = await Promise.all([queryBasicData(request), wellBaseInfo(request)]);
-                this.tableData = [Object.assign(wellInfo.data.data.wellBaseInfo[0], basicData.data.data[0])]
+                this.tableData = [Object.assign(wellInfo?.data.data.wellBaseInfo[0], basicData?.data.data[0])]
             } catch (error) {
                 // 异常处理
                 console.error(error);
