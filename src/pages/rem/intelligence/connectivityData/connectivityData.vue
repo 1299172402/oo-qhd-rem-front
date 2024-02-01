@@ -61,7 +61,7 @@
                 </el-button>
             </el-form>
         </header-search>
-        <div v-show="this.ifNotShow">
+        <div v-show="this.ifNotShow" style="margin-left: 500px;margin-top: 200px">
             模型正在运算。。。。。
         </div>
         <page-panel 

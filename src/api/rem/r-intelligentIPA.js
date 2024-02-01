@@ -36,6 +36,7 @@ export function getStratifiedInjectionDetails(params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/stratifiedInjectionDetails`,
         method: "post",
+        timeout:30000,
         headers: {
             showLoading: false
         },
