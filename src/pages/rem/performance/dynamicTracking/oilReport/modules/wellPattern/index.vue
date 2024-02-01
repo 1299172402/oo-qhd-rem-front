@@ -1,112 +1,118 @@
 <!--井网图-->
 <template>
-    <pagePanel headerTitle="井网图" style="height: 400px;width: 100%" show-btn>
-        <div class="z-main">
-            <div class="z-echarts">
-                <el-image :src="image">
-                    <div slot="error"></div>
-                </el-image>
-            </div>
+    <!-- <div class="image-content">
+        <div style="width:100%;height:100%;">
+            <iframe style="height: 100%;width: 100%" :src="url"></iframe>
         </div>
-    </pagePanel>
+    </div> -->
+    <page-panel header-title="井网图" style="height:600px;width:100%;" show-btn>
+        <div class="z-main">
+            <page-panel-new style="height:100%;margin-top:0;" show-btn>
+                <div v-if="uploadTime" style="position: absolute; left: 20px; top: 5px;">上传时间：{{ uploadTime }}</div>
+                <div style="overflow: auto;width: 100%; height: 100%;display: flex;justify-content: center;">
+                    <el-image :src="src">
+                        <div slot="error"></div>
+                    </el-image>
+                </div>
+            </page-panel-new>
+        </div>
+    </page-panel>
 </template>
 
 <script>
-import {developmentDataWellPattern} from "@/api/oilDeposit/rem-01/fielddynamicanalysis.js";
-import {downFile} from "@/lib/remBase64Download.js";
-
+import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+import {filePreview,downFile} from "@/components/upload/utils/file";
+import FileSaver from "file-saver";
 export default {
+    props: {
+        //选择油田
+        oilFeildId: {},
+        //选择平台
+        platform: {},
+        //选择井号
+        wellId: {},
+        queryData:{}
+    },
     data() {
         return {
-            oilFeildId: "3FC9A818F5BC43B88270DB80BBB3018F",
-            platform: "3F1E5858C6CC41E2BF4FFC4902797C08",
-            wellId: "09D30C16BD1D4F759D53F74941701307",
-            radio: 1,
-            image: '',
+            fileId:'',
+            filestrId:'',
+            src:'',
+            operationId:"",
+            uploadTime: "", // 文件上传时间
         };
+    },
+    watch:{
+        queryData:{
+            handler(Nval){
+                this.doSearch();
+            },
+            deep: true,
+        }
     },
     mounted() {
         this.doSearch();
     },
-    watch: {
-        //监听层位信息，给其动态传值
-        selectPosition(val) {
-            this.$emit('childPara', this.selectPosition);
-            this.OnChangeImage();
-        }
-    },
     methods: {
         passValue(val) {
-            this.oilFeildId = val.ogfId;
-            this.platform = val.assetCode;
-            this.wellId = val.selectWellId;
-            // this.doSearch();
+            this.operationId = val.selectWellId;
+            this.doSearch();
         },
-
-        async doSearch() {
-            this.$emit('childPara', '');
-            //获取参数油田id 平台id 井id
-            let request = {
-                oilFieldId: this.oilFieldId,
-                fieldId: this.blockId,
-                //layerId:this.selectPosition,
+        doSearch() {
+            let params = {
+                operationId: this.operationId,
+                operationType: 'WATERJWT',
+                readOne: 'one'
             }
-            //获取图片组信息
-            await developmentDataWellPattern(request).then((res) => {
+            queryRemUploadFileMinio(params).then((res) => {
                 if (res.data.code == 200) {
-                    let imgData = res.data.data.data;
-                    let type = res.data.data.type;
-                    let firstParty = 'data:' + type + ';base64,';
-                    if (imgData) {
-                        this.image = firstParty + imgData;
-                    } else {
-                        this.image = '';
+                    if(res.data.data.length){
+                        this.fileId=res.data.data[0].fileId;
+                        this.filestrId=res.data.data[0].filestrId;
+                        this.uploadTime=res.data.data[0].uploadTime || "";
+                        downFile(this.fileId).then((res)=>{
+                            this.src=window.URL.createObjectURL(res);
+                        })
+                    }else{
+                        this.fileId="";
+                        this.filestrId="";
+                        this.uploadTime="";
+                        this.src="";
                     }
+                } else {
+                    this.$message.error("文件查询接口异常!");
                 }
             });
         },
-        //切换图片
-        OnChangeImage() {
-            this.image = '';
-            let request = {
-                oilFieldId: this.oilFieldId,
-                fieldId: this.blockId,
-                //layerId:this.selectPosition,
-            }
-            developmentDataWellPattern(request).then((res) => {
-                if (res.data.code == 0) {
-                    let imgData = res.data.data.data;
-                    let type = res.data.data.type;
-                    let firstParty = 'data:' + type + ';base64,';
-                    if (imgData) {
-                        this.image = firstParty + imgData;
-                    } else {
-                        this.image = '';
-                    }
-                }
-            });
-        },
-        //单选按钮选中改变事件
-        changeRadio() {
-            this.$emit('childPara', this.selectPosition);
-            this.OnChangeImage();
-        },
-        //下载
+        //下载功能
         doDownLoad() {
-            let fileName = '井网图';
-            if (this.blockName) {
-                fileName = this.blockName + fileName;
+            if(!this.fileId) {
+                this.$message.error('无可下载内容')
+                return
             }
-            downFile(this.image, fileName);
+            let fileName = '井网图';
+            let file_suffix=this.filestrId.split('.')[1];
+            downFile(this.fileId).then(res=>{
+                FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+            })
         }
     },
-};
+}
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .image-content {
     width: 100%;
     height: calc(100% - 101px);
     overflow-y: scroll;
+}
+.z-main{
+    width: 100%;
+    height:calc(100% - 95px);
+    overflow: auto;
+    // border: 1px solid #ddd;
+    border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+    display: flex;
+    justify-content: center;
 }
 </style>

@@ -1,17 +1,28 @@
 <!--井网图-->
 <template>
-    <page-panel header-title="井网图" style="height:600px;width:100%;" show-btn>
-        <div class="image-content">
-            <el-image :src="image" style="width: 100%">
-                <div slot="error"></div>
-            </el-image>
+    <!-- <div class="image-content">
+        <div style="width:100%;height:100%;">
+            <iframe style="height: 100%;width: 100%" :src="url"></iframe>
         </div>
+    </div> -->
+    <page-panel header-title="井网图" style="height:600px;width:100%;" show-btn>
+    <div class="z-main">
+        <page-panel-new style="height:100%;margin-top:0;" show-btn>
+            <div v-if="uploadTime" style="position: absolute; left: 20px; top: 5px;">上传时间：{{ uploadTime }}</div>
+            <div style="overflow: auto;width: 100%; height: 100%;display: flex;justify-content: center;">
+                <el-image :src="src">
+                    <div slot="error"></div>
+                </el-image>
+            </div>
+        </page-panel-new>
+    </div>
     </page-panel>
 </template>
 
 <script>
-import {wellNetDiagram} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
-import {downFile} from "@/lib/remBase64Download.js";
+import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
+import {filePreview,downFile} from "@/components/upload/utils/file";
+import FileSaver from "file-saver";
 export default {
     props: {
         //选择油田
@@ -24,49 +35,79 @@ export default {
     },
     data() {
         return {
-            image: '',
+            fileId:'',
+            filestrId:'',
+            src:'',
+            uploadTime: "", // 文件上传时间
         };
+    },
+    watch:{
+        queryData:{
+            handler(Nval){
+                this.doSearch();
+            },
+            deep: true,
+        }
     },
     mounted() {
         this.doSearch();
     },
     methods: {
-        //调用图片
-        doSearch(){
-            let request={
-                ogfId: this.queryData.ogfId,
-                platformId: this.queryData.platform,
-                wellId: this.queryData.selectWellId,
-            };
-            wellNetDiagram(request).then((res)=>{
-                if(res.data.code==200){
-                    let imgData = res.data.data.data;
-                    let type = res.data.data.type;
-                    let firstParty='data:'+type+';base64,';
-                    if(imgData){
-                        this.image=firstParty+imgData;
-                    } else{
-                        this.image = '';
+        doSearch() {
+            let params = {
+                operationId: this.queryData.selectWellId,
+                operationType: 'WATERJWT',
+                readOne: 'one'
+            }
+            queryRemUploadFileMinio(params).then((res) => {
+                if (res.data.code == 200) {
+                    if(res.data.data.length){
+                        this.fileId=res.data.data[0].fileId;
+                        this.filestrId=res.data.data[0].filestrId;
+                        this.uploadTime=res.data.data[0].uploadTime || "";
+                        downFile(this.fileId).then((res)=>{
+                            this.src=window.URL.createObjectURL(res);
+                        })
+                    }else{
+                        this.fileId="";
+                        this.filestrId="";
+                        this.uploadTime="";
+                        this.src="";
                     }
+                } else {
+                    this.$message.error("文件查询接口异常!");
                 }
             });
         },
-        //下载
-        doDownLoad(){
-            let fileName = '井网图';
-            if(this.wellName){
-                fileName = this.wellName + fileName;
+        //下载功能
+        doDownLoad() {
+            if(!this.fileId) {
+                this.$message.error('无可下载内容')
+                return
             }
-            downFile(this.image,fileName);
+            let fileName = '井网图';
+            let file_suffix=this.filestrId.split('.')[1];
+            downFile(this.fileId).then(res=>{
+                FileSaver.saveAs(res,`${fileName}.${file_suffix}`);
+            })
         }
     },
 }
 </script>
 
-<style lang="scss" scoped>
-.image-content{
-    width:100%;
-    height:calc(100% - 10px);
+<style scoped lang="scss">
+.image-content {
+    width: 100%;
+    height: calc(100% - 101px);
     overflow-y: scroll;
+}
+.z-main{
+    width: 100%;
+    height:calc(100% - 95px);
+    overflow: auto;
+    // border: 1px solid #ddd;
+    border-image: linear-gradient(180deg, rgba(0, 96, 166, 0.2), var(--onlyLightBlueColor)) 1 1;
+    display: flex;
+    justify-content: center;
 }
 </style>

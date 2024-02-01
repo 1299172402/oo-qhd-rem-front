@@ -120,7 +120,7 @@
                                         v-show="stateList.length != 0">
                                 <el-row :gutter="10">
                                     <el-checkbox-group v-model="stateValue">
-                                        <el-col v-for="item in stateList" :key="item.id" :span="6"
+                                        <el-col v-for="item in stateList" :key="item.val" :span="6"
                                                 style="min-width: 120px">
                                             <el-checkbox :label="item.val" :value="item.val">
                                                 {{ item.name ? item.name : item }}
@@ -447,6 +447,7 @@ export default {
                 this.activeTabIndexDate = 3;
                 //判断类型
                 if (Nval == 1) {
+                    //单井
                     this.activeTabIndexData = "wellhead"; //'井口生产指标'
                     this.dataTypes = [
                         {val: "wellhead", name: "井口生产指标"},
@@ -455,6 +456,7 @@ export default {
                         {val: "inject", name: "注入指标"},
                     ];
                 } else {
+                    //油田
                     this.activeTabIndexData = "YTproProDic"; //'生产指标'
                     this.dataTypes = [
                         {val: "YTproProDic", name: "生产指标"},
@@ -728,6 +730,7 @@ export default {
                 (this.injectValue = []),
                 (this.managerValue = []),
                 (this.storeList = []);
+            debugger
             switch (Nval) {
                 //日
             case "wellhead": //'井口生产指标':
@@ -768,40 +771,39 @@ export default {
                     (this.injectList = []),
                     (this.managerList = []);
                 break;
-                case "YTproProDic": //'计量生产指标':
-                    (this.stateList = []),
-                        (this.productList = [
-                            {val: "DAILY_LIQUID_PROD", name: "日产液", unit: "m³"},
-                            {val: "DAILY_OIL_PROD", name: "日产油", unit: "m³"},
-                            {val: "DAILY_WATER_PROD", name: "日产水", unit: "m³"},
-                            {val: "DAILY_GAS_PROD", name: "日产气", unit: "m³"},
-                            {val: "WATER_RATIO", name: "含水", unit: "%"},
-                            {val: "OIL_GAS_RATIO", name: "气油比", unit: "m³/m³"},
-                            {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "m³"},
-                            {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "m³"},
-                            {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "m³"},
-                            {val: "MONTHLY_CUMU_GAS_PROD", name: "月累产气", unit: "m³"},
-                        ]),
-                        (this.totalList = [
-                            {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "m³"},
-                            {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "m³"},
-                            {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "m³"},
-                            {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "m³"},
-                        ]),
-                        (this.injectList = [
-                            {val: "AVERAGE_OIL_PRESS", name: "平均油压", unit: "MPa"},
-                            {val: "AVERAGE_MAINLINE_PRESS", name: "平均干线压力", unit: "MPa"},
-                            {val: "DAILY_WATER_INJECT_AMOUNT", name: "日注水聚总量", unit: "m³"},
-                            {val: "MONTHLY_CUMUL_WATER_INJECT_AMOUNT", name: "月累注水聚总量", unit: "m³"},
-                            {val: "YEAR_CUMUL_WATER_INJECT_AMOUNT", name: "年累注水聚总量", unit: "m³"},
-                        ]),
-                        (this.managerList = [
-                            {val: "DAY_TOTAL_NUMBER_WELLS_PER", name: "日生产总井数", unit: "口"},
-                            {val: "DAY_NUMBER_WELLS_OPENED_PER", name: "日生产开井数", unit: "口"},
-                            {val: "TOTAL_DAILY_INJECTION_WELLS", name: "日注入总井数", unit: "口"},
-                            {val: "NUMBER_DAILY_INJECTION_WELLS_OPENED", name: "日注入开井数", unit: "口"},
-                        ]);
-                    break;
+            case "proProDic": //'计量生产指标':
+                (this.stateList = [
+                    {val: "CALCUL_DATE", name: "计量时间", unit: "h"},
+                    {val: "NOZZLE_DIAMETER", name: "油嘴直径", unit: "mm"},
+                    {val: "WH_TEMP", name: "井口温度", unit: "℃"},
+                    {val: "DH_FLOWING_TEMP", name: "油压", unit: "MPa"},
+                    {val: "CSG_PRESS", name: "套压", unit: "MPa"},
+                    {val: "FLOWING_TEMP", name: "井底流温", unit: "℃"},
+                    {val: "DH_FLOWING_PRESS", name: "井底流压", unit: "MPa"},
+                    {val: "PUMP_FREQUENCY", name: "泵频率", unit: "Hz"},
+                    {val: "PUMP_CURRENT", name: "泵电流", unit: "A"},
+                    {val: "PUMP_VOLTAGE", name: "泵电压", unit: "V"},
+                    {val: "PUMP_INLET_TEMP", name: "泵入口温度", unit: "℃"},
+                    {val: "PUMP_MOTOR_TEMP", name: "泵马达温度", unit: "℃"},
+                    {val: "PUMP_INLET_PRESS", name: "泵入口压力", unit: "MPa"},
+                    {val: "PUMP_OUTLET_PRESS", name: "泵出口压力", unit: "MPa"},
+                    {val: "GAS_LIFT_CHOKE_DIAMETER", name: "气举嘴直径", unit: "mm"},
+                    {val: "GAS_LIFT_PRESS", name: "气举压力", unit: "MPa"},
+                ]),
+                    (this.productList = [
+                        {val: "ACTUAL_DAILY_LIQUID_PROD", name: "实际日产液", unit: "m³"},
+                        {val: "ACTUAL_DAILY_OIL_PROD", name: "实际日产油", unit: "m³"},
+                        {val: "ACTUAL_DAILY_WATER_PROD", name: "实际日产水", unit: "m³"},
+                        {val: "ACTUAL_DAILY_GAS_PROD", name: "实际日产气", unit: "m³"},
+                        {val: "WATER_RATIO", name: "含水", unit: "%"},
+                        {val: "GAS_OIL_RATIO", name: "气油比", unit: "m³/m³"},
+                        {val: "OIL_GAS_RATIO", name: "油气比", unit: "m³/m³"},
+                        {val: "WATER_GAS_RATIO", name: "水气比", unit: "m³/m³"},
+                    ]),
+                    (this.totalList = []),
+                    (this.injectList = []),
+                    (this.managerList = []);
+                break;
             case "verifyPro": //'核实生产指标':
                 if (this.activeTabIndex == "1") {
                     (this.stateList = []),
@@ -1219,6 +1221,9 @@ export default {
                             || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily'|| key == 'daynumberwellsopenedper'|| 
                             key == 'daytotalnumberwellsper'|| key == 'numberdailyinjectionwellsopened'|| key == 'totaldailyinjectionwells'|| key == 'dailymeasurewells'
                             || key == 'monthlycumulcount'|| key == 'yearcumulcount') {
+                            if (data[key] === null || data[key] === '') {
+                                continue;
+                            }
                             data[key] = parseFloat(data[key]).toFixed(0);
                         }
                     }

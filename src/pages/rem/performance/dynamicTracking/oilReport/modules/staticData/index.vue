@@ -10,7 +10,7 @@
         >
             <el-table-column type="index" label="序号"></el-table-column>
             <el-table-column prop="wellNo" label="井号" width="130"></el-table-column>
-            <el-table-column prop="fieldName" label="区块" min-width="90"></el-table-column>
+            <el-table-column prop="fieldName" label="区块" min-width="130"></el-table-column>
             <el-table-column prop="coordX" label="井坐标位置" min-width="250px">
                 <template slot-scope="scope">
                     <span>{{ 'X：' + scope.row.coordX + ' , Y：' + scope.row.coordY }}</span>
