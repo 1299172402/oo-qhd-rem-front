@@ -356,6 +356,14 @@ export default {
         this.selectData = [new Date(year + '-01-01').format('yyyy-MM-dd'), new Date().format('yyyy-MM-dd')];
         this.fieldLayersApi();
     },
+    watch:{
+        queryData:{
+            handler(Nval){
+                this.doSearch();
+            },
+            deep: true,
+        }
+    },
     methods: {
         async fieldLayersApi(){
             await fieldLayers({oilFieldId:this.queryData.ogfId,wellId:this.queryData.selectWellId}).then((res) => {

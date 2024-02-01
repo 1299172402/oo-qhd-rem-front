@@ -84,7 +84,7 @@
           </template>
           <el-table-column :label="`配注量\n(m³/d)`" min-width="120" align="center">
             <template slot-scope="scope">
-              <span v-if="scope.row.dosage02 !== null && scope.row.dosage02 !== ''">{{
+              <span v-if="scope.row.dosage02 !== undefined && scope.row.dosage02 !== ''&& scope.row.dosage01!==undefined &&scope.row.dosage01 !==''">{{
                 Number(scope.row.dosage02 - scope.row.dosage01).toFixed(2)
               }}</span>
               <span v-else>-</span>
@@ -92,15 +92,15 @@
           </el-table-column>
           <el-table-column prop="injectionRatio02" min-width="140" label="注采比" align="center">
             <template slot-scope="scope">
-              <span v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{
-                (scope.row.injectionRatio02 - scope.row.injectionRatio01).toFixed(2)
+              <span v-if="scope.row.injectionRatio02 !== undefined && scope.row.injectionRatio02 !== '' && scope.row.injectionRatio01!==undefined && true &&scope.row.injectionRatio01 !==''">{{
+                      (scope.row.injectionRatio02 - scope.row.injectionRatio01).toFixed(2)
               }}</span>
               <span v-else>-</span>
             </template>
           </el-table-column>
           <el-table-column :label="`注水强度\n(m³*d.m)`" min-width="160" align="center">
             <template slot-scope="scope">
-              <span v-if="scope.row.injectionStrength02 !== null && scope.row.injectionStrength02 !== ''">{{
+              <span v-if="scope.row.injectionStrength02 !== undefined && scope.row.injectionStrength02 !== ''&& scope.row.injectionStrength01!==undefined &&scope.row.injectionStrength01 !==''">{{
                 (scope.row.injectionStrength02 - scope.row.injectionStrength01).toFixed(2)
               }}</span>
               <span v-else>-</span>

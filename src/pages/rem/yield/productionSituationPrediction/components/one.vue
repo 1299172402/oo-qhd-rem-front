@@ -20,6 +20,7 @@
         <!-- :picker-options="pickerOptions"  -->
         <el-date-picker
           v-model="searchForm.date"
+          :clearable="false"
           type="date"
           format="yyyy-MM-dd"
           value-format="yyyy-MM-dd"
@@ -54,7 +55,6 @@
         :label="outputTrackingTableDate"
         align="center"
         width="300"
-        
       ></el-table-column>
       <el-table-column label="作业公司" align="center" class-name="decollateClass">
         <el-table-column prop="zygsjc" label="基础井" align="center" width="100" :formatter="toPrecise2">
@@ -85,7 +85,14 @@
         </el-table-column>
         <el-table-column prop="qhd326kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="qhd326hj" label="合计" align="center" width="100" :formatter="toPrecise2" class-name="decollateClass">
+        <el-table-column
+          prop="qhd326hj"
+          label="合计"
+          align="center"
+          width="100"
+          :formatter="toPrecise2"
+          class-name="decollateClass"
+        >
         </el-table-column>
       </el-table-column>
       <el-table-column label="CFD6-4" align="center" class-name="decollateClass">
@@ -97,7 +104,14 @@
         </el-table-column>
         <el-table-column prop="cfd64kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="cfd64hj" label="合计" align="center" width="100" :formatter="toPrecise2" class-name="decollateClass">
+        <el-table-column
+          prop="cfd64hj"
+          label="合计"
+          align="center"
+          width="100"
+          :formatter="toPrecise2"
+          class-name="decollateClass"
+        >
         </el-table-column>
       </el-table-column>
       <!-- NB35-2 -->
@@ -110,7 +124,14 @@
         </el-table-column>
         <el-table-column prop="nb352kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="nb352hj" label="合计" align="center" width="100" :formatter="toPrecise2" class-name="decollateClass">
+        <el-table-column
+          prop="nb352hj"
+          label="合计"
+          align="center"
+          width="100"
+          :formatter="toPrecise2"
+          class-name="decollateClass"
+        >
         </el-table-column>
       </el-table-column>
       <el-table-column label="BZ3-2" align="center" class-name="decollateClass">
@@ -122,7 +143,14 @@
         </el-table-column>
         <el-table-column prop="bz32kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="bz32hj" label="合计" align="center" width="100" :formatter="toPrecise2" class-name="decollateClass">
+        <el-table-column
+          prop="bz32hj"
+          label="合计"
+          align="center"
+          width="100"
+          :formatter="toPrecise2"
+          class-name="decollateClass"
+        >
         </el-table-column>
       </el-table-column>
       <el-table-column label="QHD33-1" align="center" class-name="decollateClass">
@@ -134,7 +162,14 @@
         </el-table-column>
         <el-table-column prop="qhd331kf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="qhd331hj" label="合计" align="center" width="100" :formatter="toPrecise2" class-name="decollateClass">
+        <el-table-column
+          prop="qhd331hj"
+          label="合计"
+          align="center"
+          width="100"
+          :formatter="toPrecise2"
+          class-name="decollateClass"
+        >
         </el-table-column>
       </el-table-column>
       <el-table-column label="QHD33-1S" align="center">
@@ -275,7 +310,11 @@ export default {
       //     date: this.searchForm.date,
       //     unitType: this.searchForm.unitType,
       // };
-      getReportFroms(this.searchForm).then((res) => {
+      // TODO 不传日期保存，所以现在如果用户不选择日期默认给后台当前时间的前一天
+      getReportFroms({
+        ...this.searchForm,
+        date: this.searchForm.date ? this.searchForm.date : new Date().addDays(-1).format("yyyy-MM-dd"),
+      }).then((res) => {
         if (res.data.code == "200") {
           this.tableData = this.dealOutputTrackingData(res.data.data);
           this.outputTrackingTableDate = this.searchForm.date;
