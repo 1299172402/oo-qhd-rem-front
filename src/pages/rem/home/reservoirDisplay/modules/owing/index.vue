@@ -70,6 +70,21 @@ export default {
         downTable(){
             exportExcel("#tabledata", "超欠注情况统计");
         },
+        eeee() {
+            let data = new Date()
+            if (data.getMonth() < 10) {
+                if(data.getMonth()===0){
+                    return data.getFullYear()-1 + '-12'
+                }
+                if(data.getMonth()===1){
+                    return data.getFullYear() + '-01'
+                }
+                return data.getFullYear() + '-0' + (data.getMonth()-1)
+            } else {
+                return data.getFullYear() + '-' + (data.getMonth()-1)
+            }
+
+        },
         //超欠注情况统计
         queryUltraShortShotStatistics() {
             let queryData = {
@@ -78,7 +93,7 @@ export default {
                 //选择时间
                 // dateTime: new Date().format('YYYY-MM') ,
                 //修改取数的日期为5月
-                dateTime: new Date().format('yyyy-MM'),
+                dateTime: this.eeee(),
                 // dateTime:'2023-02',
                 //油田
                 ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'
