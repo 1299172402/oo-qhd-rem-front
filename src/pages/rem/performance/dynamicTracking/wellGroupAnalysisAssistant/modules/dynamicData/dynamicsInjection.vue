@@ -44,11 +44,11 @@
           <template slot="header">
             <div>{{ firstMonth }}注水情况</div>
           </template>
-          <el-table-column prop="dosage01" :label="`配注量\n(m³/d)`" min-width="160" align="center"></el-table-column>
+          <el-table-column prop="dosage01" :label="`月配注量\n(m³/d)`" min-width="160" align="center"></el-table-column>
           <el-table-column prop="injectionRatio01" label="注采比" min-width="100" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.injectionRatio01 !== null && scope.row.injectionRatio01 !== ''">{{
-                scope.row.injectionRatio01
+                Number(scope.row.injectionRatio01).toFixed(2)
               }}</span>
               <span v-else>-</span>
             </template>
@@ -66,11 +66,11 @@
           <template slot="header">
             <div>{{ secondMonth }}注水情况</div>
           </template>
-          <el-table-column prop="dosage02" :label="`配注量\n(m³/d)`" min-width="160" align="center"></el-table-column>
+          <el-table-column prop="dosage02" :label="`月配注量\n(m³/d)`" min-width="160" align="center"></el-table-column>
           <el-table-column prop="injectionRatio02" label="注采比" min-width="100" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.injectionRatio02 !== null && scope.row.injectionRatio02 !== ''">{{
-                scope.row.injectionRatio02
+                      Number(scope.row.injectionRatio02).toFixed(2)
               }}</span>
               <span v-else>-</span>
             </template>
@@ -82,7 +82,7 @@
           <template slot="header">
             <div>调整幅度</div>
           </template>
-          <el-table-column :label="`配注量\n(m³/d)`" min-width="120" align="center">
+          <el-table-column :label="`月配注量\n(m³/d)`" min-width="120" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.dosage02 !== undefined && scope.row.dosage02 !== ''&& scope.row.dosage01!==undefined &&scope.row.dosage01 !==''">{{
                 Number(scope.row.dosage02 - scope.row.dosage01).toFixed(2)

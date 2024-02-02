@@ -156,10 +156,25 @@ export default {
       downEcharts(){
           this.$refs.echartChart.chartDownLoad( '单井井底流压');
       },
+      yemonth() {
+          let data = new Date()
+          if (data.getMonth() < 10) {
+              if(data.getMonth()===0){
+                  return data.getFullYear()-1 + '-12'
+              }
+              if(data.getMonth()===1){
+                  return data.getFullYear() + '-01'
+              }
+              return data.getFullYear() + '-0' + (data.getMonth()-1)
+          } else {
+              return data.getFullYear() + '-' + (data.getMonth()-1)
+          }
+
+      },
       getData(){
           let params = {
               blockId: '83D33B89B0DAB7DFA440BD060746883A',
-              yearMonth: new Date().format('yyyy-MM'),
+              yearMonth: this.yemonth(),
           }
           getResidueOilCondotion(params).then(res => {
               try {
