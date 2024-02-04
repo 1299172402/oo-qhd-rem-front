@@ -56,7 +56,7 @@ var demoData = {
     name: "批次转化率",
     value: "",
 };
-let dataArr = 6130;
+let dataArr = 10000;
 export default {
     props: ["infodata"],
     components: {
@@ -419,7 +419,7 @@ export default {
                         },
                         data: [
                             {
-                                value: 90.45,
+                                value: 0,
                             },
                         ],
                     },

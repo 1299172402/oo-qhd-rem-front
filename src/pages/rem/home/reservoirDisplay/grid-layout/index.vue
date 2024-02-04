@@ -159,7 +159,7 @@ export default {
             dialog:false,
             mailBox:'sh_326yykf',
             mailtitle:'油藏看板',
-            content:`尊敬的用户：\n您好!\n附件为油藏看板请您查看。`,
+            content:`尊敬的用户：\n您好!\n正文图片为油藏看板请您查看。`,
             singleHeight: (document.body.clientHeight - this.heightFromBottom) / this.rowNum, // 单个行高
             screenWidth: document.body.clientWidth, // 屏幕宽度
             screenHeight: document.body.clientHeight, // 屏幕高度
