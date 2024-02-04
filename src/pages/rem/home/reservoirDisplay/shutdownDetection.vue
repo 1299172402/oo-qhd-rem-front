@@ -238,15 +238,15 @@ export default {
             });
         },
         //关停井分类
-        queryShutdownCategorySelect() {
-            queryShutDownValueDict().then((res) => {
+        async queryShutdownCategorySelect() {
+            await queryShutDownValueDict().then((res) => {
                 this.ShutDownValueDict = res.data.data.data
                 this.queryData.injShutdownTypeCode=''
             })
         },
         //计划属性
-        queryPlanAttributesSelect() {
-            queryPlanValueDict().then((res) => {
+        async queryPlanAttributesSelect() {
+            await queryPlanValueDict().then((res) => {
                 this.PlanValueDict = res.data.data.data
                 this.queryData.shutdownPlanTypeCode = ''
             })
@@ -269,7 +269,6 @@ export default {
             await this.queryWellSelect();
             await this.queryShutdownCategorySelect();
             await this.queryPlanAttributesSelect();
-            await this.queryPlanAttributesSelect();
         },
         choicewell() {
             QueryWellDetail({platformId: this.queryData.platformId}).then((res) => {
@@ -284,7 +283,10 @@ export default {
         async result() {
             this.queryData.pageNum = 1;
             this.queryData.pageSize = 10;
-            await this.initializeDate();
+            this.month = [
+                new Date().format('YYYY') + '-01-01',
+                new Date().format('YYYY-MM-dd')
+            ]
             await this.getData();
             await this.queryinfo()
         },
