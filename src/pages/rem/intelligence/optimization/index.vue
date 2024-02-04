@@ -482,10 +482,10 @@ export default {
             if(data.getMonth()===0){
                 return data.getFullYear() + '-01'
             }else {
-                return data.getFullYear() + '-0' + (data.getMonth()-1)
+                return data.getFullYear() + '-0' + (data.getMonth())
             }
         } else {
-            return data.getFullYear() + '-' + (data.getMonth()-1)
+            return data.getFullYear() + '-' + (data.getMonth())
         }
     },
     refresh() {
