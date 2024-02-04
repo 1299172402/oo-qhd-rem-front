@@ -96,7 +96,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="`油层厚度 \n（m）`" sortable width="130px" prop="reservoirThickness"
+                    <el-table-column :label="`油层厚度 \n（m）`"  width="130px" prop="reservoirThickness"
                                      align="center" class-name="cellWrap">
                         <template slot-scope="scope">
                             <span v-if="scope.row.reservoirThickness !== null && scope.row.reservoirThickness !== ''"
