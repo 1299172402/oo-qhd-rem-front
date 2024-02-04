@@ -75,11 +75,21 @@ export default {
       isFull: false // 当时是否是最大化
     };
   },
+    deactivated() {
+        if(this.isFull){
+            this.maximizeCom(false)
+        }
+    },
+    beforeDestroy() {
+        if(this.isFull){
+            this.maximizeCom(false)
+        }
+    },
   methods: {
     maximizeCom() {
       const gridItem = this.$el.closest(".vue-grid-item");
       const gridItemParent = gridItem?.parentNode;
-      this.isFull = !this.isFull;
+        this.isFull = typeof type ==='boolean' && !type?false:!this.isFull;
       if (gridItem && gridItemParent) {
         if (this.isFull) {
           const close = gridItem.cloneNode(true);
