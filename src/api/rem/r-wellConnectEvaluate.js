@@ -110,7 +110,7 @@ export function getCorrectionOperation (params) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/unicomModelOperation`,
         method: "post",
-        timeout:30000,
+        timeout:300000,
         headers:{
             showLoading:ifshow
         },
