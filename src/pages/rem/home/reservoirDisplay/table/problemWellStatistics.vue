@@ -13,7 +13,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="平台:" style="margin-left:20px">
-                        <el-select v-model="queryParams.assetCode" @change="choicewell" style="width: 220px">
+                        <el-select v-model="queryParams.assetCode" clearable @change="choicewell" style="width: 220px">
                             <el-option
                                 v-for="(item, index) in platforms"
                                 :key="index"
@@ -254,13 +254,19 @@ export default {
                 FileSaver.saveAs(aBlob, `油田低产低效井原因及潜力分析.xls`);
             })
         },
-        choicewell() {
-            QueryWellDetail({platformId: this.queryParams.assetCode}).then((res) => {
+        choicewell(val) {
+            const requestPlat = {
+                ogfId: this.queryParams.ogfId,
+            };
+            const data = {
+                platformId: this.queryParams.assetCode
+            }
+            QueryWellDetail(val==''?requestPlat:data).then((res) => {
                 this.wellList = res.data.data;
-                if (res.data.data.length) {
-                    this.queryParams.wellId = this.wellList[0].wellId
-                } else {
+                if (val=='') {
                     this.queryParams.wellId = ''
+                } else {
+                    this.queryParams.wellId = this.wellList[0]?.wellId
                 }
             });
         },
