@@ -240,6 +240,7 @@ export default {
     // mixins: [queryConditionMixin],
     data() {
         return {
+            selectOilField:'',
             blockList:[],
             oilField: [],
             queryData: {
@@ -300,6 +301,8 @@ export default {
                 for(var i=0;i<this.blockList.length;i++){
                     if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
                         this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
+                    }else {
+                        this.queryData.blockId=this.blockList[0].reservoirAnalyseUnitId
                     }
                 }
                 this.doSearch()

@@ -24,6 +24,7 @@
           filterable
           clearable
           style="width:180px;"
+          @change="selectblock1"
         >
           <el-option
             v-for="item in oilField"
@@ -419,14 +420,34 @@ export default {
       getblockData({ogfId:this.queryData.ogfId}).then((res) => {
         this.blockList = res.data.data;
         for(var i=0;i<this.blockList.length;i++){
-          if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
+          if(this.blockList[i].reservoirAnalyseUnitId==="83D33B89B0DAB7DFA440BD060746883A"){
             this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
           }
         }
         this.doSearch()
       });
       
+      
      
+    },
+    selectblock1() {
+      this.queryData.ogfId=this.selectOilField
+      getblockData({ogfId:this.queryData.ogfId}).then((res) => {
+        this.blockList = res.data.data;
+        if(this.blockList.length==0){
+          this.queryData.blockId='无数据'
+        }
+        for(var i=0;i<this.blockList.length;i++){
+          if(this.blockList[i].reservoirAnalyseUnitId==="83D33B89B0DAB7DFA440BD060746883A"){
+            this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
+          }else {
+            this.queryData.blockId=this.blockList[0].reservoirAnalyseUnitId
+          }
+        }
+      });
+
+
+
     },
     changeOilfield() {
       this.selectblock();
