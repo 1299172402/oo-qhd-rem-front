@@ -445,10 +445,11 @@ export default {
         
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
                 this.blockList = res.data.data;
-                for(var i=0;i<this.blockList.length;i++){
+                for(var i=0;i<this.blockList.length;i++){          
                     if(this.blockList[i].reservoirAnalyseUnitId==='83D33B89B0DAB7DFA440BD060746883A'){
                         this.myselect=this.blockList[i].reservoirAnalyseUnitId
-                    
+                    }else {
+                        this.myselect=this.blockList[0].reservoirAnalyseUnitId
                     }
                 }
                 
@@ -618,9 +619,6 @@ export default {
         },
         //左侧区块
         queryWellGroupBlock() {
-
-            console.log("898966")
-            console.log(this.queryData)
             getWellGroupBlock(this.queryData).then((res) => {
                 console.log("898966")
                 console.log(res)
