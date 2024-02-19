@@ -290,6 +290,7 @@ export function getChatPlanINjAlloc(params) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/chatPlanINjAlloc`,
         method: "POST",
+        timeout:30000,
         data: params
     }).then((res) => {
         return res.data
@@ -354,6 +355,7 @@ export function getWellInjRatio(data) {
     return Axios({
         url: `${baseUrl}/injDeployOptimize/wellInjRatio`,
         method: "post",
+        timeout:30000,
         data
     }).then((res) => {
             return res.data

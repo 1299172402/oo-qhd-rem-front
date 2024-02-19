@@ -66,7 +66,7 @@
             <el-row  style="height: 40%">
                 <el-col :span="24">
                     <page-panel :show-btn="true" header-title="平台人数对比" style="margin-top: 0;">
-                        <el-button type="primary" class="buttonActive_primary detailLinkBtn"    @click="downEcharts">下载</el-button>
+                        <el-button type="primary" class="buttonActive_primary detailLinkBtn"   @click="downEcharts">下载</el-button>
                         <echart ref="echartChart" :chart-data="histogram" :height="chartHeight" />
                     </page-panel>
                 </el-col>
@@ -212,6 +212,7 @@
                                     style="margin-left: 10px"
                                     type="primary"
                                     @click="downtable"
+                                    icon="el-icon-download"
                                 >
                                     下载
                                 </el-button>

@@ -70,6 +70,38 @@ export function getPumpData(realtimeDataDto) {
     data: realtimeDataDto,
   });
 }
+// 电潜泵汇聚(10分钟1条)
+export function getDwdEspMonitorAgg(realtimeDataDto) {
+  return Axios({
+    url: `${baseUrl}/detail/getDwdEspMonitorAgg`,
+    method: "post",
+    data: realtimeDataDto,
+  });
+}
+// 油井汇聚(10分钟1条) 
+export function getDwdDcsProdWellMonitorAgg(realtimeDataDto) {
+  return Axios({
+    url: `${baseUrl}/detail/getDwdDcsProdWellMonitorAgg`,
+    method: "post",
+    data: realtimeDataDto,
+  });
+}
+// 电潜泵实时(1秒1条) 
+export function getDwdEspMonitor(realtimeDataDto) {
+  return Axios({
+    url: `${baseUrl}/detail/getDwdEspMonitor`,
+    method: "post",
+    data: realtimeDataDto,
+  });
+}
+// 油井实时(1秒1条)
+export function getDwdDcsProdWellMonitor(realtimeDataDto) {
+  return Axios({
+    url: `${baseUrl}/detail/getDwdDcsProdWellMonitor`,
+    method: "post",
+    data: realtimeDataDto,
+  });
+}
 export function downloadDynamicInfo(realtimeDataDto) {
   return Axios({
     url: `${baseUrl}/detail/downloadDynamicInfo`,

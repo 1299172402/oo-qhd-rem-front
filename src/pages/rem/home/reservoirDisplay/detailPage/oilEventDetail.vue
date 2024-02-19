@@ -43,14 +43,14 @@
                     </el-select>
                 </el-form-item>
                 <el-button type="primary" @click="queryserch()" icon="el-icon-search">搜索</el-button>
-                <el-button type="primary" @click="refresh()" icon="el-icon-refresh">重置</el-button>
+                <el-button class="commonBtn" @click="refresh()" icon="el-icon-refresh">重置</el-button>
                 <el-button style="float: right" type="primary" @click="goBack()">返回</el-button>
             </el-form>
         </header-search>
         <page-panel :header-title=title style="height: calc(100% - 145px)" :show-btn="true">
             <el-form>
                 <el-form-item>
-                    <el-button style="float:right" type="primary"  @click="downtable">下载</el-button>
+                    <el-button style="float:right" type="primary" icon="el-icon-download"  @click="downtable">下载</el-button>
                 </el-form-item>
             </el-form>
             <el-table

@@ -224,7 +224,7 @@
                     size="medium"
                     :readonly="true"
                   ></el-input>
-                  <el-button type="primary" @click="searchWellOutputWave">搜索</el-button>
+                  <el-button icon="el-icon-search" type="primary" @click="searchWellOutputWave">搜索</el-button>
                   <el-button type="primary" style="margin-left: 10px !important" @click="jumpMore">更多</el-button>
                 </div>
                 <!-- <div class="echartBox"> -->
