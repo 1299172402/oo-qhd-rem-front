@@ -6,6 +6,7 @@ export function send(data) {
     return request({
         url: `${baseUrl}/message/sendMailIncludePicture`,
         method: "post",
+        timeout:30000,
         headers: {
             showLoading: false
         },
