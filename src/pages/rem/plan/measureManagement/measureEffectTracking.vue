@@ -583,6 +583,10 @@ import {
   getRealtimeData,
   getOilWellData,
   getPumpData,
+  getDwdEspMonitorAgg,
+  getDwdDcsProdWellMonitorAgg,
+  getDwdEspMonitor,
+  getDwdDcsProdWellMonitor,
 } from "@/api/oilDeposit/ipm-03/machineprodwellipm.js";
 import { transformBorepipeNo } from "@/api/oilDeposit/ipm-03/basedata.js";
 import { wellFluxLastDayHour } from "@/api/oilDeposit/opm/opmData.js";
@@ -590,12 +594,14 @@ import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail, userListByUserNam
 import { nameAndCode } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { getWorkProgress } from "@/api/oilDeposit/rem-04/plan.js";
 import { exportExcel, exportExcelFromJson } from "@/lib/exportExcel.js";
+import { cloneDeep } from "lodash";
+
 export default {
   // name: 'measureEffectTracking',
   components: {
     verticalSwitchButton,
     Echarts,
-    singleWellDetails
+    singleWellDetails,
   },
   data() {
     return {
@@ -1497,7 +1503,7 @@ export default {
         ],
         series: [],
       },
-     
+
       // 水井折线图内容
       waterOption: {
         dataZoom: [
@@ -2669,7 +2675,7 @@ export default {
       // this.$message.success("下载成功！");
       // return this.loadData();
       // fileSaver.saveAs(filePath);
-      window.open(filePath,"_blank")
+      window.open(filePath, "_blank");
       // })
       // .catch(() => {
       //   // this.$message.warning("已取消下载");
@@ -2684,11 +2690,9 @@ export default {
         const { code } = data.data;
         if (code == 200) {
           this.checkList = data.data.data;
-          this.checkList
-            .map((item) => item.childParams)
-            .flat(Infinity)
-            // .forEach((item) => {
-            // });
+          this.checkList.map((item) => item.childParams).flat(Infinity);
+          // .forEach((item) => {
+          // });
         }
       });
     },
@@ -2723,22 +2727,84 @@ export default {
             this.realTimeData = data;
           }
         }
-        getPumpData(request).then((ref) => {
-          if (ref.data.code == 200) {
-            const data = ref.data.data;
-            if (Object.keys(data).length) {
-              if (Object.keys(this.realTimeData).length) {
-                this.realTimeData = Object.assign(this.realTimeData, data);
+        // getPumpData(request).then((ref) => {
+        //   if (ref.data.code == 200) {
+        //     const data = ref.data.data;
+        //     if (Object.keys(data).length) {
+        //       if (Object.keys(this.realTimeData).length) {
+        //         this.realTimeData = Object.assign(this.realTimeData, data);
+        //       } else {
+        //         this.realTimeData = data;
+        //       }
+        //     }
+        //   }
+        //   this.$nextTick(() => {
+        //     this.getChartsOption();
+        //   });
+        // });
+
+        // getDwdEspMonitorAgg(request),
+        // getDwdDcsProdWellMonitorAgg(request),
+        // getDwdEspMonitor(request),
+        // getDwdDcsProdWellMonitor(request),
+        Promise.all([
+          getDwdEspMonitorAgg(request),
+          getDwdEspMonitor(request),
+
+          getDwdDcsProdWellMonitorAgg(request),
+          getDwdDcsProdWellMonitor(request),
+        ])
+          .then((values) => {
+            if (values.length > 0) {
+              let realData = {};
+              this.realTimeData = {};
+              values.forEach((item, index, array) => {
+                // if (index > 0) {
+                let code = item.data.code;
+                if (code == 200) {
+                  let current = cloneDeep(item.data.data);
+                  realData = this.deepMerge(realData, current);
+                }
+                // }
+              });
+              if (realData) {
+                this.realTimeData = Object.assign(this.realTimeData, realData);
+                // this.realCurrentTime = realData.maxDate[0].date || "";
               } else {
-                this.realTimeData = data;
+                this.realTimeData = [];
+                // this.realCurrentTime = "";
               }
+            } else {
+              this.realTimeData = [];
+              // this.realCurrentTime = "";
             }
-          }
-          this.$nextTick(() => {
-            this.getChartsOption();
+            this.$nextTick(() => {
+              this.getChartsOption();
+            });
+          })
+          .catch((err) => {
+            console.log(err, "报错");
+            this.realTimeData = [];
+            // this.realCurrentTime = "";
           });
-        });
       });
+    },
+    deepMerge(obj1, obj2) {
+      if (typeof obj1 !== "object" || typeof obj2 !== "object") return; // 如果其中一个不是对象类型，则直接返回
+      for (let key in obj2) {
+        if (!Object.prototype.hasOwnProperty.call(obj2, key)) continue; // 跳过原型上的属性
+        if (Array.isArray(obj1[key]) && Array.isArray(obj2[key])) {
+          // 当前属性为数组时，将两个数组合并成新的数组
+          obj1[key] = [...new Set([...obj1[key], ...obj2[key]])];
+        } else if (typeof obj1[key] === "object" && typeof obj2[key] === "object") {
+          // 当前属性为对象时，递归调用deepMerge函数进行深度合并
+          obj1[key] = this.deepMerge(obj1[key], obj2[key]);
+        } else {
+          // 非数组、非对象情况下，直接覆盖值
+          obj1[key] = obj2[key];
+        }
+      }
+      return obj1;
     },
     getChartsOption() {
       // 求实时数据中的x轴，，
@@ -2762,6 +2828,7 @@ export default {
             xAxisIndex: [0, 1, 2],
             start: 0, //滚动条开始位置（共100等份）
             end: 100, //滚动条结束位置
+            filterMode: "empty",
           },
         ],
         title: {},
@@ -2865,6 +2932,13 @@ export default {
                     show: true,
                     color: "#8FA4CC",
                     minInterval: 0,
+                    formatter: function (value, index) {
+                          if (String(value).includes(".")) {
+                            return value.toFixed(2);
+                          } else {
+                            return value;
+                          }
+                        },
                   },
                   axisTick: {
                     show: true,
@@ -2910,9 +2984,20 @@ export default {
                                                           )
                                                           .paramValues.map((item) => item.paramValue)
                                                       : [], */
-                  data: this.realTimeData[paramCode]
-                    ? this.realTimeData[paramCode].map((item) => [item.date, item.paramValue])
-                    : [],
+                  // data: this.realTimeData[paramCode]
+                  //   ? this.realTimeData[paramCode].map((item) => [item.date, item.paramValue])
+                  //   : [],
+                  data:
+                    xArray.length && this.realTimeData[paramCode]
+                      ? xArray.map((itemA) => {
+                          let data = this.realTimeData[paramCode].find((item) => item.date === itemA);
+                          if (data) {
+                            return [data.date, data.paramValue];
+                          } else {
+                            return [itemA, null];
+                          }
+                        })
+                      : [],
                   name: this.childParamsList.find((item) => item.paramCode == paramCode).paramName,
                   label: {
                     show: false,

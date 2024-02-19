@@ -85,7 +85,7 @@
           <el-button
             v-if="activeName == 'staticData' && currentModule == 'connecting'"
             type="primary"
-            icon="el-icon-download"
+            icon="el-icon-upload2"
             @click="ljpmUploadDialog"
             >上传文档</el-button
           >

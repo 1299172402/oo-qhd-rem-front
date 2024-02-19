@@ -19,7 +19,7 @@
             <pagePanel headerTitle="油田产量影响因素" style="height:39%; min-height: 300px;" show-btn>
                 <div style="display: flex; justify-content: space-between;">   
                     <el-button type="primary" style="margin-bottom: 20px;" @click="saveEditRow">保存修改</el-button>
-                    <el-button type="primary" style="margin-bottom: 20px;" @click="doDownLoad(1)">下载</el-button>
+                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownLoad(1)">下载</el-button>
                 </div>
                 <el-table id="table1" :data="tableData" border highlight height="calc(100% - 55px)" :cell-style="{padding:'10px'}">
                     <el-table-column v-if="show" prop="ogfId"></el-table-column>
@@ -48,7 +48,7 @@
             </pagePanel>
             <pagePanel headerTitle="油田预测产量" style="height:27%; min-height: 210px;" show-btn>
                 <div style="display: flex; justify-content: flex-end;"> 
-                    <el-button type="primary" style="margin-bottom: 20px;" @click="doDownLoad(2)">下载</el-button>
+                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownLoad(2)">下载</el-button>
                 </div>
                 <el-table id="ForecastProductionTable" :data="tableData1" border highlight height="calc(100% - 55px)" style="font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
                     <el-table-column label="油田" align="center">
@@ -67,7 +67,7 @@
             </pagePanel>
             <pagePanel headerTitle="油田剩余水平" style="height:33%; min-height: 250px;" show-btn>
                 <div style="display: flex; justify-content: flex-end;">   
-                    <el-button type="primary" style="margin-bottom: 20px;" @click="doDownLoad(3)">下载</el-button>
+                    <el-button icon="el-icon-download" type="primary" style="margin-bottom: 20px;" @click="doDownLoad(3)">下载</el-button>
                 </div>
                 <el-table id="ResidualLevelTable" :data="tableData2" border highlight height="calc(100% - 55px)" style="width:100%;font-size:15px;font-weight:500" :cell-style="{padding:'25px'}">
                     <el-table-column label="油田" align="center" min-width="150">

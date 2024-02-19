@@ -24,9 +24,10 @@ export function wellGuessResult(data) {
 }
 export function wellInjRatio(data) {
   return request({
-    url: `${baseUrl}/injDeployOptimize/wellInjRatio`,
-    method: "post",
-    data
+      url: `${baseUrl}/injDeployOptimize/wellInjRatio`,
+      method: "post", 
+      timeout:30000,
+      data
   });
 }
 export function getWellMonthAllocationList({ blockId, dateTime } = {}) {

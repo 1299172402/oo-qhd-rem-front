@@ -89,7 +89,7 @@
         >
           <span>{{ searchForm.ogfName }}单井产量变化</span>
           <div>
-            <el-button type="primary" style="height: 30px" @click="doDownIndex">下载</el-button>
+            <el-button icon="el-icon-download" type="primary" style="height: 30px" @click="doDownIndex">下载</el-button>
             <el-button type="primary" style="height: 30px" @click="goBack">返回</el-button>
           </div>
         </div>

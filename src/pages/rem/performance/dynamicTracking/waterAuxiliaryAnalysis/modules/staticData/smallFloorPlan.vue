@@ -71,7 +71,6 @@ export default {
               this.position = res.data.data.fieldLayers;
               if (!this.selectPosition && this.position[0]) {
                 if (
-                  this.blockId == "83D33B89B0DAB7DFA440BD060746883A" ||
                   this.blockId == "83D33B89B0DAB7DFA440BD060746883A"
                 ) {
                   if (
@@ -132,7 +131,6 @@ export default {
             this.position = res.data.data.fieldLayers;
             if (!this.selectPosition && this.position[0]) {
               if (
-                this.blockId == "83D33B89B0DAB7DFA440BD060746883A" ||
                 this.blockId == "83D33B89B0DAB7DFA440BD060746883A"
               ) {
                 if (
