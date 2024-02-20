@@ -120,7 +120,7 @@
                 <template slot="header">
                   <p>
                     日配产量
-                    <br>(m³/d)
+                    <br>(m³)
                   </p>
                 </template>
               </el-table-column>
