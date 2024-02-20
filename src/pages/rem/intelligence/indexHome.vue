@@ -12,7 +12,7 @@
                     filterable
                     clearable
                     style="width:180px"
-                    @change="changeOil1"
+                    @change="queryBlockFeild2"
                 >
                     <el-option
                         v-for="item in oilList"
@@ -442,19 +442,32 @@ export default {
             this.queryBlockFeild1();
         },
         queryBlockFeild1 () {
-        
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
                 this.blockList = res.data.data;
                 for(var i=0;i<this.blockList.length;i++){          
+                    if(this.blockList[i].reservoirAnalyseUnitId==='83D33B89B0DAB7DFA440BD060746883A'){
+                        this.myselect=this.blockList[i].reservoirAnalyseUnitId
+                    }
+                }
+                this.searchList()
+                // this.queryData.blockId=this.blockList[0].blockId
+            });
+        },
+        queryBlockFeild2 () {
+            getblockData({ogfId:this.queryData.ogfId}).then((res) => {
+                this.blockList = res.data.data;
+                
+                if(this.blockList.length==0){
+                    this.myselect='无数据'
+                }
+                for(var i=0;i<this.blockList.length;i++){
                     if(this.blockList[i].reservoirAnalyseUnitId==='83D33B89B0DAB7DFA440BD060746883A'){
                         this.myselect=this.blockList[i].reservoirAnalyseUnitId
                     }else {
                         this.myselect=this.blockList[0].reservoirAnalyseUnitId
                     }
                 }
-                
-         
-                this.searchList()
+                // this.searchList()
                 // this.queryData.blockId=this.blockList[0].blockId
             });
         },
