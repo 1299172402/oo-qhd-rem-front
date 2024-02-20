@@ -561,39 +561,43 @@ export default {
          * 获取数据
          */
         reset(){
-            this.queryData.blockId=this.myselect
             this.queryData.dateTime=this.eeee();
-            if (!this.queryData.dateTime) {
-                return this.$message.error('请输入时间')
-            }
-            //左侧区块
-            this.queryWellGroupBlock()
-            //分层注采量
-            this.queryStratifiedInjectionDetails()
-            //超欠注情况统计
-            this.queryUltraShortShotStatistics()
-            this.blockList.forEach(item => {
-                if (item.reservoirAnalyseUnitId == this.queryData.blockId) {
-                    this.title = item.reservoirAnalyseUnitName
-                }
-            });
-            let params = {
-                blockId: this.queryData.blockId,
-                yearMonth: this.queryData.dateTime,
-            }
-            getResidueOilCondotion(params).then(res => {
-                try {
-                    this.residueOil = res.map(item => {
-                        item.dhFlowingPress = item.dhFlowingPress ? Number(item.dhFlowingPress).toFixed(1) : '';
-                        item.fluidProdDaily = item.fluidProdDaily ? Math.round(item.fluidProdDaily) : '';
-                        return item;
-                    });
-                } catch (e) {
-                }
-                const newArray = res.filter(obj => obj.dhFlowingPress != '' && obj.fluidProdDaily != '');
-                this.ResidueOilRank = newArray.slice(0, 10);
-                this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
-            })
+            this.getuserListByUserNamesData()
+            // this.queryData.ogfId='3FC9A818F5BC43B88270DB80BBB3018F'
+            // this.myselect='请选择'
+            // this.queryData.blockId=this.myselect
+            
+            // if (!this.queryData.dateTime) {
+            //     return this.$message.error('请输入时间')
+            // }
+            // //左侧区块
+            // this.queryWellGroupBlock()
+            // //分层注采量
+            // this.queryStratifiedInjectionDetails()
+            // //超欠注情况统计
+            // this.queryUltraShortShotStatistics()
+            // this.blockList.forEach(item => {
+            //     if (item.reservoirAnalyseUnitId == this.queryData.blockId) {
+            //         this.title = item.reservoirAnalyseUnitName
+            //     }
+            // });
+            // let params = {
+            //     blockId: this.queryData.blockId,
+            //     yearMonth: this.queryData.dateTime,
+            // }
+            // getResidueOilCondotion(params).then(res => {
+            //     try {
+            //         this.residueOil = res.map(item => {
+            //             item.dhFlowingPress = item.dhFlowingPress ? Number(item.dhFlowingPress).toFixed(1) : '';
+            //             item.fluidProdDaily = item.fluidProdDaily ? Math.round(item.fluidProdDaily) : '';
+            //             return item;
+            //         });
+            //     } catch (e) {
+            //     }
+            //     const newArray = res.filter(obj => obj.dhFlowingPress != '' && obj.fluidProdDaily != '');
+            //     this.ResidueOilRank = newArray.slice(0, 10);
+            //     this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
+            // })
         },
         searchList() {
        
