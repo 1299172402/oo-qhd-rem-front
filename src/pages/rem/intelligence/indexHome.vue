@@ -30,7 +30,7 @@
                         :value="item.reservoirAnalyseUnitId"
                     ></el-option>
                 </el-select>
-                <span>年度：</span>
+                <span>日期：</span>
                 <el-date-picker
                     v-model="queryData.dateTime"
                     type="month"
