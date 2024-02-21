@@ -273,7 +273,7 @@ export default {
         onPlatfromChange(val) {
             this.queryParams.wellId = ''
 
-            if (val === undefined || val === undefined || val === '') {
+            if (val === undefined || val === null || val === '') {
                 this.choicepla(this.queryParams.selectOilField);
                 return;
             }
