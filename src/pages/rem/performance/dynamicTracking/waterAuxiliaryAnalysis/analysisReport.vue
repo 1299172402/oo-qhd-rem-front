@@ -1365,11 +1365,14 @@ export default {
     // 区块切换事件
     changeBlock() {
       this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock]);
+      this.platform = "";
+      this.wellId = "";
       this.queryPlatFormList();
     },
     // 平台切换事件
     changePlatform() {
       this.$refs.treeSelectionCustom.setCheckedKeys([this.selectBlock, this.platform]);
+      this.wellId = "";
       this.queryWellListByPid();
     },
     // 井号切换事件
