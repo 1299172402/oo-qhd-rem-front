@@ -148,15 +148,34 @@ export default {
   mounted() {
     this.wellGroupname = this.wellGrouplist?.find((obj) => obj.wellGroupId == this.wellGroupId)?.wellGroupName;
     this.queryData.secondMonth = this.getLastMonth()
-    this.queryData.firstMonth = new Date().format('yyyy-MM');
+    this.queryData.firstMonth = this.getfirstMonth()
     this.secondMonth = this.getLastMonth()
-    this.firstMonth = new Date().format('yyyy-MM');
+    this.firstMonth = this.getfirstMonth()
     this.doSearch();
   },
   methods: {
     doSearch() {
       this.getdata();
-    },
+    }, 
+      getLastTwoMonths() {
+    const now = new Date();
+    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const secondLastMonth = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        return `${year}-${month}`;
+    }
+
+    return [formatDate(this.secondLastMonth), formatDate(lastMonth)];
+},
+      getfirstMonth(){
+          const now = new Date();
+          const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+          const secondLastMonth = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+            return secondLastMonth.format('yyyy-MM')
+      },
       getLastMonth() {
           var date = new Date();
           var year = date.getFullYear();   //当前年：四位数字
