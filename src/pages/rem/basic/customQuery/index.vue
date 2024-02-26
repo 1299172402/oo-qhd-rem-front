@@ -15,13 +15,13 @@
                                 />
                             </el-select>
                             <span v-show="activeTabIndex == 1" style="padding-left: 20px">平台：</span>
-                            <el-select v-show="activeTabIndex == 1" v-model="platformId" @change="onPlatfromChange" :disabled="activeEchart">
+                            <el-select v-show="activeTabIndex == 1"  v-model="platformId" @change="onPlatfromChange" :disabled="activeEchart">
                                 <el-option v-for="(item, index) in plalist" :key="item.platformId"
                                            :label="item.platformCode"
                                            :value="item.platformId"/>
                             </el-select>
                             <span v-show="activeTabIndex == 1" style="padding-left: 20px">井号：</span>
-                            <el-select v-show="activeTabIndex == 1" v-model="wellId" multiple  collapse-tags :disabled="activeEchart">
+                            <el-select v-show="activeTabIndex == 1" filterable v-model="wellId" multiple  collapse-tags :disabled="activeEchart">
                                 <el-option v-for="(item, index) in wellData" :key="index" :label="item.wellName"
                                            :value="item.wellId"/>
                             </el-select>
@@ -590,6 +590,8 @@ export default {
             }
         },
        async choicewell(val) {
+            this.platformId = ''
+           this.wellId = []
            await  QueryPlatformDetail({ogfId:this.ogfId}).then((res)=>{
                this.plalist = res.data.data
                this.platformId = this.plalist[0].platformId
@@ -597,13 +599,16 @@ export default {
            await QueryWellDetail({ogfId: this.ogfId,platformId: this.platformId}).then((res) => {
                if (res.data.code == 200) {
                    this.wellData = res.data.data;
+                   this.wellId = [`${res.data.data[0].wellId}`]
                    this.key++
                }
            });
         },
         onPlatfromChange(val) {
+            this.wellId = []
             QueryWellDetail({platformId: val, ogfId: this.ogfId}).then((res) => {
                 this.wellData = res.data.data;
+                this.wellId = [`${res.data.data[0].wellId}`]
             })
             // await this.queryserch()
         },
@@ -628,6 +633,7 @@ export default {
             await QueryWellDetail({ogfId: this.ogfId,platformId: this.platformId}).then((res) => {
                 if (res.data.code == 200) {
                     this.wellData = res.data.data;
+                    this.wellId = [`${res.data.data[0].wellId}`]
                     this.key++
                 }
             });
