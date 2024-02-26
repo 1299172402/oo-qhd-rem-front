@@ -1,17 +1,7 @@
 <template>
     <div class="app-container">
-        <div style="display: flex;flex-direction: row; height: 100%;">
-            <div style=" height: 100%">
-                <!--                <tree-multiple-selection :arrayData="listdata" :type="type"  @childinfo='childinfo' :key="key" :level="'5'"/>-->
-                <treeSelectionAll
-                    ref="treeSelectionAll"
-                    level="5"
-                    :defaultCheckedKeys="defaultCheckedKeys"
-                    @getSelectItems="getSelectItems"
-                />
-            </div>
             <div
-                style="display: flex;flex-direction: column;  height: calc(100%);margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
+                style=" height: calc(100%);">
                 <header-search>
                     <el-row style="margin: 20px 0">
                         <div style="display: inline-block">
@@ -24,8 +14,14 @@
                                     :value="item.ogfId"
                                 />
                             </el-select>
+                            <span v-show="activeTabIndex == 1" style="padding-left: 20px">平台：</span>
+                            <el-select v-show="activeTabIndex == 1" v-model="platformId" @change="onPlatfromChange" :disabled="activeEchart">
+                                <el-option v-for="(item, index) in plalist" :key="item.platformId"
+                                           :label="item.platformCode"
+                                           :value="item.platformId"/>
+                            </el-select>
                             <span v-show="activeTabIndex == 1" style="padding-left: 20px">井号：</span>
-                            <el-select v-show="activeTabIndex == 1" v-model="wellId" :disabled="activeEchart">
+                            <el-select v-show="activeTabIndex == 1" v-model="wellId" multiple  collapse-tags :disabled="activeEchart">
                                 <el-option v-for="(item, index) in wellData" :key="index" :label="item.wellName"
                                            :value="item.wellId"/>
                             </el-select>
@@ -332,14 +328,13 @@
                 </el-dialog>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
 import {queryCustomQueryList} from "@/api/basic/basic";
 import {fetchProductionWells} from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import {
-    QueryOgfDetail,
+    QueryOgfDetail, QueryPlatformDetail,
     QueryWellDetail, userListByUserNames
 } from "@/api/basic/master";
 import {exportExcel} from "@/lib/exportExcel";
@@ -386,9 +381,11 @@ export default {
             storeValue: [], //储采指标
             dialogVisible: false,
             ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-            wellId: "",
+            wellId: [],
+            platformId:'',
             oilFields: [],
             wellData: [],
+            plalist:[],
             dataTypes: [
                 {val: "wellhead", name: "井口生产指标"},
                 {val: "proProDic", name: "计量生产指标"},
@@ -574,142 +571,64 @@ export default {
             // let ttt=this.$refs.treeSelectionAll.deptOptions;
         },
        
-        changetype(val) {
+       async changetype(val) {
             if (val == 1) {
                 let ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
                 const request = {
                     ogfId,
                 };
-                QueryWellDetail(request).then((res) => {
-                    this.listdata = [
-                        {
-                            label: "有限天津分公司",
-                            value: "3DC1B33E1B5B431E99FA163BF9E86E6A",
-                            level: "1",
-                            children: [
-                                {
-                                    label: "秦皇岛32-6作业公司",
-                                    value: "715AD1CD60484BB59E737CD18A9DE44A",
-                                    level: "2",
-                                    children: [
-                                        {
-                                            label: "QHD32-6",
-                                            value: "3FC9A818F5BC43B88270DB80BBB3018F",
-                                            level: "3",
-                                            children: []
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ];
-                    if (res.data.code == 200) {
+              await  QueryPlatformDetail(ogfId).then((res)=>{
+                    this.plalist = res.data.data
+                  
+                })
+                await  QueryWellDetail(request).then((res) => {
                         this.wellData = res.data.data;
-                        let data = []
-                        res.data.data.map((n) => {
-                            data.push({
-                                label: n.wellName,
-                                level: "4",
-                                value: n.wellId,
-                                children: []
-                            })
-                        })
-                        this.listdata[0].children[0].children[0].children.push(...data)
                         this.key++
-                    }
                 });
             } else {
-                this.listdata = [
-                    {
-                        label: "有限天津分公司",
-                        value: "3DC1B33E1B5B431E99FA163BF9E86E6A",
-                        level: "1",
-                        children: [
-                            {
-                                label: "秦皇岛32-6作业公司",
-                                value: "715AD1CD60484BB59E737CD18A9DE44A",
-                                level: "2",
-                                children: [
-                                    {
-                                        label: "QHD32-6",
-                                        value: "3FC9A818F5BC43B88270DB80BBB3018F",
-                                        level: "3",
-                                        children: []
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ];
                 this.key++
             }
         },
-        choicewell(val) {
-            QueryWellDetail({ogfId: val}).then(res => {
-                if (res.data.code == 200) {
-                    this.wellData = res.data.data
-                    if (this.wellData == null || this.wellData == undefined) {
-                        this.wellId = '';
-                    } else {
-                        this.wellId = this.wellData[0].wellId;
-                    }
-                }
-            })
+       async choicewell(val) {
+           await  QueryPlatformDetail({ogfId:this.ogfId}).then((res)=>{
+               this.plalist = res.data.data
+               this.platformId = this.plalist[0].platformId
+           })
+           await QueryWellDetail({ogfId: this.ogfId,platformId: this.platformId}).then((res) => {
+               if (res.data.code == 200) {
+                   this.wellData = res.data.data;
+                   this.key++
+               }
+           });
         },
-        initData() {
+        onPlatfromChange(val) {
+            QueryWellDetail({platformId: val, ogfId: this.ogfId}).then((res) => {
+                this.wellData = res.data.data;
+            })
+            // await this.queryserch()
+        },
+       async initData() {
             //查询条件
             let params = {
                 searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             }
-            userListByUserNames(params).then((res) => {
+           await userListByUserNames(params).then((res) => {
                 this.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-                QueryOgfDetail({operationZoneId: this.orgId}).then(res => {
-                    if (res.data.code == 200) {
-                        this.oilFields = res.data.data
-                    }
-                })
+               
             })
-            let ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
-            const request = {
-                ogfId,
-            };
-            QueryWellDetail(request).then((res) => {
-                this.listdata = [
-                    {
-                        label: "有限天津分公司",
-                        value: "3DC1B33E1B5B431E99FA163BF9E86E6A",
-                        level: "1",
-                        children: [
-                            {
-                                label: "秦皇岛32-6作业公司",
-                                value: "715AD1CD60484BB59E737CD18A9DE44A",
-                                level: "2",
-                                children: [
-                                    {
-                                        label: "QHD32-6",
-                                        value: "3FC9A818F5BC43B88270DB80BBB3018F",
-                                        level: "3",
-                                        children: []
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ];
+           await QueryOgfDetail({operationZoneId: this.orgId}).then(res => {
+               if (res.data.code == 200) {
+                   this.oilFields = res.data.data
+               }
+           })
+            await  QueryPlatformDetail({ogfId:this.ogfId}).then((res)=>{
+                this.plalist = res.data.data
+                this.platformId = this.plalist[0].platformId
+            })
+            await QueryWellDetail({ogfId: this.ogfId,platformId: this.platformId}).then((res) => {
                 if (res.data.code == 200) {
                     this.wellData = res.data.data;
-                    let data = []
-                    res.data.data.map((n) => {
-                        data.push({
-                            label: n.wellName,
-                            level: "4",
-                            value: n.wellId,
-                            children: []
-                        })
-                    })
-                    this.listdata[0].children[0].children[0].children.push(...data)
                     this.key++
-                    this.wellId = this.wellData[0].wellId
                 }
             });
         },
@@ -730,7 +649,6 @@ export default {
                 (this.injectValue = []),
                 (this.managerValue = []),
                 (this.storeList = []);
-            debugger
             switch (Nval) {
                 //日
             case "wellhead": //'井口生产指标':
@@ -1207,7 +1125,10 @@ export default {
                 timeType: this.activeTabIndexDate, //时间类型 1 年 2月 3 日
                 startTime: this.activeTabIndexDate != 1 ? this.selectDate[0] : this.selectDate, //开始时间
                 endTime: this.selectDate[1], //结束时间
-                dataId: this.activeTabIndex == 2 ? this.ogfId : this.wellId,//若目标类型为2油田传ogfId,若为井传wellId
+                wellIdList:this.wellId,
+                dataId: null,//若目标类型为2油田传ogfId,若为井传wellId
+                platformId:this.platformId,
+                ogfId:this.ogfId,
                 pageNum: this.page,//分页页码
                 pageSize: this.pageSize,//每页页数
             };
