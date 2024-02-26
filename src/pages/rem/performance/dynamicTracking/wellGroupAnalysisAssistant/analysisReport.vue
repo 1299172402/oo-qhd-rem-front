@@ -301,7 +301,7 @@
                       </el-tooltip>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="injectionProductionBalance" align="center" label="注水平衡" min-width="140">
+                  <el-table-column prop="injectionProductionBalance" align="center" label="注采平衡" min-width="140">
                     <template slot-scope="{ row }">
                       <span v-if="row['injectionProductionBalanceMessage'] == ''">{{
                         row["injectionProductionBalance"] ? row["injectionProductionBalance"] : "-"
@@ -864,7 +864,7 @@
                       </el-tooltip>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="injectionProductionBalance" align="center" label="注水平衡" min-width="140">
+                  <el-table-column prop="injectionProductionBalance" align="center" label="注采平衡" min-width="140">
                     <template slot-scope="{ row }">
                       <span v-if="row['injectionProductionBalanceMessage'] == ''">{{
                         row["injectionProductionBalance"] ? row["injectionProductionBalance"] : "-"
