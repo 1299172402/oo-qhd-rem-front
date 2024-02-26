@@ -17,7 +17,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区块：">
-                    <el-select v-model="queryData.blockId">
+                    <el-select v-model="queryData.blockId" @change="changeWell">
                         <el-option
                             v-for="item in blockList"
                             :key="item.reservoirAnalyseUnitId"
@@ -409,9 +409,12 @@ export default {
         queryBlockFeild() {
           getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
             this.blockList = res.data.data;
+            if(this.blockList.length===0){
+                this.queryData='无数据'
+            }
             for(var i=0;i<this.blockList.length;i++){
               if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
-                this.queryData.blockId.value=this.blockList[i].reservoirAnalyseUnitId
+                  this.queryData.blockId.value=this.blockList[i].reservoirAnalyseUnitId
               }
             }
             this.queryWellData();
