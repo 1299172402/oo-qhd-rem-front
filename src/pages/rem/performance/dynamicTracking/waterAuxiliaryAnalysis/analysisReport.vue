@@ -299,18 +299,22 @@
                   height="calc(100% - 110px)"
                   ref="tableList"
                   row-key="id"
-                  default-expand-all
                   :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
                   @sort-change="sortChange"
                 >
-                  <el-table-column
+                  <!-- <el-table-column
                     type="index"
                     label="序号"
                     align="center"
                     width="80px"
                     fixed="left"
                     :index="formatIndex"
-                  ></el-table-column>
+                  ></el-table-column> -->
+                  <el-table-column type="" align="center" width="100px" label="序号" prop="parentIndex" fixed="left">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.isIndex">{{ scope.row.parentIndex }}</span>
+                    </template>
+                  </el-table-column>
                   <el-table-column
                     prop="wellId"
                     label="井号"
@@ -882,18 +886,22 @@
                   height="calc(100% - 110px)"
                   ref="tableList"
                   row-key="id"
-                  default-expand-all
                   :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
                   @sort-change="sortChange"
                 >
-                  <el-table-column
+                  <!-- <el-table-column
                     type="index"
                     label="序号"
                     align="center"
                     width="80px"
                     fixed="left"
                     :index="formatIndex"
-                  ></el-table-column>
+                  ></el-table-column> -->
+                  <el-table-column type="" align="center" width="100px" label="序号" prop="parentIndex" fixed="left">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.isIndex">{{ scope.row.parentIndex }}</span>
+                    </template>
+                  </el-table-column>
                   <el-table-column
                     prop="wellId"
                     label="井号"
@@ -1982,6 +1990,10 @@ export default {
       //地层原因 formationReason
       //停注恢复 stopInjectionRecovery
       //recommendedMeasuresOptions//措施推荐；不需要考虑数据项
+      myData.forEach((item, index) => {
+        item.parentIndex = index + 1;
+        item.isIndex = true;
+      });
       this.tableData = myData; //加载数据
       this.oldTableData = cloneDeep(myData); //加载数据
       this.$nextTick(() => {
