@@ -222,11 +222,10 @@
                   ref="tableList"
                   class="doubleHeader"
                   row-key="id"
-                  default-expand-all
                   :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
                   @sort-change="sortChange"
                 >
-                  <el-table-column
+                  <!-- <el-table-column
                     key="table1-index"
                     type="index"
                     label="序号"
@@ -234,8 +233,12 @@
                     width="80px"
                     fixed="left"
                     :index="formatIndex"
-                  ></el-table-column>
-
+                  ></el-table-column> -->
+                  <el-table-column type="" align="center" width="100px" label="序号" prop="parentIndex" fixed="left">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.isIndex">{{ scope.row.parentIndex }}</span>
+                    </template>
+                  </el-table-column>
                   <el-table-column
                     key="table1-wellId"
                     prop="wellId"
@@ -448,7 +451,6 @@
             <img src="@/assets/rem/performance/jingzu.gif" alt="" class="speed" />
             <img src="@/assets/rem/performance/bg.png" alt="" class="bg" v-if="$store.state.setting.mode == 'dark'" />
             <img src="@/assets/rem/performance/bg2.png" alt="" class="bg" v-else />
-            
           </div>
           <div class="rightBox">
             <div class="v1">
@@ -786,18 +788,22 @@
                   height="calc(100% - 110px)"
                   ref="tableList"
                   class="doubleHeader"
-                  default-expand-all
                   :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
                   @sort-change="sortChange"
                 >
-                  <el-table-column
+                  <!-- <el-table-column
                     type="index"
                     label="序号"
                     align="center"
                     width="100px"
                     fixed="left"
                     :index="formatIndex"
-                  ></el-table-column>
+                  ></el-table-column> -->
+                  <el-table-column type="" align="center" width="100px" label="序号" prop="parentIndex" fixed="left">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.isIndex">{{ scope.row.parentIndex }}</span>
+                    </template>
+                  </el-table-column>
                   <el-table-column
                     key="table2-wellId"
                     prop="wellId"
@@ -1080,9 +1086,9 @@ export default {
     },
   },
   methods: {
-      handleCurrentDateChange(v) {
-          this.queryWellGroupList();
-      },
+    handleCurrentDateChange(v) {
+      this.queryWellGroupList();
+    },
     //重置
     resetting() {
       let isNewformat = this.isNewformat;
@@ -1115,7 +1121,9 @@ export default {
           //   res.data.data[0]?.currentTenantBindOrgId
           //     ? res.data.data[0].currentTenantBindOrgId
           //     : undefined;
-          this.companyId = res.data.data[0]?.currentTenantBindOrgId ? res.data.data[0].currentTenantBindOrgId : undefined;
+          this.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.companyId }).then((data) => {
@@ -1132,33 +1140,35 @@ export default {
       });
     },
     //获取区块
-      async queryBlockList(paramMap) {
-          await QueryReservoirAnalyseUnit({ogfId: this.selYtdm}).then((res) => {
-              if (res.data.code == 200) {
-                  this.blockData = res.data.data;
-                  if (this.blockData === null) {
-                      this.blockData = [{
-                          reservoirAnalyseUnitId: this.selYtdm,
-                          reservoirAnalyseUnitName: "全部",
-                          reservoirAnalyseUnitNo: "全部",
-                      }];
-                  } else {
-                      this.blockData.unshift({
-                          reservoirAnalyseUnitId: this.selYtdm,
-                          reservoirAnalyseUnitName: "全部",
-                          reservoirAnalyseUnitNo: "全部",
-                      });
-                  }
-                  this.selBlock = this.blockData[0].reservoirAnalyseUnitId;
-                  this.queryWellGroupList();
-              }
-          });
-      },
+    async queryBlockList(paramMap) {
+      await QueryReservoirAnalyseUnit({ ogfId: this.selYtdm }).then((res) => {
+        if (res.data.code == 200) {
+          this.blockData = res.data.data;
+          if (this.blockData === null) {
+            this.blockData = [
+              {
+                reservoirAnalyseUnitId: this.selYtdm,
+                reservoirAnalyseUnitName: "全部",
+                reservoirAnalyseUnitNo: "全部",
+              },
+            ];
+          } else {
+            this.blockData.unshift({
+              reservoirAnalyseUnitId: this.selYtdm,
+              reservoirAnalyseUnitName: "全部",
+              reservoirAnalyseUnitNo: "全部",
+            });
+          }
+          this.selBlock = this.blockData[0].reservoirAnalyseUnitId;
+          this.queryWellGroupList();
+        }
+      });
+    },
     //获取井组
     async queryWellGroupList() {
       await selectWellGroup({
         ogfId: this.selYtdm,
-        blockId: this.selBlock === this.selYtdm ? '' :this.selBlock ,
+        blockId: this.selBlock === this.selYtdm ? "" : this.selBlock,
         dateTime: this.currentDate,
       }).then((res) => {
         if (res.data.code == 200) {
@@ -1639,6 +1649,10 @@ export default {
         }
         this.recommendedMeasuresOptions[j].value = t_count; //登记条数
       }
+      myData.forEach((item, index) => {
+        item.parentIndex = index + 1;
+        item.isIndex = true;
+      });
       this.tableData = myData;
       this.oldTableData = cloneDeep(myData);
       this.$nextTick(() => {
