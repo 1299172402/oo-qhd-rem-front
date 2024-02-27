@@ -84,7 +84,7 @@
                     <el-row>
                         <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
                             <page-panel :show-btn="true" headerTitle="目标类型">
-                                <el-radio-group @change="changetype" v-model="activeTabIndex">
+                                <el-radio-group  v-model="activeTabIndex">
                                     <el-radio :label="1"> 单井</el-radio>
                                     <el-radio :label="2"> 油田(区块)</el-radio>
                                 </el-radio-group>
@@ -578,15 +578,14 @@ export default {
                     ogfId,
                 };
               await  QueryPlatformDetail(ogfId).then((res)=>{
-                    this.plalist = res.data.data
-                  
+                    this.plalist = res.data.dataW
                 })
                 await  QueryWellDetail(request).then((res) => {
                         this.wellData = res.data.data;
                         this.key++
                 });
             } else {
-                this.key++
+                
             }
         },
        async choicewell(val) {
