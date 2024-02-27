@@ -418,14 +418,14 @@ export default {
             totalList: [
                 {val: "MONTH_PROD_DURATION", name: "月累生产时长", unit: "h"},
                 {val: "YEAR_PROD_DURATION", name: "年累生产时长", unit: "h"},
-                {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "t"},
-                {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "t"},
-                {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "t"},
-                {val: "MONTHLY_CUMU_GAS_PROD", name: "月累产气", unit: "t"},
-                {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "t"},
-                {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "t"},
-                {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "t"},
-                {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "t"},
+                {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "10⁴m³"},
+                {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "10⁴m³"},
+                {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "10⁴m³"},
+                {val: "MONTHLY_CUMU_GAS_PROD", name: "月累产气", unit: "10⁴m³"},
+                {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "10⁴m³"},
+                {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "10⁴m³"},
+                {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "10⁴m³"},
+                {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "10⁴m³"},
                 {val: "REMAKE", name: "备注", unit: ""},
             ],
             injectList: [],
@@ -683,14 +683,14 @@ export default {
                     (this.totalList = [
                         {val: "MONTH_PROD_DURATION", name: "月累生产时长", unit: "h"},
                         {val: "YEAR_PROD_DURATION", name: "年累生产时长", unit: "h"},
-                        {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "t"},
-                        {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "t"},
-                        {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "t"},
-                        {val: "MONTHLY_CUMU_GAS_PROD", name: "月累产气", unit: "t"},
-                        {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "t"},
-                        {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "t"},
-                        {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "t"},
-                        {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "t"},
+                        {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "10⁴m³"},
+                        {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMU_GAS_PROD", name: "月累产气", unit: "10⁴m³"},
+                        {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "10⁴m³"},
+                        {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "10⁴m³"},
+                        {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "10⁴m³"},
+                        {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "10⁴m³"},
                         {val: "REMAKE", name: "备注", unit: ""},
                     ]),
                     (this.injectList = []),
@@ -737,10 +737,10 @@ export default {
                             {val: "DAILY_CUMU_NET_PROD", name: "日净产量", unit: "m³"},
                         ]),
                         (this.totalList = [
-                            {val: "MONTHLY_VE_PROD", name: "月累核实产量", unit: "t"},
-                            {val: "MONTHLY_CUMU_NET_PROD", name: "月累净产量", unit: "t"},
-                            {val: "YEAR_VE_PROD", name: "年累核实产量", unit: "t"},
-                            {val: "YEAR_CUMU_NET_PROD", name: "年累净产量", unit: "t"},
+                            {val: "MONTHLY_VE_PROD", name: "月累核实产量", unit: "10⁴m³"},
+                            {val: "MONTHLY_CUMU_NET_PROD", name: "月累净产量", unit: "10⁴m³"},
+                            {val: "YEAR_VE_PROD", name: "年累核实产量", unit: "10⁴m³"},
+                            {val: "YEAR_CUMU_NET_PROD", name: "年累净产量", unit: "10⁴m³"},
                         ]),
                         (this.injectList = []),
                         (this.managerList = []);
@@ -752,16 +752,16 @@ export default {
                             {val: "DAILY_CUMU_NET_PROD", name: "日净产量", unit: "m³"},
                         ]),
                         (this.totalList = [
-                            {val: "MONTHLY_VE_PROD", name: "月累核实产量", unit: "t"},
-                            {val: "MONTHLY_CUMU_NET_PROD", name: "月累净产量", unit: "t"},
-                            {val: "MONTHLY_VERIFICA_AIR_DEFENSE_VOLUME", name: "月累核实放空量", unit: "t"},
-                            {val: "MONTHLY_VERI_VOLUME", name: "月累核实外输量", unit: "t"},
-                            {val: "YEAR_VE_PROD", name: "年累核实产量", unit: "t"},
-                            {val: "YEAR_VE_OIL_EQUI", name: "年累核实油当量", unit: "t"},
-                            {val: "YEAR_CUMU_NET_PROD", name: "年累净产量", unit: "t"},
-                            {val: "YEAR_VER_SELF_CONSUMPTION", name: "年累核实自用量", unit: "t"},
-                            {val: "YEAR_VER_RELEASE_VOLUME", name: "年累核实放空量", unit: "t"},
-                            {val: "YEAR_VER_EXPORT_VOLUME", name: "年累核实外输量", unit: "t"},
+                            {val: "MONTHLY_VE_PROD", name: "月累核实产量", unit: "10⁴m³"},
+                            {val: "MONTHLY_CUMU_NET_PROD", name: "月累净产量", unit: "10⁴m³"},
+                            {val: "MONTHLY_VERIFICA_AIR_DEFENSE_VOLUME", name: "月累核实放空量", unit: "10⁴m³"},
+                            {val: "MONTHLY_VERI_VOLUME", name: "月累核实外输量", unit: "10⁴m³"},
+                            {val: "YEAR_VE_PROD", name: "年累核实产量", unit: "10⁴m³"},
+                            {val: "YEAR_VE_OIL_EQUI", name: "年累核实油当量", unit: "10⁴m³"},
+                            {val: "YEAR_CUMU_NET_PROD", name: "年累净产量", unit: "10⁴m³"},
+                            {val: "YEAR_VER_SELF_CONSUMPTION", name: "年累核实自用量", unit: "10⁴m³"},
+                            {val: "YEAR_VER_RELEASE_VOLUME", name: "年累核实放空量", unit: "10⁴m³"},
+                            {val: "YEAR_VER_EXPORT_VOLUME", name: "年累核实外输量", unit: "10⁴m³"},
                         ]),
                         (this.injectList = []),
                         (this.managerList = []);
@@ -823,10 +823,10 @@ export default {
                     ]),
                     (this.totalList = [
                         {val: "YEAR_CUMU_PROD_DAILY", name: "年累生产天数", unit: "d"},
-                        {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "t"},
-                        {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "t"},
-                        {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "t"},
-                        {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "t"},
+                        {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "10⁴m³"},
+                        {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "10⁴m³"},
+                        {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "10⁴m³"},
+                        {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "10⁴m³"},
                     ]),
                     (this.injectList = []),
                     (this.managerList = []);
@@ -835,8 +835,8 @@ export default {
                 (this.stateList = []),
                     (this.productList = []),
                     (this.totalList = [
-                        {val: "MONTHLY_VE_PROD", name: "月累核实产量", unit: "t"},
-                        {val: "MONTHLY_CUMU_NET_PROD", name: "月累净产量", unit: "t"},
+                        {val: "MONTHLY_VE_PROD", name: "月累核实产量", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMU_NET_PROD", name: "月累净产量", unit: "10⁴m³"},
                     ]),
                     (this.injectList = []),
                     (this.managerList = []);
@@ -856,7 +856,7 @@ export default {
                     (this.injectList = [
                         {val: "YEAR_CUMU_PROD_DAILY", name: "年累生产天数", unit: "d"},
                         {val: "MONTHLY_INJECT_VOL", name: "月注入量", unit: "m³"},
-                        {val: "YEAR_CUMUL_INJ_VOLUME", name: "年累注入量", unit: "t"},
+                        {val: "YEAR_CUMUL_INJ_VOLUME", name: "年累注入量", unit: "10⁴m³"},
                     ]),
                     (this.managerList = []);
                 break;
@@ -869,23 +869,23 @@ export default {
                         {val: "DAILY_GAS_PROD", name: "日产气", unit: "m³"},
                         {val: "WATER_RATIO", name: "含水", unit: "%"},
                         {val: "OIL_GAS_RATIO", name: "气油比", unit: "m³/m³"},
-                        {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "t"},
-                        {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "t"},
-                        {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "t"},
-                        {val: "MONTHLY_CUMU_GAS_PROD", name: "月累产气", unit: "t"},
+                        {val: "MONTHLY_CUMU_FLUID_PROD", name: "月累产液", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMU_OIL_PROD", name: "月累产油", unit: "10⁴m³"},
+                        {val: "MONTHLY_ACCUM_WATER_PROD", name: "月累产水", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMU_GAS_PROD", name: "月累产气", unit: "10⁴m³"},
                     ]),
                     (this.totalList = [
-                        {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "t"},
-                        {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "t"},
-                        {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "t"},
-                        {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "t"},
+                        {val: "YEAR_CUMU_FLUID_PROD", name: "年累产液", unit: "10⁴m³"},
+                        {val: "YEAR_CUMU_OIL_PROD", name: "年累产油", unit: "10⁴m³"},
+                        {val: "YEAR_ACCUM_WATER_PROD", name: "年累产水", unit: "10⁴m³"},
+                        {val: "YEAR_CUMU_GAS_PROD", name: "年累产气", unit: "10⁴m³"},
                     ]),
                     (this.injectList = [
                         {val: "AVERAGE_OIL_PRESS", name: "平均油压", unit: "MPa"},
                         {val: "AVERAGE_MAINLINE_PRESS", name: "平均干线压力", unit: "MPa"},
                         {val: "DAILY_WATER_INJECT_AMOUNT", name: "日注水聚总量", unit: "m³"},
-                        {val: "MONTHLY_CUMUL_WATER_INJECT_AMOUNT", name: "月累注水聚总量", unit: "t"},
-                        {val: "YEAR_CUMUL_WATER_INJECT_AMOUNT", name: "年累注水聚总量", unit: "t"},
+                        {val: "MONTHLY_CUMUL_WATER_INJECT_AMOUNT", name: "月累注水聚总量", unit: "10⁴m³"},
+                        {val: "YEAR_CUMUL_WATER_INJECT_AMOUNT", name: "年累注水聚总量", unit: "10⁴m³"},
                     ]),
                     (this.managerList = [
                         {val: "DAY_TOTAL_NUMBER_WELLS_PER", name: "日生产总井数", unit: "口"},
@@ -928,8 +928,8 @@ export default {
                 (this.stateList = []),
                     (this.productList = []),
                     (this.totalList = [
-                        {val: "MONTHLY_VE_PROD", name: "年累核实产量", unit: "t"},
-                        {val: "MONTHLY_CUMU_NET_PROD", name: "年累净产量", unit: "t"},
+                        {val: "MONTHLY_VE_PROD", name: "年累核实产量", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMU_NET_PROD", name: "年累净产量", unit: "10⁴m³"},
                     ]),
                     (this.injectList = []),
                     (this.managerList = []);
@@ -938,7 +938,7 @@ export default {
                 (this.stateList = []),
                     (this.productList = [
                         {val: "YEAR_CUMU_PROD_DAILY", name: "年累生产天数", unit: "d"},
-                        {val: "YEAR_CUMUL_INJ_VOLUME", name: "年累注入量", unit: "t"},
+                        {val: "YEAR_CUMUL_INJ_VOLUME", name: "年累注入量", unit: "10⁴m³"},
                     ]),
                     (this.totalList = []),
                     (this.injectList = []),
@@ -955,14 +955,14 @@ export default {
                         {val: "DAILY_INCGAS_PROD", name: "日增产气", unit: "m³"},
                     ]),
                     (this.totalList = [
-                        {val: "MONTHLY_ACCUM_PROD_SOLUT", name: "月累增产液", unit: "t"},
-                        {val: "MONTHLY_CUMUL_INC_OIL_PROD", name: "月累增产油", unit: "t"},
-                        {val: "MONTHLY_CUMUL_INC_WATER_PROD", name: "月累增产水", unit: "t"},
-                        {val: "MONTHLY_CUMUL_INC_GAS_PROD", name: "月累增产气", unit: "t"},
-                        {val: "YEAR_CUMUL_YIELD_INCREASE_LIQUID", name: "年累增产液", unit: "t"},
-                        {val: "YEAR_CUMUL_INCR_OIL_PROD", name: "年累增产油", unit: "t"},
-                        {val: "YEAR_CUMUL_INCR_WATER_PROD", name: "年累增产水", unit: "t"},
-                        {val: "YEAR_CUMUL_INCR_GAS_PROD", name: "年累增产气", unit: "t"},
+                        {val: "MONTHLY_ACCUM_PROD_SOLUT", name: "月累增产液", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMUL_INC_OIL_PROD", name: "月累增产油", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMUL_INC_WATER_PROD", name: "月累增产水", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMUL_INC_GAS_PROD", name: "月累增产气", unit: "10⁴m³"},
+                        {val: "YEAR_CUMUL_YIELD_INCREASE_LIQUID", name: "年累增产液", unit: "10⁴m³"},
+                        {val: "YEAR_CUMUL_INCR_OIL_PROD", name: "年累增产油", unit: "10⁴m³"},
+                        {val: "YEAR_CUMUL_INCR_WATER_PROD", name: "年累增产水", unit: "10⁴m³"},
+                        {val: "YEAR_CUMUL_INCR_GAS_PROD", name: "年累增产气", unit: "10⁴m³"},
                     ]),
                     (this.injectList = []),
                     (this.managerList = [
@@ -1002,8 +1002,8 @@ export default {
                 (this.stateList = []),
                     (this.productList = []),
                     (this.totalList = [
-                        {val: "MONTHLY_VE_PROD", name: "月累核实产量", unit: "t"},
-                        {val: "MONTHLY_CUMU_NET_PROD", name: "月累净产量", unit: "t"},
+                        {val: "MONTHLY_VE_PROD", name: "月累核实产量", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMU_NET_PROD", name: "月累净产量", unit: "10⁴m³"},
                     ]),
                     (this.injectList = []),
                     (this.managerList = []);
@@ -1012,8 +1012,8 @@ export default {
                 (this.stateList = []),
                     (this.productList = []),
                     (this.totalList = [
-                        {val: "MONTHLY_VE_PROD", name: "年累核实产量", unit: "t"},
-                        {val: "MONTHLY_CUMU_NET_PROD", name: "年累净产量", unit: "t"},
+                        {val: "MONTHLY_VE_PROD", name: "年累核实产量", unit: "10⁴m³"},
+                        {val: "MONTHLY_CUMU_NET_PROD", name: "年累净产量", unit: "10⁴m³"},
                     ]),
                     (this.injectList = []),
                     (this.managerList = []);
@@ -1158,7 +1158,7 @@ export default {
                         }else if(key == 'monthlyaccumwaterprod' || key == 'monthlycumufluidprod'|| key == 'monthlycumugasprod'|| key == 'monthlycumuoilprod'
                             || key == 'yearaccumwaterprod'  || key == 'yearcumufluidprod' || key == 'yearcumugasprod' || key == 'yearcumuoilprod'
                             || key == 'monthlycumulativeinjectionvolume'
-                            || key == 'yearcumulativeinjectionvolume'
+                            || key == 'yearcumulativeinjectionvolume' || key == 'yearcumulwaterinjectamount' || key == 'monthlycumulwaterinjectamount'
                         ){
                             data[key] = parseFloat(data[key]/10000).toFixed(4);
                         }
