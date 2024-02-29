@@ -2066,6 +2066,7 @@ export default {
       }
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
+        this.$refs.tableList.clearSort();
       });
       // this.selRadioIterm(this.productionCode,'productionTrendsOptions');
     },
@@ -2630,6 +2631,7 @@ export default {
       this.oldTableData = cloneDeep(this.tableData); //加载数据
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
+        this.$refs.tableList.clearSort();
       });
       // TODO lv 点击后不更改正常异常井数
       // //zxb-重新计算数量

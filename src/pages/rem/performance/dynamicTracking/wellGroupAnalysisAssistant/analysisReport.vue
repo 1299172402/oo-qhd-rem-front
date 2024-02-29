@@ -244,7 +244,7 @@
                     prop="wellId"
                     align="center"
                     label="井组"
-                    width="240px"
+                    width="240"
                     sortable="custom"
                     fixed="left"
                   ></el-table-column>
@@ -809,7 +809,7 @@
                     prop="wellId"
                     align="center"
                     label="井组"
-                    width="240px"
+                    width="240"
                     sortable="custom"
                     fixed="left"
                   ></el-table-column>
@@ -1657,6 +1657,7 @@ export default {
       this.oldTableData = cloneDeep(myData);
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
+        this.$refs.tableList.clearSort();
       });
       // TODO lv 点击后不更改正常异常井数
       // //zxb-重新计算数量

@@ -1998,6 +1998,7 @@ export default {
       this.oldTableData = cloneDeep(myData); //加载数据
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
+        this.$refs.tableList.clearSort();
       });
     },
     //井层指标变化趋势 || 注入动态---zxb
@@ -2860,6 +2861,7 @@ export default {
       this.oldTableData = cloneDeep(myData); //加载数据
       this.$nextTick(() => {
         this.$refs.tableList.doLayout();
+        this.$refs.tableList.clearSort();
         this.$forceUpdate();
       });
       // TODO lv 点击后不更改正常异常井数
