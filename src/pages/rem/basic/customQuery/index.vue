@@ -15,13 +15,13 @@
                                 />
                             </el-select>
                             <span v-show="activeTabIndex == 1" style="padding-left: 20px">平台：</span>
-                            <el-select v-show="activeTabIndex == 1"  v-model="platformId" @change="onPlatfromChange" :disabled="activeEchart">
+                            <el-select v-show="activeTabIndex == 1"  v-model="platformId" multiple  collapse-tags  @change="onPlatfromChange" :disabled="activeEchart">
                                 <el-option v-for="(item, index) in plalist" :key="item.platformId"
                                            :label="item.platformCode"
                                            :value="item.platformId"/>
                             </el-select>
                             <span v-show="activeTabIndex == 1" style="padding-left: 20px">井号：</span>
-                            <el-select v-show="activeTabIndex == 1" filterable v-model="wellId" multiple  collapse-tags :disabled="activeEchart">
+                            <el-select v-show="activeTabIndex == 1" style="width: 260px" filterable v-model="wellId" multiple  collapse-tags :disabled="activeEchart">
                                 <el-option v-for="(item, index) in wellData" :key="index" :label="item.wellName"
                                            :value="item.wellId"/>
                             </el-select>
@@ -56,7 +56,6 @@
                         </div>
                         <div style="display: inline-block; float: right">
                             <el-button
-                                icon="el-icon-search"
                                 style="margin-right: 30px"
                                 type="primary"
                                 @click="doSearch"
@@ -358,6 +357,7 @@ export default {
     data() {
         return {
             // 主数据树结构默认选中的值
+            oldplaid:[],
             defaultCheckedKeys: [],
             params: "",
             key: 1,
@@ -384,7 +384,7 @@ export default {
             dialogVisible: false,
             ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
             wellId: [],
-            platformId:'',
+            platformId:[],
             oilFields: [],
             wellData: [],
             plalist:[],
@@ -552,6 +552,12 @@ export default {
                 this.changeList();
             },
         },
+        // platformId:{
+        //     deep: true,
+        //     handler(newVal,oldval) {
+        //         console.log(newVal,oldval)
+        //     },
+        // }
     },
     created() {
     },
@@ -591,27 +597,28 @@ export default {
             }
         },
        async choicewell(val) {
-            this.platformId = ''
+           this.platformId = ''
            this.wellId = []
            await  QueryPlatformDetail({ogfId:this.ogfId}).then((res)=>{
                this.plalist = res.data.data
-               this.platformId = this.plalist[0].platformId
            })
            await QueryWellDetail({ogfId: this.ogfId,platformId: this.platformId}).then((res) => {
                if (res.data.code == 200) {
                    this.wellData = res.data.data;
-                   this.wellId = [`${res.data.data[0].wellId}`]
                    this.key++
                }
            });
         },
         onPlatfromChange(val) {
+            this.wellData = []
             this.wellId = []
-            QueryWellDetail({platformId: val, ogfId: this.ogfId}).then((res) => {
-                this.wellData = res.data.data;
-                this.wellId = [`${res.data.data[0].wellId}`]
+            val.forEach((plaid)=>{
+                QueryWellDetail({ogfId: this.ogfId,platformId: plaid}).then((res) => {
+                    if (res.data.code == 200) {
+                        this.wellData.push(...res.data.data)
+                    }
+                });
             })
-            // await this.queryserch()
         },
        async initData() {
             //查询条件
@@ -629,12 +636,10 @@ export default {
            })
             await  QueryPlatformDetail({ogfId:this.ogfId}).then((res)=>{
                 this.plalist = res.data.data
-                this.platformId = this.plalist[0].platformId
             })
-            await QueryWellDetail({ogfId: this.ogfId,platformId: this.platformId}).then((res) => {
+            await QueryWellDetail({ogfId: this.ogfId}).then((res) => {
                 if (res.data.code == 200) {
                     this.wellData = res.data.data;
-                    this.wellId = [`${res.data.data[0].wellId}`]
                     this.key++
                 }
             });
@@ -1134,7 +1139,7 @@ export default {
                 endTime: this.selectDate[1], //结束时间
                 wellIdList:this.wellId,
                 dataId: null,//若目标类型为2油田传ogfId,若为井传wellId
-                platformId:this.platformId,
+                platformIdList:this.platformId,
                 ogfId:this.ogfId,
                 pageNum: this.page,//分页页码
                 pageSize: this.pageSize,//每页页数
