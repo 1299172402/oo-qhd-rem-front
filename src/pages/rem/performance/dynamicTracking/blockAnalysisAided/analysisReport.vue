@@ -286,6 +286,7 @@
                     <el-col v-for="(item, index) in stabilityFoundationAnalysisList" :key="index" :span="24">
                       <el-button
                         class="z-button"
+                        :ref="`stabilityFoundationAnalysisListItem${index}`"
                         :class="[item.value > 0 ? 'about1' : '', item.code == indexChangeTrend ? 'selectButton' : '']"
                         v-if="
                           !item.name.includes('正常') &&
@@ -502,7 +503,6 @@
 </template>
 
 <script>
-
 import { fieldOilLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import H5Chart from "@/components/tools/H5Chart/index.vue";
 import H5Chart2 from "@/components/tools/H5Chart/index.vue";
@@ -520,7 +520,7 @@ import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 // Minio
 import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
 import { addRemUploadFileMinio, queryRemUploadFileMinio } from "@/api/rem/remuploadfileminio";
-import {  downFile } from "@/components/upload/utils/file";
+import { downFile } from "@/components/upload/utils/file";
 export default {
   name: "blockAnalysisReport",
   components: { H5Chart, H5Chart2, FileUpload },
@@ -767,11 +767,16 @@ export default {
             let code = this.recoveryAnalysisList[0].code;
             this.selRadioIterm(code, "recoveryAnalysisList");
           } else {
-            this.clickAnalysis();
+            // this.clickAnalysis();
+            setTimeout(() => {
+              if (this.$refs.stabilityFoundationAnalysisListItem0) {
+                this.$refs.stabilityFoundationAnalysisListItem0[0].$el.click();
+              }
+            }, 5000);
           }
         })
         .catch((err) => {
-          // console.log("初始化接口报错!");
+          // console.log("初始化接口报错!",err);
         });
     },
 
@@ -811,19 +816,27 @@ export default {
             reservoirAnalyseUnitNo: "全部",
           });
           //默认选中北区信息
-          this.selectBlock = this.selectOilField;
+          // this.selectBlock = this.selectOilField;
+          let inCludes = this.blocks
+            .map((item) => item.reservoirAnalyseUnitId)
+            .includes("83D33B89B0DAB7DFA440BD060746883A");
+          this.selectBlock = inCludes ? "83D33B89B0DAB7DFA440BD060746883A" : this.selectOilField;
         }
       });
     },
     //获取层位信息
     async fieldOilLayersApi() {
       this.selectPosition = "";
+      this.position = [];
       await fieldOilLayers({ oilFieldId: this.selectOilField, fieldId: this.selectBlock }).then((res) => {
         if (res.data.code == 200) {
           if (res.data.data) {
             this.position = res.data.data.fieldLayers;
             if (!this.selectPosition && this.position && this.position.length) {
-              this.selectPosition = this.position[0].fieldLayerId;
+              let inCludes = this.position
+                .map((item) => item.fieldLayerId)
+                .includes("263518079CED49AE8B6C9FE5CEBDD26A");
+              this.selectPosition = inCludes ? "263518079CED49AE8B6C9FE5CEBDD26A" : this.position[0].fieldLayerId;
             }
           } else {
             this.position = [];

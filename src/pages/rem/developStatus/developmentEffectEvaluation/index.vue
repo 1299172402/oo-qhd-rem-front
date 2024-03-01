@@ -161,9 +161,11 @@ export default {
   },
   methods: {
     //重置
-    resetting() {
-      Object.assign(this.$data, this.$options.data());
-      this.initData();
+    async resetting() {
+      let tabsValue = this.tabsValue;
+      Object.assign(this.$data, this.$options.data(), { tabsValue: tabsValue });
+      await this.initData();
+      this.$refs.childComponents.doSearch();
     },
     //设置页面初始化
     async initData() {
