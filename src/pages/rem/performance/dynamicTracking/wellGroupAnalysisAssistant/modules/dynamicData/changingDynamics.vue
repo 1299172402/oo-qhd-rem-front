@@ -162,11 +162,14 @@ export default {
   },
   data() {
     return {
-      pickerOption: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
+        pickerOption: {
+            disabledDate(time) {
+                let year = new Date().getFullYear();
+                let month = new Date().getMonth() + 1;
+                let days = new Date(year, month, 0).getDate();
+                return time.getTime() > Date.now() - 24 * 60 * 60 * 1000 * days;
+            },
         },
-      },
       picker: {
         disabledDate: (time) => {
           let data = new Date(this.queryData.secondMonth).getTime();
@@ -184,9 +187,9 @@ export default {
   },
   mounted() {
       this.queryData.secondMonth = this.getLastMonth()
-      this.queryData.firstMonth = new Date().format('yyyy-MM');
+      this.queryData.firstMonth = this.getfirstMonth()
       this.secondMonth = this.getLastMonth()
-      this.firstMonth = new Date().format('yyyy-MM');
+      this.firstMonth = this.getfirstMonth()
     this.doSearch();
   },
   methods: {
@@ -201,6 +204,12 @@ export default {
         };
       }
     },
+      getfirstMonth(){
+          const now = new Date();
+          const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+          const secondLastMonth = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+          return secondLastMonth.format('yyyy-MM')
+      },
       getLastMonth() {
           var date = new Date();
           var year = date.getFullYear();   //当前年：四位数字

@@ -45,6 +45,9 @@
             <div>{{ firstMonth }}注水情况</div>
           </template>
           <el-table-column prop="dosage01" :label="`日配注量\n(m³)`" min-width="160" align="center">
+<!--              <template slot-scope="scope">-->
+<!--                  {{scope.row.dosage01.tofiexd(0)}}-->
+<!--              </template>-->
           </el-table-column>
           <el-table-column prop="injectionRatio01" label="注采比" min-width="100" align="center">
           </el-table-column>
@@ -55,7 +58,11 @@
           <template slot="header">
             <div>{{ secondMonth }}注水情况</div>
           </template>
-          <el-table-column prop="dosage02" :label="`日配注量\n(m³)`" min-width="160" align="center"></el-table-column>
+          <el-table-column prop="dosage02" :label="`日配注量\n(m³)`" min-width="160" align="center">
+<!--              <template slot-scope="scope">-->
+<!--                  {{scope.row.dosage02.tofiexd(0)}}-->
+<!--              </template>-->
+          </el-table-column>
           <el-table-column prop="injectionRatio02" label="注采比" min-width="100" align="center">
           </el-table-column>
           <el-table-column prop="injectionStrength02" min-width="160" :label="`注水强度\n(m³*d.m)`" align="center">
@@ -68,7 +75,7 @@
           <el-table-column :label="`日配注量\n(m³)`" min-width="120" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.dosage02 !== undefined && scope.row.dosage02 !== ''&& scope.row.dosage01!==undefined &&scope.row.dosage01 !==''">{{
-                Number(scope.row.dosage02 - scope.row.dosage01).toFixed(2)
+                Number(scope.row.dosage02 - scope.row.dosage01).toFixed(0)
               }}</span>
               <span v-else>-</span>
             </template>
@@ -148,15 +155,34 @@ export default {
   mounted() {
     this.wellGroupname = this.wellGrouplist?.find((obj) => obj.wellGroupId == this.wellGroupId)?.wellGroupName;
     this.queryData.secondMonth = this.getLastMonth()
-    this.queryData.firstMonth = new Date().format('yyyy-MM');
+    this.queryData.firstMonth = this.getfirstMonth()
     this.secondMonth = this.getLastMonth()
-    this.firstMonth = new Date().format('yyyy-MM');
+    this.firstMonth = this.getfirstMonth()
     this.doSearch();
   },
   methods: {
     doSearch() {
       this.getdata();
-    },
+    }, 
+      getLastTwoMonths() {
+    const now = new Date();
+    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const secondLastMonth = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        return `${year}-${month}`;
+    }
+
+    return [formatDate(this.secondLastMonth), formatDate(lastMonth)];
+},
+      getfirstMonth(){
+          const now = new Date();
+          const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+          const secondLastMonth = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+            return secondLastMonth.format('yyyy-MM')
+      },
       getLastMonth() {
           var date = new Date();
           var year = date.getFullYear();   //当前年：四位数字
