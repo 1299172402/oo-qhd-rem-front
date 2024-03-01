@@ -788,8 +788,8 @@ export default {
                     (this.productList = [
                         {val: "MONTHLY_CUMULATIVE_PRODUCTION_TIME", name: "月累生产时长", unit: "h"},
                         {val: "YEAR_CUMULATIVE_PRODUCTION_TIME", name: "年累生产时长", unit: "h"},
-                        {val: "MONTHLY_CUMULATIVE_INJECTION_VOLUME", name: "月累注入量", unit: "m³"},
-                        {val: "YEAR_CUMULATIVE_INJECTION_VOLUME", name: "年累注入量", unit: "m³"},
+                        {val: "MONTHLY_CUMULATIVE_INJECTION_VOLUME", name: "月累注入量", unit: "10⁴m³"},
+                        {val: "YEAR_CUMULATIVE_INJECTION_VOLUME", name: "年累注入量", unit: "10⁴m³"},
                         {val: "REMARK", name: "备注", unit: ""},
                     ]),
                     (this.totalList = []),
@@ -905,10 +905,10 @@ export default {
                     (this.stateList = []),
                         (this.productList = [
                             {val: "YEAR_CUMU_PROD_DAILY", name: "年累生产天数", unit: "d"},
-                            {val: "FLUID_PROD_YEAR", name: "年产液", unit: "m³"},
-                            {val: "OIL_PROD_YEAR", name: "年产油", unit: "m³"},
-                            {val: "WATER_PROD_YEAR", name: "年产水", unit: "m³"},
-                            {val: "GAS_PROD_YEAR", name: "年产气", unit: "m³"},
+                            {val: "FLUID_PROD_YEAR", name: "年产液", unit: "10⁴m³"},
+                            {val: "OIL_PROD_YEAR", name: "年产油", unit: "10⁴m³"},
+                            {val: "WATER_PROD_YEAR", name: "年产水", unit: "10⁴m³"},
+                            {val: "GAS_PROD_YEAR", name: "年产气", unit: "10⁴m³"},
                         ]),
                         (this.totalList = []),
                         (this.injectList = []),
@@ -919,10 +919,10 @@ export default {
                         (this.productList = []),
                         (this.totalList = [
                             {val: "INJ_WATER_YEAR", name: "年注水聚总量", unit: "m³"},
-                            {val: "YEAR_LIQUID_PRODUCT", name: "年产液", unit: "m³"},
-                            {val: "OIL_PRODUCTION_YEAR", name: "年产油", unit: "m³"},
-                            {val: "PROD_WATER_YEAR", name: "年产水", unit: "m³"},
-                            {val: "GAS_PRODUCTION_YEAR", name: "年产气", unit: "m³"},
+                            {val: "YEAR_LIQUID_PRODUCT", name: "年产液", unit: "10⁴m³"},
+                            {val: "OIL_PRODUCTION_YEAR", name: "年产油", unit: "10⁴m³"},
+                            {val: "PROD_WATER_YEAR", name: "年产水", unit: "10⁴m³"},
+                            {val: "GAS_PRODUCTION_YEAR", name: "年产气", unit: "10⁴m³"},
                         ]),
                         (this.injectList = []),
                         (this.managerList = []);
@@ -1082,6 +1082,7 @@ export default {
         confirm() {
             let sqlStrAnd = "",
                 sqlStrOr = "";
+            this.page = 1
             let flag = true;
             this.tableRow.forEach((item) => {
                 if (item.type && item.name && item.model && item.val) {
@@ -1141,7 +1142,7 @@ export default {
                 dataId: null,//若目标类型为2油田传ogfId,若为井传wellId
                 platformIdList:this.platformId,
                 ogfId:this.ogfId,
-                pageNum: this.page,//分页页码
+                pageNum: 1,//分页页码
                 pageSize: this.pageSize,//每页页数
             };
             this.params = params;
@@ -1158,12 +1159,11 @@ export default {
                                 continue;
                             }
                             data[key] = parseFloat(data[key]).toFixed(0);
-                           
-                            
                         }else if(key == 'monthlyaccumwaterprod' || key == 'monthlycumufluidprod'|| key == 'monthlycumugasprod'|| key == 'monthlycumuoilprod'
                             || key == 'yearaccumwaterprod'  || key == 'yearcumufluidprod' || key == 'yearcumugasprod' || key == 'yearcumuoilprod'
                             || key == 'monthlycumulativeinjectionvolume'
                             || key == 'yearcumulativeinjectionvolume' || key == 'yearcumulwaterinjectamount' || key == 'monthlycumulwaterinjectamount'
+                            || key == 'monthlycumunetprod'|| key == 'monthlyveprod'
                         ){
                             data[key] = parseFloat(data[key]/10000).toFixed(4);
                         }
