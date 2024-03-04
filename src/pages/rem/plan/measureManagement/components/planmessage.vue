@@ -223,7 +223,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="120px" :label="`井控储量\n(10⁴m³)`" prop="probReservesWell"
+                    <!-- <el-table-column sortable min-width="120px" :label="`井控储量\n(10⁴m³)`" prop="probReservesWell"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -242,7 +242,7 @@
                                 }}</span>
                             <span v-else>-</span>
                         </template>
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column sortable :label="`采液指数\n（m³/d.MPa）`" min-width="150px"
                                      prop="fluidProductionIndex" align="center">
                         <template slot-scope="scope">
