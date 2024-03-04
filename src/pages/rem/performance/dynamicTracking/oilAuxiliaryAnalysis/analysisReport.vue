@@ -278,7 +278,8 @@
                     selCode == '0060103' ||
                     selCode == '0060104' ||
                     selCode == '0070103' ||
-                    selCode == '0070104')
+                    selCode == '0070104' ||
+                    selCode == '0040103')
                 "
                 @click="
                   $router.push({
