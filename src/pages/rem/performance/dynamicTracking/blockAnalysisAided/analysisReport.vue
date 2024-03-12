@@ -286,7 +286,6 @@
                     <el-col v-for="(item, index) in stabilityFoundationAnalysisList" :key="index" :span="24">
                       <el-button
                         class="z-button"
-                        :ref="`stabilityFoundationAnalysisListItem${index}`"
                         :class="[item.value > 0 ? 'about1' : '', item.code == indexChangeTrend ? 'selectButton' : '']"
                         v-if="
                           !item.name.includes('正常') &&
@@ -767,16 +766,12 @@ export default {
             let code = this.recoveryAnalysisList[0].code;
             this.selRadioIterm(code, "recoveryAnalysisList");
           } else {
-            // this.clickAnalysis();
-            setTimeout(() => {
-              if (this.$refs.stabilityFoundationAnalysisListItem0) {
-                this.$refs.stabilityFoundationAnalysisListItem0[0].$el.click();
-              }
-            }, 5000);
+            this.clickAnalysis();
+            this.queryRemUploadFileMinioApi(true);
           }
         })
         .catch((err) => {
-          // console.log("初始化接口报错!",err);
+          // console.log("初始化接口报错!");
         });
     },
 
@@ -833,6 +828,7 @@ export default {
           if (res.data.data) {
             this.position = res.data.data.fieldLayers;
             if (!this.selectPosition && this.position && this.position.length) {
+              // this.selectPosition = this.position[0].fieldLayerId;
               let inCludes = this.position
                 .map((item) => item.fieldLayerId)
                 .includes("263518079CED49AE8B6C9FE5CEBDD26A");
