@@ -766,7 +766,7 @@ export default {
             let code = this.recoveryAnalysisList[0].code;
             this.selRadioIterm(code, "recoveryAnalysisList");
           } else {
-            this.clickAnalysis();
+            // this.clickAnalysis();
             this.queryRemUploadFileMinioApi(true);
           }
         })
