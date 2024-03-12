@@ -346,7 +346,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px" :label="`最大出砂量(%)`" prop="sandValue" align="center">
+                    <el-table-column sortable min-width="150px" :label="`最大出砂量(%)`" prop="sandValue" align="center">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.sandValue !== null && scope.row.sandValue !== ''">{{
