@@ -5,6 +5,7 @@ export function queryProductionAnalysisList({ assetCode, date, evalResult, wellG
   return request({
     url: `${baseUrl}/productionAnalysis/queryProductionAnalysisList?assetCode=${ assetCode || "" }&date=${ date || "" }&evalResult=${ evalResult || "" }&wellGroupName=${ wellGroupName || "" }&ogfId=${ ogfId || "" }&operationZone=${ operationZone || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }`,
     method: "get",
+      timeout: 30000
   });
 }
 
