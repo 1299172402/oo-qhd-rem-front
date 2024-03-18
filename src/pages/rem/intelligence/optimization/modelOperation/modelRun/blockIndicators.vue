@@ -36,7 +36,7 @@
               <pagePanel :headerTitle="titleBlockData" :show-btn="true"
                          style="height: calc(100% - 10px);z-index:100;position: absolute;top: -20px;left: -0px">
                   <el-table :data="tableList" height="calc(100% - 15px)" style="background-color: rgba(128,128,128,0.5)">
-                      <el-table-column fixed="left" prop="simulationTime" label="时间步" align="center">
+                      <el-table-column fixed="left" prop="simulationDate" label="时间步" align="center">
                       </el-table-column>
                       <el-table-column prop="npv" label="净现值//(元)" :render-header="renderHeader" align="center">
                           <template v-slot="scope">
@@ -174,7 +174,7 @@
               <pagePanel :headerTitle="titleOilData" :show-btn="true"
                          style="height: calc(100% - 10px);z-index:100;position: absolute;top: -20px;left: -0px;">
                   <el-table :data="djtableList" height="calc(100% - 15px)" style="background-color: rgba(128,128,128,0.5)">
-                      <el-table-column fixed="left" prop="simulationTime" label="时间步" align="center">
+                      <el-table-column fixed="left" prop="simulationDate" label="时间步" align="center">
                       </el-table-column>
                       <el-table-column prop="wopt" label="累产油//(m³)" :render-header="renderHeader" align="center">
                           <template v-slot="scope">
@@ -321,7 +321,7 @@ export default {
         },
         xAxis: {
           //type:'category',
-          name: "时间/天",
+          name: "日期",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
             color: "#8FA4CC",
@@ -536,7 +536,7 @@ export default {
         },
         xAxis: {
           //type:'category',
-          name: "时间/天",
+          name: "日期",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
             color: "#8FA4CC",
@@ -751,7 +751,7 @@ export default {
         },
         xAxis: {
           //type:'category',
-          name: "时间/天",
+          name: "日期",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
             color: "#8FA4CC",
@@ -936,7 +936,7 @@ export default {
         },
         xAxis: {
           //type:'category',
-          name: "时间/天",
+          name: "日期",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
             color: "#8FA4CC",
@@ -1079,7 +1079,7 @@ export default {
         },
         xAxis: {
           //type:'category',
-          name: "时间/天",
+          name: "日期",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
             color: "#8FA4CC",
@@ -1222,7 +1222,7 @@ export default {
         },
         xAxis: {
           //type:'category',
-          name: "时间/天",
+          name: "日期",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
             color: "#8FA4CC",
@@ -1365,7 +1365,7 @@ export default {
         },
         xAxis: {
           //type:'category',
-          name: "时间/天",
+          name: "日期",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
             color: "#8FA4CC",
@@ -1564,7 +1564,7 @@ export default {
         },
         xAxis: {
           //type:'category',
-          name: "时间/天",
+          name: "日期",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
             color: "#8FA4CC",
@@ -1763,7 +1763,7 @@ export default {
         },
         xAxis: {
           //type:'category',
-          name: "时间/天",
+          name: "日期",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
             color: "#8FA4CC",
@@ -1948,7 +1948,7 @@ export default {
         },
         xAxis: {
           //type:'category',
-          name: "时间/天",
+          name: "日期",
           nameTextStyle: {
             padding: [0, 0, -60, -30],
             color: "#8FA4CC",
