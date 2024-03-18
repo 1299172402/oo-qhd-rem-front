@@ -284,6 +284,7 @@ export function postWellgroupRevise (data) {
     return request({
         url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/updateWellGroup`,
         method: "post",
+        timeout:300000,
         data,
     });
 }
