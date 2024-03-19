@@ -33,7 +33,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="井号：">
-                    <el-select v-model="wellId" class="f2" @change="OilfieldBut">
+                    <el-select v-model="wellId" class="f2" @change="queryWellData1">
                         <el-option
                             v-for="item in params.wellIdList"
                             :key="item.wellId"
@@ -42,17 +42,17 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="时间：">
-                    <el-date-picker
-                        v-model="params.value"
-                        type="daterange"
-                        range-separator="-"
-                        style="width: 250px"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        value-format="yyyy-MM-dd"
-                    ></el-date-picker>
-                </el-form-item>
+<!--                <el-form-item label="时间：">-->
+<!--                    <el-date-picker-->
+<!--                        v-model="params.value"-->
+<!--                        type="daterange"-->
+<!--                        range-separator="-"-->
+<!--                        style="width: 250px"-->
+<!--                        start-placeholder="开始日期"-->
+<!--                        end-placeholder="结束日期"-->
+<!--                        value-format="yyyy-MM-dd"-->
+<!--                    ></el-date-picker>-->
+<!--                </el-form-item>-->
                 <el-button type="primary" class="confirmBut" icon="el-icon-search" disabled>搜索</el-button>
                 <el-button type="primary" class="commonBtn" icon="el-icon-refresh" disabled>重置</el-button>
                 <el-button type="primary" class="confirmBut" icon="el-icon-back" style="float: right" @click="returned">返回</el-button>
@@ -319,6 +319,7 @@ export default {
         }
         return {
             well: [],
+            wellName: undefined,
             wellId: undefined, //井号
             //井别下拉框
             wellCategoryList: [
@@ -505,6 +506,27 @@ export default {
                 this.queryWellData();
             });
         },
+        queryWellData1() {
+
+            var welltypeName=null;
+            if(this.params.wellCategory==="01"){
+                welltypeName='采油井'
+            }else {
+                welltypeName='注水井'
+            }
+            getWellDataForWellStyle({blockId:this.params.blockId.value,ogfId:this.params.ogfId.value,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
+                this.params.wellIdList=res.data.data
+                for(var i=0;i<this.params.wellIdList.length;i++){
+                    if(this.params.wellIdList[i].wellId===this.wellId){
+                        this.wellId=this.params.wellIdList[i].wellId
+                        this.wellName=this.params.wellIdList[i].wellName
+                    }
+                }
+                
+                this.OilfieldBut()
+
+            });
+        },
         queryWellData() {
             
             var welltypeName=null;
@@ -518,6 +540,7 @@ export default {
                 for(var i=0;i<this.params.wellIdList.length;i++){
                     if(this.params.wellIdList[i].wellId==='DA0269628E74490ABDE198E7D1DBF3EA'){
                         this.wellId=this.params.wellIdList[i].wellId
+                        this.wellName=this.params.wellIdList[i].wellName
                     }
                 }
                 this.OilfieldBut()
@@ -728,7 +751,7 @@ export default {
             }
             if (this.params.wellCategory === "01") {
                 postdividingCoefficient({
-                    wellName: wellName,
+                    wellName: this.wellName,
                     wellId: this.wellId,
                     wellType: this.params.wellCategory,
                     blockId: this.params.blockId.value,
@@ -765,6 +788,7 @@ export default {
                     ogfId: this.params.ogfId.value,
                     wellId: this.wellId,
                     blockId: this.params.blockId.value,
+                    wellName: this.wellName
                 }).then((res) => {
                     this.tableData = res.map(item => {
                         item.id = item.intervId;

@@ -108,6 +108,7 @@
                     @click="modify = !modify"
                 >更改
                 </el-button>
+                
                 <el-button
                     type="primary"
                     size="mini"
@@ -117,6 +118,15 @@
                     :disabled="disabledComp || !form.tableData.length"
                     @click="preserve('form')"
                 >保存
+                </el-button>
+                <el-button
+                        type="primary"
+                        size="mini"
+
+                        style="margin-left: 50px; width: 70px"
+                        :disabled="disabledComp || !form.tableData.length"
+                        @click="modify = !modify"
+                >更新模型
                 </el-button>
                 <el-button
                     type="primary"
