@@ -391,7 +391,7 @@
                           :content="row[item.code + 'Message']"
                           placement="top"
                         >
-                          <span>{{ row[item.code] ? row[item.code] : "-" }}</span>
+                          <span>{{ row[item.code + "Message"] ? row[item.code + "Message"] : "-" }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -989,7 +989,7 @@
                           :content="row[item.code + 'Message']"
                           placement="top"
                         >
-                          <span>{{ row[item.code] ? row[item.code] : "-" }}</span>
+                          <span>{{ row[item.code + "Message"] ? row[item.code + "Message"] : "-" }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
