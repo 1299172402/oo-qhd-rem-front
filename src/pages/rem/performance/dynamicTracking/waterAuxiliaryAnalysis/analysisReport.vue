@@ -448,7 +448,7 @@
                     </el-table-column>
                     <el-table-column label="操作" align="center">
                       <template slot-scope="scope">
-                        <el-button type="text" @click="openAnalysis(scope.row.wellId)">分析</el-button>
+                        <el-button type="text" @click="openAnalysis(scope.row.wellId,scope.row.isLayer,scope.row.wellIdParent)">分析</el-button>
                       </template>
                     </el-table-column>
                   </el-table-column>
@@ -1046,7 +1046,7 @@
                     </el-table-column>
                     <el-table-column label="操作" align="center">
                       <template slot-scope="scope">
-                        <el-button type="text" @click="openAnalysis(scope.row.wellId)">分析</el-button>
+                        <el-button type="text" @click="openAnalysis(scope.row.wellId,scope.row.isLayer,scope.row.wellIdParent)">分析</el-button>
                       </template>
                     </el-table-column>
                   </el-table-column>
@@ -1534,6 +1534,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                     [key2]: evalBasisLayers[a].itemValue,
                   });
@@ -1544,6 +1546,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                   [key2]: el.itemValue,
                 });
@@ -1603,6 +1607,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                     [key2]: evalBasisLayers[a].itemValue,
                   });
@@ -1669,6 +1675,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                   });
                 }
@@ -1678,6 +1686,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -1732,6 +1742,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                   });
                 }
@@ -1741,6 +1753,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -1795,6 +1809,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                   });
                 }
@@ -1804,6 +1820,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -1858,6 +1876,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                   });
                 }
@@ -1867,6 +1887,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -1921,6 +1943,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                   });
                 }
@@ -1930,6 +1954,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2310,6 +2336,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                     [key2]: evalBasisLayers[a].itemValue,
                   });
@@ -2320,6 +2348,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                   [key2]: el.itemValue,
                 });
@@ -2389,6 +2419,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                   [key2]: el.itemValue,
                 });
@@ -2453,6 +2485,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2516,6 +2550,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2579,6 +2615,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2642,6 +2680,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2705,6 +2745,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2893,12 +2935,12 @@ export default {
       }
     },
     //跳转到分析
-    openAnalysis(wellNumber) {
+    openAnalysis(wellNumber,isLayer,wellIdParent) {
       this.$router.push({
         name: "WaterAuxiliaryAnalysis",
         query: {
           oilField: this.selYtdm,
-          wellId: wellNumber,
+          wellId: isLayer ?  wellIdParent : wellNumber,
         },
       });
     },

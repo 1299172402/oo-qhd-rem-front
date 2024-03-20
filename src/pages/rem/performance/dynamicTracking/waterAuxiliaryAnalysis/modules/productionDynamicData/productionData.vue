@@ -21,9 +21,9 @@
       >
         <el-option
           v-for="item in position"
-          :key="item.fieldLayerId"
+          :key="item.layerId"
           :label="item.layerName"
-          :value="item.fieldLayerId"
+          :value="item.layerId"
         ></el-option>
       </el-select>
       <el-button type="primary" icon="el-icon-search" @click="doSearch">搜索</el-button>
@@ -62,6 +62,7 @@
 
 <script>
 import { fieldLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
+import { getLayerInfo } from "@/api/oilDeposit/ipm-02/injectsinglewell.js";
 import { produceData } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import Echarts from "@/components/tools/Echarts/index.vue";
 import FileSaver from "file-saver";
@@ -423,14 +424,19 @@ export default {
     // this.height = document.getElementsByClassName("z-main")[0].offsetHeight - 40 - 60 - 10;
     let year = new Date().getFullYear();
     this.selectData = [new Date(year + "-01-01").format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
-    this.fieldLayersApi();
+    // this.fieldLayersApi();
   },
   watch: {
     wellId(newVal) {
       if (newVal) {
-        fieldLayers({ oilFieldId: this.oilFeildId, wellId: this.wellId }).then((res) => {
-          if (res.data.code == 200 && res.data.data && res.data.data.fieldLayers && res.data.data.fieldLayers.length) {
-            this.position = res.data.data.fieldLayers;
+        // fieldLayers({ oilFieldId: this.oilFeildId, wellId: this.wellId }).then((res) => {
+        //   if (res.data.code == 200 && res.data.data && res.data.data.fieldLayers && res.data.data.fieldLayers.length) {
+        //     this.position = res.data.data.fieldLayers;
+        //   }
+        // });
+        getLayerInfo(this.wellId).then((res) => {
+          if (res.data.code == 200 && res.data.data && res.data.data.length) {
+            this.position = res.data.data;
           }
         });
       } else {
@@ -440,10 +446,15 @@ export default {
   },
   methods: {
     async fieldLayersApi() {
-      await fieldLayers({ oilFieldId: this.oilFeildId, wellId: this.wellId }).then((res) => {
-        if (res.data.code == 200 && res.data.data && res.data.data.fieldLayers && res.data.data.fieldLayers.length) {
-          this.position = res.data.data.fieldLayers;
-          this.doSearch();
+      // await fieldLayers({ oilFieldId: this.oilFeildId, wellId: this.wellId }).then((res) => {
+      //   if (res.data.code == 200 && res.data.data && res.data.data.fieldLayers && res.data.data.fieldLayers.length) {
+      //     this.position = res.data.data.fieldLayers;
+      //     this.doSearch();
+      //   }
+      // });
+      await getLayerInfo(this.wellId).then((res) => {
+        if (res.data.code == 200 && res.data.data && res.data.data.length) {
+          this.position = res.data.data;
         }
       });
     },
