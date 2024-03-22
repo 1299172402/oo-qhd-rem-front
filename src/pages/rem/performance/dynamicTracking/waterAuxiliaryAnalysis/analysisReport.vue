@@ -360,7 +360,7 @@
                             :content="row[item.code + 'Message']"
                             placement="top"
                           >
-                            <span>{{ row[item.code + "Message"] ? row[item.code + "Message"] : "-" }}</span>
+                            <span>{{ row[item.code ] ? row[item.code ] : "-" }}</span>
                           </el-tooltip>
                           <img
                             src="@/assets/rem/yieId/upTriangle.png"
@@ -950,7 +950,7 @@
                             :content="row[item.code + 'Message']"
                             placement="top"
                           >
-                            <span>{{ row[item.code + "Message"] ? row[item.code + "Message"] : "-" }}</span>
+                            <span>{{ row[item.code] ? row[item.code] : "-" }}</span>
                           </el-tooltip>
 
                           <img
@@ -1713,7 +1713,10 @@ export default {
             messData = t_data.basis.find((item) => {
               return item.well == myWellId;
             });
-            myData[i]["theGroundBecauseMessage"] = messData ? (messData.message ? messData.message : "") : "";
+            // myData[i]["theGroundBecauseMessage"] = messData ? (messData.message ? messData.message : "") : "";
+            myData[i][t_data.code + "Message"] = messData && messData.message ? messData.message : "";
+            myData[i][t_data.code] = messData && messData.itemValue ? messData.itemValue : "";
+            myData[i].id = Math.random() * 3;
           }
           //选中项目不需要测试
           if (val == t_data.code) {
@@ -2512,7 +2515,10 @@ export default {
             messData = t_data.basis.find((item) => {
               return item.well == myWellId;
             });
-            myData[i]["theGroundBecauseMessage"] = messData ? (messData.message ? messData.message : "") : "";
+            // myData[i]["theGroundBecauseMessage"] = messData ? (messData.message ? messData.message : "") : "";
+            myData[i][t_data.code + "Message"] = messData && messData.message ? messData.message : "";
+            myData[i][t_data.code] = messData && messData.itemValue ? messData.itemValue : "";
+            myData[i].id = Math.random() * 3;
           }
           //选中项目不需要测试
           if (val == t_data.code) {
@@ -2816,7 +2822,7 @@ export default {
           if (t_data.unit) {
             unit = t_data.unit.replace("m3", "m³");
           }
-          if (t_data.flag !== "0") {
+          if (t_data.name != "正常" && t_data.flag !== "0") {
             this.trendOfIndicatorsTab.push({
               code: t_data.code,
               name: titleName,
@@ -2835,7 +2841,7 @@ export default {
           t_count = 0; //初始化
         }
         this.zsqdForm[j].value = t_count; //登记条数
-        if (t_count > 0) {
+        if (t_count > 0 && t_data.name != "正常" && t_data.flag !== "0" ) {
           this.trendOfIndicatorsTab.push({
             code: t_data.code,
             name: t_data.name,
@@ -2864,6 +2870,13 @@ export default {
           t_count = 0; //初始化
         }
         this.theGroundBecause[j].value = t_count; //登记条数
+        if (t_count > 0 && t_data.name != "正常" && t_data.flag !== "0" ) {
+          this.trendOfIndicatorsTab.push({
+            code: t_data.code,
+            name: t_data.name,
+            unit: "m³/d·m",
+          });
+        }
       }
       //井筒原因 wellboreReason
       for (let j = 0; j < this.wellboreReason.length; j++) {
