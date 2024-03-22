@@ -360,7 +360,7 @@
                             :content="row[item.code + 'Message']"
                             placement="top"
                           >
-                            <span>{{ row[item.code] ? row[item.code] : "-" }}</span>
+                            <span>{{ row[item.code ] ? row[item.code ] : "-" }}</span>
                           </el-tooltip>
                           <img
                             src="@/assets/rem/yieId/upTriangle.png"
@@ -391,7 +391,7 @@
                           :content="row[item.code + 'Message']"
                           placement="top"
                         >
-                          <span>{{ row[item.code] ? row[item.code] : "-" }}</span>
+                          <span>{{ row[item.code + "Message"] ? row[item.code + "Message"] : "-" }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -414,7 +414,7 @@
                           :content="row[item.code + 'Message']"
                           placement="top"
                         >
-                          <span>{{ row[item.code] ? row[item.code] : "-" }}</span>
+                          <span>{{ row[item.code + "Message"] ? row[item.code + "Message"] : "-" }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -448,7 +448,11 @@
                     </el-table-column>
                     <el-table-column label="操作" align="center">
                       <template slot-scope="scope">
-                        <el-button type="text" @click="openAnalysis(scope.row.wellId)">分析</el-button>
+                        <el-button
+                          type="text"
+                          @click="openAnalysis(scope.row.wellId, scope.row.isLayer, scope.row.wellIdParent)"
+                          >分析</el-button
+                        >
                       </template>
                     </el-table-column>
                   </el-table-column>
@@ -989,7 +993,7 @@
                           :content="row[item.code + 'Message']"
                           placement="top"
                         >
-                          <span>{{ row[item.code] ? row[item.code] : "-" }}</span>
+                          <span>{{ row[item.code + "Message"] ? row[item.code + "Message"] : "-" }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -1012,7 +1016,7 @@
                           :content="row[item.code + 'Message']"
                           placement="top"
                         >
-                          <span>{{ row[item.code] ? row[item.code] : "-" }}</span>
+                          <span>{{ row[item.code + "Message"] ? row[item.code + "Message"] : "-" }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -1046,7 +1050,11 @@
                     </el-table-column>
                     <el-table-column label="操作" align="center">
                       <template slot-scope="scope">
-                        <el-button type="text" @click="openAnalysis(scope.row.wellId)">分析</el-button>
+                        <el-button
+                          type="text"
+                          @click="openAnalysis(scope.row.wellId, scope.row.isLayer, scope.row.wellIdParent)"
+                          >分析</el-button
+                        >
                       </template>
                     </el-table-column>
                   </el-table-column>
@@ -1334,7 +1342,7 @@ export default {
         t_data.value = t_count; //登记条数
         if (t_count > 0) {
           let unit = t_data.unit ? t_data.unit.replace("m3", "m³") : "";
-          if (t_data.name != "正常") {
+          if (t_data.name != "正常" && t_data.flag !== "0") {
             this.trendOfIndicatorsTab.push({
               code: t_data.code,
               name: t_data.name,
@@ -1534,6 +1542,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                     [key2]: evalBasisLayers[a].itemValue,
                   });
@@ -1544,6 +1554,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                   [key2]: el.itemValue,
                 });
@@ -1603,6 +1615,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                     [key2]: evalBasisLayers[a].itemValue,
                   });
@@ -1669,6 +1683,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                   });
                 }
@@ -1678,6 +1694,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -1695,7 +1713,10 @@ export default {
             messData = t_data.basis.find((item) => {
               return item.well == myWellId;
             });
-            myData[i]["theGroundBecauseMessage"] = messData ? (messData.message ? messData.message : "") : "";
+            // myData[i]["theGroundBecauseMessage"] = messData ? (messData.message ? messData.message : "") : "";
+            myData[i][t_data.code + "Message"] = messData && messData.message ? messData.message : "";
+            myData[i][t_data.code] = messData && messData.itemValue ? messData.itemValue : "";
+            myData[i].id = Math.random() * 3;
           }
           //选中项目不需要测试
           if (val == t_data.code) {
@@ -1732,6 +1753,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                   });
                 }
@@ -1741,6 +1764,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -1795,6 +1820,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                   });
                 }
@@ -1804,6 +1831,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -1858,6 +1887,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                   });
                 }
@@ -1867,6 +1898,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -1921,6 +1954,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                   });
                 }
@@ -1930,6 +1965,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2310,6 +2347,8 @@ export default {
                   children.push({
                     id: Math.random() * 3,
                     wellId: evalBasisLayers[a].layerCode,
+                    wellIdParent: myWellId,
+                    isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                     [key2]: evalBasisLayers[a].itemValue,
                   });
@@ -2320,6 +2359,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                   [key2]: el.itemValue,
                 });
@@ -2389,6 +2430,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                   [key2]: el.itemValue,
                 });
@@ -2453,6 +2496,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2470,7 +2515,10 @@ export default {
             messData = t_data.basis.find((item) => {
               return item.well == myWellId;
             });
-            myData[i]["theGroundBecauseMessage"] = messData ? (messData.message ? messData.message : "") : "";
+            // myData[i]["theGroundBecauseMessage"] = messData ? (messData.message ? messData.message : "") : "";
+            myData[i][t_data.code + "Message"] = messData && messData.message ? messData.message : "";
+            myData[i][t_data.code] = messData && messData.itemValue ? messData.itemValue : "";
+            myData[i].id = Math.random() * 3;
           }
           //选中项目不需要测试
           if (val == t_data.code) {
@@ -2516,6 +2564,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2579,6 +2629,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2642,6 +2694,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2705,6 +2759,8 @@ export default {
                 children.push({
                   id: Math.random() * 3,
                   wellId: el.layerCode,
+                  wellIdParent: myWellId,
+                  isLayer: true,
                   [key1]: el.message,
                 });
               });
@@ -2766,11 +2822,13 @@ export default {
           if (t_data.unit) {
             unit = t_data.unit.replace("m3", "m³");
           }
-          this.trendOfIndicatorsTab.push({
-            code: t_data.code,
-            name: titleName,
-            unit,
-          });
+          if (t_data.name != "正常" && t_data.flag !== "0") {
+            this.trendOfIndicatorsTab.push({
+              code: t_data.code,
+              name: titleName,
+              unit,
+            });
+          }
         }
       }
       //注水强度zsqdForm
@@ -2783,7 +2841,7 @@ export default {
           t_count = 0; //初始化
         }
         this.zsqdForm[j].value = t_count; //登记条数
-        if (t_count > 0) {
+        if (t_count > 0 && t_data.name != "正常" && t_data.flag !== "0" ) {
           this.trendOfIndicatorsTab.push({
             code: t_data.code,
             name: t_data.name,
@@ -2812,6 +2870,13 @@ export default {
           t_count = 0; //初始化
         }
         this.theGroundBecause[j].value = t_count; //登记条数
+        if (t_count > 0 && t_data.name != "正常" && t_data.flag !== "0" ) {
+          this.trendOfIndicatorsTab.push({
+            code: t_data.code,
+            name: t_data.name,
+            unit: "m³/d·m",
+          });
+        }
       }
       //井筒原因 wellboreReason
       for (let j = 0; j < this.wellboreReason.length; j++) {
@@ -2893,12 +2958,12 @@ export default {
       }
     },
     //跳转到分析
-    openAnalysis(wellNumber) {
+    openAnalysis(wellNumber, isLayer, wellIdParent) {
       this.$router.push({
         name: "WaterAuxiliaryAnalysis",
         query: {
           oilField: this.selYtdm,
-          wellId: wellNumber,
+          wellId: isLayer ? wellIdParent : wellNumber,
         },
       });
     },
