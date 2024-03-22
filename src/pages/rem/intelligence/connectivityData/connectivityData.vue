@@ -72,30 +72,29 @@
             style="color: white; height: calc(100% - 105px);width: 100%;"
         >
             <div style="">
-                <el-button
-                    type="primary"
-                    size="mini"
-                    class="confirmBut"
-                    :loading="btnLoad"
-                    icon="el-icon-cpu"
-                    @click="Correction(1)"
-                >运算
-                </el-button>
-                <el-button
-                    type="primary"
-                    size="mini"
-                    :loading="btnLoad"
-                    class="confirmBut"
-                    icon="el-icon-s-tools"
-                    @click="Correction(2)"
-                >修正
-                </el-button>
+<!--                <el-button-->
+<!--                    type="primary"-->
+<!--                    size="mini"-->
+<!--                    class="confirmBut"-->
+<!--                    :loading="btnLoad"-->
+<!--                    icon="el-icon-cpu"-->
+<!--                    @click="Correction(1)"-->
+<!--                >运算-->
+<!--                </el-button>-->
+<!--                <el-button-->
+<!--                    type="primary"-->
+<!--                    size="mini"-->
+<!--                    :loading="btnLoad"-->
+<!--                    class="confirmBut"-->
+<!--                    icon="el-icon-s-tools"-->
+<!--                    @click="Correction(2)"-->
+<!--                >修正-->
+<!--                </el-button>-->
                 <el-button
                     type="primary"
                     size="mini"
                     class="confirmBut"
                     icon="el-icon-refresh"
-                    :disabled="!isComputed && !isCorrected"
                     @click="handleExchange"
                 >置换
                 </el-button>
@@ -103,7 +102,7 @@
                     type="primary"
                     size="mini"
                     icon="el-icon-edit"
-                    style="margin-left: 50px; width: 70px"
+                    style="margin-left: 0px; width: 70px"
                     :disabled="disabledComp || !form.tableData.length"
                     @click="modify = !modify"
                 >更改
@@ -122,10 +121,8 @@
                 <el-button
                         type="primary"
                         size="mini"
-
-                        style="margin-left: 50px; width: 70px"
-                        :disabled="disabledComp || !form.tableData.length"
-                        @click="modify = !modify"
+                        style="margin-left: 50px; width: 140px"
+                        @click="tableOilfield1"
                 >更新模型
                 </el-button>
                 <el-button
@@ -149,64 +146,64 @@
                 >
                     <el-table-column prop="wellGroupName" min-width="200" label="井组名称"
                                      align="center"></el-table-column>
-                    <el-table-column prop="injWellNo" min-width="140" label="水井井号"
+                    <el-table-column prop="waterWellNo" min-width="140" label="水井井号"
                                      align="center"></el-table-column>
                     <el-table-column prop="layerName" label="层位名称" min-width="200"
                                      align="center"></el-table-column>
-                    <el-table-column prop="proWellNo" label="油井井号" min-width="140"
+                    <el-table-column prop="oilWellNo" label="油井井号" min-width="140"
                                      align="center"></el-table-column>
-                    <el-table-column prop="diviDingCoeff" label="连通系数?(动态调整)" min-width="120"
+                    <el-table-column prop="dynamicAdjustCoefficient" label="连通系数?(动态调整)" min-width="120"
                                      align="center" :render-header="renderheader" show-overflow-tooltip
                                      class="lian">
                         <template slot-scope="scope">
                             <el-form-item
                                 v-if="modify"
-                                :prop="'tableData.'+scope.$index+'.diviDingCoeff'"
+                                :prop="'tableData.'+scope.$index+'.dynamicAdjustCoefficient'"
                                 :rules="rules.injDividingCoeff"
                             >
                                 <el-input
-                                    v-model="scope.row.diviDingCoeff"
+                                    v-model="scope.row.dynamicAdjustCoefficient"
                                     placeholder="连通系数(动态调整)"
                                     @blur="veitBut"
                                 />
                             </el-form-item>
-                            <span v-else>{{ scope.row.diviDingCoeff }}</span>
+                            <span v-else>{{ scope.row.dynamicAdjustCoefficient }}</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="injSplitData" label="劈分注水量?m³/d" :render-header="renderheader"
+                    <el-table-column prop="adjustInjalloc" label="劈分注水量?m³/d" :render-header="renderheader"
                                      show-overflow-tooltip min-width="125px" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.injSplitData !== null && scope.row.injSplitData !== ''">{{scope.row.injSplitData}}</span>
+                            <span v-if="scope.row.adjustInjalloc !== null && scope.row.adjustInjalloc !== ''">{{scope.row.adjustInjalloc}}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="operationalNarration" label="静态连通性系数" min-width="120"
+                    <el-table-column prop="staticCoefficient" label="静态连通性系数" min-width="120"
                                      :render-header="renderheader" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.operationalNarration !== null && scope.row.operationalNarration !== ''">{{scope.row.operationalNarration}}</span>
+                            <span v-if="scope.row.staticCoefficient !== null && scope.row.staticCoefficient !== ''">{{scope.row.staticCoefficient}}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="operationInjSplitData" label="劈分注水量?m³/d"
+                    <el-table-column prop="staticInjalloc" label="劈分注水量?m³/d"
                                      :render-header="renderheader" show-overflow-tooltip min-width="120px"
                                      align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.operationInjSplitData !== null && scope.row.operationInjSplitData !== ''">{{scope.row.operationInjSplitData}}</span>
+                            <span v-if="scope.row.staticInjalloc !== null && scope.row.staticInjalloc !== ''">{{scope.row.staticInjalloc}}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="correctionFactor" label="动态连通性系数" min-width="120"
+                    <el-table-column prop="dynamicCoefficient" label="动态连通性系数" min-width="120"
                                      :render-header="renderheader" align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.correctionFactor !== null && scope.row.correctionFactor !== ''">{{scope.row.correctionFactor}}</span>
+                            <span v-if="scope.row.dynamicCoefficient !== null && scope.row.dynamicCoefficient !== ''">{{scope.row.dynamicCoefficient}}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="reviseInjSplitData" label="劈分注水量?m³/d"
+                    <el-table-column prop="dynamicInjalloc" label="劈分注水量?m³/d"
                                      :render-header="renderheader" show-overflow-tooltip min-width="120px"
                                      align="center">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.reviseInjSplitData !== null && scope.row.reviseInjSplitData !== ''">{{scope.row.reviseInjSplitData}}</span>
+                            <span v-if="scope.row.dynamicInjalloc !== null && scope.row.dynamicInjalloc !== ''">{{scope.row.dynamicInjalloc}}</span>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
@@ -289,7 +286,8 @@
 // import queryConditionMixin from "@/mixins/queryConditionMixin.js";
 import {
     postCoefficientConnectionpreserve, //保存
-    getCorrectionOperation, //运算与修正
+    getCorrectionOperation,
+    getCorrectResult,//运算与修正
     downLoadUnicomModeloperationDto
 } from "@/api/rem/r-wellConnectEvaluate.js";
 import {getuserListByUserNames,getFieldListsDetail,getblockData} from "@/api/basic/masterBycoderXu.js"
@@ -309,7 +307,7 @@ export default {
             let arr = 0
             this.form.tableData.forEach(item => {
                 if (this.form.tableData[index].wellGroupName === item.wellGroupName) {
-                    arr += item.diviDingCoeff - 0
+                    arr += item.dynamicAdjustCoefficient - 0
                 }
             });
             if ((arr >= 0.99 && arr <= 1.01) || arr === 0) {
@@ -489,7 +487,6 @@ export default {
             (this.queryData.dateTime = this.eeee());
             (this.tableOilfield());
         },
-        // 获取油田列表数据
         tableOilfield() {
             let params = {
                 blockId: this.queryData.blockId,
@@ -499,32 +496,107 @@ export default {
             this.form.wellGroupIds = []
             this.form.wellGroupList = []
             try{
-                getCorrectionOperation(params).then((res) => {
-                if (Array.isArray(res)) {
-                    this.disabledDateTime = res[0].updateYearMonth ? res[0].updateYearMonth : null
-                }
-                if (res[0].wellGroupId == null) {
-                    this.form.tableData = [];
-                } else {
-                    res.forEach(item => {
-                        item.diviDingCoeff = String(item.diviDingCoeff)
-                        if (!this.form.wellGroupIds.includes(item.wellGroupId)) {
-                            this.form.wellGroupIds.push(item.wellGroupId)
-                            this.form.wellGroupList.push({
-                                wellGroupName: item.wellGroupName,
-                                wellGroupId: item.wellGroupId
-                            })
-                        }
-                    })
-                    this.form.tableData = res;
-                }
-                this.$set(this.form, 'tableData', this.form.tableData)
-                this.getSpanArr(this.form.tableData)
-            });
+                getCorrectResult(params).then((res) => {
+                    console.log('123333')
+                    console.log(res)
+                    if (Array.isArray(res)) {
+                        this.disabledDateTime = res[0].updateTime ? res[0].updateTime : null
+                    }
+                    if (res[0].wellGroupId == null) {
+                        this.form.tableData = [];
+                    } else {
+                        res.forEach(item => {
+                            item.dynamicAdjustCoefficient = String(item.dynamicAdjustCoefficient)
+                            if (!this.form.wellGroupIds.includes(item.wellGroupId)) {
+                                this.form.wellGroupIds.push(item.wellGroupId)
+                                this.form.wellGroupList.push({
+                                    wellGroupName: item.wellGroupName,
+                                    wellGroupId: item.wellGroupId
+                                })
+                            }
+                        })
+                        this.form.tableData = res;
+                    }
+                    // this.$set(this.form, 'tableData', this.form.tableData)
+                    this.getSpanArr(this.form.tableData)
+                });
             }catch(e){
-                console.log("查询月份没有数据")
+                console.log("查询月份没有数据"+e)
             }
         },
+        tableOilfield1() {
+            let params = {
+                blockId: this.queryData.blockId,
+                type: 1,
+                dateTime: this.queryData.dateTime,
+            };
+            this.form.wellGroupIds = []
+            this.form.wellGroupList = []
+            try{
+                getCorrectResult(params).then((res) => {
+                    console.log('123333')
+                    console.log(res)
+                    if (Array.isArray(res)) {
+                        this.disabledDateTime = res[0].updateTime ? res[0].updateTime : null
+                    }
+                    if (res[0].wellGroupId == null) {
+                        this.form.tableData = [];
+                    } else {
+                        res.forEach(item => {
+                            item.dynamicAdjustCoefficient = String(item.dynamicAdjustCoefficient)
+                            if (!this.form.wellGroupIds.includes(item.wellGroupId)) {
+                                this.form.wellGroupIds.push(item.wellGroupId)
+                                this.form.wellGroupList.push({
+                                    wellGroupName: item.wellGroupName,
+                                    wellGroupId: item.wellGroupId
+                                })
+                            }
+                        })
+                        this.form.tableData = res;
+                    }
+                    // this.$set(this.form, 'tableData', this.form.tableData)
+                    this.getSpanArr(this.form.tableData)
+                });
+            }catch(e){
+                console.log("查询月份没有数据"+e)
+            }
+        },
+        // 获取油田列表数据
+        // tableOilfield() {
+        //     let params = {
+        //         blockId: this.queryData.blockId,
+        //         type: 0,
+        //         dateTime: this.queryData.dateTime,
+        //     };
+        //     this.form.wellGroupIds = []
+        //     this.form.wellGroupList = []
+        //     try{
+        //         getCorrectionOperation(params).then((res) => {
+        //         if (Array.isArray(res)) {
+        //             this.disabledDateTime = res[0].updateYearMonth ? res[0].updateYearMonth : null
+        //         }
+        //         if (res[0].wellGroupId == null) {
+        //             this.form.tableData = [];
+        //         } else {
+        //             res.forEach(item => {
+        //                 item.diviDingCoeff = String(item.diviDingCoeff)
+        //                 if (!this.form.wellGroupIds.includes(item.wellGroupId)) {
+        //                     this.form.wellGroupIds.push(item.wellGroupId)
+        //                     this.form.wellGroupList.push({
+        //                         wellGroupName: item.wellGroupName,
+        //                         wellGroupId: item.wellGroupId
+        //                     })
+        //                 }
+        //             })
+        //             this.form.tableData = res;
+        //         }
+        //         this.$set(this.form, 'tableData', this.form.tableData)
+        //         this.getSpanArr(this.form.tableData)
+        //     });
+        //     }catch(e){
+        //         console.log("查询月份没有数据")
+        //     }
+        // },
         // 运算、修正: type = 1 运算，type = 2 修正
         Correction(type) {
             this.btnLoad = true
@@ -559,7 +631,7 @@ export default {
 
                     // 补充没有井组处理
                     this.form.tableData.forEach(elItme => {
-                        if (!existsList.includes(elItme.oilWellId)) {
+                        if (!existsList.includes(elItme.oilrWellId)) {
                             if (type === 1) {
                                 elItme.operationalNarration = 0
                                 elItme.operationInjSplitData = 0
@@ -647,12 +719,14 @@ export default {
         preserve(form) {
             let params = [];
             let data = this.form.tableData;
+            console.log('898989989')
+            console.log(data)
             for (var i = 0; i < data.length; i++) {
                 params.push({
                     wellGroupId: data[i].wellGroupId,
-                    proWellId: data[i].oilWellId,
+                    proWellId: data[i].oilrWellId,
                     remark: data[i].remark,
-                    diviDingCoeff: data[i].diviDingCoeff,
+                    diviDingCoeff: data[i].dynamicAdjustCoefficient,
                     dateTime: this.queryData.dateTime,
                 });
             }
@@ -710,27 +784,34 @@ export default {
 
         // 置换保存
         saveExchange() {
-            if (!this.multipleSelection.length || this.exchangeType === 1 && !this.isComputed || this.exchangeType === 2 && !this.isCorrected) {
-                this.exchangeVisible = false
-                return
-            }
+            // console.log('0')
+            // if (!this.multipleSelection.length || this.exchangeType === 1 && !this.isComputed || this.exchangeType === 2 && !this.isCorrected) {
+            //     console.log('0.1')
+            //     this.exchangeVisible = false
+            //     return
+            // }
 
-            if (this.exchangeType === 1) { // 计算——>动态调整
+            if (this.exchangeType === 1) {
+                console.log('1')// 计算——>动态调整
                 this.form.tableData.forEach(item => {
                     if (this.multipleSelection.includes(item.wellGroupId)) {
-                        item.diviDingCoeff = item.operationalNarration
-                        item.injSplitData = item.operationInjSplitData
+                        item.dynamicAdjustCoefficient = item.staticCoefficient
+                        item.adjustInjalloc = item.staticInjalloc
                     }
                 })
-            } else if (this.exchangeType === 2) { // 修正——>动态调整
+                console.log(this.form.tableData)
+            } else if (this.exchangeType === 2) {
+                console.log('2')// 修正——>动态调整
                 this.form.tableData.forEach(item => {
                     if (this.multipleSelection.includes(item.wellGroupId)) {
-                        item.diviDingCoeff = item.correctionFactor
-                        item.injSplitData = item.reviseInjSplitData
+                        item.dynamicAdjustCoefficient = item.dynamicCoefficient
+                        item.adjustInjalloc = item.dynamicInjalloc
                     }
                 })
+                console.log(this.form.tableData)
             }
-            this.$set(this.form, 'tableData', this.form.tableData)
+         
+            // this.$set(this.form, 'tableData', this.form.tableData)
             this.exchangeVisible = false
         },
     },

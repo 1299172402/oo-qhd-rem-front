@@ -125,6 +125,23 @@ export function getCorrectionOperation (params) {
     });
 }
 
+export function getCorrectResult (params) {
+    
+    return Axios({
+        url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/getCorrectResult`,
+        method: "post",
+        timeout:300000,
+        params,
+    }).then((res) => {
+        if (res.data) {
+            // 返回数据 [{"wellGroupId":"井组标识", "wellGroupName":"井组名"}]
+            return res.data;
+        } else {
+            return [];
+        }
+    });
+}
+
 /**
  * 井组数据展示
  * @param {ogfId:'油田id',blockId: '区块id',dataTime: '时间 2022-04'} data
