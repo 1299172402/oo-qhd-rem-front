@@ -699,9 +699,13 @@ export default {
         //   }
         // },
         downloadTable() {
+            console.log('889988998899')
+            console.log(this.queryData.ogfId)
+            console.log(this.queryData.blockId)
+            console.log(this.blockList)
             let blockName = ''
             if (this.queryData.ogfId && this.queryData.blockId) {
-                blockName = this.blockList.find((item) => item.blockId == this.queryData.blockId).blockName;
+                blockName = this.blockList.find((item) => item.reservoirAnalyseUnitId == this.queryData.blockId).reservoirAnalyseUnitName;
             }
             downLoadUnicomModeloperationDto(this.form.tableData).then((res) => {
                 const aBlob = new Blob([res]);
