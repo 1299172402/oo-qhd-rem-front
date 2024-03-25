@@ -82,8 +82,15 @@
                     <el-table-column label="生产层位" sortable prop="layerName" min-width="200px" align="center"
                                      class-name="cellWrap">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.layerName !== null && scope.row.layerName !== ''"
-                                  v-html="scope.row.layerName"></span>
+                            <el-tooltip
+                                v-if="scope.row.layerName !== null && scope.row.layerName !== ''"
+                                class="item"
+                                effect="dark"
+                                placement="top"
+                            >
+                                <div slot="content" v-html="scope.row.layerName"></div>
+                                <span v-html="scope.row.layerName"></span>
+                            </el-tooltip>
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
