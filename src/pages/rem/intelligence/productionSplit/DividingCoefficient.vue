@@ -23,7 +23,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="井别：">
-                    <el-select v-model="params.wellCategory" class="f2" style="width: 100px" filterable @change="queryWellData">
+                    <el-select v-model="params.wellCategory" style="width: 100px" filterable @change="queryWellData">
                         <el-option
                             v-for="item  in wellCategoryList"
                             :key="item.id"
@@ -33,7 +33,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="井号：">
-                    <el-select v-model="wellId" class="f2" @change="queryWellData1">
+                    <el-select v-model="wellId" @change="queryWellData1">
                         <el-option
                             v-for="item in params.wellIdList"
                             :key="item.wellId"
@@ -827,8 +827,8 @@ export default {
 }
 
 .f2 {
-    width: 140px;
-    height: 40px;
+    width: 160px;
+    height: 50px;
     line-height: 40px;
 }
 
