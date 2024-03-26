@@ -112,6 +112,7 @@ import {
 import { exportExcel } from "@/lib/exportExcel.js";
 import { queryLinkageAlarmInfo } from "@/api/rem/injectionproductionlinkage";
 import request from "@/utils/request";
+import dayjs from "dayjs";
 
 export default {
   props: {
@@ -119,6 +120,7 @@ export default {
     oilFieldId: {},
     //层系id
     layerId: {},
+    blockId: {},
     //井组id
     wellGroupId: {},
     wellGrouplist: [],
@@ -202,13 +204,20 @@ export default {
       this.firstMonth = this.queryData.firstMonth;
       this.itemKey++;
       let firstMonth = {
-        wellGroupName: this.wellGroupname,
+        ogfId: this.oilFieldId,
+        blockId: this.oilFieldId == this.blockId ? "" : this.blockId,
+        wellGroupName: this.wellGroupname == '全部' ? '' : this.wellGroupname,
         month: this.queryData.firstMonth,
+        dateTime: dayjs().format("YYYY-MM-DD"),
       };
 
       let secondMonth = {
-        wellGroupName: this.wellGroupname,
+        ogfId: this.oilFieldId,
+        blockId: this.oilFieldId == this.blockId ? "" : this.blockId,
+        wellGroupName: this.wellGroupname == '全部' ? '' : this.wellGroupname,
         month: this.queryData.secondMonth,
+        dateTime: dayjs().format("YYYY-MM-DD"),
+
       };
       try {
         const [res1, res2] = await Promise.all([

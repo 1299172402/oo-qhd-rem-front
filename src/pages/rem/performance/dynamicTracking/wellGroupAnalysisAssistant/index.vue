@@ -70,6 +70,7 @@
             v-model="selectWellGroup"
             placeholder="请选择"
             filterable
+            :clearable="currentModule === 'dynamicsInjection'"
             style="margin-right: 15px"
             @change="changeWellGroup"
           >
@@ -449,7 +450,21 @@ export default {
     //点击二级tabs
     handleTwoClicj(name) {
       this.currentModule = name;
-      this.selectWellGroup = this.newWellGroup[0].wellGroupId;
+      if (this.currentModule === "dynamicsInjection") {
+        this.newWellGroup.unshift({
+          wellGroupId: "",
+          wellGroupName: "全部",
+        });
+      } else {
+        this.newWellGroup = this.newWellGroup.filter((item) => item.wellGroupName != "全部");
+      }
+      // this.selectWellGroup = this.newWellGroup[0].wellGroupId;
+      if (this.$route.query.wellId) {
+        let item = this.newWellGroup.find((el) => el.wellGroupName == this.$route.query.wellId);
+        this.selectWellGroup = item.wellGroupId;
+      } else {
+        this.selectWellGroup = this.newWellGroup[0].wellGroupId;
+      }
       this.childParam = ""; //清空层位
       //是否显示minio上传文档按钮
       this.isUpdateFile = this.operationTypeList[this.currentModule] ? true : false;
@@ -506,8 +521,15 @@ export default {
         dateTime: new Date().format("yyyy-MM-dd"),
       };
       await selectWellGroup(obj).then((res) => {
+        this.newWellGroup = [];
         if (res.data.code == 200 && res.data.data && res.data.data.length) {
-          this.newWellGroup = res.data.data;
+          this.newWellGroup = res.data.data || [];
+          if (this.currentModule === "dynamicsInjection") {
+            this.newWellGroup.unshift({
+              wellGroupId: "",
+              wellGroupName: "全部",
+            });
+          }
           if (this.$route.query.wellId) {
             let item = this.newWellGroup.find((el) => el.wellGroupName == this.$route.query.wellId);
             this.selectWellGroup = item.wellGroupId;
@@ -539,8 +561,15 @@ export default {
           blockId: this.selectBlock === this.selectOilField ? "" : this.selectBlock,
           dateTime: new Date().format("yyyy-MM-dd"),
         }).then((res) => {
+          this.newWellGroup = [];
           if (res.data.code == 200) {
             this.newWellGroup = res.data.data;
+            if (this.currentModule === "dynamicsInjection") {
+              this.newWellGroup.unshift({
+                wellGroupId: "",
+                wellGroupName: "全部",
+              });
+            }
           }
         });
       }
@@ -604,9 +633,16 @@ export default {
       };
       //动态资料-井组配注变化动态||井组连通性变化动态||注采井网状态变化 调zxp这个接口
       await selectWellGroup(obj).then((res) => {
+        this.newWellGroup = [];
         if (res.data.code == 200) {
           if (res.data.data && res.data.data.length) {
             this.newWellGroup = res.data.data;
+            if (this.currentModule === "dynamicsInjection") {
+              this.newWellGroup.unshift({
+                wellGroupId: "",
+                wellGroupName: "全部",
+              });
+            }
             this.selectWellGroup = this.newWellGroup[0].wellGroupId;
           } else {
             this.newWellGroup = [];
