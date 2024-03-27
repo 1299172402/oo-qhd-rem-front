@@ -206,7 +206,7 @@ export default {
       let firstMonth = {
         ogfId: this.oilFieldId,
         blockId: this.oilFieldId == this.blockId ? "" : this.blockId,
-        wellGroupName: this.wellGroupname == '全部' ? '' : this.wellGroupname,
+        wellGroupName: this.wellGroupname && this.wellGroupname != '全部' ? this.wellGroupname : "",
         month: this.queryData.firstMonth,
         dateTime: dayjs().format("YYYY-MM-DD"),
       };
@@ -214,7 +214,7 @@ export default {
       let secondMonth = {
         ogfId: this.oilFieldId,
         blockId: this.oilFieldId == this.blockId ? "" : this.blockId,
-        wellGroupName: this.wellGroupname == '全部' ? '' : this.wellGroupname,
+        wellGroupName: this.wellGroupname && this.wellGroupname != '全部' ? this.wellGroupname : "",
         month: this.queryData.secondMonth,
         dateTime: dayjs().format("YYYY-MM-DD"),
 
