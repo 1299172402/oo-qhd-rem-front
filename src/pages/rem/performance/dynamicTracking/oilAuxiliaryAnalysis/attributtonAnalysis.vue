@@ -310,9 +310,9 @@
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
-                    <template slot-scope="scope">
-                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g, '') : '' }} </span>
-                    </template>
+<!--                    <template slot-scope="scope">-->
+<!--                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g, '') : '' }} </span>-->
+<!--                    </template>-->
                 </el-table-column>
                 <el-table-column v-if="link == 1" prop="intensity" min-width="150"
                                  :label="`采液强度\n(m³/d·m)`">
@@ -747,7 +747,7 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "油井采液强度不合理",
+                            "name": "油井采液指数不合理",
                             "children": [
                                 {
                                     "level": 2,
@@ -1033,7 +1033,7 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "油井采液强度不合理",
+                            "name": "油井米采液指数不合理",
                             "children": [
                                 {
                                     "level": 2,
