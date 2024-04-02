@@ -89,7 +89,7 @@
             <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link==4" :headerTitle="title" style="height: 120%" :show-btn="true">
-            <Echart id="option2"  :chart-data="option2" style="height: 100%"></Echart>
+            <Echart id="option2" :chart-data="option2" style="height: 100%"></Echart>
             <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link==5" :headerTitle="title" style="height: 120%" :show-btn="true">
@@ -310,9 +310,9 @@
             >
                 <el-table-column prop="wellName" min-width="150" label="井号"></el-table-column>
                 <el-table-column prop="date" min-width="150" label="日期">
-<!--                    <template slot-scope="scope">-->
-<!--                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g, '') : '' }} </span>-->
-<!--                    </template>-->
+                    <!--                    <template slot-scope="scope">-->
+                    <!--                        <span> {{ scope.row.date ? scope.row.date.split(' ')[0].replace(/-01/g, '') : '' }} </span>-->
+                    <!--                    </template>-->
                 </el-table-column>
                 <el-table-column v-if="link == 1" prop="intensity" min-width="150"
                                  :label="`采液强度\n(m³/d·m)`">
@@ -737,6 +737,254 @@ export default {
                     animationDurationUpdate: 750
                 }]
             },
+            option11: {
+                tooltip: {
+                    trigger: 'item',
+                    triggerOn: 'mousemove'
+                },
+                series: [{
+                    type: 'tree',
+                    data: [
+                        {
+                            "level": 1,
+                            "name": "油井采液强度不合理",
+                            "children": [
+                                {
+                                    "level": 3,
+                                    "name": "判断油嘴和泵频率",
+                                    "code": "YZBPL",
+                                    "children": [
+                                        {
+                                            "level": 4,
+                                            "name": "判断排量效率",
+                                            "code": "PLXL",
+                                            "children": [
+                                                {
+                                                    "level": 5,
+                                                    "name": "判断含水率",
+                                                    "code": "HSL",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
+                                                                    "code": "003003"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因6：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
+                                                                    "code": "003006"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "判断流压",
+                                                            "code": "LY",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "code": "003004"
+                                                                },
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "code": "003005"
+                                                                },
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "code": "003007"
+                                                                }
+                                                            ]
+                                                        }
+
+                                                    ]
+                                                },
+                                                {
+                                                    "level": 5,
+                                                    "name": "判断流压",
+                                                    "code": "LY",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "code": "003004"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "code": "003005"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "code": "003007"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+
+                                            ]
+                                        },
+                                        {
+                                            "level": 4,
+                                            "name": "",
+                                            "children": [
+                                                {
+                                                    "level": 5,
+                                                    "name": "",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
+                                                                    "code": "003002"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                },
+                            ]
+                        }
+                    ],
+                    top: '1%',
+                    left: '10%',
+                    bottom: '1%',
+                    right: '25%',
+                    symbol: 'none',
+                    symbolSize: 7,
+                    label: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 12,
+                        lineHeight: 24,
+                        // width: 100,
+                        // ellipsis: false,
+                        formatter: function (params) {
+                            if (params.data.level === 1 && params.data.name) {
+                                return '{a|' + params.name + '}'
+                            } else if (params.data.level === 2 && params.data.name) {
+                                return '{b|' + params.name + '}'
+                            } else if (params.data.level === 3 && params.data.name) {
+                                return '{c|' + params.name + '}'
+                            } else if (params.data.level === 4 && params.data.name) {
+                                return '{d|' + params.name + '}'
+                            } else if (params.data.level === 6 && params.data.name) {
+                                return '{f|' + params.name + '}'
+                            } else if (params.data.level === 5 && params.data.name) {
+                                return '{e|' + params.name + '}'
+                            } else if (params.data.level === 7 && params.data.name) {
+                                return '{h|' + params.name + '}'
+                            } else {
+                                return ''
+                            }
+                        },
+                        rich: {
+                            a: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#546fc6'
+                            },
+                            b: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#7ab1a6'
+                            },
+                            c: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#446dd3'
+                            },
+                            d: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#904a9b'
+                            },
+                            e: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#1ca3c1',
+                            },
+                            f: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#3c8418',
+                                // width:'10px',
+                            },
+                            h: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#9e2f5d',
+                            }
+                        }
+                    },
+                    lineStyle: {
+                        color: '#91cd75'
+                    },
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+
+                    emphasis: {
+                        disabled: true,
+                        focus: 'ancestor',
+                    },
+                    select: {
+                        disabled: true
+                    },
+                    selectedMode: "multiple",
+                    expandAndCollapse: false,
+                    animationDuration: 550,
+                    animationDurationUpdate: 750
+                }]
+            },
             option5: {
                 tooltip: {
                     trigger: 'item',
@@ -912,6 +1160,255 @@ export default {
                                                         }
                                                     ]
                                                 },
+                                            ]
+                                        },
+                                    ]
+                                },
+                            ]
+                        }
+                    ],
+                    top: '1%',
+                    left: '10%',
+                    bottom: '1%',
+                    right: '25%',
+                    symbol: 'none',
+                    symbolSize: 7,
+                    label: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 12,
+                        lineHeight: 24,
+                        // width: 100,
+                        // ellipsis: false,
+                        formatter: function (params) {
+                            if (params.data.level === 1 && params.data.name) {
+                                return '{a|' + params.name + '}'
+                            } else if (params.data.level === 2 && params.data.name) {
+                                return '{b|' + params.name + '}'
+                            } else if (params.data.level === 3 && params.data.name) {
+                                return '{c|' + params.name + '}'
+                            } else if (params.data.level === 4 && params.data.name) {
+                                return '{d|' + params.name + '}'
+                            } else if (params.data.level === 6 && params.data.name) {
+                                return '{f|' + params.name + '}'
+                            } else if (params.data.level === 5 && params.data.name) {
+                                return '{e|' + params.name + '}'
+                            } else if (params.data.level === 7 && params.data.name) {
+                                return '{h|' + params.name + '}'
+                            } else {
+                                return ''
+                            }
+                        },
+                        rich: {
+                            a: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#546fc6'
+                            },
+                            b: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#7ab1a6'
+                            },
+                            c: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#446dd3'
+                            },
+                            d: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#904a9b'
+                            },
+                            e: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#1ca3c1',
+                            },
+                            f: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#3c8418',
+                                // width:'10px',
+                            },
+                            h: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#9e2f5d',
+                                // width:'10px',
+                            }
+                        }
+                    },
+                    lineStyle: {
+                        color: '#91cd75'
+                    },
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+
+                    emphasis: {
+                        disabled: true,
+                        focus: 'ancestor',
+                    },
+                    select: {
+                        disabled: true
+                    },
+                    selectedMode: "multiple",
+                    expandAndCollapse: false,
+                    animationDuration: 550,
+                    animationDurationUpdate: 750
+                }]
+            },
+            option55: {
+                tooltip: {
+                    trigger: 'item',
+                    triggerOn: 'mousemove'
+                },
+                series: [{
+                    type: 'tree',
+                    data: [
+                        {
+                            "level": 1,
+                            "name": "油井采液指数不合理",
+                            "children": [
+                                {
+                                    "level": 3,
+                                    "name": "判断油嘴和泵频率",
+                                    "code": "YZBPL",
+                                    "children": [
+                                        {
+                                            "level": 4,
+                                            "name": "判断排量效率",
+                                            "code": "PLXL",
+                                            "children": [
+                                                {
+                                                    "level": 5,
+                                                    "name": "判断含水率",
+                                                    "code": "HSL",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
+                                                                    "code": "005003"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因6：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
+                                                                    "code": "005006"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "判断流压",
+                                                            "code": "LY",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "code": "005004"
+                                                                },
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "code": "005005"
+                                                                },
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "code": "005007"
+                                                                }
+                                                            ]
+                                                        }
+
+                                                    ]
+                                                },
+                                                {
+                                                    "level": 5,
+                                                    "name": "判断流压",
+                                                    "code": "LY",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "code": "005004"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "code": "005005"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "code": "005007"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+
+                                            ]
+                                        },
+                                        {
+                                            "level": 4,
+                                            "name": "",
+                                            "children": [
+                                                {
+                                                    "level": 5,
+                                                    "name": "",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
+                                                                    "code": "005002"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
                                             ]
                                         },
                                     ]
@@ -1309,6 +1806,255 @@ export default {
                     animationDurationUpdate: 750
                 }]
             },
+            option66: {
+                tooltip: {
+                    trigger: 'item',
+                    triggerOn: 'mousemove'
+                },
+                series: [{
+                    type: 'tree',
+                    data: [
+                        {
+                            "level": 1,
+                            "name": "油井米采液指数不合理",
+                            "children": [
+                                {
+                                    "level": 3,
+                                    "name": "判断油嘴和泵频率",
+                                    "code": "YZBPL",
+                                    "children": [
+                                        {
+                                            "level": 4,
+                                            "name": "判断排量效率",
+                                            "code": "PLXL",
+                                            "children": [
+                                                {
+                                                    "level": 5,
+                                                    "name": "判断含水率",
+                                                    "code": "HSL",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
+                                                                    "code": "002003"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因6：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
+                                                                    "code": "002006"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "判断流压",
+                                                            "code": "LY",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "code": "002004"
+                                                                },
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "code": "002005"
+                                                                },
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "code": "002007"
+                                                                }
+                                                            ]
+                                                        }
+
+                                                    ]
+                                                },
+                                                {
+                                                    "level": 5,
+                                                    "name": "判断流压",
+                                                    "code": "LY",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "code": "002004"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "code": "002005"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "code": "002007"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+
+                                            ]
+                                        },
+                                        {
+                                            "level": 4,
+                                            "name": "",
+                                            "children": [
+                                                {
+                                                    "level": 5,
+                                                    "name": "",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
+                                                                    "code": "002002"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                    ]
+                                },
+                            ]
+                        }
+                    ],
+                    top: '1%',
+                    left: '10%',
+                    bottom: '1%',
+                    right: '25%',
+                    symbol: 'none',
+                    symbolSize: 7,
+                    label: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 12,
+                        lineHeight: 24,
+                        // width: 100,
+                        // ellipsis: false,
+                        formatter: function (params) {
+                            if (params.data.level === 1 && params.data.name) {
+                                return '{a|' + params.name + '}'
+                            } else if (params.data.level === 2 && params.data.name) {
+                                return '{b|' + params.name + '}'
+                            } else if (params.data.level === 3 && params.data.name) {
+                                return '{c|' + params.name + '}'
+                            } else if (params.data.level === 4 && params.data.name) {
+                                return '{d|' + params.name + '}'
+                            } else if (params.data.level === 6 && params.data.name) {
+                                return '{f|' + params.name + '}'
+                            } else if (params.data.level === 5 && params.data.name) {
+                                return '{e|' + params.name + '}'
+                            } else if (params.data.level === 7 && params.data.name) {
+                                return '{h|' + params.name + '}'
+                            } else {
+                                return ''
+                            }
+                        },
+                        rich: {
+                            a: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#546fc6'
+                            },
+                            b: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#7ab1a6'
+                            },
+                            c: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#446dd3'
+                            },
+                            d: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#904a9b'
+                            },
+                            e: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#1ca3c1',
+                            },
+                            f: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#3c8418',
+                                // width:'10px',
+                            },
+                            h: {
+                                padding: 6,
+                                borderRadius: 3,
+                                color: '#fff',
+                                backgroundColor: '#9e2f5d',
+                                // width:'10px',
+                            }
+                        }
+                    },
+                    lineStyle: {
+                        color: '#91cd75'
+                    },
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+
+                    emphasis: {
+                        disabled: true,
+                        focus: 'ancestor',
+                    },
+                    select: {
+                        disabled: true
+                    },
+                    selectedMode: "multiple",
+                    expandAndCollapse: false,
+                    animationDuration: 550,
+                    animationDurationUpdate: 750
+                }]
+            },
             option2: {
                 tooltip: {
                     trigger: 'item',
@@ -1319,7 +2065,7 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "注水强度归因分析 \n" + 
+                            "name": "注水强度归因分析 \n" +
                                 '(注水井/日度/变高)',
                             "children": [
                                 {
@@ -1440,7 +2186,7 @@ export default {
                                                                                 {
                                                                                     "level": 7,
                                                                                     "code": "004105",
-                                                                                    "name": "归因5：①配水器冲蚀/封隔器失效/管柱漏失等；②大孔道等影响。\n"+
+                                                                                    "name": "归因5：①配水器冲蚀/封隔器失效/管柱漏失等；②大孔道等影响。\n" +
                                                                                         "建议措施：①作业换管柱；②调剖等。",
                                                                                 },
                                                                             ]
@@ -1453,11 +2199,11 @@ export default {
                                                                                     "level": 7,
                                                                                     "code": "004106",
                                                                                     "name": "归因6：配水器开度调大/对应油井提液/对应水井注水量下降等影响 \n" +
-                                                                                    "建议措施：维持/调小配水器开度等。",
+                                                                                        "建议措施：维持/调小配水器开度等。",
                                                                                 },
                                                                             ]
                                                                         },
-                                                                     
+
                                                                     ]
 
                                                                 },
@@ -1665,8 +2411,8 @@ export default {
                                                                                 {
                                                                                     "level": 7,
                                                                                     "code": "004003",
-                                                                                    "name": "归因3：直接关联关停记录表的停井原因。\n"+
-                                                                                    "建议措施：提高注水时率。",
+                                                                                    "name": "归因3：直接关联关停记录表的停井原因。\n" +
+                                                                                        "建议措施：提高注水时率。",
                                                                                 },
                                                                             ]
                                                                         },
@@ -1687,8 +2433,8 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "code": "004004",
-                                                                            "name": "归因4：①地层出砂/地层污染等；②注采失调：周围油井采液量下降或周围注水井注入量上升等影响。\n"+
-                                                                            "建议措施：①作业防砂/酸化处理地层等。② 维持/注采调整：调整周围井的采液量或注水量等。"
+                                                                            "name": "归因4：①地层出砂/地层污染等；②注采失调：周围油井采液量下降或周围注水井注入量上升等影响。\n" +
+                                                                                "建议措施：①作业防砂/酸化处理地层等。② 维持/注采调整：调整周围井的采液量或注水量等。"
                                                                         },
                                                                     ]
                                                                 },
@@ -1705,8 +2451,8 @@ export default {
                                                                                 {
                                                                                     "level": 7,
                                                                                     "code": "004005",
-                                                                                    "name": "归因5：封隔器失效/管柱漏失等；\n"+
-                                                                                    "建议措施：作业换管柱等。",
+                                                                                    "name": "归因5：封隔器失效/管柱漏失等；\n" +
+                                                                                        "建议措施：作业换管柱等。",
                                                                                 },
                                                                             ]
                                                                         },
@@ -1718,7 +2464,7 @@ export default {
                                                                                     "level": 7,
                                                                                     "code": "004006",
                                                                                     "name": "归因6：配水器开度调整等影响。\n" +
-                                                                                    "建议措施：调整配水器开度/维持。",
+                                                                                        "建议措施：调整配水器开度/维持。",
                                                                                 },
                                                                             ]
                                                                         },
@@ -2379,46 +3125,67 @@ export default {
             this.chart = echarts.init(document.getElementById('option2'));
             if (this.link == '1') {
                 this.modelCode = "YJCYQD";
-                this.initCodeDataIndex(this.option.series[0].data);
-                this.initTreeStyle(this.option.series[0]);
-                this.chart.setOption(this.option);
-                this.title = '油井采液强度归因分析'
+                //变底正常走
+                if (this.$route.query.evalResult == '0050104') {
+                    this.initCodeDataIndex(this.option.series[0].data);
+                    this.initTreeStyle(this.option.series[0]);
+                    this.chart.setOption(this.option);
+                } else {
+                    this.initCodeDataIndex(this.option11.series[0].data);
+                    this.initTreeStyle(this.option11.series[0]);
+                    this.chart.setOption(this.option11);
+                }
+                this.title = '油井采液强度归因分析';
             } else if (this.link == '2') {
                 this.modelCode = "YJCYZS";
-                this.initCodeDataIndex(this.option5.series[0].data);
-                this.initTreeStyle(this.option5.series[0]);
-                this.chart.setOption(this.option5);
-                this.title = '油井采液指数归因分析'
+                //变底正常走
+                if (this.$route.query.evalResult == '0060104') {
+                    this.initCodeDataIndex(this.option5.series[0].data);
+                    this.initTreeStyle(this.option5.series[0]);
+                    this.chart.setOption(this.option5);
+                } else {
+                    this.initCodeDataIndex(this.option55.series[0].data);
+                    this.initTreeStyle(this.option55.series[0]);
+                    this.chart.setOption(this.option55);
+                }
+                this.title = '油井采液指数归因分析';
             } else if (this.link == '3') {
                 this.modelCode = "YJMCYZS";
-                this.initCodeDataIndex(this.option6.series[0].data);
-                this.initTreeStyle(this.option6.series[0]);
-                this.chart.setOption(this.option6);
-                this.title = '油井米采液指数归因分析'
+                //变底正常走
+                if (this.$route.query.evalResult == '0070104') {
+                    this.initCodeDataIndex(this.option6.series[0].data);
+                    this.initTreeStyle(this.option6.series[0]);
+                    this.chart.setOption(this.option6);
+                } else {
+                    this.initCodeDataIndex(this.option66.series[0].data);
+                    this.initTreeStyle(this.option66.series[0]);
+                    this.chart.setOption(this.option66);
+                }
+                this.title = '油井米采液指数归因分析';
             } else if (this.link == '4') {
                 this.modelCode = "ZSQD";
-                if( this.link==4 && this.$route.query.evalResult=='注水强度变高'){
+                if (this.link == 4 && this.$route.query.evalResult == '注水强度变高') {
                     this.initCodeDataIndex(this.option2.series[0].data);
                     this.initTreeStyle(this.option2.series[0]);
                     this.chart.setOption(this.option2);
-                }else if (this.link==4 && this.$route.query.evalResult=='注水强度变低'){
+                } else if (this.link == 4 && this.$route.query.evalResult == '注水强度变低') {
                     this.initCodeDataIndex(this.optionzc.series[0].data);
                     this.initTreeStyle(this.optionzc.series[0]);
                     this.chart.setOption(this.optionzc);
                 }
-                this.title = '注水强度归因分析'
+                this.title = '注水强度归因分析';
             } else if (this.link == '5') {
                 this.modelCode = "YJDJL";
                 this.initCodeDataIndex(this.option3.series[0].data);
                 this.initTreeStyle(this.option3.series[0]);
                 this.chart.setOption(this.option3);
-                this.title = '油井递减率归因分析'
+                this.title = '油井递减率归因分析';
             } else if (this.link == '6') {
                 this.modelCode = "JZSCDT";
                 this.initCodeDataIndex(this.option4.series[0].data);
                 this.initTreeStyle(this.option4.series[0]);
                 this.chart.setOption(this.option4);
-                this.title = '井组生产动态归因分析'
+                this.title = '井组生产动态归因分析';
             }
             this.getFormData();
         },
