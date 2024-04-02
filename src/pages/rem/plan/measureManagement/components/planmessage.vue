@@ -111,7 +111,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column :label="`水平段长度 \n（m）`" sortable min-width="130px" prop="horizonIntervalLen"
+                    <el-table-column v-if="$route.query.measureCode != '0100102'" :label="`水平段长度 \n（m）`" sortable min-width="130px" prop="horizonIntervalLen"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -261,7 +261,7 @@
                         </template>
                     </el-table-column>
                 </el-table-column>
-                <el-table-column label="预测值" prop="name" align="center">
+                <el-table-column v-if="$route.query.measureCode != '0100102'" label="预测值" prop="name" align="center">
                     <el-table-column sortable min-width="120px" :label="`产液值\n（m³/d）`" prop="forecastFluid"
                                      align="center">
                         <template slot-scope="scope">
@@ -429,7 +429,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable label="泵能耗预测" min-width="130px" prop="pumpEnergyConsumeForecast"
+                    <el-table-column v-if="$route.query.measureCode != '0100102'" sortable label="泵能耗预测" min-width="130px" prop="pumpEnergyConsumeForecast"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -439,7 +439,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px" label="变频器" prop="frequencyConverter" align="center">
+                    <el-table-column v-if="$route.query.measureCode != '0100102'" sortable min-width="130px" label="变频器" prop="frequencyConverter" align="center">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.frequencyConverter !== null && scope.row.frequencyConverter !== ''">{{
@@ -448,7 +448,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px" label="变压器" prop="transformer" align="center">
+                    <el-table-column v-if="$route.query.measureCode != '0100102'" sortable min-width="130px" label="变压器" prop="transformer" align="center">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.transformer !== null && scope.row.transformer !== ''">{{
