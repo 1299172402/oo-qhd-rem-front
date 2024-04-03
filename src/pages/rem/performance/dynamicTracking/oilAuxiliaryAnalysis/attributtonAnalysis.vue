@@ -395,7 +395,7 @@
                 @pagination="pagination"
             />
         </pagePanel>
-        <el-dialog :visible="showGyCalDialog" title="选择时间范围更新模型数据" width="25%">
+        <el-dialog :visible.sync="showGyCalDialog" title="选择时间范围更新模型数据" width="25%">
             <el-form ref="form" :model="gyDate" label-width="120px">
                 <el-form-item label="开始时间">
                     <el-date-picker
@@ -424,7 +424,7 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
         <el-button @click="showGyCalDialog = false">取消</el-button>
-        <el-button type="primary" @click="executeModel(modelCode)">确认</el-button>
+        <el-button type="primary" @click="executeModel(modelCode);showGyCalDialog = false">确认</el-button>
       </span>
         </el-dialog>
     </div>
