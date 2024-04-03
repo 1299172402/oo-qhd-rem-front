@@ -101,7 +101,7 @@
             <div class="overlay" v-if="isTableClick" style="z-index: 1"></div>
         </pagePanel>
         <pagePanel v-if="link=='5'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
-            <el-button size="mini" @click="executeModel(modelCode)" type="primary"
+            <el-button size="mini" @click="showGyCalDialog =true" type="primary"
                        style="float: left;margin-bottom: 10px;">执行归因计算
             </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
@@ -188,7 +188,7 @@
             />
         </pagePanel>
         <pagePanel v-if="link=='6'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
-            <el-button size="mini" @click="executeModel(modelCode)" type="primary"
+            <el-button size="mini" @click="showGyCalDialog =true" type="primary"
                        style="float: left;margin-bottom: 10px;">执行归因计算
             </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
@@ -231,10 +231,10 @@
             />
         </pagePanel>
         <pagePanel v-if="link=='4'" :headerTitle="title+'明细表'" style="height: 100%" :show-btn="true">
-            <el-button size="mini" @click="executeModel(modelCode)" type="primary"
+            <el-button size="mini" @click="showGyCalDialog =true" type="primary"
                        style="float: left;margin-bottom: 10px;">执行归因计算
             </el-button>
-            <el-button size="mini" @click="executeModel('ZSQDPJ')" type="primary"
+            <el-button size="mini" @click="showGyCalDialog =true;modelCode='ZSQDPJ'" type="primary"
                        style="float: left;margin-bottom: 10px;margin-left: 10px">执行评价计算
             </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
@@ -287,7 +287,7 @@
         </pagePanel>
         <pagePanel v-if="link=='1' || link=='2' || link=='3'" :headerTitle="title+'明细表'" style="height: 100%"
                    :show-btn="true">
-            <el-button size="mini" @click="executeModel(modelCode)" type="primary"
+            <el-button size="mini" @click="showGyCalDialog =true" type="primary"
                        style="float: left;margin-bottom: 10px;">执行归因计算
             </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
@@ -395,6 +395,38 @@
                 @pagination="pagination"
             />
         </pagePanel>
+        <el-dialog :visible="showGyCalDialog" title="选择时间范围更新模型数据" width="25%">
+            <el-form ref="form" :model="gyDate" label-width="120px">
+                <el-form-item label="开始时间">
+                    <el-date-picker
+                        value-format="yyyy-MM-dd"
+                        clearable
+                        v-model="gyDate.startDate"
+                        type="date"
+                        key="111"
+                        style="width: 170px"
+                        placeholder="开始时间"
+                    >
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item label="结束时间">
+                    <el-date-picker
+                        value-format="yyyy-MM-dd"
+                        clearable
+                        v-model="gyDate.endDate"
+                        type="date"
+                        key="222"
+                        style="width: 170px"
+                        placeholder="结束时间"
+                    >
+                    </el-date-picker>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+        <el-button @click="showGyCalDialog = false">取消</el-button>
+        <el-button type="primary" @click="executeModel(modelCode)">确认</el-button>
+      </span>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -423,6 +455,12 @@ export default {
     },
     data() {
         return {
+            showGyCalDialog: false,
+            //归因计算时间范围选择
+            gyDate: {
+                startDate: '',
+                endDate: ''
+            },
             //模型代码
             modelCode: "",
             //是否点击过表格
@@ -3094,14 +3132,35 @@ export default {
     },
     mounted() {
         this.initData();
+        this.gyDate.startDate = this.getCurrentTimeBeforeThreeStr();
+        this.gyDate.endDate = this.getCurrentTimeStr();
     },
     created() {
         this.link = this.$route.query.link
     },
     methods: {
         executeModel(code) {
-            updateDateByCode({code: code});
-            this.$message.success("执行归因计算成功")
+            updateDateByCode({
+                code: code,
+                startDate: this.gyDate.startDate,
+                endDate: this.gyDate.endDate
+            }).then((res) => {
+                this.$message.success("执行归因计算成功")
+            });
+        },
+        getCurrentTimeStr() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        },
+        getCurrentTimeBeforeThreeStr() {
+            const date = new Date();
+            const year = date.getFullYear() - 2;
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
         },
         initData() {
             // 在组件被激活时执行归因计算操作

@@ -11,9 +11,9 @@ export function wellGroupEvaluation(data) {
     });
 }
 
-export function updateDateByCode({code} = {}) {
+export function updateDateByCode({code,startDate,endDate} = {}) {
     return request({
-        url: `${baseUrl}/modelController/updateDateByCode?code=${code || ""}`,
+        url: `${baseUrl}/modelController/updateDateByCode?code=${code || ""}&startDate=${startDate || ""}&endDate=${endDate || ""}`,
         method: "get",
     });
 }
