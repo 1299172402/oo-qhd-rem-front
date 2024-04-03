@@ -756,6 +756,29 @@ export default {
                                     "children": [
                                         {
                                             "level": 4,
+                                            "name": "",
+                                            "children": [
+                                                {
+                                                    "level": 5,
+                                                    "name": "",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因1：调整参数影响。\n下步措施：参数二次调整",
+                                                                    "code": "003002"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "level": 4,
                                             "name": "判断排量效率",
                                             "code": "PLXL",
                                             "children": [
@@ -770,7 +793,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
+                                                                    "name": "归因2：目前处于中低含水期\n下步措施：存在乳化风险",
                                                                     "code": "003003"
                                                                 }
                                                             ]
@@ -781,7 +804,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因6：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
+                                                                    "name": "归因5：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
                                                                     "code": "003006"
                                                                 }
                                                             ]
@@ -793,17 +816,17 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "name": "归因3：注采失调\n下步措施：排查周边井组状态",
                                                                     "code": "003004"
                                                                 },
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "name": "归因4：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
                                                                     "code": "003005"
                                                                 },
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "name": "归因6：地层能量不足。\n下步措施：优化注水",
                                                                     "code": "003007"
                                                                 }
                                                             ]
@@ -822,7 +845,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "name": "归因3：注采失调\n下步措施：排查周边井组状态",
                                                                     "code": "003004"
                                                                 }
                                                             ]
@@ -833,7 +856,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "name": "归因4：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
                                                                     "code": "003005"
                                                                 }
                                                             ]
@@ -844,7 +867,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "name": "归因6：地层能量不足。\n下步措施：优化注水",
                                                                     "code": "003007"
                                                                 }
                                                             ]
@@ -854,29 +877,7 @@ export default {
 
                                             ]
                                         },
-                                        {
-                                            "level": 4,
-                                            "name": "",
-                                            "children": [
-                                                {
-                                                    "level": 5,
-                                                    "name": "",
-                                                    "children": [
-                                                        {
-                                                            "level": 6,
-                                                            "name": "",
-                                                            "children": [
-                                                                {
-                                                                    "level": 7,
-                                                                    "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
-                                                                    "code": "003002"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
+
                                     ]
                                 },
                             ]
@@ -1290,6 +1291,29 @@ export default {
                                     "children": [
                                         {
                                             "level": 4,
+                                            "name": "",
+                                            "children": [
+                                                {
+                                                    "level": 5,
+                                                    "name": "",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因1：调整参数影响。\n下步措施：参数二次调整",
+                                                                    "code": "005002"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "level": 4,
                                             "name": "判断排量效率",
                                             "code": "PLXL",
                                             "children": [
@@ -1304,7 +1328,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
+                                                                    "name": "归因2：目前处于中低含水期\n下步措施：存在乳化风险",
                                                                     "code": "005003"
                                                                 }
                                                             ]
@@ -1315,7 +1339,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因6：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
+                                                                    "name": "归因5：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
                                                                     "code": "005006"
                                                                 }
                                                             ]
@@ -1327,17 +1351,17 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "name": "归因3：注采失调\n下步措施：排查周边井组状态",
                                                                     "code": "005004"
                                                                 },
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "name": "归因4：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
                                                                     "code": "005005"
                                                                 },
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "name": "归因6：地层能量不足。\n下步措施：优化注水",
                                                                     "code": "005007"
                                                                 }
                                                             ]
@@ -1356,7 +1380,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "name": "归因3：注采失调\n下步措施：排查周边井组状态",
                                                                     "code": "005004"
                                                                 }
                                                             ]
@@ -1367,7 +1391,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "name": "归因4：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
                                                                     "code": "005005"
                                                                 }
                                                             ]
@@ -1378,7 +1402,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "name": "归因6：地层能量不足。\n下步措施：优化注水",
                                                                     "code": "005007"
                                                                 }
                                                             ]
@@ -1386,29 +1410,6 @@ export default {
                                                     ]
                                                 }
 
-                                            ]
-                                        },
-                                        {
-                                            "level": 4,
-                                            "name": "",
-                                            "children": [
-                                                {
-                                                    "level": 5,
-                                                    "name": "",
-                                                    "children": [
-                                                        {
-                                                            "level": 6,
-                                                            "name": "",
-                                                            "children": [
-                                                                {
-                                                                    "level": 7,
-                                                                    "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
-                                                                    "code": "005002"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
                                             ]
                                         },
                                     ]
@@ -1825,6 +1826,29 @@ export default {
                                     "children": [
                                         {
                                             "level": 4,
+                                            "name": "",
+                                            "children": [
+                                                {
+                                                    "level": 5,
+                                                    "name": "",
+                                                    "children": [
+                                                        {
+                                                            "level": 6,
+                                                            "name": "",
+                                                            "children": [
+                                                                {
+                                                                    "level": 7,
+                                                                    "name": "归因1：调整参数影响。\n下步措施：参数二次调整",
+                                                                    "code": "002002"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "level": 4,
                                             "name": "判断排量效率",
                                             "code": "PLXL",
                                             "children": [
@@ -1839,7 +1863,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因3：目前处于中低含水期\n下步措施：存在乳化风险",
+                                                                    "name": "归因2：目前处于中低含水期\n下步措施：存在乳化风险",
                                                                     "code": "002003"
                                                                 }
                                                             ]
@@ -1850,7 +1874,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因6：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
+                                                                    "name": "归因5：①注采失调；②水线突进。\n下步措施：产液结构优化调整、优化注水",
                                                                     "code": "002006"
                                                                 }
                                                             ]
@@ -1862,17 +1886,17 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "name": "归因3：注采失调\n下步措施：排查周边井组状态",
                                                                     "code": "002004"
                                                                 },
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "name": "归因4：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
                                                                     "code": "002005"
                                                                 },
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "name": "归因6：地层能量不足。\n下步措施：优化注水",
                                                                     "code": "002007"
                                                                 }
                                                             ]
@@ -1891,7 +1915,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因4：注采失调\n下步措施：排查周边井组状态",
+                                                                    "name": "归因3：注采失调\n下步措施：排查周边井组状态",
                                                                     "code": "002004"
                                                                 }
                                                             ]
@@ -1902,7 +1926,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因5：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
+                                                                    "name": "归因4：①设备影响；②邻井干扰；③关停层、封堵层失效。\n下步措施：①检泵，查管柱；②邻井排查；③上作业",
                                                                     "code": "002005"
                                                                 }
                                                             ]
@@ -1913,7 +1937,7 @@ export default {
                                                             "children": [
                                                                 {
                                                                     "level": 7,
-                                                                    "name": "归因7：地层能量不足。\n下步措施：优化注水",
+                                                                    "name": "归因6：地层能量不足。\n下步措施：优化注水",
                                                                     "code": "002007"
                                                                 }
                                                             ]
@@ -1921,29 +1945,6 @@ export default {
                                                     ]
                                                 }
 
-                                            ]
-                                        },
-                                        {
-                                            "level": 4,
-                                            "name": "",
-                                            "children": [
-                                                {
-                                                    "level": 5,
-                                                    "name": "",
-                                                    "children": [
-                                                        {
-                                                            "level": 6,
-                                                            "name": "",
-                                                            "children": [
-                                                                {
-                                                                    "level": 7,
-                                                                    "name": "归因2：调整参数影响。\n下步措施：参数二次调整",
-                                                                    "code": "002002"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
                                             ]
                                         },
                                     ]
@@ -2168,8 +2169,8 @@ export default {
                                                                         {
                                                                             "level": 7,
                                                                             "code": "004104",
-                                                                            "name": "归因4：配水器开度调大/对应油井提液/对应水井注水量下降等影响。\n" +
-                                                                                "建议措施：维持/调小配水器开度等。"
+                                                                            "name": "归因4：提压/配水器开度调大/对应油井提液/对应水井注水量下降等影响\n" +
+                                                                                "建议措施：降压/调小配水器开度/维持等"
                                                                         },
                                                                     ]
                                                                 },
@@ -3197,6 +3198,8 @@ export default {
             console.log(this.codeDataIndexMap);
         },
         initTreeStyle(treeData) {
+            // treeData.left = '11%';
+            // treeData.right = '30%';
             treeData.label.formatter = function (params) {
                 if (params.data.level === 1 && params.data.name) {
                     return '{a|' + params.name + '}'
@@ -3221,43 +3224,50 @@ export default {
                     padding: 6,
                     borderRadius: 3,
                     color: '#fff',
-                    backgroundColor: '#546fc6'
+                    backgroundColor: '#546fc6',
+                    // fontSize: 14,
                 },
                 b: {
                     padding: 6,
                     borderRadius: 3,
                     color: '#fff',
-                    backgroundColor: '#7ab1a6'
+                    backgroundColor: '#7ab1a6',
+                    // fontSize: 14,
                 },
                 c: {
                     padding: 6,
                     borderRadius: 3,
                     color: '#fff',
-                    backgroundColor: '#446dd3'
+                    backgroundColor: '#446dd3',
+                    // fontSize: 14,
                 },
                 d: {
                     padding: 6,
                     borderRadius: 3,
                     color: '#fff',
-                    backgroundColor: '#904a9b'
+                    backgroundColor: '#904a9b',
+                    // fontSize: 14,
                 },
                 e: {
                     padding: 6,
                     borderRadius: 3,
                     color: '#fff',
                     backgroundColor: '#1ca3c1',
+                    // fontSize: 14,
                 },
                 f: {
                     padding: 6,
                     borderRadius: 3,
                     color: '#fff',
                     backgroundColor: '#3c8418',
+                    // fontSize: 14,
                 },
                 h: {
                     padding: 6,
                     borderRadius: 3,
                     color: '#fff',
                     backgroundColor: '#9e2f5d',
+                    // fontSize: 14,
                 }
             }
 
