@@ -3389,19 +3389,8 @@ export default {
             });
         },
         downexcel() {
-            let resultDate = ''
-            if (this.link == 4) {
-                resultDate = this.queryData.month
-            } else {
-                if (this.queryData.month.length > 7) {
-                    resultDate = this.decreaseMonth(this.queryData.month);
-                } else {
-                    resultDate = this.decreaseMonth(this.queryData.month + '-06');
-                }
-                resultDate = resultDate.toISOString().substr(0, 10)//日期
-            }
             let params = {
-                date: resultDate,
+                date: this.queryData.month,
                 wellId: this.queryData.well,//井号
                 assetCode: this.queryData.assetCode,//平台
                 ogfId: this.queryData.ogfId,//油田
@@ -3551,16 +3540,6 @@ export default {
         result() {
             this.initData();
         },
-        decreaseMonth(dateStr) {
-            const date = new Date(dateStr);
-            const day = date.getDate();
-            if (day <= 5) {
-                date.setMonth(date.getMonth() - 2);
-            } else {
-                date.setMonth(date.getMonth() - 1);
-            }
-            return date;
-        },
         //获取表格数据
         getFormData() {
             this.isTableClick = false
@@ -3570,19 +3549,8 @@ export default {
                 seriesIndex: 0,
                 dataIndex: undefined
             })
-            let resultDate = ''
-            if (this.link == 4) {
-                resultDate = this.queryData.month
-            } else {
-                if (this.queryData.month.length > 7) {
-                    resultDate = this.decreaseMonth(this.queryData.month);
-                } else {
-                    resultDate = this.decreaseMonth(this.queryData.month + '-06');
-                }
-                resultDate = resultDate.toISOString().substr(0, 10)//日期
-            }
             let params = {
-                date: resultDate,
+                date: this.queryData.month,
                 wellId: this.queryData.well,//井号
                 assetCode: this.queryData.assetCode,//平台
                 ogfId: this.queryData.ogfId,//油田
