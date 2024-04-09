@@ -2814,17 +2814,6 @@ export default {
                                                     "children": [
                                                         {
                                                             "level": 5,
-                                                            "name": "",
-                                                            "children": [
-                                                                {
-                                                                    "level": 99,
-                                                                    "name": "归因8：数据问题。\n下步措施：数据排查",
-                                                                    "code": "001008"
-                                                                },
-                                                            ]
-                                                        },
-                                                        {
-                                                            "level": 5,
                                                             "name": "关联水井注水量分析",
                                                             "code": "ZSLFX",
                                                             "children": [
