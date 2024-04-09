@@ -78,7 +78,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="*生产单元" min-width="130px" prop="prodectionUnit" align="center">
+                <el-table-column label="*生产平台" min-width="130px" prop="prodectionUnit" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.prodectionUnit !== null && scope.row.prodectionUnit !== ''">{{
