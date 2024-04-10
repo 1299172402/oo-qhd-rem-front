@@ -3384,7 +3384,7 @@ export default {
             });
         },
         downexcelmid(){
-            let prams = {
+            let params = {
                 code:this.evalResult
             }
             downloadFile(params).then(res => {
