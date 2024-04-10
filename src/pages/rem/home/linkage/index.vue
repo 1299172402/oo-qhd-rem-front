@@ -56,7 +56,7 @@ export default {
         this.arrowFun()
         //转动弹出图片循环
         this.timmer = setInterval(() => {
-            this.arrowFun()
+            this.arrowFun()attributtonAnalysis
         }, 100 * 50)
     },
     methods: {
