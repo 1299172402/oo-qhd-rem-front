@@ -1,12 +1,6 @@
 <template>
     <div class="container" style="height: calc(100% - 20px);width: 100%;position:relative">
         <div class="topBanner">注采联动</div>
-<!--        <video-->
-<!--            autoPlay-->
-<!--            loop-->
-<!--            style="width: 100%;height: 100%;object-fit: cover;position: absolute;top: 10;left: 0;"-->
-<!--            muted-->
-<!--            src="@/pages/rem/home/linkage/liandong-bg.mp4"/>-->
         <linkageBox @stopTimer="stopTimer" @startTimer="startTimer" :style="item.style" :showFlag="item.showFlag"
                     :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
         <div class="studySelf" style="cursor:pointer" @click="$router.push({ name: 'Modelconfig',query: { page: 'Linkage' } });">
