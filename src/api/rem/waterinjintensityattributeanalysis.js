@@ -15,3 +15,10 @@ export function queryWaterInjDownExcel({ assetCode, date, evalResult, evalTypeId
     responseType: "blob",
   });
 }
+export function downloadFile({ code } = {}) {
+  return request({
+    url: `${baseUrl}/modelController/downloadFile?code=${ code || "" }`,
+    method: "get",
+    responseType: "blob",
+  });
+}

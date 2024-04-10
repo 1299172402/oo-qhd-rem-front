@@ -104,6 +104,9 @@
             <el-button size="mini" @click="showGyCalDialog =true" type="primary"
                        style="float: left;margin-bottom: 10px;">执行归因计算
             </el-button>
+            <el-button size="mini" @click="downexcelmid()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px">中间数据库导出
+            </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
@@ -191,6 +194,9 @@
             <el-button size="mini" @click="showGyCalDialog =true" type="primary"
                        style="float: left;margin-bottom: 10px;">执行归因计算
             </el-button>
+            <el-button size="mini" @click="downexcelmid()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px">中间数据库导出
+            </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
             </el-button>
@@ -236,6 +242,9 @@
             </el-button>
             <el-button size="mini" @click="showGyCalDialog =true;modelCode='ZSQDPJ'" type="primary"
                        style="float: left;margin-bottom: 10px;margin-left: 10px">执行评价计算
+            </el-button>
+            <el-button size="mini" @click="downexcelmid()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px">中间数据库导出
             </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
@@ -289,6 +298,9 @@
                    :show-btn="true">
             <el-button size="mini" @click="showGyCalDialog =true" type="primary"
                        style="float: left;margin-bottom: 10px;">执行归因计算
+            </el-button>
+            <el-button size="mini" @click="downexcelmid()" type="primary" icon="el-icon-download"
+                       style="float: right;margin-bottom: 10px">中间数据库导出
             </el-button>
             <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
                        style="float: right;margin-bottom: 10px">下载
@@ -438,7 +450,7 @@ import {
 import * as echarts from "echarts/core";
 import {
     queryWaterInjIntensityAttributeAnalysis,
-    queryWaterInjDownExcel
+    queryWaterInjDownExcel,downloadFile
 } from "@/api/rem/waterinjintensityattributeanalysis.js"
 import {analyzeOilWellFluidAttributionQuery} from "@/api/rem/wellmonthlyanalysis";
 import {oilWellFluidQuery, oilWellFluidDownExcel} from "@/api/rem/oilwellfluid";
@@ -760,160 +772,7 @@ export default {
                             verticalAlign: 'middle',
                             align: 'left'
                         }
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
                     },
-
                     emphasis: {
                         disabled: true,
                         focus: 'ancestor',
@@ -3523,6 +3382,15 @@ export default {
                     this.queryData.wellGroup = '全部'
                 }
             });
+        },
+        downexcelmid(){
+            let prams = {
+                code:this.evalResult
+            }
+            downloadFile(params).then(res => {
+                const aBlob = new Blob([res]);
+                FileSaver.saveAs(aBlob, params.title + '中间数据导出表.xls');
+            })
         },
         downexcel() {
             let params = {

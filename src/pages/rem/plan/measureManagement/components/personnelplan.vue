@@ -173,18 +173,6 @@
                     <page-panel :show-btn="true" header-title="人员类型概况" style="height: calc(100% - 20px)">
                         <el-form>
                             <el-form-item label="请选择：">
-                                <el-radio v-model="radio" label="4">
-                                    近三月
-                                </el-radio>
-                                <el-radio v-model="radio" label="1">
-                                    上月
-                                </el-radio>
-                                <el-radio v-model="radio" label="2">
-                                    当月
-                                </el-radio>
-                                <el-radio v-model="radio" label="3">
-                                    近七天
-                                </el-radio>
                                 <el-date-picker
                                     v-model="currentTimeStart"
                                     style="width: 150px"
@@ -540,7 +528,7 @@ export default {
                     itemGap: 40,
                     data: ["定员人数", "POB"],
                     textStyle: {
-                        color: "#FFFFFF",
+                        color: "rgb(131,142,150)",
                         fontSize: 14
                     }
                 },
@@ -558,7 +546,7 @@ export default {
                             interval: 0,
                             showMinLabel: true,
                             showMaxLabel: true,
-                            color: "#8FA4CC",
+                            color: "rgb(131,142,150)",
                             fontSize: 14
                         },
                         axisTick: {
@@ -567,7 +555,7 @@ export default {
                         axisLine: {
                             lineStyle: {
                                 // color: '#979797'
-                                color: "rgba(255,255,255,.16)"
+                                color: "rgb(131,142,150)",
                             }
                         }
                     }
@@ -576,7 +564,7 @@ export default {
                     {
                         type: "value",
                         axisLabel: {
-                            color: "#8FA4CC",
+                            color: "rgb(131,142,150)",
                             fontSize: 14
                         },
                         axisTick: {
@@ -585,13 +573,13 @@ export default {
                         axisLine: {
                             show: false,
                             lineStyle: {
-                                color: "#979797"
+                                color: "rgb(131,142,150)",
                             }
                         },
                         splitLine: {
                             show: true,
                             lineStyle: {
-                                color: "rgba(255,255,255,.16)"
+                                color: "rgb(131,142,150)",
                             }
                         }
                     }
@@ -617,7 +605,7 @@ export default {
                             position: "top",
                             textStyle: {
                                 fontSize: 14,
-                                color: "#979797"
+                                color: "rgb(131,142,150)",
                             }
                         }
                     }
@@ -646,7 +634,7 @@ export default {
                             position: "top",
                             textStyle: {
                                 fontSize: 14,
-                                color: "#979797"
+                                color: "rgb(131,142,150)",
                             }
                         }
                     }
