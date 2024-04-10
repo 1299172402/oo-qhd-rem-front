@@ -3,6 +3,27 @@
 /* eslint-disable no-restricted-syntax */
 import * as MpfUtil from "@/utils/MpfUtil";
 import * as Arrays from "@/utils/Arrays";
+import store from "../store";
+
+export function randomArrVal(arr) {
+  if (Array.isArray(arr)) {
+    for (const i in arr) {
+      randomArrVal(arr[i]);
+    }
+  }
+  randomObjVal(arr);
+}
+
+export function randomObjVal(obj) {
+  // eslint-disable-next-line array-callback-return
+  Object.keys(obj).map(key => {
+    const val = Number(obj[key]);
+
+    if (typeof val === "number" && !Number.isNaN(val)) {
+      obj[key] = (val + Math.random() * 5).toFixed(2);
+    }
+  });
+}
 
 export function validNum(val) {
   if (!val) {
@@ -30,12 +51,27 @@ export function number(val) {
 
   const str = Number(val).toFixed(2);
   const v = Number(str); // 转化时，末尾的0会被化简
-
-  // const v = Number(val).toFixed(2);
-  // debugger;
   return v;
 }
 
+export function val2Std(property, symbol, val) {
+  const units = getUnits(property);
+  const unit = getUnit(units, symbol);
+  return toStdUnit(unit, val);
+}
+
+export function std2Val(property, symbol, valStd) {
+  const units = getUnits(property);
+  const unit = getUnit(units, symbol);
+  const v = toValUnit(unit, valStd);
+  return v;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getUnits(property) {
+  const us = store.getters.unitMap;
+  return us[property];
+}
 
 export function getUnit(units, symbol) {
   // debugger
@@ -74,6 +110,7 @@ export function unitConver4Well(well, onlyFlux = false) {
   unitConver(well, "myFwStdvol", fluxA);
   // debugger;
   well.myFlStdvol = number((well.myFoStdvol - 0) + (well.myFwStdvol - 0));
+  unitConver(well, "myFlStdvol");
   well.gor = number(well.myFgStdvol / well.myFoStdvol);
 
   if (onlyFlux) {
@@ -214,6 +251,12 @@ export function unitConver4Wellbore(wellbore) {
   wellbore.myProfileFoStdvol = Arrays.ftm(wellbore.myProfileFoStdvol, fluxA);
   wellbore.myProfileFwStdvol = Arrays.ftm(wellbore.myProfileFwStdvol, fluxA);
 
+  unitConver(wellbore, "myFgStdvol", fluxA);
+  unitConver(wellbore, "myFoStdvol", fluxA);
+  unitConver(wellbore, "myFwStdvol", fluxA);
+  wellbore.myFlStdvol = (wellbore.myFoStdvol - 0) + (wellbore.myFwStdvol - 0);
+  unitConver(wellbore, "myFlStdvol");
+  // debugger;
   wellbore.myProfileFlStdvol = (wellbore.myProfileFoStdvol - 0) + (wellbore.myProfileFwStdvol - 0);
   unitConver(wellbore, "myProfileFlStdvol");
   wellbore.myWc = (wellbore.myProfileFwStdvol - 0) / (wellbore.myProfileFlStdvol - 0);
@@ -233,8 +276,10 @@ export function unitConver4Wellbore(wellbore) {
 
   // debugger;
   unitConver(wellbore, "myPeu1", pressA); // 吸入压力
+  unitConver(wellbore, "myPout1", pressA); // 井口压力
+  unitConver(wellbore, "myPin1", pressA); // 排出压力
   unitConver(wellbore, "myTeu1", aT, bT); // 吸入温度
-  // unitConver(wellbore, "myTcd1", aT, bT);
+  unitConver(wellbore, "myTcd1", aT, bT);
   unitConver(wellbore, "myTout1", aT, bT); // 油温
   unitConver(wellbore, "myPcd1", pressA); // 回压
 
@@ -265,22 +310,24 @@ export function unitConver4SteadyEdgesData(steadyData) {
   steadyData.myProfile = Arrays.ftm(steadyData.myProfile);
   steadyData.myProfileE = Arrays.ftm(steadyData.myProfileE);
   steadyData.myProfileV = Arrays.ftm(steadyData.myProfileV);
-  if (Array.isArray(steadyData.myProfileV)) {
-    steadyData.myProfileV = steadyData.myProfileV[0];
-  }
+  // if (Array.isArray(steadyData.myProfileV)) {
+  //   steadyData.myProfileV = steadyData.myProfileV[0];
+  // }
   steadyData.myProfileVe = Arrays.ftm(steadyData.myProfileVe);
 
   steadyData.myProfileFgStdvol = Arrays.ftm(steadyData.myProfileFgStdvol, fluxA);
+  // debugger;
   steadyData.myProfileFoStdvol = Arrays.ftm(steadyData.myProfileFoStdvol, fluxA);
   steadyData.myProfileFwStdvol = Arrays.ftm(steadyData.myProfileFwStdvol, fluxA);
 
-  if (Array.isArray(steadyData.myProfileFoStdvol)) {
-    steadyData.myProfileFoStdvol = steadyData.myProfileFoStdvol[0];
-  }
-
-  if (Array.isArray(steadyData.myProfileFwStdvol)) {
-    steadyData.myProfileFwStdvol = steadyData.myProfileFwStdvol[0];
-  }
+  // // debugger;
+  // if (Array.isArray(steadyData.myProfileFoStdvol)) {
+  //   steadyData.myProfileFoStdvol = steadyData.myProfileFoStdvol[0];
+  // }
+  // // debugger;
+  // if (Array.isArray(steadyData.myProfileFwStdvol)) {
+  //   steadyData.myProfileFwStdvol = steadyData.myProfileFwStdvol[0];
+  // }
 
   // debugger;
   steadyData.myProfileFlStdvol = (steadyData.myProfileFoStdvol - 0) + (steadyData.myProfileFwStdvol - 0);
@@ -311,16 +358,6 @@ export function unitConver4SteadyEdgesData(steadyData) {
   steadyData.myTin1 = steadyData.myProfileT[0];
   steadyData.myTout1 = steadyData.myProfileT[steadyData.myProfileT.length - 1];
   steadyData.mydT1 = number(steadyData.myTin1 - steadyData.myTout1);
-
-  if (!steadyData.myType) {
-    return;
-  }
-
-  if (steadyData.myType === "Pipe") {
-    steadyData.myType = "海管";
-  } else if (steadyData.myType === "Pump") {
-    steadyData.myType = "泵";
-  }
 }
 
 // 管路数据
@@ -352,34 +389,36 @@ export function unitConver4Pump(pump) {
 
 // 分离器
 export function unitConver4Sep(sep) {
-  unitConver(sep, "R_OIL_WATER_INTERFACE");
-  unitConver(sep, "R_OIL_CHAMBER_LEVEL");
-  unitConver(sep, "R_WATER_CHAMBER_LEVEL");
-  unitConver(sep, "R_OP_OUTLET_LEVEL_RV_OPENING");
-  unitConver(sep, "R_AP_OUTLET_LEVEL_RV_OPENING");
-  unitConver(sep, "R_GP_DS_OUTLET_PRV_OPENING");
-  unitConver(sep, "R_GP_TORCH_OUTLET_PRV_OPENING");
-  unitConver(sep, "R_OPER_PRESSURE");
-  unitConver(sep, "R_WATER_CHAMBER_OPERATION_TEMP");
-  unitConver(sep, "R_OIL_CHAMBER_OPERATION_TEMP");
+  unitConver(sep, "r_oil_water_interface");
+  unitConver(sep, "r_oil_chamber_level");
+  unitConver(sep, "r_water_chamber_level");
+  unitConver(sep, "r_op_outlet_level_rv_opening");
+  unitConver(sep, "r_ap_outlet_level_rv_opening");
+  unitConver(sep, "r_gp_ds_outlet_prv_opening");
+  unitConver(sep, "r_gp_torch_outlet_prv_opening");
+  unitConver(sep, "r_oper_pressure");
+  unitConver(sep, "r_water_chamber_operation_temp");
+  unitConver(sep, "r_oil_chamber_operation_temp");
 }
 
 // 井日度数据
 export function unitConver4WellDailyData(wellDailyData) {
-  unitConver(wellDailyData, "myfo");
-  unitConver(wellDailyData, "myfg");
-  wellDailyData.myfg = Number((wellDailyData.myfg * 10000).toFixed(2));
-  unitConver(wellDailyData, "myfw");
-  wellDailyData.myfl = (wellDailyData.myfo - 0) + (wellDailyData.myfw - 0);
+  const pressA = 1e3;
+  wellDailyData.myfl = wellDailyData.my_fo + wellDailyData.my_fw;
+  wellDailyData.mygor = wellDailyData.my_fg / wellDailyData.my_fo;
+  wellDailyData.mywc = wellDailyData.my_fw / wellDailyData.myfl;
+
+  unitConver(wellDailyData, "my_fo");
+  unitConver(wellDailyData, "my_fg", 10000);
+  unitConver(wellDailyData, "my_fw");
   unitConver(wellDailyData, "myfl");
-  wellDailyData.mygor = number(wellDailyData.myfg / wellDailyData.myfo);
-  unitConver(wellDailyData, "mygor");
-  wellDailyData.mywc = (wellDailyData.myfw - 0) / (wellDailyData.myfl - 0);
+  unitConver(wellDailyData, "mygor", 10000);
   unitConver(wellDailyData, "mywc", 100.0);
-  unitConver(wellDailyData, "myhz");
+  unitConver(wellDailyData, "pump_frequency");
   unitConver(wellDailyData, "nozzle_diameter");
-  unitConver(wellDailyData, "mypg");
-  unitConver(wellDailyData, "mytg");
+  unitConver(wellDailyData, "pump_inlet_press", pressA);
+  unitConver(wellDailyData, "pump_outlet_press", pressA);
+  unitConver(wellDailyData, "oil_press", pressA);
 }
 
 // 海管日度数据
@@ -412,6 +451,295 @@ export function unitConver4PipeDesignData(pipeDesignData) {
       item.mytype = "注水";
     }
   });
+}
+
+// 混输/注水海管实时数据
+export function unitConver4PipeData(pipeData) {
+  const pressA = 1e-3;
+  unitConver(pipeData, "myPin1", pressA);
+  unitConver(pipeData, "myPout1", pressA);
+  unitConver(pipeData, "myStatus");
+  unitConver(pipeData, "myTin1");
+  unitConver(pipeData, "myTout1");
+}
+
+// 工艺计算输入转格式
+export function unitConver4FlowSimData(dpipeData) {
+  const pressA = 1e-3;
+  const fluxA = 1 / (3600 * 24);
+  const aT = 1;
+  const bT = 273.15;
+  unitConver(dpipeData, "myDout", pressA);
+  unitConver(dpipeData, "myPout", 1000000);
+  unitConver(dpipeData, "myQg", fluxA);
+  unitConver(dpipeData, "myQo", fluxA);
+  unitConver(dpipeData, "myQw", fluxA);
+  unitConver(dpipeData, "myRoughAbs", pressA);
+  unitConver(dpipeData, "myTe", aT, bT);
+  unitConver(dpipeData, "myTin", aT, bT);
+  unitConver(dpipeData, "myWallThick", pressA);
+}
+
+// 工艺计算输出转格式
+export function unitConver4FlowSimResultData(dpipeData) {
+  const pressA = 1e-6;
+  unitConver(dpipeData, "myDP", pressA);
+  unitConver(dpipeData, "myDPHammer", pressA);
+  unitConver(dpipeData, "myDT");
+  unitConver(dpipeData, "myPdesign", pressA);
+  unitConver(dpipeData, "myPin", pressA);
+  unitConver(dpipeData, "myTdesign");
+  unitConver(dpipeData, "myTout");
+}
+
+// 内压分析输入转格式
+export function unitConver4BurstingSimData(dpipeData) {
+  const pressA = 1e-3;
+  unitConver(dpipeData, "myDout", pressA);
+  unitConver(dpipeData, "myFut", 1000000);
+  unitConver(dpipeData, "myFyt", 1000000);
+  unitConver(dpipeData, "myPd", 1000000);
+  unitConver(dpipeData, "mySMTS", 1000000);
+  unitConver(dpipeData, "mySMYS", 1000000);
+  unitConver(dpipeData, "myThCorr", pressA);
+  unitConver(dpipeData, "myThFab", pressA);
+  unitConver(dpipeData, "myThSteel", pressA);
+}
+
+// 内压分析输出转格式
+export function unitConver4BurstingSimResultData(dpipeData) {
+  const pressA = 1e-6;
+  unitConver(dpipeData, "myFu", pressA);
+  unitConver(dpipeData, "myFy", pressA);
+  unitConver(dpipeData, "myPd", pressA);
+  unitConver(dpipeData, "myPb", pressA);
+  unitConver(dpipeData, "myPbs", pressA);
+  unitConver(dpipeData, "myPus", pressA);
+}
+
+// 外压分析输入转格式
+export function unitConver4BucklingSimData(dpipeData) {
+  const pressA = 1e-3;
+  // debugger;
+  unitConver(dpipeData, "myDout", pressA);
+  unitConver(dpipeData, "myE", 1000000);
+  unitConver(dpipeData, "myFo", 1e-2);
+  unitConver(dpipeData, "myFyt", 1000000);
+  unitConver(dpipeData, "mySMYS", 1000000);
+  unitConver(dpipeData, "myThCorr", pressA);
+  unitConver(dpipeData, "myThSteel", pressA);
+}
+
+// 外压分析输出转格式
+export function unitConver4BucklingSimResultData(dpipeData) {
+  const pressA = 1e-6;
+  unitConver(dpipeData, "myFy", pressA);
+  unitConver(dpipeData, "myPcc", pressA);
+  unitConver(dpipeData, "myPec", pressA);
+  unitConver(dpipeData, "myPpc", pressA);
+  unitConver(dpipeData, "myPbs", pressA);
+  unitConver(dpipeData, "myPus", pressA);
+}
+
+// 载荷分析输入转格式
+export function unitConver4LoadingSimData(dpipeData) {
+  const pressA = 1e-3;
+  // debugger;
+  unitConver(dpipeData, "myDout", pressA);
+  unitConver(dpipeData, "myE", 1000000);
+  unitConver(dpipeData, "myFo", 1e-2);
+  unitConver(dpipeData, "myFut", 1000000);
+  unitConver(dpipeData, "myFyt", 1000000);
+  unitConver(dpipeData, "myPd", 1000000);
+  unitConver(dpipeData, "mySMTS", 1000000);
+  unitConver(dpipeData, "mySMYS", 1000000);
+  unitConver(dpipeData, "myThCorr", pressA);
+  unitConver(dpipeData, "myThFab", pressA);
+  unitConver(dpipeData, "myThSteel", pressA);
+}
+
+// 载荷分析输出转格式
+export function unitConver4LoadingSimResultData(dpipeData) {
+  const pressA = 1e-6;
+  // debugger;
+  unitConver(dpipeData, "myFu", pressA);
+  unitConver(dpipeData, "myFy", pressA);
+  unitConver(dpipeData, "myPb", pressA);
+  unitConver(dpipeData, "myPbs", pressA);
+  unitConver(dpipeData, "myPus", pressA);
+}
+
+// 膨胀分析输入转格式
+export function unitConver4ExpanSimData(dpipeData) {
+  const pressA = 1e-3;
+  unitConver(dpipeData, "myDout", pressA);
+  unitConver(dpipeData, "myE", 1000000);
+  unitConver(dpipeData, "myFo", 1e-2);
+  unitConver(dpipeData, "myFut", 1000000);
+  unitConver(dpipeData, "myFyt", 1000000);
+  unitConver(dpipeData, "myPd", 1000000);
+  unitConver(dpipeData, "mySMTS", 1000000);
+  unitConver(dpipeData, "mySMYS", 1000000);
+  unitConver(dpipeData, "myThCorr", pressA);
+  unitConver(dpipeData, "myThFab", pressA);
+  unitConver(dpipeData, "myThSteel", pressA);
+}
+
+// 膨胀分析输出转格式
+export function unitConver4ExpanSimResultData(dpipeData) {
+  const pressA = 1e-6;
+  unitConver(dpipeData, "myFu", pressA);
+  unitConver(dpipeData, "myFy", pressA);
+  unitConver(dpipeData, "myPb", pressA);
+  unitConver(dpipeData, "myPbs", pressA);
+  unitConver(dpipeData, "myPus", pressA);
+  unitConver(dpipeData, "mySxr", pressA);
+  unitConver(dpipeData, "mySxt", pressA);
+  unitConver(dpipeData, "mySy", pressA);
+  //   "myFf": 2751926.5082176137,
+}
+
+export function formatValOrNa(v, rep) {
+  return formatValOrNaZero(v, rep, true);
+}
+
+export function formatValOrNaZero(v, repVal, isZeroRep) {
+  // debugger;
+  if (
+    (isZeroRep && v === "0") ||
+    (v === null ||
+      v === "N/A" ||
+      v === undefined)
+  ) {
+    if (repVal) {
+      v = `${repVal.toFixed(2)}*`;
+    } else {
+      v = "N/A";
+    }
+  } else if (Number(v)) {
+    // debugger;
+    v = Number(v).toFixed(2);
+  }
+  // debugger;
+  if (v !== "") {
+    return v;
+  }
+  return "N/A";
+}
+
+// 表格数据格式化
+export function formatVal(v) {
+  if (
+    v !== null &&
+    v !== "" &&
+    v !== undefined &&
+    v !== "N/A" &&
+    v !== "NaN"
+  ) {
+    if (Array.isArray(v)) {
+      return Number(v[0]).toFixed(2);
+    }
+    return Number(v).toFixed(2);
+  }
+  return "N/A";
+}
+
+// 表格数据格式化
+export function formatVal3(v) {
+  if (
+    v !== null &&
+    v !== "" &&
+    v !== undefined &&
+    v !== "N/A" &&
+    v !== "NaN"
+  ) {
+    if (Array.isArray(v)) {
+      return Number(v[0]).toFixed(3);
+    }
+    return Number(v).toFixed(3);
+  }
+  return "N/A";
+}
+
+// 表格数据格式化
+export function formatVals(v1, v2, operator) {
+  if (
+    v1 !== null &&
+    v1 !== "" &&
+    v1 !== undefined &&
+    v1 !== "N/A" &&
+    v1 !== "NaN" &&
+    v2 !== null &&
+    v2 !== "" &&
+    v2 !== undefined &&
+    v2 !== "N/A" &&
+    v2 !== "NaN"
+  ) {
+    let v;
+    if (operator === "+") {
+      v = v1 + v2;
+    }
+    if (operator === "-") {
+      v = v1 - v2;
+    }
+    if (operator === "*") {
+      v = v1 * v2;
+    }
+    if (operator === "/") {
+      v = v1 / v2;
+    }
+    if (operator === "%") {
+      v = v1 % v2;
+    }
+
+    return formatVal(v);
+  }
+  return "N/A";
+}
+
+export function sortByStrNo(a, b) {
+  const letterA = a.match(/[a-zA-Z]+/)[0];
+  const letterB = b.match(/[a-zA-Z]+/)[0];
+  const numA = parseInt(a.match(/\d+/)[0], 10);
+  const numB = parseInt(b.match(/\d+/)[0], 10);
+  const restA = a.replace(letterA, "").replace(numA, "");
+  const restB = b.replace(letterB, "").replace(numB, "");
+
+  if (letterA < letterB) {
+    return -1;
+  } if (letterA > letterB) {
+    return 1;
+  }
+  if (numA !== numB) {
+    return numA - numB;
+  }
+  return restA.localeCompare(restB);
+}
+
+// 对含有特殊字符的列数据进行排序
+export function sortHasStr(arr, prop, order) {
+  let data1 = [];
+  const data2 = [];
+
+  // eslint-disable-next-line array-callback-return
+  arr.map(item => {
+    const data = formatVal(item[prop]);
+    if (data !== "N/A") {
+      item[prop] = parseFloat(data);
+      data1.push(item);
+    } else {
+      item[prop] = "N/A";
+      data2.push(item);
+    }
+  });
+  if (order === "ascending") {
+    data1 = data1.sort((a, b) => a[prop] - b[prop]);
+  }
+  if (order === "descending") {
+    data1 = data1.sort((a, b) => b[prop] - a[prop]);
+  }
+
+  return data1.concat(data2);
 }
 
 export function createFluxPoint(time, fluxArr, isSum = false) {

@@ -12,12 +12,15 @@ export function wellFluxLastDayHour(data) {
   });
 }
 
-export function getWellsHmiMetetData(mName) {
+export function getWellsHmiMetetData(wellName) {
   return Axios({
-    url: `/oo-qhd-prm-pom-agg/vms/getWellsHmiMetetData/${mName}`,
+    // url: `/oo-qhd-prm-pom-agg/vms/getWellsHmiMetetData/${mName}`,
+    url: `/oo-ppd-dpc-vms-model/vms/getWellHmiMetetData/${wellName}`,
     method: "get",
     headers: {
       showLoading: false,
+      myToken:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoIjoicWhkLXZtcyIsImV4cCI6MjM0MzQzNjY2MSwidXNlcklkIjoia3EifQ.seCIlaiaP340nDQX-hEptH-Qbx1IvyAg0L9GEEqCLZ4",
     },
   });
 }
