@@ -3,7 +3,8 @@
         <header-search style="height: auto;display: grid">
             <el-form style="margin: 20px 0 10px 0" :inline="true">
                 <el-form-item label="油田：">
-                    <el-select v-model="params.ogfId.value" >
+                    <el-select v-model="params.ogfId.value"
+                               @change="queryBlockFeild1">
                         <el-option
                             v-for="item in params.ogfList"
                             :key="item.ogfId"
@@ -13,7 +14,8 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区块：">
-                    <el-select v-model="params.blockId.value" >
+                    <el-select v-model="params.blockId.value"
+                               @change="queryWellData1">
                         <el-option
                             v-for="item in params.blockList"
                             :key="item.reservoirAnalyseUnitId"
@@ -23,7 +25,8 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="井别：">
-                    <el-select v-model="params.wellCategory" style="width: 100px" filterable @change="queryWellData">
+                    <el-select v-model="params.wellCategory" style="width: 100px" filterable
+                               @change="queryWellData1">
                         <el-option
                             v-for="item  in wellCategoryList"
                             :key="item.id"
@@ -53,8 +56,8 @@
 <!--                        value-format="yyyy-MM-dd"-->
 <!--                    ></el-date-picker>-->
 <!--                </el-form-item>-->
-                <el-button type="primary" class="confirmBut" icon="el-icon-search" disabled>搜索</el-button>
-                <el-button type="primary" class="commonBtn" icon="el-icon-refresh" disabled>重置</el-button>
+                <el-button type="primary" class="confirmBut" icon="el-icon-search" @click="this.OilfieldBut" >搜索</el-button>
+                <el-button type="primary" class="commonBtn" icon="el-icon-refresh" @click="this.getuserListByUserNamesData">重置</el-button>
                 <el-button type="primary" class="confirmBut" icon="el-icon-back" style="float: right" @click="returned">返回</el-button>
             </el-form>
         </header-search>
@@ -387,6 +390,8 @@ export default {
                 ]
             },
             orgId:'',
+            blockList: [{reservoirAnalyseUnitId:'0',
+                reservoirAnalyseUnitName:'无数据'}],
             params: {
                 ogfId: {value: '', label: ''},
                 blockId: {value: '', label: ''},
@@ -398,7 +403,7 @@ export default {
             },
         }
     },
-    mounted() {
+    created() {
 //         const params = JSON.parse(localStorage.getItem('PRODUCTION_SPLIT'))
 //         if(this.$route.query.link){
 //             // 获取当前日期
@@ -481,6 +486,20 @@ export default {
                 this.queryOilFeild()
             })
         },
+        queryOilFeild1() {
+            getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
+                this.params.ogfList = res.data.data;
+                console.log(this.params.ogfList)
+                for(var i=0;i<this.params.ogfList.length;i++){
+                    if(this.params.ogfList[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+                        this.params.ogfId.value=this.params.ogfList[i].ogfId
+                    }else {
+                        this.params.ogfId.value=this.params.ogfList[0].ogfId
+                    }
+                }
+                this.queryBlockFeild()
+            });
+        },
         queryOilFeild() {
             getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
                 this.params.ogfList = res.data.data;
@@ -495,6 +514,21 @@ export default {
                 this.queryBlockFeild()
             });
         },
+        queryBlockFeild1() {
+            getblockData({ogfId:this.params.ogfId.value}).then((res) => {
+                this.params.blockList = res.data.data;
+                console.log('2222')
+                console.log(this.params.blockList.length)
+                if(this.params.blockList.length===0){
+                    
+                    this.params.blockList=this.blockList;
+                    console.log(this.params.blockList)
+                    this.params.blockId.value=this.blockList[0].reservoirAnalyseUnitId
+                }else {
+                    this.params.blockId.value=this.params.blockList[0].reservoirAnalyseUnitId
+                }
+            });
+        },
         queryBlockFeild() {
             getblockData({ogfId:this.params.ogfId.value}).then((res) => {
                 this.params.blockList = res.data.data;
@@ -507,7 +541,6 @@ export default {
             });
         },
         queryWellData1() {
-
             var welltypeName=null;
             if(this.params.wellCategory==="01"){
                 welltypeName='采油井'
@@ -523,8 +556,6 @@ export default {
                     }
                 }
                 
-                this.OilfieldBut()
-
             });
         },
         queryWellData() {
