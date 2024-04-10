@@ -8,7 +8,9 @@
 <script>
 import { Message } from "element-ui";
 import Echarts from "@/components/tools/Echarts/index.vue";
+// import { parseTime } from "@/utils/MyUtil";
 import * as FmtUtil from "@/utils/FmtUtil";
+// import { getWellsData } from "@/api/pom/vms";
 import { getWellsHmiMetetData } from "@/api/oilDeposit/opm/opmData.js";
 import { isArray } from "lodash";
 
@@ -17,27 +19,19 @@ export default {
     Echarts,
   },
   props: {
-    selectedOilWell: {
-      type: String,
+    selectedOilWellName: {
+      type: "String",
       default: "",
     },
   },
-  beforeRouteLeave(to, from, next) {
-    this.clearTimeOutTask(this.updateStoreData);
-    // 注意一定要next()让其跳转!!!
-    next();
-  },
   data() {
     return {
-      wellName: "",
-      vmsData: {},
+      // selectedOilWellName: "QHD32-6-I10H",
+      fieldWellsData: [],
       selectedWellData: {},
-      // point: {},
-      pointSize: 60,
-
       updateStoreData: null,
       timer: null,
-
+      timeout: 1000,
       oilOption2: {
         toolbox: {
           show: true,
@@ -213,57 +207,122 @@ export default {
           },
         ],
       },
+      pointSize: 60,
     };
   },
+  watch: {
+    selectedOilWellName() {
+      this.handleQuery();
+    },
+  },
   created() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
-    this.wellName = this.selectedOilWell;
-    that.clearTimeOutTask(that.updateStoreData);
-    that.clearChart();
+    this.clear();
     that.$nextTick(async () => {
+      await that.getWellsDataList({ field: "QHD32-6_VMS" });
       await that.handleQuery();
     });
   },
-  mounted() {},
+  mounted() {
+    // this.getWellData();
+    this.$nextTick(async () => {
+      await this.intervalUpdateData();
+    });
+  },
+  // 页面销毁前清除定时器
   beforeDestroy() {
-    this.clearTimeOutTask(this.updateStoreData);
-    this.clearChart();
+    this.clearTimeout();
+    this.clear();
+  },
+  // 路由跳转前，清除定时器
+  beforeRouteLeave(to, from, next) {
+    next();
+    this.clearTimeout();
   },
   methods: {
-    // 获取某油井数据
-    async getWellVmsData() {
-      const that = this;
-      await getWellsHmiMetetData(that.wellName)
-        .then((res) => {
-          if (res.data.code === 200) {
-            const { data } = res.data;
-            if (data) {
-              FmtUtil.unitConver4Wellbore(data);
-              if (data) {
-                that.vmsData = data;
-              }
-            }
-          } else {
-            that.vmsData = null;
-          }
-        })
-        .catch((e) => {
-          that.vmsData = null;
-        });
+    // 查询某项目所有井的计算结果及运行数据 // 获取全油田油井数据（vms！）
+    async getWellsDataList(params) {
+      if (!params.field) {
+        return;
+      }
+      if (params.field.indexOf("VMS") === -1) {
+        params.field += "_VMS";
+      }
+      const { data } = await getWellsHmiMetetData(params.field);
+      if (!data) {
+        return;
+      }
+      if (!data.data || !isArray(data.data)) {
+        return;
+      }
+      // debugger;
+      data.data.map((item) => {
+        if (!item.myName.includes("QHD32-6-")) {
+          item.myName = `QHD32-6-${item.myName}`;
+        }
+        FmtUtil.unitConver4Well(item);
+        return item;
+      });
+      this.fieldWellsData = data.data;
     },
-
+    // 实时更新
+    async intervalUpdateData() {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const that = this;
+      that.clear();
+      await this.getWellsDataList({ field: "QHD32-6_VMS" });
+      that.$nextTick(async () => {
+        if (!that.fieldWellsData) {
+          return;
+        }
+        const vmsTableData = that.fieldWellsData.filter((i) => {
+          if (that.selectedOilWellName === i.myName) {
+            return i;
+          }
+        });
+        if (!vmsTableData[0]) {
+          return;
+        }
+        const vmsObj = {
+          update: vmsTableData[0].update,
+          myFoStdvol: vmsTableData[0].myFoStdvol,
+          myFgStdvol: vmsTableData[0].myFgStdvol,
+          myFwStdvol: vmsTableData[0].myFwStdvol,
+          myFlStdvol: vmsTableData[0].myFlStdvol,
+        };
+        that.selectedWellData = { ...vmsObj };
+      });
+      that.updateStoreData = setTimeout(async () => {
+        await that.intervalUpdateData();
+      }, 10000);
+    },
     // 清除定时器
-    clearTimeOutTask(data) {
-      if (data) {
-        clearTimeout(data);
-        data = null;
+    clear() {
+      if (this.updateStoreData) {
+        clearTimeout(this.updateStoreData);
+        this.updateStoreData = null;
       }
     },
-
+    clearTimeout() {
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
+    },
+    clearChart() {
+      this.clearTimeout();
+      this.oilOption2.xAxis.data = [];
+      this.oilOption2.series[0].data = [];
+      this.oilOption2.series[1].data = [];
+      this.oilOption2.series[2].data = [];
+      this.oilOption2.series[3].data = [];
+    },
     getWellData() {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const that = this;
-      that.clearTimeOutTask(this.timer);
       const timeout = 1000;
+      // eslint-disable-next-line no-use-before-define
       getData();
       function getData() {
         const data = that.selectedWellData;
@@ -273,19 +332,16 @@ export default {
         that.timer = setTimeout(getData, timeout);
       }
     },
-
     updateChartPoint(time, data, isForce = false) {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const that = this;
+      // const timeStr = parseTime(time);
       const timeStr = new Date(time).format("yyyy-MM-dd hh:mm:ss");
       let oil = data.myFoStdvol;
       let gas = data.myFgStdvol;
       let water = data.myFwStdvol;
       let liq = data.myFlStdvol;
-      // const point = FmtUtil.createFluxPoint(timeStr, [oil, gas, water, liq]);
-      // if (isForce) {
-      //   this.$refs.FluxChart.updateChart(point);
-      // } else {
-      //   that.point = point;
-      // }
+
       this.oilOption2.xAxis.data.push(timeStr);
       this.oilOption2.series[0].data.push([timeStr, oil]);
       this.oilOption2.series[1].data.push([timeStr, gas]);
@@ -299,73 +355,43 @@ export default {
         this.oilOption2.series[3].data.shift();
       }
     },
-
     // 搜索
     async handleQuery() {
-      const that = this;
-      that.clearTimeOutTask(that.updateStoreData);
-      that.clearChart();
-      that.selectedWellData = {};
-
-      if (that.wellName !== "") {
-        await that.getAndUpdateLiveData();
+      this.selectedWellData = {};
+      if (this.selectedOilWellName !== "") {
+        this.clearChart();
+        this.clearTimeout();
+        this.$nextTick(async () => {
+          // eslint-disable-next-line array-callback-return
+          if (!this.fieldWellsData) {
+            return;
+          }
+          // eslint-disable-next-line array-callback-return
+          const vmsTableData = this.fieldWellsData.filter((i) => {
+            if (this.selectedOilWellName === i.myName) {
+              return i;
+            }
+          });
+          if (!vmsTableData[0]) {
+            return;
+          }
+          const vmsObj = {
+            update: vmsTableData[0].update,
+            myFoStdvol: vmsTableData[0].myFoStdvol,
+            myFgStdvol: vmsTableData[0].myFgStdvol,
+            myFwStdvol: vmsTableData[0].myFwStdvol,
+            myFlStdvol: vmsTableData[0].myFlStdvol,
+          };
+          this.selectedWellData = { ...vmsObj };
+          this.getWellData();
+        });
       } else {
-        that.clearChart();
+        this.clearChart();
         Message({
           message: "请先选择油井",
         });
-        that.selectedWellData = {};
+        this.selectedWellData = {};
       }
-    },
-
-    // 拼接整体对象
-    async getAndUpdateLiveData() {
-      const that = this;
-      that.clearTimeOutTask(that.updateStoreData);
-      await that.getWellVmsData();
-      const vmsObj = {};
-      if (that.vmsData) {
-        vmsObj.update = that.vmsData.update;
-        vmsObj.myFoStdvol = that.vmsData.myFoStdvol;
-        vmsObj.myFgStdvol = that.vmsData.myFgStdvol;
-        vmsObj.myFwStdvol = that.vmsData.myFwStdvol;
-        vmsObj.myFlStdvol = that.vmsData.myFlStdvol;
-      } else {
-        vmsObj.update = "N/A";
-        vmsObj.myFoStdvol = "N/A";
-        vmsObj.myFgStdvol = "N/A";
-        vmsObj.myFwStdvol = "N/A";
-        vmsObj.myFlStdvol = "N/A";
-        that.clearTimeOutTask(that.updateStoreData);
-        that.clearChart();
-        return;
-      }
-
-      that.selectedWellData = { ...vmsObj };
-      if (that.selectedWellData.my_fo && that.selectedWellData.my_fw) {
-        that.selectedWellData.my_fl = FmtUtil.formatVals(that.selectedWellData.my_fo, that.selectedWellData.my_fw, "+");
-      }
-      if (that.selectedWellData.myFo && that.selectedWellData.myFw) {
-        that.selectedWellData.myFl = FmtUtil.formatVals(that.selectedWellData.myFo, that.selectedWellData.myFw, "+");
-      }
-      await that.getWellData();
-
-      that.updateStoreData = setTimeout(() => {
-        that.getAndUpdateLiveData();
-      }, 2000);
-    },
-
-    // 清图
-    clearChart() {
-      this.clearTimeOutTask(this.timer);
-
-      this.$nextTick(() => {
-        this.oilOption2.xAxis.data = [];
-        this.oilOption2.series[0].data = [];
-        this.oilOption2.series[1].data = [];
-        this.oilOption2.series[2].data = [];
-        this.oilOption2.series[3].data = [];
-      });
     },
   },
 };

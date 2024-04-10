@@ -390,7 +390,7 @@
             </div> -->
             <div class="echarts-view">
               <!-- <echarts :chart-data="oilOption2" height="100%"></echarts> -->
-              <singleWellDetails :selectedOilWellName="selectWellName"></singleWellDetails>
+              <singleWellDetails ref="singleWellDetails" :selectedOilWell="selectWellName"></singleWellDetails>
             </div>
           </div>
           <div class="svg" v-else-if="oilTabType == '3'">
@@ -3158,6 +3158,10 @@ export default {
     //虚拟计量内容 查询
     doWellFluxLastDayHour() {
       this.selectWellName = this.wells.filter((el) => this.selectWellId == el.wellId)[0].wellName || "";
+      if (this.$refs?.singleWellDetails) {
+        this.$refs.singleWellDetails.wellName = this.selectWellName;
+        this.$refs.singleWellDetails.handleQuery();
+      }
       // return false;
     },
     //下载导出文件 tableId tableName

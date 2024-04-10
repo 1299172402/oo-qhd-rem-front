@@ -1,7 +1,12 @@
 <template>
   <div class="menu menuColor">
     <!--隐藏菜单-->
-    <div class="ensconce" style="cursor: pointer">
+    <div
+      class="ensconce"
+      style="cursor: pointer"
+      :style="{ display: isOpen ? 'none' : 'block' }"
+      @click="isOpen = !isOpen"
+    >
       <h2>
         <img v-if="$store.state.setting.mode === 'dark'" src="@/assets/treeSelectDark2.png" alt="" />
         <img v-else src="@/assets/treeSelectWhite2.png" alt="" />
@@ -9,8 +14,12 @@
       </h2>
     </div>
     <!--显示菜单-->
-    <div class="open openColor" :class="$store.state.setting.mode === 'dark' ? 'open' : 'open-white'">
-      <div class="navH navHColor" style="cursor: pointer">
+    <div
+      class="open openColor"
+      :class="$store.state.setting.mode === 'dark' ? 'open' : 'open-white'"
+      :style="{ marginLeft: isOpen ? '0px' : '-300px' }"
+    >
+      <div class="navH navHColor" style="cursor: pointer" @click="isOpen = !isOpen">
         <div style="font-size: 14px; font-weight: 500">目标导航</div>
         <span>
           <img v-if="$store.state.setting.mode === 'dark'" class="obscure" src="@/assets/treeSelectDark1.png" alt="" />
@@ -71,6 +80,7 @@ export default {
     return {
       deptOptions: [],
       selectKeys: [], // 所有选中的数据集合
+      isOpen: false,
     };
   },
   watch: {
@@ -81,6 +91,7 @@ export default {
   mounted() {
     this.init();
     this.getTreeData();
+    this.isOpen = false;
   },
   updated() {
     this.init();
@@ -88,32 +99,32 @@ export default {
   methods: {
     // 初始化方法
     init() {
-      // 隐藏菜单
-      const obscure = document.querySelector(".navH");
-      const open = document.querySelector(".open");
-      const ensconce = document.querySelector(".ensconce");
-      let that = this;
-      obscure.onclick = () => {
-        open.style.marginLeft = "-300px";
-        setTimeout(() => {
-          ensconce.style.display = "block";
-          that.$nextTick(() => {
-            that.$emit("change");
-          });
-        }, 350);
-      };
-      // 显示菜单
-      const showC = document.querySelector(".ensconce");
-      showC.onclick = function () {
-        open.style.marginLeft = "0px";
-        setTimeout(() => {
-          ensconce.style.display = "none";
-          that.$nextTick(() => {
-            that.$emit("change");
-          });
-        }, 100);
-      };
-      obscure.onclick();
+      //   // 隐藏菜单
+      //   const obscure = document.querySelector(".navH");
+      //   const open = document.querySelector(".open");
+      //   const ensconce = document.querySelector(".ensconce");
+      //   let that = this;
+      //   obscure.onclick = () => {
+      //     open.style.marginLeft = "-300px";
+      //     setTimeout(() => {
+      //       ensconce.style.display = "block";
+      //       that.$nextTick(() => {
+      //         that.$emit("change");
+      //       });
+      //     }, 350);
+      //   };
+      //   // 显示菜单
+      //   const showC = document.querySelector(".ensconce");
+      //   showC.onclick = function () {
+      //     open.style.marginLeft = "0px";
+      //     setTimeout(() => {
+      //       ensconce.style.display = "none";
+      //       that.$nextTick(() => {
+      //         that.$emit("change");
+      //       });
+      //     }, 100);
+      //   };
+      //   obscure.onclick();
       //= ==========================================
       /* rem 适应 */
       /* 让文字和标签的大小随着屏幕的尺寸做变话 等比缩放 */
