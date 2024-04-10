@@ -167,11 +167,11 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="是否动管柱" prop="isMovingPipePresent" align="center">
+                <el-table-column label="是否动管柱" prop="isMovingPipePlan" align="center">
                     <template slot-scope="scope">
                         <span
-                            v-if="scope.row.isMovingPipePresent !== null && scope.row.isMovingPipePresent !== ''">{{
-                                scope.row.isMovingPipePresent
+                            v-if="scope.row.isMovingPipePlan !== null && scope.row.isMovingPipePlan !== ''">{{
+                                scope.row.isMovingPipePlan
                             }}</span>
                         <span v-else>-</span>
                     </template>
