@@ -64,6 +64,7 @@
           ></el-date-picker>
         </div>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="doSearch">搜索</el-button>
+        <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
       </div>
     </headerSearch>
     <div style="height: auto; padding-top: 0; margin-bottom: 14px" class="svg">
@@ -2061,6 +2062,19 @@ export default {
     this.initSearchSelect();
   },
   methods: {
+    //重置
+    resetting() {
+      Object.assign(this.$data, this.$options.data());
+      this.$nextTick(async () => {
+        if (this.$route.query.dateTime) {
+          this.dateTime = this.$route.query.dateTime;
+        } else {
+          this.dateTime = new Date().format("yyyy");
+        }
+        await this.initSearchSelect();
+        await this.initData();
+      });
+    },
     //初始化
     async initData() {
       const { oilFieldId } = this.$route.query;
@@ -2933,12 +2947,12 @@ export default {
                     color: "#8FA4CC",
                     minInterval: 0,
                     formatter: function (value, index) {
-                          if (String(value).includes(".")) {
-                            return value.toFixed(2);
-                          } else {
-                            return value;
-                          }
-                        },
+                      if (String(value).includes(".")) {
+                        return value.toFixed(2);
+                      } else {
+                        return value;
+                      }
+                    },
                   },
                   axisTick: {
                     show: true,

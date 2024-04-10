@@ -50,7 +50,7 @@
           </div>
           <div style="margin-right: 20px">
             层系：
-            <el-select v-model="queryParams.layerId">
+            <el-select v-model="queryParams.layerId" clearable>
               <el-option
                 v-for="item in layer"
                 :key="item.fieldLayerId"

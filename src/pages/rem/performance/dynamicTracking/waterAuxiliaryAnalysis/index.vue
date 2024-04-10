@@ -643,7 +643,15 @@ export default {
         let url = `https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge`;
         window.open(url, "_blank");
       } else if (name == "injectivityIndex") {
-        window.open("https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge", "_blank");
+          let baseUrl = ''
+          if (window.location.origin.includes('test')) {
+              baseUrl = 'tjioms-test.tjltd.cnooc'
+          } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
+              baseUrl = 'tjioms-dev.tjltd.cnooc'
+          }else if (window.location.origin.includes('tpro')) {
+              baseUrl = 'tjioms-tpro.tjltd.cnooc'
+          }
+        window.open(`https://ipm.${baseUrl}/#/waterflood/merge`, "_blank");
       } else {
         this.currentModule = name;
         this.isUpdateFile = this.operationTypeList[this.currentModule] ? true : false;
