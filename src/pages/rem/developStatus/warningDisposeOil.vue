@@ -233,8 +233,8 @@ export default {
             },
             axisLine: {
               lineStyle: {
-                //color: '#979797'
-                color: "rgba(255,255,255,.16)",
+                //color: '#8FA4CC'
+                color: "#8FA4CC",
               },
             },
           },
@@ -251,8 +251,8 @@ export default {
             },
             axisLine: {
               lineStyle: {
-                //color: '#979797'
-                color: "rgba(255,255,255,.16)",
+                //color: '#8FA4CC'
+                color: "#8FA4CC",
               },
             },
           },
@@ -269,8 +269,8 @@ export default {
             },
             axisLine: {
               lineStyle: {
-                //color: '#979797'
-                color: "rgba(255,255,255,.16)",
+                //color: '#8FA4CC'
+                color: "#8FA4CC",
               },
             },
           },
@@ -287,8 +287,8 @@ export default {
             },
             axisLine: {
               lineStyle: {
-                //color: '#979797'
-                color: "rgba(255,255,255,.16)",
+                //color: '#8FA4CC'
+                color: "#8FA4CC",
               },
             },
           },
@@ -309,8 +309,8 @@ export default {
             },
             axisLine: {
               lineStyle: {
-                //color: '#979797'
-                color: "rgba(255,255,255,.16)",
+                //color: '#8FA4CC'
+                color: "#8FA4CC",
               },
             },
           },
@@ -322,7 +322,7 @@ export default {
             nameLocation: "center",
             nameRotate: 90,
             nameTextStyle: {
-              color: "#fff",
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisLabel: {
@@ -335,13 +335,13 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                color: "#979797",
+                color: "#8FA4CC",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: "rgba(255,255,255,.16)",
+                color: "#8FA4CC",
                 type: "dashed",
               },
             },
@@ -352,7 +352,7 @@ export default {
             nameLocation: "center",
             nameRotate: 90,
             nameTextStyle: {
-              color: "#fff",
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisLabel: {
@@ -365,13 +365,13 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                color: "#979797",
+                color: "#8FA4CC",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: "rgba(255,255,255,.16)",
+                color: "#8FA4CC",
                 type: "dashed",
               },
             },
@@ -382,7 +382,7 @@ export default {
             nameLocation: "center",
             nameRotate: 90,
             nameTextStyle: {
-              color: "#fff",
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisLabel: {
@@ -395,13 +395,13 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                color: "#979797",
+                color: "#8FA4CC",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: "rgba(255,255,255,.16)",
+                color: "#8FA4CC",
                 type: "dashed",
               },
             },
@@ -412,7 +412,7 @@ export default {
             nameLocation: "center",
             nameRotate: 90,
             nameTextStyle: {
-              color: "#fff",
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisLabel: {
@@ -425,13 +425,13 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                color: "#979797",
+                color: "#8FA4CC",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: "rgba(255,255,255,.16)",
+                color: "#8FA4CC",
                 type: "dashed",
               },
             },
@@ -442,7 +442,7 @@ export default {
             nameLocation: "center",
             nameRotate: 90,
             nameTextStyle: {
-              color: "#fff",
+              color: "#8FA4CC",
               fontSize: 14,
             },
             axisLabel: {
@@ -455,13 +455,13 @@ export default {
             axisLine: {
               show: false,
               lineStyle: {
-                color: "#979797",
+                color: "#8FA4CC",
               },
             },
             splitLine: {
               show: true,
               lineStyle: {
-                color: "rgba(255,255,255,.16)",
+                color: "#8FA4CC",
                 type: "dashed",
               },
             },
@@ -476,7 +476,7 @@ export default {
             data: [],
             label: {
               show: true,
-              color: "#fff",
+              color: "#8FA4CC",
               fontSize: 14,
             },
             lineStyle: {
@@ -499,7 +499,7 @@ export default {
             data: [],
             label: {
               show: true,
-              color: "#fff",
+              color: "#8FA4CC",
               fontSize: 14,
             },
             lineStyle: {
@@ -522,7 +522,7 @@ export default {
             data: [],
             label: {
               show: true,
-              color: "#fff",
+              color: "#8FA4CC",
               fontSize: 14,
             },
             lineStyle: {
@@ -545,7 +545,7 @@ export default {
             data: [],
             label: {
               show: true,
-              color: "#fff",
+              color: "#8FA4CC",
               fontSize: 14,
             },
             lineStyle: {
@@ -568,7 +568,7 @@ export default {
             data: [],
             label: {
               show: true,
-              color: "#fff",
+              color: "#8FA4CC",
               fontSize: 14,
             },
             lineStyle: {
