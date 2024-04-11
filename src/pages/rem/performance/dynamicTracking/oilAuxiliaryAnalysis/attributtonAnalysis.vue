@@ -218,11 +218,25 @@
                 <el-table-column prop="date" min-width="150" label="日期"></el-table-column>
                 <el-table-column prop="pressureEvaluation" min-width="150" label="井组压力保持评价"></el-table-column>
                 <el-table-column prop="monthlyLiquidProduction" min-width="150"
-                                 :label="`井组月度产液量\n(m³)`"></el-table-column>
+                                 :label="`井组月度产液量\n(m³)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.monthlyLiquidProduction !== null && scope.row.monthlyLiquidProduction !== ''">{{
+                                Number(scope.row.monthlyLiquidProduction).toFixed(2)
+                            }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="balanceAnalysisResult" min-width="150"
                                  label="注采平衡分析结果"></el-table-column>
                 <el-table-column prop="monthlyWaterInjection" min-width="180"
-                                 :label="`井组月注水量\n(m³)`"></el-table-column>
+                                 :label="`井组月注水量\n(m³)`">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.monthlyWaterInjection !== null && scope.row.monthlyWaterInjection !== ''">{{
+                                Number(scope.row.monthlyWaterInjection).toFixed(2)
+                            }}</span>
+                        <span v-else>-</span>
+                    </template>
+                </el-table-column>
                 <el-table-column show-overflow-tooltip prop="attribution" min-width="250"
                                  label="归因"></el-table-column>
                 <el-table-column show-overflow-tooltip prop="measure" min-width="250"
@@ -467,6 +481,8 @@ export default {
     },
     data() {
         return {
+            //往前推几个月
+            monthNum:1,
             showGyCalDialog: false,
             //归因计算时间范围选择
             gyDate: {
@@ -3161,7 +3177,10 @@ export default {
             // 在组件被激活时执行归因计算操作
             this.getData();
             //跳转路由中获取参数赋值给查询条件
-            this.queryData.month = this.$route.query.currentDate
+            this.queryData.month = this.$route.query.currentDate;
+            if (this.queryData.month.substring(8,10)<='05') {
+                this.monthNum = 2;
+            }
             //判断url上是否有井组参数 有则赋值
             this.queryData.wellGroup = this.$route.query.searchKeys ? this.$route.query.searchKeys : ''
             //平台若是等于油田ID 重置为空
@@ -3394,7 +3413,7 @@ export default {
         },
         downexcel() {
             let params = {
-                date: this.queryData.month,
+                date: this.getDate(this.queryData.month),
                 wellId: this.queryData.well,//井号
                 assetCode: this.queryData.assetCode,//平台
                 ogfId: this.queryData.ogfId,//油田
@@ -3554,7 +3573,7 @@ export default {
                 dataIndex: undefined
             })
             let params = {
-                date: this.queryData.month,
+                date: this.getDate(this.queryData.month),
                 wellId: this.queryData.well,//井号
                 assetCode: this.queryData.assetCode,//平台
                 ogfId: this.queryData.ogfId,//油田
@@ -3591,6 +3610,56 @@ export default {
                     this.pageTotal = res.data.data.total
                 })
             }
+        },
+        getDate(date) {
+            if (this.link == 4) {
+                return date;
+            } else {
+                return this.toolTime(date);
+            }
+        },
+        toolTime(now) {
+            now = new Date(now);
+            // 获取当前日期
+            // let now = new Date(); // 注意：月份是从0开始的，所以1月是0，2月是1，以此类推
+            let currentDate = now.getDate();
+            let currentMonth = now.getMonth() + 1; // 获取当前月份（0-11）
+            let currentYear = now.getFullYear(); // 获取当前年份
+            let newYear = null;
+            let newMonth = null;
+            // 判断当前月份是否小于等于2（因为我们要减去两个月或一个月）
+            if (this.monthNum === 2) {
+                if (currentMonth <= 2) {
+                    // 如果是，减去两个月
+                    let monthDiff = currentMonth - 2;
+                    if (monthDiff <= 0) {
+                        // 如果月份差是负数，说明需要从前一年的12月开始计算
+                        monthDiff += 12;
+                        newYear = currentYear - 1; // 年份减1
+                    } else {
+                        newYear = currentYear; // 年份不变
+                    }
+                    newMonth = monthDiff; // 直接使用月份差作为新月份
+                } else {
+                    newMonth = currentMonth - 2;
+                    newYear = currentYear;
+                }
+            } else {
+                // 否则，减去一个月
+                newMonth = (currentMonth - 1 + 12) % 12; // 使用模运算确保月份在0-11之间
+                newYear = currentYear; // 如果只减去一个月，年份不会变
+                if (currentMonth === 1) { // 如果当前是1月，减去一个月后会变成上一年的12月，所以年份需要减1
+                    newYear--;
+                }
+            }
+
+            if (newMonth === 0) {
+                newMonth = 12;
+            }
+
+            // 格式化日期为YYYY-MM-01并返回
+            let formattedDate = newYear + '-' + (newMonth).toString().padStart(2, '0') + '-01'; // 月份加1，因为通常月份是从1开始计数的
+            return formattedDate;
         },
         //表格鼠标悬浮事件
         handleCurrentChange(row) {
