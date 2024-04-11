@@ -3385,11 +3385,11 @@ export default {
         },
         downexcelmid(){
             let params = {
-                code:this.evalResult
+                code:this.modelCode,
             }
             downloadFile(params).then(res => {
                 const aBlob = new Blob([res]);
-                FileSaver.saveAs(aBlob, params.title + '中间数据导出表.xls');
+                FileSaver.saveAs(aBlob,  this.title + '中间数据导出表.xls');
             })
         },
         downexcel() {
