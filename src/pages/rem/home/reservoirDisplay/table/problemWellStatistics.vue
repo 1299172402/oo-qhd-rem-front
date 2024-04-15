@@ -196,12 +196,13 @@ export default {
                 pageNum: 1,
                 wellId: '',
                 // yearDate:new Date().format('YYYY'),
-                yearDate: '2022',
+                yearDate: '2024',
                 assetCode: '',
             },
         };
     },
     created() {
+        this.queryParams.yearDate = new Date().format('YYYY');
         this.getlist();
         this.searchinfo()
     },
@@ -286,7 +287,7 @@ export default {
             this.queryParams.assetCode = ''
             this.queryParams.wellId = ''
 
-            this.queryParams.yearDate = '2022'
+            this.queryParams.yearDate = new Date().format('YYYY')
             await this.getlist()
             await this.searchinfo()
             // this.getInfo()
