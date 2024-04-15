@@ -22,8 +22,8 @@
       <el-table-column prop="displacement" :label="`位移\n (m)`" :formatter="toPrecise2"></el-table-column>
       <el-table-column prop="closureAzimuth" :label="`闭合方位\n (°)`" :formatter="toPrecise2"></el-table-column>
       <el-table-column prop="closureDistance" :label="`闭合距\n (m)`" :formatter="toPrecise2"></el-table-column>
-      <el-table-column prop="NSIncrement" :label="`坐标北南增量\n (m)`" :formatter="toPrecise2"></el-table-column>
-      <el-table-column prop="EWIncrement" :label="`坐标东西增量\n (m)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="nsIncrement" :label="`坐标北南增量\n (m)`" :formatter="toPrecise2"></el-table-column>
+      <el-table-column prop="ewIncrement" :label="`坐标东西增量\n (m)`" :formatter="toPrecise2"></el-table-column>
       <el-table-column prop="curvature" :label="`狗腿度\n(°/30m)`" :formatter="toPrecise2"></el-table-column>
       <el-table-column prop="remark" label="备注" align="left"></el-table-column>
     </el-table>
