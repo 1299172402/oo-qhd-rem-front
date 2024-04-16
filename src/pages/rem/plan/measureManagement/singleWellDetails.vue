@@ -239,9 +239,7 @@ export default {
             const { data } = res.data;
             if (data) {
               FmtUtil.unitConver4Wellbore(data);
-              if (data) {
-                that.vmsData = data;
-              }
+              that.vmsData = data;
             }
           } else {
             that.vmsData = null;
