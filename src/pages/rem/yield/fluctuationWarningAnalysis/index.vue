@@ -73,7 +73,7 @@
             >
               <span class="title">{{ oilFieldName }}产量跟踪分析 {{ currentDate }}</span>
               <el-button type="primary" size="medium" style="height: 30px" @click="switchUpPage"
-                >产量运行分析报告下载</el-button
+                >产量运行分析报告</el-button
               >
             </div>
             <div class="pageHeader" style="width: 100%; display: flex; align-items: center" v-if="isShowTable">
