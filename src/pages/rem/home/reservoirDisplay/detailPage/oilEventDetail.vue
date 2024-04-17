@@ -86,14 +86,6 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column :label="`结束时间\n(yyyy-mm-dd)`" min-width="140px" prop="endTime" align="center">
-                    <template slot-scope="scope">
-                        <span
-                            v-if="scope.row.endTime !== null && scope.row.endTime !== ''">{{ scope.row.endTime ? scope.row.endTime.split(' ')[0] : ''
-                            }}</span>
-                        <span v-else>-</span>
-                    </template>
-                </el-table-column>
                 <el-table-column label="大事简要" min-width="130px" prop="chronicle" align="center">
                     <template slot-scope="scope">
                         <span
