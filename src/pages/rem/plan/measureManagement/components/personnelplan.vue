@@ -76,103 +76,23 @@
                 <!--          </page-panel>-->
                 <!--        </el-col>-->
             </el-row>
-            <!--      <el-row>-->
-            <!--        <el-col :span="24">-->
-            <!--          <page-panel :show-btn="true" header-title="当日施工概况">-->
-            <!--            <el-table-->
-            <!--              highlight-->
-            <!--              :height="tableHeight"-->
-            <!--              :data="tableData1"-->
-            <!--              style="width: 100%"-->
-            <!--              :border="false"-->
-            <!--              :row-style="{ height: '0px' }"-->
-            <!--              header-cell-class-name="table_header"-->
-            <!--              :cell-style="{ padding: '6px', 'text-align': 'center' }"-->
-            <!--              :default-sort="{ prop: 'date', order: 'descending' }"-->
-            <!--              :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"-->
-            <!--            >-->
-            <!--              <el-table-column-->
-            <!--                prop="prodPlatform"-->
-            <!--                label="平台"-->
-            <!--                min-width="200px"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="projectName"-->
-            <!--                label="项目名称"-->
-            <!--                min-width="180px"-->
-            <!--                show-overflow-tooltip-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="operatingBeginTime"-->
-            <!--                min-width="180px"-->
-            <!--                label="开工时间"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="planEndDate"-->
-            <!--                min-width="180px"-->
-            <!--                label="预计完工时间"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="projectUser"-->
-            <!--                min-width="180px"-->
-            <!--                label="当日施工人数"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="operatingContentToday"-->
-            <!--                min-width="180px"-->
-            <!--                label="当日工作内容"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="operatingContentToday"-->
-            <!--                min-width="180px"-->
-            <!--                label="明日工作计划"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="operatingContentToday"-->
-            <!--                min-width="180px"-->
-            <!--                label="时间进度"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="operatingContentToday"-->
-            <!--                min-width="180px"-->
-            <!--                label="实际进度"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="operatingContentToday"-->
-            <!--                min-width="180px"-->
-            <!--                label="工程领队"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="operatingContentToday"-->
-            <!--                min-width="180px"-->
-            <!--                label="现场负责人"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--              <el-table-column-->
-            <!--                prop="operatingContentToday"-->
-            <!--                min-width="180px"-->
-            <!--                label="公司负责人"-->
-            <!--                align="center"-->
-            <!--              />-->
-            <!--            </el-table>-->
-            <!--          </page-panel>-->
-            <!--        </el-col>-->
-            <!--      </el-row>-->
             <el-row style="height:60% ">
                 <el-col :span="24" style="height: 100%">
                     <page-panel :show-btn="true" header-title="人员类型概况" style="height: calc(100% - 20px)">
                         <el-form>
                             <el-form-item label="请选择：">
+                                <el-radio v-model="radio" label="4">
+                                    近三月
+                                </el-radio>
+                                <el-radio v-model="radio" label="1">
+                                    上月
+                                </el-radio>
+                                <el-radio v-model="radio" label="2">
+                                    当月
+                                </el-radio>
+                                <el-radio v-model="radio" label="3">
+                                    近七天
+                                </el-radio>
                                 <el-date-picker
                                     v-model="currentTimeStart"
                                     style="width: 150px"
@@ -721,13 +641,9 @@ export default {
         };
     },
     watch: {
-        // selectOilField(val) {
-        //   this.getFetchPlatforms(val);
-        // }
-
-        // selectPlatform(val) {
-        //   this.getFetchWells(this.selectOilField, val);
-        // }
+        radio(val) {
+            this.radioChange(val);
+        }
     },
     updated() {
         this.$nextTick(() => {
@@ -739,6 +655,38 @@ export default {
         this.initData();
     },
     methods: {
+        radioChange(val) {
+            // 获取当前时间
+            const currentDate = new Date();
+            // 设置为上一个月的第一天
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            currentDate.setDate(1); // 将日期设置为每月的第一天
+
+            // 格式化日期输出
+            const year1 = currentDate.getFullYear();
+            const month1 = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, "0");
+            // eslint-disable-next-line no-useless-concat
+            const startDate = `${year}-${month}-` + "01";
+            // eslint-disable-next-line no-useless-concat
+            const startDateLast = `${year1}-${month1}-` + "01";
+            if (val === "1") {
+                this.currentTimeStart = new Date(startDateLast);
+                this.currentTimeEnd = new Date();
+            } else if (val === "2") {
+                this.currentTimeStart = new Date(startDate);
+                this.currentTimeEnd = new Date();
+            } else if (val === "3") {
+                this.currentTimeStart = new Date().addDays(-7);
+                this.currentTimeEnd = new Date();
+            } else if (val === "4") {
+                this.currentTimeStart = new Date().addDays(-91);
+                this.currentTimeEnd = new Date();
+            }
+        },
         getWorkTime(row, column) {
             return parseFloat(row[column.property]) * 12;
         },
