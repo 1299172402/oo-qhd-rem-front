@@ -20,8 +20,9 @@ import { GridComponent, TooltipComponent, LegendComponent } from "echarts/compon
 import { CanvasRenderer } from "echarts/renderers";
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 import {
-    getStratifiedInjectionDetails,
+    getStratifiedInjectionDetails, stratifiedExtractionAmount
 } from "@/api/rem/r-intelligentIPA.js";
+import {getblockData} from "@/api/basic/masterBycoderXu";
 export default {
   props: ["infodata"],
   components: {
@@ -106,29 +107,36 @@ export default {
       },
       eeee() {
           let data = new Date()
-          if (data.getMonth() < 10) {
               if(data.getMonth()===0){
                   return data.getFullYear()-1 + '-12'
               }
-              if(data.getMonth()===1){
-                  return data.getFullYear() + '-01'
-              }
-              return data.getFullYear() + '-0' + (data.getMonth()-1)
-          } else {
-              return data.getFullYear() + '-' + (data.getMonth()-1)
+           else {
+                  if (data.getMonth() < 10) {
+                      return data.getFullYear() + '-0' + data.getMonth();
+                  } else {
+                      return data.getFullYear() + '-' + data.getMonth();
+                  }
           }
-
       },
       //分层注采量
-      queryStratifiedInjectionDetails() {
+      async queryStratifiedInjectionDetails() {
+          let blockList=[];
+
+          await getblockData({ogfId: '3FC9A818F5BC43B88270DB80BBB3018F'}).then((res) => {
+              for (let i of res.data.data) {
+                  blockList.push(i.reservoirAnalyseUnitId);   
+              }
+          })
+
           let params = {
-              blockId: '83D33B89B0DAB7DFA440BD060746883A',
-              startTime: this.eeee(),
-              // startTime: '2023-05',
-              timeStatus: '1',
-              type: 1
+              blockIds: blockList,
+              startTime: [this.eeee(),this.eeee()],
+              endTime:[],
+              timeStatus: 0,
+              ogfId: "3FC9A818F5BC43B88270DB80BBB3018F"
           }
-          getStratifiedInjectionDetails(params).then((res) => {
+          
+          stratifiedExtractionAmount(params).then((res) => {
               let productionIntervalNo=[],inj=[],injAlloc=[],fluidProd=[]
               res.forEach((item) => {
                   if(item.productionIntervalNo){
