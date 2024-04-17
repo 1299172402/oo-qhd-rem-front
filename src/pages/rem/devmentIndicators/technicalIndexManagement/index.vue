@@ -74,7 +74,7 @@
                 </span>
                 <div style="margin-top: 10px">
                   <el-row v-if="item.title == '年产油量'" :gutter="6" style="line-height: 20px; text-align: center">
-                    <el-col :span="13" style="color: #8fa4cc"> 环比上年 </el-col>
+                    <el-col :span="13" style="color: #8fa4cc"> 同比去年 </el-col>
                     <el-col :span="11">
                       <span v-if="item.tbTag == 'up'" style="color: #00c39f">{{ item.tb | numberFormat }}% ↑ </span>
                       <span v-if="item.tbTag == 'down'" style="color: #cd3d00">{{ item.tb | numberFormat }}% ↓ </span>
