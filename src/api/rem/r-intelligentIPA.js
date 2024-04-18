@@ -59,7 +59,7 @@ export function getStratifiedInjectionDetails(params) {
  * timeStatus  时间状态 月度：1，年度：2，阶段：3
  * @returns {AxiosPromise}
  */
-export function stratifiedExtractionAmount(params) {
+export function stratifiedExtractionAmount(data) {
     return Axios({
         url: `${baseUrl}/injectionProductionDeploy/stratifiedExtractionAmount`,
         method: "post",
@@ -67,7 +67,7 @@ export function stratifiedExtractionAmount(params) {
         headers: {
             showLoading: false
         },
-        params
+        data
     }).then((res) => {
         // if(res.data.code === 0 && res.data.data)
         return res.data
