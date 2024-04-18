@@ -1953,6 +1953,14 @@ export default {
             legendData.push(item.label);
             let series = {};
             series.name = item.label;
+            series.label = {
+              show: true,
+              position: "top",
+              color: "#8fa4cc",
+              formatter(params) {
+                return parseFloat(params.value[1] || 0).toFixed(2);
+              },
+            };
             if (item.label == "去年实际值") {
               series.itemStyle = {
                 normal: {
@@ -2080,6 +2088,14 @@ export default {
             legendData.push(item.label);
             let series = {};
             series.name = item.label;
+            series.label = {
+              show: true,
+              position: "top",
+              color: "#8fa4cc",
+              formatter(params) {
+                return parseFloat(params.value[1] || 0).toFixed(2);
+              },
+            };
             if (item.label == "去年实际值") {
               series.itemStyle = {
                 normal: {

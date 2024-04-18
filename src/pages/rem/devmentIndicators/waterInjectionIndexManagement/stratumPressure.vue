@@ -39,12 +39,12 @@
         <div class="g-row-flex-V" style="margin-bottom: 20px">
           <div style="margin-right: 20px">
             区块：
-            <el-select v-model="queryParams.fileId">
+            <el-select v-model="queryParams.fileId" @change="getFieldLayers">
               <el-option
                 v-for="item in blockList"
-                :key="item.fieldId"
-                :label="item.name"
-                :value="item.fieldId"
+                :key="item.reservoirAnalyseUnitId"
+                :label="item.reservoirAnalyseUnitName"
+                :value="item.reservoirAnalyseUnitId"
               ></el-option>
             </el-select>
           </div>
@@ -176,7 +176,7 @@
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import { layerPressureLevelRate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
-import { QueryOgfDetail, userListByUserNames } from "@/api/rem/marster.js";
+import { QueryOgfDetail, userListByUserNames, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
 import { fetchFields, fieldOilLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
@@ -370,10 +370,9 @@ export default {
       };
       await userListByUserNames(params).then((res) => {
         if (res.data.code == 200) {
-          this.queryParams.companyId =
-            res.data.data[0]?.currentTenantBindOrgId
-              ? res.data.data[0].currentTenantBindOrgId
-              : undefined;
+          this.queryParams.companyId = res.data.data[0]?.currentTenantBindOrgId
+            ? res.data.data[0].currentTenantBindOrgId
+            : undefined;
         }
       });
       await QueryOgfDetail({ operationZoneId: this.queryParams.companyId }).then((data) => {
@@ -388,8 +387,8 @@ export default {
         }
       });
 
-      this.getFetchFields(); // 获取区块类型
-      this.getFieldLayers(); // 获取层位信息
+      await this.getFetchFields(); // 获取区块类型
+      await this.getFieldLayers(); // 获取层位信息
       // 地层压力保持水平图表数据
       this.doLayerPressureLevelRate();
     },
@@ -400,26 +399,37 @@ export default {
     },
     // 获得区块类型
     async getFetchFields() {
-      await fetchFields(this.queryParams).then((res) => {
+      this.blockList = [];
+      this.queryParams.fileId = "";
+      await QueryReservoirAnalyseUnit({ ogfId: this.queryParams.oilFieldId }).then((res) => {
         if (res.data.code == 200) {
-          this.blockList = res.data.data.fields;
-          this.queryParams.fileId = res.data.data.fields[0].fieldId;
+          this.blockList = res.data?.data || [];
+          this.blockList.unshift({
+            reservoirAnalyseUnitId: this.queryParams.oilFieldId,
+            reservoirAnalyseUnitName: "全部",
+            reservoirAnalyseUnitNo: "全部",
+          });
+          this.queryParams.fileId = this.queryParams.oilFieldId;
         }
       });
     },
     //获得层位信息
     async getFieldLayers() {
-      await fieldOilLayers(this.queryParams).then((res) => {
-        if (res.data.code == 200) {
-          this.layer = res.data.data.fieldLayers;
-        }
-      });
+      this.layer = [];
+      this.queryParams.layerId = "";
+      await fieldOilLayers({ oilFieldId: this.queryParams.oilFieldId, fieldId: this.queryParams.fileId }).then(
+        (res) => {
+          if (res.data.code == 200) {
+            this.layer = res.data.data.fieldLayers;
+          }
+        },
+      );
     },
 
     //油田切换
-    changeOgf() {
-      this.getFetchFields(); // 获取区块类型
-      this.getFieldLayers(); // 获取层位信息
+    async changeOgf() {
+      await this.getFetchFields(); // 获取区块类型
+      await this.getFieldLayers(); // 获取层位信息
       // getPlatInfo(this.queryParams.ogfId).then((data) => {
       //   this.queryParams.platId = null;
       //   let code = data.data.code;

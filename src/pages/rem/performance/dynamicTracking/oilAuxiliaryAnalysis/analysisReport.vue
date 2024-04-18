@@ -907,11 +907,12 @@
                     <div class="z-row-right" style="position: relative; top: 16px; height: 96px">
                       <div class="name">措施推荐</div>
                       <div class="num">
+                        <!-- 屏蔽  || item.name == '加深泵挂'" -->
                         <span
                           :class="[item.code == selCode ? 'spActive' : '']"
                           v-for="(item, index) in recommendedMeasuresOptions"
                           :key="index"
-                          v-if="item.name == '换大泵' || item.name == '加深泵挂'"
+                          v-if="item.name == '换大泵'"
                           @click="selRadioIterm(item.code, 'recommendedMeasuresOptions')"
                         >
                           {{ item.name + (item.increase > 0 ? "/" + item.increase + "t" : "") }}：<span
@@ -1188,13 +1189,13 @@
                       <div class="z-row-right" style="height: 130px; position: relative; top: 48px">
                         <div class="name">措施推荐</div>
                         <div class="num">
+                          <!-- 屏蔽  item.name == '关层' || -->
                           <span
                             :class="[item.code == selCode ? 'spActive' : '']"
                             v-for="(item, index) in recommendedMeasuresOptions"
                             :key="index"
                             v-if="
                               item.name == '开层' ||
-                              item.name == '关层' ||
                               item.name == '防砂' ||
                               item.name == '停井复产'
                             "
