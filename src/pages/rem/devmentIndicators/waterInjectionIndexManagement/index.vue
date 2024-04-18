@@ -1629,6 +1629,14 @@ export default {
             legendData.push(item.label);
             let series = {};
             series.name = item.label;
+            series.label = {
+              show: true,
+              position: "top",
+              color: "#8fa4cc",
+              formatter(params) {
+                return parseFloat(params.value[1] || 0).toFixed(2);
+              },
+            };
             series.markLine = {
               lineStyle: {
                 type: "solid",
@@ -1828,6 +1836,14 @@ export default {
             legendData.push(item.label);
             let series = {};
             series.name = item.label;
+            series.label = {
+              show: true,
+              position: "top",
+              color: "#8fa4cc",
+              formatter(params) {
+                return parseFloat(params.value[1] || 0).toFixed(2);
+              },
+            };
             series.markLine = {
               lineStyle: {
                 type: "solid",

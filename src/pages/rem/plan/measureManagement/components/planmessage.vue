@@ -111,7 +111,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column v-if="$route.query.measureCode != '0100102'" :label="`水平段长度 \n（m）`" sortable min-width="130px" prop="horizonIntervalLen"
+                    <el-table-column :label="`水平段长度 \n（m）`" v-if="$route.query.measureCode != '0100102'" sortable min-width="130px" prop="horizonIntervalLen"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -191,7 +191,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`地层压力测试时间\n （yyyy-mm-dd）`" prop="testDate" min-width="200"
+                    <el-table-column sortable :label="`地层压力测试时间\n （yyyy-mm-dd）`"  v-if="$route.query.measureCode != '0100114' && $route.query.measureCode != '0100102' " prop="testDate" min-width="200"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -201,7 +201,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`测试压力值\n（MPa）`" min-width="130px"
+                    <el-table-column sortable :label="`测试压力值\n（MPa）`" min-width="130px"  v-if="$route.query.measureCode != '0100114'&& $route.query.measureCode != '0100102'"
                                      prop="basalLevelStaticPress" align="center">
                         <template slot-scope="scope">
                             <span
@@ -211,7 +211,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`流压\n（MPa）`" min-width="130px" prop="flowPress" align="center">
+                    <el-table-column sortable :label="`流压\n（MPa）`" min-width="130px" prop="flowPress" align="center" v-if="$route.query.measureCode != '0100114' && $route.query.measureCode != '0100102' && $route.query.measureCode != '0100106'"> 
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.flowPress !== null && scope.row.flowPress !== ''">{{
@@ -220,7 +220,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable :label="`生产压差\n（MPa）`" min-width="130px" prop="productPress"
+                    <el-table-column sortable :label="`生产压差\n（MPa）`" min-width="130px" prop="productPress" v-if="$route.query.measureCode != '0100114' && $route.query.measureCode != '0100102' && $route.query.measureCode != '0100106'  && $route.query.measureCode != '0100111' "
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -230,27 +230,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <!-- <el-table-column sortable min-width="120px" :label="`井控储量\n(10⁴m³)`" prop="probReservesWell"
-                                     align="center">
-                        <template slot-scope="scope">
-                            <span
-                                v-if="scope.row.probReservesWell !== null && scope.row.probReservesWell !== ''">{{
-                                    Number(scope.row.probReservesWell).toFixed(4)
-                                }}</span>
-                            <span v-else>-</span>
-                        </template>
-                    </el-table-column>
-                    <el-table-column sortable :label="`剩余可采储量\n(10⁴m³)`" prop="remainingRecoverableReserves"
-                                     min-width="130px" align="center">
-                        <template slot-scope="scope">
-                            <span
-                                v-if="scope.row.remainingRecoverableReserves !== null && scope.row.remainingRecoverableReserves !== ''">{{
-                                    !isNaN(Number(scope.row.remainingRecoverableReserves)) ? Number(scope.row.remainingRecoverableReserves).toFixed(4) : "-"
-                                }}</span>
-                            <span v-else>-</span>
-                        </template>
-                    </el-table-column> -->
-                    <el-table-column sortable :label="`采液指数\n（m³/d.MPa）`" min-width="150px"
+                    <el-table-column sortable :label="`采液指数\n（m³/d.MPa）`" min-width="150px" v-if="$route.query.measureCode != '0100114' && $route.query.measureCode != '0100102' && $route.query.measureCode != '0100106'&& $route.query.measureCode != '0100111'"
                                      prop="fluidProductionIndex" align="center">
                         <template slot-scope="scope">
                             <span
@@ -261,7 +241,7 @@
                         </template>
                     </el-table-column>
                 </el-table-column>
-                <el-table-column v-if="$route.query.measureCode != '0100102'" label="预测值" prop="name" align="center">
+                <el-table-column v-if=" $route.query.measureCode != '0100114' && $route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' " label="预测值" prop="name" align="center">
                     <el-table-column sortable min-width="120px" :label="`产液值\n（m³/d）`" prop="forecastFluid"
                                      align="center">
                         <template slot-scope="scope">
@@ -272,7 +252,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="100px" :label="`含水\n（%）`" prop="forecastWaterRatio"
+                    <el-table-column sortable min-width="100px" :label="`含水\n（%）`" prop="forecastWaterRatio" v-if="$route.query.measureCode != '0100114'"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -282,7 +262,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="120px" :label="`日增油\n（m³）`" prop="forecastOilInc"
+                    <el-table-column sortable min-width="120px" :label="`日增油\n（m³）`" prop="forecastOilInc" v-if="$route.query.measureCode != '0100114'"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -292,7 +272,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="120px" :label="`日产油\n（m³）`" prop="forecastOil"
+                    <el-table-column sortable min-width="120px" :label="`日产油\n（m³）`" prop="forecastOil" v-if="$route.query.measureCode != '0100114'"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -302,8 +282,8 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="120px" :label="`生产压差\n（MPa）`" prop="forecastProductPress"
-                                     align="center">
+                    <el-table-column sortable min-width="120px" :label="`生产压差\n（MPa）`" prop="forecastProductPress" v-if="$route.query.measureCode != '0100114' && $route.query.measureCode != '0100102' && $route.query.measureCode != '0100111'"
+                                     align="center"> 
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.forecastProductPress !== null && scope.row.forecastProductPress !== ''">{{
@@ -312,7 +292,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="120px" :label="`流压\n（MPa）`" prop="forecastFlowPress"
+                    <el-table-column sortable min-width="120px" :label="`流压\n（MPa）`" prop="forecastFlowPress" v-if="$route.query.measureCode != '0100114' && $route.query.measureCode != '0100111'"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -324,7 +304,7 @@
                     </el-table-column>
                 </el-table-column>
                 <el-table-column label="其他因素" prop="name" align="center">
-                    <el-table-column sortable min-width="130px" :label="`排量效率\n(%)`" prop="displacementEfficiency"
+                    <el-table-column sortable min-width="130px" :label="`排量效率\n(%)`" prop="displacementEfficiency" v-if="$route.query.measureCode != '0100114'&& $route.query.measureCode != '0100102' && $route.query.measureCode != '0100106'"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -334,7 +314,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px" :label="`历史出砂(d)`" prop="historySandDay"
+                    <el-table-column sortable min-width="130px" :label="`历史出砂(d)`" prop="historySandDay" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -344,7 +324,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px" :label="`近期出砂(d)`" prop="sandDay" align="center">
+                    <el-table-column sortable min-width="130px" :label="`近期出砂(d)`" prop="sandDay" align="center" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.sandDay !== null && scope.row.sandDay !== ''">{{
@@ -353,7 +333,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="150px" :label="`最大出砂量(%)`" prop="sandValue" align="center">
+                    <el-table-column sortable min-width="150px" :label="`最大出砂量(%)`" prop="sandValue" align="center" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.sandValue !== null && scope.row.sandValue !== ''">{{
@@ -362,7 +342,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="150px" :label="`防砂措施`" prop="sandMeasure" align="center">
+                    <el-table-column sortable min-width="150px" :label="`防砂措施`" prop="sandMeasure" align="center" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.sandMeasure !== null && scope.row.sandMeasure !== ''">{{
@@ -371,7 +351,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="150px" :label="`措施时间\n(yyyy-mm-dd)`" prop="measureTime" align="center">
+                    <el-table-column sortable min-width="150px" :label="`措施时间\n(yyyy-mm-dd)`" prop="measureTime" align="center" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.measureTime !== null && scope.row.measureTime !== ''">{{
@@ -380,7 +360,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px" label="电泵情况" prop="pumpCondition" align="center">
+                    <el-table-column sortable min-width="130px" label="电泵情况" prop="pumpCondition" align="center" v-if="$route.query.measureCode != '0100110' && $route.query.measureCode != '0100102' && $route.query.measureCode != '0100111'">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.pumpCondition !== null && scope.row.pumpCondition !== ''">{{
@@ -389,7 +369,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px" label="管柱情况" prop="tubularColumnCondition"
+                    <el-table-column sortable min-width="130px" label="管柱情况" prop="tubularColumnCondition" v-if="($route.query.measureCode != '0100114') && ($route.query.measureCode != '0100110')&& $route.query.measureCode != '0100106'&& $route.query.measureCode != '0100111' "
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -399,7 +379,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column min-width="190px" label="海管名称" prop="pipeline" align="center">
+                    <el-table-column min-width="190px" label="海管名称" prop="pipeline" align="center" v-if="$route.query.measureCode != '0100114'&& ($route.query.measureCode != '0100110')">
                         <template slot-scope="scope">
                             <el-tooltip class="item" effect="dark" :content="scope.row.pipeline" placement="top"
                                         v-if="scope.row.pipeline !== null && scope.row.pipeline !== ''">
@@ -419,7 +399,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column> -->
-                    <el-table-column sortable min-width="130px" :label="`海管余量\n     (m³)`" prop="quantity"
+                    <el-table-column sortable min-width="130px" :label="`海管余量\n(m³)`" prop="quantity" v-if="$route.query.measureCode != '0100114' && ($route.query.measureCode != '0100110')"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -429,7 +409,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column v-if="$route.query.measureCode != '0100102'" sortable label="泵能耗预测" min-width="130px" prop="pumpEnergyConsumeForecast"
+                    <el-table-column v-if=" $route.query.measureCode != '0100114' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'" sortable label="泵能耗预测" min-width="130px" prop="pumpEnergyConsumeForecast"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -439,7 +419,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column v-if="$route.query.measureCode != '0100102'" sortable min-width="130px" label="变频器" prop="frequencyConverter" align="center">
+                    <el-table-column v-if=" $route.query.measureCode != '0100114' && $route.query.measureCode != '0100106'&& $route.query.measureCode != '0100111'" sortable min-width="130px" label="变频器" prop="frequencyConverter" align="center">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.frequencyConverter !== null && scope.row.frequencyConverter !== ''">{{
@@ -448,7 +428,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column v-if="$route.query.measureCode != '0100102'" sortable min-width="130px" label="变压器" prop="transformer" align="center">
+                    <el-table-column v-if=" $route.query.measureCode != '0100114' && $route.query.measureCode != '0100106'&& $route.query.measureCode != '0100111'" sortable min-width="130px" label="变压器" prop="transformer" align="center">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.transformer !== null && scope.row.transformer !== ''">{{
@@ -515,6 +495,7 @@ export default {
     created() {
         this.getserch()
         this.queryParams.endTime = this.$route.query.currentDate
+        console.log(this.$route.query)
         this.getList();
         // this.choiceDepts(); // 获取组织机构
     },
