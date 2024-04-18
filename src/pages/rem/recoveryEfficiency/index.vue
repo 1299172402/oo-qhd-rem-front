@@ -149,6 +149,9 @@
                     <span>(%)</span>
                   </div>
                 </template>
+                <template slot-scope="scoped">
+                  <span>{{ scoped.row.geologyReservoirsForOutput | toFixedTwo}}</span>
+                </template>
               </el-table-column>
               <el-table-column prop="recoverableReservesForOutput" label-class-name="twoRowHeader">
                 <template #header>
@@ -157,6 +160,9 @@
                     <br />
                     <span>(%)</span>
                   </div>
+                </template>
+                <template slot-scope="scoped">
+                  <span>{{ scoped.row.recoverableReservesForOutput | toFixedTwo}}</span>
                 </template>
               </el-table-column>
             </el-table-column>
@@ -169,6 +175,9 @@
                     <span>(%)</span>
                   </div>
                 </template>
+                <template slot-scope="scoped">
+                  <span>{{ scoped.row.recoverableReservesForProSpeed | toFixedTwo}}</span>
+                </template>
               </el-table-column>
               <el-table-column prop="recoverableReservesRemainForProSpeed" label-class-name="twoRowHeader">
                 <template #header>
@@ -177,6 +186,9 @@
                     <br />
                     <span>(%)</span>
                   </div>
+                </template>
+                <template slot-scope="scoped">
+                  <span>{{ scoped.row.recoverableReservesRemainForProSpeed | toFixedTwo}}</span>
                 </template>
               </el-table-column>
             </el-table-column>
@@ -865,7 +877,7 @@ export default {
   filters: {
     //保留4位小数
     toFixedFour(val) {
-      if (val || val == 0) {
+      if (val || val === 0) {
         return parseFloat(val).toFixed(4);
       } else {
         return "-";
@@ -873,7 +885,7 @@ export default {
     },
     //保留2位小数
     toFixedTwo(val) {
-      if (val || val == 0) {
+      if (val || val === 0) {
         return parseFloat(val).toFixed(2);
       } else {
         return "-";

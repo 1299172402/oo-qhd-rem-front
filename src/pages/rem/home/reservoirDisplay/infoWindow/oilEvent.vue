@@ -52,7 +52,17 @@ export default {
     components: {},
     data() {
         return {
-            tableData: []
+            tableData: [],
+            queryData: {
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                wellId: "",
+                platformId: "",
+                selectDate: [],
+                event: [],
+                page: 1,
+                pageSize: 10,
+                orgId: '715AD1CD60484BB59E737CD18A9DE44A',
+            },
         };
     },
     mounted() {
@@ -63,7 +73,29 @@ export default {
             this.$router.push({name: rname});
         },
         getData() {
-            queryOilFieldIncident({}).then(res => {
+            var nowTime = new Date();
+            var year = nowTime.getFullYear();
+            nowTime =
+                nowTime.getFullYear() +
+                "-" +
+                (nowTime.getMonth() + 1 >= 10 ? nowTime.getMonth() + 1 : "0" + (nowTime.getMonth() + 1)) +//月份从0开始
+                "-" +
+                (nowTime.getDate() >= 10 ? nowTime.getDate() : "0" + nowTime.getDate());
+            var startTime = year + "-" + "01-01";
+            var endTime = nowTime;
+            this.$set(this.queryData.selectDate, 0, startTime);
+            this.$set(this.queryData.selectDate, 1, endTime);
+            
+            let params = {
+                ogfId: this.queryData.ogfId,
+                platformId: this.queryData.platformId,
+                wellId: this.queryData.wellId,
+                chronicleTypeCode: this.queryData.event,
+                startTime: this.queryData.selectDate ? this.queryData.selectDate[0] : '',
+                endTime: this.queryData.selectDate ? this.queryData.selectDate[1] : ''
+            }
+            
+            queryOilFieldIncident(params).then(res => {
                 this.tableData = res.data.data.data.slice(0, 10)
                 this.$nextTick(()=>{
                     this.infinitScroll()

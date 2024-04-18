@@ -201,7 +201,7 @@ export default {
           message: "含水上升率：",
         },
         {
-          message: "总递减率：",
+          message: "自然递减率：",
         },
       ],
       //折线图
@@ -476,7 +476,7 @@ export default {
           },
           {
             gridIndex: 4,
-            name: "总递减率（%）",
+            name: "自然递减率（%）",
             nameLocation: "center",
             nameRotate: 90,
             nameTextStyle: {
@@ -599,7 +599,7 @@ export default {
             },
           },
           {
-            name: "总递减率",
+            name: "自然递减率",
             type: "line",
             xAxisIndex: 4,
             yAxisIndex: 4,
