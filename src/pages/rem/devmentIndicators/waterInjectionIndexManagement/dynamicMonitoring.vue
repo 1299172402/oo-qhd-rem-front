@@ -52,12 +52,12 @@
         <div class="g-row-flex-V" style="margin-bottom: 20px">
           <div style="margin-right: 20px">
             区块：
-            <el-select v-model="queryParams.fileId">
+            <el-select v-model="queryParams.fileId" @change="getFieldLayers">
               <el-option
                 v-for="item in blockList"
-                :key="item.fieldId"
-                :label="item.name"
-                :value="item.fieldId"
+                :key="item.reservoirAnalyseUnitId"
+                :label="item.reservoirAnalyseUnitName"
+                :value="item.reservoirAnalyseUnitId"
               ></el-option>
             </el-select>
           </div>
@@ -144,7 +144,7 @@
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
 import { dynamicMoniterFinshRate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
-import { QueryOgfDetail, userListByUserNames } from "@/api/rem/marster.js";
+import { QueryOgfDetail, userListByUserNames, QueryReservoirAnalyseUnit } from "@/api/rem/marster.js";
 import { fetchOilFields, fetchFields, fieldOilLayers } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
@@ -350,32 +350,43 @@ export default {
           }
         }
       });
-      this.getFetchFields(); // 获取区块类型
-      this.getFieldLayers(); // 获取层位信息
+      await this.getFetchFields(); // 获取区块类型
+      await this.getFieldLayers(); // 获取层位信息
       // 动态监测完成率图表数据
       this.doDynamicMoniterFinshRate();
     },
     // 油田改变事件
-    oilFieldChange() {
-      this.getFetchFields(); // 获取区块类型
-      this.getFieldLayers(); // 获取层位信息
+    async oilFieldChange() {
+      await this.getFetchFields(); // 获取区块类型
+      await this.getFieldLayers(); // 获取层位信息
     },
     //获得区块类型
-    getFetchFields() {
-      fetchFields(this.queryParams).then((res) => {
+    async getFetchFields() {
+      this.blockList = [];
+      this.queryParams.fileId = "";
+      await QueryReservoirAnalyseUnit({ ogfId: this.queryParams.oilFieldId }).then((res) => {
         if (res.data.code == 200) {
-          this.blockList = res.data.data.fields;
-          this.queryParams.fileId = res.data.data.fields[0].fieldId;
+          this.blockList = res.data?.data || [];
+          this.blockList.unshift({
+            reservoirAnalyseUnitId: this.queryParams.oilFieldId,
+            reservoirAnalyseUnitName: "全部",
+            reservoirAnalyseUnitNo: "全部",
+          });
+          this.queryParams.fileId = this.queryParams.oilFieldId;
         }
       });
     },
     //获得层位信息
-    getFieldLayers() {
-      fieldOilLayers(this.queryParams).then((res) => {
-        if (res.data.code == 200) {
-          this.layer = res.data.data.fieldLayers;
-        }
-      });
+    async getFieldLayers() {
+      this.layer = [];
+      this.queryParams.layerId = "";
+      await fieldOilLayers({ oilFieldId: this.queryParams.oilFieldId, fieldId: this.queryParams.fileId }).then(
+        (res) => {
+          if (res.data.code == 200) {
+            this.layer = res.data.data.fieldLayers;
+          }
+        },
+      );
     },
 
     //油田切换
