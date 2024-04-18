@@ -48,6 +48,33 @@ export function getStratifiedInjectionDetails(params) {
     });
 }
 
+
+/**
+ * 油藏首页-分层注采量
+ * @param params
+ * ogfId   油田Id
+ * blockId  区块Id
+ * startTime  开始时间
+ * endTime    结束时间
+ * timeStatus  时间状态 月度：1，年度：2，阶段：3
+ * @returns {AxiosPromise}
+ */
+export function stratifiedExtractionAmount(data) {
+    return Axios({
+        url: `${baseUrl}/injectionProductionDeploy/stratifiedExtractionAmount`,
+        method: "post",
+        timeout:30000,
+        headers: {
+            showLoading: false
+        },
+        data
+    }).then((res) => {
+        // if(res.data.code === 0 && res.data.data)
+        return res.data
+
+    });
+}
+
 /**
  * 分层注采量
  * @param params

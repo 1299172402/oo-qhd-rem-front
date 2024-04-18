@@ -724,6 +724,7 @@ export default {
             console.log(data)
             for (var i = 0; i < data.length; i++) {
                 params.push({
+                    blockId:this.queryData.blockId,
                     wellGroupId: data[i].wellGroupId,
                     proWellId: data[i].oilrWellId,
                     remark: data[i].remark,
