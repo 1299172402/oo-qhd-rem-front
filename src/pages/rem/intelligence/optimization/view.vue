@@ -75,7 +75,7 @@
                             id="indexscv"
                             highlight
                             height="calc(100% - 50px)"
-                            style="margin-top: 10px"
+                            style="margin-top: 10px;width: 100%"
                             :header-cell-style="tableColor"
                             :cell-style="tableColorone"
                         >
@@ -84,20 +84,19 @@
                                 label="生产井"
                                 show-overflow-tooltip
                                 align="center"
-                                width="150"
+                          
                             ></el-table-column>
                             <el-table-column
                                 prop="fluidProd"
                                 label="上月日均产液量?(m³)"
                                 :render-header="renderheader"
                                 show-overflow-tooltip
-                                width="120"
                                 align="center"
                             ></el-table-column>
                             <el-table-column
                                 prop="allocating"
                                 label="本月日配产量?(m³)"
-                                width="115"
+                                
                                 :render-header="renderheader"
                                 align="center"
                             >
@@ -550,6 +549,7 @@ export default {
                 wellInjRatioList: this.tableData1
             }
             getWellInjRatio(params).then((res) => {
+                console.log("2222")
                 console.log(res)
                 // 多添加的
                 let arr = eval(res.wellGroupData)
