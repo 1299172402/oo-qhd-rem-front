@@ -194,7 +194,7 @@
             </el-dialog>
             <!-- 下载预测制度 -->
             <el-dialog title="下载预测制度" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogFormVisible" 
-                          :close-on-click-modal="false" width="100%" style="height: 100%">
+                          :close-on-click-modal="false" width="100%" style="height: 100% !important;">
                 <el-row type="flex" justify="space-between" :gutter="10">
                     <el-col :span="12">
                         <pagePanel headerTitle="WCONPROD" :show-btn="true"
@@ -223,21 +223,25 @@
                         <el-button type="primary" :disabled="tooltipdiabled" style="margin-left: 10px" @click="cancel">取 消</el-button>
                     </el-row>
                 </div>
-                <!-- 显示折线图 -->
-                <el-card v-show="dialogVisiblePicture" style="width: 50%; height: 70%;position: absolute;top: 140px;left:500px;background-color: rgba(5,52,73,0.8);">
-                    <span style="color:white;font-size:16px;margin-right: 10px">请选择优化时间:</span>
-                    <!--选择框-->
-                    <el-select class="radioselect" v-model="falutName" :popper-append-to-body="false"
-                               @change="changeSelectImage($event, item)">
-                        <el-option v-for="item in pictureOption" :key="item.pictureOption" :label="item.stepTime"
-                                   :value="item.fileStepId">
-                        </el-option>
-                    </el-select>
-                    <!--   放置echarts       -->
-                    <Echart :chart-data="echartsListaa" height="100%" width="100%" style="height: 100% !important;margin-top: 20px"></Echart>
-                    <el-button @click="close" type="primary" style="float: right">取 消</el-button>
-                </el-card>
-                </el-dialog>
+            </el-dialog>
+            <!-- 显示折线图 -->
+            <el-dialog title="优化结果对比" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogVisiblePicture"
+                       :close-on-click-modal="false" width="50%" height="100%" style="height: 100% !important;">
+                <span style="color:white;font-size:16px;margin-right: 10px">请选择优化时间:</span>
+                <!--选择框-->
+                <el-select class="radioselect" v-model="falutName" :popper-append-to-body="false"
+                           @change="changeSelectImage($event, item)">
+                    <el-option v-for="item in pictureOption" :key="item.pictureOption" :label="item.stepTime"
+                               :value="item.fileStepId">
+                    </el-option>
+                </el-select>
+                <!--   放置echarts       -->
+                <!--                    <div style="height: 500px !important;">-->
+                <Echart :chart-data="echartsListaa" height="550px" width="100%" style="margin-top: 20px"></Echart>
+                <!--                    </div>-->
+
+                <el-button @click="close" type="primary" style="float: right; margin-top: 10px;margin-bottom: 15px">取 消</el-button>
+            </el-dialog>
             <!-- 下载实际制度 -->
             <el-dialog title="下载实际制度" custom-class="no-header-dialog" :show-close="false" :visible.sync="dialogReal" width="100%"
                             :close-on-click-modal="false" style="height: 100%">

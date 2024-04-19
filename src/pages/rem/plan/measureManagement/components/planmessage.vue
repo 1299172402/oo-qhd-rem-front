@@ -314,7 +314,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px" :label="`历史出砂(d)`" prop="historySandDay" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'"
+                    <el-table-column sortable min-width="130px" :label="`历史出砂(d)`" prop="historySandDay" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111' && $route.query.measureCode != '0100114'"
                                      align="center">
                         <template slot-scope="scope">
                             <span
@@ -324,7 +324,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="130px" :label="`近期出砂(d)`" prop="sandDay" align="center" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'">
+                    <el-table-column sortable min-width="130px" :label="`近期出砂(d)`" prop="sandDay" align="center" v-if="$route.query.measureCode != '0100102' &&  $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111' && $route.query.measureCode != '0100111' && $route.query.measureCode != '0100114'">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.sandDay !== null && scope.row.sandDay !== ''">{{
@@ -333,7 +333,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="150px" :label="`最大出砂量(%)`" prop="sandValue" align="center" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'">
+                    <el-table-column sortable min-width="150px" :label="`最大出砂量(%)`" prop="sandValue" align="center" v-if="$route.query.measureCode != '0100102'&& $route.query.measureCode != '0100111' && $route.query.measureCode != '0100114' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.sandValue !== null && scope.row.sandValue !== ''">{{
@@ -342,7 +342,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="150px" :label="`防砂措施`" prop="sandMeasure" align="center" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'">
+                    <el-table-column sortable min-width="150px" :label="`防砂措施`" prop="sandMeasure" align="center" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106'&& $route.query.measureCode != '0100111' && $route.query.measureCode != '0100114' && $route.query.measureCode != '0100111'">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.sandMeasure !== null && scope.row.sandMeasure !== ''">{{
@@ -351,7 +351,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column sortable min-width="150px" :label="`措施时间\n(yyyy-mm-dd)`" prop="measureTime" align="center" v-if="$route.query.measureCode != '0100102' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'">
+                    <el-table-column sortable min-width="150px" :label="`措施时间\n(yyyy-mm-dd)`" prop="measureTime" align="center" v-if="$route.query.measureCode != '0100102'&& $route.query.measureCode != '0100111' && $route.query.measureCode != '0100114' && $route.query.measureCode != '0100106' && $route.query.measureCode != '0100111'">
                         <template slot-scope="scope">
                             <span
                                 v-if="scope.row.measureTime !== null && scope.row.measureTime !== ''">{{
