@@ -286,7 +286,8 @@
                 saveInfluencingFactorsOfOilfieldProduction(params).then((res) => {
                     if (res.data.code==200&&res.data.data) {
                         this.$message.success("保存成功");
-                        this.queryTableData();
+                        this.doSearch();
+                        // this.queryTableData();
                     } else {
                         this.$message.error("保存失败");
                     }
