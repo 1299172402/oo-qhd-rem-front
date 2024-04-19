@@ -391,7 +391,7 @@ export default {
             dataTypes: [
                 {val: "wellhead", name: "井口生产指标"},
                 {val: "proProDic", name: "计量生产指标"},
-                {val: "verifyPro", name: "核实生产指标"},
+                // {val: "verifyPro", name: "核实生产指标"},
                 {val: "inject", name: "注入指标"},
             ],
             stateList: [
@@ -451,7 +451,7 @@ export default {
                     this.dataTypes = [
                         {val: "wellhead", name: "井口生产指标"},
                         {val: "proProDic", name: "计量生产指标"},
-                        {val: "verifyPro", name: "核实生产指标"},
+                        // {val: "verifyPro", name: "核实生产指标"},
                         {val: "inject", name: "注入指标"},
                     ];
                 } else {
