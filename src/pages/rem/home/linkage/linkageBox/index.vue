@@ -104,9 +104,9 @@ export default {
                 }
                 addLinkageAlarmInfo(data).then(()=>{
                 })
-                window.open( url + (url.includes("?") ? '&alarmTime=' : '?alarmTime=') + item.alarmTime, '_parent');
+                window.open( url + (url.includes("?") ? '&alarmTime=' : '?alarmTime=') + item.alarmTime, '_blank');
             }else{
-                window.open(url, '_parent');
+                window.open(url, '_blank');
             }
 
         },
@@ -119,7 +119,7 @@ export default {
                 this.baseUrl = 'tjioms-tpro.tjltd.cnooc'
             }
             if(currentList.alarmPageCode =='OSTOPF'){
-                    window.open(`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage`, '_parent');
+                    window.open(`https://rem.${this.baseUrl}/#/yield/statisticalTableProduction?page=reservoirDisplay/linkage`, '_blank');
             }
             else{
                 console.log(currentList.boxBottomText)
@@ -141,9 +141,9 @@ export default {
                 }).then(()=>{
                     if (!url) return
                     if(currentList.warningurl){
-                        window.open(currentList.warningurl, '_parent');
+                        window.open(currentList.warningurl, '_blank');
                     }else{
-                        window.open(linkurl.url, '_parent'); 
+                        window.open(linkurl.url, '_blank'); 
                     }
                 })
             }

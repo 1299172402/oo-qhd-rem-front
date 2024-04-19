@@ -78,7 +78,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="*生产平台" min-width="130px" prop="prodectionUnit" align="center">
+                <el-table-column label="生产平台" min-width="130px" prop="prodectionUnit" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.prodectionUnit !== null && scope.row.prodectionUnit !== ''">{{
@@ -163,24 +163,6 @@
                         <span
                             v-if="scope.row.nextJobWellNo !== null && scope.row.nextJobWellNo !== ''">{{
                                 scope.row.nextJobWellNo
-                            }}</span>
-                        <span v-else>-</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="是否动管柱" prop="isMovingPipePlan" align="center">
-                    <template slot-scope="scope">
-                        <span
-                            v-if="scope.row.isMovingPipePlan !== null && scope.row.isMovingPipePlan !== ''">{{
-                                scope.row.isMovingPipePlan
-                            }}</span>
-                        <span v-else>-</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="预计作业时间" prop="planStartDate" align="center">
-                    <template slot-scope="scope">
-                        <span
-                            v-if="scope.row.planStartDate !== null && scope.row.planStartDate !== ''">{{
-                                scope.row.planStartDate
                             }}</span>
                         <span v-else>-</span>
                     </template>
