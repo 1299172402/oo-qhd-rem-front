@@ -151,7 +151,7 @@ import fourAdd from "../popups/fourAdd.vue";
 
 export default {
   components: {
-    fourAdd,
+    fourAdd
   },
   data() {
     return {
@@ -317,7 +317,9 @@ export default {
     },
     //关闭添加框
     handleDialogClose() {
+        console.log('.....#######被调用');
       this.AddDialogFlag = false;
+      this.searchDataFromServer();
     },
     //下载导出文件 tableId tableName
     doDownExcel(tableId, tableName) {
