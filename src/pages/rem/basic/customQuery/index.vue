@@ -391,7 +391,7 @@ export default {
             dataTypes: [
                 {val: "wellhead", name: "井口生产指标"},
                 {val: "proProDic", name: "计量生产指标"},
-                {val: "verifyPro", name: "核实生产指标"},
+                // {val: "verifyPro", name: "核实生产指标"},
                 {val: "inject", name: "注入指标"},
             ],
             stateList: [
@@ -451,7 +451,7 @@ export default {
                     this.dataTypes = [
                         {val: "wellhead", name: "井口生产指标"},
                         {val: "proProDic", name: "计量生产指标"},
-                        {val: "verifyPro", name: "核实生产指标"},
+                        // {val: "verifyPro", name: "核实生产指标"},
                         {val: "inject", name: "注入指标"},
                     ];
                 } else {
@@ -482,7 +482,7 @@ export default {
                         this.dataTypes = [
                             {val: "wellhead", name: "井口生产指标"},
                             {val: "proProDic", name: "计量生产指标"},
-                            {val: "verifyPro", name: "核实生产指标"},
+                            // {val: "verifyPro", name: "核实生产指标"},
                             {val: "inject", name: "注入指标"},
                         ];
                         break;
@@ -494,7 +494,7 @@ export default {
                         this.activeTabIndexData = "Mwellhead"; //'井口月生产'
                         this.dataTypes = [
                             {val: "Mwellhead", name: "井口月生产"},
-                            {val: "MverifyPro", name: "核实月生产"},
+                            // {val: "MverifyPro", name: "核实月生产"},
                             {val: "Minject", name: "注入月指标"},
                         ];
                         break;
@@ -503,7 +503,7 @@ export default {
                         this.activeTabIndexData = "YproProDic"; //'生产指标'
                         this.dataTypes = [
                             {val: "YproProDic", name: "生产指标"},
-                            {val: "YverifyPro", name: "核实生产"},
+                            // {val: "YverifyPro", name: "核实生产"},
                             {val: "Yinject", name: "注入指标"},
                         ];
                         break;
