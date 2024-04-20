@@ -239,7 +239,12 @@ export default {
                 this.queryData.pt = this.platforms[0].platformId;
                 QueryWellDetail({platformId: this.queryData.pt}).then((res) => {
                     this.wells = res.data.data
-                    this.queryData.wellId = this.wells[0].wellId
+                    if (this.wells.length == 0) {
+                        this.queryData.wellId = this.wells[0].wellId;
+                    }
+                    if (this.wells.length > 0) {
+                        this.queryData.wellId = this.wells[1].wellId;
+                    }
                     queryWellControlReservesLayer({wellId: this.queryData.wellId}).then((res) => {
                         this.cwOptions = res.data.data;
                     });
