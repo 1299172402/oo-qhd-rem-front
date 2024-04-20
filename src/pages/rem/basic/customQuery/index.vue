@@ -1151,6 +1151,10 @@ export default {
                 let dataArray =  res.data.data.rows;
                 dataArray.forEach((data)=>{
                     for (var key in data) {
+                        if (data[key] ===undefined || data[key]===null ||data[key] ==='' ) {
+                            data[key]='-'
+                            continue;
+                        }
                         if (key == 'monthprodduration' || key == 'yearprodduration'
                             || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily'|| key == 'daynumberwellsopenedper'|| 
                             key == 'daytotalnumberwellsper'|| key == 'numberdailyinjectionwellsopened'|| key == 'totaldailyinjectionwells'|| key == 'dailymeasurewells'
