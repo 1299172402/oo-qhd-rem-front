@@ -359,6 +359,8 @@ export default {
               legendData.push("实际年累产");
             } else if (linearChart.label == "计划年产") {
               legendData.push("计划年累产");
+            }else if (linearChart.label == "上年实际年产") {
+              legendData.push("上年实际累产");
             }
             //向数据数组中添加 所有折线的信息
             seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
@@ -411,6 +413,10 @@ export default {
         series.name = "计划年累产";
       } else if (label == "剩余水平") {
         series.yAxisIndex = 0;
+      } else if (label == "上年实际年产") {
+        series.yAxisIndex = 1;
+        series.name = "上年实际累产";
+
       }
       let seriesData = [];
       let chartData = linearChart.linearData;

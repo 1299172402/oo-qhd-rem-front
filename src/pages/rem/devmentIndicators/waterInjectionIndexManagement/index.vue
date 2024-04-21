@@ -257,7 +257,8 @@
             :formatter="formatterNumber"
           ></el-table-column>
           <el-table-column label="操作" width="120" align="center">
-            <template slot-scope="scope" v-if="scope.row.name !== '年注入量（10⁴m³）'">
+            <!-- v-if="scope.row.name !== '年注入量（10⁴m³）'" -->
+            <template slot-scope="scope" >
               <el-button
                 type="text"
                 key="button1"
