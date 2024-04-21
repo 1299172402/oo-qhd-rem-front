@@ -152,10 +152,10 @@ export default {
           formatter(params) {
             var relVal = params[0].name;
             params.forEach((item) => {
-              if (item.seriesName == "计划年累注" || item.seriesName == "实际年累注") {
-                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
+              if (item.seriesName == "计划年累注" || item.seriesName == "实际年累注" ||  item.seriesName == '今年考核值') {
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4) + " (10⁴m³)";
               } else {
-                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2) + " (m³)";
               }
             });
             return relVal;
@@ -389,7 +389,7 @@ export default {
       let labelName = linearChart.label;
       if (labelName == "实际日注入量" || labelName == "滚动预测" || labelName == "计划日注入量") {
         series.yAxisIndex = 0;
-      } else if (labelName == "实际年累注" || labelName == "计划年累注") {
+      } else {
         series.yAxisIndex = 1;
       }
       let seriesData = [];
