@@ -105,6 +105,19 @@ export function dividingLayerQualityRate(request, showLoading = false) {
 
 /**
  * hwh
+ * 0502-04-注水指标管理-分注井层段合格率-有数据的最新日期
+ * @param params
+ * @returns {paramsPromise}
+ */
+export function getLatestDate() {
+  return Axios({
+    url: `${baseUrl}/oilFieldManagePlanController/getLatestDate`,
+    method: "get"
+  });
+}
+
+/**
+ * hwh
  * 0502-08-注水指标管理-分注井测试率
  * @param request
  * @returns {AxiosPromise}

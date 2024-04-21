@@ -173,7 +173,7 @@
 
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import { dividingLayerQualityRate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import { dividingLayerQualityRate, getLatestDate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { QueryOgfDetail, QueryPlatformDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { exportExcel, exportExcelFromJson } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
@@ -382,6 +382,8 @@ export default {
       });
       // 获取平台信息
       this.getFetchPlatforms();
+      // 获取数据最新时间
+      await this.getLatestDate();
       // 分注井层段合格率图表数据
       this.doDividingLayerQualityRate();
     },
@@ -432,11 +434,24 @@ export default {
       this.queryParams.pageSize = pagination.limit;
       this.doDividingLayerQualityRate();
     },
+    /**
+     * hwh
+     * 分注井层段合格率 - 数据最新时间
+     */
+    async getLatestDate() {
+      await getLatestDate().then((res) => {
+        if (res?.data?.code == 200) {
+          console.log(res.data.data);
+          this.queryParams.month = dayjs(res.data.data).format("YYYY-MM"); // 分注井层段合格率明细 日期选择
+          this.queryParams.date = dayjs(res.data.data).format("YYYY-MM-DD"); // 单井层段合格明细 日期选择
+        }
+      });
+    },
     //分注井层段合格率
-    doDividingLayerQualityRate() {
+    async doDividingLayerQualityRate() {
       this.oilFieldName =
         this.oilFieldList.filter((item) => item.ogfId === this.queryParams.oilFieldId)[0].ogfName || "";
-      dividingLayerQualityRate(this.queryParams, true).then((res) => {
+      await dividingLayerQualityRate(this.queryParams, true).then((res) => {
         if (res?.data?.code == 200) {
           let legendData = [];
           let seriesData = [];
