@@ -196,7 +196,7 @@ export default {
                 isAxisIndex = val.axisIndex;
                 res = res + "<br>";
               }
-              res = res + val.marker + val.seriesName + ":" + val.value + "<br>";
+              res = res + val.marker + val.seriesName + ":" + (val.value || "-")  + "<br>";
             }
             return res;
           },
@@ -205,8 +205,8 @@ export default {
           { x: "8%", y: "4%", width: "90%", height: "18%" },
           { x: "8%", y: "22%", width: "90%", height: "18%" },
           { x: "8%", y: "40%", width: "90%", height: "18%" },
-          { x: "8%", y: "58%", width: "90%", height: "18%" },
-          { x: "8%", y: "76%", width: "90%", height: "18%" },
+          { x: "8%", y: "58%", width: "90%", height: "19%" },
+          { x: "8%", y: "76%", width: "90%", height: "20%" },
         ],
         axisPointer: {
           link: {
@@ -438,7 +438,7 @@ export default {
           },
           {
             gridIndex: 4,
-            name: "自然递减率（%）",
+            name: "预测月产油量(10⁴m³）",
             nameLocation: "center",
             nameRotate: 90,
             nameTextStyle: {
@@ -561,7 +561,7 @@ export default {
             },
           },
           {
-            name: "自然递减率",
+            name: "预测月产油量",
             type: "line",
             xAxisIndex: 4,
             yAxisIndex: 4,
@@ -660,7 +660,7 @@ export default {
         let waterCutChart = data.data.data.charts[2].linearDataSets[0];
         //注采比
         let zcbChart = data.data.data.charts[3].linearDataSets[0];
-        //递减率
+        //预测月产油量
         let djlChart = data.data.data.charts[4].linearDataSets[0];
 
         //找到的对应的方法-产液率
@@ -671,7 +671,7 @@ export default {
         this.waterCutChart(waterCutChart);
         //注采比
         this.zcbChart(zcbChart);
-        //递减率
+        //预测月产油量
         this.djlChart(djlChart);
       });
     },
@@ -724,7 +724,7 @@ export default {
       this.lineTable.series[3].data = y;
       this.lineTable.xAxis[3].data = x;
     },
-    //折线图-注采比
+    //折线图-预测月产油量
     djlChart(djlChart) {
       let list = djlChart.linearData;
       let x = [];
