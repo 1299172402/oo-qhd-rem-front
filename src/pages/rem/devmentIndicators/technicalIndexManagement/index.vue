@@ -1767,8 +1767,8 @@ export default {
       let request = {
         // beginDate: "2023-01-01",
         // endDate: "2023-12-31",
-        beginDate: new Date().format('YYYY-01-01'),
-        endDate: new Date().format('YYYY-12-31'),
+        beginDate: new Date().format("YYYY-01-01"),
+        endDate: new Date().format("YYYY-12-31"),
         oilFieldId,
         planTypeCode: "002003",
         rollForecastVersion: "202301",
@@ -1787,12 +1787,14 @@ export default {
             //获得每一个折线数据
             let linearChart = charDataS[i];
             //向图例中添加 折线名称
-            if (linearChart.label != "实际年产" && linearChart.label != "计划年产") {
-              legendData.push(linearChart.label);
-            } else if (linearChart.label == "实际年产") {
+            if (linearChart.label == "实际年产") {
               legendData.push("实际年累产");
             } else if (linearChart.label == "计划年产") {
               legendData.push("计划年累产");
+            } else if (linearChart.label == "上年实际年产") {
+              legendData.push("上年实际累产");
+            } else {
+              legendData.push(linearChart.label);
             }
             //向数据数组中添加 所有折线的信息
             seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
@@ -1845,6 +1847,9 @@ export default {
         series.name = "计划年累产";
       } else if (label == "剩余水平") {
         series.yAxisIndex = 0;
+      } else if (label == "上年实际年产") {
+        series.yAxisIndex = 1;
+        series.name = "上年实际累产";
       }
       let seriesData = [];
       let chartData = linearChart.linearData;
