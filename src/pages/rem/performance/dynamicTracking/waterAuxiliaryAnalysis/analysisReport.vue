@@ -2922,6 +2922,10 @@ export default {
         }
         this.recommendedMeasuresOptions[j].value = t_count; //登记条数
       }
+      myData.forEach((item, index) => {
+        item.parentIndex = index + 1;
+        item.isIndex = true;
+      });
       this.tableData = myData; //加载数据
       this.oldTableData = cloneDeep(myData); //加载数据
       this.$nextTick(() => {

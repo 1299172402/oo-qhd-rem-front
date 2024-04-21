@@ -5,7 +5,7 @@
                     :currentList="item" :key="index" v-for="(item,index) in currentLists"></linkageBox>
         <div class="studySelf" style="cursor:pointer" @click="$router.push({ name: 'Modelconfig',query: { page: 'Linkage' } });">
             <div class="studySelfInside"></div>
-            <span>模型自学习</span>
+            <span>模型配置</span>
         </div>
         <img class="downArrow" style="display: block;z-index:-1" src="@/assets/linkage/arrow-left.png" alt="">
         <img class="downArrow" style="z-index:-1" src="@/assets/linkage/arrow-left.png" alt="">
