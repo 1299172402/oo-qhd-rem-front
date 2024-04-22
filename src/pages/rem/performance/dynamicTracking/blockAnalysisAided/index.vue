@@ -400,18 +400,18 @@ export default {
               label: "累产液产油现状图",
               name: "cumulativeOilWaterProduction",
             },
-            {
-              label: "含油饱和度分布图",
-              name: "remainingOil",
-            },
-            {
-              label: "液油含水等值线图",
-              name: "oilwaterIsoline",
-            },
-            {
-              label: "液油含水差值图",
-              name: "liquidOilDifferenceDiagram",
-            },
+            // {
+            //   label: "含油饱和度分布图",
+            //   name: "remainingOil",
+            // },
+            // {
+            //   label: "液油含水等值线图",
+            //   name: "oilwaterIsoline",
+            // },
+            // {
+            //   label: "液油含水差值图",
+            //   name: "liquidOilDifferenceDiagram",
+            // },
             {
               label: "地层压力分布图",
               name: "totalPressureDropDiagram",
@@ -420,26 +420,26 @@ export default {
               label: "生产压差图",
               name: "differentialPressureDiagram",
             },
-            {
-              label: "采液强度等值图",
-              name: "fluidStrengthEquivalence",
-            },
-            {
-              label: "注水强度等值图",
-              name: "isogramOfWaterInjectionIntensity",
-            },
-            {
-              label: "米采指数",
-              name: "cumulativeOilProductionPerMeter",
-            },
-            {
-              label: "累积水油比分布图",
-              name: "distributionOfAccumulatedwateroilRatio",
-            },
-            {
-              label: "注采比分布图",
-              name: "injectionProductionRatioDistribution",
-            },
+            // {
+            //   label: "采液强度等值图",
+            //   name: "fluidStrengthEquivalence",
+            // },
+            // {
+            //   label: "注水强度等值图",
+            //   name: "isogramOfWaterInjectionIntensity",
+            // },
+            // {
+            //   label: "米采指数",
+            //   name: "cumulativeOilProductionPerMeter",
+            // },
+            // {
+            //   label: "累积水油比分布图",
+            //   name: "distributionOfAccumulatedwateroilRatio",
+            // },
+            // {
+            //   label: "注采比分布图",
+            //   name: "injectionProductionRatioDistribution",
+            // },
             {
               label: "综合开发曲线",
               name: "comprehensiveDevelopmentCurve",
