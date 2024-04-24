@@ -6,7 +6,7 @@
         class="pageHeader"
         style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-left: 0"
       >
-        措施效果跟踪
+        作业效果跟踪
         <el-button type="primary" style="height: 30px" @click="switchToBack">返回</el-button>
       </div>
     </div>
@@ -46,7 +46,7 @@
           </el-select>
         </div>
         <div style="margin-right: 15px">
-          <span>措施事件：</span>
+          <span>作业事件：</span>
           <el-select v-model="selectMeasuresId" class="f2" @change="changeMeasuresType">
             <el-option v-for="(item, index) in measuresTypes" :key="index" :label="item.name" :value="item.code">
             </el-option>
@@ -81,24 +81,24 @@
           prop="beginDate"
           header-align="center"
           align="center"
-          :label="`措施开始日期\n(yyyy-mm-dd)`"
+          :label="`作业开始日期\n(yyyy-mm-dd)`"
           width="140"
         ></el-table-column>
         <el-table-column
           prop="endDate"
           header-align="center"
           align="center"
-          :label="`措施结束日期\n(yyyy-mm-dd)`"
+          :label="`作业结束日期\n(yyyy-mm-dd)`"
           width="140"
         ></el-table-column>
         <el-table-column
           prop="measureType"
           header-align="center"
           align="center"
-          :label="`措施类型`"
+          :label="`作业类型`"
           width="140"
         ></el-table-column>
-        <el-table-column align="center" label="措施前生产情况">
+        <el-table-column align="center" label="作业前生产情况">
           <el-table-column
             header-align="center"
             align="center"
@@ -118,7 +118,7 @@
             :formatter="toPrecise2"
           ></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="措施效果">
+        <el-table-column align="center" label="作业效果">
           <el-table-column
             header-align="center"
             align="center"
@@ -214,17 +214,17 @@
           prop="beginDate"
           header-align="center"
           align="center"
-          :label="`措施开始日期\n(yyyy-mm-dd)`"
+          :label="`作业开始日期\n(yyyy-mm-dd)`"
           min-width="110px"
         ></el-table-column>
         <el-table-column
           prop="endDate"
           header-align="center"
           align="center"
-          :label="`措施结束日期\n(yyyy-mm-dd)`"
+          :label="`作业结束日期\n(yyyy-mm-dd)`"
           min-width="110px"
         ></el-table-column>
-        <el-table-column align="center" label="措施前注入情况" min-width="100">
+        <el-table-column align="center" label="作业前注入情况" min-width="100">
           <el-table-column
             header-align="center"
             align="center"
@@ -234,7 +234,7 @@
             :formatter="toPrecise2"
           ></el-table-column>
         </el-table-column>
-        <el-table-column align="center" label="措施效果">
+        <el-table-column align="center" label="作业效果">
           <el-table-column
             prop="injDaily"
             header-align="center"
@@ -308,7 +308,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <pagePanelNew headerTitle="措施效果跟踪" class="pagePanelNew" style="margintop: 0">
+    <pagePanelNew headerTitle="作业效果跟踪" class="pagePanelNew" style="margintop: 0">
       <div class="main" v-if="type == 0">
         <el-row class="main-row" v-if="type == 0" style="height: 46px">
           <el-tabs class="g-pageHeader" v-model="oilTabType" topline @tab-click="doSearchCharts">
@@ -640,16 +640,16 @@ export default {
           isChecked: false,
           oilTabType: "1",
         },
-        {
-          name: "虚拟计量曲线",
-          isChecked: false,
-          oilTabType: "2",
-        },
-        {
-          name: "化验数据",
-          isChecked: false,
-          oilTabType: "3",
-        },
+        // {
+        //   name: "虚拟计量曲线",
+        //   isChecked: false,
+        //   oilTabType: "2",
+        // },
+        // {
+        //   name: "化验数据",
+        //   isChecked: false,
+        //   oilTabType: "3",
+        // },
         {
           name: "作业信息",
           isChecked: false,
@@ -2119,7 +2119,7 @@ export default {
         this.wellType,
         this.wellBoreName,
       );
-      this.getAnalysisResult();
+      // this.getAnalysisResult();
       this.getWorkProgress();
       this.doSearchCharts();
     },
@@ -2262,7 +2262,7 @@ export default {
         this.type = 1;
       }
       this.doSearchCharts();
-      this.getAnalysisResult();
+      // this.getAnalysisResult();
       this.getFetchMeasureStatInfos(
         this.selectOilField,
         this.selectPlatform,
@@ -2621,15 +2621,15 @@ export default {
               this.getRealtimeData();
             }
             break;
-          case "2":
-            {
-              this.doWellFluxLastDayHour();
-            }
-            break;
-          case "3":
-            {
-            }
-            break;
+          // case "2":
+          //   {
+          //     this.doWellFluxLastDayHour();
+          //   }
+          //   break;
+          // case "3":
+          //   {
+          //   }
+          //   break;
           default: {
           }
         }
