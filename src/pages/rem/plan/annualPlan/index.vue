@@ -207,7 +207,7 @@ export default {
         planTypeCode: "002003", //产量计划类型绑定值
         theYieldComponentsValue: 1, //产量构成绑定值
         rollForecastVersion: "", //滚动预测绑定值
-        selectUnitOfProduction: "m", //产量单位绑定值
+        selectUnitOfProduction: "t", //产量单位绑定值
       },
       //是否加载子组件
       isLoadChildCommon: false,
