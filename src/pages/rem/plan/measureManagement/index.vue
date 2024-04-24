@@ -61,7 +61,7 @@
             </el-select>
           </div>
           <div style="margin-right: 15px; margin-bottom: 10px">
-            <span>措施属性：</span>
+            <span>作业属性：</span>
             <el-select v-model="stimClassCode" filterable style="width: 170px" @change="getMeasureNameAndCode">
               <el-option
                 v-for="(item, index) in stimClassCodeSelect"
@@ -72,7 +72,7 @@
             </el-select>
           </div>
           <div style="margin-right: 15px; margin-bottom: 10px">
-            <span>措施类型：</span>
+            <span>作业类型：</span>
             <el-select v-model="measureId" style="width: 170px">
               <el-option
                 v-for="(item, index) in measuresTypes"
@@ -135,7 +135,7 @@
         </div>
       </headerSearch>
       <div class="z-container">
-        <pagePanelNew headerTitle="措施管理" style="height: 100%; margin-top: 0">
+        <pagePanelNew headerTitle="作业管理" style="height: 100%; margin-top: 0">
           <div
             class="pageHeader"
             style="
@@ -183,7 +183,7 @@
               ></el-table-column>
               <el-table-column
                 prop="measureName3"
-                :label="`措施作业天数\n(计划/实际)\n(d)`"
+                :label="`作业天数\n(计划/实际)\n(d)`"
                 width="110"
                 header-align="center"
                 align="center"
@@ -198,7 +198,7 @@
               </el-table-column>
               <el-table-column
                 prop="status"
-                :label="`措施是否\n达标`"
+                :label="`作业是否\n达标`"
                 width="80"
                 header-align="center"
                 align="center"
@@ -236,15 +236,15 @@
                     </div>
                     <div class="icon1">
                       <img src="@/assets/rem/plan/i0.png" alt="" />
-                      <span>增产性措施</span>
+                      <span>增产性作业</span>
                     </div>
                     <div class="icon1">
                       <img src="@/assets/rem/plan/i1.png" alt="" />
-                      <span>增注性措施</span>
+                      <span>增注性作业</span>
                     </div>
                     <div class="icon1" style="margin-right: 0">
                       <img src="@/assets/rem/plan/i2.png" alt="" />
-                      <span>维护性措施</span>
+                      <span>维护性作业</span>
                     </div>
                   </div>
                 </template>
@@ -289,7 +289,7 @@
                         v-if="scope.row.stimClassCode == '003'"
                         :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}d)\n${
                           scope.row.realityMeasuresEndTime || '-'
-                        } 增产性措施`"
+                        } 增产性作业`"
                       />
                       <img
                         :src="
@@ -303,7 +303,7 @@
                         v-else-if="scope.row.stimClassCode == '004'"
                         :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}d)\n${
                           scope.row.realityMeasuresEndTime || '-'
-                        } 增注性措施`"
+                        } 增注性作业`"
                       />
                       <img
                         :src="
@@ -317,7 +317,7 @@
                         v-else
                         :title="`${scope.row.wellNo}\n${scope.row.measureName}(${scope.row.realityMeasuresDayNum}d)\n${
                           scope.row.realityMeasuresEndTime || '-'
-                        } 维护性措施`"
+                        } 维护性作业`"
                       />
                     </div>
                     <div class="vv-right">
