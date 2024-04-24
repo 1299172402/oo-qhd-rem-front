@@ -205,7 +205,7 @@ export default {
       searchForm: {
         rollingForecastDate: "", //滚动预测
         date: new Date().addDays(-1).format("yyyy-MM-dd"), //日期
-        unitType: "m", //单位
+        unitType: "t", //单位
       },
       pickerOptions: {
         disabledDate(time) {
