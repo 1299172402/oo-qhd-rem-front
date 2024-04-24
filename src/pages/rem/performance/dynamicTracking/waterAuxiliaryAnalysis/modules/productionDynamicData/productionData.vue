@@ -426,7 +426,7 @@ export default {
     // this.height = document.getElementsByClassName("z-main")[0].offsetHeight - 40 - 60 - 10;
     let year = new Date().getFullYear();
     this.selectData = [new Date(year + "-01-01").format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")];
-    // this.fieldLayersApi();
+    this.fieldLayersApi();
   },
   watch: {
     wellId(newVal) {
@@ -470,6 +470,7 @@ export default {
         platformId: this.platformId,
         wellId: this.wellId,
         layerId: this.selectPosition,
+        wellType: "INJ",
       };
       produceData(request).then((res) => {
         if (res.data.code == 200) {

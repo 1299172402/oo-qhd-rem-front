@@ -708,6 +708,7 @@ export default {
         platformId: this.platformId,
         wellId: this.wellId,
         allocOrCalculate: this.allocOrCalculate,
+        wellType: "PRO",
       };
       produceData(request).then((res) => {
         let seriesData = [];
