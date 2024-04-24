@@ -66,6 +66,8 @@ import { getLayerInfo } from "@/api/oilDeposit/ipm-02/injectsinglewell.js";
 import { produceData } from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import Echarts from "@/components/tools/Echarts/index.vue";
 import FileSaver from "file-saver";
+import { exportExcel } from "@/lib/exportExcel.js";
+
 export default {
   components: {
     Echarts,
@@ -624,6 +626,8 @@ export default {
         fileName = this.wellName + fileName;
       }
       FileSaver.saveAs(res, fileName);
+
+      exportExcel("#tableData", fileName);
     },
   },
 };

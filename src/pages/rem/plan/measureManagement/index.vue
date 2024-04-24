@@ -587,14 +587,9 @@ export default {
       //平台
       await QueryPlatformDetail({ ogfId: this.selectOilField }).then((res) => {
         if (res.data.code == 200) {
-          let platform = res.data.data;
-
-          if (platform[0].platName == "全部") {
-            platform.splice(0, 1);
-          }
-          this.platforms = platform;
-          // this.platforms[0].platFormId=this.selectOilField;
-          this.selectPlatform = platform[0].platformId;
+          this.platforms = res.data.data;
+          this.platforms.unshift({platformCode: "全部",platformId:""})
+          this.selectPlatform = "";
         }
       });
       //井号
