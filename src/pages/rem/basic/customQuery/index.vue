@@ -226,11 +226,21 @@
                         height="calc(100% - 30px)"
                         border
                         id="zdycxtab"
+                        @sort-change="sortchange"
                         header-cell-class-name="table_header"
                         :cell-style="{ padding: '10px', 'text-align': 'center' }"
                         style="margin: 20px 0; height: calc(100% - 125px)"
-                        :default-sort="{ prop: 'date', order: 'descending' }"
                     >
+                        <el-table-column label="序号"    min-width="50" prop="seq"
+                                         align="center"></el-table-column>
+                        <el-table-column label="井名"    min-width="150" prop="name"
+                                         align="center"></el-table-column>
+                        <el-table-column  align="center" min-width="150px"  :default-sort="{ prop: 'tmd', order: 'descending' }" prop="proddate" sortable="custom">
+                            <template slot="header"  >
+                                <span >{{this.activeTabIndexDate==3? `生产时间\n(yyyy-mm-dd)`:
+                                    this.activeTabIndexDate==2? `生产时间\n(yyyy-mm)`:`生产时间\n(yyyy)`}}</span>
+                            </template>
+                        </el-table-column>
                         <el-table-column
                             :key="index"
                             :prop="item.val"
@@ -256,6 +266,7 @@
                         <el-table-column
                             :key="index"
                             :prop="item.val"
+                            
                             :label="item.name"
                             min-width="160"
                             v-for="(item, index) in headerTextLower"
@@ -435,6 +446,7 @@ export default {
             tableRow: [],
             headerText: [], //生成标题数据
             headerTextLower: [],
+            order:'',
         };
     },
     computed: {},
@@ -562,21 +574,119 @@ export default {
     created() {
     },
     methods: {
-        getSelectItems(selectList, selectData) {
-            // let ogfId = selectList.ogfId;
-            // let wellIds = selectList.wellIds;
-            //
-            // let ogfIdOld = this.ogfId;
-            // let wellIdsOld = this.wellId;
-            //
-            // if (ogfId != ogfIdOld) {
-            //     this.queryData.ogfId = ogfId;
-            //     this.choicewell(ogfId);
-            // }else if (wellIds != wellIdsOld) {
-            //     this.queryData.wellId = wellIds;
-            //     this.changewell(wellIds);
-            // }
-            // let ttt=this.$refs.treeSelectionAll.deptOptions;
+        sortchange(row){
+            if(row.order == 'ascending'){
+                this.sorttable('asc')
+                this.order = 'ascending'
+            }else if (row.order == 'descending'){
+                this.sorttable('desc')
+                this.order = 'ascending'
+            }else{
+                if(this.order.indexOf('asc') != -1 ){
+                    this.sorttable('asc')
+                    this.order = 'ascending'
+                    row.order='ascending'
+                }else{
+                    this.sorttable('desc')
+                    this.order = 'descending'
+                    row.order='descending'
+                }
+                row.column.order = row.order
+            }
+            
+        },
+        sorttable(sort) {
+            let sqlStrAnd = "",
+                sqlStrOr = "";
+            this.page = 1
+            let flag = true;
+            this.tableRow.forEach((item) => {
+                if (item.type && item.name && item.model && item.val) {
+                    if (item.type == "AND") {
+                        sqlStrAnd += `${item.type} ${item.name} ${item.model} ${item.val} `;
+                    } else {
+                        sqlStrOr += `${item.type} ${item.name} ${item.model} ${item.val} `;
+                    }
+                } else {
+                    flag = false;
+                }
+            });
+            let sqlObj = [];
+            this.tableRow.forEach((item) => {
+                if (item.type && item.name && item.model && item.val) {
+                    sqlObj.push({
+                        link: item.type,
+                        index: item.name,
+                        condition: item.model,
+                        value: item.val,
+                    });
+                }
+            });
+            if (!flag) {
+                this.$message.error("请填写完整查询条件！");
+                return;
+            }
+            let sqlStr = sqlStrAnd + sqlStrOr;
+            if (sqlStrOr) {
+                sqlStr = sqlStr.slice(0, sqlStr.lastIndexOf("AND")) + "( " + sqlStr.slice(sqlStr.lastIndexOf("AND")) + ")";
+            } else {
+                sqlStr = sqlStrAnd;
+            }
+            let condList = this.stateValue.concat(
+                this.productValue,
+                this.totalValue,
+                this.injectValue,
+                this.managerValue,
+                this.storeValue,
+            );
+            let condListFormat = [];
+            condList.forEach((item) => {
+                condListFormat.push(item.toLowerCase().replace(/_/g, ""));
+            });
+            let params = {
+                condList: condListFormat, //字段名字
+                // sqlSent:sqlStr,//拼接sql
+                sqlSent: sqlObj, //拼接sql
+                targetType: this.activeTabIndex, //目标类型 井：1  油田 ：2
+                dataType: this.activeTabIndexData, //数据类型 （井口指标，计量指标等）
+                timeType: this.activeTabIndexDate, //时间类型 1 年 2月 3 日
+                startTime: this.activeTabIndexDate != 1 ? this.selectDate[0] : this.selectDate, //开始时间
+                endTime: this.selectDate[1], //结束时间
+                wellIdList:this.wellId,
+                dataId: null,//若目标类型为2油田传ogfId,若为井传wellId
+                platformIdList:this.platformId,
+                ogfId:this.ogfId,
+                pageNum: 1,//分页页码
+                pageSize: this.pageSize,//每页页数
+                sortRule:sort
+            };
+            this.params = params;
+            this.queryData = [];
+            queryCustomQueryList(params).then((res) => {
+                let dataArray =  res.data.data.rows;
+                dataArray.forEach((data)=>{
+                    for (var key in data) {
+                        if (key == 'monthprodduration' || key == 'yearprodduration'
+                            || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily'|| key == 'daynumberwellsopenedper'||
+                            key == 'daytotalnumberwellsper'|| key == 'numberdailyinjectionwellsopened'|| key == 'totaldailyinjectionwells'|| key == 'dailymeasurewells'
+                            || key == 'monthlycumulcount'|| key == 'yearcumulcount') {
+                            if (data[key] === null || data[key] === '') {
+                                continue;
+                            }
+                            data[key] = parseFloat(data[key]).toFixed(0);
+                        }else if(key == 'monthlyaccumwaterprod' || key == 'monthlycumufluidprod'|| key == 'monthlycumugasprod'|| key == 'monthlycumuoilprod'
+                            || key == 'yearaccumwaterprod'  || key == 'yearcumufluidprod' || key == 'yearcumugasprod' || key == 'yearcumuoilprod'
+                            || key == 'monthlycumulativeinjectionvolume'
+                            || key == 'yearcumulativeinjectionvolume' || key == 'yearcumulwaterinjectamount' || key == 'monthlycumulwaterinjectamount'
+                            || key == 'monthlycumunetprod'|| key == 'monthlyveprod'
+                        ){
+                            data[key] = parseFloat(data[key]/10000).toFixed(4);
+                        }
+                    }
+                })
+                this.queryData = dataArray
+                this.pageTotal = res.data.data.total;
+            });
         },
        
        async changetype(val) {
@@ -1075,7 +1185,6 @@ export default {
                     });
                 });
                 //添加固定的两个字段 井名 生产时间
-                this.headerTextLower.unshift({name: "井名", val: "name"}, {name:this.activeTabIndexDate==3? `生产时间\n(yyyy-mm-dd)`: this.activeTabIndexDate==2? `生产时间\n(yyyy-mm)`:`生产时间\n(yyyy)` , val: "proddate"});
                 this.tableData = tableArr;
             }
         },
@@ -1151,12 +1260,8 @@ export default {
                 let dataArray =  res.data.data.rows;
                 dataArray.forEach((data)=>{
                     for (var key in data) {
-                        if (data[key] ===undefined || data[key]===null ||data[key] ==='' ) {
-                            data[key]='-'
-                            continue;
-                        }
                         if (key == 'monthprodduration' || key == 'yearprodduration'
-                            || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily'|| key == 'daynumberwellsopenedper'|| 
+                            || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily'|| key == 'daynumberwellsopenedper'||
                             key == 'daytotalnumberwellsper'|| key == 'numberdailyinjectionwellsopened'|| key == 'totaldailyinjectionwells'|| key == 'dailymeasurewells'
                             || key == 'monthlycumulcount'|| key == 'yearcumulcount') {
                             if (data[key] === null || data[key] === '') {

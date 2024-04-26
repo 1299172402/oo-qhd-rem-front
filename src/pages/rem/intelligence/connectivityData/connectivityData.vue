@@ -115,7 +115,7 @@
                     icon="el-icon-bank-card"
                     style="width: 70px"
                     :disabled="disabledComp || !form.tableData.length"
-                    @click="preserve('form')"
+                    @click="savedata('form')"
                 >保存
                 </el-button>
                 <el-button
@@ -716,11 +716,15 @@ export default {
             if (this.$refs['form'])
                 this.$refs['form'].validate()
         },
+        savedata(form){
+            console.log('1122222')
+            console.log(this.preserve(form))
+            this.preserve(form);
+        },
         // 保存
         preserve(form) {
             let params = [];
             let data = this.form.tableData;
-            console.log('898989989')
             console.log(data)
             for (var i = 0; i < data.length; i++) {
                 params.push({
