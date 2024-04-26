@@ -101,12 +101,12 @@
                 //产量单位数据源
                 unitTypeList: [
                   {
-                    label: "m³",
-                    value: "m",
-                  },
-                  {
                     label: "t",
                     value: "t",
+                  },
+                  {
+                    label: "m³",
+                    value: "m³",
                   },
                 ],
                 pickerOptions: {
@@ -126,7 +126,7 @@
                 searchForm:{
                     rollingForecastDate:'',//滚动预测
                     date:new Date().addDays(-1).format('yyyy-MM-dd'),//日期
-                    unitType:'m',//单位
+                    unitType:'t',//单位
                 },
                 
                 
