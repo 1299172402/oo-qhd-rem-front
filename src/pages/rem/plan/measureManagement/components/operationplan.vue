@@ -68,17 +68,18 @@
                 header-cell-class-name="table_header"
                 :cell-style="{ 'text-align': 'center', padding: '2px' }"
                 style="width: 100%"
+                @sort-change="sortchange"
+                :sort-orders="['descending','ascending']"
                 height="calc(100% - 90px)"
-                :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column label="日期" prop="theDate" align="center" min-width="130px" >
+                <el-table-column label="日期" sortable="custom"  :sort-orders="['descending','ascending']" prop="theDate" align="center" min-width="130px" >
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.theDate !== null && scope.row.theDate !== ''">{{ scope.row.theDate }}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="生产平台" min-width="130px" prop="prodectionUnit" align="center">
+                <el-table-column label="生产平台" sortable="custom"  :sort-orders="['descending','ascending']" min-width="130px" prop="prodectionUnit" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.prodectionUnit !== null && scope.row.prodectionUnit !== ''">{{
@@ -87,7 +88,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="修井机状态" prop="workvoerRigStatus" align="center">
+                <el-table-column label="修井机状态"  prop="workvoerRigStatus" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.workvoerRigStatus !== null && scope.row.workvoerRigStatus !== ''">{{
@@ -217,6 +218,9 @@ export default {
             pageNum: 1,
             orgId: '',
             pageSize: 10,
+            datesort:'',
+            plasort:'',
+            sortarr:[],
             // 查询参数
         };
     },
@@ -251,6 +255,65 @@ export default {
         show(data) {
             this.getList()
         },
+        nonempty(row){
+            if(row.prop=='theDate'){
+                if(row.order == 'ascending'){
+                    this.datesort = 'ascending'
+                }else if (row.order == 'descending'){
+                    this.datesort = 'ascending'
+                }else{
+                    if(this.datesort.indexOf('asc') != -1 ){
+                        this.datesort = 'ascending'
+                        row.order='ascending'
+                    }else{
+                        this.datesort = 'descending'
+                        row.order='descending'
+                    }
+                    row.column.order = row.order
+                }
+            }else{
+                if(row.order == 'ascending'){
+                    this.plasort = 'ascending'
+                }else if (row.order == 'descending'){
+                    this.plasort = 'ascending'
+                }else{
+                    if(this.plasort.indexOf('asc') != -1 ){
+                        this.plasort = 'ascending'
+                        row.order='ascending'
+                    }else{
+                        this.plasort = 'descending'
+                        row.order='descending'
+                    }
+                    row.column.order = row.order
+                }
+            }
+        },
+        sortchange(sort){
+                if(this.sortarr.length ==0){
+                    let dateobj = {}
+                    dateobj[sort.prop] = sort.order
+                    this.sortarr = [dateobj]
+                    this.retrieval()
+                    this.nonempty(sort)
+                }else{
+                   this.nonempty(sort)
+                  let newlist =  this.sortarr.some((item)=>{
+                        return Object.keys(item)[0] == sort.prop
+                    })
+                   if(newlist==true){
+                       this.sortarr.forEach((item,index)=>{
+                           if(Object.keys(item)[0] == sort.prop){
+                             this.$set(this.sortarr,index,{[sort.prop]:sort.order})
+                           }
+                       })
+                   }else{
+                       let dateobj = {}
+                       dateobj[sort.prop] = sort.order
+                       this.sortarr.push(dateobj)
+                   }
+                    this.retrieval()
+                }
+        },
         //平台下拉-change
         onPlatfromChange(val) {
             this.queryParams.wellId = ''
@@ -275,7 +338,8 @@ export default {
                 measureTypeCode: this.queryParams.measureTypeCode,
                 yearTime: this.queryParams.yeartime,
                 pageNum: this.pageNum,
-                pageSize: this.pageSize
+                pageSize: this.pageSize,
+                sortRules:this.sortarr
             }
             // debugger
             getOnSiteWork(data).then((res) => {

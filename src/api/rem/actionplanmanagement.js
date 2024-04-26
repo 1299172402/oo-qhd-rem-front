@@ -7,9 +7,9 @@ export function getOnSiteWork({ ogfId, assetCode, wellId, measureTypeCode, yearT
     method: "get",
   });
 }
-export function onSiteWorkDownloadFile({ ogfId, asseCode, wellId, measureTypeCode, yearTime, pageNum, pageSize } = {}) {
+export function onSiteWorkDownloadFile({ ogfId, asseCode, wellId, measureTypeCode, yearTime, pageNum, pageSize,sortRules } = {}) {
     return request({
-        url: `${baseUrl}/actionPlanManagement/onSiteWorkDownloadFile?ogfId=${ ogfId || "" }&asseCode=${ asseCode || "" }&wellId=${ wellId || "" }&measureTypeCode=${ measureTypeCode || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&yearTime=${ yearTime || "" }`,
+        url: `${baseUrl}/actionPlanManagement/onSiteWorkDownloadFile?ogfId=${ ogfId || "" }&asseCode=${ asseCode || "" }&wellId=${ wellId || "" }&measureTypeCode=${ measureTypeCode || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&yearTime=${ yearTime || "" }&sortRules=${ sortRules || "" }`,
         method: "get",
         responseType:'blob',
     });
