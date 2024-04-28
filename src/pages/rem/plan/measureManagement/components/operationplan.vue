@@ -47,7 +47,7 @@
                                     placeholder="年">
                     </el-date-picker>
                 </el-form-item>
-                <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search"
+                <el-button size="medium" type="primary" @click="resetQuery();retrieval();" icon="el-icon-search"
                            style="margin-left: 10px"
                 >搜索
                 </el-button
@@ -72,6 +72,7 @@
                 :sort-orders="['descending','ascending']"
                 :header-cell-class-name="handleHeaderCellClass"
                 height="calc(100% - 90px)"
+                ref="sortTable"
             >
                 <el-table-column label="日期" sortable="custom"  :sort-orders="['descending','ascending']" prop="theDate" align="center" min-width="130px" >
                     <template slot-scope="scope">
@@ -255,6 +256,17 @@ export default {
     methods: {
         show(data) {
             this.getList()
+        },
+        // 清除排序
+        resetQuery() {
+            // 因为无法通过element ui的api来清除排序样式，所以只能通过原生js来清除
+            this.$refs.sortTable.$el.querySelectorAll(".is-sortable").forEach((item) => {
+                // 移除table表头中的排序样式descending和ascending
+                item.classList.remove("descending");
+                item.classList.remove("ascending");
+            });
+            // 同时要清除排序字段
+            this.sortArray = [];
         },
         // 保留所有排序过的箭头样式
         handleHeaderCellClass({ row, column, rowIndex, columnIndex }) {

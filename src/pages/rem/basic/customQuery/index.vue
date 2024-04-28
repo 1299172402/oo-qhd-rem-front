@@ -1,345 +1,339 @@
 <template>
     <div class="app-container">
-            <div
-                style=" height: calc(100%);">
-                <header-search>
-                    <el-row style="margin: 20px 0">
-                        <div style="display: inline-block">
-                            <span>油田：</span>
-                            <el-select v-model="ogfId" @change="choicewell">
-                                <el-option
-                                    v-for="(item, index) in oilFields"
-                                    :key="index"
-                                    :label="item.ogfName"
-                                    :value="item.ogfId"
-                                />
-                            </el-select>
-                            <span v-show="activeTabIndex == 1" style="padding-left: 20px">平台：</span>
-                            <el-select v-show="activeTabIndex == 1"  v-model="platformId" multiple  collapse-tags  @change="onPlatfromChange" :disabled="activeEchart">
-                                <el-option v-for="(item, index) in plalist" :key="item.platformId"
-                                           :label="item.platformCode"
-                                           :value="item.platformId"/>
-                            </el-select>
-                            <span v-show="activeTabIndex == 1" style="padding-left: 20px">井号：</span>
-                            <el-select v-show="activeTabIndex == 1" style="width: 260px" filterable v-model="wellId" multiple  collapse-tags :disabled="activeEchart">
-                                <el-option v-for="(item, index) in wellData" :key="index" :label="item.wellName"
-                                           :value="item.wellId"/>
-                            </el-select>
-                            <span style="padding-left: 20px">日期：</span>
-                            <el-date-picker
-                                v-show="activeTabIndexDate == 3"
-                                v-model="selectDate"
-                                type="daterange"
-                                range-separator="-"
-                                start-placeholder="开始日期"
-                                end-placeholder="结束日期"
-                                value-format="yyyy-MM-dd"
-                                :disabled="activeEchart"
+        <div
+            style=" height: calc(100%);">
+            <header-search>
+                <el-row style="margin: 20px 0">
+                    <div style="display: inline-block">
+                        <span>油田：</span>
+                        <el-select v-model="ogfId" @change="choicewell">
+                            <el-option
+                                v-for="(item, index) in oilFields"
+                                :key="index"
+                                :label="item.ogfName"
+                                :value="item.ogfId"
                             />
-                            <el-date-picker
-                                v-show="activeTabIndexDate == 2"
-                                v-model="selectDate"
-                                type="monthrange"
-                                range-separator="-"
-                                start-placeholder="开始日期"
-                                end-placeholder="结束日期"
-                                value-format="yyyy-MM"
-                                :disabled="activeEchart"
-                            />
-                            <el-date-picker
-                                v-show="activeTabIndexDate == 1"
-                                v-model="selectDate"
-                                type="year"
-                                placeholder="选择年份"
-                                :disabled="activeEchart"
-                            />
-                        </div>
-                        <div style="display: inline-block; float: right">
-                            <el-button
-                                style="margin-right: 30px"
-                                type="primary"
-                                @click="doSearch"
-                                v-if="activeEchart == true"
-                            >返回
-                            </el-button>
-                        </div>
-                    </el-row>
-                </header-search>
-                <page-panel-new :show-btn="true" v-if="!activeEchart"
-                                style="min-height: calc(100% - 100px);height: 100%;overflow-y: scroll">
-                    <el-row>
-                        <div style="display: inline-block; float: right">
-                            <el-button
-                                icon="el-icon-search"
-                                style="margin-right: 30px"
-                                type="primary"
-                                @click="doSearch"
-                                v-if="activeEchart == false"
-                            > 指标查询
-                            </el-button>
-                        </div>
-                    </el-row>
+                        </el-select>
+                        <span v-show="activeTabIndex == 1" style="padding-left: 20px">平台：</span>
+                        <el-select v-show="activeTabIndex == 1"  v-model="platformId" multiple  collapse-tags  @change="onPlatfromChange" :disabled="activeEchart">
+                            <el-option v-for="(item, index) in plalist" :key="item.platformId"
+                                       :label="item.platformCode"
+                                       :value="item.platformId"/>
+                        </el-select>
+                        <span v-show="activeTabIndex == 1" style="padding-left: 20px">井号：</span>
+                        <el-select v-show="activeTabIndex == 1" style="width: 260px" filterable v-model="wellId" multiple  collapse-tags :disabled="activeEchart">
+                            <el-option v-for="(item, index) in wellData" :key="index" :label="item.wellName"
+                                       :value="item.wellId"/>
+                        </el-select>
+                        <span style="padding-left: 20px">日期：</span>
+                        <el-date-picker
+                            v-show="activeTabIndexDate == 3"
+                            v-model="selectDate"
+                            type="daterange"
+                            range-separator="-"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            value-format="yyyy-MM-dd"
+                            :disabled="activeEchart"
+                        />
+                        <el-date-picker
+                            v-show="activeTabIndexDate == 2"
+                            v-model="selectDate"
+                            type="monthrange"
+                            range-separator="-"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            value-format="yyyy-MM"
+                            :disabled="activeEchart"
+                        />
+                        <el-date-picker
+                            v-show="activeTabIndexDate == 1"
+                            v-model="selectDate"
+                            type="year"
+                            placeholder="选择年份"
+                            :disabled="activeEchart"
+                        />
+                    </div>
+                    <div style="display: inline-block; float: right">
+                        <el-button
+                            style="margin-right: 30px"
+                            type="primary"
+                            @click="doSearch"
+                            v-if="activeEchart == true"
+                        >返回
+                        </el-button>
+                    </div>
+                </el-row>
+            </header-search>
+            <page-panel-new :show-btn="true" v-if="!activeEchart"
+                            style="min-height: calc(100% - 100px);height: 100%;overflow-y: scroll">
+                <el-row>
+                    <div style="display: inline-block; float: right">
+                        <el-button
+                            icon="el-icon-search"
+                            style="margin-right: 30px"
+                            type="primary"
+                            @click="doSearch"
+                            v-if="activeEchart == false"
+                        > 指标查询
+                        </el-button>
+                    </div>
+                </el-row>
 
-                    <el-row>
-                        <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
-                            <page-panel :show-btn="true" headerTitle="目标类型">
-                                <el-radio-group  v-model="activeTabIndex">
-                                    <el-radio :label="1"> 单井</el-radio>
-                                    <el-radio :label="2"> 油田(区块)</el-radio>
-                                </el-radio-group>
-                            </page-panel>
-                        </el-col>
-                        <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
-                            <page-panel :show-btn="true" headerTitle="时间类型">
-                                <el-radio-group v-model="activeTabIndexDate">
-                                    <el-radio :label="3">日</el-radio>
-                                    <el-radio :label="2">月</el-radio>
-                                    <el-radio :label="1">年</el-radio>
-                                </el-radio-group>
-                            </page-panel>
-                        </el-col>
-                        <el-col :span="9" style="margin-left: 20px; margin-right: 20px">
-                            <page-panel :show-btn="true" headerTitle="数据类型">
-                                <el-radio-group v-model="activeTabIndexData">
-                                    <el-radio :label="dataType.val" :key="index" v-for="(dataType,index) in dataTypes">
-                                        {{ dataType.name }}
-                                    </el-radio>
-                                </el-radio-group>
-                            </page-panel>
-                        </el-col>
-                    </el-row>
+                <el-row>
+                    <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
+                        <page-panel :show-btn="true" headerTitle="目标类型">
+                            <el-radio-group  v-model="activeTabIndex">
+                                <el-radio :label="1"> 单井</el-radio>
+                                <el-radio :label="2"> 油田(区块)</el-radio>
+                            </el-radio-group>
+                        </page-panel>
+                    </el-col>
+                    <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
+                        <page-panel :show-btn="true" headerTitle="时间类型">
+                            <el-radio-group v-model="activeTabIndexDate">
+                                <el-radio :label="3">日</el-radio>
+                                <el-radio :label="2">月</el-radio>
+                                <el-radio :label="1">年</el-radio>
+                            </el-radio-group>
+                        </page-panel>
+                    </el-col>
+                    <el-col :span="9" style="margin-left: 20px; margin-right: 20px">
+                        <page-panel :show-btn="true" headerTitle="数据类型">
+                            <el-radio-group v-model="activeTabIndexData">
+                                <el-radio :label="dataType.val" :key="index" v-for="(dataType,index) in dataTypes">
+                                    {{ dataType.name }}
+                                </el-radio>
+                            </el-radio-group>
+                        </page-panel>
+                    </el-col>
+                </el-row>
 
-                    <el-row>
-                        <el-col :span="8" style="margin-left: 20px; margin-right: 20px">
-                            <page-panel :show-btn="true" headerTitle="状态指标" style="min-height: 250px"
-                                        v-show="stateList.length != 0">
-                                <el-row :gutter="10">
-                                    <el-checkbox-group v-model="stateValue">
-                                        <el-col v-for="item in stateList" :key="item.val" :span="6"
-                                                style="min-width: 120px">
-                                            <el-checkbox :label="item.val" :value="item.val">
-                                                {{ item.name ? item.name : item }}
-                                            </el-checkbox>
-                                        </el-col>
-                                    </el-checkbox-group>
-                                </el-row>
-                            </page-panel>
-                        </el-col>
-                        <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
-                            <page-panel
-                                :show-btn="true"
-                                headerTitle="生产指标"
-                                style="min-height: 250px"
-                                v-show="productList.length != 0"
-                            >
-                                <el-row :gutter="10">
-                                    <el-checkbox-group v-model="productValue">
-                                        <el-col v-for="item in productList" :key="item.val" :span="8"
-                                                style="min-width: 120px">
-                                            <el-checkbox :label="item.val" :value="item.val">
-                                                {{ item.name ? item.name : item }}
-                                            </el-checkbox>
-                                        </el-col>
-                                    </el-checkbox-group>
-                                </el-row>
-                            </page-panel>
-                        </el-col>
-                        <el-col :span="8" style="margin-left: 20px; margin-right: 20px">
-                            <page-panel :show-btn="true" headerTitle="累产指标" style="min-height: 250px"
-                                        v-show="totalList.length != 0">
-                                <el-row :gutter="10">
-                                    <el-checkbox-group v-model="totalValue">
-                                        <el-col v-for="item in totalList" :key="item.val" :span="6"
-                                                style="min-width: 120px">
-                                            <el-checkbox :label="item.val" :value="item.val">
-                                                {{ item.name ? item.name : item }}
-                                            </el-checkbox>
-                                        </el-col>
-                                    </el-checkbox-group>
-                                </el-row>
-                            </page-panel>
-                        </el-col>
-                        <el-col :span="8" style="margin-left: 20px; margin-right: 20px">
-                            <page-panel :show-btn="true" headerTitle="注入指标" style="min-height: 250px"
-                                        v-show="injectList.length != 0">
-                                <el-row :gutter="10">
-                                    <el-checkbox-group v-model="injectValue">
-                                        <el-col v-for="item in injectList" :key="item.val" :span="6"
-                                                style="min-width: 120px">
-                                            <el-checkbox :label="item.val" :value="item.val">
-                                                {{ item.name ? item.name : item }}
-                                            </el-checkbox>
-                                        </el-col>
-                                    </el-checkbox-group>
-                                </el-row>
-                            </page-panel>
-                        </el-col>
-                        <el-col :span="8" style="margin-left: 20px; margin-right: 20px">
-                            <page-panel
-                                :show-btn="true"
-                                headerTitle="管理指标"
-                                style="min-height: 250px"
-                                v-show="managerList.length != 0"
-                            >
-                                <el-row :gutter="10">
-                                    <el-checkbox-group v-model="managerValue">
-                                        <el-col v-for="item in managerList" :key="item.val" :span="6"
-                                                style="min-width: 120px">
-                                            <el-checkbox :label="item.val" :value="item.val">
-                                                {{ item.name ? item.name : item }}
-                                            </el-checkbox>
-                                        </el-col>
-                                    </el-checkbox-group>
-                                </el-row>
-                            </page-panel>
-                        </el-col>
-                        <el-col :span="8" style="margin-left: 20px; margin-right: 20px">
-                            <page-panel :show-btn="true" headerTitle="储采指标" style="min-height: 250px"
-                                        v-show="storeList.length != 0">
-                                <el-row :gutter="10">
-                                    <el-checkbox-group v-model="storeValue">
-                                        <el-col v-for="item in storeList" :key="item.val" :span="6"
-                                                style="min-width: 120px">
-                                            <el-checkbox :label="item.val" :value="item.val">
-                                                {{ item.name ? item.name : item }}
-                                            </el-checkbox>
-                                        </el-col>
-                                    </el-checkbox-group>
-                                </el-row>
-                            </page-panel>
-                        </el-col>
-                    </el-row>
-                </page-panel-new>
-                <page-panel
-                    headerTitle="自定义查询"
-                    :show-btn="true"
-                    v-else-if="activeEchart"
-                    style="height: calc(100% - 112px); padding-bottom: 60px"
-                >
-                    <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
-                               style="float: right;margin-bottom: 10px">下载
-                    </el-button>
-                    <el-table
-                        :row-style="{ height: '0px' }"
-                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                        :data="queryData"
-                        height="calc(100% - 30px)"
-                        border
-                        id="zdycxtab"
-                        @sort-change="sortchange"
-                        header-cell-class-name="table_header"
-                        :cell-style="{ padding: '10px', 'text-align': 'center' }"
-                        style="margin: 20px 0; height: calc(100% - 125px)"
-                    >
-                        <el-table-column label="序号"    min-width="50" prop="seq"
-                                         align="center"></el-table-column>
-                        <el-table-column label="井名"    min-width="150" prop="name"
-                                         align="center"></el-table-column>
-                        <el-table-column  align="center" min-width="150px"  :default-sort="{ prop: 'tmd', order: 'descending' }" prop="proddate" sortable="custom">
-                            <template slot="header"  >
-                                <span >{{this.activeTabIndexDate==3? `生产时间\n(yyyy-mm-dd)`:
-                                    this.activeTabIndexDate==2? `生产时间\n(yyyy-mm)`:`生产时间\n(yyyy)`}}</span>
-                            </template>
-                        </el-table-column>
-                        <el-table-column
-                            :key="index"
-                            :prop="item.val"
-                            :label="item.name"
-                            show-overflow-tooltip
-                            align="center"
-                            min-width="160"
-                            v-for="(item, index) in headerTextLower"
-                        ></el-table-column>
-                    </el-table>
-                    <el-table
-                        :row-style="{ height: '0px' }"
-                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                        :data="dowload"
-                        height="100%"
-                        id="zdycx"
-                        v-show="false"
-                        header-cell-class-name="table_header"
-                        :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                        style="margin: 20px 0; height: calc(100% - 125px)"
-                        :default-sort="{ prop: 'date', order: 'descending' }"
-                    >
-                        <el-table-column
-                            :key="index"
-                            :prop="item.val"
-                            
-                            :label="item.name"
-                            min-width="160"
-                            v-for="(item, index) in headerTextLower"
+                <el-row>
+                    <el-col :span="8" style="margin-left: 20px; margin-right: 20px">
+                        <page-panel :show-btn="true" headerTitle="状态指标" style="min-height: 250px"
+                                    v-show="stateList.length != 0">
+                            <el-row :gutter="10">
+                                <el-checkbox-group v-model="stateValue">
+                                    <el-col v-for="item in stateList" :key="item.val" :span="6"
+                                            style="min-width: 120px">
+                                        <el-checkbox :label="item.val" :value="item.val">
+                                            {{ item.name ? item.name : item }}
+                                        </el-checkbox>
+                                    </el-col>
+                                </el-checkbox-group>
+                            </el-row>
+                        </page-panel>
+                    </el-col>
+                    <el-col :span="6" style="margin-left: 20px; margin-right: 20px">
+                        <page-panel
+                            :show-btn="true"
+                            headerTitle="生产指标"
+                            style="min-height: 250px"
+                            v-show="productList.length != 0"
                         >
-                        </el-table-column>
-                    </el-table>
-                    <pagination
-                        v-if="pageTotal"
-                        :pageSizes="[15, 20, 40, 100]"
-                        :total="pageTotal"
-                        :page.sync="page"
-                        :limit.sync="pageSize"
-                        @pagination="pagination"
-                    />
-                </page-panel>
-                <el-dialog title="查询" :visible.sync="dialogVisible" width="720px" :close-on-click-modal="false">
-                    <el-button class="commonBtn" @click="addRow">添加</el-button>
-                    <el-table
-                        :row-style="{ height: '0px' }"
-                        :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
-                        :data="tableRow"
-                        height="300px"
-                        header-cell-class-name="table_header"
-                        :cell-style="{ padding: '6px', 'text-align': 'center' }"
-                        style="width: 700px; margin: 20px 0"
-                        :default-sort="{ prop: 'date', order: 'descending' }"
+                            <el-row :gutter="10">
+                                <el-checkbox-group v-model="productValue">
+                                    <el-col v-for="item in productList" :key="item.val" :span="8"
+                                            style="min-width: 120px">
+                                        <el-checkbox :label="item.val" :value="item.val">
+                                            {{ item.name ? item.name : item }}
+                                        </el-checkbox>
+                                    </el-col>
+                                </el-checkbox-group>
+                            </el-row>
+                        </page-panel>
+                    </el-col>
+                    <el-col :span="8" style="margin-left: 20px; margin-right: 20px">
+                        <page-panel :show-btn="true" headerTitle="累产指标" style="min-height: 250px"
+                                    v-show="totalList.length != 0">
+                            <el-row :gutter="10">
+                                <el-checkbox-group v-model="totalValue">
+                                    <el-col v-for="item in totalList" :key="item.val" :span="6"
+                                            style="min-width: 120px">
+                                        <el-checkbox :label="item.val" :value="item.val">
+                                            {{ item.name ? item.name : item }}
+                                        </el-checkbox>
+                                    </el-col>
+                                </el-checkbox-group>
+                            </el-row>
+                        </page-panel>
+                    </el-col>
+                    <el-col :span="8" style="margin-left: 20px; margin-right: 20px">
+                        <page-panel :show-btn="true" headerTitle="注入指标" style="min-height: 250px"
+                                    v-show="injectList.length != 0">
+                            <el-row :gutter="10">
+                                <el-checkbox-group v-model="injectValue">
+                                    <el-col v-for="item in injectList" :key="item.val" :span="6"
+                                            style="min-width: 120px">
+                                        <el-checkbox :label="item.val" :value="item.val">
+                                            {{ item.name ? item.name : item }}
+                                        </el-checkbox>
+                                    </el-col>
+                                </el-checkbox-group>
+                            </el-row>
+                        </page-panel>
+                    </el-col>
+                    <el-col :span="8" style="margin-left: 20px; margin-right: 20px">
+                        <page-panel
+                            :show-btn="true"
+                            headerTitle="管理指标"
+                            style="min-height: 250px"
+                            v-show="managerList.length != 0"
+                        >
+                            <el-row :gutter="10">
+                                <el-checkbox-group v-model="managerValue">
+                                    <el-col v-for="item in managerList" :key="item.val" :span="6"
+                                            style="min-width: 120px">
+                                        <el-checkbox :label="item.val" :value="item.val">
+                                            {{ item.name ? item.name : item }}
+                                        </el-checkbox>
+                                    </el-col>
+                                </el-checkbox-group>
+                            </el-row>
+                        </page-panel>
+                    </el-col>
+                    <el-col :span="8" style="margin-left: 20px; margin-right: 20px">
+                        <page-panel :show-btn="true" headerTitle="储采指标" style="min-height: 250px"
+                                    v-show="storeList.length != 0">
+                            <el-row :gutter="10">
+                                <el-checkbox-group v-model="storeValue">
+                                    <el-col v-for="item in storeList" :key="item.val" :span="6"
+                                            style="min-width: 120px">
+                                        <el-checkbox :label="item.val" :value="item.val">
+                                            {{ item.name ? item.name : item }}
+                                        </el-checkbox>
+                                    </el-col>
+                                </el-checkbox-group>
+                            </el-row>
+                        </page-panel>
+                    </el-col>
+                </el-row>
+            </page-panel-new>
+            <page-panel
+                headerTitle="自定义查询"
+                :show-btn="true"
+                v-else-if="activeEchart"
+                style="height: calc(100% - 112px); padding-bottom: 60px"
+            >
+                <el-button size="mini" @click="downexcel()" type="primary" icon="el-icon-download"
+                           style="float: right;margin-bottom: 10px">下载
+                </el-button>
+                <el-table
+                    :row-style="{ height: '0px' }"
+                    :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                    :data="queryData"
+                    height="calc(100% - 30px)"
+                    border
+                    id="zdycxtab"
+                    header-cell-class-name="table_header"
+                    :cell-style="{ padding: '10px', 'text-align': 'center' }"
+                    style="margin: 20px 0; height: calc(100% - 125px)"
+                    :default-sort="{ prop: 'date', order: 'descending' }"
+
+                    @sort-change="handleSortChange"
+                    :sort-orders="['descending','ascending']"
+                    :header-cell-class-name="handleHeaderCellClass"
+                >
+                    <el-table-column
+                        :key="index"
+                        :prop="item.val"
+                        :label="item.name"
+                        show-overflow-tooltip
+                        align="center"
+                        min-width="160"
+                        v-for="(item, index) in headerTextLower"
+                        :sortable="item.val === 'proddate' ? 'custom' : null"  :sort-orders="['descending','ascending']"
+                    ></el-table-column>
+                </el-table>
+                <el-table
+                    :row-style="{ height: '0px' }"
+                    :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                    :data="dowload"
+                    height="100%"
+                    id="zdycx"
+                    v-show="false"
+                    header-cell-class-name="table_header"
+                    :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                    style="margin: 20px 0; height: calc(100% - 125px)"
+                    :default-sort="{ prop: 'date', order: 'descending' }"
+                >
+                    <el-table-column
+                        :key="index"
+                        :prop="item.val"
+                        :label="item.name"
+                        min-width="160"
+                        v-for="(item, index) in headerTextLower"
                     >
-                        <el-table-column prop="type" label="关系" width="110">
-                            <template slot-scope="scope">
-                                <el-select v-model="scope.row.type" size="small">
-                                    <el-option label="且" value="AND"/>
-                                    <el-option label="或" value="OR"/>
-                                </el-select>
-                            </template>
-                        </el-table-column>
+                    </el-table-column>
+                </el-table>
+                <pagination
+                    v-if="pageTotal"
+                    :pageSizes="[15, 20, 40, 100]"
+                    :total="pageTotal"
+                    :page.sync="page"
+                    :limit.sync="pageSize"
+                    @pagination="pagination"
+                />
+            </page-panel>
+            <el-dialog title="查询" :visible.sync="dialogVisible" width="720px" :close-on-click-modal="false">
+                <el-button class="commonBtn" @click="addRow">添加</el-button>
+                <el-table
+                    :row-style="{ height: '0px' }"
+                    :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+                    :data="tableRow"
+                    height="300px"
+                    header-cell-class-name="table_header"
+                    :cell-style="{ padding: '6px', 'text-align': 'center' }"
+                    style="width: 700px; margin: 20px 0"
+                    :default-sort="{ prop: 'date', order: 'descending' }"
+                >
+                    <el-table-column prop="type" label="关系" width="110">
+                        <template slot-scope="scope">
+                            <el-select v-model="scope.row.type" size="small">
+                                <el-option label="且" value="AND"/>
+                                <el-option label="或" value="OR"/>
+                            </el-select>
+                        </template>
+                    </el-table-column>
 
-                        <el-table-column prop="name" label="指标" width="170">
-                            <template slot-scope="scope">
-                                <el-select v-model="scope.row.name" size="small">
-                                    <el-option :key="index" :label="item.name" :value="item.val"
-                                               v-for="(item,index) in headerText"/>
-                                </el-select>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="model" label="条件" width="110">
-                            <template slot-scope="scope">
-                                <el-select v-model="scope.row.model" size="small">
-                                    <el-option label=">" value="gt"/>
-                                    <el-option label="<" value="lt"/>
-                                    <el-option label=">=" value="gteq"/>
-                                    <el-option label="<=" value="lteq"/>
-                                </el-select>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="val" label="值" width="130">
-                            <template slot-scope="scope">
-                                <el-input v-model="scope.row.val" size="smaller"/>
-                            </template>
-                        </el-table-column>
-                        <el-table-column prop="val" label="操作" width="130">
-                            <template slot-scope="scope">
-                                <el-button class="commonBtn" @click="deleteRow(scope)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
+                    <el-table-column prop="name" label="指标" width="170">
+                        <template slot-scope="scope">
+                            <el-select v-model="scope.row.name" size="small">
+                                <el-option :key="index" :label="item.name" :value="item.val"
+                                           v-for="(item,index) in headerText"/>
+                            </el-select>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="model" label="条件" width="110">
+                        <template slot-scope="scope">
+                            <el-select v-model="scope.row.model" size="small">
+                                <el-option label=">" value="gt"/>
+                                <el-option label="<" value="lt"/>
+                                <el-option label=">=" value="gteq"/>
+                                <el-option label="<=" value="lteq"/>
+                            </el-select>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="val" label="值" width="130">
+                        <template slot-scope="scope">
+                            <el-input v-model="scope.row.val" size="smaller"/>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="val" label="操作" width="130">
+                        <template slot-scope="scope">
+                            <el-button class="commonBtn" @click="deleteRow(scope)">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
 
-                    <span slot="footer" class="dialog-footer">
+                <span slot="footer" class="dialog-footer">
         <el-button class="cancelBtn" @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirm">确 定</el-button>
+        <el-button type="primary" @click="confirm(true)">确 定</el-button>
       </span>
-                </el-dialog>
-            </div>
+            </el-dialog>
         </div>
+    </div>
 </template>
 
 <script>
@@ -367,6 +361,8 @@ export default {
     },
     data() {
         return {
+            rule:'',
+            sortArray:[],
             // 主数据树结构默认选中的值
             oldplaid:[],
             defaultCheckedKeys: [],
@@ -446,7 +442,6 @@ export default {
             tableRow: [],
             headerText: [], //生成标题数据
             headerTextLower: [],
-            order:'',
         };
     },
     computed: {},
@@ -573,151 +568,94 @@ export default {
     },
     created() {
     },
-    methods: {
-        sortchange(row){
-            if(row.order == 'ascending'){
-                this.sorttable('asc')
-                this.order = 'ascending'
-            }else if (row.order == 'descending'){
-                this.sorttable('desc')
-                this.order = 'ascending'
-            }else{
-                if(this.order.indexOf('asc') != -1 ){
-                    this.sorttable('asc')
-                    this.order = 'ascending'
-                    row.order='ascending'
-                }else{
-                    this.sorttable('desc')
-                    this.order = 'descending'
-                    row.order='descending'
+    methods: {        
+        // 保留所有排序过的箭头样式
+        handleHeaderCellClass({ row, column, rowIndex, columnIndex }) {
+            const sortArray = this.sortArray;
+            for (let i = 0; i < sortArray.length; i++) {
+                if (column.property === sortArray[i].name) {
+                    column.order = sortArray[i].rule;
                 }
-                row.column.order = row.order
             }
-            
         },
-        sorttable(sort) {
-            let sqlStrAnd = "",
-                sqlStrOr = "";
-            this.page = 1
-            let flag = true;
-            this.tableRow.forEach((item) => {
-                if (item.type && item.name && item.model && item.val) {
-                    if (item.type == "AND") {
-                        sqlStrAnd += `${item.type} ${item.name} ${item.model} ${item.val} `;
-                    } else {
-                        sqlStrOr += `${item.type} ${item.name} ${item.model} ${item.val} `;
+        handleSortChange({ column, prop, order }) {
+            const sortArray = this.sortArray;
+            if (order) {
+                // 参与排序
+                let flagIsHave = false;
+                for (let i = 0; i < sortArray.length; i++) {
+                    if (sortArray[i].name === prop) {
+                        sortArray[i].rule = order;
+                        flagIsHave = true;
                     }
-                } else {
-                    flag = false;
                 }
-            });
-            let sqlObj = [];
-            this.tableRow.forEach((item) => {
-                if (item.type && item.name && item.model && item.val) {
-                    sqlObj.push({
-                        link: item.type,
-                        index: item.name,
-                        condition: item.model,
-                        value: item.val,
+                if (!flagIsHave) {
+                    sortArray.push({
+                        name: prop,
+                        rule: order,
                     });
                 }
-            });
-            if (!flag) {
-                this.$message.error("请填写完整查询条件！");
-                return;
-            }
-            let sqlStr = sqlStrAnd + sqlStrOr;
-            if (sqlStrOr) {
-                sqlStr = sqlStr.slice(0, sqlStr.lastIndexOf("AND")) + "( " + sqlStr.slice(sqlStr.lastIndexOf("AND")) + ")";
             } else {
-                sqlStr = sqlStrAnd;
-            }
-            let condList = this.stateValue.concat(
-                this.productValue,
-                this.totalValue,
-                this.injectValue,
-                this.managerValue,
-                this.storeValue,
-            );
-            let condListFormat = [];
-            condList.forEach((item) => {
-                condListFormat.push(item.toLowerCase().replace(/_/g, ""));
-            });
-            let params = {
-                condList: condListFormat, //字段名字
-                // sqlSent:sqlStr,//拼接sql
-                sqlSent: sqlObj, //拼接sql
-                targetType: this.activeTabIndex, //目标类型 井：1  油田 ：2
-                dataType: this.activeTabIndexData, //数据类型 （井口指标，计量指标等）
-                timeType: this.activeTabIndexDate, //时间类型 1 年 2月 3 日
-                startTime: this.activeTabIndexDate != 1 ? this.selectDate[0] : this.selectDate, //开始时间
-                endTime: this.selectDate[1], //结束时间
-                wellIdList:this.wellId,
-                dataId: null,//若目标类型为2油田传ogfId,若为井传wellId
-                platformIdList:this.platformId,
-                ogfId:this.ogfId,
-                pageNum: 1,//分页页码
-                pageSize: this.pageSize,//每页页数
-                sortRule:sort
-            };
-            this.params = params;
-            this.queryData = [];
-            queryCustomQueryList(params).then((res) => {
-                let dataArray =  res.data.data.rows;
-                dataArray.forEach((data)=>{
-                    for (var key in data) {
-                        if (key == 'monthprodduration' || key == 'yearprodduration'
-                            || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily'|| key == 'daynumberwellsopenedper'||
-                            key == 'daytotalnumberwellsper'|| key == 'numberdailyinjectionwellsopened'|| key == 'totaldailyinjectionwells'|| key == 'dailymeasurewells'
-                            || key == 'monthlycumulcount'|| key == 'yearcumulcount') {
-                            if (data[key] === null || data[key] === '') {
-                                continue;
-                            }
-                            data[key] = parseFloat(data[key]).toFixed(0);
-                        }else if(key == 'monthlyaccumwaterprod' || key == 'monthlycumufluidprod'|| key == 'monthlycumugasprod'|| key == 'monthlycumuoilprod'
-                            || key == 'yearaccumwaterprod'  || key == 'yearcumufluidprod' || key == 'yearcumugasprod' || key == 'yearcumuoilprod'
-                            || key == 'monthlycumulativeinjectionvolume'
-                            || key == 'yearcumulativeinjectionvolume' || key == 'yearcumulwaterinjectamount' || key == 'monthlycumulwaterinjectamount'
-                            || key == 'monthlycumunetprod'|| key == 'monthlyveprod'
-                        ){
-                            data[key] = parseFloat(data[key]/10000).toFixed(4);
-                        }
+                // 不参与排序
+                let orderIndex = 0;
+                for (let i = 0; i < sortArray.length; i++) {
+                    if (sortArray[i].name === prop) {
+                        orderIndex = i;
                     }
-                })
-                this.queryData = dataArray
-                this.pageTotal = res.data.data.total;
-            });
+                }
+                sortArray.splice(orderIndex, 1);
+            }
+
+            this.sortArray = sortArray;
+            this.confirm(true);
+            
         },
-       
-       async changetype(val) {
+        getSelectItems(selectList, selectData) {
+            // let ogfId = selectList.ogfId;
+            // let wellIds = selectList.wellIds;
+            //
+            // let ogfIdOld = this.ogfId;
+            // let wellIdsOld = this.wellId;
+            //
+            // if (ogfId != ogfIdOld) {
+            //     this.queryData.ogfId = ogfId;
+            //     this.choicewell(ogfId);
+            // }else if (wellIds != wellIdsOld) {
+            //     this.queryData.wellId = wellIds;
+            //     this.changewell(wellIds);
+            // }
+            // let ttt=this.$refs.treeSelectionAll.deptOptions;
+        },
+
+        async changetype(val) {
             if (val == 1) {
                 let ogfId = "3FC9A818F5BC43B88270DB80BBB3018F";
                 const request = {
                     ogfId,
                 };
-              await  QueryPlatformDetail(ogfId).then((res)=>{
+                await  QueryPlatformDetail(ogfId).then((res)=>{
                     this.plalist = res.data.dataW
                 })
                 await  QueryWellDetail(request).then((res) => {
-                        this.wellData = res.data.data;
-                        this.key++
+                    this.wellData = res.data.data;
+                    this.key++
                 });
             } else {
-                
+
             }
         },
-       async choicewell(val) {
-           this.platformId = ''
-           this.wellId = []
-           await  QueryPlatformDetail({ogfId:this.ogfId}).then((res)=>{
-               this.plalist = res.data.data
-           })
-           await QueryWellDetail({ogfId: this.ogfId,platformId: this.platformId}).then((res) => {
-               if (res.data.code == 200) {
-                   this.wellData = res.data.data;
-                   this.key++
-               }
-           });
+        async choicewell(val) {
+            this.platformId = ''
+            this.wellId = []
+            await  QueryPlatformDetail({ogfId:this.ogfId}).then((res)=>{
+                this.plalist = res.data.data
+            })
+            await QueryWellDetail({ogfId: this.ogfId,platformId: this.platformId}).then((res) => {
+                if (res.data.code == 200) {
+                    this.wellData = res.data.data;
+                    this.key++
+                }
+            });
         },
         onPlatfromChange(val) {
             this.wellData = []
@@ -730,20 +668,20 @@ export default {
                 });
             })
         },
-       async initData() {
+        async initData() {
             //查询条件
             let params = {
                 searchKeys: [this.$store.getters["user/userDetail"].user.userName],
             }
-           await userListByUserNames(params).then((res) => {
+            await userListByUserNames(params).then((res) => {
                 this.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
-               
+
             })
-           await QueryOgfDetail({operationZoneId: this.orgId}).then(res => {
-               if (res.data.code == 200) {
-                   this.oilFields = res.data.data
-               }
-           })
+            await QueryOgfDetail({operationZoneId: this.orgId}).then(res => {
+                if (res.data.code == 200) {
+                    this.oilFields = res.data.data
+                }
+            })
             await  QueryPlatformDetail({ogfId:this.ogfId}).then((res)=>{
                 this.plalist = res.data.data
             })
@@ -1185,10 +1123,11 @@ export default {
                     });
                 });
                 //添加固定的两个字段 井名 生产时间
+                this.headerTextLower.unshift({name: "井名", val: "name"}, {name:this.activeTabIndexDate==3? `生产时间\n(yyyy-mm-dd)`: this.activeTabIndexDate==2? `生产时间\n(yyyy-mm)`:`生产时间\n(yyyy)` , val: "proddate"});
                 this.tableData = tableArr;
             }
         },
-        confirm() {
+        confirm(activeEchart) {
             let sqlStrAnd = "",
                 sqlStrOr = "";
             this.page = 1
@@ -1237,7 +1176,7 @@ export default {
                 condListFormat.push(item.toLowerCase().replace(/_/g, ""));
             });
             this.dialogVisible = false;
-            this.activeEchart = !this.activeEchart;
+            this.activeEchart = activeEchart;
             let params = {
                 condList: condListFormat, //字段名字
                 // sqlSent:sqlStr,//拼接sql
@@ -1253,6 +1192,7 @@ export default {
                 ogfId:this.ogfId,
                 pageNum: 1,//分页页码
                 pageSize: this.pageSize,//每页页数
+                sortRule: this.sortArray[0]?.rule === 'descending' ? 'desc' :'asc' //时间排序规则
             };
             this.params = params;
             this.queryData = [];
@@ -1260,6 +1200,10 @@ export default {
                 let dataArray =  res.data.data.rows;
                 dataArray.forEach((data)=>{
                     for (var key in data) {
+                        if (data[key] ===undefined || data[key]===null ||data[key] ==='' ) {
+                            data[key]='-'
+                            continue;
+                        }
                         if (key == 'monthprodduration' || key == 'yearprodduration'
                             || key == 'calculdate'|| key == 'monthlyproddays'|| key == 'yearcumuproddaily'|| key == 'daynumberwellsopenedper'||
                             key == 'daytotalnumberwellsper'|| key == 'numberdailyinjectionwellsopened'|| key == 'totaldailyinjectionwells'|| key == 'dailymeasurewells'
@@ -1335,6 +1279,7 @@ export default {
                 pageNum: 1,//分页页码
                 pageSize: 10000,//暂用此下载方法
             };
+            debugger
             this.params = params;
             this.dowload = [];
             queryCustomQueryList(params).then((res) => {
