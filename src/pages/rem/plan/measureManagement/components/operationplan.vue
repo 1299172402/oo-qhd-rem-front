@@ -68,8 +68,9 @@
                 header-cell-class-name="table_header"
                 :cell-style="{ 'text-align': 'center', padding: '2px' }"
                 style="width: 100%"
-                @sort-change="sortchange"
+                @sort-change="handleSortChange"
                 :sort-orders="['descending','ascending']"
+                :header-cell-class-name="handleHeaderCellClass"
                 height="calc(100% - 90px)"
             >
                 <el-table-column label="日期" sortable="custom"  :sort-orders="['descending','ascending']" prop="theDate" align="center" min-width="130px" >
@@ -220,7 +221,7 @@ export default {
             pageSize: 10,
             datesort:'',
             plasort:'',
-            sortarr:[],
+            sortArray:[],
             // 查询参数
         };
     },
@@ -255,64 +256,48 @@ export default {
         show(data) {
             this.getList()
         },
-        nonempty(row){
-            if(row.prop=='theDate'){
-                if(row.order == 'ascending'){
-                    this.datesort = 'ascending'
-                }else if (row.order == 'descending'){
-                    this.datesort = 'ascending'
-                }else{
-                    if(this.datesort.indexOf('asc') != -1 ){
-                        this.datesort = 'ascending'
-                        row.order='ascending'
-                    }else{
-                        this.datesort = 'descending'
-                        row.order='descending'
-                    }
-                    row.column.order = row.order
-                }
-            }else{
-                if(row.order == 'ascending'){
-                    this.plasort = 'ascending'
-                }else if (row.order == 'descending'){
-                    this.plasort = 'ascending'
-                }else{
-                    if(this.plasort.indexOf('asc') != -1 ){
-                        this.plasort = 'ascending'
-                        row.order='ascending'
-                    }else{
-                        this.plasort = 'descending'
-                        row.order='descending'
-                    }
-                    row.column.order = row.order
+        // 保留所有排序过的箭头样式
+        handleHeaderCellClass({ row, column, rowIndex, columnIndex }) {
+            const sortArray = this.sortArray;
+            for (let i = 0; i < sortArray.length; i++) {
+                if (column.property === sortArray[i].name) {
+                    column.order = sortArray[i].rule;
                 }
             }
         },
-        sortchange(sort){
-                if(this.sortarr.length ==0){
-                    let dateobj = {}
-                    dateobj[sort.prop] = sort.order
-                    this.sortarr = [dateobj]
-                    this.retrieval()
-                    this.nonempty(sort)
-                }else{
-                   this.nonempty(sort)
-                  let newlist =  this.sortarr.some((item)=>{
-                        return Object.keys(item)[0] == sort.prop
-                    })
-                   if(newlist==true){
-                       this.sortarr.forEach((item,index)=>{
-                           if(Object.keys(item)[0] == sort.prop){
-                             this.$set(this.sortarr,index,{[sort.prop]:sort.order})
-                           }
-                       })
-                   }else{
-                       let dateobj = {}
-                       dateobj[sort.prop] = sort.order
-                       this.sortarr.push(dateobj)
-                   }
-                    this.retrieval()
+        
+        // 收集排序字段，并发送后端
+        // 根据点击排序箭头的状态（即order），添加或删除排序字段
+        handleSortChange({ column, prop, order }) {
+            const sortArray = this.sortArray;
+            if (order) {
+                // 参与排序
+                let flagIsHave = false;
+                for (let i = 0; i < sortArray.length; i++) {
+                    if (sortArray[i].name === prop) {
+                        sortArray[i].rule = order;
+                        flagIsHave = true;
+                    }
                 }
+                if (!flagIsHave) {
+                    sortArray.push({
+                        name: prop,
+                        rule: order,
+                    });
+                }
+            } else {
+                // 不参与排序
+                let orderIndex = 0;
+                for (let i = 0; i < sortArray.length; i++) {
+                    if (sortArray[i].name === prop) {
+                        orderIndex = i;
+                    }
+                }
+                sortArray.splice(orderIndex, 1);
+            }
+            
+            this.sortArray = sortArray;
+            this.retrieval();
         },
         //平台下拉-change
         onPlatfromChange(val) {
@@ -339,7 +324,7 @@ export default {
                 yearTime: this.queryParams.yeartime,
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
-                sortRules:this.sortarr
+                sortRules:this.sortArray
             }
             // debugger
             getOnSiteWork(data).then((res) => {
@@ -359,7 +344,7 @@ export default {
                 measureTypeCode: this.queryParams.measureTypeCode,
                 yearTime: this.queryParams.yeartime,
                 pageNum: this.pageNum,
-                pageSize: this.pageSize
+                pageSize: this.pageSize,
             }
             onSiteWorkDownloadFile(data).then((res) => {
                 const aBlob = new Blob([res]);
