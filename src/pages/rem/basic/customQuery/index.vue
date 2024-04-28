@@ -1229,6 +1229,7 @@ export default {
         downexcel() {
             let sqlStrAnd = "",
                 sqlStrOr = "";
+            let flag = true;
             this.tableRow.forEach((item) => {
                 if (item.type && item.name && item.model && item.val) {
                     if (item.type == "AND") {
@@ -1236,6 +1237,8 @@ export default {
                     } else {
                         sqlStrOr += `${item.type} ${item.name} ${item.model} ${item.val} `;
                     }
+                } else {
+                    flag = false;
                 }
             });
             let sqlObj = [];
@@ -1275,13 +1278,15 @@ export default {
                 timeType: this.activeTabIndexDate, //时间类型 1 年 2月 3 日
                 startTime: this.activeTabIndexDate != 1 ? this.selectDate[0] : this.selectDate, //开始时间
                 endTime: this.selectDate[1], //结束时间
-                dataId: this.activeTabIndex == 2 ? this.ogfId : this.wellId,//若目标类型为2油田传ogfId,若为井传wellId
+                wellIdList:this.wellId,
+                dataId: null,//若目标类型为2油田传ogfId,若为井传wellId
+                platformIdList:this.platformId,
+                ogfId:this.ogfId,
                 pageNum: 1,//分页页码
                 pageSize: 10000,//暂用此下载方法
+                sortRule: this.sortArray[0]?.rule === 'descending' ? 'desc' :'asc' //时间排序规则
             };
-            debugger
             this.params = params;
-            this.dowload = [];
             queryCustomQueryList(params).then((res) => {
                 this.dowload = res.data.data.rows;
             }).then(() => {
