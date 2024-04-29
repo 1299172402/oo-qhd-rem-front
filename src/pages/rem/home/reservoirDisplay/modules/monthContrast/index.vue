@@ -9,17 +9,22 @@
         >
             <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('AnnualPlan')">详情</el-button>
             <el-button type="primary" class="buttonActive_primary detailLinkBtn" style="right:110px"  @click="downEcharts">下载</el-button>
+            <el-select v-model="proPlanTypeCode" @change="choicecode" style="position: absolute;top:6%;z-index: 10">
+                <el-option
+                    v-for="(item, index) in codelist"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                ></el-option>
+            </el-select>
             <Echart ref="echartChart" :chart-data="histogram" style="height: 100%"></Echart>
         </info-window>
     </div>
 </template>
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import verticalSwitchButton from "@/components/intelligentOilfield/vertical-switch-button/index.vue";
 import * as echarts from "echarts/core";
-import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
-import {CanvasRenderer} from "echarts/renderers";
-import {monthlyProductionComparison} from "@/api/rem/reservoirbillboards";
+import {monthlyProductionComparison,getAllProductionPlanTypes,getProductionDataByPlanType} from "@/api/rem/reservoirbillboards";
 export default {
     props: ["infodata"],
     components: {
@@ -149,11 +154,17 @@ export default {
                     },
                 ],
             },
+            proPlanTypeCode:'',
+            codelist:[]
         };
 
     },
-    mounted() {
-        this.getinfo()
+   async mounted() {
+       await getAllProductionPlanTypes().then((res)=>{
+            this.codelist = res.data.data
+            this.proPlanTypeCode = this.codelist[0].value
+        })
+     await   this.getinfo();
     },
     methods: {
         linkroute(rname) {
@@ -162,8 +173,16 @@ export default {
         downEcharts(){
             this.$refs.echartChart.chartDownLoad( '油田月度产量对比');
         },
+        choicecode(){
+            getProductionDataByPlanType({'ogfId':'3FC9A818F5BC43B88270DB80BBB3018F','proPlanTypeCode':this.proPlanTypeCode}).then(res => {
+                let data = res.data.data
+                this.histogram.series[0].data = data.map(item => {
+                    return Number(item.allocProdMonthly / 10000).toFixed(4)
+                })
+            })
+        },
         getinfo() {
-            monthlyProductionComparison({'ogfId':'3FC9A818F5BC43B88270DB80BBB3018F'}).then(res => {
+            monthlyProductionComparison({'ogfId':'3FC9A818F5BC43B88270DB80BBB3018F','proPlanTypeCode':this.proPlanTypeCode}).then(res => {
                 this.histogram.yAxis[0].min = null
                 this.histogram.yAxis[0].max = null
                 this.histogram.series[0].data = res.data.data.monthlyPlannedOutputVo.map(item => {
