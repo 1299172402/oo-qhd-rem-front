@@ -11,11 +11,17 @@ export function getYieldFluctuation(data) {
       }
   });
 }
-export function monthlyProductionComparison({ date,ogfId } = {}) {
+export function monthlyProductionComparison({ proPlanTypeCode,ogfId } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/monthlyProductionComparison?date=${ date || "" }&ogfId=${ ogfId || "" }`,
+    url: `${baseUrl}/reservoirBillboards/monthlyProductionComparison?proPlanTypeCode=${ proPlanTypeCode || "" }&ogfId=${ ogfId || "" }`,
     method: "get",
   });
+}
+export function getProductionDataByPlanType({ proPlanTypeCode,ogfId } = {}) {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/getProductionDataByPlanType?proPlanTypeCode=${ proPlanTypeCode || "" }&ogfId=${ ogfId || "" }`,
+        method: "get",
+    });
 }
 export function productionMetricsOverview({ogfId,orgId, date } = {}) {
   return request({
@@ -140,5 +146,11 @@ export function getOilVideoFromMinIO() {
         url: `${baseUrl}/reservoirBillboards/getOilVideoFromMinIO`,
         method: "get",
         responseType: "blob",
+    });
+}
+export function getAllProductionPlanTypes() {
+    return request({
+        url: `${baseUrl}/reservoirBillboards/getAllProductionPlanTypes`,
+        method: "get",
     });
 }
