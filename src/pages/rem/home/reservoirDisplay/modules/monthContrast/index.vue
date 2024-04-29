@@ -9,7 +9,7 @@
         >
             <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('AnnualPlan')">详情</el-button>
             <el-button type="primary" class="buttonActive_primary detailLinkBtn" style="right:110px"  @click="downEcharts">下载</el-button>
-            <el-select v-model="proPlanTypeCode" @change="choicecode" style="position: absolute;top:6%;z-index: 10">
+            <el-select v-model="proPlanTypeCode" @change="choicecode" style="position: absolute;top:8%;z-index: 10">
                 <el-option
                     v-for="(item, index) in codelist"
                     :key="item.value"
@@ -58,7 +58,7 @@ export default {
                     type: "inside",
                 },
                 grid: {
-                    top: '10%',
+                    top: '15%',
                     left: '5%',
                     right: 10,
                     bottom: 50,
