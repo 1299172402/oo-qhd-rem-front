@@ -243,7 +243,7 @@
                         align="center"
                         min-width="160"
                         v-for="(item, index) in headerTextLower"
-                        :sortable="item.val === 'proddate' ? 'custom' : null"  :sort-orders="['descending','ascending']"
+                        :sortable="item.val === 'proddate'||item.val === 'name' ? 'custom' : null"  :sort-orders="['descending','ascending']"
                     ></el-table-column>
                 </el-table>
                 <el-table
@@ -1192,7 +1192,8 @@ export default {
                 ogfId:this.ogfId,
                 pageNum: 1,//分页页码
                 pageSize: this.pageSize,//每页页数
-                sortRule: this.sortArray[0]?.rule === 'descending' ? 'desc' :'asc' //时间排序规则
+                //sortRule: this.sortArray[0]?.rule === 'descending' ? 'desc' :'asc' //时间排序规则
+                sortRules: this.sortArray //时间排序规则
             };
             this.params = params;
             this.queryData = [];
