@@ -370,6 +370,27 @@ export default {
         if (lineTitle != null && lineTitle != "") {
           // 'QHD32-6', 'QHD33-1', 'NB35-2', 'QHD33-1S', 'CFD6-4', 'BZ3-2'
           // 'QHD32-6', 'NB35-2' , 'QHD33-1S','QHD33-1'
+          console.log(123456,item,objData,objData[item]["QHD32-6"]["jiChu"],(
+              parseFloat(objData[item]["QHD32-6"]["jiChu"] || 0) +
+              parseFloat(objData[item]["QHD33-1"]["jiChu"] || 0) +
+              parseFloat(objData[item]["NB35-2"]["jiChu"] || 0) +
+              parseFloat(objData[item]["QHD33-1S"]["jiChu"] || 0) +
+              parseFloat(objData[item]["CFD6-4"]["jiChu"] || 0) +
+              parseFloat(objData[item]["BZ3-2"]["jiChu"] || 0) +
+              parseFloat(objData[item]["QHD32-6"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["QHD33-1"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["NB35-2"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["QHD33-1S"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["CFD6-4"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["BZ3-2"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["QHD32-6"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["QHD33-1"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["NB35-2"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["QHD33-1S"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["CFD6-4"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["BZ3-2"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["QHD33-1"]["kaiFa"] || 0)
+            ))
           let lineObj = {
             type: lineTitle,
             code: item,
@@ -399,25 +420,25 @@ export default {
             ).toFixed(2),
             zygskf: objData[item]["QHD33-1"]["kaiFa"] ? parseFloat(objData[item]["QHD33-1"]["kaiFa"].toFixed(2)) : "",
             zygshj: (
-              parseFloat(objData[item]["QHD32-6"]["jiChu"]) +
-              parseFloat(objData[item]["QHD33-1"]["jiChu"]) +
-              parseFloat(objData[item]["NB35-2"]["jiChu"]) +
-              parseFloat(objData[item]["QHD33-1S"]["jiChu"]) +
-              parseFloat(objData[item]["CFD6-4"]["jiChu"]) +
-              parseFloat(objData[item]["BZ3-2"]["jiChu"]) +
-              parseFloat(objData[item]["QHD32-6"]["cuoShi"]) +
-              parseFloat(objData[item]["QHD33-1"]["cuoShi"]) +
-              parseFloat(objData[item]["NB35-2"]["cuoShi"]) +
-              parseFloat(objData[item]["QHD33-1S"]["cuoShi"]) +
-              parseFloat(objData[item]["CFD6-4"]["cuoShi"]) +
-              parseFloat(objData[item]["BZ3-2"]["cuoShi"]) +
-              parseFloat(objData[item]["QHD32-6"]["tiaoZheng"]) +
-              parseFloat(objData[item]["QHD33-1"]["tiaoZheng"]) +
-              parseFloat(objData[item]["NB35-2"]["tiaoZheng"]) +
-              parseFloat(objData[item]["QHD33-1S"]["tiaoZheng"]) +
-              parseFloat(objData[item]["CFD6-4"]["tiaoZheng"]) +
-              parseFloat(objData[item]["BZ3-2"]["tiaoZheng"]) +
-              parseFloat(objData[item]["QHD33-1"]["kaiFa"])
+              parseFloat(objData[item]["QHD32-6"]["jiChu"] || 0) +
+              parseFloat(objData[item]["QHD33-1"]["jiChu"] || 0) +
+              parseFloat(objData[item]["NB35-2"]["jiChu"] || 0) +
+              parseFloat(objData[item]["QHD33-1S"]["jiChu"] || 0) +
+              parseFloat(objData[item]["CFD6-4"]["jiChu"] || 0) +
+              parseFloat(objData[item]["BZ3-2"]["jiChu"] || 0) +
+              parseFloat(objData[item]["QHD32-6"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["QHD33-1"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["NB35-2"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["QHD33-1S"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["CFD6-4"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["BZ3-2"]["cuoShi"] || 0) +
+              parseFloat(objData[item]["QHD32-6"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["QHD33-1"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["NB35-2"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["QHD33-1S"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["CFD6-4"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["BZ3-2"]["tiaoZheng"] || 0) +
+              parseFloat(objData[item]["QHD33-1"]["kaiFa"] || 0)
             ).toFixed(2),
             qhd326jc: objData[item]["QHD32-6"]["jiChu"] ? objData[item]["QHD32-6"]["jiChu"] : "",
             qhd326cs: objData[item]["QHD32-6"]["cuoShi"] ? objData[item]["QHD32-6"]["cuoShi"] : "",

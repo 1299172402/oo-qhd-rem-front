@@ -47,7 +47,7 @@ export default {
                     itemWidth: 12,
                     itemHeight: 10,
                     itemGap: 40,
-                    data: ["月度计划产量", "月度实际产量"],
+                    data: ["分公司考核-月度计划产量", "分公司考核-月度实际产量"],
                     textStyle: {
                         color: "#a9a8a8",
                         fontSize: 14,
@@ -117,7 +117,7 @@ export default {
                 ],
                 series: [
                     {
-                        name: "月度计划产量",
+                        name: "分公司考核-月度计划产量",
                         type: "bar",
                         barWidth: "12",
                         data: [0],
@@ -135,7 +135,7 @@ export default {
                         },
                     },
                     {
-                        name: "月度实际产量",
+                        name: "分公司考核-月度实际产量",
                         type: "bar",
                         barWidth: "12",
                         data: [0],
@@ -179,6 +179,22 @@ export default {
                 this.histogram.series[0].data = data.map(item => {
                     return Number(item.allocProdMonthly / 10000).toFixed(4)
                 })
+              let text = ''
+                  this.codelist.forEach((item)=>{
+                if(this.proPlanTypeCode ==item.value){
+                  text =  item.label
+                }
+              })
+              this.histogram.legend.data = [text+'-月度计划产量',text+'-月度实际产量']
+              this.histogram.series[0].name = text+'-月度计划产量',
+                  this.histogram.series[1].name = text+'-月度实际产量',   
+              this.histogram.legend  = abc
+              // console.log(this.histogram.legend)
+             
+              // var myChart = echarts.init(this.$refs.echartChart);
+              // // console.log(this.histogram.legend)
+              // myChart.resize()
+              
             })
         },
         getinfo() {
