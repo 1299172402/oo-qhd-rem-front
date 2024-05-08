@@ -332,6 +332,18 @@
                 end-placeholder="结束日期"
                 value-format="yyyy-MM-dd"
               ></el-date-picker>
+              <el-select
+                v-model="allocOrCalculate"
+                placeholder="请选择"
+                style="width: 150px; margin-left: 20px"
+              >
+                <el-option
+                  :label="item.name"
+                  :value="item.code"
+                  v-for="(item, index) in selectAllocOrCalculate"
+                  :key="index"
+                ></el-option>
+              </el-select>
               <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts"
                 >搜索</el-button
               >
@@ -951,6 +963,11 @@ export default {
       pageTotal2: 0,
       // 选择时间
       selectData: [],
+      selectAllocOrCalculate: [
+        { name: "分配", code: "1" },
+        { name: "计量", code: "2" },
+      ],
+      allocOrCalculate: "1",
       // 选择实时时间
       selectRealData: [],
       // 油井折线图内容
@@ -2425,6 +2442,8 @@ export default {
         ogfId: this.selectOilField,
         platformId: this.selectPlatform,
         wellId: this.selectWellId,
+        allocOrCalculate: this.allocOrCalculate,
+        wellType: "PRO",
       };
       produceData(request).then((res) => {
         const seriesData = [];
@@ -2531,6 +2550,7 @@ export default {
         ogfId: this.selectOilField,
         platformId: this.selectPlatform,
         wellId: this.selectWellId,
+        wellType: "INJ",
       };
       produceData(request).then((res) => {
         const seriesData = [];
