@@ -638,19 +638,15 @@ export default {
     },
     //点击二级菜单
     tabsClick(name) {
-      if (name == "stratificationTesting") {
-        //分层调配
-        let url = `https://ipm.tjioms-dev.tjltd.cnooc/#/waterflood/merge`;
-        window.open(url, "_blank");
-      } else if (name == "injectivityIndex") {
-          let baseUrl = ''
-          if (window.location.origin.includes('test')) {
-              baseUrl = 'tjioms-test.tjltd.cnooc'
-          } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
-              baseUrl = 'tjioms-dev.tjltd.cnooc'
-          }else if (window.location.origin.includes('tpro')) {
-              baseUrl = 'tjioms-tpro.tjltd.cnooc'
-          }
+      if (name == "injectivityIndex" || name == "stratificationTesting") {
+        let baseUrl = ''
+        if (window.location.origin.includes('test')) {
+          baseUrl = 'tjioms-test.tjltd.cnooc'
+        } else if (window.location.origin.includes('dev') || window.location.origin.includes('808')) {
+          baseUrl = 'tjioms-dev.tjltd.cnooc'
+        } else if (window.location.origin.includes('tpro')) {
+          baseUrl = 'tjioms-tpro.tjltd.cnooc'
+        }
         window.open(`https://ipm.${baseUrl}/#/waterflood/merge`, "_blank");
       } else {
         this.currentModule = name;
