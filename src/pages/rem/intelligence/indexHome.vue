@@ -639,8 +639,8 @@ export default {
             getWellGroupBlock(this.queryData).then((res) => {
                 console.log("898966")
                 console.log(res)
-                res.injRatio = res.injRatio == null ? '' : Number(res.injRatio).toFixed(1)
-                res.haveWater = res.haveWater == null ? '' : Number(res.haveWater).toFixed(1)
+                res.injRatio = res.injRatio == null ? '' : Number(res.injRatio).toFixed(2)
+                res.haveWater = res.haveWater == null ? '' : Number(res.haveWater).toFixed(2)
                 res.waterProd = res.waterProd == null ? '' : Number(res.waterProd).toFixed(4)
                 res.oilProd = res.oilProd == null ? '' : Number(res.oilProd).toFixed(4)
                 res.gasProd = res.gasProd == null ? '' : Number(res.gasProd).toFixed(4)
