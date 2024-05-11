@@ -72,6 +72,12 @@
           :label="searchForm.selectUnitOfProduction == 'm' ? '实际年累产\n(10⁴m³)' : '实际年累产\n(10⁴t)'"
           :formatter="toPrecise4"
         ></el-table-column>
+        <el-table-column
+          prop="forecast"
+          align="center"
+          :label="searchForm.selectUnitOfProduction == 'm' ? '滚动预测\n(m³)' : '滚动预测\n(t)'"
+          :formatter="toPrecise2"
+        ></el-table-column>
       </el-table>
       <!-- <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination"/> -->
       <pagination

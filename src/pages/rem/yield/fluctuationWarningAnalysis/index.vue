@@ -1503,11 +1503,13 @@ export default {
       };
       let _this = this;
       this.productAnaysisTable = [];
+      this.wellAllNum = 0;
       wellOutputWaveAnalysis(request).then((res) => {
         let xAxisData = [];
         let seriesData = [];
         if (res.data.code == 200) {
           this.productAnaysisTable = res.data.data.wellAllocDailiesAll;
+          this.wellAllNum = res.data.data.wellAllocDailiesAll&& res.data.data.wellAllocDailiesAll.length ? res.data.data.wellAllocDailiesAll.length : 0;
           //获取产油数据项
           let data = res.data.data.oilChart;
           if (res.data.data.oilChart != null) {
@@ -1528,13 +1530,12 @@ export default {
           _this.barChart.yAxis.name = "产油量变化(m³)";
           _this.unitValue = "m³";
         }
-
-        getWellOutputWaveAnalysisNum().then((res) => {
-          if (res.data.code == 200) {
-            let data = res.data.data;
-            this.wellAllNum = data;
-          }
-        });
+        // getWellOutputWaveAnalysisNum().then((res) => {
+        //   if (res.data.code == 200) {
+        //     let data = res.data.data;
+        //     this.wellAllNum = data;
+        //   }
+        // });
       });
     },
     //柱状图

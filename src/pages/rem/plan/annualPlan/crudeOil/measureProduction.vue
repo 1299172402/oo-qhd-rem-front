@@ -61,7 +61,12 @@
           :label="searchForm.selectUnitOfProduction == 'm' ? '计划产量\n(m³/d)' : '计划产量\n(t/d)'"
           :formatter="toPrecise2"
         ></el-table-column>
-        <!-- <el-table-column prop="oilprodRollForecast" align="center" label="滚动预测"></el-table-column> -->
+        <el-table-column
+          prop="oilprodRollForecast"
+          align="center"
+          :label="searchForm.selectUnitOfProduction == 'm' ? '滚动预测\n(m³)' : '滚动预测\n(t)'"
+          :formatter="toPrecise2"
+        ></el-table-column>
       </el-table>
       <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination" />
     </pagePanel>
