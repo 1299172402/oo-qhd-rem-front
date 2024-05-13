@@ -42,7 +42,6 @@
                     size="mini"
                     icon="el-icon-edit"
                     class="confirmBut"
-                    :disabled="disabledComp || !form.tableWater.length"
                     @click="modify = !modify"
                 >更改
                 </el-button>
@@ -52,7 +51,6 @@
                     :loading="saveLoad"
                     icon="el-icon-bank-card"
                     class="confirmBut"
-                    :disabled="disabledComp || !form.tableWater.length"
                     @click="preserve('form')"
                 >保存
                 </el-button>

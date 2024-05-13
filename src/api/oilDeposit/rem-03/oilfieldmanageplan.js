@@ -132,6 +132,19 @@ export function dividingTestRate(request) {
 
 /**
  * hwh
+ * 0502-08-注水指标管理-分注井测试率-有数据的最新日期
+ * @param params
+ * @returns {paramsPromise}
+ */
+export function getLatestDateDivideRate(params) {
+  return Axios({
+    url: `/rem/api/oilFieldManagePlanController/getLatestDateDivideRate`,
+    method: "get",
+    data: params,
+  });
+}
+/**
+ * hwh
  * 0502-07-注水指标管理-动态监测完成率
  * @param request
  * @returns {AxiosPromise}
