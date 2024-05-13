@@ -39,7 +39,8 @@ const GenerateRouter = {
   "SystemAccess": () => import("@/pages/statistical/components/systemAccess.vue"),
 
   // 20230925添加路由映射
-  "Density": () => import("@/pages/rem/basic/densityMaintenance/index.vue"),
+  "Density": () => import("@/pages/rem/basic/densityMaintenance/index.vue"), 
+  "ProdIntervalMaintain": () => import("@/pages/rem/basic/prodinterval/index.vue"),  
   "Reserves": () => import("@/pages/rem/basic/wellControlReserves/index.vue"),
   "CustomQuery": () => import("@/pages/rem/basic/customQuery/index.vue"),
   "WellGroup_Maintenance": () => import("@/pages/rem/basic/wellGroup_Maintenance/index.vue"),
