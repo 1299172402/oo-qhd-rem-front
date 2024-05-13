@@ -185,9 +185,9 @@ export default {
                   text =  item.label
                 }
               })
-              this.histogram.legend.data = [text+'-月度计划产量',text+'-月度实际产量']
+              this.histogram.legend.data = [text+'-月度计划产量','月度实际产量']
               this.histogram.series[0].name = text+'-月度计划产量',
-                  this.histogram.series[1].name = text+'-月度实际产量',   
+                  this.histogram.series[1].name ='月度实际产量',
               this.histogram.legend  = abc
               // console.log(this.histogram.legend)
              
