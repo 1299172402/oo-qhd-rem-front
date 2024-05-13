@@ -49,7 +49,7 @@
 
     <page-panel-new class="app-content">
       <pagePanel headerTitle="分注井测试率" style="height: 500px" show-btn>
-        <div class="g-row-flex-V" style="position: absolute; left: 20px; z-index: 99;">
+        <div class="g-row-flex-V" style="position: absolute; left: 20px; z-index: 99">
           <div style="margin-right: 20px">
             平台：
             <el-select v-model="queryParams.platFormId" clearable="" style="width: 220px">
@@ -123,7 +123,7 @@
 
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import { dividingTestRate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import { dividingTestRate, getLatestDateDivideRate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { QueryOgfDetail, QueryPlatformDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { fetchPlatforms } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { exportExcel, exportExcelFromJson } from "@/lib/exportExcel.js";
@@ -299,13 +299,15 @@ export default {
       tableData: [],
     };
   },
-  mounted() {
+  async mounted() {
+    await this.getLatestDateDivideRate();
     this.initData();
   },
   methods: {
     //重置
-    resetting() {
+    async resetting() {
       Object.assign(this.$data, this.$options.data());
+      await this.getLatestDateDivideRate();
       this.initData();
     },
     //表格序号
@@ -391,6 +393,17 @@ export default {
     doSearch() {
       //分注井测试率
       this.doDividingTestRate();
+    },
+    /**
+     * hwh
+     * 分注井测试率-有数据的最新日期
+     */
+    async getLatestDateDivideRate() {
+      await getLatestDateDivideRate().then((res) => {
+        if (res.data.code == 200) {
+          this.queryParams.year = dayjs(res.data.data).format("YYYY-MM-DD"); // 开始时间
+        }
+      });
     },
     //分注井测试率
     doDividingTestRate() {
