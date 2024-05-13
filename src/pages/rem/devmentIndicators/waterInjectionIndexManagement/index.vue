@@ -1889,9 +1889,9 @@ export default {
                   },
                 },
               };
-            } else if (item.label == "今年考核值") {
+            } else if (item.label == "今年考核值"  || item.label == "考核值") {
               series.type = "line";
-              series.symbol = "none";
+              series.symbol = "circle";
               series.symbolSize = 0;
               series.itemStyle = {
                 normal: {

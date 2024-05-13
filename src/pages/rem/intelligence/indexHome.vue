@@ -444,6 +444,9 @@ export default {
         queryBlockFeild1 () {
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
                 this.blockList = res.data.data;
+                console.log('8888888')
+                console.log(this.blockList)
+                console.log(this.queryData.ogfId)
                 for(var i=0;i<this.blockList.length;i++){          
                     if(this.blockList[i].reservoirAnalyseUnitId==='83D33B89B0DAB7DFA440BD060746883A'){
                         this.myselect=this.blockList[i].reservoirAnalyseUnitId
@@ -485,6 +488,7 @@ export default {
             getFieldListsDetail({operationZoneId:this.queryData.orgId}).then((res) => {
                 this.oilList = res.data.data;
                 var list =res.data.data;
+                
                 for(var i=0;i<list.length;i++){
                     if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
                         this.queryData.ogfId=list[i].ogfId
@@ -639,8 +643,8 @@ export default {
             getWellGroupBlock(this.queryData).then((res) => {
                 console.log("898966")
                 console.log(res)
-                res.injRatio = res.injRatio == null ? '' : Number(res.injRatio).toFixed(1)
-                res.haveWater = res.haveWater == null ? '' : Number(res.haveWater).toFixed(1)
+                res.injRatio = res.injRatio == null ? '' : Number(res.injRatio).toFixed(2)
+                res.haveWater = res.haveWater == null ? '' : Number(res.haveWater).toFixed(2)
                 res.waterProd = res.waterProd == null ? '' : Number(res.waterProd).toFixed(4)
                 res.oilProd = res.oilProd == null ? '' : Number(res.oilProd).toFixed(4)
                 res.gasProd = res.gasProd == null ? '' : Number(res.gasProd).toFixed(4)
