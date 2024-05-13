@@ -49,7 +49,11 @@
           align="center"
           :formatter="toPrecise2"
         ></el-table-column>
-        <!-- <el-table-column prop="oilprodRollForecast" :label="searchForm.selectUnitOfProduction == 'm' ? '滚动预测\n(10⁴m³)' : '滚动预测\n(10⁴t)'"></el-table-column> -->
+        <el-table-column
+          prop="oilprodRollForecast"
+          :label="searchForm.selectUnitOfProduction == 'm' ? '滚动预测\n(m³)' : '滚动预测\n(t)'"
+          :formatter="toPrecise2"
+        ></el-table-column>
       </el-table>
       <pagination v-if="total" :total="total" :page="page" :limit="pageSize" @pagination="pagination" />
     </pagePanel>

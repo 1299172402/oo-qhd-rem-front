@@ -528,7 +528,7 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "油井采液强度不合理",
+                            "name": "油井采液强度变低",
                             "children": [
                                 {
                                     "level": 2,
@@ -812,7 +812,7 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "油井采液强度不合理",
+                            "name": "油井采液强度变高",
                             "children": [
                                 {
                                     "level": 3,
@@ -1061,7 +1061,7 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "油井采液指数不合理",
+                            "name": "油井采液指数变低",
                             "children": [
                                 {
                                     "level": 2,
@@ -1347,7 +1347,7 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "油井采液指数不合理",
+                            "name": "油井采液指数变高",
                             "children": [
                                 {
                                     "level": 3,
@@ -1596,7 +1596,7 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "油井米采液指数不合理",
+                            "name": "油井米采液指数变低",
                             "children": [
                                 {
                                     "level": 2,
@@ -1882,7 +1882,7 @@ export default {
                     data: [
                         {
                             "level": 1,
-                            "name": "油井米采液指数不合理",
+                            "name": "油井米采液指数变高",
                             "children": [
                                 {
                                     "level": 3,

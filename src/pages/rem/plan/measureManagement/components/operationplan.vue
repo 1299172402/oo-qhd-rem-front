@@ -47,7 +47,7 @@
                                     placeholder="年">
                     </el-date-picker>
                 </el-form-item>
-                <el-button size="medium" type="primary" @click="retrieval" icon="el-icon-search"
+                <el-button size="medium" type="primary" @click="resetQuery();retrieval();" icon="el-icon-search"
                            style="margin-left: 10px"
                 >搜索
                 </el-button
@@ -68,17 +68,20 @@
                 header-cell-class-name="table_header"
                 :cell-style="{ 'text-align': 'center', padding: '2px' }"
                 style="width: 100%"
+                @sort-change="handleSortChange"
+                :sort-orders="['descending','ascending']"
+                :header-cell-class-name="handleHeaderCellClass"
                 height="calc(100% - 90px)"
-                :default-sort="{ prop: 'date', order: 'descending' }"
+                ref="sortTable"
             >
-                <el-table-column label="日期" prop="theDate" align="center" min-width="130px" >
+                <el-table-column label="日期" sortable="custom"  :sort-orders="['descending','ascending']" prop="theDate" align="center" min-width="130px" >
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.theDate !== null && scope.row.theDate !== ''">{{ scope.row.theDate }}</span>
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="生产平台" min-width="130px" prop="prodectionUnit" align="center">
+                <el-table-column label="生产平台" sortable="custom"  :sort-orders="['descending','ascending']" min-width="130px" prop="prodectionUnit" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.prodectionUnit !== null && scope.row.prodectionUnit !== ''">{{
@@ -87,7 +90,7 @@
                         <span v-else>-</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="修井机状态" prop="workvoerRigStatus" align="center">
+                <el-table-column label="修井机状态"  prop="workvoerRigStatus" align="center">
                     <template slot-scope="scope">
                         <span
                             v-if="scope.row.workvoerRigStatus !== null && scope.row.workvoerRigStatus !== ''">{{
@@ -217,6 +220,9 @@ export default {
             pageNum: 1,
             orgId: '',
             pageSize: 10,
+            datesort:'',
+            plasort:'',
+            sortArray:[],
             // 查询参数
         };
     },
@@ -251,6 +257,60 @@ export default {
         show(data) {
             this.getList()
         },
+        // 清除排序
+        resetQuery() {
+            // 因为无法通过element ui的api来清除排序样式，所以只能通过原生js来清除
+            this.$refs.sortTable.$el.querySelectorAll(".is-sortable").forEach((item) => {
+                // 移除table表头中的排序样式descending和ascending
+                item.classList.remove("descending");
+                item.classList.remove("ascending");
+            });
+            // 同时要清除排序字段
+            this.sortArray = [];
+        },
+        // 保留所有排序过的箭头样式
+        handleHeaderCellClass({ row, column, rowIndex, columnIndex }) {
+            const sortArray = this.sortArray;
+            for (let i = 0; i < sortArray.length; i++) {
+                if (column.property === sortArray[i].name) {
+                    column.order = sortArray[i].rule;
+                }
+            }
+        },
+        
+        // 收集排序字段，并发送后端
+        // 根据点击排序箭头的状态（即order），添加或删除排序字段
+        handleSortChange({ column, prop, order }) {
+            const sortArray = this.sortArray;
+            if (order) {
+                // 参与排序
+                let flagIsHave = false;
+                for (let i = 0; i < sortArray.length; i++) {
+                    if (sortArray[i].name === prop) {
+                        sortArray[i].rule = order;
+                        flagIsHave = true;
+                    }
+                }
+                if (!flagIsHave) {
+                    sortArray.push({
+                        name: prop,
+                        rule: order,
+                    });
+                }
+            } else {
+                // 不参与排序
+                let orderIndex = 0;
+                for (let i = 0; i < sortArray.length; i++) {
+                    if (sortArray[i].name === prop) {
+                        orderIndex = i;
+                    }
+                }
+                sortArray.splice(orderIndex, 1);
+            }
+            
+            this.sortArray = sortArray;
+            this.retrieval();
+        },
         //平台下拉-change
         onPlatfromChange(val) {
             this.queryParams.wellId = ''
@@ -275,7 +335,8 @@ export default {
                 measureTypeCode: this.queryParams.measureTypeCode,
                 yearTime: this.queryParams.yeartime,
                 pageNum: this.pageNum,
-                pageSize: this.pageSize
+                pageSize: this.pageSize,
+                sortRules:this.sortArray
             }
             // debugger
             getOnSiteWork(data).then((res) => {
@@ -295,7 +356,7 @@ export default {
                 measureTypeCode: this.queryParams.measureTypeCode,
                 yearTime: this.queryParams.yeartime,
                 pageNum: this.pageNum,
-                pageSize: this.pageSize
+                pageSize: this.pageSize,
             }
             onSiteWorkDownloadFile(data).then((res) => {
                 const aBlob = new Blob([res]);

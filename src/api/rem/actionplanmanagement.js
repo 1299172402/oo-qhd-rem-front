@@ -1,15 +1,16 @@
 import request from '@/utils/request'
 const baseUrl = process.env.NODE_ENV == "production" ? "/rem/api" : "/rem/api"
 
-export function getOnSiteWork({ ogfId, assetCode, wellId, measureTypeCode, yearTime, pageNum, pageSize } = {}) {
+export function getOnSiteWork(data) {
   return request({
-    url: `${baseUrl}/actionPlanManagement/onSiteWork?ogfId=${ ogfId || "" }&assetCode=${ assetCode || "" }&wellId=${ wellId || "" }&measureTypeCode=${ measureTypeCode || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&yearTime=${ yearTime || "" }`,
-    method: "get",
+    url: `${baseUrl}/actionPlanManagement/onSiteWork`,
+    method: "post",
+      data
   });
 }
-export function onSiteWorkDownloadFile({ ogfId, asseCode, wellId, measureTypeCode, yearTime, pageNum, pageSize } = {}) {
+export function onSiteWorkDownloadFile({ ogfId, asseCode, wellId, measureTypeCode, yearTime, pageNum, pageSize,sortRules } = {}) {
     return request({
-        url: `${baseUrl}/actionPlanManagement/onSiteWorkDownloadFile?ogfId=${ ogfId || "" }&asseCode=${ asseCode || "" }&wellId=${ wellId || "" }&measureTypeCode=${ measureTypeCode || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&yearTime=${ yearTime || "" }`,
+        url: `${baseUrl}/actionPlanManagement/onSiteWorkDownloadFile?ogfId=${ ogfId || "" }&asseCode=${ asseCode || "" }&wellId=${ wellId || "" }&measureTypeCode=${ measureTypeCode || "" }&pageNum=${ pageNum || "" }&pageSize=${ pageSize || "" }&yearTime=${ yearTime || "" }&sortRules=${ sortRules || "" }`,
         method: "get",
         responseType:'blob',
     });
