@@ -221,7 +221,8 @@ export default {
           formatter(params) {
             var relVal = params[0].name;
             params.forEach((item) => {
-              relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
+              relVal +=
+                "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2) + " %";
             });
             return relVal;
           },
