@@ -47,7 +47,7 @@ export default {
                     itemWidth: 12,
                     itemHeight: 10,
                     itemGap: 40,
-                    data: ["分公司考核-月度计划产量", "分公司考核-月度实际产量"],
+                    data: ["分公司考核-月度计划产量", "月度实际产量"],
                     textStyle: {
                         color: "#a9a8a8",
                         fontSize: 14,
@@ -135,7 +135,7 @@ export default {
                         },
                     },
                     {
-                        name: "分公司考核-月度实际产量",
+                        name: "月度实际产量",
                         type: "bar",
                         barWidth: "12",
                         data: [0],
