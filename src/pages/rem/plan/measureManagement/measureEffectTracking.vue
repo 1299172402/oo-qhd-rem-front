@@ -332,11 +332,7 @@
                 end-placeholder="结束日期"
                 value-format="yyyy-MM-dd"
               ></el-date-picker>
-              <el-select
-                v-model="allocOrCalculate"
-                placeholder="请选择"
-                style="width: 150px; margin-left: 20px"
-              >
+              <el-select v-model="allocOrCalculate" placeholder="请选择" style="width: 150px; margin-left: 20px">
                 <el-option
                   :label="item.name"
                   :value="item.code"
@@ -2210,6 +2206,7 @@ export default {
       await QueryWellDetail({
         ogfId: val,
         platformId: this.selectPlatform,
+        wellboreType: this.type == 0 ? "采油井": "注水井",
       }).then((res) => {
         if (res.data.code == 200) {
           this.wells = res.data.data;
@@ -2247,6 +2244,7 @@ export default {
       await QueryWellDetail({
         ogfId: oilFieldId,
         platformId: platformId,
+        wellboreType: this.type == 0 ? "采油井": "注水井",
       }).then((res) => {
         if (res.data.code == 200) {
           this.wells = res.data.data;

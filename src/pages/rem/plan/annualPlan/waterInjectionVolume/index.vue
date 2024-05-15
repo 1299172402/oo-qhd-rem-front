@@ -49,28 +49,28 @@
           prop="injectionDailyReal"
           header-align="center"
           align="center"
-          :label="`实际日注入量\n(m³)`"
+          :label="`实际日注入量\n(${searchForm.selectUnitOfProduction == 'm' ? 'm³':'t'})`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="injectionDailyPlan"
           header-align="center"
           align="center"
-          :label="`计划日注入量\n(m³)`"
+          :label="`计划日注入量\n(${searchForm.selectUnitOfProduction == 'm' ? 'm³':'t'})`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           property="injectionSumReal"
           header-align="center"
           align="center"
-          :label="`实际年累注\n(10⁴m³)`"
+          :label="`实际年累注\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³':'10⁴t'})`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="injectionSumPlan"
           header-align="center"
           align="center"
-          :label="`计划年累注\n(10⁴m³)`"
+          :label="`计划年累注\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³':'10⁴t'})`"
           :formatter="toPrecise4"
         ></el-table-column>
       </el-table>
@@ -285,6 +285,7 @@ export default {
     getSearchInjectionChart() {
       let request = {
         oilFieldId: this.searchForm.selectOilField,
+        unitType: this.searchForm.selectUnitOfProduction,
         beginDate: this.searchForm.selectDate[0],
         endDate: this.searchForm.selectDate[1],
         planTypeCode: this.searchForm.planTypeCode,
@@ -297,6 +298,13 @@ export default {
         let seriesData = [];
         let xSet = new Set();
         let xData = [];
+        if (this.searchForm.selectUnitOfProduction == "m") {
+            this.GasProLineChart.yAxis[0].name = "日注水量(m³)";
+            this.GasProLineChart.yAxis[1].name = "年注水量(10⁴m³)";
+          } else if (this.searchForm.selectUnitOfProduction == "t") {
+            this.GasProLineChart.yAxis[0].name = "日注水量(t)";
+            this.GasProLineChart.yAxis[1].name = "年注水量(10⁴t)";
+          }
         if (res.data.code == 200) {
           let chartDatas = res.data.data.chart.linearDataSets;
           for (let i = 0; i < chartDatas.length; i++) {
@@ -386,6 +394,7 @@ export default {
     getSearchInjectionTable() {
       let request = {
         oilFieldId: this.searchForm.selectOilField,
+        unitType: this.searchForm.selectUnitOfProduction,
         beginDate: this.searchForm.selectDate[0],
         endDate: this.searchForm.selectDate[1],
         planTypeCode: this.searchForm.planTypeCode,
