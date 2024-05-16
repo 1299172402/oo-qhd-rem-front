@@ -67,6 +67,22 @@
           </el-select>
         </div>
         <div style="margin-right: 15px; margin-bottom: 10px">
+          <span>单位选择：</span>
+          <el-select
+            v-model="searchForm.selectUnitOfProduction"
+            placeholder="请选择"
+            style="width: 100px"
+            @change="doSearch"
+          >
+            <el-option
+              v-for="(item, index) in unitOfProduction"
+              :key="index"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </div>
+        <div style="margin-right: 15px; margin-bottom: 10px">
           <el-button icon="el-icon-search" type="primary" style="margin-left: 10px" @click="doSearch">搜索</el-button>
           <el-button class="commonBtn" icon="el-icon-refresh" @click="resetting">重置</el-button>
           <el-button
@@ -92,7 +108,7 @@
               :searchForm="searchForm"
               ref="childComponent"
             >
-              <template v-slot:downBtn>
+              <!-- <template v-slot:downBtn>
                 <div style="position: absolute; top: 52px; right: 111px; z-index: 99">
                   <span>单位选择：</span>
                   <el-select
@@ -109,7 +125,7 @@
                     ></el-option>
                   </el-select>
                 </div>
-              </template>
+              </template> -->
             </crudeOil>
             <basicYield
               v-if="pageType == '原油产量' && searchForm.theYieldComponentsValue == 2"
