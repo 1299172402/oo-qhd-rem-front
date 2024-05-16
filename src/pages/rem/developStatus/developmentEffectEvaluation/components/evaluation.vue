@@ -337,6 +337,8 @@ export default {
             var relVal = "";
             params.forEach((item) => {
               relVal =
+                item.marker +
+                "地质储量采出程度 : " +
                 item.axisValue +
                 "<br/>" +
                 item.marker +
