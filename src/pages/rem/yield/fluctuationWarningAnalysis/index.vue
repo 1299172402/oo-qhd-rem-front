@@ -192,15 +192,6 @@
               </pagePanel>
             </div>
             <div class="row" style="margin-right: 20px">
-              <pagePanel headerTitle="平台产量组成" style="height: 400px; margin-top: 0" show-btn>
-                <div class="row-container">
-                  <Echart :chart-data="pieEchart" height="100%"></Echart>
-                </div>
-              </pagePanel>
-            </div>
-          </div>
-          <div class="rowBox" v-if="!isShowTable">
-            <div class="row" style="margin-right: 20px">
               <pagePanel headerTitle="单井产量波动分析" style="height: 400px; margin-top: 0" show-btn>
                 <!-- <div class="row-container"> -->
                 <div style="position: absolute; top: 52px; right: 100px; width: calc(100% - 120px); z-index: 99">
@@ -231,6 +222,16 @@
                 <Echart :chart-data="barChart" height="100%"></Echart>
                 <!-- </div> -->
                 <!-- </div> -->
+              </pagePanel>
+            </div>
+          </div>
+          <div class="rowBox" v-if="!isShowTable">
+       
+            <div class="row" style="margin-right: 20px">
+              <pagePanel headerTitle="平台产量组成" style="height: 400px; margin-top: 0" show-btn>
+                <div class="row-container">
+                  <Echart :chart-data="pieEchart" height="100%"></Echart>
+                </div>
               </pagePanel>
             </div>
             <div class="row" style="margin-right: 20px">

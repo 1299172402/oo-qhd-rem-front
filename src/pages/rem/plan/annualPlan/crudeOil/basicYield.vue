@@ -52,6 +52,7 @@
         <el-table-column
           prop="oilprodRollForecast"
           :label="searchForm.selectUnitOfProduction == 'm' ? '滚动预测\n(m³)' : '滚动预测\n(t)'"
+          align="center"
           :formatter="toPrecise2"
         ></el-table-column>
       </el-table>
