@@ -2493,15 +2493,15 @@ export default {
               series.xAxisIndex = 0;
               series.yAxisIndex = 1;
               series.itemStyle = { color: "rgb(250,0,251)" };
-            } else if (lineName == "日产液量") {
+            } else if (lineName == "日产液量" || lineName == "产液") {
               series.xAxisIndex = 2;
               series.yAxisIndex = 9;
               series.itemStyle = { color: "rgb(250,0,251)" };
-            } else if (lineName == "日产油量") {
+            } else if (lineName == "日产油量" || lineName == "产油") {
               series.xAxisIndex = 2;
               series.yAxisIndex = 8;
               series.itemStyle = { color: "rgb(0,128,0)" };
-            } else if (lineName == "日产气量") {
+            } else if (lineName == "日产气量" || lineName == "产气" ) {
               series.xAxisIndex = 2;
               series.yAxisIndex = 10;
               series.itemStyle = { color: "rgb(255,0,0)" };

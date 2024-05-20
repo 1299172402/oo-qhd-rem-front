@@ -120,6 +120,19 @@ export default {
         },
         dataZoom: [
           {
+            type: "slider",
+            show: true,
+            height: "15px",
+            bottom: "8px",
+            xAxisIndex: [0],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [0],
+          },
+          {
             type: "inside",
             xAxisIndex: [0],
             start: 0, //滚动条开始位置（共100等份）
@@ -147,7 +160,7 @@ export default {
         grid: {
           x: 120,
           y: 50,
-          x2: 120,
+          x2: 140,
           y2: 100,
         },
         legend: {

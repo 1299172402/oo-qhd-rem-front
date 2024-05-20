@@ -53,8 +53,8 @@
               <pagePanel :headerTitle="oilFieldName + '产量跟踪预警分析'" style="height: 456px; margin-top: 0" show-btn>
                 <div style="position: absolute; z-index: 1">
                   <el-button type="primary" @click="openDetailedChick('红色预警')">红色预警</el-button>
-                    <el-button type="primary" @click="openDetailedChick('黄色预警')">黄色预警</el-button>
-                    <el-button type="primary" @click="openDetailedChick('蓝色预警')">蓝色预警</el-button>
+                  <el-button type="primary" @click="openDetailedChick('黄色预警')">黄色预警</el-button>
+                  <el-button type="primary" @click="openDetailedChick('蓝色预警')">蓝色预警</el-button>
                 </div>
                 <Echart
                   :chart-data="echartOption"
@@ -226,7 +226,6 @@
             </div>
           </div>
           <div class="rowBox" v-if="!isShowTable">
-       
             <div class="row" style="margin-right: 20px">
               <pagePanel headerTitle="平台产量组成" style="height: 400px; margin-top: 0" show-btn>
                 <div class="row-container">
@@ -492,14 +491,31 @@ export default {
             return relVal;
           },
         },
-        dataZoom: {
-          start: 0,
-          type: "inside",
-        },
+        dataZoom: [
+          {
+            type: "slider",
+            show: true,
+            height: "15px",
+            bottom: "8px",
+            xAxisIndex: [0],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [0],
+          },
+          {
+            type: "inside",
+            xAxisIndex: [0],
+            start: 0, //滚动条开始位置（共100等份）
+            end: 100, //滚动条结束位置
+          },
+        ],
         grid: {
           x: 150,
-          y: 70,
-          x2: 80,
+          y: 100,
+          x2: 100,
           y2: 100,
         },
         toolbox: {
@@ -688,12 +704,12 @@ export default {
             end: 100, //滚动条结束位置
           },
         ],
-          tooltip: {
-              trigger: "axis",
-              axisPointer: {
-                  type: "shadow",
-              },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
           },
+        },
         // tooltip: {
         //   trigger: "axis",
         //   axisPointer: {
@@ -1220,18 +1236,18 @@ export default {
               fontSize: 14,
             },
           });
-        legendData.push({
+          legendData.push({
             name: "黄色预警",
             icon: "circle",
             itemGap: 14,
             itemStyle: {
-                color: "#F5BE43",
+              color: "#F5BE43",
             },
             textStyle: {
-                color: "#8FA4CC",
-                fontSize: 14,
+              color: "#8FA4CC",
+              fontSize: 14,
             },
-        });
+          });
           legendData.push({
             name: "蓝色预警",
             icon: "circle",
@@ -1510,7 +1526,10 @@ export default {
         let seriesData = [];
         if (res.data.code == 200) {
           this.productAnaysisTable = res.data.data.wellAllocDailiesAll;
-          this.wellAllNum = res.data.data.wellAllocDailiesAll&& res.data.data.wellAllocDailiesAll.length ? res.data.data.wellAllocDailiesAll.length : 0;
+          this.wellAllNum =
+            res.data.data.wellAllocDailiesAll && res.data.data.wellAllocDailiesAll.length
+              ? res.data.data.wellAllocDailiesAll.length
+              : 0;
           //获取产油数据项
           let data = res.data.data.oilChart;
           if (res.data.data.oilChart != null) {
