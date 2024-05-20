@@ -360,7 +360,7 @@
                             :content="row[item.code + 'Message']"
                             placement="top"
                           >
-                            <span>{{ row[item.code ] ? row[item.code ] : "-" }}</span>
+                            <span>{{ row[item.code] ? row[item.code] : "-" }}</span>
                           </el-tooltip>
                           <img
                             src="@/assets/rem/yieId/upTriangle.png"
@@ -997,6 +997,18 @@
                         </el-tooltip>
                       </template>
                     </el-table-column>
+                    <!-- <el-table-column :key="`index39-1`" prop="zsqdForm" label="注水强度" align="center">
+                      <el-table-column :key="`index39-1-1`" prop="zsqdFormValue" label="数值" align="center">
+                        <template slot-scope="{ row }">
+                          <span>{{ row["zsqdFormValue"] ? row[item.code] : "-" }}</span>
+                        </template>
+                      </el-table-column>
+                      <el-table-column :key="`index39-1-2`" prop="zsqdFormName" label="评价结论" align="center">
+                        <template slot-scope="{ row }">
+                          <span>{{ row["zsqdFormName"] ? row['zsqdFormName'] : "-" }}</span>
+                        </template>
+                      </el-table-column>
+                    </el-table-column> -->
                   </el-table-column>
                   <el-table-column prop="overUnderInjectionAnalysis" label="超欠注原因分析" align="center">
                     <el-table-column
@@ -1570,12 +1582,16 @@ export default {
           //添加详情信息
           if (t_data.basis == null) {
             myData[i][t_data.code + "Message"] = "";
+            // myData[i]["zsqdFormValue"] = "";
+            // myData[i]["zsqdFormName"] = "";
           } else {
             messData = t_data.basis.find((item) => {
               return item.well == myWellId;
             });
             myData[i][t_data.code + "Message"] = messData && messData.message ? messData.message : "";
             myData[i][t_data.code] = messData && messData.itemValue ? messData.itemValue : "";
+            // myData[i]["zsqdFormValue"] = messData && messData.name ? messData.name : "";
+            // myData[i]["zsqdFormName"] = messData && messData.itemValue ? messData.itemValue : "";
             myData[i].id = Math.random() * 3;
           }
           //选中项目不需要测试
@@ -2399,6 +2415,7 @@ export default {
             }
             myWellCount[t_data.code] = t_count; //回写
           }
+          // console.log(myData[i].zsqdForm, "注水强度");
           //深化点-点击井号展示层位
           if (messData && messData.evalBasisLayers) {
             let key1 = t_data.code + "Message";
@@ -2841,7 +2858,7 @@ export default {
           t_count = 0; //初始化
         }
         this.zsqdForm[j].value = t_count; //登记条数
-        if (t_count > 0 && t_data.name != "正常" && t_data.flag !== "0" ) {
+        if (t_count > 0 && t_data.name != "正常" && t_data.flag !== "0") {
           this.trendOfIndicatorsTab.push({
             code: t_data.code,
             name: t_data.name,
@@ -2870,7 +2887,7 @@ export default {
           t_count = 0; //初始化
         }
         this.theGroundBecause[j].value = t_count; //登记条数
-        if (t_count > 0 && t_data.name != "正常" && t_data.flag !== "0" ) {
+        if (t_count > 0 && t_data.name != "正常" && t_data.flag !== "0") {
           this.trendOfIndicatorsTab.push({
             code: t_data.code,
             name: t_data.name,
@@ -3036,6 +3053,7 @@ export default {
       } else {
         this.tableData = cloneDeep(this.oldTableData);
       }
+      this.tableData.forEach((item, index) => (item.parentIndex = index + 1));
     },
     // 自定序号
     formatIndex(index) {

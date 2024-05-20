@@ -141,7 +141,10 @@ export default {
         tooltip: {
           trigger: "axis",
           axisPointer: {
-            type: "shadow",
+             type: "shadow",
+          },
+          textStyle:{
+            fontSize: 18
           },
           formatter(params) {
             var relVal = params[0].name;
@@ -158,7 +161,7 @@ export default {
         grid: {
           x: 120,
           y: 50,
-          x2: 120,
+          x2: 140,
           y2: 120,
         },
         legend: {
@@ -275,36 +278,49 @@ export default {
         ],
         series: [],
         dataZoom: [
-          {
-            type: "inside",
-            xAxisIndex: [0, 1, 2, 3],
-            start: 0, //滚动条开始位置（共100等份）
-            end: 100, //滚动条结束位置
+        {
+            type: "slider",
+            show: true,
+            height: "15px",
+            bottom: "8px",
+            xAxisIndex: [0],
           },
           {
             type: "slider",
-            realtime: true, //拖动滚动条时是否动态的更新图表数据
-            height: 10, //滚动条高度
-            startValue: 0, //滚动条开始位置
-            endValue: 100, //结束位置
-            zoomLock: true,
-            showDetail: false,
-            brushSelect: false,
-            backgroundColor: "rgba(0,0,0,0)",
-            dataBackground: {
-              lineStyle: {
-                color: "rgba(0,0,0,0)",
-              },
-              areaStyle: {
-                color: "rgba(0,0,0,0)",
-                opacity: 1,
-              },
-            },
-            selectedDataBackground: {
-              areaStyle: {
-                color: "rgba(0,0,0,0)",
-              },
-            },
+            show: true,
+            width: "20px",
+            yAxisIndex: [0],
+          },
+          // {
+          //   type: "slider",
+          //   realtime: true, //拖动滚动条时是否动态的更新图表数据
+          //   height: 10, //滚动条高度
+          //   startValue: 0, //滚动条开始位置
+          //   endValue: 100, //结束位置
+          //   zoomLock: true,
+          //   showDetail: false,
+          //   brushSelect: false,
+          //   backgroundColor: "rgba(0,0,0,0)",
+          //   dataBackground: {
+          //     lineStyle: {
+          //       color: "rgba(0,0,0,0)",
+          //     },
+          //     areaStyle: {
+          //       color: "rgba(0,0,0,0)",
+          //       opacity: 1,
+          //     },
+          //   },
+          //   selectedDataBackground: {
+          //     areaStyle: {
+          //       color: "rgba(0,0,0,0)",
+          //     },
+          //   },
+          // },
+          {
+            type: "inside",
+            xAxisIndex: [0],
+            start: 0, //滚动条开始位置（共100等份）
+            end: 100, //滚动条结束位置
           },
         ],
       },

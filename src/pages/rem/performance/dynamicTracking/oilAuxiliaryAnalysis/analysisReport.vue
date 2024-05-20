@@ -453,7 +453,7 @@
                           />
                         </span>
                       </template>
-                      <template v-if="item.code != 'yjgk' || item.code != 'gpgx'">
+                      <template v-if="item.code == 'djl' || item.code == 'cyqd'|| item.code == 'cyzs'|| item.code == 'mcyzs'">
                         <el-table-column min-width="100" label="区块均值" align="center">
                           <template slot-scope="scope">
                             <span style="display: flex; align-items: center; justify-content: center">
@@ -1428,7 +1428,7 @@
                           />
                         </span>
                       </template>
-                      <template v-if="item.code != 'yjgk' || item.code != 'gpgx'">
+                      <template v-if="item.code == 'djl' || item.code == 'cyqd'|| item.code == 'cyzs'|| item.code == 'mcyzs'">
                         <el-table-column min-width="100" label="区块均值" align="center">
                           <template slot-scope="scope">
                             <span style="display: flex; align-items: center; justify-content: center">
