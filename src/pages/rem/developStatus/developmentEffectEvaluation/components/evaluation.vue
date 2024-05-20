@@ -79,19 +79,19 @@
             >
           </div>
           <el-table id="table1" :data="tableData" border highlight height="calc(100% - 55px)">
-            <el-table-column prop="indicatorName" label="指标" min-width="170" align="center"></el-table-column>
-            <el-table-column prop="evaluationResult" label="评价结果" align="center"></el-table-column>
+            <el-table-column prop="indicatorName" label="指标" min-width="170" align="center" fixed></el-table-column>
+            <el-table-column prop="evaluationResult" label="评价结果" align="center" :formatter="toPrecise2"></el-table-column>
             <el-table-column
               prop="lastPhaseValue"
               label="上阶段值"
               align="center"
-              :formatter="toPrecise4"
+              :formatter="toPrecise2"
             ></el-table-column>
             <el-table-column
               prop="diffLastPhaseValue"
               label="与上阶段对比差值"
               align="center"
-              :formatter="toPrecise4"
+              :formatter="toPrecise2"
             ></el-table-column>
             <el-table-column label="理论值" min-width="100" align="center">
               <template slot-scope="scope">
@@ -103,7 +103,7 @@
                 ></el-input-number>
               </template>
             </el-table-column>
-            <el-table-column prop="diffTheoryValue" label="与理论值对比差值" align="center">
+            <el-table-column prop="diffTheoryValue" label="与理论值对比差值" min-width="150" align="center">
               <template slot-scope="scope">
                 <span>{{
                   (Number(scope.row.evaluationResult) - Number(scope.row.theoryValue)) | toFixNumberFour
@@ -114,7 +114,8 @@
               prop="diffSimilarOilField"
               label="与同类型油田比较"
               align="center"
-              width="80"
+              min-width="120"
+              :formatter="toPrecise2"
             ></el-table-column>
             <el-table-column prop="result" label="结论" align="center" width="80"></el-table-column>
           </el-table>
@@ -154,7 +155,7 @@ export default {
   },
   filters: {
     toFixNumberFour(val) {
-      return val.toFixed(4);
+      return val.toFixed(2);
     },
   },
   data() {
@@ -1096,13 +1097,13 @@ export default {
       exportExcel(tableId, tableName);
     },
     // 表格格式化方法 - 数值只保留四位小数
-    toPrecise4(row, column) {
+    toPrecise2(row, column) {
       if (
         (row[column.property] || parseFloat(row[column.property]) === 0) &&
         typeof parseFloat(row[column.property]) === "number"
       ) {
         return parseFloat(row[column.property]) || parseFloat(row[column.property]) === 0
-          ? parseFloat(row[column.property]).toFixed(4)
+          ? parseFloat(row[column.property]).toFixed(2)
           : "0";
       } else {
         return row[column.property] ? row[column.property] : "-";
