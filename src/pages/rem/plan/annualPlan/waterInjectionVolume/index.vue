@@ -49,28 +49,28 @@
           prop="injectionDailyReal"
           header-align="center"
           align="center"
-          :label="`实际日注入量\n(${searchForm.selectUnitOfProduction == 'm' ? 'm³':'t'})`"
+          :label="`实际日注入量\n(${searchForm.selectUnitOfProduction == 'm' ? 'm³' : 't'})`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="injectionDailyPlan"
           header-align="center"
           align="center"
-          :label="`计划日注入量\n(${searchForm.selectUnitOfProduction == 'm' ? 'm³':'t'})`"
+          :label="`计划日注入量\n(${searchForm.selectUnitOfProduction == 'm' ? 'm³' : 't'})`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           property="injectionSumReal"
           header-align="center"
           align="center"
-          :label="`实际年累注\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³':'10⁴t'})`"
+          :label="`实际年累注\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³' : '10⁴t'})`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="injectionSumPlan"
           header-align="center"
           align="center"
-          :label="`计划年累注\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³':'10⁴t'})`"
+          :label="`计划年累注\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³' : '10⁴t'})`"
           :formatter="toPrecise4"
         ></el-table-column>
       </el-table>
@@ -124,6 +124,19 @@ export default {
         },
         dataZoom: [
           {
+            type: "slider",
+            show: true,
+            height: "15px",
+            bottom: "8px",
+            xAxisIndex: [0],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [0],
+          },
+          {
             type: "inside",
             xAxisIndex: [0],
             start: 0, //滚动条开始位置（共100等份）
@@ -151,7 +164,7 @@ export default {
         grid: {
           x: 120,
           y: 50,
-          x2: 120,
+          x2: 140,
           y2: 100,
         },
         legend: {
@@ -299,12 +312,12 @@ export default {
         let xSet = new Set();
         let xData = [];
         if (this.searchForm.selectUnitOfProduction == "m") {
-            this.GasProLineChart.yAxis[0].name = "日注水量(m³)";
-            this.GasProLineChart.yAxis[1].name = "年注水量(10⁴m³)";
-          } else if (this.searchForm.selectUnitOfProduction == "t") {
-            this.GasProLineChart.yAxis[0].name = "日注水量(t)";
-            this.GasProLineChart.yAxis[1].name = "年注水量(10⁴t)";
-          }
+          this.GasProLineChart.yAxis[0].name = "日注水量(m³)";
+          this.GasProLineChart.yAxis[1].name = "年注水量(10⁴m³)";
+        } else if (this.searchForm.selectUnitOfProduction == "t") {
+          this.GasProLineChart.yAxis[0].name = "日注水量(t)";
+          this.GasProLineChart.yAxis[1].name = "年注水量(10⁴t)";
+        }
         if (res.data.code == 200) {
           let chartDatas = res.data.data.chart.linearDataSets;
           for (let i = 0; i < chartDatas.length; i++) {
