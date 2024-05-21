@@ -20,3 +20,11 @@ export function queryRemUploadFileMinio({ operationId, operationType, pageNum, p
     method: "get",
   });
 }
+
+export function wellGroupMainFileQuery({operationType} = {}) {
+    return request({
+        url: `${baseUrl}/fileUpload/wellGroupMainFileQuery?operationType=${ operationType || "" }`,
+        method: "get",
+    });
+}
+

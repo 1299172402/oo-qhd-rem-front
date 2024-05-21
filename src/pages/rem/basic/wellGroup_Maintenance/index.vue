@@ -82,6 +82,13 @@
                         </el-button>
                         <el-button
                             type="primary"
+                            @click="wellGroupMainPageLoading = true"
+                        >
+                            <i class="el-icon-s-platform el-icon--left"/>
+                            文档维护
+                        </el-button>
+                        <el-button
+                            type="primary"
                             @click="preserve"
                             style="font-size: 12px; padding: 5px 10px 5px 10px; width: 85px;float: right"
                         >
@@ -233,6 +240,68 @@
         <el-button type="primary" @click="queryBut">确定</el-button>
       </span>
         </el-dialog>
+
+        <el-dialog
+            title="井组文档维护"
+            :visible.sync="wellGroupMainPageLoading"
+            width="50%">
+            <div :style="wellGroupMainPageStyle" id="wgmps">
+                <div style="width: 40%;	height: 100%;	float: left;">
+                    <el-upload
+                        drag
+                        action=""
+                        :on-error="handleUploadError"
+                        :on-success="handleUploadSuccess"
+                        :http-request="httpRequest"
+                        :file-list="fileList"
+                        :accept="accept"
+                        :limit="limit"
+                        :disabled="false"
+                        multiple>
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+<!--                        <div class="el-upload__tip"  slot="tip">注意：同名文件会直接覆盖</div>-->
+                    </el-upload>
+                </div>
+                <div style="width: 55%;	height: 100%;	float: left; margin-left: 3%">
+                    <el-table
+                        :data="wellGroupMainPageData"
+                        stripe
+                        :row-style="{ height: '0px' }"
+                        :header-cell-style="{ 'text-align': 'left', padding: '0px 0','font-size':'17px' }"
+                        :cell-style="{ padding: '3px', 'text-align': 'left' }"
+                        max-height="100%"
+                        style="width: 100%;"
+                        height="100%">
+                        <el-table-column
+                            prop="fileName"
+                            label="文件名称"
+                            width="250"
+                        />
+
+                        <el-table-column
+                            prop="uploadDate"
+                            label="上传时间"
+                        />
+                        <el-table-column
+                            label="操作"
+                            width="100">
+                            <template v-slot="scope">
+                                <el-button @click="downloadMaintenanceFiles(scope.row)" type="text" size="small">下载
+                                </el-button>
+                                <el-popconfirm
+                                    title="确定删除吗？"
+                                    @confirm="delMaintenanceFiles(cope.row)"
+                                    style="margin-left: 10px"
+                                >
+                                    <el-button slot="reference" type="text" size="small">删除</el-button>
+                                </el-popconfirm>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+            </div>
+        </el-dialog>
     </div>
     <!--  </el-container>-->
 </template>
@@ -255,12 +324,26 @@ import {
     userListByUserNames
 } from "@/api/basic/master";
 import {QueryReservoirAnalyseUnit} from "@/api/rem/marster"
+import {uploadFile} from "@/components/upload/utils/file";
+import {addRemUploadFileMinio,queryRemUploadFileMinio,wellGroupMainFileQuery} from "@/api/rem/remuploadfileminio";
 
 export default {
     name: "WellGroup_Maintenance",
     components: {treeMultipleSelection},
     data() {
         return {
+            operationType: 'rem_well_group_doc_maintenance',
+            accept: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "pdf"].map(item => `.${item}`).join(","),
+            limit:10,
+            uploadType: 'minio',
+            bizPath: 'rem/oo-qhd-rem-agg',
+            fileList: [],
+            wellGroupMainPageData: [],
+            wellGroupMainPageStyle: {
+                width: '100%',
+                height: window.innerHeight * 0.5 + 'px',
+            },
+            wellGroupMainPageLoading: false,
             loading: false,
             options: [],
             transferData: [],
@@ -297,7 +380,7 @@ export default {
                 },
             },
             isDisabled: false
-        }
+        };
     },
     created() {
         this.getDate()
@@ -311,7 +394,74 @@ export default {
             return this.computedDate !== this.query.value2
         },
     },
+    watch: {
+        wellGroupMainPageLoading: {
+            handler(val) {
+                if (val) {
+                    wellGroupMainFileQuery({operationType: this.operationType}).then(res => {
+                        this.wellGroupMainPageData = res.data.data
+                    });
+                }
+            },
+            deep: true
+        }
+    },
     methods: {
+        // 上传失败
+        handleUploadError() {
+            this.$message.error("上传文件失败，请重试");
+        },
+        /**
+         * 上传成功回调
+         */
+        handleUploadSuccess(res, file) {
+            const [id, name] = res.data.data.split(":");
+            if (res.data.code === 200) {
+                let params = {
+                    fileId: id,
+                    filestrId: name,
+                    remUploadFileMinioId: "",
+                    operationId: id+name,
+                    operationType:this.operationType,
+                };
+                addRemUploadFileMinio(params).then((res) => {
+                    if (res.data.code == 200) {
+                        this.$message.success("文件上传成功!");
+                        wellGroupMainFileQuery({operationType: this.operationType}).then(res => {
+                            this.wellGroupMainPageData = res.data.data
+                        });
+                    } else {
+                        this.$message.error("文件上传失败!");
+                    }
+                });
+            }
+        },
+        /**
+         * 使用统一的 axios 处理文件上传，方便统一拦截处理
+         */
+        httpRequest: function (val) {
+            const fd = new FormData();
+            fd.append("file", val.file, val.file.name);
+            fd.append("bizPath", this.bizPath);
+            fd.append("uploadType", this.uploadType);
+            return new Promise((reslove, reject) => {
+                uploadFile(fd).then(res => {
+                    if (res.data.code === 200) {
+                        reslove(res);
+                    } else {
+                        reject(res);
+                    }
+                }).catch(e => {
+                        reject(e);
+                    });
+            });
+        },
+        downloadMaintenanceFiles() {
+            
+        },
+        delMaintenanceFiles() {
+            
+        },
         async reset() {
             await this.getDate();
             await this.selectData();
