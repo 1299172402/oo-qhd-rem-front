@@ -3225,7 +3225,7 @@ export default {
   .pagePanelNew {
     flex: 1;
     // height:0;
-    min-height: 500px;
+    min-height: 600px;
   }
   .main {
     // flex:1;
