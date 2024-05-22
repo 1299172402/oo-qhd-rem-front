@@ -312,11 +312,11 @@ export default {
         let xSet = new Set();
         let xData = [];
         if (this.searchForm.selectUnitOfProduction == "m") {
-          this.GasProLineChart.yAxis[0].name = "日注水量(m³)";
-          this.GasProLineChart.yAxis[1].name = "年注水量(10⁴m³)";
+          this.OilYearLineChart.yAxis[0].name = "日注水量(m³)";
+          this.OilYearLineChart.yAxis[1].name = "年注水量(10⁴m³)";
         } else if (this.searchForm.selectUnitOfProduction == "t") {
-          this.GasProLineChart.yAxis[0].name = "日注水量(t)";
-          this.GasProLineChart.yAxis[1].name = "年注水量(10⁴t)";
+          this.OilYearLineChart.yAxis[0].name = "日注水量(t)";
+          this.OilYearLineChart.yAxis[1].name = "年注水量(10⁴t)";
         }
         if (res.data.code == 200) {
           let chartDatas = res.data.data.chart.linearDataSets;
