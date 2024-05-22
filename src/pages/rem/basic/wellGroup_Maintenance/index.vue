@@ -257,16 +257,16 @@
                         :accept="accept"
                         :limit="limit"
                         :disabled="false"
+                        :show-file-list="false"
                         multiple>
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-<!--                        <div class="el-upload__tip"  slot="tip">注意：同名文件会直接覆盖</div>-->
+                        <div class="el-upload__tip"  slot="tip">注意：同名文件会直接覆盖</div>
                     </el-upload>
                 </div>
                 <div style="width: 55%;	height: 100%;	float: left; margin-left: 3%">
                     <el-table
                         :data="wellGroupMainPageData"
-                        stripe
                         :row-style="{ height: '0px' }"
                         :header-cell-style="{ 'text-align': 'left', padding: '0px 0','font-size':'17px' }"
                         :cell-style="{ padding: '3px', 'text-align': 'left' }"
@@ -291,7 +291,7 @@
                                 </el-button>
                                 <el-popconfirm
                                     title="确定删除吗？"
-                                    @confirm="delMaintenanceFiles(cope.row)"
+                                    @confirm="delMaintenanceFiles(scope.row)"
                                     style="margin-left: 10px"
                                 >
                                     <el-button slot="reference" type="text" size="small">删除</el-button>
@@ -324,8 +324,9 @@ import {
     userListByUserNames
 } from "@/api/basic/master";
 import {QueryReservoirAnalyseUnit} from "@/api/rem/marster"
-import {uploadFile} from "@/components/upload/utils/file";
-import {addRemUploadFileMinio,queryRemUploadFileMinio,wellGroupMainFileQuery} from "@/api/rem/remuploadfileminio";
+import {uploadFile, deleteFile, downFile} from "@/components/upload/utils/file";
+import {addRemUploadFileMinio,queryRemUploadFileMinio,wellGroupMainFileQuery,wellGroupMainFileDel} from "@/api/rem/remuploadfileminio";
+import FileSaver from 'file-saver'
 
 export default {
     name: "WellGroup_Maintenance",
@@ -440,6 +441,8 @@ export default {
          * 使用统一的 axios 处理文件上传，方便统一拦截处理
          */
         httpRequest: function (val) {
+            let fileIndex=this.wellGroupMainPageData.findIndex(v => v.fileName === val.fileName);
+            
             const fd = new FormData();
             fd.append("file", val.file, val.file.name);
             fd.append("bizPath", this.bizPath);
@@ -456,11 +459,27 @@ export default {
                     });
             });
         },
-        downloadMaintenanceFiles() {
-            
+        downloadMaintenanceFiles(val) {
+            downFile(val.fileId).then((res) => {
+                const aBlob = new Blob([res]);
+                FileSaver.saveAs(aBlob, val.fileName);
+            })
         },
-        delMaintenanceFiles() {
-            
+         delMaintenanceFiles(val) {
+             deleteFile(val.fileId).then((res) => {
+                if (res.status === 200) {
+                    wellGroupMainFileDel(val).then(res => {
+                        wellGroupMainFileQuery({operationType: this.operationType}).then(res => {
+                            this.wellGroupMainPageData = res.data.data
+                            this.$message.success("文件删除成功");
+                        });
+                    });
+                }else {
+                    this.$message.error(res.msg)
+                }
+            });
+
+
         },
         async reset() {
             await this.getDate();
