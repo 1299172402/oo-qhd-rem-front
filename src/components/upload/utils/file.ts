@@ -139,4 +139,14 @@ export function filePreview(attachmentId) {
   });
 }
 
+/**
+ * 根据文件id删除文件
+ * @param {*} id 文件id
+ */
+export function deleteFile(id) {
+    return axios({
+        url: `/file/delete/${id}`,
+        method: "delete",
+    });
+}
 export default {};

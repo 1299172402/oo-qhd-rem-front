@@ -929,7 +929,7 @@ export default {
   }
 
   .z-echarts {
-    height: calc(100% - 85px);
+    height: 100%;
     width: 100%;
     overflow-y: scroll;
     padding-right: 20px;

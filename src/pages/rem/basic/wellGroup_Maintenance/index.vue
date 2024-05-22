@@ -84,7 +84,7 @@
                             type="primary"
                             @click="wellGroupMainPageLoading = true"
                         >
-                            <i class="el-icon-s-platform el-icon--left"/>
+                            <i class="el-icon-document el-icon--left"/>
                             文档维护
                         </el-button>
                         <el-button
@@ -253,20 +253,21 @@
                         :on-error="handleUploadError"
                         :on-success="handleUploadSuccess"
                         :http-request="httpRequest"
+                        :before-upload="handleBeforeUpload"
                         :file-list="fileList"
                         :accept="accept"
                         :limit="limit"
                         :disabled="false"
+                        :show-file-list="false"
                         multiple>
                         <i class="el-icon-upload"></i>
                         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-<!--                        <div class="el-upload__tip"  slot="tip">注意：同名文件会直接覆盖</div>-->
+                        <div class="el-upload__tip"  slot="tip">注意：同名文件会直接覆盖</div>
                     </el-upload>
                 </div>
                 <div style="width: 55%;	height: 100%;	float: left; margin-left: 3%">
                     <el-table
                         :data="wellGroupMainPageData"
-                        stripe
                         :row-style="{ height: '0px' }"
                         :header-cell-style="{ 'text-align': 'left', padding: '0px 0','font-size':'17px' }"
                         :cell-style="{ padding: '3px', 'text-align': 'left' }"
@@ -291,7 +292,7 @@
                                 </el-button>
                                 <el-popconfirm
                                     title="确定删除吗？"
-                                    @confirm="delMaintenanceFiles(cope.row)"
+                                    @confirm="delMaintenanceFiles(scope.row)"
                                     style="margin-left: 10px"
                                 >
                                     <el-button slot="reference" type="text" size="small">删除</el-button>
@@ -324,8 +325,9 @@ import {
     userListByUserNames
 } from "@/api/basic/master";
 import {QueryReservoirAnalyseUnit} from "@/api/rem/marster"
-import {uploadFile} from "@/components/upload/utils/file";
-import {addRemUploadFileMinio,queryRemUploadFileMinio,wellGroupMainFileQuery} from "@/api/rem/remuploadfileminio";
+import {uploadFile, deleteFile, downFile} from "@/components/upload/utils/file";
+import {addRemUploadFileMinio,queryRemUploadFileMinio,wellGroupMainFileQuery,wellGroupMainFileDel} from "@/api/rem/remuploadfileminio";
+import FileSaver from 'file-saver'
 
 export default {
     name: "WellGroup_Maintenance",
@@ -333,6 +335,7 @@ export default {
     data() {
         return {
             operationType: 'rem_well_group_doc_maintenance',
+            fileType: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "pdf"],
             accept: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "pdf"].map(item => `.${item}`).join(","),
             limit:10,
             uploadType: 'minio',
@@ -407,6 +410,37 @@ export default {
         }
     },
     methods: {
+        handleBeforeUpload(file) {
+            if (this.fileType) {
+                let fileExtension = "";
+                if (file.name.lastIndexOf(".") > -1) {
+                    fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1);
+                }
+                const isTypeOk = this.fileType.some(type => {
+                    if (file.type.indexOf(type) > -1) {
+                        return true;
+                    }
+                    if (fileExtension && fileExtension.indexOf(type) > -1) {
+                        return true;
+                    }
+                    return false;
+                });
+                if (!isTypeOk) {
+                    this.$message.error(`文件格式不正确, 请上传${this.fileType.join("/")}格式文件!`);
+                    return false;
+                }
+            }
+            // 校检文件大小
+            // if (this.fileSize) {
+            //     const isLt = file.size / 1024 / 1024 < this.fileSize;
+            //     if (!isLt) {
+            //         this.$modal.msgError(`上传文件大小不能超过 ${this.fileSize} MB!`);
+            //         return false;
+            //     }
+            // }
+            this.$modal.loading("正在上传文件，请稍候...");
+            return true;
+        },
         // 上传失败
         handleUploadError() {
             this.$message.error("上传文件失败，请重试");
@@ -414,21 +448,31 @@ export default {
         /**
          * 上传成功回调
          */
-        handleUploadSuccess(res, file) {
-            const [id, name] = res.data.data.split(":");
+        async handleUploadSuccess(res, file) {
             if (res.data.code === 200) {
+                const [id, name] = res.data.data.split(":");
+                for (let v of this.wellGroupMainPageData) {
+                    if (v.fileName === name)
+                        await deleteFile(v.fileId).then((res) => {
+                            if (res.status === 200) {
+                                wellGroupMainFileDel(v).then(res => {
+                                });
+                            }
+                        });
+                }
+
                 let params = {
                     fileId: id,
                     filestrId: name,
                     remUploadFileMinioId: "",
-                    operationId: id+name,
-                    operationType:this.operationType,
+                    operationId: id + name,
+                    operationType: this.operationType,
                 };
-                addRemUploadFileMinio(params).then((res) => {
+                await addRemUploadFileMinio(params).then((res) => {
                     if (res.data.code == 200) {
-                        this.$message.success("文件上传成功!");
                         wellGroupMainFileQuery({operationType: this.operationType}).then(res => {
                             this.wellGroupMainPageData = res.data.data
+                            this.$message.success("文件上传成功!");
                         });
                     } else {
                         this.$message.error("文件上传失败!");
@@ -456,11 +500,25 @@ export default {
                     });
             });
         },
-        downloadMaintenanceFiles() {
-            
+        downloadMaintenanceFiles(val) {
+            downFile(val.fileId).then((res) => {
+                const aBlob = new Blob([res]);
+                FileSaver.saveAs(aBlob, val.fileName);
+            })
         },
-        delMaintenanceFiles() {
-            
+         delMaintenanceFiles(val) {
+             deleteFile(val.fileId).then((res) => {
+                if (res.status === 200) {
+                    wellGroupMainFileDel(val).then(res => {
+                        wellGroupMainFileQuery({operationType: this.operationType}).then(res => {
+                            this.wellGroupMainPageData = res.data.data
+                            this.$message.success("文件删除成功");
+                        });
+                    });
+                }else {
+                    this.$message.error(res.msg)
+                }
+            });
         },
         async reset() {
             await this.getDate();
