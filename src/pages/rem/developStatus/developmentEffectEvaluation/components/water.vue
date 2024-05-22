@@ -32,7 +32,7 @@
             >
           </div>
           <el-table id="table1" :data="tableData" border highlight height="calc(100% - 55px)">
-            <el-table-column prop="indicatorName" label="指标" align="center"></el-table-column>
+            <el-table-column prop="indicatorName" label="指标" align="center" min-width="100"></el-table-column>
             <el-table-column prop="evaluationResult" label="评价结果" align="center" :formatter="toPrecise">
               <!-- <template slot-scope="scope">
                                 <span>{{
@@ -54,7 +54,7 @@
                                 }}</span>
                             </template> -->
             </el-table-column>
-            <el-table-column label="理论值" align="center">
+            <el-table-column label="理论值" align="center" min-width="100">
               <template slot-scope="scope">
                 <el-input-number
                   v-model="scope.row.theoryValue"
@@ -105,7 +105,7 @@ export default {
   },
   filters: {
     toFixNumberFour(val) {
-      return Number(val).toFixed(4);
+      return Number(val).toFixed(2);
     },
   },
   data() {
@@ -669,7 +669,7 @@ export default {
     // 表格格式化方法 - 数值只保四两位小数
     toPrecise(row, column) {
       if (!isNaN(parseFloat(row[column.property])) && typeof parseFloat(row[column.property]) === "number") {
-        return parseFloat(row[column.property]).toFixed(4);
+        return parseFloat(row[column.property]).toFixed(2);
       } else {
         return row[column.property] ? row[column.property] : "";
       }
