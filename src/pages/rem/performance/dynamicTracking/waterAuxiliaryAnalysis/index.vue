@@ -737,15 +737,18 @@ export default {
       if (this.$refs.componentCustom.blockId) {
         this.$refs.componentCustom.blockId = this.blockId;
       }
-
       if (this.childParam) {
         this.$refs.componentCustom.selectPosition = this.childParam;
       }
       this.majorEventsBrieflyValue = "";
       this.getMajorEventsBriefly();
-
+      let params = {
+          selectWellId:this.selectWellId,
+          selectOilField:this.selectWellId,
+          selectPlatform:this.selectPlatform,
+      }
       if (this.currentModule == "waterReport") {
-        this.$refs.componentCustom.queryAll();
+        this.$refs.componentCustom.queryAll(params);
       } else {
         this.$refs.componentCustom.doSearch();
       }
@@ -794,6 +797,13 @@ export default {
       this.childParam = "";
       this.$refs.componentCustom.selectPosition = this.childParam;
       this.$refs.treeSelection.setCheckedKeys([this.selectOilField, this.selectPlatform, this.selectWellId]);
+        let params = {
+            selectWellId:this.selectWellId,
+            selectOilField:this.selectWellId,
+            selectPlatform:this.selectPlatform,
+        }
+        if (this.currentModule == "waterReport") {
+            this.$refs.componentCustom.changewell(params);}
       this.getBlockWellApi();
     },
     //主数据树结构数选中数据 selectList：选中数据Id集合，selectData：当前选中数据对象

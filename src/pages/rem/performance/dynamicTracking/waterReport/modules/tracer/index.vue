@@ -65,15 +65,6 @@ import { tracer } from "@/api/oilDeposit/rem-01/wellgroupdynamicanalysis.js";
 import { downFile } from "@/lib/remBase64Download.js";
 import { getWellGroupByWellId } from "@/api/rem/tracer.js";
 export default {
-    props: {
-        //选择油田
-        oilFeildId: {},
-        //选择平台
-        platform: {},
-        //选择井号
-        wellId: {},
-        queryData:{}
-    },
     data() {
         return {
             //示踪剂信息
@@ -93,34 +84,32 @@ export default {
             wellGroupId: "",
             tableData: [],
             fieldId: "",
+            oilFeildId: {},
+            //选择平台
+            platform: {},
+            //选择井号
+            wellId: {},
+            
         };
     },
-    watch: {
-        selectPosition(val) {
-            this.$emit("childPara", this.selectPosition);
-        },
-    },
-    mounted() {
-        console.log(this.queryData);
-        this.doSearch();
-    },
+    
     methods: {
+        passValue(val) {
+            this.oilFeildId = val.ogfId;
+            this.platform = val.assetCode;
+            this.wellId = val.selectWellId;
+            this.doSearch();
+        },
         doSearch() {
-            // let request = {
-            //     oilFieldId: this.oilFieldId,
-            //     fieldId: this.blockId,
-            //     fieldLayerId: this.layerId,
-            //     wellGroupId: this.wellGroupId,
-            // };
-            let params = { wellId: this.queryData.selectWellId };
+            let params = { wellId: this.wellId};
             // let WellId?wellId=8AD478C388D54C1590FDD6AE2DFFB2F5
             getWellGroupByWellId(params).then((res) => {
                 this.wellGroupId = res.data.data.wellGroupId;
                 this.fieldId = res.data.data.blockId;
                 let request = {
-                    oilFieldId: this.queryData.ogfId,
-                    fieldId: this.queryData.platform,
-                    wellGroupId: this.queryData.selectWellId,
+                    oilFieldId: this.oilFeildId,
+                    fieldId:  this.platform,
+                    wellGroupId: this.wellId,
                 };
                 tracer(request).then((res) => {
                     if (res.data.code == 200) {

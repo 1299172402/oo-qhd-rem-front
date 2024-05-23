@@ -58,9 +58,6 @@ export default {
       wellId: "09D30C16BD1D4F759D53F74941701307",
     };
   },
-  mounted() {
-    this.doSearch();
-  },
   methods: {
       passValue(val) {
       this.oilFeildId = val.ogfId;

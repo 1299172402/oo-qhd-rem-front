@@ -38,34 +38,25 @@ export default {
     data() {
         return {
             tableData: [],
+            oilFeildId: "",
+            //选择平台
+            platform: "",
+            //选择井号
+            wellId: "",
         };
     },
-    props: {
-        queryData:{}
-    },
-    watch:{
-        queryData:{
-            handler(Nval){
-                let params = {
-                    assetCode: Nval.platform,
-                    wellId: Nval.selectWellId
-                }
-                this.doSearch(params)
-            },
-            deep: true,
-        }
-    },
-    mounted() {
-        this.$nextTick(()=>{
-            let params = {
-                assetCode: this.queryData.platform,
-                wellId: this.queryData.selectWellId
-            }
-            this.doSearch(params)
-        })
-    },
     methods: {
-        doSearch(params){
+        passValue(val) {
+            this.oilFeildId = val.ogfId;
+            this.platform = val.assetCode;
+            this.wellId = val.selectWellId;
+            this.doSearch();
+        },
+        doSearch(){
+            let params ={
+                assetCode: this.platform,
+                wellId: this.wellId
+            }
             queryBasicData(params).then(res=>{
                 this.tableData = res.data.data
             })
