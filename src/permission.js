@@ -88,7 +88,7 @@ router.beforeEach(async(to, from, next) => {
 
 router.afterEach(() => {
   const token = store.getters["user/token"];
-  if (router.currentRoute.path !== "/login" && token) {
+  if (router.currentRoute.path !== "/login" && router.currentRoute.path !== "/appCallback" && token) {
     // 1.判断token是否失效
     const tokenParams = {
       token: store.getters["user/token"],
