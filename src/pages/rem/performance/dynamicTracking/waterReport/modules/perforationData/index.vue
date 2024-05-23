@@ -30,44 +30,35 @@
 import { getComPerfInterval} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js";
 import {exportExcel} from "@/lib/exportExcel.js";
 export default {
-    props: {
-        //选择油田
-        oilFeildId: {},
-        //选择平台
-        platform: {},
-        //选择井号
-        wellId: {},
-        queryData:{}
-    },
     data() {
         return {
             tableData: [],
+            oilFeildId: {},
+            //选择平台
+            platform: {},
+            //选择井号
+            wellId: {},
         }
     },
-    mounted() {
-        this.doSearch();
-    },
     methods: {
+        passValue(val) {
+            this.oilFeildId = val.ogfId;
+            this.platform = val.assetCode;
+            this.wellId = val.selectWellId;
+            this.doSearch();
+        },
         //根据父组件传递过来的参数进行查询
         doSearch() {
             let request = {
-                ogfId: this.queryData.ogfId,
-                platformId: this.queryData.platform,
-                wellId: this.queryData.selectWellId,
+                ogfId: this.oilFeildId,
+                platformId:  this.platform,
+                wellId: this.wellId,
             };
             getComPerfInterval(request).then((res) => {
                 if (res.data.code == 200) {
                     this.tableData = res.data.data.comPerfInterval;
                 }
             })
-        },
-        //下载
-        doDownLoad() {
-            let fileName = '射孔数据';
-            if (this.wellName) {
-                fileName = this.wellName + fileName;
-            }
-            exportExcel('#tableData',fileName);
         },
     },
 }

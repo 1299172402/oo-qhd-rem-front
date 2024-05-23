@@ -40,52 +40,25 @@ export default {
             }
         }
     },
-    props: {
-        queryData: {},
-        //选择油田
-        oilFeildId: {},
-        //选择平台
-        platform: {},
-        //选择井号
-        wellId: {}
-    },
-    computed: {
-        getQueryData() {
-            return this.queryData
-        }
-    },
-    watch: {
-        queryData: {
-            handler(Nval) {
-                console.log(Nval);
-                let params = {
-                    ogfId: Nval.ogfId,
-                    platformId: Nval.platform,
-                    wellId: Nval.selectWellId
-                }
-                this.doSearch(params)
-            }
-        }
-    },
     data() {
         return {
             tableData: [],
-            activeName: 'staticData',
+            oilFeildId: "",
+            //选择平台
+            platform: "",
+            //选择井号
+            wellId: "",
         };
-    },
-    mounted() {
-        this.doSearch();
     },
     methods: {
         //根据父组件传递过来的参数进行查询
         async doSearch() {
             try {
                 const request = {
-                    ogfId: this.queryData.ogfId,
-                    platformId: this.queryData.platform,
-                    wellId: this.queryData.selectWellId
+                    ogfId: this.oilFeildId,
+                    platformId: this.platform,
+                    wellId: this.wellId
                 };
-                console.log(request)
                 const [basicData, wellInfo] = await Promise.all([queryBasicData(request), wellBaseInfo(request)]);
                 this.tableData = [Object.assign(wellInfo?.data.data.wellBaseInfo[0], basicData?.data.data[0])]
             } catch (error) {
@@ -93,13 +66,11 @@ export default {
                 console.error(error);
             }
         },
-        //下载
-        doDownLoad() {
-            let fileName = '单井基本信息表';
-            if (this.wellName) {
-                fileName = this.wellName + fileName;
-            }
-            exportExcel('#tableData', fileName);
+        passValue(val) {
+            this.oilFeildId = val.ogfId;
+            this.platform = val.assetCode;
+            this.wellId = val.selectWellId;
+            this.doSearch();
         },
     }
 };
