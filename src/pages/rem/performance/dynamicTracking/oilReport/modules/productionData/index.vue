@@ -1,6 +1,6 @@
 <!-- 生产数据 -->
 <template>
-  <pagePanel headerTitle="生产指标" style="height: 650px;" show-btn>
+  <pagePanel headerTitle="生产指标" style="height: auto;" show-btn>
       <div class="z-search">
           <span>日期：</span>
           <el-date-picker
@@ -27,7 +27,7 @@
       </div>
       <div class="z-echarts">
           <pagePanel headerTitle="油井生产数据曲线图" style="margin-top: 10px; height: 100%;" show-btn>
-              <Echarts ref="echartDown" :chart-data="option" height="500px"></Echarts>
+              <Echarts ref="echartDown" :chart-data="option" height="400px"></Echarts>
           </pagePanel>
       </div>
       <div class="develop">
