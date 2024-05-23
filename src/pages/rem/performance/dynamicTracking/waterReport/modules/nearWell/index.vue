@@ -37,39 +37,26 @@ import { queryAdjacentWellData} from "@/api/oilDeposit/rem-01/dynamicAnalysis.js
 import {exportExcel} from "@/lib/exportExcel.js";
 import {downFile} from "@/lib/remBase64Download";
 export default {
-    props: {
-        //选择油田
-        oilFeildId: {},
-        //选择平台
-        platform: {},
-        //选择井号
-        wellId: {},
-        queryData:{}
-    },
   data() {
     return {
       tableData: [],
+        oilFeildId: "",
+        //选择平台
+        platform: "",
+        //选择井号
+        wellId: "",
     };
   },
-    mounted() {
-    this.doSearch();
-  },
-    watch:{
-        queryData:{
-            handler(Nval){
-                let data = {
-                    wellId: Nval.selectWellId
-                }
-                queryAdjacentWellData(data).then((res)=>{
-                    this.tableData = res.data.data
-                })
-            }
-        }
-    },
   methods: {
+      passValue(val) {
+          this.oilFeildId = val.ogfId;
+          this.platform = val.assetCode;
+          this.wellId = val.selectWellId;
+          this.doSearch();
+      },
       doSearch() {
           let data = {
-              wellId:this.queryData.selectWellId
+              wellId:this.wellId
           }
           queryAdjacentWellData(data).then((res)=>{
             this.tableData = res.data.data

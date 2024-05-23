@@ -29,30 +29,30 @@ import { outProfileLoggingInterpretation } from "@/api/oilDeposit/rem-01/dynamic
 import { downFile } from "@/lib/remBase64Download.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 export default {
-    props: {
-        //选择油田
-        oilFeildId: {},
-        //选择平台
-        platform: {},
-        //选择井号
-        wellId: {},
-        queryData:{}
-    },
+  
     data() {
         return {
             image: '',
             tableData: [],
+            oilFeildId: "",
+            //选择平台
+            platform: "",
+            //选择井号
+            wellId: "",
         };
     },
-    mounted() {
-        this.doSearch();
-    },
     methods: {
+        passValue(val) {
+            this.oilFeildId = val.ogfId;
+            this.platform = val.assetCode;
+            this.wellId = val.selectWellId;
+            this.doSearch();
+        },
         doSearch() {
             let request = {
-                ogfId: this.queryData.ogfId,
-                platformId: this.queryData.platform,
-                wellId: this.queryData.selectWellId,
+                ogfId: this.oilFeildId,
+                platformId: this.platform,
+                wellId: this.wellId,
             };
             outProfileLoggingInterpretation(request).then((res) => {
                 if (res.data.code == 200) {
@@ -68,16 +68,6 @@ export default {
                     this.tableData = res.data.data.injectivityIndexs;
                 }
             })
-        },
-        doDownLoad() {
-            let fileName = '产液剖面';
-            if (this.wellName) {
-                fileName = this.wellName + fileName;
-            }
-            if (this.image){
-                downFile(this.image, fileName);
-                exportExcel('#tableData', fileName);
-            }
         },
     },
 };
