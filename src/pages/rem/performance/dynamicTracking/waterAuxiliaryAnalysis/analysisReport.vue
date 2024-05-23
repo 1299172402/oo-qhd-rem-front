@@ -395,6 +395,23 @@
                         </el-tooltip>
                       </template>
                     </el-table-column>
+                    <el-table-column prop="zsqdForm" label="注水强度" align="center">
+                      <el-table-column prop="average" label="区块均值" align="center">
+                        <template slot-scope="{ row }">
+                          <span>{{ row.zsqdForm && row.zsqdForm.average ? row.zsqdForm.average : "-" }}</span>
+                        </template>
+                      </el-table-column>
+                      <el-table-column prop="valshu" label="本井值" align="center">
+                        <template slot-scope="{ row }">
+                          <span>{{ row.zsqdForm && row.zsqdForm.value ? row.zsqdForm.value : "-" }}</span>
+                        </template>
+                      </el-table-column>
+                      <el-table-column prop="zsqdFormName" label="评价结论" align="center" min-width="140">
+                        <template slot-scope="{ row }">
+                          <span>{{ row.zsqdForm && row.zsqdForm.showLabel ? row.zsqdForm.showLabel : "-" }}</span>
+                        </template>
+                      </el-table-column>
+                    </el-table-column>
                   </el-table-column>
                   <el-table-column prop="overUnderInjectionAnalysis" label="超欠注原因分析" align="center">
                     <el-table-column
@@ -997,18 +1014,23 @@
                         </el-tooltip>
                       </template>
                     </el-table-column>
-                    <!-- <el-table-column :key="`index39-1`" prop="zsqdForm" label="注水强度" align="center">
-                      <el-table-column :key="`index39-1-1`" prop="zsqdFormValue" label="数值" align="center">
+                    <el-table-column prop="zsqdForm" label="注水强度" align="center">
+                      <el-table-column prop="average" label="区块均值" align="center">
                         <template slot-scope="{ row }">
-                          <span>{{ row["zsqdFormValue"] ? row[item.code] : "-" }}</span>
+                          <span>{{ row.zsqdForm && row.zsqdForm.average ? row.zsqdForm.average : "-" }}</span>
                         </template>
                       </el-table-column>
-                      <el-table-column :key="`index39-1-2`" prop="zsqdFormName" label="评价结论" align="center">
+                      <el-table-column prop="valshu" label="本井值" align="center">
                         <template slot-scope="{ row }">
-                          <span>{{ row["zsqdFormName"] ? row['zsqdFormName'] : "-" }}</span>
+                          <span>{{ row.zsqdForm && row.zsqdForm.value ? row.zsqdForm.value : "-" }}</span>
                         </template>
                       </el-table-column>
-                    </el-table-column> -->
+                      <el-table-column prop="zsqdFormName" label="评价结论" align="center" min-width="140">
+                        <template slot-scope="{ row }">
+                          <span>{{ row.zsqdForm && row.zsqdForm.showLabel ? row.zsqdForm.showLabel : "-" }}</span>
+                        </template>
+                      </el-table-column>
+                    </el-table-column>
                   </el-table-column>
                   <el-table-column prop="overUnderInjectionAnalysis" label="超欠注原因分析" align="center">
                     <el-table-column
@@ -1590,8 +1612,11 @@ export default {
             });
             myData[i][t_data.code + "Message"] = messData && messData.message ? messData.message : "";
             myData[i][t_data.code] = messData && messData.itemValue ? messData.itemValue : "";
-            // myData[i]["zsqdFormValue"] = messData && messData.name ? messData.name : "";
-            // myData[i]["zsqdFormName"] = messData && messData.itemValue ? messData.itemValue : "";
+            myData[i]["zsqdForm"] = {
+              average: messData && messData.blockAvg ? messData.blockAvg : "",
+              value: messData && messData.itemValue ? messData.itemValue : "",
+              showLabel: t_data && t_data.name ? t_data.name : "",
+            };
             myData[i].id = Math.random() * 3;
           }
           //选中项目不需要测试
@@ -1625,6 +1650,11 @@ export default {
                     children[b].id = Math.random() * 3;
                     children[b][key1] = evalBasisLayers[a].message;
                     children[b][key2] = evalBasisLayers[a].itemValue;
+                    children[b]["zsqdForm"] = {
+                      average: evalBasisLayers[a].blockAvg,
+                      value: evalBasisLayers[a].itemValue,
+                      showLabel: t_data.name,
+                    };
                   }
                 }
                 if (!isFindOut) {
@@ -1635,6 +1665,11 @@ export default {
                     isLayer: true,
                     [key1]: evalBasisLayers[a].message,
                     [key2]: evalBasisLayers[a].itemValue,
+                    ["zsqdForm"]: {
+                      average: evalBasisLayers[a].blockAvg,
+                      value: evalBasisLayers[a].itemValue,
+                      showLabel: t_data.name,
+                    },
                   });
                 }
               }
@@ -1645,6 +1680,11 @@ export default {
                   wellId: el.layerCode,
                   [key1]: el.message,
                   [key2]: el.itemValue,
+                  ["zsqdForm"]: {
+                    average: el.blockAvg,
+                    value: el.itemValue,
+                    showLabel: t_data.name,
+                  },
                 });
               });
             }
@@ -2397,6 +2437,11 @@ export default {
             });
             myData[i][t_data.code + "Message"] = messData && messData.message ? messData.message : "";
             myData[i][t_data.code] = messData && messData.itemValue ? messData.itemValue : "";
+            myData[i]["zsqdForm"] = {
+              average: messData && messData.blockAvg ? messData.blockAvg : "",
+              value: messData && messData.itemValue ? messData.itemValue : "",
+              showLabel: t_data && t_data.name ? t_data.name : "",
+            };
             myData[i].id = Math.random() * 3;
           }
           //选中项目不需要测试
@@ -2431,6 +2476,11 @@ export default {
                     children[b].id = Math.random() * 3;
                     children[b][key1] = evalBasisLayers[a].message;
                     children[b][key2] = evalBasisLayers[a].itemValue;
+                    children[b]["zsqdForm"] = {
+                      average: evalBasisLayers[a].blockAvg,
+                      value: evalBasisLayers[a].itemValue,
+                      showLabel: t_data.name,
+                    };
                   }
                 }
                 if (!isFindOut) {
@@ -2439,6 +2489,11 @@ export default {
                     wellId: evalBasisLayers[a].layerCode,
                     [key1]: evalBasisLayers[a].message,
                     [key2]: evalBasisLayers[a].itemValue,
+                    ["zsqdForm"]: {
+                      average: evalBasisLayers[a].blockAvg,
+                      value: evalBasisLayers[a].itemValue,
+                      showLabel: t_data.name,
+                    },
                   });
                 }
               }
@@ -2451,6 +2506,11 @@ export default {
                   isLayer: true,
                   [key1]: el.message,
                   [key2]: el.itemValue,
+                  ["zsqdForm"]: {
+                    average: el.blockAvg,
+                    value: el.itemValue,
+                    showLabel: t_data.name,
+                  },
                 });
               });
             }
