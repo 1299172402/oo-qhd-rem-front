@@ -107,9 +107,9 @@ export default {
           this.$refs.toolchild3.changeWellid(val)
       },
       queryAll(val){
-          (this.queryData.ogfId = val.oilFeildId),
-              (this.queryData.assetCode = val.platform),
-              (this.queryData.selectWellId = val.wellId);
+          (this.queryData.ogfId = this.oilFeildId),
+              (this.queryData.assetCode = this.platform),
+              (this.queryData.selectWellId = this.wellId);
           for (let i = 0, j = 10; i <= j; i++) {
               const child = this.$refs[`toolchild${i}`];
               child.passValue(this.queryData);
