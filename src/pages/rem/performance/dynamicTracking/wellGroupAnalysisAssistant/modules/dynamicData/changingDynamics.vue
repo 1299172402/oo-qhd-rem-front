@@ -46,7 +46,7 @@
           align="center"
         ></el-table-column>
         <el-table-column prop="layerName" label="层位" min-width="200" align="center"></el-table-column>
-        <el-table-column prop="oilWellName" label="油井" min-width="130" align="center"></el-table-column>
+        <el-table-column prop="oilWellName" label="油井" min-width="160" align="center"></el-table-column>
         <el-table-column prop="effectivenessSituation" label="受效情况" align="center"></el-table-column>
         <el-table-column header-align="center" min-width="500">
           <template slot="header">
