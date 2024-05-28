@@ -24,38 +24,30 @@ import {queryRemUploadFileMinio} from "@/api/rem/remuploadfileminio";
 import {filePreview,downFile} from "@/components/upload/utils/file";
 import FileSaver from "file-saver";
 export default {
-    props: {
-        //选择油田
-        oilFeildId: {},
-        //选择平台
-        platform: {},
-        //选择井号
-        wellId: {},
-        queryData:{}
-    },
     data() {
         return {
             fileId:'',
             filestrId:'',
             src:'',
             uploadTime: "", // 文件上传时间
+            oilFeildId: {},
+            //选择平台
+            platform: {},
+            //选择井号
+            wellId: {},
         };
     },
-    watch:{
-        queryData:{
-            handler(Nval){
-                this.doSearch();
-            },
-            deep: true,
-        }
-    },
-    mounted() {
-        this.doSearch();
-    },
+
     methods: {
+        passValue(val) {
+            this.oilFeildId = val.ogfId;
+            this.platform = val.assetCode;
+            this.wellId = val.selectWellId;
+            this.doSearch();
+        },
         doSearch() {
             let params = {
-                operationId: this.queryData.selectWellId,
+                operationId: this.wellId ,
                 operationType: 'WATERJWT',
                 readOne: 'one'
             }

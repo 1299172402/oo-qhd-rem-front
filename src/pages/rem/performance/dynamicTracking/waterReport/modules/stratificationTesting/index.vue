@@ -111,15 +111,6 @@ let stopTime = new Date('2020-1-1')
 export default {
     components: {},
     // mixins: [dropDownUnit],
-    props: {
-        //选择油田
-        oilFeildId: {},
-        //选择平台
-        platform: {},
-        //选择井号
-        wellId: {},
-        queryData:{}
-    },
     data() {
         return {
             selectArray: '',
@@ -150,40 +141,26 @@ export default {
                     return time.getTime() > new Date(timeNew.getFullYear(), timeNew.getMonth() - 1).getTime()
                 }
             },
+            oilFeildId: {},
+            //选择平台
+            platform: {},
+            //选择井号
+            wellId: {},
         }
     },
-
-    mounted() {
-        // this.initData();
-        // this.retrievalBut()
-        // let data = {
-        //   platformId: '0C118F2856574256A8F1BBA26F99BA1A',
-        //   dateTime: '2022-09'
-        // }
-        // this.getForecast(data)
-        this.doSearch()
-    },
-    watch:{
-        queryData:{
-            handler(Nval){
-                let request = {
-                    ogfId: this.queryData.ogfId,
-                    platformId: this.queryData.platform,
-                    wellId: this.queryData.selectWellId,
-                    layerId:this.selectPosition,
-                    dateTime:new Date().format('yyyy-MM')
-                };
-                this.getForecast(request)
-            },
-            deep: true,
-        }
-    },
+    
     methods: {
+        passValue(val) {
+            this.oilFeildId = val.ogfId;
+            this.platform = val.assetCode;
+            this.wellId = val.selectWellId;
+            this.doSearch();
+        },
         doSearch() {
             let request = {
-                ogfId: this.queryData.ogfId,
-                platformId: this.queryData.platform,
-                wellId: this.queryData.selectWellId,
+                ogfId: this.oilFeildId,
+                platformId: this.platform,
+                wellId: this.wellId,
                 layerId:this.selectPosition,
                 dateTime:new Date().format('yyyy-MM')
             };
@@ -197,17 +174,17 @@ export default {
                     this.tableData = res
                     // this.table = res[0].almostYearAvgMonthAbsorpList? res[0].almostYearAvgMonthAbsorpList : []
                     const params = {
-                        ogfId: this.queryData.ogfId,
-                        platformId: this.queryData.platform,
-                        wellId: this.queryData.selectWellId,
+                        ogfId: this.oilFeildId,
+                        platformId: this.platform,
+                        wellId: this.wellId,
                         layerId:this.selectPosition,
                         dateTime:new Date().format('yyyy-MM')
                     }
                     this.tableData.forEach((item) => {
                         const tempList = []
                         if (Array.isArray(item.almostYearAvgMonthAbsorpList) && item.almostYearAvgMonthAbsorpList.length) {
-                            item.platId = this.queryData.platform,
-                            item.dateTime = this.queryData.dateTime
+                            item.platId = this.platform,
+                            item.dateTime = new Date().format('yyyy-MM')
                             // item.almostYearAvgMonthAbsorpList.forEach((el) => {
                             //   if(!this.table.includes(el.yearMonth)){
                             //     this.table.push(el.yearMonth)

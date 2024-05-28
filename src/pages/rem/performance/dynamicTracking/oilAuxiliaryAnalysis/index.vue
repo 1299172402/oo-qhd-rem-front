@@ -759,7 +759,7 @@ export default {
       await QueryWellDetail({
         ogfId: this.selectOilField,
         // platformId: this.selectPlatform,
-        wellboreType: "采油井",
+        // wellboreType: "采油井",
       }).then((res) => {
         //判断联通状态
         if (res.data.code == 200) {
@@ -815,7 +815,7 @@ export default {
       QueryWellDetail({
         ogfId: this.selectOilField,
         platformId: isOilFieldId ? undefined : this.selectPlatform,
-        wellboreType: "采油井",
+        // wellboreType: "采油井",
       }).then((res) => {
         if (res.data.code == 200) {
           let wellData = res.data.data;
@@ -936,7 +936,7 @@ export default {
         QueryWellDetail({
           ogfId: this.selectOilField,
           platformId: this.selectOilField == this.selectPlatform ? undefined : this.selectPlatform,
-          wellboreType: "采油井",
+          // wellboreType: "采油井",
         }).then((res) => {
           if (res.data.code == 200) {
             let wellData = res.data?.data || [];

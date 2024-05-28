@@ -128,6 +128,31 @@ export default {
       allocOrCalculate: "1",
       option: {
         dataZoom: [
+        {
+            type: "slider",
+            show: true,
+            height: "15px",
+            bottom: "8px",
+            xAxisIndex: [0, 1, 2],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [0,1,2,3],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [4,5,6,7],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [8,9,10],
+          },
           {
             type: "inside",
             xAxisIndex: [0, 1, 2],
@@ -158,7 +183,7 @@ export default {
             fontSize: 14,
           },
           x: "center",
-          bottom: 0,
+          bottom: 30,
           icon: "rect",
           itemWidth: 12,
           itemHeight: 6,
@@ -185,22 +210,22 @@ export default {
         },
         grid: [
           {
-            left: "14%",
-            top: "5%",
+            left: "12%",
+            top: "3%",
             width: "74%",
-            height: "25%",
+            height: "22%",
           },
           {
-            left: "14%",
-            top: "34%",
+            left: "12%",
+            top: "32%",
             width: "74%",
-            height: "25%",
+            height: "22%",
           },
           {
-            left: "14%",
-            top: "64%",
+            left: "12%",
+            top: "62%",
             width: "74%",
-            height: "25%",
+            height: "22%",
           },
         ],
         xAxis: [
@@ -762,15 +787,15 @@ export default {
               series.xAxisIndex = 1;
               series.yAxisIndex = 6;
               series.itemStyle = { color: "rgb(255,99,31)" };
-            } else if (lineName == "日产液量") {
+            } else if (lineName == "日产液量" || lineName == "产液") {
               series.xAxisIndex = 2;
               series.yAxisIndex = 9;
               series.itemStyle = { color: "rgb(250,0,251)" };
-            } else if (lineName == "日产油量") {
+            } else if (lineName == "日产油量" || lineName == "产油") {
               series.xAxisIndex = 2;
               series.yAxisIndex = 8;
               series.itemStyle = { color: "rgb(0,128,0)" };
-            } else if (lineName == "日产气量") {
+            } else if (lineName == "日产气量" || lineName == "产气") {
               series.xAxisIndex = 2;
               series.yAxisIndex = 10;
               series.itemStyle = { color: "rgb(255,0,0)" };
@@ -904,7 +929,7 @@ export default {
   }
 
   .z-echarts {
-    height: calc(100% - 85px);
+    height: 100%;
     width: 100%;
     overflow-y: scroll;
     padding-right: 20px;

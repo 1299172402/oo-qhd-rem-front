@@ -15,70 +15,31 @@
     import { workingHistory } from '@/api/oilDeposit/rem-01/dynamicAnalysis.js';
     import { exportExcel } from '@/lib/exportExcel.js';
     export default {
-        props: {
-            queryData:{},
-            //选择油田
-            oilFeildId: {},
-            //选择平台
-            platform: {},
-            //选择井号
-            wellId: {},
-            //大事简要
-            majorEventsBrieflyValue: ''
-        },
-        computed:{
-            getQueryData(){
-                return this.queryData
-            }
-        },
-        watch:{
-          queryData:{
-              handler(Nval){
-                  let params = {
-                      ogfId: Nval.ogfId,
-                      platformId: Nval.platform,
-                      wellId: Nval.selectWellId
-                  }
-                  this.doSearch(params)
-              }
-          }  
-        },
         data() {
             return {
                 tableData: []
             };
         },
-        mounted() {
-            let params = {
-                ogfId: this.queryData.ogfId,
-                platformId: this.queryData.platform,
-                wellId: this.queryData.selectWellId
-            }
-            this.doSearch(params);
-        },
         methods: {
+            passValue(val) {
+                this.oilFeildId = val.ogfId;
+                this.platform = val.assetCode;
+                this.wellId = val.selectWellId;
+                this.doSearch();
+            },
             //根据父组件传递过来的参数进行查询
-            doSearch(majorEventsBrieflyValue) {
-                // let request = {
-                //     ogfId: this.oilFeildId,
-                //     platformId: this.platform,
-                //     wellId: this.wellId,
-                //     majorEventsBriefly:majorEventsBrieflyValue!==undefined?majorEventsBrieflyValue:this.majorEventsBrieflyValue
-                // };
-                workingHistory(majorEventsBrieflyValue).then((res) => {
+            doSearch() {
+                let request = {
+                    ogfId:  this.oilFeildId ,
+                    platformId: this.platform,
+                    wellId: this.wellId,
+                };
+                workingHistory(request).then((res) => {
                     if (res.data.code == 200) {
                         this.tableData = res.data.data.workingHistorys;
                     }
                 });
             },
-            //下载
-            doDownLoad() {
-                let fileName = '作业井史';
-                if (this.wellName) {
-                    fileName = this.wellName + fileName;
-                }
-                exportExcel('#tableData', fileName);
-            }
         }
     };
 </script>

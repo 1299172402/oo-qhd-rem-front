@@ -44,28 +44,28 @@
           property="gasProdPlan"
           header-align="center"
           align="center"
-          :label="`计划产气量\n(10⁴m³)`"
+          :label="`计划产气量\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³' : '10⁴t'})`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           property="gasProdDaily"
           header-align="center"
           align="center"
-          :label="`实际产气量\n(10⁴m³)`"
+          :label="`实际产气量\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³' : '10⁴t'})`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="oilEquivalent"
           header-align="center"
           align="center"
-          :label="`气转油量\n(t)`"
+          :label="`气转油量\n(${searchForm.selectUnitOfProduction == 'm' ? 'm³' : 't'})`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="gasProdRollFocecast"
           header-align="center"
           align="center"
-          :label="`滚动预测产气量\n(10⁴m³)`"
+          :label="`滚动预测产气量\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³' : '10⁴t'})`"
           :formatter="toPrecise4"
         ></el-table-column>
       </el-table>
@@ -118,6 +118,19 @@ export default {
         },
         dataZoom: [
           {
+            type: "slider",
+            show: true,
+            height: "15px",
+            bottom: "8px",
+            xAxisIndex: [0],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [0],
+          },
+          {
             type: "inside",
             xAxisIndex: [0],
             start: 0, //滚动条开始位置（共100等份）
@@ -145,7 +158,7 @@ export default {
         grid: {
           x: 120,
           y: 30,
-          x2: 120,
+          x2: 140,
           y2: 100,
         },
         legend: {
@@ -197,7 +210,7 @@ export default {
         ],
         yAxis: [
           {
-            name: "实际产气量(10⁴m³)",
+            name: "实际产气量(10⁴t)",
             nameLocation: "middle",
             nameGap: 70,
             nameTextStyle: {
@@ -283,6 +296,7 @@ export default {
     getSearchGasChart() {
       let request = {
         oilFieldId: this.searchForm.selectOilField,
+        unitType: this.searchForm.selectUnitOfProduction,
         beginDate: this.searchForm.selectDate[0],
         endDate: this.searchForm.selectDate[1],
         planTypeCode: this.searchForm.planTypeCode,
@@ -293,6 +307,13 @@ export default {
         let legendData = [];
         //折线数据信息
         let seriesData = [];
+        if (this.searchForm.selectUnitOfProduction == "m") {
+          this.GasProLineChart.yAxis[0].name = "实际产气量(10⁴m³)";
+          this.GasProLineChart.yAxis[1].name = "气转油量(m³)";
+        } else if (this.searchForm.selectUnitOfProduction == "t") {
+          this.GasProLineChart.yAxis[0].name = "实际产气量(10⁴t)";
+          this.GasProLineChart.yAxis[1].name = "气转油量(t)";
+        }
         //请求成功 获得数据
         if (res.data.code == 200) {
           //获得图表中数据
@@ -309,6 +330,7 @@ export default {
           //获得图例结果赋值
           this.GasProLineChart.legend.data = legendData;
           //获得折线数据结果赋值
+          this.GasProLineChart.series = seriesData;
           this.GasProLineChart.series = seriesData;
         }
       });
@@ -346,6 +368,7 @@ export default {
     getGasTable() {
       let request = {
         oilFieldId: this.searchForm.selectOilField,
+        unitType: this.searchForm.selectUnitOfProduction,
         beginDate: this.searchForm.selectDate[0],
         endDate: this.searchForm.selectDate[1],
         planTypeCode: this.searchForm.planTypeCode,

@@ -332,11 +332,7 @@
                 end-placeholder="结束日期"
                 value-format="yyyy-MM-dd"
               ></el-date-picker>
-              <el-select
-                v-model="allocOrCalculate"
-                placeholder="请选择"
-                style="width: 150px; margin-left: 20px"
-              >
+              <el-select v-model="allocOrCalculate" placeholder="请选择" style="width: 150px; margin-left: 20px">
                 <el-option
                   :label="item.name"
                   :value="item.code"
@@ -709,23 +705,23 @@ export default {
       isSelect: 0,
       optionRealData: {},
       defaultTypeList: [
-        ["001001", "001004", "002003", "002002", "003001", "003002", "003003", "003004", "003005", "003006"],
         [
-          "001008",
+          "001001",
+          "001002",
+          "001003",
+          "001004",
           "001005",
-          "002004",
-          "002005",
-          "002006",
-          "002007",
-          "003007",
-          "003008",
-          "003009",
-          "003010",
-          "003011",
-          "003012",
+          "001008",
+          "003001",
+          "003002",
+          "003003",
+          "003004",
+          "003005",
+          "003006",
         ],
-        ["002001", "001002", "001003", "002008", "003013", "003014", "003015", "003016", "003017", "003018"],
-        ["003019", "003020"],
+        ["002001", "002008", "002002", "002003", "002004", "003007", "003008", "003009", "003010", "003011", "003012"],
+        ["002005", "002006", "002007", "003013", "003014", "003015", "003016"],
+        ["003019", "003017", "003020", "003018"],
       ],
       paramsList: [
         {
@@ -2210,6 +2206,7 @@ export default {
       await QueryWellDetail({
         ogfId: val,
         platformId: this.selectPlatform,
+        wellboreType: this.type == 0 ? "采油井" : "注水井",
       }).then((res) => {
         if (res.data.code == 200) {
           this.wells = res.data.data;
@@ -2247,6 +2244,7 @@ export default {
       await QueryWellDetail({
         ogfId: oilFieldId,
         platformId: platformId,
+        wellboreType: this.type == 0 ? "采油井" : "注水井",
       }).then((res) => {
         if (res.data.code == 200) {
           this.wells = res.data.data;
@@ -2495,15 +2493,15 @@ export default {
               series.xAxisIndex = 0;
               series.yAxisIndex = 1;
               series.itemStyle = { color: "rgb(250,0,251)" };
-            } else if (lineName == "日产液量") {
+            } else if (lineName == "日产液量" || lineName == "产液") {
               series.xAxisIndex = 2;
               series.yAxisIndex = 9;
               series.itemStyle = { color: "rgb(250,0,251)" };
-            } else if (lineName == "日产油量") {
+            } else if (lineName == "日产油量" || lineName == "产油") {
               series.xAxisIndex = 2;
               series.yAxisIndex = 8;
               series.itemStyle = { color: "rgb(0,128,0)" };
-            } else if (lineName == "日产气量") {
+            } else if (lineName == "日产气量" || lineName == "产气" ) {
               series.xAxisIndex = 2;
               series.yAxisIndex = 10;
               series.itemStyle = { color: "rgb(255,0,0)" };
@@ -2841,20 +2839,20 @@ export default {
       return obj1;
     },
     getChartsOption() {
-      // 求实时数据中的x轴，，
-      const xSet = new Set();
-      for (const [key, value] of Object.entries(this.realTimeData)) {
-        // 判断value是否为数组
-        if (Array.isArray(value)) {
-          value.forEach((item, index) => {
-            xSet.add(item.date);
-          });
-        } else {
-          return true;
-        }
-      }
-      // 对x轴做排序
-      const xArray = Array.from(xSet).sort();
+      // // 求实时数据中的x轴，，
+      // const xSet = new Set();
+      // for (const [key, value] of Object.entries(this.realTimeData)) {
+      //   // 判断value是否为数组
+      //   if (Array.isArray(value)) {
+      //     value.forEach((item, index) => {
+      //       xSet.add(item.date);
+      //     });
+      //   } else {
+      //     return true;
+      //   }
+      // }
+      // // 对x轴做排序
+      // const xArray = Array.from(xSet).sort();
       this.optionRealData = {
         dataZoom: [
           {
@@ -2918,7 +2916,7 @@ export default {
               /* data: (this.realTimeData[0] && this.realTimeData[0].paramValues)
                                               ? this.realTimeData[0].paramValues.map((item) => item.date)
                                               : [], */
-              data: xArray,
+              // data: xArray,
               textStyle: {
                 fontSize: 14,
               },
@@ -3021,17 +3019,9 @@ export default {
                   // data: this.realTimeData[paramCode]
                   //   ? this.realTimeData[paramCode].map((item) => [item.date, item.paramValue])
                   //   : [],
-                  data:
-                    xArray.length && this.realTimeData[paramCode]
-                      ? xArray.map((itemA) => {
-                          let data = this.realTimeData[paramCode].find((item) => item.date === itemA);
-                          if (data) {
-                            return [data.date, data.paramValue];
-                          } else {
-                            return [itemA, null];
-                          }
-                        })
-                      : [],
+                  data: this.realTimeData[paramCode]
+                        ? this.realTimeData[paramCode].map((itemA) => [itemA.date, itemA.paramValue])
+                        : [],
                   name: this.childParamsList.find((item) => item.paramCode == paramCode).paramName,
                   label: {
                     show: false,
@@ -3235,7 +3225,7 @@ export default {
   .pagePanelNew {
     flex: 1;
     // height:0;
-    min-height: 500px;
+    min-height: 600px;
   }
   .main {
     // flex:1;

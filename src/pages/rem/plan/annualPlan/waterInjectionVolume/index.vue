@@ -49,28 +49,28 @@
           prop="injectionDailyReal"
           header-align="center"
           align="center"
-          :label="`实际日注入量\n(m³)`"
+          :label="`实际日注入量\n(${searchForm.selectUnitOfProduction == 'm' ? 'm³' : 't'})`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           prop="injectionDailyPlan"
           header-align="center"
           align="center"
-          :label="`计划日注入量\n(m³)`"
+          :label="`计划日注入量\n(${searchForm.selectUnitOfProduction == 'm' ? 'm³' : 't'})`"
           :formatter="toPrecise2"
         ></el-table-column>
         <el-table-column
           property="injectionSumReal"
           header-align="center"
           align="center"
-          :label="`实际年累注\n(10⁴m³)`"
+          :label="`实际年累注\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³' : '10⁴t'})`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           prop="injectionSumPlan"
           header-align="center"
           align="center"
-          :label="`计划年累注\n(10⁴m³)`"
+          :label="`计划年累注\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³' : '10⁴t'})`"
           :formatter="toPrecise4"
         ></el-table-column>
       </el-table>
@@ -124,6 +124,19 @@ export default {
         },
         dataZoom: [
           {
+            type: "slider",
+            show: true,
+            height: "15px",
+            bottom: "8px",
+            xAxisIndex: [0],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [0],
+          },
+          {
             type: "inside",
             xAxisIndex: [0],
             start: 0, //滚动条开始位置（共100等份）
@@ -151,7 +164,7 @@ export default {
         grid: {
           x: 120,
           y: 50,
-          x2: 120,
+          x2: 140,
           y2: 100,
         },
         legend: {
@@ -285,6 +298,7 @@ export default {
     getSearchInjectionChart() {
       let request = {
         oilFieldId: this.searchForm.selectOilField,
+        unitType: this.searchForm.selectUnitOfProduction,
         beginDate: this.searchForm.selectDate[0],
         endDate: this.searchForm.selectDate[1],
         planTypeCode: this.searchForm.planTypeCode,
@@ -297,6 +311,13 @@ export default {
         let seriesData = [];
         let xSet = new Set();
         let xData = [];
+        if (this.searchForm.selectUnitOfProduction == "m") {
+          this.OilYearLineChart.yAxis[0].name = "日注水量(m³)";
+          this.OilYearLineChart.yAxis[1].name = "年注水量(10⁴m³)";
+        } else if (this.searchForm.selectUnitOfProduction == "t") {
+          this.OilYearLineChart.yAxis[0].name = "日注水量(t)";
+          this.OilYearLineChart.yAxis[1].name = "年注水量(10⁴t)";
+        }
         if (res.data.code == 200) {
           let chartDatas = res.data.data.chart.linearDataSets;
           for (let i = 0; i < chartDatas.length; i++) {
@@ -386,6 +407,7 @@ export default {
     getSearchInjectionTable() {
       let request = {
         oilFieldId: this.searchForm.selectOilField,
+        unitType: this.searchForm.selectUnitOfProduction,
         beginDate: this.searchForm.selectDate[0],
         endDate: this.searchForm.selectDate[1],
         planTypeCode: this.searchForm.planTypeCode,
