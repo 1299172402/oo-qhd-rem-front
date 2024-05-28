@@ -42,6 +42,16 @@ export function getWellData(data) {
         data
     });
 }
+export function getWellDataforme(data) {
+    return Axios({
+        url: `${baseUrl}/omc003d/QueryWellDetailforme`,
+        method: "post",
+        headers: {
+            showLoading: false
+        },
+        data
+    });
+}
 
 export function getWellDataForWellStyle(data) {
     return Axios({

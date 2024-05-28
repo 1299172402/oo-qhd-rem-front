@@ -8,9 +8,8 @@
                 <el-form-item label="油田：">
                     <el-select
                         v-model="queryData.ogfId"
-                        disabled
                         style="width: 180px"
-                        @change="changeOil">
+                        @change="queryBlockFeild1">
                         <el-option
                             v-for="item in oilList"
                             :key="item.ogfId"
@@ -20,17 +19,17 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区块：">
-                    <el-select v-model="queryData.blockId" @change="changeBlock">
+                    <el-select v-model="queryData.blockId" @change="queryWellData1" >
                         <el-option
                             v-for="item in blockList"
                             :key="item.blockId"
-                            :label="item.blockName"
-                            :value="{ value: item.blockId, label: item.blockName }"
+                            :label="item.reservoirAnalyseUnitName"
+                            :value="{ value: item.reservoirAnalyseUnitId, label: item.reservoirAnalyseUnitName }"
                         ></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="井别：">
-                    <el-select v-model="queryData.wellCategory" filterable @change="changeWell" style="width: 100px">
+                    <el-select v-model="queryData.wellCategory" filterable style="width: 100px" @change="queryWellData1">
                         <el-option
                             v-for="item in wellCategoryList"
                             :key="item.id"
@@ -41,15 +40,15 @@
                 </el-form-item>
                 <el-form-item label="井号：">
                     <el-select
-                        v-model="wellName"
+                        v-model="queryData.wellId"
                         class="collapseTags"
                         clearable
-                        @change="getDataInfo(wellName)">
+                        @change="getDataInfo">
                         <el-option
                             v-for="item in wellList"
-                            :key="item.wellName"
+                            :key="item.wellId"
                             :label="item.wellName"
-                            :value="item.wellName"
+                            :value="item.wellId"
                         />
                     </el-select>
                 </el-form-item>
@@ -58,19 +57,15 @@
         <page-panel-new header-title="油井生产段维护列表" class="g-w100" style="height:580px">
             <el-row class="mbBottom">
                 <el-col class="height-placeholder" :span="20">
-                    <el-button type="primary" @click="showAddDialog">
-                        新增
+<!--                    <el-button type="primary" @click="showAddDialog">-->
+<!--                        新增-->
+<!--                    </el-button>-->
+                    <el-button type="primary" @click="showAddDialogPI">
+                        新增生产段
                     </el-button>
                 </el-col>
-                <!-- <el-col :span="4" style="text-align: right">
-                  <el-button
-                    v-hasPermi="['system:logininfor:export']"
-                    type="primary"
-                  >
-                    导出
-                  </el-button>
-                </el-col> -->
             </el-row>
+         
             <el-table
                 height="calc(100% - 113px)"
                 :row-style="{ height: '0px' }"
@@ -81,12 +76,11 @@
                 style="width: 100%; height: 100%"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column type="index" label="序号" width="100" />
                 <el-table-column prop="wellName" label="井名" min-width="150"/>
-                <el-table-column prop="layerName" label="层位名称" v-if="this.ifshow" min-width="150"/>
-                <el-table-column prop="prIntervalname" label="生产段" width="150" />
-                <el-table-column prop="openOrClose" label="状态" width="100" />
-                <el-table-column prop="startDate" label="日期" width="180" />
+                <el-table-column prop="prodInterName" label="生产段" width="150" />
+                <el-table-column prop="layerName" label="层位名称" min-width="150"/>
+                
+                
                 <el-table-column label="操作" width="400">
                     <template slot-scope="scope">
                         <el-button type="text" @click="showDialog(scope.row,'up')">
@@ -105,60 +99,104 @@
                 :close-on-click-modal="false">
                 <div style="margin-top: 10px;">
                     井名
-                    <span class="idstyle">{{this.DialogData.wellName}}</span>
-                </div>
-                <div style="margin-top: 10px;" v-if="this.ifshow">
-                    层位名称
-                    <span style="margin-left: 25px;"><el-select v-model="lnselect" class="f2" style="width:220px" filterable clearable @change="choseLN">
-                  <el-option v-for="item in LNData" :key="item" :label="item" :value="item" :disabled="item.disabled">
-                  </el-option>
-              </el-select></span>
+                    <span class="idstyle" >{{this.editdialogWellName}}</span>
                 </div>
                 <div style="margin-top: 10px;">
                     生产段
-                    <span style="margin-left: 25px;"><el-select v-model="piselect" class="f2" style="width:220px" filterable clearable @change="chosePI">
-                  <el-option v-for="item in PIData" :key="item" :label="item" :value="item" :disabled="item.disabled">
+                    <span class="idstyle" style="margin-left: 45px">{{this.editdialogPiName}}</span>
+                </div>
+                <div style="margin-top: 10px;">
+                    <div>生产段顶深
+                        <el-input class="inputPi" type="number" v-model="inputEditPItop" :placeholder="minputEditPItop" style="margin-left: 10px">
+
+                        </el-input>
+                        
+                    </div>
+                    <div>生产段底深
+                        <el-input class="inputPi" type="number" v-model="inputEditPIbottom" :placeholder="minputEditPIbottom" style="margin-left: 10px">
+
+                        </el-input>
+
+                    </div>
+                    
+                </div>
+                <div style="margin-top: 10px;">
+                    层位名称
+                    <span style="margin-left: 25px;"><el-select v-model="lnselect" class="f2" style="width:220px" filterable clearable>
+                  <el-option v-for="item in LNData" :key="item.layerId" :label="item.layerName" :value="item.layerId" :disabled="item.disabled">
                   </el-option>
               </el-select></span>
                 </div>
-                <div style="margin-top: 10px;">
-                    开关状态
-                    <span style="margin-left: 12px;margin-top: 20px;"><el-select v-model="ocselect" class="f2" style="width:220px" filterable clearable @change="choseOc">
-                  <el-option v-for="item in ocData" :key="item" :label="item" :value="item" :disabled="item.disabled">
+                
+                <span slot="footer" class="dialog-footer">
+                    <el-button class="cancelBtn" @click="dialogVisible = false">取 消</el-button>
+                    <el-button type="primary" class="buttonActive_primary" @click="sureInfo">确 定</el-button>
+                </span>
+            </el-dialog>
+            <el-dialog
+                :title=this.dialogtitleAddPI
+                :visible.sync="dialogVisiblePI"
+                width="30%"
+                :close-on-click-modal="false">
+                <div style="margin-top: 10px;" v-show="ifeditwellName">
+                    井名
+                    <span style="margin-left: 68px;"><el-select v-model="queryData.wellId" class="f2" style="width:220px;margin-left:15px " filterable clearable @change="choseWell">
+                  <el-option v-for="item in wellList" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled">
                   </el-option>
-              </el-select></span>
+                 </el-select></span>
                 </div>
                 <div style="margin-top: 10px;">
-                    时间
-                    <span class="idstyle"><el-date-picker
-                        v-model="date1"
-                        type="date"
-                        placeholder="选择日期"
-                        style="width: 400px"/></span>
+                    生产段
+                    <span style="margin-left: 68px;"><el-select v-model="piselectPI" class="f2" style="width:220px" filterable clearable>
+                  <el-option v-for="item in PIDataNew" :key="item.lable" :label="item.lable" :value="item.lable" :disabled="item.disabled">
+                  </el-option>
+                 </el-select></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    生产段顶深
+                    <span style="margin-left: 40px;">
+                        <el-input class="inputPi" type="number" v-model="inputPItop" placeholder="请输入生产段顶深">
+                            
+                        </el-input>
+                    </span>
+                </div>
+                <div style="margin-top: 10px;">
+                    生产段底深
+                    <span style="margin-left: 40px;">
+                        <el-input class="inputPi" type="number" v-model="inputPIbottom" placeholder="请输入生产段底深">
+                            
+                        </el-input>
+                    </span>
+                </div>
+                <div style="margin-top: 10px;">
+                    层位名称
+                    <span style="margin-left: 53px;"><el-select v-model="lnselect" class="f2" style="width:220px" filterable clearable >
+                  <el-option v-for="item in LNData" :key="item.layerId" :label="item.layerName" :value="item.layerId" :disabled="item.disabled">
+                  </el-option>
+              </el-select></span>
                 </div>
                 <span slot="footer" class="dialog-footer">
-        <el-button class="cancelBtn" @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" class="buttonActive_primary" @click="sureInfo">确 定</el-button>
-      </span>
+                    <el-button class="cancelBtn" @click="dialogVisiblePI = false">取 消</el-button>
+                    <el-button type="primary" class="buttonActive_primary" @click="sureInfoPI">确 定</el-button>
+                </span>
             </el-dialog>
-            <pagination
-                v-show="total > 0"
-                :total="total"
-                :page.sync="queryParams.pageNum"
-                :limit.sync="queryParams.pageSize"
-            />
+<!--            <pagination-->
+<!--                v-show="total > 0"-->
+<!--                :total="total"-->
+<!--                :page.sync="queryParams.pageNum"-->
+<!--                :limit.sync="queryParams.pageSize"-->
+<!--            />-->
             <!-- <el-pagination background layout="prev, pager, next,total" :total="1000" class="paginationDiv"> </el-pagination> -->
         </page-panel-new>
     </div>
 </template>
 <script>
-import {queryPioilWellInfo,queryPiInfo,addDataPiInfo,upDataPiInfo,deleteDataPiInfo} from "@/api/rem/pioilwellmaintain.js";
+import {queryPioilWellInfo,queryLnInfo,queryPiInfo,addDataPiInfo,upDataPiInfo,deleteDataPiInfo,addPINew,queryPIcomInfo} from "@/api/rem/pioilwellmaintain.js";
 import {
     getProductionSplit,
-    getOgfInfo,
-    getblockData,
-    getWellData
 } from "@/api/rem/r-intelligentIPA.js";
+import {getuserListByUserNames,getFieldListsDetail,getblockData,getWellDataforme} from "@/api/basic/masterBycoderXu.js"
+
 let timeNew = new Date();
 timeNew.setMonth(timeNew.getMonth() - 1);
 timeNew.setDate(1)
@@ -169,6 +207,14 @@ export default {
     name:"ProdIntervalMaintain",
     data() {
         return {
+            minputEditPItop:'',
+            minputEditPIbottom:'',
+            inputEditPItop:'',
+            inputEditPIbottom:'',
+            inputPItop:'',
+            inputPIbottom:'',
+            wellList: [],
+            wellnameSelect:'',
             ifshow:false,
             queryData: {
                 ogfId: {
@@ -181,7 +227,7 @@ export default {
                     label: "秦皇岛32-6南区",
                 }, //区块
                 wellCategory: "01", //井别
-                wellId: ["DA0269628E74490ABDE198E7D1DBF3EA"], //井号
+                wellId: "", //井号
                 value: [timeNew.format('YYYY-MM-DD'), lastDay.format('YYYY-MM-DD')],
                 // ['2022-10-24', '2022-11-24']
                 startTime: '',
@@ -190,6 +236,7 @@ export default {
             },
             //油田下拉框
             oilList: [],
+            ifeditwellNameY:false,
             datePickOptions: {
                 disabledDate: (time) => {
                     if (time.getTime() > filterTime.getTime()) {
@@ -203,19 +250,36 @@ export default {
             },
             //区块下拉
             blockList: [],
+            editdialogWellName:'',
+            editdialogPiName:'',
             //井别下拉
             wellCategoryList: [
                 {id: "01", name: "油井"},
                 {id: "02", name: "水井"},
             ],
+            ifeditwellName:true,
+            
             //井号下拉
-            wellList: [],
+            
 
             //已完成条数
             finishNum: 0,
             addwellName:'1212',
             dialogtitle:'',
+            dialogtitleAddPI:'新增生产段',
+            dialogVisiblePI:false,
             PIData:[],
+            PIDataNew:[
+                {lable:'P1'},
+                {lable:'P2'},
+                {lable:'P3'},
+                {lable:'P4'},
+                {lable:'P5'},
+                {lable:'P6'},
+                {lable:'P7'},
+                {lable:'P8'},
+                {lable:'P9'}
+            ],
             LNData:[],
             date1: "",
             dialogVisible: false,
@@ -231,6 +295,7 @@ export default {
             ptData: [],
             platform: "", //选中项
             piselect:"",
+            piselectPI:"",
             lnselect:"",
             paramMap: {},
             ocselect:"",
@@ -423,17 +488,15 @@ export default {
             ],
             Data:[
                 {
-                    proid:"",
                     wellName: "1",
                     layerName:"1",
-                    prIntervalname: "1",
-                    openOrClose: "1",
-                    startDate: "2023-06-21"
+                    prodInterName: "1",
                 },
             ],
             DialogData:{
                 piId:"000",
                 wellName: "1",
+                wellId:"",
                 layerName:"1",
                 prIntervalname: "1",
                 openOrClose: "1",
@@ -443,9 +506,28 @@ export default {
         };
     },
     methods: {
+        getuserListByUserNamesData(){
+            let params = {
+                searchKeys:[this.$store.getters["user/userDetail"].user.userName],
+            }
+            getuserListByUserNames(params).then((res)=>{
+                this.orgId=res.data.data[0].currentTenantBindOrgId
+                this.queryOilFeild()
+            })
+
+        },
         queryOilFeild() {
-            getOgfInfo().then((res) => {
-                this.oilList = res.ogfId;
+            getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
+                this.oilList = res.data.data;
+                var list =res.data.data;
+                for(var i=0;i<list.length;i++){
+                    if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
+                        this.queryData.ogfId.value=list[i].ogfId
+                    }else {
+                        this.queryData.ogfId.value=list[0].ogfId
+                    }
+                }
+                this.queryBlockFeild()
             });
         },
         resettingQuery(){
@@ -515,41 +597,69 @@ export default {
         doSearch() {
             this.queryProductionSplit();
         },
-        changeWell() {
-            if (this.queryData.blockId) {
-                this.queryData.wellId = []
-                this.tableData = []
-                this.queryWellData();
-
-            }
+        // changeWell() {
+        //     if (this.queryData.blockId) {
+        //         this.queryData.wellId = []
+        //         this.tableData = []
+        //         this.queryWellData();
+        //
+        //     }
+        // },
+        queryWellData1() {
+            let params = {
+                blockId: this.queryData.blockId.value,
+                wellType: this.queryData.wellCategory,
+                ogfId: this.queryData.ogfId.value
+            };
+            getWellDataforme(params).then((res) => {
+                this.wellList = res.data.data;
+                this.getDataInfo(this.wellList)
+            });
         },
         queryWellData() {
             let params = {
                 blockId: this.queryData.blockId.value,
-                apprndixId: this.queryData.wellCategory,
+                wellType: this.queryData.wellCategory,
+                ogfId: this.queryData.ogfId.value
             };
-            getWellData(params).then((res) => {
-                this.wellList = res.wellList;
-                this.wellName=this.wellList[0].wellName
-                console.log(res.wellList[0].wellName)
-                this.getDataInfo(this.wellName)
+            getWellDataforme(params).then((res) => {
+                this.wellList = res.data.data;
+                this.getDataInfo(this.wellList)
             });
         },
-        changeBlock(e) {
-            console.log(e)
-            this.queryData.wellId = [];
-            if (this.queryData.wellCategory) {
-                this.queryWellData();
-            }
+        // changeBlock(e) {
+        //     console.log(e)
+        //     this.queryData.wellId = [];
+        //     if (this.queryData.wellCategory) {
+        //         this.queryWellData();
+        //     }
+        // },
+        queryBlockFeild1() {
+            getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
+                this.blockList = res.data.data;
+                if(this.blockList.length===0){
+                    this.queryData='无数据'
+                }
+                for(var i=0;i<this.blockList.length;i++){
+                    if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
+                        this.queryData.blockId.value=this.blockList[i].reservoirAnalyseUnitId
+                    }
+                }
+            });
         },
         queryBlockFeild() {
-            let param = {
-                ogfId: this.queryData.ogfId.value,
-            };
-            getblockData(param).then((res) => {
-                console.log("看数据")
-                console.log(res.blockList)
-                this.blockList = res.blockList;
+            getblockData({ogfId:this.queryData.ogfId.value}).then((res) => {
+               
+                this.blockList = res.data.data;
+                if(this.blockList.length===0){
+                    this.queryData='无数据'
+                }
+                for(var i=0;i<this.blockList.length;i++){
+                    if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
+                        this.queryData.blockId.value=this.blockList[i].reservoirAnalyseUnitId
+                    }
+                }
+                this.queryWellData();
             });
         },
         changeOil() {
@@ -558,7 +668,6 @@ export default {
             this.queryBlockFeild();
         },
         cellStyle(row,column,rowIndex,columnIndex){
-            console.log('kkqqkkaa')
             if(row.row.iftrue==true){
                 return 'color:red;padding:3px;text-align:center;color:green'
             }else{
@@ -574,6 +683,42 @@ export default {
 
             });
 
+        },
+        sureInfoPI(){
+            console.log(this.queryData.wellId)
+            console.log(this.piselectPI)
+            console.log(this.inputPItop)
+            console.log(this.inputPIbottom)
+            console.log(this.wellList.length)
+            var mwellname=''
+            for(var i=0;i<this.wellList.length;i++){
+                if(this.wellList[i].wellId==this.queryData.wellId){
+                    mwellname=this.wellList[i].wellName
+                }
+            }
+            var mlayerName=''
+            var mlayerCode=''
+            for(var i=0;i<this.LNData.length;i++){
+                if(this.LNData[i].layerId==this.lnselect){
+                    mlayerName=this.LNData[i].layerName
+                    mlayerCode=this.LNData[i].layerCode
+                }
+            }
+            const params={
+                wellId:this.queryData.wellId,
+                piselectPI:this.piselectPI,
+                inputPItop:this.inputPItop,
+                inputPIbottom:this.inputPIbottom,
+                wellName:mwellname,
+                layerName:mlayerName,
+                layerId:this.lnselect,
+                layerCode:mlayerCode
+            }
+            addPINew(params).then((res) => {
+                console.log(res)
+                this.dialogVisiblePI = false
+
+            });
         },
         sureInfo(){
             if(this.dialogtitle=='新增'){
@@ -604,16 +749,36 @@ export default {
         },
 
         showAddDialog(){
-            console.log(this.Data[0].wellName)
-            this.showDialog(this.Data[0].wellName,'add')
+            
+            if(this.queryData.wellId===null||this.queryData.wellId===''){
+                console.log('1111')
+                this.showDialog('','add')
+            }else {
+                console.log('22222')
+                console.log(this.queryData.wellId)
+                this.showDialog(this.queryData.wellId,'add')
+            }
+           
 
         },
+        showAddDialogPI(){
+            this.dialogtitleAddPI='新增生产段'
+            this.dialogVisiblePI = true
+            this.ifeditwellNameY=false
+            this.ifeditwellName=true
+            this.getLNData()
+        },
         choseLN(){
-            this.DialogData.layerName=this.lnselect
+            this.getLNData()
 
         },
         chosePI(){
-            this.DialogData.prIntervalname=this.piselect
+            
+            this.getPIData()
+
+        },
+        choseWell(){
+            this.DialogData.wellId=this.wellnameSelect
 
         },
         choseOc(){
@@ -627,80 +792,95 @@ export default {
 
         },
         getPIData(){
-            queryPiInfo().then((res) => {
-                console.log(res.data.data)
-                this.PIData=res.data.data
+            var wellName=''
+            for(var i=0;i<this.wellList.length;i++){
+                if(this.wellList[i].wellId==this.queryData.wellId){
+                    wellName=this.wellList[i].wellName
+                }
+            }
+            const params={
+                wellId:this.queryData.wellId,
+                wellName:wellName
+            }
+            queryPiInfo(params).then((res) => {
+                console.log(res.data.data.data)
+                this.PIData=res.data.data.data
             });
         },
         getLNData(){
-            const param={
-                wellName:this.DialogData.wellName
+            const params={
+                ogfId:this.queryData.ogfId.value
             }
-            queryLnInfo(param).then((res) => {
+            queryLnInfo(params).then((res) => {
                 console.log(res.data.data)
-                this.LNData=res.data.data
+                this.LNData=res.data.data.data
             });
         },
         showDialog(row,whatshow){
+            console.log('11118888')
+            console.log(row)
+            console.log(whatshow)
+            
             if(whatshow=='up'){
                 this.dialogtitle='编辑'
+                this.editdialogWellName=row.wellName
+                this.editdialogPiName=row.prodInterName
                 this.dialogVisible = true
-                this.DialogData.piId=row.piId
-                this.DialogData.wellName=row.wellName
-                console.log("wwwqqqeee")
-                console.log(row)
-
-            }else{
-                this.dialogtitle='新增'
-                this.dialogVisible = true
-                this.DialogData.wellName=row
+                this.ifeditwellNameY=true
+                this.ifeditwellName=false
+                var mpiId=row.prodInterId
+                const params={
+                    piId:mpiId
+                }
+                queryPIcomInfo(params).then((res) => {
+                    // this.minputEditPItop=res.data.data.data
+                    // minputEditPIbottom:'',
+                    var result=res.data.data.data
+                    this.minputEditPItop=result[0].top
+                    this.minputEditPIbottom=result[0].bottom
+                });
+                this.getLNData()
             }
 
 
         },
-        getDataInfo(wellName) {
-            if(this.queryData.wellCategory=='01'){
-                this.ifshow=false
+        getDataInfo(wellParams) {
+            
+            if(Array.isArray(wellParams)){
+                let wellIdrry=[""];
+                for(let i=0;i<wellParams.length;i++){
+                    wellIdrry[i]='"'+wellParams[i].wellId+'"'
+                }
+                const params={
+                    wellList:wellIdrry
+                }
+                queryPioilWellInfo(params).then((res) => {
+                    this.Data=res.data.data.data
+                    // this.addwellName=this.Data[0].wellName
+                });
             }else{
-                this.ifshow=true
-            }
-            this.queryParams.wellName=wellName
-            queryPioilWellInfo(this.queryParams).then((res) => {
-                this.Data=res.data.data
-                this.addwellName=this.Data[0].wellName
-            });
+                let wellIdrry=[""];
+                console.log('898989891111')
+                console.log(wellParams)
+                wellIdrry[0]='"'+this.queryData.wellId+'"'
+                const params={
+                    wellList:wellIdrry
+                }
+                queryPioilWellInfo(params).then((res) => {
+
+                    this.Data=res.data.data.data
+                    // this.addwellName=this.Data[0].wellName
+                });
+            } 
+            
         },
     },
     created(){
-        const params = JSON.parse(localStorage.getItem('PRODUCTION_SPLIT'))
-        if (params && params.blockId) {
-            console.log('1111111222222')
-            this.queryData.ogfId.value = params.ogfId.value
-            this.queryData.ogfId.label = params.ogfId.label
-            this.queryData.blockId.value = params.blockId.value
-            this.queryData.blockId.label = params.blockId.label
-            this.queryData.wellCategory = params.wellCategory
-            this.queryData.value = params.value
-            let arr = []
-            params.wellId.forEach(item => {
-                arr.push(item.wellId)
-            })
-            this.queryData.wellId = arr
-            localStorage.removeItem('PRODUCTION_SPLIT')
-        } else {
-            console.log('888888889999999')
-            this.queryData.ogfId.value = "3FC9A818F5BC43B88270DB80BBB3018F"
-            this.queryData.ogfId.label = "秦皇岛32-6"
-            this.queryData.blockId.value = "83D33B89B0DAB7DFA440BD060746883A"
-            this.queryData.blockId.label = "秦皇岛32-6南区"
-            this.queryData.wellCategory = "01"
-            this.queryData.wellId = ["DA0269628E74490ABDE198E7D1DBF3EA"]
-            this.queryData.wellName = "QHD32-6-A21H1"
-        }
-        this.queryOilFeild();
-        this.queryBlockFeild();
-        this.queryWellData();
-        this.queryProductionSplit()
+        this.getuserListByUserNamesData();
+        // this.queryOilFeild();
+        // this.queryBlockFeild();
+        // this.queryWellData();
+        // this.queryProductionSplit()
     },
     mounted() {
 
@@ -711,7 +891,10 @@ export default {
 </script>
 <style scoped>
 .idstyle{
-    margin-left: 40px;
+    margin-left: 60px;
+}
+.inputPi{
+    width: 220px;
 }
 .titleStyle{
     color: #fff;

@@ -14,7 +14,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="区块：">
-                        <el-select v-model="params.blockId">
+                        <el-select v-model="params.blockId" @change="queryWellData">
                             <el-option
                                 v-for="item in blockList"
                                 :key="item.reservoirAnalyseUnitId"
