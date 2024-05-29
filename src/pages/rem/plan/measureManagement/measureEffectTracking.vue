@@ -543,6 +543,20 @@
                 end-placeholder="结束日期"
                 value-format="yyyy-MM-dd"
               ></el-date-picker>
+              <el-select
+                v-model="selectPosition"
+                placeholder="请选择"
+                filterable
+                clearable
+                style="width: 220px; margin-left: 20px"
+              >
+                <el-option
+                  v-for="item in position"
+                  :key="item.layerId"
+                  :label="item.layerName"
+                  :value="item.layerId"
+                ></el-option>
+              </el-select>
               <el-button type="primary" icon="el-icon-search" style="margin-left: 10px" @click="doSearchCharts"
                 >搜索</el-button
               >
@@ -597,6 +611,7 @@ import {
   getDwdEspMonitor,
   getDwdDcsProdWellMonitor,
 } from "@/api/oilDeposit/ipm-03/machineprodwellipm.js";
+import { getLayerInfo } from "@/api/oilDeposit/ipm-02/injectsinglewell.js";
 import { transformBorepipeNo } from "@/api/oilDeposit/ipm-03/basedata.js";
 import { wellFluxLastDayHour } from "@/api/oilDeposit/opm/opmData.js";
 import { QueryOgfDetail, QueryPlatformDetail, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
@@ -964,6 +979,8 @@ export default {
         { name: "计量", code: "2" },
       ],
       allocOrCalculate: "1",
+      position: [],
+      selectPosition: "",
       // 选择实时时间
       selectRealData: [],
       // 油井折线图内容
@@ -982,6 +999,31 @@ export default {
           },
         },
         dataZoom: [
+          {
+            type: "slider",
+            show: true,
+            height: "15px",
+            bottom: "8px",
+            xAxisIndex: [0, 1, 2],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [0, 1, 2, 3],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [4, 5, 6, 7],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [8, 9, 10],
+          },
           {
             type: "inside",
             xAxisIndex: [0, 1, 2],
@@ -1012,7 +1054,7 @@ export default {
             fontSize: 14,
           },
           x: "center",
-          bottom: 0,
+          bottom: 20,
           icon: "rect",
           itemWidth: 12,
           itemHeight: 6,
@@ -1020,22 +1062,22 @@ export default {
         },
         grid: [
           {
-            left: "14%",
+            left: "12%",
             top: "55",
             width: "74%",
-            height: "23%",
+            height: "22%",
           },
           {
-            left: "14%",
+            left: "12%",
             top: "38%",
             width: "74%",
-            height: "23%",
+            height: "22%",
           },
           {
-            left: "14%",
+            left: "12%",
             top: "66%",
             width: "74%",
-            height: "23%",
+            height: "22%",
           },
         ],
         xAxis: [
@@ -1521,6 +1563,25 @@ export default {
       // 水井折线图内容
       waterOption: {
         dataZoom: [
+        {
+            type: "slider",
+            show: true,
+            height: "15px",
+            bottom: "8px",
+            xAxisIndex: [0, 1],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [0, 1, 2],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [3, 4, 5, 6],
+          },
           {
             type: "inside",
             xAxisIndex: [0, 1],
@@ -1552,7 +1613,7 @@ export default {
             fontSize: 14,
           },
           x: "center",
-          bottom: 0,
+          bottom: 20,
           icon: "rect",
           itemWidth: 12,
           itemHeight: 6,
@@ -1569,7 +1630,7 @@ export default {
             left: "14%",
             top: "47%",
             width: "74%",
-            height: "40%",
+            height: "35%",
           },
         ],
         xAxis: [
@@ -2174,6 +2235,16 @@ export default {
         0,
       );
     },
+    async fieldLayersApi() {
+      await getLayerInfo(this.selectWellId).then((res) => {
+        if (res.data.code == 200 && res.data.data && res.data.data.length) {
+          this.position = res.data.data;
+        } else {
+          this.selectPosition = "";
+          this.position = [];
+        }
+      });
+    },
     //措施事件下拉框数据源
     getMeasureNameAndCode(oilFieldId, platformId, wellId, measureId, year, page, pageSize, isStimTypeCodeOrNot) {
       const wellArray = [];
@@ -2232,6 +2303,7 @@ export default {
       this.measuresDate = new Date(this.dateTime).format("yyyy");
     },
     changeWellId() {
+      this.selectPosition = "";
       this.selectMeasuresId = "";
       this.measuresDate = new Date(this.dateTime).format("yyyy");
     },
@@ -2501,7 +2573,7 @@ export default {
               series.xAxisIndex = 2;
               series.yAxisIndex = 8;
               series.itemStyle = { color: "rgb(0,128,0)" };
-            } else if (lineName == "日产气量" || lineName == "产气" ) {
+            } else if (lineName == "日产气量" || lineName == "产气") {
               series.xAxisIndex = 2;
               series.yAxisIndex = 10;
               series.itemStyle = { color: "rgb(255,0,0)" };
@@ -2548,6 +2620,7 @@ export default {
         ogfId: this.selectOilField,
         platformId: this.selectPlatform,
         wellId: this.selectWellId,
+        layerId: this.selectPosition,
         wellType: "INJ",
       };
       produceData(request).then((res) => {
@@ -2655,6 +2728,7 @@ export default {
         switch (this.waterTabType) {
           case "0":
             {
+              this.fieldLayersApi();
               this.doWaterSearch();
             }
             break;
@@ -3020,8 +3094,8 @@ export default {
                   //   ? this.realTimeData[paramCode].map((item) => [item.date, item.paramValue])
                   //   : [],
                   data: this.realTimeData[paramCode]
-                        ? this.realTimeData[paramCode].map((itemA) => [itemA.date, itemA.paramValue])
-                        : [],
+                    ? this.realTimeData[paramCode].map((itemA) => [itemA.date, itemA.paramValue])
+                    : [],
                   name: this.childParamsList.find((item) => item.paramCode == paramCode).paramName,
                   label: {
                     show: false,

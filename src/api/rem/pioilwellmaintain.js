@@ -7,12 +7,22 @@ export function queryPioilWellInfo(data) {
     data
   });
 }
-export function queryPiInfo() {
+export function addPINew(data) {
+    return request({
+        url: `${baseUrl}/prodIntervalOilwell/addPINew`,
+        method: "post",
+        data
+    });
+}
+
+export function queryPiInfo(data) {
   return request({
     url: `${baseUrl}/prodIntervalOilwell/queryPiInfo`,
-    method: "get"
+    method: "post",
+    data  
   });
 }
+
 export function queryLnInfo(data) {
   return request({
     url: `${baseUrl}/prodIntervalOilwell/queryLnInfo`,
@@ -40,4 +50,11 @@ export function deleteDataPiInfo(data) {
     method: "post",
     data
   });
+}
+export function queryPIcomInfo(data) {
+    return request({
+        url: `${baseUrl}/prodIntervalOilwell/queryPIcomInfo`,
+        method: "post",
+        data
+    });
 }
