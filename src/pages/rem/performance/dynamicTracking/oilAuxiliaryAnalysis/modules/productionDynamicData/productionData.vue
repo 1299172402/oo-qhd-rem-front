@@ -26,7 +26,7 @@
       </el-select>
     </div>
     <div class="z-echarts">
-      <pagePanel headerTitle="油井生产数据曲线图" style="margin-top: 0; height: 100%;" show-btn>
+      <pagePanel headerTitle="油井生产数据曲线图" style="margin-top: 0; height: 100%" show-btn>
         <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
       </pagePanel>
     </div>
@@ -128,7 +128,7 @@ export default {
       allocOrCalculate: "1",
       option: {
         dataZoom: [
-        {
+          {
             type: "slider",
             show: true,
             height: "15px",
@@ -139,19 +139,19 @@ export default {
             type: "slider",
             show: true,
             width: "20px",
-            yAxisIndex: [0,1,2,3],
+            yAxisIndex: [0, 1, 2, 3],
           },
           {
             type: "slider",
             show: true,
             width: "20px",
-            yAxisIndex: [4,5,6,7],
+            yAxisIndex: [4, 5, 6, 7],
           },
           {
             type: "slider",
             show: true,
             width: "20px",
-            yAxisIndex: [8,9,10],
+            yAxisIndex: [8, 9, 10],
           },
           {
             type: "inside",
@@ -817,7 +817,7 @@ export default {
               let point = [];
               point.push(lineData[i].label);
               xSet.add(lineData[i].label);
-              point.push(lineData[i].value ==0 ||lineData[i].value ==null?0:lineData[i].value );
+              point.push(lineData[i].value == 0 || lineData[i].value == null ? 0 : lineData[i].value);
               pointData.push(point);
             }
             series.data = pointData;
@@ -829,7 +829,7 @@ export default {
           this.option.xAxis[1].data = xData;
           this.option.xAxis[2].data = xData;
           this.option.series = seriesData;
-            console.log(this.option)
+          console.log(this.option);
         }
       });
       produceTableData(request).then((res) => {
