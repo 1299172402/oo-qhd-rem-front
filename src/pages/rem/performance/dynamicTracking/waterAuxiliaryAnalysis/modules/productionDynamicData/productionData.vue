@@ -89,6 +89,25 @@ export default {
       option: {
         dataZoom: [
           {
+            type: "slider",
+            show: true,
+            height: "15px",
+            bottom: "8px",
+            xAxisIndex: [0, 1],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [0, 1, 2],
+          },
+          {
+            type: "slider",
+            show: true,
+            width: "20px",
+            yAxisIndex: [3, 4, 5, 6],
+          },
+          {
             type: "inside",
             xAxisIndex: [0, 1],
             start: 0, //滚动条开始位置（共100等份）
@@ -115,15 +134,15 @@ export default {
             fontSize: 14,
           },
           x: "center",
-          bottom: 0,
+          bottom: 20,
           icon: "rect",
           itemWidth: 12,
           itemHeight: 6,
           itemGap: 14,
         },
         grid: [
-          { left: "14%", top: "4%", width: "74%", height: "38%" },
-          { left: "14%", top: "48%", width: "74%", height: "38%" },
+          { left: "14%", top: "4%", width: "74%", height: "35%" },
+          { left: "14%", top: "48%", width: "74%", height: "35%" },
         ],
         xAxis: [
           {
