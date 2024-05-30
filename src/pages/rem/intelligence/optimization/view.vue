@@ -353,17 +353,13 @@ export default {
     },
     methods: {
         getOilFields() {
+            const params = JSON.parse(localStorage.getItem('OPTIMIZATION'))
             getFieldListsDetail({operationZoneId:this.queryData.orgId}).then((res) => {
                 this.oilField = res.data.data;
-                var list =res.data.data;
-                for(var i=0;i<list.length;i++){
-                    if(list[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
-                        this.selectOilField=list[i].ogfId
+                this.selectOilField=params.ogfId
 
-                    }else {
-                      this.selectOilField=list[0].ogfId
-                    }
-                }
+                   
+                
                 this.selectblock()
             });
         },
@@ -391,14 +387,11 @@ export default {
             //     this.blockList = blockList;
             // });
             //   }
+            const params = JSON.parse(localStorage.getItem('OPTIMIZATION'))
             this.queryData.ogfId=this.selectOilField
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
                 this.blockList = res.data.data;
-                for(var i=0;i<this.blockList.length;i++){
-                  if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
-                    this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
-                  }
-                }
+                this.queryData.blockId=params.blockId
             });
         },
         changeOilfield() {

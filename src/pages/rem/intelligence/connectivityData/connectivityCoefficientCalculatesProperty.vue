@@ -267,6 +267,8 @@ export default {
     mounted() {
         //获取井组下拉数据
         const params = JSON.parse(localStorage.getItem('CONNECTIVITY_DATA'))
+        console.log('21111111')
+        console.log(params)
         if (params && params.blockId) {
             this.Select.block = params.blockId
             this.Select.blockName = params.blockName
