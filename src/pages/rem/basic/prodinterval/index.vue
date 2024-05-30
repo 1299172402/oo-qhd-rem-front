@@ -108,29 +108,25 @@
                 <div style="margin-top: 10px;">
                     <div>生产段顶深
                         <el-input class="inputPi" type="number" v-model="inputEditPItop" :placeholder="minputEditPItop" style="margin-left: 10px">
-
                         </el-input>
-                        
                     </div>
                     <div>生产段底深
                         <el-input class="inputPi" type="number" v-model="inputEditPIbottom" :placeholder="minputEditPIbottom" style="margin-left: 10px">
-
                         </el-input>
-
                     </div>
                     
                 </div>
                 <div style="margin-top: 10px;">
                     层位名称
                     <span style="margin-left: 25px;"><el-select v-model="lnselect" class="f2" style="width:220px" filterable clearable>
-                  <el-option v-for="item in LNData" :key="item.layerId" :label="item.layerName" :value="item.layerId" :disabled="item.disabled">
-                  </el-option>
-              </el-select></span>
+                    <el-option v-for="item in LNData" :key="item.layerId" :label="item.layerName" :value="item.layerId" :disabled="item.disabled">
+                    </el-option>
+                    </el-select></span>
                 </div>
                 
                 <span slot="footer" class="dialog-footer">
                     <el-button class="cancelBtn" @click="dialogVisible = false">取 消</el-button>
-                    <el-button type="primary" class="buttonActive_primary" @click="sureInfo">确 定</el-button>
+                    <el-button type="primary" class="buttonActive_primary" @click="upsureInfo">确 定</el-button>
                 </span>
             </el-dialog>
             <el-dialog
@@ -156,7 +152,6 @@
                     生产段顶深
                     <span style="margin-left: 40px;">
                         <el-input class="inputPi" type="number" v-model="inputPItop" placeholder="请输入生产段顶深">
-                            
                         </el-input>
                     </span>
                 </div>
@@ -164,7 +159,6 @@
                     生产段底深
                     <span style="margin-left: 40px;">
                         <el-input class="inputPi" type="number" v-model="inputPIbottom" placeholder="请输入生产段底深">
-                            
                         </el-input>
                     </span>
                 </div>
@@ -676,10 +670,13 @@ export default {
         },
         deleteData(row){
             console.log(row)
-            this.DialogData.piId=row.piId
-            deleteDataPiInfo(this.DialogData).then((res) => {
-
-                this.getDataInfo(res.data.msg)
+            const params={
+                wellName:row.wellName,
+                layerId:row.layerId,
+                piName:row.prodInterName
+            }
+            deleteDataPiInfo(params).then((res) => {
+                this.getDataInfo()
 
             });
 
@@ -717,35 +714,36 @@ export default {
             addPINew(params).then((res) => {
                 console.log(res)
                 this.dialogVisiblePI = false
+                this.getDataInfo()
 
             });
         },
-        sureInfo(){
-            if(this.dialogtitle=='新增'){
-                const date = new Date(this.date1);
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                const formattedDate = `${year}-${month}-${day}`;
-                this.DialogData.startDate=formattedDate
-                addDataPiInfo(this.DialogData).then((res) => {
-                    this.dialogVisible = false
-                    this.getDataInfo(res.data.msg)
-
-                });
-            }else{
-                const date = new Date(this.date1);
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                const formattedDate = `${year}-${month}-${day}`;
-                this.DialogData.startDate=formattedDate
-                upDataPiInfo(this.DialogData).then((res) => {
-                    this.dialogVisible = false
-                    this.getDataInfo(res.data.msg)
-                });
+        upsureInfo(){
+            if(this.inputEditPItop==null||this.inputEditPItop==''){
+                this.inputEditPItop=this.minputEditPItop
             }
-
+            if(this.inputEditPIbottom==null||this.inputEditPIbottom==''){
+                this.inputEditPIbottom=this.minputEditPIbottom
+            }
+            var mlayerNamem=''
+            for(var i=0;i<this.LNData.length;i++){
+                if(this.lnselect==this.LNData[i].layerId){
+                    mlayerNamem=this.LNData[i].layerCode
+                }
+            }
+            const params={
+                wellname:this.editdialogWellName,
+                piName:this.editdialogPiName,
+                layerId:this.lnselect,
+                layerName:mlayerNamem,
+                top:this.inputEditPItop,
+                bottom:this.inputEditPIbottom
+            }
+            console.log(params)
+            upDataPiInfo(params).then((res) => {
+                this.dialogVisible = false
+                this.getDataInfo()
+            });
         },
 
         showAddDialog(){
