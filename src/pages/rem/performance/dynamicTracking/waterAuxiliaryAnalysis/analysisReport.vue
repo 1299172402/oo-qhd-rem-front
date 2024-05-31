@@ -1606,6 +1606,11 @@ export default {
             myData[i][t_data.code + "Message"] = "";
             // myData[i]["zsqdFormValue"] = "";
             // myData[i]["zsqdFormName"] = "";
+            myData[i]["zsqdForm"] = {
+              average: messData && messData.blockAvg ? messData.blockAvg : "",
+              value: messData && messData.itemValue ? messData.itemValue : "",
+              showLabel: t_data && t_data.name ? t_data.name : "",
+            };
           } else {
             messData = t_data.basis.find((item) => {
               return item.well == myWellId;
@@ -2431,6 +2436,11 @@ export default {
           //添加详情信息
           if (t_data.basis == null) {
             myData[i][t_data.code + "Message"] = "";
+            myData[i]["zsqdForm"] = {
+              average: messData && messData.blockAvg ? messData.blockAvg : "",
+              value: messData && messData.itemValue ? messData.itemValue : "",
+              showLabel: t_data && t_data.name ? t_data.name : "",
+            };
           } else {
             messData = t_data.basis.find((item) => {
               return item.well == myWellId;
