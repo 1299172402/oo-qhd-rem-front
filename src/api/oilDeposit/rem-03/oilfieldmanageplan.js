@@ -257,6 +257,20 @@ export function injectionYear(request) {
 
 /**
  * hwh
+ * 0502-01-注水指标管理-年注入量考核值修改
+ * @param params
+ * @returns {paramsPromise}
+ */
+export function yearInjectAssessValueUpdate(params) {
+  return Axios({ 
+    url: `/rem/api/oilFieldManagePlanController/yearInjectAssessValueUpdate`,
+    method: "post",
+    data: params,
+  });
+}
+
+/**
+ * hwh
  * 0502-02-注水指标管理-地层压力保持水平
  * @param request
  * @returns {AxiosPromise}
