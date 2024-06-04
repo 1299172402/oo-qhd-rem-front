@@ -334,11 +334,11 @@
                       v-for="(item, index) in trendOfIndicatorsTab"
                       :key="`index10-${index}`"
                       :prop="item.code"
-                      :label="item.name"
+                      :label="`${item.name}\n${item.unit ? '('+item.unit+')' : ''}`"
                       align="center"
                       sortable="custom"
                     >
-                      <template #header>
+                      <!-- <template #header>
                         <div>
                           <div v-if="item.unit">
                             <span>{{ item.name }}</span>
@@ -349,7 +349,7 @@
                             <span>{{ item.name }}</span>
                           </div>
                         </div>
-                      </template>
+                      </template> -->
                       <template slot-scope="{ row }">
                         <span style="display: flex; align-items: center; justify-content: center">
                           <span v-if="!row[item.code + 'Message']">{{ row[item.code] ? row[item.code] : "-" }}</span>
@@ -942,11 +942,11 @@
                       v-for="(item, index) in trendOfIndicatorsTab"
                       :key="`index24-${index}`"
                       :prop="item.code"
-                      :label="item.name"
+                      :label="`${item.name}\n${item.unit ? '('+item.unit+')' : ''}`"
                       align="center"
                       sortable="custom"
                     >
-                      <template #header>
+                      <!-- <template #header>
                         <div v-if="item.unit">
                           <span>{{ item.name }}</span>
                           <br />
@@ -955,7 +955,7 @@
                         <div v-else>
                           <span>{{ item.name }}</span>
                         </div>
-                      </template>
+                      </template> -->
                       <template slot-scope="{ row }">
                         <span style="display: flex; align-items: center; justify-content: center">
                           <span v-if="!row[item.code + 'Message']">{{ row[item.code] ? row[item.code] : "-" }}</span>
@@ -1606,6 +1606,11 @@ export default {
             myData[i][t_data.code + "Message"] = "";
             // myData[i]["zsqdFormValue"] = "";
             // myData[i]["zsqdFormName"] = "";
+            myData[i]["zsqdForm"] = {
+              average: messData && messData.blockAvg ? messData.blockAvg : "",
+              value: messData && messData.itemValue ? messData.itemValue : "",
+              showLabel: t_data && t_data.name ? t_data.name : "",
+            };
           } else {
             messData = t_data.basis.find((item) => {
               return item.well == myWellId;
@@ -2431,6 +2436,11 @@ export default {
           //添加详情信息
           if (t_data.basis == null) {
             myData[i][t_data.code + "Message"] = "";
+            myData[i]["zsqdForm"] = {
+              average: messData && messData.blockAvg ? messData.blockAvg : "",
+              value: messData && messData.itemValue ? messData.itemValue : "",
+              showLabel: t_data && t_data.name ? t_data.name : "",
+            };
           } else {
             messData = t_data.basis.find((item) => {
               return item.well == myWellId;
@@ -3632,5 +3642,6 @@ export default {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
+  white-space: pre;
 }
 </style>

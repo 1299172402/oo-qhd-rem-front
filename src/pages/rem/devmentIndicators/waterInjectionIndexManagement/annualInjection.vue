@@ -44,6 +44,10 @@
       </pagePanel>
       <pagePanel :headerTitle="`${oilFieldName || ''}注入量`" style="height: 550px" show-btn>
         <div style="display: flex; justify-content: flex-end">
+          <el-button v-if="!isEdit" style="margin-bottom: 20px" type="primary" @click="editAuditNumber">
+            编辑
+          </el-button>
+          <el-button v-else style="margin-bottom: 20px" type="primary" @click="saveAuditNumber"> 保存 </el-button>
           <el-button
             style="margin-bottom: 20px"
             type="primary"
@@ -60,12 +64,22 @@
             align="center"
             :formatter="toPrecise4"
           ></el-table-column>
-          <el-table-column
-            prop="dailycount3"
-            :label="`年考核注入量\n(10⁴m³)`"
-            align="center"
-            :formatter="toPrecise4"
-          ></el-table-column>
+          <el-table-column prop="dailycount3" :label="`年考核注入量\n(10⁴m³)`" align="center" :formatter="toPrecise4">
+            <template slot-scope="scope">
+              <div>
+                <el-input-number
+                  v-if="isEdit"
+                  placeholder="输入考核值"
+                  v-model="scope.row.dailycount3"
+                  :precision="4"
+                  style="width: 100%"
+                ></el-input-number>
+                <span v-else>
+                  <span>{{ scope.row.dailycount3 ? parseFloat(scope.row.dailycount3).toFixed(4) : "-" }}</span>
+                </span>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column
             prop="dailycount1"
             :label="`年实际注入量\n(10⁴m³)`"
@@ -80,7 +94,7 @@
 
 <script>
 import Echart from "@/components/tools/Echarts/index.vue";
-import { injectionYear } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
+import { injectionYear, yearInjectAssessValueUpdate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { QueryOgfDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { exportExcel } from "@/lib/exportExcel.js";
 import dayjs from "dayjs";
@@ -152,10 +166,21 @@ export default {
           formatter(params) {
             var relVal = params[0].name;
             params.forEach((item) => {
-              if (item.seriesName == "计划年累注" || item.seriesName == "实际年累注" ||  item.seriesName == '今年考核值') {
-                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4) + " (10⁴m³)";
+              if (
+                item.seriesName == "计划年累注" ||
+                item.seriesName == "实际年累注" ||
+                item.seriesName == "今年考核值"
+              ) {
+                relVal +=
+                  "<br/>" +
+                  item.marker +
+                  item.seriesName +
+                  " : " +
+                  parseFloat(item.value[1] || 0).toFixed(4) +
+                  " (10⁴m³)";
               } else {
-                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2) + " (m³)";
+                relVal +=
+                  "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2) + " (m³)";
               }
             });
             return relVal;
@@ -283,6 +308,8 @@ export default {
       },
       // 表格数据
       tableData: [],
+      // 表格年考核量是否是编辑状态
+      isEdit: false,
     };
   },
   mounted() {
@@ -403,6 +430,28 @@ export default {
       }
       series.data = seriesData;
       return series;
+    },
+    editAuditNumber() {
+      this.isEdit = true;
+    },
+    saveAuditNumber() {
+      let editArray = this.tableData
+        .filter((item) => item.dailycount3)
+        .map((item) => {
+          return {
+            name: item.platform_name,
+            auditNumber: item.dailycount3,
+          };
+        });
+      yearInjectAssessValueUpdate(editArray).then((res) => {
+        if (res.data.code == 200) {
+          this.$message.success("保存成功");
+          this.doInjectionYear();
+          this.isEdit = false;
+        } else {
+          this.$message.success("保存失败");
+        }
+      });
     },
     //表格id 表格名称
     doDownExcel(tableId, tableName) {
