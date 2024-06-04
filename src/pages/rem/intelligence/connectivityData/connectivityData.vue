@@ -499,7 +499,7 @@ export default {
                 getCorrectResult(params).then((res) => {
                     console.log('123333')
                     console.log(res)
-                    if (Array.isArray(res)) {
+                    if (Array.isArray(res)||res.length!=0) {
                         this.disabledDateTime = res[0].updateTime ? res[0].updateTime : null
                     }
                     if (res[0].wellGroupId == null) {
@@ -717,8 +717,6 @@ export default {
                 this.$refs['form'].validate()
         },
         savedata(form){
-            console.log('1122222')
-            console.log(this.preserve(form))
             this.preserve(form);
         },
         // 保存

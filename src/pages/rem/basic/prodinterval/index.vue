@@ -57,11 +57,15 @@
         <page-panel-new header-title="油井生产段维护列表" class="g-w100" style="height:580px">
             <el-row class="mbBottom">
                 <el-col class="height-placeholder" :span="20">
-<!--                    <el-button type="primary" @click="showAddDialog">-->
-<!--                        新增-->
-<!--                    </el-button>-->
+                    
                     <el-button type="primary" @click="showAddDialogPI">
                         新增生产段
+                    </el-button>
+                    <el-button type="primary" @click="addPIStateDialog">
+                        新增生产段状态
+                    </el-button>
+                    <el-button type="primary" @click="editPIStateDialog">
+                        编辑生产段状态
                     </el-button>
                 </el-col>
             </el-row>
@@ -92,6 +96,93 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <el-dialog
+                :title=this.dialogPIstateAdd
+                :visible.sync="dialogPIstateAddVisible"
+                width="30%"
+                :close-on-click-modal="false">
+                <div style="margin-top: 10px;">
+                    井名
+                    <span style="margin-left: 80px;">{{this.dialogPIstateAddWellSelect}}</span>
+                </div>
+                <div style="margin-top: 10px;">
+                    生产段
+                    <span style="margin-left: 68px;"><el-select v-model="dialogPIstateAddPiSelect" class="f2" style="width:220px" filterable clearable>
+                  <el-option v-for="item in Data" :key="item.prodInterId" :label="item.prodInterName" :value="item.prodInterId" :disabled="item.disabled">
+                  </el-option>
+                 </el-select></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    状态生效时间
+                    <span style="margin-left: 5px;">
+                        <el-date-picker
+                            v-model="query.value2"
+                            type="date"
+                            placeholder="请选择"
+                            style="margin-left: 20px"
+                            value-format="yyyy-MM-dd">
+                        </el-date-picker>
+                    </span>
+                </div>
+                <div style="margin-top: 10px;">
+                    生产段状态
+                    <span style="margin-left: 40px;"><el-select v-model="piaddstateselectPI" class="f2" style="width:220px" filterable clearable>
+                  <el-option v-for="item in PIState" :key="item.stateid" :label="item.name" :value="item.stateid" :disabled="item.disabled">
+                  </el-option>
+                 </el-select></span>
+                </div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button class="cancelBtn" @click="dialogPIstateAddVisible = false">取 消</el-button>
+                    <el-button type="primary" class="buttonActive_primary" @click="dialogPIstateAddInfo">确 定</el-button>
+                </span>
+            </el-dialog>
+            <el-dialog
+                :title=this.dialogPIstateEdit
+                :visible.sync="dialogPIstateEditVisible"
+                width="30%"
+                :close-on-click-modal="false">
+                <div style="margin-top: 10px;">
+                    井名
+                    <span style="margin-left: 68px;"><el-select v-model="queryData.wellId" class="f2" style="width:220px;margin-left:15px " filterable clearable @change="getPIStateData">
+                  <el-option v-for="item in wellList" :key="item.wellId" :label="item.wellName" :value="item.wellId" :disabled="item.disabled">
+                  </el-option>
+                 </el-select></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    生产段
+                    <span style="margin-left: 68px;"><el-select v-model="editSelectPi" class="f2" style="width:220px" filterable clearable @change="changePIStateStartTime">
+                  <el-option v-for="item in editSelectPiData" :key="item" :label="item" :value="item" :disabled="item.disabled">
+                  </el-option>
+                 </el-select></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    状态生效时间
+                    <span style="margin-left: 25px;">
+                        <el-select v-model="editPistateTimeSelect" class="f2" style="width:220px" filterable clearable @change="changePIState">
+                          <el-option v-for="item in editSelectPiListDate" :key="item.startTime" :label="item.startTime" :value="item.startTime" :disabled="item.disabled">
+                          </el-option>
+                        </el-select>
+                    </span>
+                </div>
+                <div style="margin-top: 10px;">
+                    原生产段状态
+                    <span style="margin-left: 25px;"><el-select v-model="editOldPiStateSelect" class="f2" style="width:220px" filterable clearable :disabled="true">
+                  <el-option v-for="item in editSelectOldPiList" :key="item.state" :label="item.state" :value="item.state" >
+                  </el-option>
+                 </el-select></span>
+                </div>
+                <div style="margin-top: 10px;">
+                    生产段状态
+                    <span style="margin-left: 40px;"><el-select v-model="editPiStateSelect" class="f2" style="width:220px" filterable clearable>
+                  <el-option v-for="item in PIState" :key="item.name" :label="item.name" :value="item.name" :disabled="item.disabled">
+                  </el-option>
+                 </el-select></span>
+                </div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button class="cancelBtn" @click="dialogPIstateEditVisible = false">取 消</el-button>
+                    <el-button type="primary" class="buttonActive_primary" @click="sureEditPiInfo">确 定</el-button>
+                </span>
+            </el-dialog>
             <el-dialog
                 :title=this.dialogtitle
                 :visible.sync="dialogVisible"
@@ -185,7 +276,7 @@
     </div>
 </template>
 <script>
-import {queryPioilWellInfo,queryLnInfo,queryPiInfo,addDataPiInfo,upDataPiInfo,deleteDataPiInfo,addPINew,queryPIcomInfo} from "@/api/rem/pioilwellmaintain.js";
+import {queryPioilWellInfo,upPiStateInfo,getPiStateInfo,queryLnInfo,queryPiInfo,stateAddInfo,upDataPiInfo,deleteDataPiInfo,addPINew,queryPIcomInfo} from "@/api/rem/pioilwellmaintain.js";
 import {
     getProductionSplit,
 } from "@/api/rem/r-intelligentIPA.js";
@@ -201,6 +292,31 @@ export default {
     name:"ProdIntervalMaintain",
     data() {
         return {
+            editSelectOldPiList:[],
+            editOldPiStateSelect:'',
+            editPiStateSelect:'',
+            editPistateTimeSelect:'',
+            editSelectPi:'',
+            editSelectPiList:[],
+            editSelectPiListDate:[],
+            editSelectPiData:[],
+            editSelectPiDataDate:[],
+            piaddstateselectPI:'',
+            pieditstateselectPI:'',
+            query: {
+                value2: '',
+            },
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > Date.now();
+                },
+            },
+            dialogPIstateAddWellSelect:'',
+            dialogPIstateEditWellSelect:'',
+            dialogPIstateAddPiSelect:'',
+            dialogPIstateEditPiSelect:'',
+            dialogPIstateAddLayerSelect:'',
+            dialogPIstateEditLayerSelect:'',
             minputEditPItop:'',
             minputEditPIbottom:'',
             inputEditPItop:'',
@@ -208,6 +324,16 @@ export default {
             inputPItop:'',
             inputPIbottom:'',
             wellList: [],
+            PIState:[
+                {
+                    name:'打开',
+                    stateid:'0'
+                },
+                {
+                    name:'关闭',
+                    stateid:'1'
+                }
+            ],
             wellnameSelect:'',
             ifshow:false,
             queryData: {
@@ -233,13 +359,10 @@ export default {
             ifeditwellNameY:false,
             datePickOptions: {
                 disabledDate: (time) => {
-                    if (time.getTime() > filterTime.getTime()) {
-                        return true;
-                    } else if (time.getTime() < stopTime.getTime()) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    let year = new Date().getFullYear();
+                    let month = new Date().getMonth() + 1;
+                    let days = new Date(year, month, 0).getDate();
+                    return time.getTime() > Date.now() - 24 * 60 * 60 * 1000 * days;
                 },
             },
             //区块下拉
@@ -260,8 +383,12 @@ export default {
             finishNum: 0,
             addwellName:'1212',
             dialogtitle:'',
+            dialogPIstateEdit:'编辑生产段状态',
+            dialogPIstateAdd:'新增生产段状态',
             dialogtitleAddPI:'新增生产段',
             dialogVisiblePI:false,
+            dialogPIstateAddVisible:false,
+            dialogPIstateEditVisible:false,
             PIData:[],
             PIDataNew:[
                 {lable:'P1'},
@@ -481,11 +608,7 @@ export default {
                 }
             ],
             Data:[
-                {
-                    wellName: "1",
-                    layerName:"1",
-                    prodInterName: "1",
-                },
+                
             ],
             DialogData:{
                 piId:"000",
@@ -500,6 +623,112 @@ export default {
         };
     },
     methods: {
+        sureEditPiInfo(){
+            var mwellName=''
+            console.log(this.queryData.wellId)
+            for(var i=0;i<this.wellList.length;i++){
+                if(this.queryData.wellId==this.wellList[i].wellId){
+                    mwellName=this.wellList[i].wellName
+                }
+            }
+            const params={
+                piName:this.editSelectPi,
+                wellName:mwellName,
+                startTime:this.editPistateTimeSelect,
+                state:this.editPiStateSelect
+                
+            }
+            upPiStateInfo(params).then((res)=>{
+                this.dialogPIstateEditVisible = false
+
+            });
+        },
+        changePIStateStartTime(){
+            this.editSelectPiListDate=[]
+            for(var i=0;i<this.editSelectPiList.length;i++){
+                if(this.editSelectPi==this.editSelectPiList[i].piName){
+                    this.editSelectPiListDate.push(this.editSelectPiList[i])
+                }
+            }
+            
+        },
+        changePIState(){
+            this.editSelectOldPiList=[]
+            for(var i=0;i<this.editSelectPiList.length;i++){
+                if(this.editPistateTimeSelect==this.editSelectPiList[i].startTime&&this.editSelectPi==this.editSelectPiList[i].piName){
+                    this.editSelectOldPiList.push(this.editSelectPiList[i])
+                    this.editOldPiStateSelect=this.editSelectPiList[i].state
+                    
+                }
+                
+            }
+            
+        },
+        getPIStateData(){
+            var mWellName=''
+            for (var i=0;i<this.wellList.length;i++){
+                if(this.queryData.wellId==this.wellList[i].wellId){
+                    mWellName=this.wellList[i].wellName
+                }
+            }
+            const params={
+                wellName:mWellName
+            }
+            getPiStateInfo(params).then((res)=>{
+                this.editSelectPiData=[]
+                this.editSelectPiList=res.data.data.data
+                for(var i=0;i<this.editSelectPiList.length;i++){
+                    this.editSelectPiData.push(this.editSelectPiList[i].piName)
+                }
+                this.editSelectPiData=Array.from(new Set(this.editSelectPiData))
+                console.log(this.editSelectPiData)
+
+            });
+        },
+        dialogPIstateAddInfo(){
+              var mpiName=''
+              for(var i=0;i<this.Data.length;i++){
+                  if(this.Data[i].prodInterId==this.dialogPIstateAddPiSelect){
+                      mpiName=this.Data[i].prodInterName
+                  }
+              }
+              var mstate=''
+              if(this.piaddstateselectPI==0){
+                  mstate='打开'
+              }else{
+                  mstate='关闭'
+              }
+              const params={
+                  wellName:this.dialogPIstateAddWellSelect,
+                  wellId:this.queryData.wellId,
+                  piId:this.dialogPIstateAddPiSelect,
+                  piName:mpiName,
+                  startTime:this.query.value2,
+                  state:mstate
+                  
+              }
+              if(params.wellName==null||params.wellName==''){
+                  this.$message.error('请选择井号')
+              }
+              if(params.wellId==null||params.wellId==''){
+                  this.$message.error('请选择井号')
+              }
+              if(params.piId==null||params.piId==''){
+                  this.$message.error('请选择生产段')
+              }
+              if(params.startTime==null||params.startTime==''){
+                  this.$message.error('请选择生效时间')
+              }
+              if(params.piName==null||params.piName==''){
+                  this.$message.error('请选择生产段')
+              }
+              if(params.state==null||params.state==''){
+                  this.$message.error('请选择开关状态')
+              }
+              stateAddInfo(params).then((res)=>{
+                  this.dialogPIstateAddVisible = false
+              })
+        },
         getuserListByUserNamesData(){
             let params = {
                 searchKeys:[this.$store.getters["user/userDetail"].user.userName],
@@ -758,6 +987,38 @@ export default {
             }
            
 
+        },
+        addPIStateDialog(){
+            if(this.queryData.wellId==null||this.queryData.wellId==''){
+                this.$message.error('请选择井号')
+            }else {
+                console.log(this.Data)
+                if(this.Data.length===0){
+                    this.$message.error('请新增生产段')
+                }else {
+                    var mwellname=''
+                    for(var i=0;i<this.wellList.length;i++){
+                        if(this.wellList[i].wellId==this.queryData.wellId){
+                            mwellname=this.wellList[i].wellName
+                        }
+                    }
+                    this.dialogPIstateAddWellSelect=mwellname
+                    this.dialogPIstateAddVisible=true
+                    
+                }
+               
+            }
+           
+            
+        },
+        editPIStateDialog(){
+            if(this.queryData.wellId==null||this.queryData.wellId==''){
+                this.$message.error('请选择井号')
+            }else {
+                this.dialogPIstateEditVisible=true
+                this.getPIStateData()
+            }
+            
         },
         showAddDialogPI(){
             this.dialogtitleAddPI='新增生产段'
