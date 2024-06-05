@@ -87,7 +87,7 @@
                 
                 <el-table-column label="操作" width="300">
                     <template slot-scope="scope">
-                        <el-button type="text" style="color: #00cbdd" @click="showDialog(scope.row,'up')">
+                        <el-button type="text"  style="color: #00cbdd" @click="showDialog(scope.row,'up')">
                             编辑
                         </el-button>
                         <el-button type="text" style="color: #f56c6c" @click="deleteData(scope.row)">
