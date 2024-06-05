@@ -370,13 +370,27 @@
               })"
               :key="index"
             >
-              <div style="width: 100px; display: inline-block">
-                <span>{{ item.paramName }}</span>
+              <div>
+                <span>{{ item.paramName }}&nbsp;&nbsp;&nbsp;</span>
+                <el-checkbox
+                  :key="`checked-${index}`"
+                  v-model="item.isChecked"
+                  :checked="item.isChecked"
+                  @change="handleChecked(item)"
+                ></el-checkbox>
               </div>
-              <el-checkbox-group v-model="queryParams.paramCodes" style="display: inline-block">
-                <el-checkbox v-for="(it, i) in item.childParams" :key="i" :label="it.paramCode" @change="isDisabled">{{
-                  it.paramName
-                }}</el-checkbox>
+              <el-checkbox-group
+                v-model="queryParams.paramCodes"
+                style="display: inline-block"
+                @change="handleCheckedChange"
+              >
+                <el-checkbox
+                  v-for="(it, i) in item.childParams"
+                  :key="i"
+                  :label="it.paramCode"
+                  @change="isDisabled($event, item)"
+                  >{{ it.paramName }}</el-checkbox
+                >
               </el-checkbox-group>
             </el-row>
             <div class="echarts-view">
@@ -2796,24 +2810,67 @@ export default {
         const { code } = data.data;
         if (code == 200) {
           this.checkList = data.data.data;
-          this.checkList.map((item) => item.childParams).flat(Infinity);
+          this.checkList.forEach((item) => (item.isChecked = true));
+          // this.checkList.map((item) => item.childParams).flat(Infinity);
           // .forEach((item) => {
           // });
         }
       });
     },
     //判断是否可选中
-    isDisabled(select, index) {
+    isDisabled(select, itemData) {
       /* this.getRealtimeData(); */
-      if (!select.length) {
-        this.isSelect = null;
-      } else {
-        const obj = this.childParamsList.find((child) => child.paramCode == select[0]);
-        if (obj) this.isSelect = obj.isRealTime;
-      }
+      // if (!select.length) {
+      //   this.isSelect = null;
+      // } else {
+      //   const obj = this.childParamsList.find((child) => child.paramCode == select[0]);
+      //   if (obj) this.isSelect = obj.isRealTime;
+      // }
+      let isChecked = itemData.childParams.every((item) => this.queryParams.paramCodes.indexOf(item.paramCode) != -1);
+      this.checkList.forEach((item) => {
+        if (item.paramName == itemData.paramName) {
+          item.isChecked = isChecked;
+        }
+      });
       this.$nextTick(() => {
         this.getChartsOption();
       });
+    },
+    // 选中改变 - 全选
+    handleChecked(itemData) {
+      itemData.childParams.forEach((item) => {
+        let index = this.queryParams.paramCodes.indexOf(item.paramCode);
+        if (itemData.isChecked) {
+          if (index == -1) {
+            this.queryParams.paramCodes.push(item.paramCode);
+          }
+        } else {
+          if (index != -1) {
+            this.queryParams.paramCodes.splice(index, 1);
+          }
+        }
+      });
+      this.$nextTick(() => {
+        this.getChartsOption();
+      });
+    },
+    // 选中改变
+    handleCheckedChange(value) {
+      let str = JSON.stringify(value);
+      if (
+        str.indexOf("001001") != -1 ||
+        str.indexOf("001002") != -1 ||
+        str.indexOf("001005") != -1 ||
+        str.indexOf("001004") != -1 ||
+        str.indexOf("001003") != -1 ||
+        str.indexOf("001008") != -1
+      ) {
+        //首次选中油井指标请求
+        if (this.first1) {
+          this.getOilWellData();
+          this.first1 = false;
+        }
+      }
     },
     createChange(dates) {
       this.queryParams.beginDate = dates[0];
