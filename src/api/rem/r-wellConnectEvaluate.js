@@ -455,6 +455,7 @@ export function postsaveAndupdateWellGroup (params) {
     return request({
         url: `${baseUrl}/injectionProductionDeploy/wellConnectivityEval/saveAndupdateWellGroup`,
         method: "post",
+        timeout:300000,
         data:params
     }).then((res) => {
         if (res.code == 0) {
@@ -474,6 +475,7 @@ export function postsaveAndupdateWellGroup (params) {
     return request({
         url: `${baseUrl}/injectionProductionDeploy/saveAllWellGroup`,
         method: "POST",
+        timeout:300000,
         data
     }).then((res) => {
         if (res.data.data) {

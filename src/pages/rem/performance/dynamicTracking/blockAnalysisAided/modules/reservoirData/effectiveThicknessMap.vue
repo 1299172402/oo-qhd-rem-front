@@ -80,7 +80,7 @@
                                         this.selectPosition = this.position[0].fieldLayerId;
                                     }
                                 } else {
-                                    this.selectPosition = this.position[0].fieldLayerId;
+                                    this.selectPosition = this.position[0].fieldLayerId;    
                                 } 
                                 this.$emit('childPara', this.selectPosition);
                             }
