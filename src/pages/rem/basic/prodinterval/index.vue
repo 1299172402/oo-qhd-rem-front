@@ -87,7 +87,7 @@
                 
                 <el-table-column label="操作" width="300">
                     <template slot-scope="scope">
-                        <el-button type="text" style="color: #00ee00" @click="showDialog(scope.row,'up')">
+                        <el-button type="text" style="color: #00cbdd" @click="showDialog(scope.row,'up')">
                             编辑
                         </el-button>
                         <el-button type="text" style="color: #f56c6c" @click="deleteData(scope.row)">
@@ -894,7 +894,7 @@ export default {
             if(row.row.iftrue==true){
                 return 'color:red;padding:3px;text-align:center;color:green'
             }else{
-                return 'color:red;padding:3px;text-align:center;color:red'
+                return 'olpadding:3px;text-align:center'
             }
         },
         deleteData(row){
