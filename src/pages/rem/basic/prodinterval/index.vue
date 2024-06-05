@@ -54,8 +54,8 @@
                 </el-form-item>
             </el-form>
         </header-search>
-        <page-panel-new header-title="油井生产段维护列表" class="g-w100" style="height:580px">
-            <el-row class="mbBottom">
+        <page-panel-new header-title="油井生产段维护列表" class="g-w100" style="height:85%" show-btn>
+            <el-row class="buttonstyle">
                 <el-col class="height-placeholder" :span="20">
                     
                     <el-button type="primary" @click="showAddDialogPI">
@@ -71,23 +71,23 @@
             </el-row>
          
             <el-table
-                height="calc(100% - 113px)"
+                height="calc(100% - 20px)"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
                 :cell-style="cellStyle"
                 :data="Data"
-                style="width: 100%; height: 100%"
+                style="width: 100%; height: 100%;margin-top: 25px ;"
                 :default-sort="{ prop: 'date', order: 'descending' }"
             >
-                <el-table-column prop="wellName" label="井名" min-width="150"/>
-                <el-table-column prop="prodInterName" label="生产段" width="150" />
-                <el-table-column prop="layerName" label="层位名称" min-width="150"/>
+                <el-table-column prop="wellName" label="井名" min-width="300" />
+                <el-table-column prop="prodInterName" label="生产段" width="300" />
+                <el-table-column prop="layerName" label="层位名称" min-width="300"/>
                 
                 
-                <el-table-column label="操作" width="400">
+                <el-table-column label="操作" width="300">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="showDialog(scope.row,'up')">
+                        <el-button type="text"  style="color: #00cbdd" @click="showDialog(scope.row,'up')">
                             编辑
                         </el-button>
                         <el-button type="text" style="color: #f56c6c" @click="deleteData(scope.row)">
@@ -894,7 +894,7 @@ export default {
             if(row.row.iftrue==true){
                 return 'color:red;padding:3px;text-align:center;color:green'
             }else{
-                return 'color:red;padding:3px;text-align:center;color:red'
+                return 'olpadding:3px;text-align:center'
             }
         },
         deleteData(row){
@@ -1166,6 +1166,9 @@ export default {
     color: var(--form-text);
     position: relative;
     font-family: PingFangSC-Regular, "PingFang SC";
+}
+.buttonstyle{
+    margin-top: -25px;
 }
 
 .topSearchDiv {

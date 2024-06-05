@@ -379,7 +379,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
-                    <el-table-column min-width="190px" label="海管名称" prop="pipeline" align="center" v-if="$route.query.measureCode != '0100114'&& ($route.query.measureCode != '0100110')">
+                    <el-table-column min-width="190px" label="海管名称" prop="pipeline" align="center" v-if="$route.query.measureCode != '0100114'">
                         <template slot-scope="scope">
                             <el-tooltip class="item" effect="dark" :content="scope.row.pipeline" placement="top"
                                         v-if="scope.row.pipeline !== null && scope.row.pipeline !== ''">
@@ -399,7 +399,7 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column> -->
-                    <el-table-column sortable min-width="130px" :label="`海管余量\n(m³)`" prop="quantity" v-if="$route.query.measureCode != '0100114' && ($route.query.measureCode != '0100110')"
+                    <el-table-column sortable min-width="130px" :label="`海管余量\n(m³)`" prop="quantity" v-if="$route.query.measureCode != '0100114'"
                                      align="center">
                         <template slot-scope="scope">
                             <span

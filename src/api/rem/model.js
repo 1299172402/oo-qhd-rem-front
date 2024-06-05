@@ -6,7 +6,7 @@ export function wellGroupEvaluation(data) {
     return request({
         url: `${baseUrl}/wellGroupDynamicAnalysis/wellGroupModelCal`,
         method: "post",
-        timeout: 30000,
+        timeout: 300000,
         data
     });
 }
