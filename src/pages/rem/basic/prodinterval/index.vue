@@ -56,7 +56,7 @@
         </header-search>
         <page-panel-new header-title="油井生产段维护列表" class="g-w100" style="height:85%" show-btn>
             <el-row class="buttonstyle">
-                <el-col class="height-placeholder" :span="20">
+                <el-col class="height-placeholder" :span="22">
                     
                     <el-button type="primary" @click="showAddDialogPI">
                         新增生产段
@@ -68,10 +68,16 @@
                         编辑生产段状态
                     </el-button>
                 </el-col>
+                <el-col class="height-placeholder" :span="1000">
+                    <el-button type="primary" @click="exportForExcel" style="margin-right: 0px">
+                        下载
+                    </el-button>
+                </el-col>
             </el-row>
          
             <el-table
                 height="calc(100% - 20px)"
+                id="piMaintainexport"
                 :row-style="{ height: '0px' }"
                 :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
                 header-cell-class-name="table_header"
@@ -79,14 +85,18 @@
                 :data="Data"
                 style="width: 100%; height: 100%;margin-top: 25px ;"
                 :default-sort="{ prop: 'date', order: 'descending' }"
+                border
             >
-                <el-table-column prop="wellName" label="井名" min-width="300" />
-                <el-table-column prop="prodInterName" label="生产段" width="300" />
-                <el-table-column prop="layerName" label="层位名称" min-width="300"/>
-                
-                
-                <el-table-column label="操作" width="300">
-                    <template slot-scope="scope">
+                <el-table-column prop="wellName" label="井名" min-width="80" />
+                <el-table-column prop="prodInterName" label="生产段" min-width="80" />
+                <el-table-column prop="layerName" label="层位名称" min-width="80"/>
+                <el-table-column prop="top" label="生产段顶深(m)" min-width="80"/>
+                <el-table-column prop="bottom" label="生产段底深(m)" min-width="80"/>
+                <el-table-column label="操作" min-width="80">
+                    v-if="showNameColumn"
+                    v-if="showNameColumn"
+                    v-if="showNameColumn"
+                    <template slot-scope="scope"  v-if="showNameColumn">
                         <el-button type="text"  style="color: #00cbdd" @click="showDialog(scope.row,'up')">
                             编辑
                         </el-button>
@@ -276,6 +286,7 @@
     </div>
 </template>
 <script>
+import {exportExcel} from "@/lib/exportExcel";
 import {queryPioilWellInfo,upPiStateInfo,getPiStateInfo,queryLnInfo,queryPiInfo,stateAddInfo,upDataPiInfo,deleteDataPiInfo,addPINew,queryPIcomInfo} from "@/api/rem/pioilwellmaintain.js";
 import {
     getProductionSplit,
@@ -292,6 +303,7 @@ export default {
     name:"ProdIntervalMaintain",
     data() {
         return {
+            showNameColumn: true,
             editSelectOldPiList:[],
             editOldPiStateSelect:'',
             editPiStateSelect:'',
@@ -623,6 +635,11 @@ export default {
         };
     },
     methods: {
+        showNameColumn: false,
+        exportForExcel(){
+            exportExcel('#piMaintainexport', this.queryData.blockId.label + '生产段信息');
+        },
+        
         sureEditPiInfo(){
             var mwellName=''
             console.log(this.queryData.wellId)
@@ -1115,6 +1132,8 @@ export default {
                 }
                 queryPioilWellInfo(params).then((res) => {
                     this.Data=res.data.data.data
+                    console.log('59595444444444444')
+                    console.log(this.Data)
                     // this.addwellName=this.Data[0].wellName
                 });
             }else{
