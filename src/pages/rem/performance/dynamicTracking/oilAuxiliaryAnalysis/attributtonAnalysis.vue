@@ -2964,18 +2964,7 @@ export default {
                                                         }
                                                     ]
                                                 },
-                                                {
-                                                    "level": 4,
-                                                    "name": "油井采液强度指标归因分析模型",
-                                                    "code": "YJCYQDGY",
-                                                    "children": [
-                                                        {
-                                                            "level": 6,
-                                                            "name": "归因统计分析",
-                                                            "code": "006006"
-                                                        }
-                                                    ]
-                                                }
+                                               
                                             ]
                                         },
                                         {
@@ -2988,18 +2977,6 @@ export default {
                                                     "name": "分析井组水井分层月注水量",
                                                     "code": "JZSJFCYZSL",
                                                     "children": [
-                                                        {
-                                                            "level": 5,
-                                                            "name": "油井采液强度指标归因分析模型",
-                                                            "code": "YJCYQDGY",
-                                                            "children": [
-                                                                {
-                                                                    "level": 6,
-                                                                    "name": "归因统计分析",
-                                                                    "code": "006006"
-                                                                }
-                                                            ]
-                                                        },
                                                         {
                                                             "level": 5,
                                                             "name": "分析井组内水井分层月注水量",
