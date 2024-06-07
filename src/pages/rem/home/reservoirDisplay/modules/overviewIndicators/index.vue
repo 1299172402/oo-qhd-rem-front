@@ -6,8 +6,11 @@
             header-title="秦皇岛32-6油田生产指标总览"
             :is-show-max-btn="true"
         >
-            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('IndexHome')">详情</el-button>
-            <el-button type="primary" class="buttonActive_primary detailLinkBtn"  style="right:110px"  @click="downlist">下载</el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" @click="linkroute('IndexHome')">详情
+            </el-button>
+            <el-button type="primary" class="buttonActive_primary detailLinkBtn" style="right:110px" @click="downlist">
+                下载
+            </el-button>
             <el-row :gutter="20" style="margin-top: 20px;padding: 0 20px">
                 <el-col :span="8">
                     <div class="grid-content bg-purple">
@@ -24,7 +27,7 @@
                     <div class="grid-content bg-purple">
                         <div class="yield gas">
                             <div class="box">
-                                <div>{{Number(oil1two).toFixed(4)}}</div>
+                                <div>{{ Number(oil1two).toFixed(4) }}</div>
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
@@ -35,16 +38,19 @@
                     <div class="grid-content bg-purple">
                         <div class="yield oil">
                             <div class="box">
-                                <div>{{ totalOilProduction === null ||totalOilProduction ===undefined ?
-                                    Number(0).toFixed(4):
-                                    Number(totalOilProduction).toFixed(4) }}</div>
+                                <div>{{
+                                        totalOilProduction === null || totalOilProduction === undefined ?
+                                            Number(0).toFixed(4) :
+                                            Number(totalOilProduction).toFixed(4)
+                                    }}
+                                </div>
                                 <div>(10⁴m³)</div>
                             </div>
                         </div>
                         <div class="text">总累产油</div>
                     </div>
                 </el-col>
-              
+
             </el-row>
             <el-row :gutter="20" style="padding: 0 20px">
                 <el-col :span="8">
@@ -96,7 +102,7 @@
                         <div class="chartText">总递减率</div>
                     </div>
                 </el-col>
-             
+
             </el-row>
             <el-row :gutter="20" style="padding: 0 20px">
                 <el-col :span="8">
@@ -135,11 +141,13 @@ import {LineChart} from "echarts/charts";
 import * as echarts from "echarts/core";
 import {GridComponent, TooltipComponent, LegendComponent} from "echarts/components";
 import {CanvasRenderer} from "echarts/renderers";
-import {productionMetricsOverview,getYieldTracking} from "@/api/rem/reservoirbillboards";
+import {productionMetricsOverview, getYieldTracking} from "@/api/rem/reservoirbillboards";
 import {dividingLayerQualityRate} from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
-import {getProductionIndex} from "@/api/monthlyReportManagement.js";
+import {getProductionIndex, getProductionIndexPanel} from "@/api/monthlyReportManagement.js";
+
 echarts.use([GridComponent, LegendComponent, TooltipComponent, LineChart, CanvasRenderer]);
 import html2canvas from "html2canvas";
+
 let value = 0;
 let name = "";
 export default {
@@ -171,15 +179,15 @@ export default {
     },
     data() {
         return {
-            totalOilProduction:0.0000,
-            value1:0,
-            value2:0,
-            value3:0,
-            dataList:'',
-            oil1two:'',
-            oil1:'',
-            mainList:[0,0,0],
-            infolist:0, //层段合格率
+            totalOilProduction: 0.0000,
+            value1: 0,
+            value2: 0,
+            value3: 0,
+            dataList: '',
+            oil1two: '',
+            oil1: '',
+            mainList: [0, 0, 0],
+            infolist: 0, //层段合格率
             histogram: {
                 title: {
                     // text: '{a|' + value + '}{c|%}',
@@ -496,46 +504,48 @@ export default {
     },
     methods: {
         linkroute(rname) {
-            this.$router.push({name: rname,query: {link:'remHome'}});
+            this.$router.push({name: rname, query: {link: 'remHome'}});
         },
-        downlist(){
-                const screenEl = document.getElementById('overviewIndicators');
-                if(this.$store.state.setting.mode === 'dark'){
-                    screenEl.classList.add('dark-mode');
-                }
-                this.$nextTick(()=>{
-                    html2canvas(screenEl, {
-                        useCORS: true,
-                        dpi:150,
-                        scale:2,
-                        height: screenEl.scrollHeight,
-                        windowHeight: screenEl.scrollHeight,
-                    }).then((canvas) => {
-                        canvas.toBlob(blob => {
-                            const href = window.URL.createObjectURL(new Blob([blob]))
-                            const link = document.createElement('a')
-                            link.href = href
-                            link.download =  '秦皇岛32-6油田生产指标总览.png'
-                            document.body.appendChild(link)
-                            link.click()
-                            document.body.removeChild(link)
-                        }, 'image/png')
-                        if(this.$store.state.setting.mode === 'dark'){
-                            screenEl.classList.remove('dark-mode');
-                        }
-                    })
+        downlist() {
+            const screenEl = document.getElementById('overviewIndicators');
+            if (this.$store.state.setting.mode === 'dark') {
+                screenEl.classList.add('dark-mode');
+            }
+            this.$nextTick(() => {
+                html2canvas(screenEl, {
+                    useCORS: true,
+                    dpi: 150,
+                    scale: 2,
+                    height: screenEl.scrollHeight,
+                    windowHeight: screenEl.scrollHeight,
+                }).then((canvas) => {
+                    canvas.toBlob(blob => {
+                        const href = window.URL.createObjectURL(new Blob([blob]))
+                        const link = document.createElement('a')
+                        link.href = href
+                        link.download = '秦皇岛32-6油田生产指标总览.png'
+                        document.body.appendChild(link)
+                        link.click()
+                        document.body.removeChild(link)
+                    }, 'image/png')
+                    if (this.$store.state.setting.mode === 'dark') {
+                        screenEl.classList.remove('dark-mode');
+                    }
                 })
+            })
         },
-        getData(){
+        getData() {
             // new Date().format('YYYY-MM')
-            productionMetricsOverview( { ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                orgId: "715AD1CD60484BB59E737CD18A9DE44A",date:'2022-12' + '-01'}).then(res=>{
+            productionMetricsOverview({
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                orgId: "715AD1CD60484BB59E737CD18A9DE44A", date: '2022-12' + '-01'
+            }).then(res => {
                 this.dataList = res.data.data
                 // this.dataList.cumeOilProd = '4493.00'
                 // if(!res.data.data.naturalDecline)  res.data.data.naturalDecline = 0
-                this.mainList[0]= res.data.data.naturalDecline
-                this.mainList[1]= res.data.data.overallDecline
-                this.mainList[2]= res.data.data.wholeDeclineRate
+                this.mainList[0] = res.data.data.naturalDecline
+                this.mainList[1] = res.data.data.overallDecline
+                this.mainList[2] = res.data.data.wholeDeclineRate
                 // this.histogram.series[0].data[0].value = res.data.data.naturalDecline
                 // this.histogram.series[0].data[1].value = 100 - res.data.data.naturalDecline
                 // this.histogram.title.text = "{a|" + res.data.data.naturalDecline + "%}{c|\n" +   "}"
@@ -548,36 +558,38 @@ export default {
                 // this.histogram3.series[0].data[1].value = 100 - res.data.data.wholeDeclineRate
                 // this.histogram3.title.text = "{a|" + res.data.data.wholeDeclineRate + "%}{c|\n" +   "}"
             })
-            getYieldTracking({ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
-                orgId: "715AD1CD60484BB59E737CD18A9DE44A"}).then(res=>{
+            getYieldTracking({
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                orgId: "715AD1CD60484BB59E737CD18A9DE44A"
+            }).then(res => {
                 this.oil1two = res.data.data.annualOilProduction,
-                this.oil1 =res.data.data.dayOilProduction
+                    this.oil1 = res.data.data.dayOilProduction
             })
 
             devPhaseInfos({
                 fieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 type: "1"
-            }).then(res=>{
-                let devPhaseInfos =res.data.data.devPhaseInfos;
+            }).then(res => {
+                let devPhaseInfos = res.data.data.devPhaseInfos;
                 let sum = 0.0;
                 for (let i = 0; i < devPhaseInfos.length; i++) {
                     sum += devPhaseInfos[i].oilSum;
                 }
-                this.totalOilProduction= sum;
+                this.totalOilProduction = sum;
             })
         },
-        getList(){
+        getList() {
             let date = new Date().format('yyyy-MM-dd')
             let data = {
-                endDate:date,
-                oilFieldId:"3FC9A818F5BC43B88270DB80BBB3018F",
-                year:date,
-                platFormId:''
+                endDate: date,
+                oilFieldId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                year: date,
+                platFormId: ''
             }
-            dividingLayerQualityRate(data).then((res)=>{
+            dividingLayerQualityRate(data).then((res) => {
                 this.infolist = res?.data.data.indicatorContent.detail
-                
+
             })
         },
         getinfo() {
@@ -600,20 +612,14 @@ export default {
                 ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
                 orgId: "715AD1CD60484BB59E737CD18A9DE44A",
             };
-            getProductionIndex(param).then((res) => {
-                let wellCountAll = 0,monthProdDurationCountAll = 0,monthProdDduration=0,monthProdDurationCount=0
-                res.data.data.forEach(item=>{
-                    wellCountAll += item.wellCount
-                    monthProdDurationCountAll += item.wellOpenCount
-                    monthProdDduration += item.monthProdDduration
-                    monthProdDurationCount += item.monthProdDurationCount
-                })
-                this.value1 = ((monthProdDurationCountAll/wellCountAll * 100)).toFixed(2);
-                this.value2 = ((monthProdDduration/monthProdDurationCount/res.data.data[0].days/24)*100).toFixed(2)
-                this.value3 = ((this.value1*this.value2)/100).toFixed(2)
+            getProductionIndexPanel(param).then((res) => {
+                this.value1 = res.data.data.utilizationRate;
+                this.value2 = res.data.data.productionTimeRate;
+                this.value3 = res.data.data.combinedHourRate;
             });
+
         },
-        
+
         //图表
         getEchartData(value, unit, valueColor, backColor, centerColor) {
             var option = {
@@ -674,8 +680,8 @@ export default {
                             fontSize: 16,
                         },
                         data: [
-                            {value: 0, name: value, label: {color:'#29EEF3', position: "center"}},
-                            {value: 1, name: unit, label: {color:'#29EEF3', position: "inner"}},
+                            {value: 0, name: value, label: {color: '#29EEF3', position: "center"}},
+                            {value: 1, name: unit, label: {color: '#29EEF3', position: "inner"}},
                         ],
                     },
                     {
@@ -869,9 +875,11 @@ export default {
     line-height: 42px;
     box-shadow: 0px 0px 15px #66ffff inset;
 }
+
 .dark-mode {
     background-color: #02213a;
 }
+
 .chart {
     // margin-top: 10px;
     height: 120px !important;
