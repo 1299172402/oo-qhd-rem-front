@@ -177,7 +177,7 @@
         </el-table-column>
         <el-table-column prop="qhd331scs" label="措施井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
-        <el-table-column prop="qhd331stj" label="调整井" align="center" width="100" :formatter="toPrecise2">
+        <el-table-column prop="qhd331stz" label="调整井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
         <el-table-column prop="qhd331skf" label="开发井" align="center" width="100" :formatter="toPrecise2">
         </el-table-column>
@@ -191,6 +191,7 @@
 <script>
 import { getReportFroms, getForecastDate } from "@/api/oilDeposit/rem-03/oilfieldmanageplan.js";
 import { exportExcel } from "@/lib/exportExcel.js";
+import dayjs from "dayjs";
 
 export default {
   data() {
@@ -300,7 +301,9 @@ export default {
       await getForecastDate().then((res) => {
         if (res.data.code == 200) {
           this.rollingForecastDateList = res.data.data;
-          this.searchForm.rollingForecastDate = this.rollingForecastDateList[0].source_ID;
+          // this.searchForm.rollingForecastDate = this.rollingForecastDateList[0].source_ID;
+          // this.searchForm.rollingForecastDate = dayjs().subtract(1, "months").format("YYYYMM");
+          this.searchForm.rollingForecastDate = dayjs().format("YYYYMM");
         }
         this.doSearch();
       });
@@ -370,27 +373,6 @@ export default {
         if (lineTitle != null && lineTitle != "") {
           // 'QHD32-6', 'QHD33-1', 'NB35-2', 'QHD33-1S', 'CFD6-4', 'BZ3-2'
           // 'QHD32-6', 'NB35-2' , 'QHD33-1S','QHD33-1'
-          console.log(123456,item,objData,objData[item]["QHD32-6"]["jiChu"],(
-              parseFloat(objData[item]["QHD32-6"]["jiChu"] || 0) +
-              parseFloat(objData[item]["QHD33-1"]["jiChu"] || 0) +
-              parseFloat(objData[item]["NB35-2"]["jiChu"] || 0) +
-              parseFloat(objData[item]["QHD33-1S"]["jiChu"] || 0) +
-              parseFloat(objData[item]["CFD6-4"]["jiChu"] || 0) +
-              parseFloat(objData[item]["BZ3-2"]["jiChu"] || 0) +
-              parseFloat(objData[item]["QHD32-6"]["cuoShi"] || 0) +
-              parseFloat(objData[item]["QHD33-1"]["cuoShi"] || 0) +
-              parseFloat(objData[item]["NB35-2"]["cuoShi"] || 0) +
-              parseFloat(objData[item]["QHD33-1S"]["cuoShi"] || 0) +
-              parseFloat(objData[item]["CFD6-4"]["cuoShi"] || 0) +
-              parseFloat(objData[item]["BZ3-2"]["cuoShi"] || 0) +
-              parseFloat(objData[item]["QHD32-6"]["tiaoZheng"] || 0) +
-              parseFloat(objData[item]["QHD33-1"]["tiaoZheng"] || 0) +
-              parseFloat(objData[item]["NB35-2"]["tiaoZheng"] || 0) +
-              parseFloat(objData[item]["QHD33-1S"]["tiaoZheng"] || 0) +
-              parseFloat(objData[item]["CFD6-4"]["tiaoZheng"] || 0) +
-              parseFloat(objData[item]["BZ3-2"]["tiaoZheng"] || 0) +
-              parseFloat(objData[item]["QHD33-1"]["kaiFa"] || 0)
-            ))
           let lineObj = {
             type: lineTitle,
             code: item,
@@ -546,7 +528,7 @@ export default {
             ? ""
             : (today["qhd331tz"] - yesterday["qhd331tz"]).toFixed(2),
         qhd331kf:
-          today["qhd331kf"] == "" && yesterday["qhd326kf"] == ""
+          today["qhd331kf"] == "" && yesterday["qhd331kf"] == ""
             ? ""
             : (today["qhd331kf"] - yesterday["qhd331kf"]).toFixed(2),
         qhd331hj:
