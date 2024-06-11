@@ -1,8 +1,5 @@
 <template>
     <div style="width: 100%; height: 100%" class="pageBox">
-        <div class="titleStyle">
-            生产段维护
-        </div>
         <header-search>
             <el-form style="margin-top: 20px" :inline="true">
                 <el-form-item label="油田：">
