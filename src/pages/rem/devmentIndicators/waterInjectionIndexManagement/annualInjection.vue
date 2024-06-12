@@ -441,6 +441,7 @@ export default {
           return {
             name: item.platform_name,
             auditNumber: item.dailycount3,
+            yearMonth: this.queryParams.endDate
           };
         });
       yearInjectAssessValueUpdate(editArray).then((res) => {
