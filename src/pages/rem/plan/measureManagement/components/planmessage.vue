@@ -103,6 +103,15 @@
                             <span v-else>-</span>
                         </template>
                     </el-table-column>
+                    <el-table-column label="评价日期" sortable prop="evalTime" min-width="200px" align="center">
+                        <template slot-scope="scope">
+                            <span
+                                v-if="scope.row.evalTime !== null && scope.row.evalTime !== ''">{{
+                                    scope.row.evalTime
+                                }}</span>
+                            <span v-else>-</span>
+                        </template>
+                    </el-table-column>
                     <el-table-column :label="`油层厚度 \n（m）`"  width="130px" prop="reservoirThickness"
                                      align="center" class-name="cellWrap">
                         <template slot-scope="scope">
