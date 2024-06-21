@@ -137,7 +137,7 @@ export default {
           },
         },
         // color: ["#1379F7", "#FF5844", "#69b146", "#00BC9C", "#9A72FF", "#DA835E"],
-        color: ["#1379F7", "#DA835E", "#69b146", "#9A72FF", "#FF5844", "#00bc9c"],
+        color: ["#1379F7", "#DA835E", "#69b146", "#9A72FF", "#FF5844", "#00bc9c", "#365508"],
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -375,14 +375,14 @@ export default {
             //获得每一个折线数据
             let linearChart = charDataS[i];
             //向图例中添加 折线名称
-            if (linearChart.label != "实际年产" && linearChart.label != "计划年产") {
-              legendData.push(linearChart.label);
-            } else if (linearChart.label == "实际年产") {
+            if (linearChart.label == "实际年产") {
               legendData.push("实际年累产");
             } else if (linearChart.label == "计划年产") {
               legendData.push("计划年累产");
             }else if (linearChart.label == "上年实际年产") {
               legendData.push("上年实际累产");
+            }else{
+              legendData.push(linearChart.label);
             }
             //向数据数组中添加 所有折线的信息
             seriesData.push(this.getLinearChartSeriesOilProduct(linearChart));
