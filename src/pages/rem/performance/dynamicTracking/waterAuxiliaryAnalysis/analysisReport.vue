@@ -881,13 +881,20 @@
             <div style="height: 680px">
               <pagePanel header-title="水井动态分析详情列表" style="height: 100%">
                 <div style="display: flex; justify-content: flex-end">
-                  <el-button
+<!--                  <el-button
                     icon="el-icon-download"
                     type="primary"
                     style="margin-bottom: 20px"
                     @click="doDownExcel('#table2', '水井动态分析详情列表')"
                     >下载</el-button
-                  >
+                  >-->
+                  <el-button
+                      icon="el-icon-download"
+                      type="primary"
+                      style="margin-bottom: 20px"
+                      @click="dialogVisible = true"
+                  >下载
+                  </el-button>
                 </div>
                 <el-table
                   key="waterAuxiliaryAnalysis-table2"
@@ -1109,10 +1116,25 @@
         </div>
       </div>
     </div>
+    <el-dialog
+        title="选择下载内容（请注意：下载的内容样式需用户手动微调）"
+        :visible.sync="dialogVisible"
+        width="30%"
+    >
+      <div class="button-container">
+        <el-button type="primary" @click="downloadTemplate('option1')">word</el-button>
+        <el-button type="primary" @click="downloadTemplate('option2')">ppt</el-button>
+        <el-button type="primary" @click="downloadTemplate('option3')">excel</el-button>
+      </div>
+      <span slot="footer" class="dialog-footer">
+      <el-button @click="dialogVisible = false">取 消</el-button>
+    </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import FileSaver from "file-saver";
 import {
   layerVariationTrend,
   layerInjectionStatus,
@@ -1128,7 +1150,7 @@ import { fetchPlatforms } from "@/api/oilDeposit/rem-02/primaryinfo.js";
 import { QueryOgfDetail, QueryReservoirAnalyseUnit, QueryWellDetail, userListByUserNames } from "@/api/rem/marster.js";
 import { getDate } from "@/api/oilDeposit/rem-04/oilAuxiliaryAnalysis.js";
 import treeSelectionCustom from "@/pages/rem/basic/components/treeSelectionCustom.vue";
-import { exportExcel } from "@/lib/exportExcel.js";
+import {exportExcel, reportSavePptRem, reportSaveWordRem} from "@/lib/exportExcel.js";
 import compareSort from "@/lib/compareSort.js";
 import { cloneDeep } from "lodash";
 
@@ -1145,6 +1167,8 @@ export default {
   },
   data() {
     return {
+      // 控制对话框显示
+      dialogVisible: false,
       // 主数据树结构默认选中的值
       defaultCheckedKeys: [],
       collectWells: [], //收集井
@@ -1264,6 +1288,13 @@ export default {
         page: 1,
         pageSize: 10,
       },
+      requestParams: {
+        ogfId: "",
+        templateCode: "",
+        templateName: "",
+        type: "",
+        date: ""
+      }
     };
   },
   mounted() {
@@ -1281,6 +1312,48 @@ export default {
     },
   },
   methods: {
+    downloadTemplate(option) {
+      // 这里根据 option 的值来调用不同的下载方法
+      switch (option) {
+        case 'option1':
+          this.requestParams.ogfId = this.selYtdm;
+          this.requestParams.templateCode = 'inj_well_analysis_report';
+          this.requestParams.templateName = '油藏水井分析报告';
+          this.requestParams.type = 'word';
+          this.requestParams.date = this.currentDate;
+          reportSaveWordRem(this.requestParams).then((res) => {
+            const aBlob = new Blob([res]);
+            try {
+              FileSaver.saveAs(aBlob, `水井动态分析word报告.docx`);
+            } catch (e) {
+              console.log(e);
+            }
+          });
+          break;
+        case 'option2':
+          this.requestParams.ogfId = this.selYtdm;
+          this.requestParams.templateCode = 'inj_well_analysis_report';
+          this.requestParams.templateName = '油藏水井分析报告';
+          this.requestParams.type = 'ppt';
+          this.requestParams.date = this.currentDate;
+          reportSavePptRem(this.requestParams).then((res) => {
+            const aBlob = new Blob([res]);
+            try {
+              FileSaver.saveAs(aBlob, `水井动态分析ppt报告.pptx`);
+            } catch (e) {
+              console.log(e);
+            }
+          });
+          break;
+        case 'option3':
+          this.doDownExcel('#table2', '水井动态分析详情列表3');
+          break;
+        default:
+          break;
+      }
+      // 关闭对话框
+      this.dialogVisible = false;
+    },
     //重置
     resetting() {
       // this.$nextTick(()=>{
@@ -3643,5 +3716,12 @@ export default {
   justify-content: center !important;
   align-items: center !important;
   white-space: pre;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* 允许换行，如果按钮过多 */
+  gap: 10px; /* 按钮之间的间距 */
+  padding: 20px; /* 容器内边距 */
 }
 </style>
