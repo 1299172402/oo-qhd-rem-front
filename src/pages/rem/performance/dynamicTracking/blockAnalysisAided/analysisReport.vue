@@ -445,7 +445,30 @@
                 <div :class="[$store.state.setting.mode == 'light' ? 'remark0' : 'remark']" v-show="myList.length > 0">
                   相关内容:
                 </div>
+                <el-table
+                  v-if="isIndexChangeTrendList && myList.length > 0"
+                  id="tableData"
+                  :data="myList"
+                  border
+                  :row-style="{ height: '0px' }"
+                  header-cell-class-name="table_header"
+                  :cell-style="{ padding: '6px' }"
+                  style="width: 590px; margin-top: 20px"
+                  height="calc(100% - 120px)"
+                  :default-sort="{ prop: 'date', order: 'descending' }"
+                  :header-cell-style="{ padding: '0px 0' }"
+                >
+                  <el-table-column prop="layerName" header-align="center" align="center" label="层位"></el-table-column>
+                  <el-table-column prop="well" header-align="center" align="center" label="井号">
+                    <template slot-scope="scope">
+                      <el-button type="text" @click="getBorepipeTypeApi(scope.row.well)">{{
+                        scope.row.well
+                      }}</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
                 <div
+                  v-else
                   style="
                     width: 100%;
                     max-height: 340px;
@@ -557,6 +580,7 @@ export default {
       url: "\/IsoFrameCom/View/eWGraphFrameShow-InterlayerGradient.html",
       layerData: null, //图层组件数据
       //开采现状(地层压力)分析
+      isIndexChangeTrendList: false,
       indexChangeTrendList: [],
       indexChangeTrendNum: {
         allnum: 0,
@@ -1071,8 +1095,10 @@ export default {
               this.tagMessage = tData.msg;
               if (tag != "indexChangeTrendList") {
                 this.myList = tData.basis ? tData.basis : [];
+                this.isIndexChangeTrendList = false;
               } else {
                 this.myListCopy = tData.basis ? tData.basis : [];
+                this.isIndexChangeTrendList = true;
               }
             }
             //获得其值 hwh
@@ -1326,8 +1352,10 @@ export default {
         this.recoveryAnalysisList[j].value = t_count; //登记条数
       }
       this.tableData = myData;
+      this.isIndexChangeTrendList = false;
       if (tag == "indexChangeTrendList") {
         await this.getLayerWell();
+        this.isIndexChangeTrendList = true;
       }
       this.clickAnalysis(indexCode, indexName);
     },
