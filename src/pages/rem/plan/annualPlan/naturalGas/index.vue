@@ -44,14 +44,14 @@
           property="gasProdPlan"
           header-align="center"
           align="center"
-          :label="`计划产气量\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³' : '10⁴t'})`"
+          :label="`计划产气量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
           property="gasProdDaily"
           header-align="center"
           align="center"
-          :label="`实际产气量\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³' : '10⁴t'})`"
+          :label="`实际产气量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
         <el-table-column
@@ -65,7 +65,7 @@
           prop="gasProdRollFocecast"
           header-align="center"
           align="center"
-          :label="`滚动预测产气量\n(${searchForm.selectUnitOfProduction == 'm' ? '10⁴m³' : '10⁴t'})`"
+          :label="`滚动预测产气量\n(10⁴m³)`"
           :formatter="toPrecise4"
         ></el-table-column>
       </el-table>

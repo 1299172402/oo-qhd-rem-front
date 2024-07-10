@@ -203,9 +203,9 @@
         <el-form-item label="模型代码">
           <el-input type="text" v-model="moduleFrom.modelId" disabled></el-input>
         </el-form-item>
-        <el-form-item label="油田区块标识" prop="ogfId" style="width: 100%">
+        <el-form-item label="油田区块标识" prop="ogfIdValue" style="width: 100%">
           <!-- <el-input type="text" v-model="moduleFrom.ogfId" disabled></el-input> -->
-          <el-input type="text" v-model="ogfIdValue" disabled></el-input>
+          <el-input type="text" v-model="moduleFrom.ogfIdValue" disabled></el-input>
         </el-form-item>
         <el-form-item label="开始日期" prop="beginDate" v-if="radio == 1">
           <el-date-picker
@@ -320,13 +320,13 @@ export default {
         beginMonth: "", //月度开始
         endMonth: "", //月度结束
         modelId: "", //模型代码
-        ogfId: "", //油田区块标识
+        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F", //油田区块标识
+        ogfIdValue: "秦皇岛32-6油田",
         beginDate: "", //日度开始
         endDate: "", //日度结束
       },
-      ogfIdValue: "秦皇岛32-6油田",
       rulesModule: {
-        ogfId: [
+        ogfIdValue: [
           {
             required: true,
             message: "请输入",
@@ -538,6 +538,8 @@ export default {
       this.searchForm.blockId = "";
       this.searchForm.wellType = "";
       this.searchForm.wellId = "";
+      this.moduleFrom.ogfId = this.searchForm.ogfId || "";
+      this.moduleFrom.ogfIdValue =   this.searchForm.ogfId && this.ogfSelectList && this.ogfSelectList.length  ? this.ogfSelectList.find(item=>item.ogfId === this.searchForm.ogfId).ogfName : "";
       QueryReservoirAnalyseUnit({ ogfId: this.searchForm.ogfId }).then((res) => {
         if (res.data.code == 200) {
           //获得区块信息
