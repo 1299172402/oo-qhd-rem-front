@@ -135,7 +135,7 @@ export default {
                             warningShowFlag: false,
                             alarmPageCode: 'LOWGPC', 
                             alarmTime: "",
-                            url: `https://rem.${this.baseUrl}/#/basic/wellGroup_Maintenance?link=linkage&page=Linkage`
+                            url: `https://rem.${this.baseUrl}/#/injection/connectivityData?link=linkage&page=Linkage`
                         },
                         {
                             name: '注采平衡分析',
@@ -294,7 +294,7 @@ export default {
                         url: `https://ipm.${this.baseUrl}/#/waterflood/merge?page=Linkage`
                     }, {
                         name: '配注微调策略', alarmTime: "",
-                        url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=Linkage`
+                        //url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=Linkage`
                     }],
                     boxBottomContent: [['智能分注调控策略优化模型', '智能分注调控策略优化模型'], ['配注方案分析评估模型']],
                     boxStyle: {
