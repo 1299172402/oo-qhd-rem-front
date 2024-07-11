@@ -122,11 +122,11 @@ export default {
                     // boxBottomText: ['分层剩余油分布', '平面剩余油分布'],
                     boxBottomText: [{
                         name: '分层剩余油分布',
-                        url: `https://rem.${this.baseUrl}/#/injection/optimization?page=IpmHome`
+                        url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=IpmHome`
                     },
                         {
                             name: '平面剩余油分布',
-                            url: `https://rem.${this.baseUrl}/#/injection/optimization?page=IpmHome`
+                            url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=IpmHome`
                         }],
                     boxStyle: {
                         pWidth: 'width:11vw;margin-left: 4.5vw;'
