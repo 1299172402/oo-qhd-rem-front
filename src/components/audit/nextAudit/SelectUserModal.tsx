@@ -2,7 +2,7 @@ import Vue from "vue";
 import { mapGetters } from "vuex";
 import DeptTree from "./DeptTree";
 import OpenClose from "./OpenClose";
-import UserTable from "./UserTable";
+import UserTable from "./UserTable.vue";
 import "./style/SelectUserModalStyle.less";
 
 const allLoading = {
@@ -123,8 +123,8 @@ export default Vue.extend({
           colKey: "action",
           width: 80,
           key: "action",
-          cell: (h, { row, index }) => <a onClick={() => {
-            (this as any).handleDelete(row, index);
+          cell: (h, { row }) => <a onClick={() => {
+            (this as any).handleDelete(row);
           }}>删除</a>
         }
       ],
@@ -135,7 +135,9 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapGetters(["userInfo"]),
+    ...mapGetters({
+      userInfo: "user/userInfo"
+    }),
     /**
      * 本组件内部使用的是否打开弹窗
      */
@@ -182,11 +184,9 @@ export default Vue.extend({
           if (val.applyScope) {
             // applyScope 等于 ALL 则说明为全部可适用
             deptId = val.applyScope !== "ALL" ? val.applyScope : "";
-          } else if (val.relativePerson === "Login") {
-            // 默认选中当前登录人的部门
+          } else if (val.relativePerson === "Starter") {
+            // 参照人为发起人时，根据当前登录人的部门id过滤用户
             deptId = this.userInfo.deptId;
-          } else {
-            deptId = val.auditUserSearchCallBackData;
           }
           if (deptId) {
             this.depts = [{
@@ -284,8 +284,11 @@ export default Vue.extend({
     /**
      * 点击已选用户中的删除按钮，将用户删掉，并且将用户的id传给用户组件
      */
-    handleDelete(row, index) {
-      (this as any).selectedUsers.splice(index, 1);
+    handleDelete(row) {
+      const index = (this as any).selectedUsers.findIndex(v => v.userId === row.userId);
+      if (index !== -1) {
+        (this as any).selectedUsers.splice(index, 1);
+      }
       (this as any).deleteId = row.userId;
       if (!(this as any).selectedUsers || (this as any).selectedUsers.length === 0) {
         if (this.$refs.userTable) {

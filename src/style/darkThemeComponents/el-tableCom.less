@@ -30,11 +30,6 @@
   background: var(--opacity-blue-bg) !important;
 }
 
-.el-table th.el-table__cell,
-.el-table th.el-table__cell.is-leaf {
-  //   background: linear-gradient(360deg, #004473 0%, rgba(0, 72, 122, 0.36) 100%) !important;
-}
-
 .el-table td.el-table__cell,
 .el-table th.el-table__cell.is-leaf {
   border-bottom: 1px solid var(--opacity-blue-bg);
@@ -59,21 +54,11 @@
   border: 0;
 }
 
-// 滚动条的宽度
-.el-table__body-wrapper::-webkit-scrollbar {
-  width: 10px; // 横向滚动条
-  height: 10px; // 纵向滚动条 必写
-}
-
 // header右侧固定白线
 .el-table__fixed-right-patch {
   // width: 0 !important;
   width: 11px !important;
   background: #02355e;
-}
-
-.el-table__fixed-right {
-  // right: 10px !important;
 }
 
 // 滚动条的滑块
@@ -253,7 +238,7 @@
 //固定的表头表尾背景色
 .el-table__fixed-right,
 .el-table__fixed {
-  height: calc(100% - 10px) !important;
+  height: calc(100% - 6px) !important;
   background: #02355e;
   box-shadow: 0 -13px 19px 3px #2c5a7b;
 }
@@ -348,7 +333,7 @@
 
 // 表格只有纵向滚动条
 .el-table--scrollable-y .el-table__fixed-right {
-  right: 10px !important;
+  right: 6px !important;
 }
 
 // 表格只有横向没有纵向

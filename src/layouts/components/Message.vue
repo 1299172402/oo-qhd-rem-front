@@ -36,7 +36,7 @@
               borderBottom: $store.state.setting.mode === 'light' ? '1px solid #eee' : '1px solid gray',
             }"
           >
-            <div class="g-w100 g-h100" style="padding: 8px 16px;" @click="sureWarn(item)">
+            <div class="g-w100 g-h100" style="padding: 8px 16px;" @click="goDetail">
               <div class="g-row-flex">
                 <div class="g-row-flex">
                   <p class="msg-level" :style="{ background: item.typeColor }">
@@ -53,14 +53,9 @@
               <!-- eslint-disable vue/no-v-html -->
               <p class="msg-content" v-html="item.alarmContent" />
             </div>
-            <template #action>
-              <t-button size="small" variant="outline" @click="sureWarn(item)">
-                {{ item.delType === "1" ? "确认" : "处理" }}
-              </t-button>
-            </template>
           </t-list-item>
           <div class="g-row-flex-H">
-            加载中...
+            {{ tableData.length >= total ? "已全部加载完成" : "加载中..." }}
           </div>
         </div>
 
@@ -104,21 +99,19 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
-// import { NotificationIcon } from 'tdesign-icons-vue';
-import {
-  queryAlcAlarmByParam,
-  updateAlcAlarmCheckTag,
-  popoverRingMessage
-} from "@/api/intelligentOilfield/portal/projectionMode";
+
+import { queryAlcAlarmByParam } from "@/api/intelligentOilfield/portal/projectionMode";
 import { NotificationItem } from "@/interface";
 import proxy from "@/config/host";
 import jumpSupApp from "@/utils/jumpSupApp.js";
+import WebSocketMixins from "@/components/mixins/WebSocketMixins.js";
 
 const env = import.meta.env.MODE;
 export default Vue.extend({
   components: {
     // NotificationIcon,
   },
+  mixins: [WebSocketMixins],
   data() {
     return {
       scrollData: 0,
@@ -129,11 +122,16 @@ export default Vue.extend({
         pageSize: 10
       },
       timer: null,
-      total: 0
+      total: 0,
+      reconnectCount: 2,
+      isCloseAfterReset: true
     };
   },
   computed: {
-    ...mapState("notification", ["msgData"])
+    ...mapState("notification", ["msgData"]),
+    wsUrl() {
+      return `${proxy[env].WEB_SOCKET_URL}${this.$store.getters["user/userInfo"]?.userName}`;
+    }
   },
   watch: {
     // isNoticeVisible() {
@@ -146,7 +144,6 @@ export default Vue.extend({
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll, true);
-    // this.initData();
     this.getList(true);
     this.pollingTime();
   },
@@ -164,96 +161,18 @@ export default Vue.extend({
         }
       }
     },
-    initData() {
-      this.tableData = [
-        {
-          typeName: "测试报警类型",
-          sourceName: "测试报警名称",
-          alarmContent:
-            "测试报警内容很长很长很<br/>试验一下息息爱狭隘性很长很长很长很长很长很长很hah<br/>长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长",
-          levelName: "一级",
-          alarmTime: "2023/2/17 17:25:00",
-          type: "我的",
-          typeColor: "#E90202"
-        },
-        {
-          typeName: "测试报警类型1",
-          sourceName: "测试报警名称1",
-          alarmContent: "测试报警内容1",
-          levelName: "三级",
-          alarmTime: "2023/2/17 17:25:00",
-          type: "全部",
-          typeColor: "green"
-        },
-        {
-          typeName: "测试报警类型2",
-          sourceName: "测试报警名称2",
-          alarmContent: "测试报警内容2",
-          levelName: "二级",
-          alarmTime: "2023/2/17 17:25:00",
-          type: "我的",
-          typeColor: "#E90202"
-        },
-        {
-          typeName: "测试报警类型2",
-          sourceName: "测试报警名称2",
-          alarmContent: "测试报警内容2",
-          levelName: "二级",
-          alarmTime: "2023/2/17 17:25:00",
-          type: "我的",
-          typeColor: "#E90202"
-        },
-        {
-          typeName: "测试报警类型2",
-          sourceName: "测试报警名称2",
-          alarmContent: "测试报警内容2",
-          levelName: "二级",
-          alarmTime: "2023/2/17 17:25:00",
-          type: "我的",
-          typeColor: "#E90202"
-        }
-      ];
-    },
     pollingTime() {
       window.clearInterval(this.timer);
       this.timer = window.setInterval(() => {
         setTimeout(() => {
           // 重新调用第一个页的接口
+          if (this.ws && this.ws.readyState !== WebSocket.CLOSED) {
+            this.ws.send("{}");
+          }
           this.getList(true);
           if (this.$refs.listDiv) this.$refs.listDiv.scrollTop = 0;
-          // TODO: Maybe change back
-          // 调接口
-          popoverRingMessage().then(response => {
-            if (response?.data?.data?.hasPopup === "1") {
-              // 是否弹窗 0否 1是
-              this.isNoticeVisible = true;
-              if (response.data.data.hasSound === "1") {
-                // 是否响铃 0否 1是
-                this.$emit("play-audio", true);
-              } else {
-                this.$emit("play-audio", false);
-              }
-            }
-          });
         }, 0);
-      }, 60000);
-    },
-    sureWarn(row) {
-      if (row.delType === "1") {
-        const queryParam = {
-          alarmId: row.alarmId
-        };
-        // 确认接口
-        this.$modal.confirm("是否已确定告警内容？").then(() =>
-          updateAlcAlarmCheckTag(queryParam).then(() => {
-            this.getList(true);
-          })
-        );
-      } else {
-        // 处置
-        // window.open(row.delUrl, "_blank");
-        window.open(`${proxy[env].ALARM_URL}${this.$store.getters["user/token"]}`, "_blank");
-      }
+      }, 30000);
     },
     scrollBarWheel(e) {
       e = e || window.event;
@@ -283,70 +202,22 @@ export default Vue.extend({
       this.getList(true);
     },
     getList(firstPage) {
-      //  TODO: Maybe change back
-      //   const _res = [
-      //     {
-      //       typeName: "测试报警类型",
-      //       sourceName: "测试报警名称",
-      //       alarmContent:
-      //         "测试报警内容很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长",
-      //       levelName: "一级",
-      //       alarmTime: "2023/2/17 17:25:00",
-      //       type: "我的",
-      //       typeColor: "#E90202"
-      //     },
-      //     {
-      //       typeName: "测试报警类型1",
-      //       sourceName: "测试报警名称1",
-      //       alarmContent: "测试报警内容1",
-      //       levelName: "三级",
-      //       alarmTime: "2023/2/17 17:25:00",
-      //       type: "全部",
-      //       typeColor: "green"
-
-      //     },
-      //     {
-      //       typeName: "测试报警类型2",
-      //       sourceName: "测试报警名称2",
-      //       alarmContent: "测试报警内容2",
-      //       levelName: "二级",
-      //       alarmTime: "2023/2/17 17:25:00",
-      //       type: "我的",
-      //       typeColor: "#E90202"
-      //     },
-      //     {
-      //       typeName: "测试报警类型2",
-      //       sourceName: "测试报警名称2",
-      //       alarmContent: "测试报警内容2",
-      //       levelName: "二级",
-      //       alarmTime: "2023/2/17 17:25:00",
-      //       type: "我的",
-      //       typeColor: "#E90202"
-      //     }
-      //   ];
-      // 获取列表
       if (process.env.NODE_ENV === "release") {
         const param = {
           pageNum: 1,
           pageSize: 10
         };
         const currentParam = firstPage ? param : this.queryParams;
-        // TODO: Maybe change back
-        //   if (firstPage) {
-        //     this.queryParams.pageNum = 1;
-        //     this.tableData = _res;
-        //     this.total = 21;
-        //   } else {
-        //     this.tableData = [...this.tableData, ..._res];
-        //   }
         queryAlcAlarmByParam(currentParam, false).then(response => {
-          const _res = JSON.parse(JSON.stringify(response.data.rows));
-          if (firstPage) {
-            this.queryParams.pageNum = 1;
-            this.tableData = _res;
-            this.total = response.data.total;
-          } else {
-            this.tableData = [...this.tableData, ..._res];
+          if (response?.data?.rows) {
+            const _res = JSON.parse(JSON.stringify(response.data.rows));
+            if (firstPage) {
+              this.queryParams.pageNum = 1;
+              this.tableData = _res;
+              this.total = response.data.total;
+            } else {
+              this.tableData = [...this.tableData, ..._res];
+            }
           }
         });
       }
@@ -379,6 +250,18 @@ export default Vue.extend({
         });
       }
       this.$store.commit("notification/setMsgData", changeMsg);
+    },
+    processMessage(message) {
+      try {
+        const data = JSON.parse(message?.data);
+        if (data.type === "alarm_sos") {
+          this.getList(true);
+          this.isNoticeVisible = true;
+          this.$emit("play-audio", true);
+        }
+      } catch (error) {
+        console.error("WebSocket信息无法正确解析");
+      }
     }
   }
 });
@@ -484,7 +367,7 @@ export default Vue.extend({
         .msg-time {
           bottom: -6px;
           opacity: 0;
-          font-size: 10px;
+          font-size: 12px;
         }
       }
 
@@ -496,15 +379,15 @@ export default Vue.extend({
 
       .msg-type {
         color: var(--td-text-color-secondary);
-        font-size: 10px;
-        width: 289px;
+        font-size: 12px;
+        width: 275px;
       }
 
       .msg-level {
         color: #fff;
         width: fit-content;
         border-radius: 4px;
-        font-size: 10px;
+        font-size: 12px;
         padding: 1px 10px;
         margin-right: 5px;
         transform: scale(0.83);
@@ -523,7 +406,7 @@ export default Vue.extend({
         transition: all 0.2s ease;
         opacity: 1;
         color: var(--td-text-color-secondary);
-        font-size: 10px;
+        font-size: 12px;
       }
     }
   }

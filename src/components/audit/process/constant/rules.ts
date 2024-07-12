@@ -9,15 +9,15 @@ export default {
   opinion: [{ required: true, message: "审批意见必填", trigger: "blur" }],
   terminateProcessReason: [{ required: true, message: "请输入驳回意见", trigger: ["blur", "change"] }],
   nextAuditInfo: [
-    { required: true, message: "请选择处理类型", trigger: ["blur", "change"] },
+    { required: true, message: "请选择下一节点处理人", trigger: "all" },
     {
       validator(value) {
-        if (value.nextAuditInfos || value.delegateInfo) {
+        if (value && (value.nextAuditInfos || value.delegateInfo)) {
           return true;
         }
         return false;
       },
-      trigger: "blur",
+      trigger: "all",
       message: "请选择下一节点处理人"
     }
   ]
@@ -52,6 +52,6 @@ interface ActionType {
 
 export const differentTypeRequire: Partial<ActionType> = {
   terminateProcessInstance: ["currentAction.key", "terminateProcessReason", "nextAuditInfo"],
-  completeTask: ["currentAction.key", "opinion", "nextAuditInfo"],
+  completeTask: ["currentAction.key", "opinion", "nextAuditInfo", "nextAuditInfo.nextAuditInfos"],
   rejectTask: ["currentAction.key", "opinion"]
 };
