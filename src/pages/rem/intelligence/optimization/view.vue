@@ -572,8 +572,22 @@ export default {
                     item.layerIndex = layerIndex.toString();
                 })
                 this.form.tableData2 = arr
+                this.form.tableData2.forEach(item => {
+                    let len = 0
+                    if (Number.isNaN(item.groupInjRatio)) {
+                        item.groupInjRatio = 0
+                        item.injSplitData = 0
+                    } else if (item.groupInjRatio.toString().indexOf('.') > -1) {
+                        const string = item.groupInjRatio.toString()
+                        len = string.length - string.indexOf('.') - 1
+                        item.injSplitData = item.groupInjRatio * Math.pow(10, len) * item.oilSplitData / Math.pow(10, len)
+                    } else {
+                        item.injSplitData = item.groupInjRatio * item.oilSplitData
+                    }
+                })
                 // this.getSpanArr(arr, 'injWellNo')
                 this.groupBy(arr)
+                
                 this.ying = eval(res.groupWaterInferData)
                 this.$message.success("保存成功")
             }).catch(() => {
