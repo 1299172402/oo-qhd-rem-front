@@ -74,11 +74,3 @@ export function getAlcSourceList(data) {
     data
   });
 }
-
-// 报警信息-弹窗响铃消息传输
-export function popoverRingMessage() {
-  return request({
-    url: "system/rang/queryCurrent",
-    method: "post"
-  });
-}

@@ -36,12 +36,6 @@
   border: 0;
 }
 
-// 滚动条的宽度
-.el-table__body-wrapper::-webkit-scrollbar {
-  width: 10px; // 横向滚动条
-  height: 10px; // 纵向滚动条 必写
-}
-
 // header右侧固定白线
 .el-table__fixed-right-patch {
   // width: 0 !important;
@@ -228,7 +222,7 @@
 //固定的表头表尾背景色
 .el-table__fixed-right,
 .el-table__fixed {
-  height: calc(100% - 10px) !important;
+  height: calc(100% - 6px) !important;
   z-index: 0;
   box-shadow: 0 -13px 18px 3px #b0b0b3;
 }
@@ -281,7 +275,7 @@
 
 // 表格只有纵向滚动条
 .el-table--scrollable-y .el-table__fixed-right {
-  right: 10px !important;
+  right: 6px !important;
 }
 
 // 表格只有纵向滚动条

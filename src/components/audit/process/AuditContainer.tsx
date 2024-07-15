@@ -149,7 +149,8 @@ export default Vue.extend({
             if (this.infos.businessType && v.acceptActions.includes("Claim")) {
               const data = {
                 bizId: _this.$route.query.businessKey,
-                taskId: _this.$route.query.taskId
+                taskId: _this.$route.query.taskId,
+                procInstId: _this.$route.query.processInstanceId
               };
               return claimApi(this.infos.businessType, data)
                 .then(() => {
@@ -167,7 +168,7 @@ export default Vue.extend({
                 _this.outsideAuditModel.action = first;
               }
             }
-            _this.infos.editableFormFields = v.editableFormFields;
+            _this.$set(_this.infos, "editableFormFields", v.editableFormFields);
             _this.infos.extendProperties = v.extendProperties;
             _this.infos.applyScope = v.applyScope || "";
             _this.infos.processDefinitionKey = v.processDefinitionKey || ""; // 当前节点key

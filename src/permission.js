@@ -88,7 +88,7 @@ router.beforeEach(async(to, from, next) => {
 
 router.afterEach(() => {
   const token = store.getters["user/token"];
-  if (router.currentRoute.path !== "/login" && token) {
+  if (router.currentRoute.path !== "/login" && router.currentRoute.path !== "/appCallback" && token) {
     // 1.判断token是否失效
     const tokenParams = {
       token: store.getters["user/token"],
@@ -103,7 +103,7 @@ router.afterEach(() => {
           menuPath: ""
         };
         if (!tokenIsLose) {
-        // 不做统计的白名单：投影和办公
+          // 不做统计的白名单：投影和办公
           if (currentRoute.path !== "/portal/officeMode" && currentRoute.path !== "/portal/projectionMode") {
             store.commit("permission/setScrollLoading", true);
             // 2.通过currentRoute.params判断是否为二级页面
@@ -113,7 +113,7 @@ router.afterEach(() => {
                 menuPath: currentRoute.path
               };
             } else { // 二级页面不带query传参
-            // 3.path路径做截取处理
+              // 3.path路径做截取处理
               params = {
                 menuName: currentRoute.meta.title,
                 menuPath: currentRoute.path.slice(0, currentRoute.path.lastIndexOf("/"))

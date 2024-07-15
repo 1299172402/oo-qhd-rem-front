@@ -223,7 +223,7 @@
                                     prop="injSplitData"
                                     label="注水井配注?(m³/d)"
                                     align="center"
-                                    :render-header="renderheader"
+                                    
                                 ></el-table-column>
                             </el-table>
                         </el-form>
@@ -572,6 +572,10 @@ export default {
                     item.layerIndex = layerIndex.toString();
                 })
                 this.form.tableData2 = arr
+                this.form.tableData2 = this.form.tableData2.map(item => {
+                    item.injSplitData = item.groupInjRatio * item.oilSplitData;
+                    return item;
+                })
                 // this.getSpanArr(arr, 'injWellNo')
                 this.groupBy(arr)
                 this.ying = eval(res.groupWaterInferData)
