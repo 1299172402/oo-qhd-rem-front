@@ -205,10 +205,10 @@
               ></el-table-column>
               <el-table-column label="类别" width="100" header-align="center" align="center">
                 <template slot-scope="scope">
-                  <div style="line-height: 18px" v-if="measureVersion == '002003'">分公司考核 <br />实际</div>
-                  <div style="line-height: 18px" v-else-if="measureVersion == '001'">分公司奋斗 <br />实际</div>
-                  <div style="line-height: 18px" v-else-if="measureVersion == '002'">有限考核 <br />实际</div>
-                  <div style="line-height: 18px" v-else-if="measureVersion == '004002'">有限奋斗 <br />实际</div>
+                  <div style="line-height: 18px" v-if="measureVersion == '003005'">分公司考核 <br />实际</div>
+                  <div style="line-height: 18px" v-else-if="measureVersion == '003004'">分公司奋斗 <br />实际</div>
+                  <div style="line-height: 18px" v-else-if="measureVersion == '003001'">有限考核 <br />实际</div>
+                  <div style="line-height: 18px" v-else-if="measureVersion == '003002'">有限奋斗 <br />实际</div>
                   <div style="line-height: 18px" v-else>滚动预测<br />实际</div>
                 </template>
               </el-table-column>
@@ -222,10 +222,10 @@
                     <div class="icon0">
                       <b class="b1"></b>
                       <span>{{
-                        measureVersion == "002003" ||
-                        measureVersion == "001" ||
-                        measureVersion == "002" ||
-                        measureVersion == "004002"
+                        measureVersion == "003005" ||
+                        measureVersion == "003004" ||
+                        measureVersion == "003001" ||
+                        measureVersion == "003002"
                           ? "计划"
                           : "滚动预测"
                       }}</span>
@@ -470,24 +470,24 @@ export default {
         },
       ],
       //措施版本
-      measureVersion: "002003",
+      measureVersion: "003005",
       measureVersionSelect: [
         // {label: '全部',value: ''},
-        { label: "分公司考核", value: "002003" },
-        { label: "分公司奋斗", value: "001" },
-        { label: "有限考核", value: "002" },
-        { label: "有限奋斗", value: "004002" },
-        { label: "1+11", value: "003003001" },
-        { label: "2+10", value: "003003002" },
-        { label: "3+9", value: "003003003" },
-        { label: "4+8", value: "003003004" },
-        { label: "5+7", value: "003003005" },
-        { label: "6+6", value: "003003006" },
-        { label: "7+5", value: "003003007" },
-        { label: "8+4", value: "003003008" },
-        { label: "9+3", value: "003003009" },
-        { label: "10+2", value: "0030030010" },
-        { label: "11+1", value: "0030030011" },
+        { label: "分公司考核", value: "003005" },
+        { label: "分公司奋斗", value: "003004" },
+        { label: "有限考核", value: "003001" },
+        { label: "有限奋斗", value: "003002" },
+        { label: "1+11", value: "004002" },
+        { label: "2+10", value: "004003" },
+        { label: "3+9", value: "004004" },
+        { label: "4+8", value: "004005" },
+        { label: "5+7", value: "004006" },
+        { label: "6+6", value: "004007" },
+        { label: "7+5", value: "004008" },
+        { label: "8+4", value: "004009" },
+        { label: "9+3", value: "004010" },
+        { label: "10+2", value: "004011" },
+        { label: "11+1", value: "004012" },
       ],
       // table表格数据
       tableData: [
