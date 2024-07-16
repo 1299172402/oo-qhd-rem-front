@@ -9,7 +9,7 @@ const config = {
   // 右上角报警点击“查看跳转”路径
   MESSAGE_URL: "https://amm.tjioms-tpro.tjltd.cnooc/#/appCallback?rediect=reportlnformation/source",
   // 右上角报警webSocket路径，使用时需拼接用户标示符，userId或userName均可
-  WEB_SOCKET_URL: "wss://amm.tjioms-test.tjltd.cnooc/wss/gem001b/webSocket/",
+  WEB_SOCKET_URL: "wss://amm.tjioms-tpro.tjltd.cnooc/wss/gem001b/webSocket/",
   appId: "$system$",
   ALARM_URL: "https://amm.tjioms-tpro.tjltd.cnooc/#/reportPolice/source?access_token=",
   WEB_TAG_NAME: "智能油田管理系统", // 网页标签名称
