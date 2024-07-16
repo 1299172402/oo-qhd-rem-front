@@ -1,14 +1,17 @@
 import "../styles/AuditPanelStyle.less";
 import Vue from "vue";
 import { cloneDeep } from "lodash";
+import { mapGetters } from "vuex";
 import ActionType from "@/components/audit/process/auditSave/ActionType";
 import { FLOW_AUDIT } from "@/components/audit/process/constant";
 import rules from "@/components/audit/process/constant/rules";
-import SelectNextAudit from "@/components/audit/nextAudit/SelectNextAudit";
+import SelectNextAudit from "@/components/audit/nextAudit/SelectNextAudit.vue";
+import SelectNotifyUser from "@/components/audit/nextAudit/SelectNotifyUser.vue";
 
 export interface ActionMap {
     Delegate: string,
     Reject: string,
+    Resolve: string,
     Complete: string,
     Terminate: string,
     Finish: string
@@ -16,6 +19,7 @@ export interface ActionMap {
 
 const actionMap: Readonly<ActionMap> = {
   "Delegate": "业务流转",
+  "Resolve": "归还委托",
   "Reject": "退回",
   "Complete": "通过",
   "Terminate": "驳回",
@@ -25,7 +29,8 @@ const actionMap: Readonly<ActionMap> = {
 export default Vue.extend({
   name: "AuditPanel",
   components: {
-    SelectNextAudit
+    SelectNextAudit,
+    SelectNotifyUser
   },
   inject: ["auditContext"],
   props: {
@@ -35,6 +40,10 @@ export default Vue.extend({
     },
     outsideAuditModel: {
       type: Object,
+      default: undefined
+    },
+    flowBackToMeMode: {
+      type: String,
       default: undefined
     }
   },
@@ -51,12 +60,13 @@ export default Vue.extend({
             validator: (this as any).nextActIdValidator
           }
         ],
-        parallelNodeAuditInfo: [{ required: true, message: "请选择处理人", trigger: ["blur"], transform: (this as any).parallelNodeAuditInfoTransform }]
+        "nextAuditInfo.nextAuditInfos": [{ validator: (this as any).validateParallelNodeAuditInfo, trigger: "blur" }]
       },
       FLOW_AUDIT,
       labelCol: { span: 3 },
       wrapperCol: { span: 14 },
       nodeType: "default",
+      notValidate: false,
       auditInfo: {
         nextAuditInfo: {
           nextActId: undefined
@@ -75,14 +85,21 @@ export default Vue.extend({
         { key: "Complete", value: "通过", action: ActionType.COMPLETE },
         { key: "Reject", value: "退回", action: ActionType.REJECT },
         { key: "Terminate", value: "驳回", action: ActionType.TERMINATEPROCESSINSTANCE },
-        { key: "Resolve", value: "归还委托", action: ActionType.RESOLVE }
+        { key: "Resolve", value: "归还委托", action: ActionType.RESOLVE },
+        { key: "Delegate", value: "业务流转", action: ActionType.DELEGATE },
+        { key: "Finish", value: "办结", action: ActionType.FINISH }
       ],
       selectNextAuditWatch: {
         assignMode: ""
-      }
+      },
+      // 需要告知的用户
+      notifyUser: []
     };
   },
   computed: {
+    ...mapGetters({
+      userInfo: "user/userInfo"
+    }),
     opinionRequired() {
       let res = false;
       (this.dataSource.extendProperties || []).forEach(x => {
@@ -108,12 +125,11 @@ export default Vue.extend({
     acceptActions() {
       // 设置默认的审批意见
       this.setDefaultOpinion(this.dataSource.extendProperties || []);
-      const accAct = this.dataSource.acceptActions || [];
-      if (this.nodeType === "Delegate") {
-        return [{ key: "Delegate", disabled: false, value: "通过", action: ActionType.DELEGATE },
-          { key: "Reject", disabled: true, value: "退回", action: ActionType.REJECT },
-          { key: "bohui", disabled: true, value: "驳回", action: "bohui" }]; // TODO:
+      if ((this.dataSource.acceptActions || []).includes("Resolve")) {
+        // 归还委托时只能进行归还委托操作
+        return [{ key: "Resolve", value: "归还委托", action: ActionType.RESOLVE, disabled: false }];
       }
+      const accAct = this.dataSource.acceptActions || [];
       const result = this.actions;
       if (result) {
         result.forEach(element => {
@@ -154,30 +170,36 @@ export default Vue.extend({
       return re;
     },
     /**
-         * 只选择到节点不用选人
-         */
+     * 是否需要告知他人
+     */
+    isNotify() {
+      return (this.dataSource.acceptActions || []).includes("Notify");
+    },
+    /**
+     * 只选择到节点不用选人
+     */
     onlyActivity() {
       if (this.isHistoryNode) return true;
       return this.selectNextAuditWatch.assignMode === "None" && this.nodeType !== "Delegate";
     },
     /**
-         * 下一节点审批人的prop
-         */
+     * 下一节点审批人的prop
+     */
     nextAuditInfoProp() {
       if (this.onlyActivity) {
         return "nextAuditInfoNextActId";
       }
-      return (this.isParallelNode ? "parallelNodeAuditInfo" : "nextAuditInfo");
+      return (this.isParallelNode ? "nextAuditInfo.nextAuditInfos" : "nextAuditInfo");
     },
     /**
-         * 显示审批意见
-         */
+     * 显示审批意见
+     */
     flowShowComment() {
       return !(this.dataSource.extendProperties || []).find(v => v.key === "flow_show_comment" && v.value === "false");
     },
     /**
-         * 显示处理操作
-         */
+     * 显示处理操作
+     */
     flowShowAction() {
       if (!this.auditInfo.currentAction.key) {
         this.setDefaultAction();
@@ -185,37 +207,37 @@ export default Vue.extend({
       if (!this.operateFlowAuth) {
         return false;
       }
-      return !(this.dataSource.extendProperties || []).find(v => v.key === "flow_show_action" && v.value === "false") && !this.isResolve;
+      return !(this.dataSource.extendProperties || []).find(v => v.key === "flow_show_action" && v.value === "false");
     },
     /**
-         * 是空值可显示处理操作字段
-         * 有值的话，需要有权限的才显示
-         */
+     * 是空值可显示处理操作字段
+     * 有值的话，需要有权限的才显示
+     */
     operateFlowAuth() {
       const item = (this.dataSource.extendProperties || []).find(v => v.key === "operateFlowAuth");
       return !item;
     },
     /**
-         * 用于判断是否为选择节点
-         */
+     * 用于判断是否为选择节点
+     */
     isSelectNode() {
       return this.dataSource.preActivities && this.dataSource.preActivities.length >= 0;
     },
     /**
-         * 用来判断选择的内容是否为历史节点
-         */
+     * 用来判断选择的内容是否为历史节点
+     */
     isHistoryNode() {
       return this.isSelectNode && this.dataSource.preActivities.find(x => x.actId === this.auditInfo.nextAuditInfo.nextActId);
     },
     /**
-         * 弹窗外部已确定操作类型
-         */
+     * 弹窗外部已确定操作类型
+     */
     defaultAction() {
       return this.outsideAuditModel?.action;
     },
     /**
-         * 当前节点的text
-         */
+     * 当前节点的text
+     */
     actionText() {
       if (this.defaultAction) {
         return this.acceptActionsMap[this.defaultAction] || actionMap[this.defaultAction];
@@ -224,16 +246,44 @@ export default Vue.extend({
     },
     curFlowBackToMeMode() {
       return this.flowBackToMeMode;
+    },
+    currentAction() {
+      return this.auditInfo?.currentAction?.key;
+    },
+    /**
+     * 需要告知的用户信息
+     */
+    notifyInfo() {
+      const { userName, nickName } = this.userInfo;
+      return {
+        senderId: userName,
+        senderName: nickName,
+        receivers: this.notifyUser
+      };
     }
   },
   watch: {
     nodeType: {
       handler() {
-        const [first] = this.acceptActions;
-        this.auditInfo.currentAction = first;
         this.auditInfo.nextAuditInfo = {};
       },
       deep: true
+    },
+    currentAction(val) {
+      if (val === "Delegate") {
+        // 处理操作为业务流转（委托）时修改nodeType
+        this.setNodeType(val);
+      } else {
+        this.setNodeType("default");
+      }
+    },
+    curFlowBackToMeMode: {
+      handler(val) {
+        if (val) {
+          // 监听流程配置的基础属性赋初始值
+          this.auditInfo.flowBackToMe = (val === "back");
+        }
+      }
     }
   },
   created() {
@@ -260,9 +310,9 @@ export default Vue.extend({
       }
       this.$nextTick(() => {
         if (this.isParallelNode) {
-          this.$refs.form.validateField("parallelNodeAuditInfo");
+          this.$refs.form?.validate({ fields: ["nextAuditInfo.nextAuditInfos"], trigger: "blur" });
         } else {
-          this.$refs?.form.clearValidate([this.onlyActivity && "nextAuditInfoNextActId" || "nextAuditInfo"]);
+          this.$refs.form?.clearValidate([this.onlyActivity && "nextAuditInfoNextActId" || "nextAuditInfo"]);
         }
       });
     },
@@ -278,17 +328,17 @@ export default Vue.extend({
       });
     },
     /**
-         * 设置默认的审批意见
-         */
+     * 设置默认的审批意见
+     */
     setDefaultOpinion(array) {
       const findRe = array.find(v => v.key === "flow_default_comment");
       this.auditInfo.opinion = findRe && findRe.value || "";
     },
     /**
-         * 设置默认的处理操作
-         * 如果隐藏处理操作字段，则设置默认操作为通过
-         * 主要用于安全检查整改回复
-         */
+     * 设置默认的处理操作
+     * 如果隐藏处理操作字段，则设置默认操作为通过
+     * 主要用于安全检查整改回复
+     */
     setDefaultAction() {
       let action = this.acceptActions && this.acceptActions[0];
       if (this.defaultAction) {
@@ -304,16 +354,23 @@ export default Vue.extend({
       }
     },
     /**
-         * 设置 nodeType
-         */
+     * 设置 nodeType
+     */
     setNodeType(val) {
       this.nodeType = val;
     },
     /**
-         * 并行节点时，需要将每个节点都选择下一节点人
-         */
-    parallelNodeAuditInfoTransform() {
-      return this.auditInfo.nextAuditInfo.nextAuditInfos?.every(v => v.users.length > 0) ? "1" : "";
+     * 并行节点时，需要将每个节点都选择下一节点人
+     */
+    validateParallelNodeAuditInfo() {
+      if (this.notValidate) {
+        // 切换处理操作时会触发校验后清空校验，避免闪一下问题
+        return { result: true, type: "success" };
+      }
+      if (this.auditInfo.nextAuditInfo.nextAuditInfos?.every(v => v.users?.length > 0)) {
+        return { result: true, type: "success" };
+      }
+      return { result: false, message: "请选择处理人", type: "error" };
     }
   },
   render() {
@@ -341,7 +398,7 @@ export default Vue.extend({
           clearable />
       </t-form-item>
     );
-      // 处理意见元素
+    // 处理意见元素
     const defaultOpinionEl = (<t-form-item
       key="defaultOpinionRequired"
       label="处理意见"
@@ -355,7 +412,7 @@ export default Vue.extend({
     //  流程回到我
     const curFlowBackToMeModeEl = (
       <t-form-item label="流程回到我">
-        <t-checkbox onChange={val => { this.auditInfo.flowBackToMe = val; }} disabled={this.curFlowBackToMeMode === "back"} />
+        <t-checkbox onChange={val => { this.auditInfo.flowBackToMe = val; }} default-checked={this.auditInfo.flowBackToMe} disabled={this.curFlowBackToMeMode === "back"} />
       </t-form-item>
     );
 
@@ -376,7 +433,7 @@ export default Vue.extend({
     >
       <div class={"audit-panel-next-node"}>
         <div>
-          <t-select value={this.nodeType} onChange={val => { this.nodeType = val; }}>
+          <t-select value={this.nodeType} disabled onChange={val => { this.nodeType = val; }}>
             {
               this.nextNodeType.map(item => <t-option key={item.value} label={item.value} value={item.key} />)
             }
@@ -387,8 +444,21 @@ export default Vue.extend({
           dataSource={this.dataSource}
           watch-value={this.selectNextAuditWatch}
           class={"select-next-audit"}
-          onParallelNode={val => { this.isParallelNode = val; }}
+          on-parallel-node={val => { this.isParallelNode = val; }}
           onSelectAuditorOk={this.selectAuditorOk}
+        />
+      </div>
+    </t-form-item>;
+
+    const notifyUserEl = <t-form-item
+      label="告知"
+      class="next-node"
+      name="notifyInfo"
+    >
+      <div class={"audit-panel-next-node"}>
+        <SelectNotifyUser
+          notify-user-setting={this.dataSource.selectCCSettings}
+          on-ok={val => { this.notifyUser = val; }}
         />
       </div>
     </t-form-item>;
@@ -404,14 +474,16 @@ export default Vue.extend({
                 this.$set(this.auditInfo, "currentAction", cloneDeep(
                   this.acceptActions.find(item => item.key === val)) || {}
                 );
+                this.notValidate = true;
                 this.$nextTick(() => {
                   setTimeout(() => {
                     this.$refs.form.clearValidate();
+                    this.notValidate = false;
                   });
                 });
               }}>
                 {
-                  this.acceptActions.filter(v => v.key !== "Reslove" && v.disabled === false).map(item => <t-radio key={item.value} disable={item.disabled} value={item.key}>{item.value}</t-radio>)
+                  this.acceptActions.filter(v => v.disabled === false).map(item => <t-radio key={item.value} disable={item.disabled} value={item.key}>{item.value}</t-radio>)
                 }
               </t-radio-group> : <span>{this.actionText}</span>
             }
@@ -421,10 +493,13 @@ export default Vue.extend({
           this.flowShowComment ? terminateOrOpinionEl : null
         }
         {
-          !this.isResolve && !["Reject", "Terminate"].includes(this.auditInfo.currentAction.key) && this.defaultAction !== "Terminate" ? nextAuditUserEl : null
+          !this.isResolve && !["Reject", "Terminate", "Finish"].includes(this.auditInfo.currentAction.key) && this.defaultAction !== "Terminate" ? nextAuditUserEl : null
         }
         {
           this.nodeType === "Delegate" && this.curFlowBackToMeMode !== "go" ? curFlowBackToMeModeEl : null
+        }
+        {
+          this.isNotify ? notifyUserEl : null
         }
       </t-form>
     );

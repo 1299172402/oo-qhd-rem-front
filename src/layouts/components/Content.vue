@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
-    <keep-alive :include="[...aliveViews,'blank']">
+    <keep-alive :include="[...aliveViews,'ThirdLevelView']">
       <router-view v-if="!isRefreshing" :key="$route.path" />
     </keep-alive>
   </transition>
@@ -16,9 +16,9 @@ export default {
       isUseTabsRouter: "setting/isUseTabsRouter"
     }),
     aliveViews() {
-        // console.log(this.isRefreshing,999)
-      // console.log(this.tabRouterList?.filter(route => route.isAlive).map(route => route.name),888)
-      return this.tabRouterList?.filter(route => route.isAlive).map(route => route.name);
+      const list = this.tabRouterList?.filter(route => route.isAlive).map(route => route.name) || [];
+      list.push("ThirdLevelView");
+      return list;
     }
   }
 };

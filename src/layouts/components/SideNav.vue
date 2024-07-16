@@ -6,6 +6,7 @@
       :theme="theme"
       :value="active"
       :collapsed="collapsed"
+      :expanded.sync="expanded"
       :expand-type="showLogo ? 'popup' : 'normal'"
     >
       <template #logo>
@@ -21,6 +22,7 @@
           :style="{ color: formData.mode == 'light' ? '#000' : '#fff' }"
         >智能油田管理系统</span>
       </template>
+      <menu-search v-if="!isCompact" style="margin-bottom: 10px;" />
       <menu-content :nav-data="menu" />
       <template #operations />
     </t-menu>
@@ -38,14 +40,15 @@ import myLogo from "@/assets/logo.svg";
 import MenuContent from "./MenuContent.vue";
 import pgk from "../../../package.json";
 import routeHighLight from "@/utils/routerMapping/routeHighLight.js";
+import MenuSearch from "./MenuSearch.vue";
 
 const MIN_POINT = 992 - 1;
 
 export default Vue.extend({
   name: "SideNav",
   components: {
-    MenuContent
-    // myLogo,
+    MenuContent,
+    MenuSearch
   },
   props: {
     menu: Array,
@@ -79,7 +82,8 @@ export default Vue.extend({
     return {
       prefix,
       pgk,
-      formData: this.$store.state.setting
+      formData: this.$store.state.setting,
+      expanded: []
     };
   },
   computed: {
@@ -129,6 +133,21 @@ export default Vue.extend({
       return myLogo;
       //   }
       //   return LogoFull;
+    }
+  },
+  watch: {
+    active: {
+      handler(val) {
+        if (!val) return;
+        const parts = val.split("/").filter(Boolean).slice(0, -1);
+        const expandedSet = new Set();
+        parts.reduce((prev, curr) => {
+          const path = `${prev}/${curr}`;
+          expandedSet.add(path);
+          return path;
+        }, "");
+        this.expanded = Array.from(new Set([...this.expanded, ...expandedSet]));
+      }
     }
   },
   mounted() {

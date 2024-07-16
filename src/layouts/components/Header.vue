@@ -22,6 +22,22 @@
           />
           <span v-if="!isTestEnvironment" class="logoText">天津分公司智能油田管理系统</span>
         </span>
+        <el-divider direction="vertical" />
+        <el-tooltip
+          class="item"
+          :content="$store.getters['user/tenantName']"
+          placement="bottom"
+        >
+          <div
+            class="g-row-flex-V"
+            :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}"
+            style="font-size: 14px;font-weight: 700px;
+              max-width: 180px;
+              white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"
+          >
+            {{ $store.getters["user/tenantName"] }}
+          </div>
+        </el-tooltip>
       </template>
       <div v-show="layout !== 'side' && !$store.getters['user/isGroupLogin'] && $store.state.setting.layout === 'top' && iconvisible" class="scrollicon" style="padding-right: 10px;">
         <i class="el-icon-arrow-left" @mousedown="scrollrightdown()" @mouseup="scrollleftup()" />
@@ -36,22 +52,6 @@
       </div>
       <template #operations>
         <div class="operations-container" style="margin-left: 20px;">
-          <el-tooltip
-            class="item"
-            :content="$store.getters['user/tenantName']"
-            placement="bottom"
-          >
-            <div
-              class="g-row-flex-V"
-              :style="{color: $store.state.setting.mode==='dark'? ' var(--light-blue-color)':'#fff'}"
-              style="font-size: 14px;font-weight: 700px;
-              margin-left: 20px;height: 22px; max-width: 180px;
-              margin-bottom: 4px; margin-right: 10px;
-              white-space: nowrap; text-overflow: ellipsis; overflow: hidden;"
-            >
-              {{ $store.getters["user/tenantName"] }}
-            </div>
-          </el-tooltip>
           <!-- 搜索框 -->
           <audio ref="musicAudio" muted="muted" src="@/assets/messageVideo.wav" />
           <message style="margin-top: 2px;" @play-audio="playAudio" />
@@ -643,7 +643,6 @@ export default Vue.extend({
     },
     /** 提交按钮 */
     submitForm() {
-      this.form.postIds = this.form.tempPostId ? this.form.tempPostId?.split(",") : [];
       this.$refs.form.validate(valid => {
         if (valid) {
           delete this.form.password;
@@ -693,9 +692,6 @@ export default Vue.extend({
       getUser(userId).then(response => {
         this.form = response.data.data;
         this.form.idCard = response.data.data.idCard;
-        this.form.postIds = response.data.postIds.length === 0 ? [] : response.data.postIds.toLocaleString().split(",");
-        this.form.tempPostId = response.data.postIds.length === 0 ? "" : String(response.data.postIds.toLocaleString());
-        this.form.roleIds = response.data.roleIds.length === 0 ? [] : response.data.roleIds.toLocaleString().split(",");
         this.open = true;
         this.title = "账号管理";
       });

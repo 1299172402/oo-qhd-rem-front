@@ -75,21 +75,33 @@ export default {
       isFull: false // 当时是否是最大化
     };
   },
-    deactivated() {
-        if(this.isFull){
-            this.maximizeCom(false)
-        }
-    },
-    beforeDestroy() {
-        if(this.isFull){
-            this.maximizeCom(false)
-        }
-    },
-  methods: {
-    maximizeCom() {
+  // 清除可能存在的.close-vue-grid-item
+  activated() {
+    setTimeout(() => {
       const gridItem = this.$el.closest(".vue-grid-item");
       const gridItemParent = gridItem?.parentNode;
-        this.isFull = typeof type ==='boolean' && !type?false:!this.isFull;
+      const closeGrid = document.querySelector(".close-vue-grid-item");
+      if (gridItemParent && closeGrid) {
+        gridItemParent.removeChild(closeGrid);
+      }
+    }, 300);
+  },
+  // 确保info-window在退出时是最小化的
+  deactivated() {
+    if (this.isFull) {
+      this.maximizeCom(false);
+    }
+  },
+  beforeDestroy() {
+    if (this.isFull) {
+      this.maximizeCom(false);
+    }
+  },
+  methods: {
+    maximizeCom(type) {
+      const gridItem = this.$el.closest(".vue-grid-item");
+      const gridItemParent = gridItem?.parentNode;
+      this.isFull = typeof type === "boolean" && !type ? false : !this.isFull;
       if (gridItem && gridItemParent) {
         if (this.isFull) {
           const close = gridItem.cloneNode(true);
@@ -99,7 +111,10 @@ export default {
         } else {
           gridItem.classList.remove("grid-item__max");
           setTimeout(() => {
-            gridItemParent.removeChild(document.querySelector(".close-vue-grid-item"));
+            const closeGrid = document.querySelector(".close-vue-grid-item");
+            if (closeGrid) {
+              gridItemParent.removeChild(closeGrid);
+            }
           }, 300);
         }
         this.$store.commit("user/SETISMAX", !this.$store.getters["user/getIsMax"]);

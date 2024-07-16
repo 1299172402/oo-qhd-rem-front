@@ -8,6 +8,8 @@ const COMPLETE = "completeTask";
 const REJECT = "rejectTask";
 // 审批驳回
 const TERMINATEPROCESSINSTANCE = "terminateProcessInstance";
+// 直接完成流程（办结）
+const FINISH = "finishProcessInstance";
 // 获取流程任务审批页面信息
 const Model = "taskAuditPageModel";
 // 委派
@@ -31,6 +33,7 @@ export default {
   COMPLETE,
   REJECT,
   TERMINATEPROCESSINSTANCE,
+  FINISH,
   Model,
   DELEGATE,
   RESOLVE,

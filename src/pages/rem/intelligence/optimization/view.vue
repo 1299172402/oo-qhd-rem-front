@@ -50,7 +50,7 @@
                 <span class="fangan">
           <!-- <el-radio v-model="radio" label="1">小层配注优先</el-radio>
           <el-radio v-model="radio" label="2">整井配注优先</el-radio>-->
-        
+
         </span>
             </div>
         </header-search>
@@ -84,7 +84,7 @@
                                 label="生产井"
                                 show-overflow-tooltip
                                 align="center"
-                          
+
                             ></el-table-column>
                             <el-table-column
                                 prop="fluidProd"
@@ -96,7 +96,7 @@
                             <el-table-column
                                 prop="allocating"
                                 label="本月日配产量?(m³)"
-                                
+
                                 :render-header="renderheader"
                                 align="center"
                             >
@@ -147,7 +147,7 @@
                                 >
                                     <template slot-scope="scope">
                                         <span>{{ scope.row.oilWellNo.includes("秦皇岛32-6")? scope.row.oilWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.oilWellNo}}</span>
-                                    </template>  
+                                    </template>
                                 </el-table-column>
                                 <el-table-column
                                     :render-header="renderheader"
@@ -197,7 +197,7 @@
                                                  min-width="160">
                                     <template slot-scope="scope">
                                         <span>{{ scope.row.injWellNo.includes("秦皇岛32-6")? scope.row.injWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.injWellNo}}</span>
-                                    </template>   
+                                    </template>
                                 </el-table-column>
                                 <el-table-column prop="oilSplitData" align="center">
                                     <template slot="header">
@@ -223,7 +223,7 @@
                                     prop="injSplitData"
                                     label="注水井配注?(m³/d)"
                                     align="center"
-                                    :render-header="renderheader"
+
                                 ></el-table-column>
                             </el-table>
                         </el-form>
@@ -349,7 +349,7 @@ export default {
             this.queryData.dateTime = params.dateTime
         }
         this.queryWellAvgFluidProdAlloc();
-        
+
     },
     methods: {
         getOilFields() {
@@ -358,8 +358,8 @@ export default {
                 this.oilField = res.data.data;
                 this.selectOilField=params.ogfId
 
-                   
-                
+
+
                 this.selectblock()
             });
         },
@@ -572,22 +572,12 @@ export default {
                     item.layerIndex = layerIndex.toString();
                 })
                 this.form.tableData2 = arr
-                this.form.tableData2.forEach(item => {
-                    let len = 0
-                    if (Number.isNaN(item.groupInjRatio)) {
-                        item.groupInjRatio = 0
-                        item.injSplitData = 0
-                    } else if (item.groupInjRatio.toString().indexOf('.') > -1) {
-                        const string = item.groupInjRatio.toString()
-                        len = string.length - string.indexOf('.') - 1
-                        item.injSplitData = item.groupInjRatio * Math.pow(10, len) * item.oilSplitData / Math.pow(10, len)
-                    } else {
-                        item.injSplitData = item.groupInjRatio * item.oilSplitData
-                    }
+                this.form.tableData2 = this.form.tableData2.map(item => {
+                    item.injSplitData = item.groupInjRatio * item.oilSplitData;
+                    return item;
                 })
                 // this.getSpanArr(arr, 'injWellNo')
                 this.groupBy(arr)
-                
                 this.ying = eval(res.groupWaterInferData)
                 this.$message.success("保存成功")
             }).catch(() => {
@@ -760,7 +750,7 @@ export default {
                                 return value;
                             }
                         },
-                        
+
                         data: this.tableData3.map((item) => item.layerConfigurationInj)
                     },
                     {
@@ -778,7 +768,7 @@ export default {
                         name: '注采比',
                         type: 'line',
                         yAxisIndex: 1,
-                        
+
                         tooltip: {
                             valueFormatter: function (value) {
                                 return value;

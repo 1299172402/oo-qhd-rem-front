@@ -1,5 +1,9 @@
 <template>
-  <div v-if="!isDispose" :id="echartsComponents" class="g-w100 g-h100 chartsComponentClass" />
+  <div
+    v-if="!isDispose"
+    ref="echarts"
+    class="g-w100 g-h100 chartsComponentClass"
+  />
 </template>
 
 <script>
@@ -24,12 +28,6 @@ export default {
       isDispose: false,
       dynamicId: null
     };
-  },
-  computed: {
-    echartsComponents() {
-      const timestamp = new Date().getTime();
-      return `echarts${timestamp}${Math.random() * 100000}`;
-    }
   },
   watch: {
     chartDataOptions: {
@@ -86,7 +84,7 @@ export default {
       // console.log('----------echarts创建---------------------------')
       //   const that = this
       this.isDispose = false;
-      const $echartsDOM = document.getElementById(this.echartsComponents);
+      const $echartsDOM = this.$refs.echarts;
       this.myEcharts = this.$echarts.init($echartsDOM);
       // this.refreshEcharts();
     },

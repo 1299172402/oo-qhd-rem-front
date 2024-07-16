@@ -5,9 +5,31 @@
     display: flex;
     flex: 1;
 
+    &.select-next-audit-parallel-node-container {
+      flex-direction: column;
+    }
+
     > div {
       flex: 1;
-      margin-right: 10px;
+
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+
+      &.select-next-audit-parallel-node__item {
+        display: flex;
+        align-items: center;
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+    }
+
+    .select-next-audit-parallel-node__item-name {
+      margin-right: 20px;
+    }
+
+    .select-next-audit-parallel-node__item-user {
+      flex: 1;
     }
   }
 }

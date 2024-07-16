@@ -64,6 +64,26 @@ export default Vue.extend({
       afterInit: false
     };
   },
+  computed: {
+    /**
+     * 是否能够多选用户
+     */
+    canMultiSelect() {
+      return !!this.$attrs["query-params"]?.canMultiSelect;
+    },
+    /**
+     * 选择的用户名展示
+     */
+    selectedUsersName() {
+      if (this.selectedUsers.length <= 0) {
+        return "";
+      }
+      if (!this.canMultiSelect) {
+        return this.selectedUsers[0].nickName || this.selectedUsers[0].realname || "";
+      }
+      return this.selectedUsers.map(item => item.nickName || item.realname).join("，");
+    }
+  },
   watch: {
     reset() {
       this.selectedUsers = [];
@@ -108,8 +128,8 @@ export default Vue.extend({
       }
     },
     /**
-         * 弹窗选人确定
-         */
+     * 弹窗选人确定
+     */
     handleOk(val) {
       if (this.isCosponsor) {
         val.forEach(x => {
@@ -124,16 +144,16 @@ export default Vue.extend({
       this.$emit("change", val);
     },
     /**
-         * 删掉人员
-         */
+     * 删掉人员
+     */
     handleSelectChange(val) {
       this.selectedUsers = this.selectedUsers.filter(v => val.includes(v.userId || v.realname));
       this.$emit("select", this.selectedUsers);
       this.$emit("change", this.selectedUsers);
     },
     /**
-         * 打开选择人员的弹窗
-         */
+     * 打开选择人员的弹窗
+     */
     handleClick() {
       this.visible = true;
     }
@@ -151,7 +171,7 @@ export default Vue.extend({
               ? this.$slots.left
               : <t-select-input
                 readOnly={true}
-                value={this.selectedUsers?.[0]?.nickName}
+                value={this.selectedUsersName}
                 class={"select-user-input"}
                 placeholder={this.placeholder}
               >
@@ -167,7 +187,7 @@ export default Vue.extend({
           </t-button>
           <SelectUserModal
             {...this.$attrs}
-            queryParams={this.$attrs.queryParams}
+            queryParams={this.$attrs["query-params"]}
             modalWidth={width}
             isCosponsor={this.isCosponsor}
             users={this.selectedUsers}
