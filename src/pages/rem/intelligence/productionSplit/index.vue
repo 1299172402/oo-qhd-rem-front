@@ -42,6 +42,7 @@
                         class="collapseTags"
                         collapse-tags
                         multiple
+                        filterable
                         placeholder="请选择"
                         clearable
                     >
