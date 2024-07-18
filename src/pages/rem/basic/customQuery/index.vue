@@ -1123,7 +1123,11 @@ export default {
                     });
                 });
                 //添加固定的两个字段 井名 生产时间
-                this.headerTextLower.unshift({name: "井名", val: "name"}, {name:this.activeTabIndexDate==3? `生产时间\n(yyyy-mm-dd)`: this.activeTabIndexDate==2? `生产时间\n(yyyy-mm)`:`生产时间\n(yyyy)` , val: "proddate"});
+                if (this.activeTabIndex===1) {
+                    this.headerTextLower.unshift({name: "井名", val: "name"}, {name:this.activeTabIndexDate==3? `生产时间\n(yyyy-mm-dd)`: this.activeTabIndexDate==2? `生产时间\n(yyyy-mm)`:`生产时间\n(yyyy)` , val: "proddate"});
+                }else if (this.activeTabIndex===2) {
+                    this.headerTextLower.unshift({name: "油田", val: "oilname"}, {name:this.activeTabIndexDate==3? `生产时间\n(yyyy-mm-dd)`: this.activeTabIndexDate==2? `生产时间\n(yyyy-mm)`:`生产时间\n(yyyy)` , val: "proddate"});
+                }
                 this.tableData = tableArr;
             }
         },
