@@ -29,6 +29,11 @@ const terminateApi = (BusinessType, data) => {
   return postAction(url, data);
 };
 
+const finishApi = (BusinessType, data) => {
+  const url = `${BASE_URL}/${BusinessType}/${actionType.FINISH}`;
+  return postAction(url, data);
+};
+
 export const modelApi = (BusinessType, data) => {
   const url = `${BASE_URL}/${BusinessType}/${actionType.Model}`;
   return postAction(url, data).then(v => v.data);
@@ -76,6 +81,8 @@ export const actionApi = (ActionType, BusinessType, data) => {
       return rejectApi(BusinessType, data);
     case actionType.TERMINATEPROCESSINSTANCE:
       return terminateApi(BusinessType, data);
+    case actionType.FINISH:
+      return finishApi(BusinessType, data);
     case actionType.Model:
       return modelApi(BusinessType, data);
     case actionType.DELEGATE:

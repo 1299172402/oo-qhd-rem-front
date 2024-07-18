@@ -193,6 +193,9 @@
               登录
             </t-button>
           </t-form-item>
+          <p v-if="tabValue === 'password'" style="text-align: center; margin-top: 10px;">
+            系统用户登录用于平台管理员及特殊用户登录
+          </p>
         </div>
       </t-form>
     </div>

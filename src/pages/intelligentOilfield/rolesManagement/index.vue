@@ -301,13 +301,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item prop="roleKey">
-              <span slot="label">
-                <el-tooltip content="控制器中定义的角色编码，如：@PreAuthorize(`@ss.hasRole('admin')`)" placement="top">
-                  <i class="el-icon-question" />
-                </el-tooltip>
-                角色编码
-              </span>
+            <el-form-item label="角色编码" prop="roleKey">
               <el-input v-model="form.roleKey" placeholder="请输入角色编码" />
             </el-form-item>
           </el-col>

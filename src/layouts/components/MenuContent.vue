@@ -33,6 +33,8 @@
           <template #icon>
             <!-- 只要不是一级路由就占位儿 -->
             <span style="color: transparent;">{{ item.meta.hasOwnProperty("single") ? "" : "##" }}</span>
+            <!-- 外链三级路由占位 -->
+            <span v-if="item.isThirdRouter" style="color: transparent;">##</span>
             <svg-icon v-if="typeof item.icon === 'string' && item.icon && item.icon !== '#'" class="svgIconClass" :icon-class="item.icon" />
             <!-- <t-icon v-if="typeof item.icon === 'string' && item.icon" :name="item.icon" /> -->
             <render-fn-icon :item="item" />
@@ -100,7 +102,7 @@
        <menu-content
           v-if="item.children && $store.state.setting.isSidebarCompact == false && $store.state.setting.layout === 'mix'"
           :nav-data="item.children"
-        /> 
+        />
         <div class="menuselect" v-show="!showSidebar  || $store.state.setting.isSidebarCompact">
           <div class="menuTitle">
             <svg-icon
@@ -282,7 +284,7 @@ export default Vue.extend({
       const list = document.querySelectorAll(".t-menu__content");
       list.forEach(item => {
         if(item.scrollWidth > item.offsetWidth) {
-          item.setAttribute("title", item.innerText); 
+          item.setAttribute("title", item.innerText);
         }
       });
     },

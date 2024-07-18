@@ -1,5 +1,6 @@
 import { getUsersInitDataFromStringField } from "@/components/audit/utils";
 import SelectUser from "@/components/audit/nextAudit/SelectUser";
+import SelectNextAudit from "@/components/audit/nextAudit/SelectNextAudit.vue";
 import "./style/SelectAuditStyle.less";
 
 export default {
@@ -63,21 +64,21 @@ export default {
       return this.nextAuditInfosQueryParams?.nextActivities?.[0]?.assignResources || null;
     },
     /**
-         * 选择下一节点人参数异常的时候disabled
-         */
+     * 选择下一节点人参数异常的时候disabled
+     */
     disabled() {
       return !this.setting;
     },
     /**
-         * 下一节点人员参数
-         */
+     * 下一节点人员参数
+     */
     setting() {
       if (this.useDelegationSetting) return this.nextAuditInfosQueryParams.selectDelegationSettings;
       return this.nextAuditInfosQueryParams?.nextActivities?.[0]?.selectNextAuditSetting || null;
     },
     /**
-         * 将上次保存的审批人回显
-         */
+     * 将上次保存的审批人回显
+     */
     initData() {
       let re = null;
       if (this.pageModel.nextAuditUsers) {
@@ -95,10 +96,17 @@ export default {
       return re || [];
     },
     /**
-         * 父组件确定默认第一人并且不是编辑的时候默认第一个审批人
-         */
+     * 父组件确定默认第一人并且不是编辑的时候默认第一个审批人
+     */
     mySetDefault() {
       return this.setDefault && !this.$route.params.id;
+    },
+    /**
+     * 是否是并行节点
+     */
+    isParallelNode() {
+      const re = this.nextAuditInfosQueryParams.nextActivities?.length > 1 && !this.nextAuditInfosQueryParams.acceptActions.includes("SelectNextAct");
+      return re;
     }
   },
   watch: {
@@ -121,28 +129,37 @@ export default {
   },
   methods: {
     /**
-         * 选择下一节点审批人完毕
-         */
+     * 选择下一节点审批人完毕
+     */
     selectAuditorOk(userArray) {
       this.pageModel.nextAuditInfos = [];
       if (!userArray || userArray.length === 0) {
         this.setNextAuditUsers();
         return;
       }
-      this.pageModel.nextAuditInfos.push(this.setAuditUser(userArray, this.nextAuditInfosQueryParams.nextActivities?.[0]));
+      if (this.isParallelNode) {
+        if (userArray.nextAuditInfos) {
+          if (userArray.nextAuditInfos.some(info => !info.users.length)) {
+            return;
+          }
+          this.pageModel.nextAuditInfos = userArray.nextAuditInfos;
+        } else return;
+      } else {
+        this.pageModel.nextAuditInfos.push(this.setAuditUser(userArray, this.nextAuditInfosQueryParams.nextActivities?.[0]));
+      }
       this.$emit("change", this.pageModel.nextAuditInfos);
       this.setNextAuditUsers();
     },
     /**
-         * 将下一节点审批人保存为字符串形式
-         */
+     * 将下一节点审批人保存为字符串形式
+     */
     setNextAuditUsers() {
       const rows = this.pageModel.nextAuditInfos[0] && this.pageModel.nextAuditInfos[0].users || [];
       this.pageModel.nextAuditUsers = JSON.stringify(rows);
     },
     /**
-         * 包装提交时审批人信息
-         */
+     * 包装提交时审批人信息
+     */
     setAuditUser(userArray, setting) {
       const auditor = {
         actId: setting && setting.actId,
@@ -159,8 +176,8 @@ export default {
       return auditor;
     },
     /**
-         * 下一节点人参数变化之后，判断是否显示下拉
-         */
+     * 下一节点人参数变化之后，判断是否显示下拉
+     */
     handleNextAuditInfosQueryParamsChange() {
       if (!this.blankTip) {
         return;
@@ -184,8 +201,8 @@ export default {
       this.afterInit = true;
     },
     /**
-         * 下拉选项改变，给赋值下一节点人
-         */
+     * 下拉选项改变，给赋值下一节点人
+     */
     handleSelectChange(val, { option }) {
       const row = option || {};
       this.$set(this.pageModel, "nextAuditInfos", !option ? [] : [{
@@ -204,8 +221,8 @@ export default {
       }
     },
     /**
-         * 下拉筛选
-         */
+     * 下拉筛选
+     */
     optionsFilter(input, option) {
       return (
         option.componentOptions.children[0].children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -217,6 +234,24 @@ export default {
   },
   render() {
     const getAuditComponent = () => {
+      if (this.isParallelNode) {
+        return <div>
+          <SelectNextAudit
+            nodeType={"default"}
+            dataSource={this.nextAuditInfosQueryParams}
+            set-init={this.setInit}
+            set-default={this.mySetDefault}
+            init-data={this.initData}
+            reset={this.reset}
+            start-process={true}
+            disable={this.disabled}
+            onChange={this.selectAuditorOk}
+            class={"select-next-audit"}
+            onSelectAuditorOk={this.selectAuditorOk}
+          />
+        </div>
+        ;
+      }
       if (this.blankTip) {
         const userOPtions = this.resources.map(item => ({
           label: item.name,
@@ -242,7 +277,7 @@ export default {
         init-data={this.initData}
         reset={this.reset}
         disable={this.disabled}
-        queryParams={this.setting}
+        query-params={this.setting}
         onChange={this.selectAuditorOk}
       />;
     };

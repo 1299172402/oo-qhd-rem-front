@@ -66,7 +66,7 @@ export default {
                     },
                         {
                             name: '区块分层液量',
-                            url: `https://rem.${this.baseUrl}/#/injection/productionSplit?page=IpmHome`
+                            url: `https://rem.${this.baseUrl}/#/injection/indexHome?page=IpmHome`
                         },
                         {
                             name: '劈分剖面',
@@ -122,7 +122,7 @@ export default {
                     // boxBottomText: ['分层剩余油分布', '平面剩余油分布'],
                     boxBottomText: [{
                         name: '分层剩余油分布',
-                        url: `https://rem.${this.baseUrl}/#/injection/optimization?page=IpmHome`
+                        url: `https://rem.${this.baseUrl}/#/injection/optimization?link=rem&page=IpmHome`
                     },
                         {
                             name: '平面剩余油分布',
