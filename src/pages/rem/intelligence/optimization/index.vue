@@ -257,7 +257,7 @@
 <!--                        class="el-icon-my-export2"-->
 <!--                      />-->
                       <i
-                        v-if="scope.row.configurationInjDaily-scope.row.afterConfigurationInjDaily<0&&(scope.row.afterConfigurationInjDaily-scope.row.configurationInjDaily-scope)/scope.row.afterConfigurationInjDaily > 0.15 && scope.row.configurationInjDaily!=null"
+                        v-if="scope.row.configurationInjDaily-scope.row.afterConfigurationInjDaily<0&&(scope.row.afterConfigurationInjDaily-scope.row.configurationInjDaily)/scope.row.afterConfigurationInjDaily > 0.15 && scope.row.configurationInjDaily!=null"
                         class="el-icon-my-export1"
                       />
                     </span>
