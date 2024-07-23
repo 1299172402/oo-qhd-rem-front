@@ -137,14 +137,14 @@ export default {
           },
         },
         // color: ["#1379F7", "#FF5844", "#69b146", "#00BC9C", "#9A72FF", "#DA835E"],
-        color: ["#1379F7", "#DA835E", "#69b146", "#9A72FF", "#FF5844", "#00bc9c", "#365508"],
+        // color: ["#1379F7", "#DA835E", "#69b146", "#9A72FF", "#FF5844", "#00bc9c", "#365508"],
         tooltip: {
           trigger: "axis",
           axisPointer: {
-             type: "shadow",
+            type: "shadow",
           },
-          textStyle:{
-            fontSize: 18
+          textStyle: {
+            fontSize: 18,
           },
           formatter(params) {
             var relVal = params[0].name;
@@ -278,7 +278,7 @@ export default {
         ],
         series: [],
         dataZoom: [
-        {
+          {
             type: "slider",
             show: true,
             height: "15px",
@@ -379,9 +379,9 @@ export default {
               legendData.push("实际年累产");
             } else if (linearChart.label == "计划年产") {
               legendData.push("计划年累产");
-            }else if (linearChart.label == "上年实际年产") {
+            } else if (linearChart.label == "上年实际年产") {
               legendData.push("上年实际累产");
-            }else{
+            } else {
               legendData.push(linearChart.label);
             }
             //向数据数组中添加 所有折线的信息
@@ -421,24 +421,31 @@ export default {
       series.type = "line";
       series.symbol = "none";
       let label = linearChart.label;
+      // color: ["#1379F7", "#DA835E", "#69b146", "#9A72FF", "#FF5844", "#00bc9c", "#365508"],
       if (label == "实际日产") {
         series.yAxisIndex = 0;
+        series.color = "#1379F7";
       } else if (label == "考核日产") {
         series.yAxisIndex = 0;
+        series.color = "#69b146";
       } else if (label == "滚动预测") {
         series.yAxisIndex = 0;
+        series.color = "#DA835E";
       } else if (label == "实际年产") {
         series.yAxisIndex = 1;
         series.name = "实际年累产";
+        series.color = "#9A72FF";
       } else if (label == "计划年产") {
         series.yAxisIndex = 1;
         series.name = "计划年累产";
+        series.color = "#FF5844";
       } else if (label == "剩余水平") {
         series.yAxisIndex = 0;
+        series.color = "#00bc9c";
       } else if (label == "上年实际年产") {
         series.yAxisIndex = 1;
         series.name = "上年实际累产";
-
+        series.color = "#365508";
       }
       let seriesData = [];
       let chartData = linearChart.linearData;
