@@ -499,7 +499,7 @@ export default {
         queryOilFeild1() {
             getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
                 this.params.ogfList = res.data.data;
-                console.log(this.params.ogfList)
+             
                 for(var i=0;i<this.params.ogfList.length;i++){
                     if(this.params.ogfList[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
                         this.params.ogfId.value=this.params.ogfList[i].ogfId
@@ -513,7 +513,7 @@ export default {
         queryOilFeild() {
             getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
                 this.params.ogfList = res.data.data;
-                console.log(this.params.ogfList)
+              
                 for(var i=0;i<this.params.ogfList.length;i++){
                     if(this.params.ogfList[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
                         this.params.ogfId.value=this.params.ogfList[i].ogfId
@@ -527,12 +527,10 @@ export default {
         queryBlockFeild1() {
             getblockData({ogfId:this.params.ogfId.value}).then((res) => {
                 this.params.blockList = res.data.data;
-                console.log('2222')
-                console.log(this.params.blockList.length)
                 if(this.params.blockList.length===0){
                     
                     this.params.blockList=this.blockList;
-                    console.log(this.params.blockList)
+            
                     this.params.blockId.value=this.blockList[0].reservoirAnalyseUnitId
                 }else {
                     this.params.blockId.value=this.params.blockList[0].reservoirAnalyseUnitId
@@ -592,8 +590,6 @@ export default {
             var arr = this.tableData
             var arraySize=[]
             var arrayStateDate=[]
-           
-            console.log("ooppii")
             for (var i=0;i<this.tableData.length;i++){
                 arraySize.push(this.tableData[i].layerData.length)
                 arrayStateDate.push(this.tableData[i].stateDate)
@@ -640,7 +636,7 @@ export default {
             if (this.params.wellCategory === '01') {
                 var a=0;
                 if (columnIndex === 7) {
-                    console.log(this.mWholeMap)
+                 
                     for(var i=0;i<this.mWholeMap.size;i++){
                         a=this.mWholeMap.get(row.stateDate)
                         return {
@@ -673,7 +669,7 @@ export default {
         },
         // 点击树形展开按钮的回调事件，重新改变表格数据，自动计算合并行
         expandChange(row, expanded) {
-            console.log(row, expanded)
+          
             if (this.params.wellCategory === '01') {
                 for (let i = 0; i < this.key.length; i++) {
                     if (row.stateDate == this.key[i]) {
