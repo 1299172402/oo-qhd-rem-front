@@ -172,12 +172,12 @@
                                         />
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="10">
-                                    <el-form-item label="备注">
-                                        <el-input style="width: 220px;" v-model="interval.remark"
-                                                  placeholder="请输入备注"/>
-                                    </el-form-item>
-                                </el-col>
+<!--                                <el-col :span="10">-->
+<!--                                    <el-form-item label="备注">-->
+<!--                                        <el-input style="width: 220px;" v-model="interval.remark"-->
+<!--                                                  placeholder="请输入备注"/>-->
+<!--                                    </el-form-item>-->
+<!--                                </el-col>-->
                             </el-row>
                         </div>
                         <div v-for="(layer,layerIndex) in interval.layerData" :key="layer.intervalId">
@@ -194,6 +194,14 @@
                                     v-model="layer.ratio"
                                     @blur="vaitBut"
                                 />
+                                <el-input
+                                    type="number"
+                                    style="width: 220px;margin-left: 80px"
+                                    placeholder="请输入备注"
+                                    v-model="layer.remark"
+                                    @blur="vaitBut"
+                                />
+                                
                             </el-form-item>
                         </div>
                     </el-card>
@@ -580,7 +588,9 @@ export default {
         },
         getdata() {
             var arr = this.tableData
+            
             const num = arr.reduce((acc, item) => {
+                
                 acc[item.stateDate] ? acc[item.stateDate]++ : acc[item.stateDate] = 1
                 return acc
             }, {})
@@ -588,6 +598,8 @@ export default {
             this.values = Object.values(num)
             this.childrenArr1 = this.tableData.length
             this.childrenArr = Array(this.values.length).fill(0)
+            
+            
         },
         // 表格列的颜色
         changeCellStyle(row, column, rowIndex, columnIndex) {
@@ -603,7 +615,9 @@ export default {
         },
         // 合并表格
         deviceSpanMethod({row, column, rowIndex, columnIndex}) {
+            
             if (this.params.wellCategory === '01') {
+                
                 if (columnIndex === 7) {
                     if (rowIndex < this.values[0]) {
                         return {

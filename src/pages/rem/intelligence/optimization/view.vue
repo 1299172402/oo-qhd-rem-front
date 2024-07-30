@@ -130,7 +130,7 @@
                                 height="calc(100% - 40px)"
                             >
                                 <!-- :span-method="arrheader" -->
-                                <el-table-column prop="injWellNo" label="水井井号" width="150"
+                                <el-table-column prop="injWellNo" label="水井井号" width="120"
                                                  align="center">
                                     <template slot-scope="scope">
                                         <span>{{ scope.row.injWellNo.includes("秦皇岛32-6")? scope.row.injWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.injWellNo}}</span>
@@ -149,11 +149,19 @@
                                         <span>{{ scope.row.oilWellNo.includes("秦皇岛32-6")? scope.row.oilWellNo.replace("秦皇岛32-6", "QHD32-6") : scope.row.oilWellNo}}</span>
                                     </template>  
                                 </el-table-column>
+                                
                                 <el-table-column
                                     :render-header="renderheader"
-                                    width="90"
-                                    prop="oilSplitData"
+                                    width="120"
+                                    prop="wellOilSplitData"
                                     label="油井配产量?(m³/d)"
+                                    align="center"
+                                ></el-table-column>
+                                <el-table-column
+                                    :render-header="renderheader"
+                                    width="120"
+                                    prop="oilSplitData"
+                                    label="井组配产量?(m³/d)"
                                     align="center"
                                 ></el-table-column>
                                 <el-table-column
@@ -439,7 +447,7 @@ export default {
                     }
                 }
             }
-            if (columnIndex == 1 || columnIndex == 3 || columnIndex == 4 || columnIndex == 5) {
+            if (columnIndex == 1  ||columnIndex == 6|| columnIndex == 4 || columnIndex == 5) {
                 if (row.layerIndex == 0) {
                     return {
                         rowspan: row.layerRowspan,
