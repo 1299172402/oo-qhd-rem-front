@@ -329,6 +329,7 @@ export default {
             }
         }
         return {
+            mWholeMap:'',
             well: [],
             wellName: undefined,
             wellId: undefined, //井号
@@ -339,6 +340,7 @@ export default {
             ],
             type: 0,	 //0：查询列表 1：运算结果
             tableData: [],
+           
             redactBut: false,
             childrenArr1: 0,
             childrenLength: 0,
@@ -588,9 +590,30 @@ export default {
         },
         getdata() {
             var arr = this.tableData
+            var arraySize=[]
+            var arrayStateDate=[]
+           
+            console.log("ooppii")
+            for (var i=0;i<this.tableData.length;i++){
+                arraySize.push(this.tableData[i].layerData.length)
+                arrayStateDate.push(this.tableData[i].stateDate)
+            }
             
+            const mMap=new Map()
+            
+            for(var i=0;i<arrayStateDate.length;i++){
+                var data=[]
+                for(var j=0;j<this.tableData.length;j++){
+                    if(this.tableData[j].stateDate===arrayStateDate[i]){
+                        var mSize=this.tableData[j].layerData.length+1
+                        data.push(mSize)
+                    }
+                }
+                const sum = data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+                mMap.set(arrayStateDate[i],sum)
+            }
+            this.mWholeMap=mMap
             const num = arr.reduce((acc, item) => {
-                
                 acc[item.stateDate] ? acc[item.stateDate]++ : acc[item.stateDate] = 1
                 return acc
             }, {})
@@ -598,8 +621,7 @@ export default {
             this.values = Object.values(num)
             this.childrenArr1 = this.tableData.length
             this.childrenArr = Array(this.values.length).fill(0)
-            
-            
+          
         },
         // 表格列的颜色
         changeCellStyle(row, column, rowIndex, columnIndex) {
@@ -614,22 +636,31 @@ export default {
             }
         },
         // 合并表格
-        deviceSpanMethod({row, column, rowIndex, columnIndex}) {
-            
+        deviceSpanMethod({row, column, rowIndex, columnIndex},abc) {
             if (this.params.wellCategory === '01') {
-                
+                var a=0;
                 if (columnIndex === 7) {
-                    if (rowIndex < this.values[0]) {
+                    console.log(this.mWholeMap)
+                    for(var i=0;i<this.mWholeMap.size;i++){
+                        a=this.mWholeMap.get(row.stateDate)
                         return {
-                            rowspan: this.values[0] + this.childrenArr[0],
-                            colspan: 1
-                        };
-                    } else if (rowIndex >= this.values[0]) {
-                        return {
-                            rowspan: this.values[1] + this.childrenArr[1],
-                            colspan: 1
+                                    rowspan: a,
+                                    colspan: 1
                         };
                     }
+                    
+                    // if (rowIndex < this.values[0]) {
+                    //     return {
+                    //         rowspan: this.values[0] + this.childrenArr[0],
+                    //         colspan: 1
+                    //     };
+                    // } else if (rowIndex >= this.values[0]) {
+                    //     return {
+                    //         rowspan: this.values[1] + this.childrenArr[1],
+                    //         colspan: 1
+                    //     };
+                    // }
+                   
                 }
             } else {
                 if (columnIndex === 6) {
