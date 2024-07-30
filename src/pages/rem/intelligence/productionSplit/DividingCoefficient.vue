@@ -594,9 +594,7 @@ export default {
                 arraySize.push(this.tableData[i].layerData.length)
                 arrayStateDate.push(this.tableData[i].stateDate)
             }
-            
             const mMap=new Map()
-            
             for(var i=0;i<arrayStateDate.length;i++){
                 var data=[]
                 for(var j=0;j<this.tableData.length;j++){
