@@ -137,7 +137,7 @@
                                     </template>
                                 </el-table-column>
                                 <el-table-column prop="layerNo" label="层位名称" align="center"
-                                                 width="220"></el-table-column>
+                                                 width="220" ></el-table-column>
                                 <el-table-column
                                     prop="oilWellNo"
                                     show-overflow-tooltip
