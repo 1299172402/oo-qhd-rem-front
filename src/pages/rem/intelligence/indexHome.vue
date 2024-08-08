@@ -276,22 +276,22 @@
                             id="tabledow"
                             :header-cell-style="headerColor"
                         >
-                            <el-table-column prop="date" label="序号" align="center" width="50">
+                            <el-table-column prop="date" label="序号" align="center" width="50" sortable>
                                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
                             </el-table-column>
                             <el-table-column prop="wellName" label="井号" min-width="130"
-                                             align="center"></el-table-column>
-                            <el-table-column prop="productionIntervalNo" label="层位" align="center" min-width="200">
+                                             align="center" sortable></el-table-column >
+                            <el-table-column prop="productionIntervalNo" label="层位" align="center" min-width="200" sortable>
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.productionIntervalNo }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="injPump" label="注水工况" align="center">
+                            <el-table-column prop="injPump" label="注水工况" align="center" sortable>
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.injPump }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="overflowInj" align="center" min-width="90">
+                            <el-table-column prop="overflowInj" align="center" min-width="90" sortable>
                                 <template slot="header">
                                     超/欠注量<br/>(m³/d)
                                 </template>
@@ -300,9 +300,9 @@
                                 </template>
                             </el-table-column>
                             <el-table-column prop="dayNum" label="天数?(d)" :render-header="renderheader"
-                                             min-width="70" align="center"></el-table-column>
+                                             min-width="70" align="center" sortable></el-table-column>
                             <el-table-column prop="injAllocRatio" label="比例?(%)" :render-header="renderheader"
-                                             min-width="70" align="center"></el-table-column>
+                                             min-width="70" align="center" sortable></el-table-column>
                         </el-table>
                     </page-panel>
                 </div>
