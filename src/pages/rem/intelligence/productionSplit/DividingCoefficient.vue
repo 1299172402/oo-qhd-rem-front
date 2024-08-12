@@ -172,12 +172,12 @@
                                         />
                                     </el-form-item>
                                 </el-col>
-                                <el-col :span="10">
-                                    <el-form-item label="备注">
-                                        <el-input style="width: 220px;" v-model="interval.remark"
-                                                  placeholder="请输入备注"/>
-                                    </el-form-item>
-                                </el-col>
+<!--                                <el-col :span="10">-->
+<!--                                    <el-form-item label="备注">-->
+<!--                                        <el-input style="width: 220px;" v-model="interval.remark"-->
+<!--                                                  placeholder="请输入备注"/>-->
+<!--                                    </el-form-item>-->
+<!--                                </el-col>-->
                             </el-row>
                         </div>
                         <div v-for="(layer,layerIndex) in interval.layerData" :key="layer.intervalId">
@@ -194,6 +194,14 @@
                                     v-model="layer.ratio"
                                     @blur="vaitBut"
                                 />
+                                <el-input
+                                    type="number"
+                                    style="width: 220px;margin-left: 80px"
+                                    placeholder="请输入备注"
+                                    v-model="layer.remark"
+                                    @blur="vaitBut"
+                                />
+                                
                             </el-form-item>
                         </div>
                     </el-card>
@@ -321,6 +329,7 @@ export default {
             }
         }
         return {
+            mWholeMap:'',
             well: [],
             wellName: undefined,
             wellId: undefined, //井号
@@ -331,6 +340,7 @@ export default {
             ],
             type: 0,	 //0：查询列表 1：运算结果
             tableData: [],
+           
             redactBut: false,
             childrenArr1: 0,
             childrenLength: 0,
@@ -489,7 +499,7 @@ export default {
         queryOilFeild1() {
             getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
                 this.params.ogfList = res.data.data;
-                console.log(this.params.ogfList)
+             
                 for(var i=0;i<this.params.ogfList.length;i++){
                     if(this.params.ogfList[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
                         this.params.ogfId.value=this.params.ogfList[i].ogfId
@@ -503,7 +513,7 @@ export default {
         queryOilFeild() {
             getFieldListsDetail({operationZoneId:this.orgId}).then((res) => {
                 this.params.ogfList = res.data.data;
-                console.log(this.params.ogfList)
+              
                 for(var i=0;i<this.params.ogfList.length;i++){
                     if(this.params.ogfList[i].ogfId==='3FC9A818F5BC43B88270DB80BBB3018F'){
                         this.params.ogfId.value=this.params.ogfList[i].ogfId
@@ -517,12 +527,10 @@ export default {
         queryBlockFeild1() {
             getblockData({ogfId:this.params.ogfId.value}).then((res) => {
                 this.params.blockList = res.data.data;
-                console.log('2222')
-                console.log(this.params.blockList.length)
                 if(this.params.blockList.length===0){
                     
                     this.params.blockList=this.blockList;
-                    console.log(this.params.blockList)
+            
                     this.params.blockId.value=this.blockList[0].reservoirAnalyseUnitId
                 }else {
                     this.params.blockId.value=this.params.blockList[0].reservoirAnalyseUnitId
@@ -580,6 +588,25 @@ export default {
         },
         getdata() {
             var arr = this.tableData
+            var arraySize=[]
+            var arrayStateDate=[]
+            for (var i=0;i<this.tableData.length;i++){
+                arraySize.push(this.tableData[i].layerData.length)
+                arrayStateDate.push(this.tableData[i].stateDate)
+            }
+            const mMap=new Map()
+            for(var i=0;i<arrayStateDate.length;i++){
+                var data=[]
+                for(var j=0;j<this.tableData.length;j++){
+                    if(this.tableData[j].stateDate===arrayStateDate[i]){
+                        var mSize=this.tableData[j].layerData.length+1
+                        data.push(mSize)
+                    }
+                }
+                const sum = data.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+                mMap.set(arrayStateDate[i],sum)
+            }
+            this.mWholeMap=mMap
             const num = arr.reduce((acc, item) => {
                 acc[item.stateDate] ? acc[item.stateDate]++ : acc[item.stateDate] = 1
                 return acc
@@ -588,6 +615,7 @@ export default {
             this.values = Object.values(num)
             this.childrenArr1 = this.tableData.length
             this.childrenArr = Array(this.values.length).fill(0)
+          
         },
         // 表格列的颜色
         changeCellStyle(row, column, rowIndex, columnIndex) {
@@ -602,20 +630,31 @@ export default {
             }
         },
         // 合并表格
-        deviceSpanMethod({row, column, rowIndex, columnIndex}) {
+        deviceSpanMethod({row, column, rowIndex, columnIndex},abc) {
             if (this.params.wellCategory === '01') {
+                var a=0;
                 if (columnIndex === 7) {
-                    if (rowIndex < this.values[0]) {
+                 
+                    for(var i=0;i<this.mWholeMap.size;i++){
+                        a=this.mWholeMap.get(row.stateDate)
                         return {
-                            rowspan: this.values[0] + this.childrenArr[0],
-                            colspan: 1
-                        };
-                    } else if (rowIndex >= this.values[0]) {
-                        return {
-                            rowspan: this.values[1] + this.childrenArr[1],
-                            colspan: 1
+                                    rowspan: a,
+                                    colspan: 1
                         };
                     }
+                    
+                    // if (rowIndex < this.values[0]) {
+                    //     return {
+                    //         rowspan: this.values[0] + this.childrenArr[0],
+                    //         colspan: 1
+                    //     };
+                    // } else if (rowIndex >= this.values[0]) {
+                    //     return {
+                    //         rowspan: this.values[1] + this.childrenArr[1],
+                    //         colspan: 1
+                    //     };
+                    // }
+                   
                 }
             } else {
                 if (columnIndex === 6) {
@@ -628,7 +667,7 @@ export default {
         },
         // 点击树形展开按钮的回调事件，重新改变表格数据，自动计算合并行
         expandChange(row, expanded) {
-            console.log(row, expanded)
+          
             if (this.params.wellCategory === '01') {
                 for (let i = 0; i < this.key.length; i++) {
                     if (row.stateDate == this.key[i]) {
