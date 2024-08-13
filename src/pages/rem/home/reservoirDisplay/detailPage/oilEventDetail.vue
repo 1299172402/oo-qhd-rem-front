@@ -105,7 +105,7 @@
       </el-table>
     </page-panel>
     <pagination
-        :total="pageTotal"
+        :total="Number(pageTotal)"
         v-show="pageTotal > 0"
         @pagination="searchinfo"
         style="position: absolute;bottom: 0px;right:35px"
