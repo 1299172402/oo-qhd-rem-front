@@ -134,7 +134,7 @@ export default {
   name: 'OilEventDetail',
   data() {
     return {
-      pageTotal: '',
+      pageTotal: 0,
       queryData: {
         ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
         wellId: "",
