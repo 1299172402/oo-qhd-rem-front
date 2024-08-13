@@ -5,8 +5,12 @@
         header-title="超欠注情况统计"
         :is-show-max-btn="true"
     >
-        <el-button class="buttonActive_primary detailLinkBtn"  type="primary" @click="linkroute('/injection/indexHome')">详情</el-button>
-        <el-button class="buttonActive_primary detailLinkBtn"  type="primary"  style="right:110px"  @click="downTable">下载</el-button>
+        <el-button class="buttonActive_primary detailLinkBtn" type="primary" @click="linkroute('/injection/indexHome')">
+            详情
+        </el-button>
+        <el-button class="buttonActive_primary detailLinkBtn" type="primary" style="right:110px" @click="downTable">
+            下载
+        </el-button>
         <el-table
             :data="tableData"
             height="100%"
@@ -14,30 +18,31 @@
             border
             style="width: 100%"
         >
-            <el-table-column prop="date" label="序号" align="center" width="50">
+            <el-table-column prop="date" label="序号" align="center" width="50" sortable>
                 <template slot-scope="scope">{{ scope.$index + 1 }}</template>
             </el-table-column>
             <el-table-column prop="wellName" label="井号" min-width="130"
-                             align="center"></el-table-column>
-            <el-table-column prop="productionIntervalNo" min-width="150" label="层位" align="center" >
+                             align="center" sortable></el-table-column>
+            <el-table-column prop="productionIntervalNo" min-width="150" label="层位" align="center" sortable>
                 <template slot-scope="scope">
                     <span>{{ scope.row.productionIntervalNo }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="injPump" label="注水工况" align="center">
+            <el-table-column prop="injPump" label="注水工况" align="center" sortable>
                 <template slot-scope="scope">
                     <span>{{ scope.row.injPump }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="overflowInj" label="超/欠注量(m³)" min-width="100" align="center">
+            <el-table-column prop="overflowInj" label="超/欠注量(m³)" min-width="100" align="center"
+                             sortable :sort-method="sortNumber">
                 <template slot-scope="scope">
                     <span>{{ scope.row.overflowInj }}</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="dayNum" :label="`天数\n(d)`" 
-                              align="center"></el-table-column>
+            <el-table-column prop="dayNum" :label="`天数\n(d)`"
+                             align="center" sortable :sort-method="sortNumber02"></el-table-column>
             <el-table-column prop="injAllocRatio" :label="`比例(%)`"
-                             align="center"></el-table-column>
+                             align="center" sortable :sort-method="sortNumber03"></el-table-column>
         </el-table>
 
     </info-window>
@@ -47,6 +52,7 @@
 <script>
 import {getUltraShortShotStatistics} from "@/api/rem/r-intelligentIPA";
 import {exportExcel} from "@/lib/exportExcel";
+
 export default {
     data() {
         return {
@@ -57,8 +63,20 @@ export default {
         this.queryUltraShortShotStatistics()
     },
     methods: {
+        sortNumber(a, b) {
+            // 将 a 和 b 转换为数值类型进行比较
+            return a.overflowInj - b.overflowInj;
+        },
+        sortNumber02(a, b) {
+            // 将 a 和 b 转换为数值类型进行比较
+            return a.dayNum - b.dayNum;
+        },
+        sortNumber03(a, b) {
+            // 将 a 和 b 转换为数值类型进行比较
+            return a.injAllocRatio - b.injAllocRatio;
+        },
         linkroute(rname) {
-            this.$router.push({path: rname,query: {link:'remHome'}});
+            this.$router.push({path: rname, query: {link: 'remHome'}});
         },
         renderheader(h, {column, $index}) {
             return h('span', {}, [
@@ -67,21 +85,21 @@ export default {
                 h('span', {}, column.label.split('?')[1])
             ]);
         },
-        downTable(){
+        downTable() {
             exportExcel("#tabledata", "超欠注情况统计");
         },
         eeee() {
             let data = new Date()
             if (data.getMonth() < 10) {
-                if(data.getMonth()===0){
-                    return data.getFullYear()-1 + '-12'
+                if (data.getMonth() === 0) {
+                    return data.getFullYear() - 1 + '-12'
                 }
-                if(data.getMonth()===1){
+                if (data.getMonth() === 1) {
                     return data.getFullYear() + '-01'
                 }
-                return data.getFullYear() + '-0' + (data.getMonth()-1)
+                return data.getFullYear() + '-0' + (data.getMonth() - 1)
             } else {
-                return data.getFullYear() + '-' + (data.getMonth()-1)
+                return data.getFullYear() + '-' + (data.getMonth() - 1)
             }
 
         },
@@ -100,7 +118,7 @@ export default {
             }
             getUltraShortShotStatistics(queryData).then((res) => {
                 this.tableData = res.ultraShortShotData
-            })
+            });
         },
     }
 };
@@ -122,7 +140,7 @@ export default {
 }
 
 .detailLinkBtn {
-position: absolute;
+    position: absolute;
     right: 45px;
     top: 10px;
     width: 50px;

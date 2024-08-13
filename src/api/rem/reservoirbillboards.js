@@ -50,9 +50,9 @@ export function queryMeasureEffectTrack({ evaluationDate, oilFieldId, platformId
     }
   });
 }
-export function queryOilFieldIncident({ chronicleTypeCode, endTime, ogfId, platformId, startTime, wellId } = {}) {
+export function queryOilFieldIncident({ chronicleTypeCode, endTime, ogfId, platformId, startTime, wellId,pageSize,pageNum } = {}) {
   return request({
-    url: `${baseUrl}/reservoirBillboards/queryOilFieldIncident?chronicleTypeCode=${ chronicleTypeCode || "" }&endTime=${ endTime || "" }&ogfId=${ ogfId || "" }&platformId=${ platformId || "" }&startTime=${ startTime || "" }&wellId=${ wellId || "" }`,
+    url: `${baseUrl}/reservoirBillboards/queryOilFieldIncident?chronicleTypeCode=${ chronicleTypeCode || "" }&endTime=${ endTime || "" }&ogfId=${ ogfId || "" }&platformId=${ platformId || "" }&startTime=${ startTime || "" }&wellId=${ wellId || "" }&pageSize=${ pageSize || "" }&pageNum=${ pageNum || "" }`,
     method: "get",
   });
 }
