@@ -96,7 +96,8 @@ export default {
             }
             
             queryOilFieldIncident(params).then(res => {
-                this.tableData = res.data.data.data.slice(0, 10)
+              debugger
+                this.tableData = res.data.data.rows.slice(0, 10)
                 this.$nextTick(()=>{
                     this.infinitScroll()
                 })
