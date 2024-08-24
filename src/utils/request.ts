@@ -167,7 +167,7 @@ instance.interceptors.response.use(
             interceptCount += 1;
             logoutBox(response);
         } else if (response.data.code === 500) {
-            if (response.config.url.substring(0, response.config.url.indexOf("?")) !== "/bn-amm/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(response.config.url) === -1) {
+            if (response.config.url.substring(0, response.config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(response.config.url) === -1) {
                 // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
                 // TODO: Maybe change back，第一版顶部吐司形式
                 // Message({
@@ -224,7 +224,7 @@ instance.interceptors.response.use(
                 return Promise.reject(err);
             } if (err.response?.data.code === 401) {
                 logoutBox();
-            } else if (config.url.substring(0, config.url.indexOf("?")) !== "/bn-amm/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(config.url) === -1) {
+            } else if (config.url.substring(0, config.url.indexOf("?")) !== "/gem001b/queryAlcAlarmByParam" && whiteListError.indexOf(config.url) === -1) {
                 // 过滤掉右上角小铃铛1min轮询接口,和报警信息列表接口的报错信息
                 // TODO: Maybe change back，弹窗形式
                 // MessageBox.alert(err.response?.data?.errorInfo?.message || err.response?.data?.msg || err.response?.statusText || "接口报错", "系统提示", {
