@@ -540,15 +540,25 @@ export default {
         queryBlockFeild() {
             getblockData({ogfId:this.params.ogfId.value}).then((res) => {
                 this.params.blockList = res.data.data;
-                for(var i=0;i<this.params.blockList.length;i++){
+                if(localStorage.getItem('blockStorage')===''||localStorage.getItem('blockStorage')===null||localStorage.getItem('blockStorage')==='[object Object]'){
+                  for(var i=0;i<this.params.blockList.length;i++){
                     if(this.params.blockList[i].reservoirAnalyseUnitId==="83D33B89B0DAB7DFA440BD060746883A"){
-                        this.params.blockId.value=this.params.blockList[i].reservoirAnalyseUnitId
+                      this.params.blockId.value=this.params.blockList[i].reservoirAnalyseUnitId
+                    }else {
+                      this.params.blockId.value=this.params.blockList[0].reservoirAnalyseUnitId
                     }
+                  }
+                }else {
+                     this.params.blockId.value=localStorage.getItem('blockStorage')
                 }
+                
+                
+                
                 this.queryWellData();
             });
         },
         queryWellData1() {
+            localStorage.setItem('blockStorage', this.params.blockId.value);
             var welltypeName=null;
             if(this.params.wellCategory==="01"){
                 welltypeName='采油井'
@@ -558,11 +568,15 @@ export default {
             getWellDataForWellStyle({blockId:this.params.blockId.value,ogfId:this.params.ogfId.value,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
                 this.params.wellIdList=res.data.data
                 for(var i=0;i<this.params.wellIdList.length;i++){
-                    if(this.params.wellIdList[i].wellId===this.wellId){
-                        this.wellId=this.params.wellIdList[i].wellId
-                        this.wellName=this.params.wellIdList[i].wellName
-                    }
+                  if(this.params.wellIdList[i].wellId==='DA0269628E74490ABDE198E7D1DBF3EA'){
+                    this.wellId=this.params.wellIdList[i].wellId
+                    this.wellName=this.params.wellIdList[i].wellName
+                  }else {
+                    this.wellId=this.params.wellIdList[0].wellId
+                    this.wellName=this.params.wellIdList[0].wellName
+                  }
                 }
+               this.OilfieldBut()
                 
             });
         },
@@ -580,6 +594,9 @@ export default {
                     if(this.params.wellIdList[i].wellId==='DA0269628E74490ABDE198E7D1DBF3EA'){
                         this.wellId=this.params.wellIdList[i].wellId
                         this.wellName=this.params.wellIdList[i].wellName
+                    }else {
+                        this.wellId=this.params.wellIdList[0].wellId
+                        this.wellName=this.params.wellIdList[0].wellName
                     }
                 }
                 this.OilfieldBut()

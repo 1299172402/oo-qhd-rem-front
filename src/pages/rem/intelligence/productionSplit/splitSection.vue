@@ -14,7 +14,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="区块：">
-                        <el-select v-model="params.blockId" @change="queryWellData">
+                        <el-select v-model="params.blockId" @change="changeWell">
                             <el-option
                                 v-for="item in blockList"
                                 :key="item.reservoirAnalyseUnitId"
@@ -310,11 +310,16 @@ export default {
       queryBlockFeild() {
         getblockData({ogfId:this.params.ogfId}).then((res) => {
           this.blockList = res.data.data;
-          for(var i=0;i<this.blockList.length;i++){
-            if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
-              this.params.blockId=this.blockList[i].reservoirAnalyseUnitId
+          if(localStorage.getItem('blockStorage')===''||localStorage.getItem('blockStorage')===null||localStorage.getItem('blockStorage')==='[object Object]'){
+            for(var i=0;i<this.blockList.length;i++){
+              if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
+                this.params.blockId=this.blockList[i].reservoirAnalyseUnitId
+              }
             }
+          }else {
+            this.params.blockId=localStorage.getItem('blockStorage')
           }
+          
           this.queryWellData();
         });
       },
@@ -331,11 +336,9 @@ export default {
        * 改变井别
        */
       changeWell() {
-        if (this.queryData.blockId) {
-          this.queryData.wellId = []
-          this.tableData = []
+        localStorage.setItem('blockStorage',this.params.blockId)
+        if (this.params.blockId) {
           this.queryWellData();
-
         }
       },
         getWellDataForWellStyle(){
@@ -360,8 +363,11 @@ export default {
                 for(var i=0;i<this.wellIdList.length;i++){
                     if(this.wellIdList[i].wellId==='DA0269628E74490ABDE198E7D1DBF3EA'){
                         this.wellId=this.wellIdList[i].wellId
+                    }else {
+                        this.wellId=this.wellIdList[0].wellId
                     }
                 }
+            this.data = null;    
             this.queryChopSection()
          
         });
@@ -390,6 +396,7 @@ export default {
             }
             getChopSection(params).then((res) => {
                 if (this.params.wellCategory == '02') {
+                    this.data1.show=[]
                     this.data1.show = res
                     res.forEach((item) => {
                         this.data.show.push(item)
