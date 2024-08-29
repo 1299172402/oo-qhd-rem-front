@@ -413,11 +413,20 @@ export default {
             if(this.blockList.length===0){
                 this.queryData='无数据'
             }
-            for(var i=0;i<this.blockList.length;i++){
-              if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
+            if(localStorage.getItem('blockStorage')===''||localStorage.getItem('blockStorage')===null||localStorage.getItem('blockStorage')==='[object Object]'){
+              console.log('11111')
+              console.log(localStorage.getItem('blockStorage'))
+              for(var i=0;i<this.blockList.length;i++){
+                if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
                   this.queryData.blockId.value=this.blockList[i].reservoirAnalyseUnitId
+                }
               }
+            }else {
+              console.log('22222')
+              console.log(localStorage.getItem('blockStorage'))
+                  this.queryData.blockId.value=localStorage.getItem('blockStorage')
             }
+            
             this.queryWellData();
           });
         },
@@ -435,6 +444,8 @@ export default {
          * 改变井别
          */
         changeWell() {
+            console.log(this.queryData.blockId.value)
+            localStorage.setItem('blockStorage',this.queryData.blockId.value)
             if (this.queryData.blockId) {
                 this.queryData.wellId = []
                 this.tableData = []
@@ -458,9 +469,8 @@ export default {
             }
             getWellData({blockId:this.queryData.blockId.value,ogfId:this.queryData.ogfId.value,wellboreType:welltypeName,objectState:'生产'}).then((res) => {
                 this.wellList=res.data.data
-                console.log("排序前")
-                console.log(this.wellList)
-                console.log("排序后")
+                this.queryData.wellId=[this.wellList[0].wellId]
+                 
                 
                 this.queryProductionSplit()
                 // this.wellList = res.wellList;

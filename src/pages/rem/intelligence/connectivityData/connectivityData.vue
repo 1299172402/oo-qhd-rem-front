@@ -20,7 +20,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区块：">
-                    <el-select v-model="queryData.blockId" filterable clearable>
+                    <el-select v-model="queryData.blockId" filterable clearable @change="blockStorage">
                         <el-option
                             v-for="item in blockList"
                             :key="item.reservoirAnalyseUnitId"
@@ -65,7 +65,7 @@
             模型正在运算。。。。。
         </div>
         <page-panel 
-                v-show="this.ifShow"
+            v-show="this.ifShow"
             :show-btn="true"
             header-title="连通系数计算"
             class="normalCard"
@@ -380,6 +380,9 @@ export default {
         }
     },
     methods: {
+        blockStorage(){
+          localStorage.setItem('blockStorage', this.queryData.blockId);
+        },
         getuserListByUserNamesData(){
           let params = {
             searchKeys:[this.$store.getters["user/userDetail"].user.userName],
@@ -463,11 +466,17 @@ export default {
         selectblock() {
           getblockData({ogfId:this.queryData.ogfId}).then((res) => {
             this.blockList = res.data.data;
-            for(var i=0;i<this.blockList.length;i++){
-              if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
-                this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
+            if(localStorage.getItem('blockStorage')===''||localStorage.getItem('blockStorage')===null||localStorage.getItem('blockStorage')==='[object Object]'){
+              for(var i=0;i<this.blockList.length;i++){
+                if(this.blockList[i].reservoirAnalyseUnitId=="83D33B89B0DAB7DFA440BD060746883A"){
+                  this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
+                }
               }
+            }else {
+              this.queryData.blockId=localStorage.getItem('blockStorage')
+              
             }
+            
             
             this.tableOilfield()
           });

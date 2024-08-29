@@ -22,7 +22,8 @@
                     ></el-option>
                 </el-select>
                 <span>区块：</span>
-                <el-select v-model="myselect">
+                <el-select v-model="myselect"
+                           @change="blockStorage">
                     <el-option
                         v-for="item in blockList"
                         :key="item.reservoirAnalyseUnitId"
@@ -438,11 +439,17 @@ export default {
 
         }
     },
-    mounted() {
+    created() {
         // this.searchList()
         this.getuserListByUserNamesData()
     },
-    methods: {
+    activated() {
+      this.getuserListByUserNamesData()
+    },
+  methods: {
+        blockStorage(){
+          localStorage.setItem('blockStorage', this.myselect);
+        },
         handleSortChange({ prop, order }) {
             this.currentSort = { prop, order };
             this.tableData.sort((a, b) => {
@@ -459,14 +466,22 @@ export default {
         queryBlockFeild1 () {
             getblockData({ogfId:this.queryData.ogfId}).then((res) => {
                 this.blockList = res.data.data;
-                console.log('8888888')
+                
                 console.log(this.blockList)
                 console.log(this.queryData.ogfId)
-                for(var i=0;i<this.blockList.length;i++){          
+                if(localStorage.getItem('blockStorage')===''||localStorage.getItem('blockStorage')===null||localStorage.getItem('blockStorage')==='[object Object]'){
+                  console.log('8888888')
+                  for(var i=0;i<this.blockList.length;i++){
                     if(this.blockList[i].reservoirAnalyseUnitId==='83D33B89B0DAB7DFA440BD060746883A'){
-                        this.myselect=this.blockList[i].reservoirAnalyseUnitId
+                      this.myselect=this.blockList[i].reservoirAnalyseUnitId
                     }
+                  }
+                }else {
+                  console.log('99999')
+                  console.log(localStorage.getItem('blockStorage'))
+                  this.myselect=localStorage.getItem('blockStorage')
                 }
+                
                 this.searchList()
                 // this.queryData.blockId=this.blockList[0].blockId
             });
@@ -619,39 +634,42 @@ export default {
             // })
         },
         searchList() {
-       
-            this.queryData.blockId=this.myselect
-            if (!this.queryData.dateTime) {
+              this.queryData.blockId=this.myselect
+              if (!this.queryData.dateTime) {
                 return this.$message.error('请输入时间')
-            }
-            //左侧区块
-            this.queryWellGroupBlock()
-            //分层注采量
-            this.queryStratifiedInjectionDetails()
-            //超欠注情况统计
-            this.queryUltraShortShotStatistics()
-            this.blockList.forEach(item => {
+              }
+              //左侧区块
+              this.queryWellGroupBlock()
+              //分层注采量
+              this.queryStratifiedInjectionDetails()
+              //超欠注情况统计
+              this.queryUltraShortShotStatistics()
+              this.blockList.forEach(item => {
                 if (item.reservoirAnalyseUnitId == this.queryData.blockId) {
-                    this.title = item.reservoirAnalyseUnitName
+                  this.title = item.reservoirAnalyseUnitName
                 }
-            });
-            let params = {
+              });
+              let params = {
                 blockId: this.queryData.blockId,
                 yearMonth: this.queryData.dateTime,
-            }
-            getResidueOilCondotion(params).then(res => {
+              }
+              getResidueOilCondotion(params).then(res => {
                 try {
-                    this.residueOil = res.map(item => {
-                        item.dhFlowingPress = item.dhFlowingPress ? Number(item.dhFlowingPress).toFixed(1) : '';
-                        item.fluidProdDaily = item.fluidProdDaily ? Math.round(item.fluidProdDaily) : '';
-                        return item;
-                    });
+                  this.residueOil = res.map(item => {
+                    item.dhFlowingPress = item.dhFlowingPress ? Number(item.dhFlowingPress).toFixed(1) : '';
+                    item.fluidProdDaily = item.fluidProdDaily ? Math.round(item.fluidProdDaily) : '';
+                    return item;
+                  });
                 } catch (e) {
                 }
                 const newArray = res.filter(obj => obj.dhFlowingPress != '' && obj.fluidProdDaily != '');
                 this.ResidueOilRank = newArray.slice(0, 10);
                 this.ResidueOilRank.sort((a, b) => a.dhFlowingPress - b.dhFlowingPress)
-            })
+              })
+              
+            
+       
+            
         },
         //左侧区块
         queryWellGroupBlock() {

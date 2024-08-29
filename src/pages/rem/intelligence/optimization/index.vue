@@ -34,7 +34,7 @@
           />
         </el-select>
         <span style="margin-left:20px">区块：</span>
-        <el-select v-model="queryData.blockId">
+        <el-select v-model="queryData.blockId" @change="blockStorage">
           <el-option
             v-for="item in blockList"
             :key="item.reservoirAnalyseUnitId"
@@ -384,6 +384,9 @@ export default {
     }
   },
   methods: {
+    blockStorage(){
+      localStorage.setItem('blockStorage', this.queryData.blockId);
+    },
     getuserListByUserNamesData(){
       let params = {
         searchKeys:[this.$store.getters["user/userDetail"].user.userName],
@@ -419,11 +422,17 @@ export default {
       this.queryData.ogfId=this.selectOilField
       getblockData({ogfId:this.queryData.ogfId}).then((res) => {
         this.blockList = res.data.data;
-        for(var i=0;i<this.blockList.length;i++){
-          if(this.blockList[i].reservoirAnalyseUnitId==="83D33B89B0DAB7DFA440BD060746883A"){
-            this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
+        if(localStorage.getItem('blockStorage')===''||localStorage.getItem('blockStorage')===null||localStorage.getItem('blockStorage')==='[object Object]'){
+          for(var i=0;i<this.blockList.length;i++){
+            if(this.blockList[i].reservoirAnalyseUnitId==="83D33B89B0DAB7DFA440BD060746883A"){
+              this.queryData.blockId=this.blockList[i].reservoirAnalyseUnitId
+            }
           }
+        }else {
+          this.queryData.blockId=localStorage.getItem('blockStorage')
         }
+        
+        
         this.doSearch()
       });
       
