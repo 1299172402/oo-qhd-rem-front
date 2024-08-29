@@ -149,6 +149,7 @@
           :oilFeildId="selectOilField"
           :platform="selectPlatform"
           :wellId="selectWellId"
+          :wellName="selectWellName"
           :blockId="blockId"
           :majorEventsBrieflyValue="majorEventsBrieflyValue"
           @childPara="changeChildParam"
@@ -340,6 +341,7 @@ export default {
       platform: [],
       //选择单井信息
       selectWellId: "",
+      selectWellName: "",
       //区块id
       blockId: "",
       //采油井信息
@@ -770,11 +772,14 @@ export default {
       if (this.$route.query.wellNo) {
         let wellItem = this.wellData.find((e) => e.wellName == this.$route.query.wellNo);
         this.selectWellId = wellItem.wellId;
+        this.selectWellName = wellItem.wellName;
       } else if (this.$route.query.wellId) {
         this.selectWellId = this.$route.query.wellId;
+        this.selectWellName = this.wellData.find((e) => e.wellId == this.$route.query.wellId).wellName;
       } else {
         if (this.wellData && this.wellData.length > 0) {
           this.selectWellId = this.wellData[0].wellId;
+          this.selectWellName = this.wellData[0].wellName;
         }
       }
       await this.getBlockWellApi();
@@ -821,6 +826,7 @@ export default {
           let wellData = res.data.data;
           this.wellData = wellData.filter((el) => el.wellName);
           this.selectWellId = this.wellData[0].wellId;
+          this.selectWellName = this.wellData[0].wellName;
           this.getBlockWellApi();
         }
         this.$refs.treeSelection.setCheckedKeys([this.selectOilField, this.selectPlatform, this.selectWellId]);
@@ -887,12 +893,14 @@ export default {
     doChangeYt(val) {
       this.selectPlatform = "";
       this.selectWellId = "";
+      this.selectWellName = "";
       this.getFetchPlatforms(val);
       this.doChangePT(this.selectOilField);
     },
     //切换平台级联改变
     doChangePT(val) {
       this.selectWellId = "";
+      this.selectWellName = "";
       this.getFetchProductionWells(this.selectOilField == val);
     },
     //切换井改变
@@ -901,6 +909,7 @@ export default {
       if (this.$refs.componentCustom.selectPosition) {
         this.$refs.componentCustom.selectPosition = this.childParam;
       }
+      this.selectWellName = this.wellData.find((e) => e.wellId == this.selectWellId).wellName;
       this.$refs.treeSelection.setCheckedKeys([this.selectOilField, this.selectPlatform, this.selectWellId]);
       this.getBlockWellApi();
     },
@@ -914,6 +923,7 @@ export default {
       this.selectPlatform = selectList.platformIds;
       // 井号选中数据
       this.selectWellId = selectList.wellIds;
+      this.selectWellName = this.wellData.find((e) => e.wellId == selectList.wellIds).wellName;
       // 判断如果当前平台，调用获取平台接口
       let isUpdata1 = this.platform.map((item) => item.platformId).includes(selectList.platformIds);
       if (!isUpdata1) {
