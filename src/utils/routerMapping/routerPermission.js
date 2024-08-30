@@ -121,9 +121,9 @@ const GenerateRouter = {
   "HorizontalMaintenance": () => import("@/pages/rem/basic/horizontalMaintenance/index.vue"),
   "StressMaintenance": () => import("@/pages/rem/basic/stressMaintenance/index.vue"),
 
-  "FlowModel": () => import("@/pages/horizontalWell/flowModel.vue"),
+  "FlowModel": () => import("@/pages/horizontalWell/flowmodel.vue"),
   "Forewarning": () => import("@/pages/horizontalWell/forewarning.vue"),
-  "CompartmentDesign": () => import("@/pages/horizontalWell/compartmentDesign.vue"),
+  "CompartmentDesign": () => import("@/pages/horizontalWell/compartmentdesign.vue"),
     
   // 
   // "": () => import(""),
