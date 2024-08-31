@@ -247,7 +247,7 @@ export default {
 
           if (
             year > currentYear + 1 ||
-            time < currenTime ||
+            month < currentMonth ||
             (year > currentYear && month > currentMonth - 7)
           ) {
             return true;
@@ -890,6 +890,9 @@ export default {
       this.tabPrediction.distance = data.distancefromb.map(function (item) {
         return item.toFixed(1) + 'm'
       })
+      this.allPredictionData.liquidSection = []
+      this.allPredictionData.wcutSectionTime = []
+      this.allPredictionData.pressurematrix = []
       // console.log(this.tabPrediction.distance)
       const year = new Date().getFullYear()
       const month = new Date().getMonth() + 1
