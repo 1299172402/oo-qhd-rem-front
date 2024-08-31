@@ -33,14 +33,14 @@
                   <el-upload drag action="http://10.77.79.57:9474/api/v1/minio_upload/upload_perm_excel/" :on-error="handleUploadError" :on-success="handleUploadSuccess" :before-upload="handleBeforeUpload" :accept="accept" :limit="limit" :disabled="false" :show-file-list="false" multiple>
                   <i class="el-icon-upload"></i>
                   <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                  <template v-if="!viewOnly">
+                  <template>
                     <i class="el-icon-upload" />
                     <div :class="$store.getters['setting/mode'] === 'dark' ? 'dark-hover-style' : 'light-hover-style'">
                       拖拽或者点击上传
                     </div>
                     <div slot="tip" class="el-upload__tip">
                       请上传
-                      <template v-if="fileType">
+                      <template>
                         格式为 <b style="color: #f56c6c;"> xlsx </b>
                       </template>
                       的最新<b style="color: #f56c6c;"> 动态数据 </b>数据文件
@@ -52,14 +52,14 @@
                   <el-upload drag action="http://10.77.79.57:9474/api/v1/minio_upload/upload_static_excel/" :on-error="handleUploadError" :on-success="handleUploadSuccess" :before-upload="handleBeforeUpload" :accept="accept" :limit="limit" :disabled="false" :show-file-list="false" multiple>
                   <i class="el-icon-upload"></i>
                   <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                  <template v-if="!viewOnly">
+                  <template>
                     <i class="el-icon-upload" />
                     <div :class="$store.getters['setting/mode'] === 'dark' ? 'dark-hover-style' : 'light-hover-style'">
                       拖拽或者点击上传
                     </div>
                     <div slot="tip" class="el-upload__tip">
                       请上传
-                      <template v-if="fileType">
+                      <template>
                         格式为 <b style="color: #f56c6c;"> xlsx </b>
                       </template>
                       的最新<b style="color: #f56c6c;"> 静态数据 </b>文件
@@ -71,14 +71,14 @@
                   <el-upload drag action="http://10.77.79.57:9474/api/v1/minio_upload/upload_model/" :on-error="handleUploadError" :on-success="handleUploadSuccess" :before-upload="handleBeforeUpload" :accept="accept" :limit="limit" :disabled="false" :show-file-list="false" multiple>
                   <i class="el-icon-upload"></i>
                   <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                  <template v-if="!viewOnly">
+                  <template>
                     <i class="el-icon-upload" />
                     <div :class="$store.getters['setting/mode'] === 'dark' ? 'dark-hover-style' : 'light-hover-style'">
                       拖拽或者点击上传
                     </div>
                     <div slot="tip" class="el-upload__tip">
                       请上传
-                      <template v-if="fileType">
+                      <template>
                         格式为 <b style="color: #f56c6c;"> pth </b>
                       </template>
                       的最新<b style="color: #f56c6c;"> 模型 </b>文件
@@ -234,7 +234,7 @@ export default {
       },
       wells: [],
       platforms: [],
-      oilFields: [],
+      oilFields: [{ogfName:''}],
 
       pickerOptions: {
         disabledDate(val) {
@@ -834,7 +834,7 @@ export default {
         well_name:'D28H'
       }
       queryDensityInfo(queryParams).then((res) => {
-        console.log("第一个函数", res)
+        // console.log("第一个函数", res)
         this.liquidChart(res.data.data)
         this.waterpercentChart(res.data.data)
         this.pressChart(res.data.data)
@@ -849,7 +849,7 @@ export default {
         this.ParmShow.xAxis[2].data = this.footerDistance
         this.showChart(res, this.monthShow, this.footerDistance)
         this.alldataPrediction(res)
-        console.log("第二个函数", res)
+        // console.log("第二个函数", res)
       })
     },
 

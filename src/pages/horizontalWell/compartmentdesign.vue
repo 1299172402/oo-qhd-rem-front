@@ -123,7 +123,7 @@ export default {
       },
       wells: [],
       platforms: [],
-      oilFields: [],
+      oilFields: [{ogfName:''}],
 
       sectionCount: "3",
       permShow: {
@@ -262,7 +262,7 @@ export default {
     searchForOilField() {
       let queryParams = {
         // well_name: this.queryData.wellId.replace('QHD32-6-',''),
-        well_name:'I18H',
+        well_name: 'I18H',
         n: this.sectionCount
       }
       cabinDiv(queryParams).then((res) => {
@@ -313,7 +313,7 @@ export default {
 
         this.resCabiEchart.xAxis.min = res.horSection[0][0]
         this.resCabiEchart.xAxis.max = res.horSection[res.avePermlist.length - 1][1]
-        console.log(this.resCabiEchart)
+        // console.log(this.resCabiEchart)
 
       })
     },

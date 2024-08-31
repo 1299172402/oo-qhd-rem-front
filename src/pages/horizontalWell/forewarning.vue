@@ -191,7 +191,7 @@ export default {
             },
             wells: [],
             platforms: [],
-            oilFields: [],
+            oilFields: [{ogfName:''}],
 
             alarm_n: [1, 1, 1, 1],
             // r4c1: '',
@@ -588,7 +588,7 @@ export default {
             // res.differences.unshift(null)
             // this.waterWarningDiff.xAxis[0].data = res.date
             let DiffValue = res.differences
-            console.log(res)
+            // console.log(res)
             this.waterWarningDiff.series[0].data = DiffValue
             this.waterWarninglimit = res.threshold
             this.waterWarningDiff.series[1].data = []
