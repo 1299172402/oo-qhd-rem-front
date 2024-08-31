@@ -3,26 +3,31 @@
         <div style="display: flex;flex-direction: row; height: 100%;">
             <div style="display: flex;flex-direction: column;  height:100%;margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
                 <headerSearch>
-                    <el-form :model="queryParams" :inline="true" style="margin-top: 18px;text-align: left;">
+                    <el-form :inline="true" style="margin-top: 18px;text-align: left;">
                         <el-form-item label="油田：">
-                            <el-select v-model="queryParams.oil_field" placeholder="请选择油田" clearable size="small" style="width: 240px">
-                                <el-option v-for="(item, index) in oil_field_list" :key="index" :label="item.label" :value="item.value"></el-option>
+                            <el-select v-model="queryData.ogfId" @change="choicepla">
+                                <el-option :label="oilFields[0].ogfName" :value="oilFields[0].ogfId"></el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="平台：">
-                            <el-select v-model="queryParams.platform" placeholder="请选择平台" clearable size="small" style="width: 240px">
-                                <el-option v-for="(item, index) in platform_list" :key="index" :label="item.label" :value="item.value"></el-option>
+                        <el-form-item label="平台：" prop="pt">
+                            <el-select v-model="queryData.pt" @change="onPlatfromChange">
+                                <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformCode" :value="item.platformId">
+                                </el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="井号：">
-                            <el-select v-model="queryParams.well_num" placeholder="请选择井号" clearable size="small" style="width: 240px">
-                                <el-option v-for="(item, index) in well_num_list" :key="index" :label="item.label" :value="item.value"></el-option>
+                            <el-select v-model="queryData.wellId">
+                                <el-option v-for="(item, index) in wells" :key="item.wellId" :label="item.wellName" :value="item.wellName">
+                                </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField">查询</el-button>
-                        <el-button @click="drawer = true" type="primary" class="button_last">数据/模型更新</el-button>
-                        <t-drawer :footer="false" header="数据上传" :visible.sync="drawer" placement="left" :close-btn="true" size="60%">
+                        <el-form-item>
+                            <el-button type="primary" @click="searchForOilField()" icon="el-icon-search">搜索
+                            </el-button>
+                            <el-button @click="drawer = true" type="primary" class="button_last">数据/模型更新</el-button>
+                        </el-form-item>
 
+                        <t-drawer :footer="false" header="数据上传" :visible.sync="drawer" placement="left" :close-btn="true" size="60%">
                             <el-card style="margin-top:2vh">
                                 <div slot="header" class="clearfix">
                                     <span>含水率预警界限表</span>
@@ -128,7 +133,7 @@
                         <el-row>
                             <el-button style="float: right" type="primary" icon="el-icon-download" @click="doDownExcel()">下载</el-button>
                         </el-row>
-                        
+
                         <el-table id="yjjgjlb" :data="yujingjieguo" max-height="450px" :header-cell-style="{ backgroundColor: 'rgb(0,55,94)', color: 'rgb(54, 201, 234)', fontSize: '14px' }">
                             <el-table-column label="日期">
                                 <template slot-scope="scope">
@@ -162,52 +167,32 @@
         </div>
     </div>
 </template>
-  
+
 <script>
-import LogoFull from "@/assets/logo.svg";
 import { queryDensityInfo, waterWarning } from "@/api/horizontalWell/horizontalWell.js";
 import Echart from "@/components/tools/Echarts/index.vue";
 import { exportExcel } from "@/lib/exportExcel";
+import {
+    QueryOgfDetail,
+    QueryPlatformDetail,
+    QueryWellDetail, userListByUserNames
+} from "@/api/basic/master";
 export default {
     data() {
         return {
-            queryParams: {
-                oil_field: '',
-                platform: '',
-                well_num: '',
+            queryData: {
+                assetCode: "",
+                month: new Date().format("yyyy-MM"),
+                ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+                // wellId: "09D30C16BD1D4F759D53F74941701307",
+                wellId: "",
+                orgId: "715AD1CD60484BB59E737CD18A9DE44A",
+                pt: "",
             },
-            oil_field_list: [{
-                value: '选项1',
-                label: '秦皇岛32-6'
-            }, {
-                value: '选项2',
-                label: '秦皇岛32-7'
-            }, {
-                value: '选项3',
-                label: '秦皇岛32-8'
-            }],
+            wells: [],
+            platforms: [],
+            oilFields: [],
 
-            platform_list: [{
-                value: '选项1',
-                label: '平台1'
-            }, {
-                value: '选项2',
-                label: '平台2'
-            }, {
-                value: '选项3',
-                label: '平台3'
-            }],
-
-            well_num_list: [{
-                value: '选项1',
-                label: '井1'
-            }, {
-                value: '选项2',
-                label: '井2'
-            }, {
-                value: '选项3',
-                label: '井3'
-            }],
             alarm_n: [1, 1, 1, 1],
             // r4c1: '',
             // r4c2: '',
@@ -558,17 +543,33 @@ export default {
             return water_cal
         }
     },
+    watch: {
+        queryData: {
+            handler(val) {
+                let obj = {};
+                obj = this.wells.find((item) => {
+                    return item.wellId === val.wellId;
+                });
+                this.wellName = obj?.wellName
+            },
+            deep: true,
+        }
+    },
     components: {
-        LogoFull,
         Echart,
+    },
+    mounted() {
+        this.getList();
     },
     methods: {
         async searchForOilField() {
             let queryParams = {
-                well_name: "D28H"
+                // well_name: this.queryData.wellId.replace('QHD32-6-','')
+                well_name: 'D28H',
             }
             let waterWarningValue = {
-                well_name: "D28H",
+                // well_name: this.queryData.wellId.replace('QHD32-6-',''),
+                well_name: 'D28H',
                 n1: this.alarm_n[0],
                 n2: this.alarm_n[1],
                 n3: this.alarm_n[2],
@@ -586,9 +587,7 @@ export default {
             // res.date.unshift('')
             // res.differences.unshift(null)
             // this.waterWarningDiff.xAxis[0].data = res.date
-            let DiffValue = res.differences.map(function (item) {
-                return (item * 100).toFixed(1)
-            })
+            let DiffValue = res.differences
             console.log(res)
             this.waterWarningDiff.series[0].data = DiffValue
             this.waterWarninglimit = res.threshold
@@ -609,7 +608,6 @@ export default {
             }
             await waterWarning(waterWarningValue).then((res) => {
                 this.updateValue(res)
-                console.log(res)
             })
         },
         waterpercentChart(data) {
@@ -644,6 +642,51 @@ export default {
         },
         doDownExcel() {
             exportExcel("#yjjgjlb", "预警结果记录表");
+        },
+        getList() {
+            //获取作业公司
+            let params = {
+                searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+            }
+            userListByUserNames(params).then((res) => {
+                this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
+            })
+            //根据作业公司查询油田
+            QueryOgfDetail({ operationZoneId: this.queryData.orgId }).then(res => {
+                this.oilFields = res.data.data
+            })
+            //根据油田查询平台列表
+            QueryPlatformDetail({ ogfId: this.queryData.ogfId }).then(res => {
+                this.platforms = res.data.data
+                this.queryData.pt = this.platforms[0].platformId;
+                QueryWellDetail({ platformId: this.queryData.pt }).then((res) => {
+                    this.wells = res.data.data
+                    if (this.wells.length == 0) {
+                        this.queryData.wellId = this.wells[0].wellName;
+                    }
+                    if (this.wells.length > 0) {
+                        this.queryData.wellId = this.wells[1].wellName;
+                    }
+                })
+            })
+        },
+
+        choicepla(val) {
+            QueryPlatformDetail({ ogfId: val }).then(res => {
+                this.platforms = res.data.data
+                this.queryData.pt = this.platforms[0].platformId;
+                QueryWellDetail({ platformId: this.queryData.pt }).then((res) => {
+                    this.wells = res.data.data
+                    this.queryData.wellId = this.wells[0].wellName
+                })
+            })
+        },
+
+        async onPlatfromChange(val) {
+            await QueryWellDetail({ platformId: val, ogfId: this.queryData.ogfId }).then((res) => {
+                this.wells = res.data.data
+                this.queryData.wellId = this.wells[0]?.wellName
+            })
         },
     }
 }

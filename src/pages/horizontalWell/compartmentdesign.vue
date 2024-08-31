@@ -3,30 +3,35 @@
     <div style="display: flex;flex-direction: row; height: 100%;">
       <div style="display: flex;flex-direction: column;  height:100%;margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
         <headerSearch>
-          <el-form :model="queryParams" :inline="true" style="margin-top: 18px;text-align: left;">
+          <el-form :inline="true" style="margin-top: 18px;text-align: left;">
             <el-form-item label="油田：">
-              <el-select v-model="queryParams.oil_field" placeholder="请选择油田" clearable size="small" style="width: 240px">
-                <el-option v-for="(item, index) in oil_field_list" :key="index" :label="item.label" :value="item.value"></el-option>
+              <el-select v-model="queryData.ogfId" @change="choicepla">
+                <el-option :label="oilFields[0].ogfName" :value="oilFields[0].ogfId"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="平台：">
-              <el-select v-model="queryParams.platform" placeholder="请选择平台" clearable size="small" style="width: 240px">
-                <el-option v-for="(item, index) in platform_list" :key="index" :label="item.label" :value="item.value"></el-option>
+            <el-form-item label="平台：" prop="pt">
+              <el-select v-model="queryData.pt" @change="onPlatfromChange">
+                <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformCode" :value="item.platformId">
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="井号：">
-              <el-select v-model="queryParams.well_num" placeholder="请选择井号" clearable size="small" style="width: 240px">
-                <el-option v-for="(item, index) in well_num_list" :key="index" :label="item.label" :value="item.value"></el-option>
+              <el-select v-model="queryData.wellId">
+                <el-option v-for="(item, index) in wells" :key="item.wellId" :label="item.wellName" :value="item.wellName">
+                </el-option>
               </el-select>
             </el-form-item>
-            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField">查询</el-button>
+            <el-form-item>
+              <el-button type="primary" @click="searchForOilField()" icon="el-icon-search">搜索
+              </el-button>
+            </el-form-item>
           </el-form>
         </headerSearch>
         <div style="overflow-y:scroll;overflow-x: hidden;padding-bottom: 1%;">
           <page-panel headerTitle="水平井沿程渗透率分布" :show-btn="true">
             <el-button icon="el-icon-download" type="primary" @click="downEchartdown">下载</el-button>
             <el-row>
-              <Echart ref="perm" :chart-data="permShow" height="350px"></Echart>
+              <Echart ref="perm" :chart-data="permShow" height="300px"></Echart>
             </el-row>
           </page-panel>
           <page-panel headerTitle="水平井分舱设计表" style="height:50vh" :show-btn="true">
@@ -97,48 +102,29 @@
 <script>
 import { cabinDiv } from "@/api/horizontalWell/horizontalWell.js";
 import Echart from "@/components/tools/Echarts/index.vue";
-import {exportExcel} from "@/lib/exportExcel";
+import { exportExcel } from "@/lib/exportExcel";
+import {
+  QueryOgfDetail,
+  QueryPlatformDetail,
+  QueryWellDetail, userListByUserNames
+} from "@/api/basic/master";
 export default {
   data() {
     return {
-      oil_field_list: [{
-        value: '选项1',
-        label: '秦皇岛32-6'
-      }, {
-        value: '选项2',
-        label: '秦皇岛32-7'
-      }, {
-        value: '选项3',
-        label: '秦皇岛32-8'
-      }],
-
-      platform_list: [{
-        value: '选项1',
-        label: '平台1'
-      }, {
-        value: '选项2',
-        label: '平台2'
-      }, {
-        value: '选项3',
-        label: '平台3'
-      }],
-
-      well_num_list: [{
-        value: '选项1',
-        label: '井1'
-      }, {
-        value: '选项2',
-        label: '井2'
-      }, {
-        value: '选项3',
-        label: '井3'
-      }],
-
-      queryParams: {
-        oil_field: '',
-        platform: '',
-        well_num: '',
+      //最上方单选框
+      queryData: {
+        assetCode: "",
+        month: new Date().format("yyyy-MM"),
+        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+        // wellId: "09D30C16BD1D4F759D53F74941701307",
+        wellId: "",
+        orgId: "715AD1CD60484BB59E737CD18A9DE44A",
+        pt: "",
       },
+      wells: [],
+      platforms: [],
+      oilFields: [],
+
       sectionCount: "3",
       permShow: {
         title: {
@@ -257,10 +243,26 @@ export default {
   components: {
     Echart,
   },
+  watch: {
+    queryData: {
+      handler(val) {
+        let obj = {};
+        obj = this.wells.find((item) => {
+          return item.wellId === val.wellId;
+        });
+        this.wellName = obj?.wellName
+      },
+      deep: true,
+    }
+  },
+  mounted() {
+    this.getList();
+  },
   methods: {
     searchForOilField() {
       let queryParams = {
-        well_name: "I18H",
+        // well_name: this.queryData.wellId.replace('QHD32-6-',''),
+        well_name:'I18H',
         n: this.sectionCount
       }
       cabinDiv(queryParams).then((res) => {
@@ -323,6 +325,51 @@ export default {
     },
     doDownExcel() {
       exportExcel("#spjfcsjb", "水平井分舱设计表");
+    },
+    getList() {
+      //获取作业公司
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      }
+      userListByUserNames(params).then((res) => {
+        this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
+      })
+      //根据作业公司查询油田
+      QueryOgfDetail({ operationZoneId: this.queryData.orgId }).then(res => {
+        this.oilFields = res.data.data
+      })
+      //根据油田查询平台列表
+      QueryPlatformDetail({ ogfId: this.queryData.ogfId }).then(res => {
+        this.platforms = res.data.data
+        this.queryData.pt = this.platforms[0].platformId;
+        QueryWellDetail({ platformId: this.queryData.pt }).then((res) => {
+          this.wells = res.data.data
+          if (this.wells.length == 0) {
+            this.queryData.wellId = this.wells[0].wellName;
+          }
+          if (this.wells.length > 0) {
+            this.queryData.wellId = this.wells[1].wellName;
+          }
+        })
+      })
+    },
+
+    choicepla(val) {
+      QueryPlatformDetail({ ogfId: val }).then(res => {
+        this.platforms = res.data.data
+        this.queryData.pt = this.platforms[0].platformId;
+        QueryWellDetail({ platformId: this.queryData.pt }).then((res) => {
+          this.wells = res.data.data
+          this.queryData.wellId = this.wells[0].wellName
+        })
+      })
+    },
+
+    async onPlatfromChange(val) {
+      await QueryWellDetail({ platformId: val, ogfId: this.queryData.ogfId }).then((res) => {
+        this.wells = res.data.data
+        this.queryData.wellId = this.wells[0]?.wellName
+      })
     },
   },
 };

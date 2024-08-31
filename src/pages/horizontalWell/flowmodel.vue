@@ -3,28 +3,90 @@
     <div style="display: flex;flex-direction: row; height: 100%;">
       <div style="display: flex;flex-direction: column;  height:100%;margin-left: 15px; flex:1;  right: 0; overflow: hidden;">
         <headerSearch>
-          <el-form :model="queryParams" :inline="true" style="margin-top: 18px;text-align: left;">
+          <el-form :inline="true" style="margin-top: 18px;text-align: left;">
             <el-form-item label="油田：">
-              <el-select v-model="queryParams.oil_field" placeholder="请选择油田" clearable size="small" style="width: 240px">
-                <el-option v-for="(item, index) in oil_field_list" :key="index" :label="item.label" :value="item.value"></el-option>
+              <el-select v-model="queryData.ogfId" @change="choicepla">
+                <el-option :label="oilFields[0].ogfName" :value="oilFields[0].ogfId"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="平台：">
-              <el-select v-model="queryParams.platform" placeholder="请选择平台" clearable size="small" style="width: 240px">
-                <el-option v-for="(item, index) in platform_list" :key="index" :label="item.label" :value="item.value"></el-option>
+            <el-form-item label="平台：" prop="pt">
+              <el-select v-model="queryData.pt" @change="onPlatfromChange">
+                <el-option v-for="item in platforms" :key="item.platformId" :label="item.platformCode" :value="item.platformId">
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="井号：">
-              <el-select v-model="queryParams.well_num" placeholder="请选择井号" clearable size="small" style="width: 240px">
-                <el-option v-for="(item, index) in well_num_list" :key="index" :label="item.label" :value="item.value"></el-option>
+              <el-select v-model="queryData.wellId">
+                <el-option v-for="(item, index) in wells" :key="item.wellName" :label="item.wellName" :value="item.wellName">
+                </el-option>
               </el-select>
             </el-form-item>
-            <el-button icon="el-icon-search" type="primary" style="margin-left: 20px" @click="searchForOilField">查询</el-button>
-            <el-button @click="drawer = true" type="primary" class="button_last">数据/模型更新</el-button>
+            <el-form-item>
+              <el-button type="primary" @click="searchForOilField()" icon="el-icon-search">搜索
+              </el-button>
+              <el-button @click="drawer = true" type="primary" class="button_last">数据/模型更新</el-button>
+            </el-form-item>
+
             <t-drawer :footer="false" header="数据上传" :visible.sync="drawer" placement="left" :close-btn="true" size="50%">
-              <div style="padding: 0 10vh;">
-                <file-upload v-model="imageurl" :limit="limit" :fileSize="20" biz-path="rem-front/text" :file-type="fileType" @change="getResData" />
-              </div>
+              <el-row type="flex" justify="center">
+                <el-col :span="7">
+                  <el-upload drag action="http://10.77.79.57:9474/api/v1/minio_upload/upload_perm_excel/" :on-error="handleUploadError" :on-success="handleUploadSuccess" :before-upload="handleBeforeUpload" :accept="accept" :limit="limit" :disabled="false" :show-file-list="false" multiple>
+                  <i class="el-icon-upload"></i>
+                  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                  <template v-if="!viewOnly">
+                    <i class="el-icon-upload" />
+                    <div :class="$store.getters['setting/mode'] === 'dark' ? 'dark-hover-style' : 'light-hover-style'">
+                      拖拽或者点击上传
+                    </div>
+                    <div slot="tip" class="el-upload__tip">
+                      请上传
+                      <template v-if="fileType">
+                        格式为 <b style="color: #f56c6c;"> xlsx </b>
+                      </template>
+                      的最新<b style="color: #f56c6c;"> 动态数据 </b>数据文件
+                    </div>
+                  </template>
+                </el-upload>
+                </el-col>
+                <el-col :span="7">
+                  <el-upload drag action="http://10.77.79.57:9474/api/v1/minio_upload/upload_static_excel/" :on-error="handleUploadError" :on-success="handleUploadSuccess" :before-upload="handleBeforeUpload" :accept="accept" :limit="limit" :disabled="false" :show-file-list="false" multiple>
+                  <i class="el-icon-upload"></i>
+                  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                  <template v-if="!viewOnly">
+                    <i class="el-icon-upload" />
+                    <div :class="$store.getters['setting/mode'] === 'dark' ? 'dark-hover-style' : 'light-hover-style'">
+                      拖拽或者点击上传
+                    </div>
+                    <div slot="tip" class="el-upload__tip">
+                      请上传
+                      <template v-if="fileType">
+                        格式为 <b style="color: #f56c6c;"> xlsx </b>
+                      </template>
+                      的最新<b style="color: #f56c6c;"> 静态数据 </b>文件
+                    </div>
+                  </template>
+                </el-upload>
+                </el-col>
+                <el-col :span="7">
+                  <el-upload drag action="http://10.77.79.57:9474/api/v1/minio_upload/upload_model/" :on-error="handleUploadError" :on-success="handleUploadSuccess" :before-upload="handleBeforeUpload" :accept="accept" :limit="limit" :disabled="false" :show-file-list="false" multiple>
+                  <i class="el-icon-upload"></i>
+                  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                  <template v-if="!viewOnly">
+                    <i class="el-icon-upload" />
+                    <div :class="$store.getters['setting/mode'] === 'dark' ? 'dark-hover-style' : 'light-hover-style'">
+                      拖拽或者点击上传
+                    </div>
+                    <div slot="tip" class="el-upload__tip">
+                      请上传
+                      <template v-if="fileType">
+                        格式为 <b style="color: #f56c6c;"> pth </b>
+                      </template>
+                      的最新<b style="color: #f56c6c;"> 模型 </b>文件
+                    </div>
+                  </template>
+                </el-upload>
+                </el-col>
+              </el-row>
             </t-drawer>
           </el-form>
         </headerSearch>
@@ -48,25 +110,22 @@
               <Echart ref="echartChartdown" :chart-data="ParmShow" height="650px"></Echart>
             </el-row>
           </page-panel>
-          <page-panel headerTitle="水平井产液剖面预测数据" :show-btn="true" style="height: 60vh;">
+          <page-panel headerTitle="水平井产液剖面预测数据" :show-btn="true">
             <el-row>
               <el-col :span='20'>
                 <el-tabs v-model="activeName_wu" @tab-click="handleClick_wu">
-                <el-tab-pane label="产液量" name="liquidSection" style="color: rgb(37, 144, 251);text-align: left;">
-                </el-tab-pane>
-                <el-tab-pane label="含水率" name="wcutSectionTime" style="color: rgb(37, 144, 251);text-align: left;">
-                </el-tab-pane>
-                <el-tab-pane label="压力" name="pressurematrix" style="color: rgb(37, 144, 251);text-align: left;">
-                </el-tab-pane>
-              </el-tabs>
+                  <el-tab-pane label="产液量" name="liquidSection" style="color: rgb(37, 144, 251);text-align: left;">
+                  </el-tab-pane>
+                  <el-tab-pane label="含水率" name="wcutSectionTime" style="color: rgb(37, 144, 251);text-align: left;">
+                  </el-tab-pane>
+                  <el-tab-pane label="压力" name="pressurematrix" style="color: rgb(37, 144, 251);text-align: left;">
+                  </el-tab-pane>
+                </el-tabs>
               </el-col>
               <el-col :span="4">
                 <el-button style="float: right" type="primary" icon="el-icon-download" @click="doDownExcel()">下载</el-button>
               </el-col>
-              
             </el-row>
-
-
             <el-table :data="dataPrediction" max-height="400px" id="spjcypmycsj" style="width: 100%" :header-cell-style="{ backgroundColor: 'rgb(0,55,94)', color: 'rgb(54, 201, 234)', fontSize: '14px' }">
               <el-table-column label="井名">
                 <template slot-scope="scope">
@@ -144,96 +203,38 @@
 </template>
 
 <script>
-import { queryDensityInfo, queryWellInfo, userListByUserNames } from "@/api/horizontalWell/horizontalWell.js";
+import { queryDensityInfo, queryWellInfo } from "@/api/horizontalWell/horizontalWell.js";
 import Echart from "@/components/tools/Echarts/index.vue";
-import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
-import {exportExcel} from "@/lib/exportExcel";
+// import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
+import { exportExcel } from "@/lib/exportExcel";
+import {
+  QueryOgfDetail,
+  QueryPlatformDetail,
+  QueryWellDetail, userListByUserNames
+} from "@/api/basic/master";
 export default {
-  name: "ChuWang",
+  name: "flowmodel",
   data() {
     return {
+      accept: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "pdf"].map(item => `.${item}`).join(","),
       imageurl: "",
-      limit: 2,
+      limit: 1,
       fileType: ["xlsx", "pth"],
-      xAxis: [],
-      biao2_prowater: [
-        {
-          type: 'line',
-          smooth: true,
-          data: [100, 200, 200, 500, 100, 20, 10, 12, 100, 123, 365, 50],
-        },
-      ],
-      biao2_waterin: [
-        {
-          type: 'line',
-          smooth: true,
-          data: [100, 200, 200, 500, 100, 20, 10, 12, 100, 123, 365, 50],
-        },
-      ],
-      biao2_press: [
-        {
-          type: 'line',
-          smooth: true,
-          data: [100, 200, 200, 500, 100, 20, 10, 12, 100, 123, 365, 50],
-        },
-      ],
-      listdata: [
-        {
-          label: "储层-井筒流体流动模型",
-          value: "3DC1B33E1B5B431E99FA163BF9E86E6A",
-          level: "1",
-        },
-        {
-          label: "井筒产量预警模型",
-          value: "3DC1B33E1B5B431E99FA163BF9E86E6A",
-          level: "1",
-        },
-        {
-          label: "水平井分仓设计模型",
-          value: "3DC1B33E1B5B431E99FA163BF9E86E6A",
-          level: "1",
-        }
-      ], //树形数组
       drawer: false,
 
       //最上方单选框
-      queryParams: {
-        oil_field: '',
-        platform: '',
-        well_num: '',
+      queryData: {
+        assetCode: "",
+        month: new Date().format("yyyy-MM"),
+        ogfId: "3FC9A818F5BC43B88270DB80BBB3018F",
+        // wellId: "09D30C16BD1D4F759D53F74941701307",
+        wellId: "D28H",
+        orgId: "715AD1CD60484BB59E737CD18A9DE44A",
+        pt: "",
       },
-      oil_field_list: [{
-        value: '选项1',
-        label: '秦皇岛32-6'
-      }, {
-        value: '选项2',
-        label: '秦皇岛32-7'
-      }, {
-        value: '选项3',
-        label: '秦皇岛32-8'
-      }],
-
-      platform_list: [{
-        value: '选项1',
-        label: '平台1'
-      }, {
-        value: '选项2',
-        label: '平台2'
-      }, {
-        value: '选项3',
-        label: '平台3'
-      }],
-
-      well_num_list: [{
-        value: '选项1',
-        label: '井1'
-      }, {
-        value: '选项2',
-        label: '井2'
-      }, {
-        value: '选项3',
-        label: '井3'
-      }],
+      wells: [],
+      platforms: [],
+      oilFields: [],
 
       pickerOptions: {
         disabledDate(val) {
@@ -262,6 +263,7 @@ export default {
         distance: [],
       },
       allPredictionData: {
+        well_name:'',
         liquidSection: [],
         wcutSectionTime: [],
         pressurematrix: [],
@@ -803,22 +805,33 @@ export default {
   },
   components: {
     Echart,
-    FileUpload,
+  },
+  watch: {
+    queryData: {
+      handler(val) {
+        let obj = {};
+        obj = this.wells.find((item) => {
+          return item.wellId === val.wellId;
+        });
+        this.wellName = obj?.wellName
+      },
+      deep: true,
+    }
   },
   mounted() {
-
-    // this.initWellName()
+    this.getList();
   },
   methods: {
     handleClick_wu(tab) {
       this.tabPrediction.labelPrediction = this.tabPrediction.labelPredictionList[tab._data.index]
       this.dataPrediction = this.allPredictionData[this.activeName_wu]
       // console.log(this.activeName_wu)
-      console.log(this.allPredictionData[this.activeName_wu])
+      // console.log(this.allPredictionData[this.activeName_wu])
     },
     searchForOilField() {
       let queryParams = {
-        well_name: "D28H"
+        // well_name: this.queryData.wellId.replace('QHD32-6-','')
+        well_name:'D28H'
       }
       queryDensityInfo(queryParams).then((res) => {
         console.log("第一个函数", res)
@@ -826,6 +839,7 @@ export default {
         this.waterpercentChart(res.data.data)
         this.pressChart(res.data.data)
         this.allPredictionData.totalvalue = res.data.data.prediction
+        this.allPredictionData.well_name = res.data.well_name
       });
       queryWellInfo(queryParams).then((res) => {
         this.allPredictionData.echartsValue = res
@@ -839,14 +853,6 @@ export default {
       })
     },
 
-    async initWellName() {
-      let queryParams = {
-        well_name: "D28H"
-      }
-      await userListByUserNames(queryParams).then((res) => {
-        console.log(res)
-      })
-    },
     liquidChart(data) {
       let liquidHistorylist = data.history.liquid.map(function (item) {
         return item.toFixed(1)
@@ -889,7 +895,7 @@ export default {
       const month = new Date().getMonth() + 1
       for (let i = 0; i < 6; i++) {
         let valuePrediction = {
-          jingming: 'D32-6H',
+          jingming: '',
           time: '',
           totalvalue: '',
           value: []
@@ -901,12 +907,13 @@ export default {
         }
         valuePrediction.value = data.liquidSection[i]
         valuePrediction.totalvalue = this.allPredictionData.totalvalue.liquid[i]
+        valuePrediction.jingming = this.allPredictionData.well_name
         this.allPredictionData.liquidSection.push(valuePrediction)
 
       }
       for (let i = 0; i < 6; i++) {
         let valuePrediction = {
-          jingming: 'D32-6H',
+          jingming: '',
           time: '',
           totalvalue: '',
           value: []
@@ -920,11 +927,12 @@ export default {
           return item * 100
         })
         valuePrediction.totalvalue = this.allPredictionData.totalvalue.waterpercent[i] * 100
+        valuePrediction.jingming = this.allPredictionData.well_name
         this.allPredictionData.wcutSectionTime.push(valuePrediction)
       }
       for (let i = 0; i < 6; i++) {
         let valuePrediction = {
-          jingming: 'D32-6H',
+          jingming: '',
           time: '',
           totalvalue: '',
           value: []
@@ -936,6 +944,7 @@ export default {
         }
         valuePrediction.value = data.pressurematrix[i]
         valuePrediction.totalvalue = this.allPredictionData.totalvalue.press[i]
+        valuePrediction.jingming = this.allPredictionData.well_name
         this.allPredictionData.pressurematrix.push(valuePrediction)
       }
       this.dataPrediction = this.allPredictionData.liquidSection
@@ -997,6 +1006,89 @@ export default {
     },
     doDownExcel() {
       exportExcel("#spjcypmycsj", "水平井产液剖面预测数据");
+    },
+
+    getList() {
+      //获取作业公司
+      let params = {
+        searchKeys: [this.$store.getters["user/userDetail"].user.userName],
+      }
+      userListByUserNames(params).then((res) => {
+        this.queryData.orgId = (res.data.data[0]?.currentTenantBindOrgId) ? res.data.data[0].currentTenantBindOrgId : undefined;
+      })
+      //根据作业公司查询油田
+      QueryOgfDetail({ operationZoneId: this.queryData.orgId }).then(res => {
+        this.oilFields = res.data.data
+      })
+      //根据油田查询平台列表
+      QueryPlatformDetail({ ogfId: this.queryData.ogfId }).then(res => {
+        this.platforms = res.data.data
+        this.queryData.pt = this.platforms[0].platformId;
+        QueryWellDetail({ platformId: this.queryData.pt }).then((res) => {
+          this.wells = res.data.data
+          if (this.wells.length == 0) {
+            this.queryData.wellId = this.wells[0].wellName;
+          }
+          if (this.wells.length > 0) {
+            this.queryData.wellId = this.wells[1].wellName;
+          }
+        })
+      })
+    },
+
+    choicepla(val) {
+      QueryPlatformDetail({ ogfId: val }).then(res => {
+        this.platforms = res.data.data
+        this.queryData.pt = this.platforms[0].platformId;
+        QueryWellDetail({ platformId: this.queryData.pt }).then((res) => {
+          this.wells = res.data.data
+          this.queryData.wellId = this.wells[0].wellName
+        })
+      })
+    },
+
+    async onPlatfromChange(val) {
+      await QueryWellDetail({ platformId: val, ogfId: this.queryData.ogfId }).then((res) => {
+        this.wells = res.data.data
+        this.queryData.wellId = this.wells[0]?.wellName
+      })
+    },
+
+    handleBeforeUpload(file) {
+      if (this.fileType) {
+        let fileExtension = "";
+        if (file.name.lastIndexOf(".") > -1) {
+          fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1);
+        }
+        const isTypeOk = this.fileType.some(type => {
+          if (file.type.indexOf(type) > -1) {
+            return true;
+          }
+          if (fileExtension && fileExtension.indexOf(type) > -1) {
+            return true;
+          }
+          return false;
+        });
+        if (!isTypeOk) {
+          this.$message.error(`文件格式不正确, 请上传${this.fileType.join("/")}格式文件!`);
+          return false;
+        }
+      }
+      this.$modal.loading("正在上传文件，请稍候...");
+      return true;
+    },
+    handleUploadError() {
+      this.$message.error("上传文件失败，请重试");
+      this.$modal.closeLoading();
+    },
+
+    async handleUploadSuccess(res, file) {
+      if (res.code === 200) {
+        this.$message.success("文件上传成功!");
+        this.$modal.closeLoading();
+      } else {
+        this.$message.error("文件上传失败!");
+      }
     },
   }
 }
