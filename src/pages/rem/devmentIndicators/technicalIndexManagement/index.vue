@@ -1224,7 +1224,7 @@ export default {
             axisLabel: {
               color: "#8FA4CC",
             },
-            //scale: true,
+            scale: true,
             axisTick: {
               show: true,
               inside: true,

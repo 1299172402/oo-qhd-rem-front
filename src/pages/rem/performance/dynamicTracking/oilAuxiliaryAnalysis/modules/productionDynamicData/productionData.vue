@@ -26,7 +26,7 @@
       </el-select>
     </div>
     <div class="z-echarts">
-      <pagePanel headerTitle="油井生产数据曲线图" style="margin-top: 0; height: 100%" show-btn>
+      <pagePanel :headerTitle="`${wellName || ''}油井生产数据曲线图`" style="margin-top: 0; height: 100%" show-btn>
         <Echarts ref="echartDown" :chart-data="option" height="100%"></Echarts>
       </pagePanel>
     </div>
@@ -116,6 +116,10 @@ export default {
     platform: {},
     //选择井号
     wellId: {},
+    wellName:{
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {
