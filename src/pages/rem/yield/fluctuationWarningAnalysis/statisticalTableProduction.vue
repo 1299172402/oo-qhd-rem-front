@@ -93,160 +93,97 @@
             <el-button type="primary" style="height: 30px" @click="goBack">返回</el-button>
           </div>
         </div>
-        <div class="tableBox" id="tableBox" style="height: calc(100% - 75px)">
+        <div class="table-container" style="height: calc(100% - 75px)">
           <el-table
             id="tableData"
             :data="tableData"
             border
             :row-style="{ height: '0px' }"
             header-cell-class-name="table_header"
-            :cell-style="{ padding: '6px', 'text-align': 'center' }"
             style="width: 100%; margin: 20px 0"
             height="100%"
-            :default-sort="{ prop: 'comparisonOilProduction', order: 'ascending' }"
             :header-cell-style="{ 'text-align': 'center', padding: '0px 0' }"
+            @sort-change="handleSortChange"
           >
             <el-table-column type="index" label="序号" align="center" width="80px" fixed="left"></el-table-column>
             <el-table-column prop="wellNo" label="井号" width="150" fixed />
             <el-table-column :label="searchForm.prodDate">
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="fluidProdDaily"
                 :label="`日产液\n(m³)`"
                 width="90"
-                :formatter="formatter"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'fluidProdDaily');
-                  }
-                "
-              />
+                :formatter="formatter"/>
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="oilProdDaily"
                 :label="`日产油\n(m³)`"
                 width="90"
-                :formatter="formatter"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'oilProdDaily');
-                  }
-                "
-              />
+                :formatter="formatter"/>
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="waterRatio"
                 :label="`含水\n(%)`"
                 width="90"
-                :formatter="formatter"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'waterRatio');
-                  }
-                "
-              />
+                :formatter="formatter"/>
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="dhFlowingPress"
                 :label="`井底流压\n(MPa)`"
                 width="100"
-                :formatter="formatter"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'dhFlowingPress');
-                  }
-                "
-              />
+                :formatter="formatter"/>
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="pumpFrequency"
                 :label="`泵频率\n(Hz)`"
-                width="90"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'pumpFrequency');
-                  }
-                "
-              />
+                width="90"/>
             </el-table-column>
             <el-table-column :label="searchForm.prodDateCompare">
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="fluidProdDailyCompare"
                 :label="`日产液\n(m³)`"
                 width="90"
-                :formatter="formatter"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'fluidProdDailyCompare');
-                  }
-                "
-              />
+                :formatter="formatter"/>
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="oilProdDailyCompare"
                 :label="`日产油\n(m³)`"
                 width="90"
-                :formatter="formatter"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'oilProdDailyCompare');
-                  }
-                "
-              />
+                :formatter="formatter"/>
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="waterRatioCompare"
                 :label="`含水\n(%)`"
                 width="90"
                 :formatter="formatter"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'waterRatioCompare');
-                  }
-                "
               />
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="dhFlowingPressCompare"
                 :label="`井底流压\n(MPa)`"
                 width="100"
                 :formatter="formatter"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'dhFlowingPressCompare');
-                  }
-                "
               />
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="pumpFrequencyCompare"
                 :label="`泵频率\n(Hz)`"
                 width="90"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'pumpFrequencyCompare');
-                  }
-                "
               />
             </el-table-column>
             <el-table-column label="变化量">
               <el-table-column
-                sortable
-                prop="fluidProdDaily"
+                sortable="custom"
+                prop="fluidProdDailyA"
                 :label="`产液对比\n(m³/d)`"
                 width="120"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort1(
-                      numReduce(a.fluidProdDailyCompare, a.fluidProdDaily),
-                      numReduce(b.fluidProdDailyCompare, b.fluidProdDaily),
-                    );
-                  }
-                "
               >
                 <template slot-scope="{ row }">
-                  <span style="display: flex; align-items: center; justify-content: center">
+                  <span style="display: flex; align-items: center; justify-content: center"
+                        v-if="row.wellNo === '合计'"
+                  >{{row.totalFluidCompaire}}</span>  
+                  <span style="display: flex; align-items: center; justify-content: center" v-else>
                     {{
                       row.fluidProdDaily !== null
                         ? numReduce(row.fluidProdDailyCompare, row.fluidProdDaily).toFixed(2)
@@ -270,66 +207,59 @@
                       v-if="row.fluidProdDaily !== null && numReduce(row.fluidProdDailyCompare, row.fluidProdDaily) < 0"
                       style="width: 20px; height: 20px"
                     />
-                  </span>
+                  </span >
                 </template>
               </el-table-column>
+        
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="comparisonOilProduction"
                 :label="`产油对比\n(m³/d)`"
                 width="160"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort(a, b, 'comparisonOilProduction');
-                  }
-                "
               >
                 <template slot-scope="{ row, $index }">
-                  <span style="display: flex; align-items: center; justify-content: center">
-                    <span style="width: 60px; text-align: right; margin-right: 10px">{{
-                      row.oilProdDaily !== null ? parseFloat(row.comparisonOilProduction).toFixed(2) : "-"
-                    }}</span>
-                    <span style="width: 30px; display: flex; justify-content: flex-end">
-                      <span
-                        style="height: 13px; display: flex"
-                        v-if="row.comparisonOilWidth !== 0 && row.comparisonOilProduction < 0"
-                      >
+                    <span style="display: flex; align-items: center; justify-content: center"
+                        v-if="row.wellNo === '合计'"
+                    >{{row.totalOilCompaire}}</span>
+                    <span style="display: flex; align-items: center; justify-content: center" v-else>
+                        <span style="width: 60px; text-align: right; margin-right: 10px">{{
+                          row.oilProdDaily !== null ? parseFloat(row.comparisonOilProduction).toFixed(2) : "-"
+                        }}</span>
+                        <span style="width: 30px; display: flex; justify-content: flex-end">
+                          <span
+                            style="height: 13px; display: flex"
+                            v-if="row.comparisonOilWidth !== 0 && row.comparisonOilProduction < 0"
+                          >
+                            <span
+                              v-if="row.oilProdDaily !== null"
+                              :style="{ width: row.comparisonOilWidth + 'px', height: '13px', backgroundColor: 'red' }"
+                            ></span>
+                          </span>
+                        </span>
                         <span
-                          v-if="row.oilProdDaily !== null"
-                          :style="{ width: row.comparisonOilWidth + 'px', height: '13px', backgroundColor: 'red' }"
+                          style="width: 1px; height: 40px; background: #8fa4cc"
+                          v-if="row.comparisonOilWidth !== 0"
                         ></span>
-                      </span>
+                        <span
+                          style="width: 30px; height: 13px; display: flex"
+                          v-if="row.comparisonOilWidth !== 0 && row.comparisonOilProduction > 0"
+                        >
+                          <span
+                            v-if="row.oilProdDaily !== null"
+                            :style="{ width: row.comparisonOilWidth + 'px', height: '13px', backgroundColor: 'green' }"
+                          ></span>
+                        </span>
+                        <span style="width: 30px; height: 13px; display: flex" v-else></span>
                     </span>
-                    <span
-                      style="width: 1px; height: 40px; background: #8fa4cc"
-                      v-if="row.comparisonOilWidth !== 0"
-                    ></span>
-                    <span
-                      style="width: 30px; height: 13px; display: flex"
-                      v-if="row.comparisonOilWidth !== 0 && row.comparisonOilProduction > 0"
-                    >
-                      <span
-                        v-if="row.oilProdDaily !== null"
-                        :style="{ width: row.comparisonOilWidth + 'px', height: '13px', backgroundColor: 'green' }"
-                      ></span>
-                    </span>
-                    <span style="width: 30px; height: 13px; display: flex" v-else></span>
-                  </span>
+                   
                 </template>
               </el-table-column>
+        
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="waterRatio"
                 :label="`含水对比\n(%)`"
                 width="120"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort1(
-                      numReduce(a.waterRatioCompare, a.waterRatio),
-                      numReduce(b.waterRatioCompare, b.waterRatio),
-                    );
-                  }
-                "
               >
                 <template slot-scope="{ row }">
                   <span style="display: flex; align-items: center; justify-content: center">
@@ -356,18 +286,10 @@
                 </template>
               </el-table-column>
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="dhFlowingPress"
                 :label="`井底流压对比\n(MPa)`"
                 width="130"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort1(
-                      numReduce(a.dhFlowingPressCompare, a.dhFlowingPress),
-                      numReduce(b.dhFlowingPressCompare, b.dhFlowingPress),
-                    );
-                  }
-                "
               >
                 <template slot-scope="scope">
                   {{
@@ -378,18 +300,10 @@
                 </template>
               </el-table-column>
               <el-table-column
-                sortable
+                sortable="custom"
                 prop="pumpFrequency"
                 :label="`泵频率对比\n(Hz)`"
                 width="120"
-                :sort-method="
-                  (a, b) => {
-                    return borepipeNoSort1(
-                      numReduce(a.pumpFrequencyCompare, a.pumpFrequency),
-                      numReduce(b.pumpFrequencyCompare, b.pumpFrequency),
-                    );
-                  }
-                "
               >
                 <template slot-scope="{ row }">
                   <span style="display: flex; align-items: center; justify-content: center">
@@ -436,7 +350,8 @@ import * as D3 from "d3";
 export default {
   name: "statisticalTableProduction",
   data() {
-    return {
+    return { 
+       
       //油田下拉框
       oilFields: [],
       //平台下拉框
@@ -478,6 +393,8 @@ export default {
       },
       //表格数据
       tableData: [],
+      totalFluid:0,
+      totalOil:0,
       //产油对比-实际值
       min: 0,
       max: 0,
@@ -513,6 +430,13 @@ export default {
     },
   },
   async mounted() {
+    const container = this.$el.querySelector('.table-container');
+    container.addEventListener('scroll', () => {
+      const scrollTop = container.scrollTop;
+      this.$el.querySelectorAll('.el-table__body-wrapper').forEach(wrapper => {
+        wrapper.scrollTop = scrollTop;
+      });
+    });
     if (Object.keys(this.$route.query).length) {
       if (this.$route.query.wellIds) {
         let wellIds = JSON.parse(this.$route.query.wellIds);
@@ -537,6 +461,68 @@ export default {
     await this.initData();
   },
   methods: {
+    handleSortChange({ column,row, prop, order,index }) {
+        console.log('sort')
+        console.log(this.tableData)
+        console.log(column.label)
+        console.log(row)
+        console.log(prop)
+        console.log(order)
+        console.log(index)
+        if(prop==='fluidProdDailyA'){
+            if(order==='ascending'){
+                this.tableData.sort((a,b)=>{
+                    if(a.wellNo==='合计'){
+                        return null;
+                    }else {
+                        return Number(a.fluidProdDailyCompare-a.fluidProdDaily) - Number(b.fluidProdDailyCompare-b.fluidProdDaily)
+                    }
+                })
+            }
+            if(order==='descending'){
+                this.tableData.sort((a,b)=>{
+                    if(a.wellNo==='合计'){
+                        return null;
+                    }else {
+                        return Number(b.fluidProdDailyCompare-b.fluidProdDaily) - Number(a.fluidProdDailyCompare-a.fluidProdDaily)
+                    }
+                })
+            }
+            if(order==='null'||order===''||order===null){
+                this.tableData.sort((a,b)=>{
+                    return null
+                })
+            } 
+        }else {
+            if(order==='ascending'){
+                this.tableData.sort((a,b)=>{
+                    if(a.wellNo==='合计'){
+                        return null;
+                    }else {
+                        return Number(a[prop]) - Number(b[prop])
+                    }
+                })
+            }
+            if(order==='descending'){
+                this.tableData.sort((a,b)=>{
+                    if(a.wellNo==='合计'){
+                        return null;
+                    }else {
+                        return Number(b[prop]) - Number(a[prop])
+                    }
+                })
+            }
+            if(order==='null'||order===''||order===null){
+                this.tableData.sort((a,b)=>{
+                    return null
+                })
+            }
+        }
+        
+        
+        
+    },
+   
     //重置
     resetting() {
       this.$nextTick(() => {
@@ -638,13 +624,44 @@ export default {
             this.max = Math.max(...minMax);
             let numScale = D3.scaleLinear();
             let linearScale = numScale.domain([this.min, this.max]).range([this.min2, this.max2]);
+            let totalOilCompaireA=0;
+            let totalFluidCompaireA=0;
             tableData.forEach((el, i) => {
+              totalOilCompaireA=totalOilCompaireA+el.comparisonOilProduction
+              let fluidChange=el.fluidProdDailyCompare-el.fluidProdDaily
+              totalFluidCompaireA=totalFluidCompaireA+fluidChange  
               if (el.oilProdDaily !== null) {
                 //产油对比
                 tableData[i].comparisonOilWidth = linearScale(Math.abs(el.comparisonOilProduction));
               }
             });
             this.tableData = tableData;
+            const totalparams={
+                comparisonOilProduction: '-',
+                comparisonOilWidth: null,
+                dhFlowingPress: null,
+                dhFlowingPressCompare: null,
+                dhFlowingPressFlag: null,
+                fluidProdDaily: null,
+                fluidProdDailyCompare: null,
+                fluidProdDailyFlag: null,
+                oilProdDaily: null,
+                oilProdDailyCompare: null,
+                oilProdDailyFlag: null,
+                prodDate: null,
+                prodDateCompare: null,
+                pumpFrequency: null,
+                pumpFrequencyCompare: null,
+                pumpFrequencyFlag: null,
+                remark: null,
+                waterRatio: null,
+                waterRatioCompare: null,
+                waterRatioFlag: null,
+                totalOilCompaire: totalOilCompaireA.toFixed(2),
+                totalFluidCompaire: totalFluidCompaireA.toFixed(2),
+                wellNo: "合计"
+            }
+            this.tableData.push(totalparams)
           } else {
             this.tableData = [];
           }
@@ -701,18 +718,31 @@ export default {
     },
     //自定义井号排序
     borepipeNoSort(oa, ob, code) {
-      let wellA = oa[code];
-      let wellB = ob[code];
-      return Number(oa[code]) - Number(ob[code]);
+      if(oa.wellNo==='合计'){
+          return  null;
+      } else {
+          let wellA = oa[code];
+          let wellB = ob[code];
+          return Number(oa[code]) - Number(ob[code]);
+      }
+      
     },
     borepipeNoSort1(oa, ob) {
-      return Number(oa) - Number(ob);
+        if(oa.wellNo==='合计'){
+            return  null;
+        } else {
+            return Number(oa) - Number(ob);
+        }
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.table-container {
+  height: 300px; /* 根据需要设置高度 */
+  overflow: auto;
+}
 .app-container {
   height: 100%;
   display: flex;
