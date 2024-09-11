@@ -1954,17 +1954,17 @@ export default {
             // Use axis to trigger tooltip
             type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
           },
-          formatter(params) {
-            var relVal = params[0].name;
-            params.forEach((item) => {
-              if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
-                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(4);
-              } else {
-                relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[1] || 0).toFixed(2);
-              }
-            });
-            return relVal;
-          },
+          // formatter(params) {
+          //   var relVal = params[0].name;
+          //   params.forEach((item) => {
+          //     if (item.seriesName == "计划年累产" || item.seriesName == "实际年累产") {
+          //       relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[0] || 0).toFixed(4);
+          //     } else {
+          //       relVal += "<br/>" + item.marker + item.seriesName + " : " + parseFloat(item.value[0] || 0).toFixed(2);
+          //     }
+          //   });
+          //   return relVal;
+          // },
         },
         grid: [
           {
@@ -2776,7 +2776,7 @@ export default {
           if (res && res.length > 0) {
             res.forEach((element) => {
               xData.push(element.day);
-              yData.push(element.dayValue ? parseFloat(Number(element.dayValue).toFixed(1)) : element.dayValue);
+              yData.push(element.dayValue ? parseFloat(element.dayValue || 0).toFixed(2) : element.dayValue);
             });
           }
           this.waterRealOption.series[i].data = yData;
