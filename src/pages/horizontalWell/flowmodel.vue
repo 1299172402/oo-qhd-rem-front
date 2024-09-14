@@ -87,6 +87,9 @@
                 </el-upload>
                 </el-col>
               </el-row>
+              <el-row style="margin-top: 5% ;">
+                <el-button type="primary"  icon="el-icon-search">下载近两年数据</el-button>
+              </el-row>
             </t-drawer>
           </el-form>
         </headerSearch>
@@ -196,7 +199,6 @@
             </el-table>
           </page-panel>
         </div>
-
       </div>
     </div>
   </div>
@@ -830,8 +832,8 @@ export default {
     },
     searchForOilField() {
       let queryParams = {
-        // well_name: this.queryData.wellId.replace('QHD32-6-','')
-        well_name:'D28H'
+        well_name: this.queryData.wellId.replace('QHD32-6-','')
+        // well_name:'H15H'
       }
       queryDensityInfo(queryParams).then((res) => {
         // console.log("第一个函数", res)

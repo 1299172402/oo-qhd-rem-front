@@ -133,7 +133,6 @@
                         <el-row>
                             <el-button style="float: right" type="primary" icon="el-icon-download" @click="doDownExcel()">下载</el-button>
                         </el-row>
-
                         <el-table id="yjjgjlb" :data="yujingjieguo" max-height="450px" :header-cell-style="{ backgroundColor: 'rgb(0,55,94)', color: 'rgb(54, 201, 234)', fontSize: '14px' }">
                             <el-table-column label="日期">
                                 <template slot-scope="scope">
@@ -564,23 +563,37 @@ export default {
     methods: {
         async searchForOilField() {
             let queryParams = {
-                // well_name: this.queryData.wellId.replace('QHD32-6-','')
-                well_name: 'D28H',
+                well_name: this.queryData.wellId.replace('QHD32-6-','')
+                // well_name: 'H15H',
             }
+            // let waterWarningValue = {
+            //     // well_name: this.queryData.wellId.replace('QHD32-6-',''),
+            //     well_name: 'H3H',
+            //     n1: this.alarm_n[0],
+            //     n2: this.alarm_n[1],
+            //     n3: this.alarm_n[2],
+            //     n4: this.alarm_n[3],
+            // }
+            await queryDensityInfo(queryParams).then((res) => {
+                this.waterpercentChart(res.data.data)
+            });
+            // await waterWarning(waterWarningValue).then((res) => {
+            //     this.updateValue(res)
+            //     // console.log(res)
+            // })
+            this.updateThreshold()
+        },
+        async updateThreshold() {
             let waterWarningValue = {
-                // well_name: this.queryData.wellId.replace('QHD32-6-',''),
-                well_name: 'D28H',
+                // well_name: "H15H",
+                well_name: this.queryData.wellId.replace('QHD32-6-',''),
                 n1: this.alarm_n[0],
                 n2: this.alarm_n[1],
                 n3: this.alarm_n[2],
                 n4: this.alarm_n[3],
             }
-            await queryDensityInfo(queryParams).then((res) => {
-                this.waterpercentChart(res.data.data)
-            });
             await waterWarning(waterWarningValue).then((res) => {
                 this.updateValue(res)
-                // console.log(res)
             })
         },
         updateValue(res) {
@@ -596,20 +609,14 @@ export default {
             this.waterWarningDiff.series[1].data.unshift(null)
             // this.waterWarningDiff.xAxis[0].data.unshift('')
             this.waterWarningDiff.series[0].data.unshift(null)
-            this.yujingjieguo = res.alarmTime
-        },
-        async updateThreshold() {
-            let waterWarningValue = {
-                well_name: "D28H",
-                n1: this.alarm_n[0],
-                n2: this.alarm_n[1],
-                n3: this.alarm_n[2],
-                n4: this.alarm_n[3],
-            }
-            await waterWarning(waterWarningValue).then((res) => {
-                this.updateValue(res)
+            this.yujingjieguo = res.alarmTime.map(item =>{
+                return {
+                    ...item,
+                    waterpercent:item.waterpercent * 100,
+                }
             })
         },
+        
         waterpercentChart(data) {
             let waterHistorylist = data.history.waterpercent.map(function (item) {
                 return (item * 100).toFixed(1)

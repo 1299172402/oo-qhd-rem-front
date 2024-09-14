@@ -261,8 +261,8 @@ export default {
   methods: {
     searchForOilField() {
       let queryParams = {
-        // well_name: this.queryData.wellId.replace('QHD32-6-',''),
-        well_name: 'I18H',
+        well_name: this.queryData.wellId.replace('QHD32-6-',''),
+        // well_name: 'H3H',
         n: this.sectionCount
       }
       cabinDiv(queryParams).then((res) => {
@@ -279,7 +279,8 @@ export default {
       this.tableData = []
       this.resCabiEchart.series = []
       let queryParams = {
-        well_name: "I18H",
+        // well_name: "I18H",
+        well_name: this.queryData.wellId.replace('QHD32-6-',''),
         n: this.sectionCount
       }
       cabinDiv(queryParams).then((res) => {
