@@ -109,8 +109,8 @@
                 <el-button icon="el-icon-download" type="primary" @click="downEchartdown">下载</el-button>
               </el-col>
             </el-row>
-            <el-row>
-              <Echart ref="echartChartdown" :chart-data="ParmShow" height="650px"></Echart>
+            <el-row >
+              <Echart ref="echartChartdown" :chart-data="ParmShow" height="250px"></Echart>
             </el-row>
           </page-panel>
           <page-panel headerTitle="水平井产液剖面预测数据" :show-btn="true">
@@ -260,8 +260,8 @@ export default {
 
       activeName_wu: 'liquidSection',
       tabPrediction: {
-        labelPrediction: '根节点（总产液量）',
-        labelPredictionList: ['根节点（总产液量）', '根节点（总含水率）', '根节点（总压力）'],
+        labelPrediction: '根节点（总产液量）/m³',
+        labelPredictionList: ['根节点（总产液量）/m³', '根节点（总含水率）/%', '根节点（总压力）/MPa'],
         distance: [],
       },
       allPredictionData: {
@@ -364,7 +364,7 @@ export default {
         yAxis: [{
           gridIndex: 0,
           min: function (value) {
-            return value.min;
+            return (Number(value.min) * 0.8) >> 0;
           },
           name: '产液量/(㎡/d)',
           nameLocation: "center",
@@ -393,7 +393,7 @@ export default {
         }, { /* Y轴设置 */
           gridIndex: 1,
           min: function (value) {
-            return value.min;
+            return (Number(value.min) * 0.8) >> 0;
           },
           name: '含水率/%',
           nameLocation: "center",
@@ -422,7 +422,7 @@ export default {
         }, {
           gridIndex: 2,
           min: function (value) {
-            return value.min;
+            return (Number(value.min) * 0.8) >> 0;
           },
           name: '压力/MPa',
           nameLocation: "center",
@@ -633,9 +633,9 @@ export default {
           },
         ],
         grid: [
-          { x: "4%", y: "5%", width: "25%", height: "30%" },
-          { x: "37%", y: "5%", width: "25%", height: "30%" },
-          { x: "70%", y: "5%", width: "25%", height: "30%" },
+          { x: "4%", y: "5%", width: "25%", height: "100%" },
+          { x: "37%", y: "5%", width: "25%", height: "100%" },
+          { x: "70%", y: "5%", width: "25%", height: "100%" },
         ],
         yAxis: [
           {
@@ -666,9 +666,6 @@ export default {
           },
           {
             gridIndex: 1,
-            min: function (value) {
-              return value.min.toFixed(3) - 0.5;
-            },
             name: '含水率/%',
             nameLocation: 'middle',
             nameGap: 50,
@@ -695,9 +692,6 @@ export default {
           },
           {
             gridIndex: 2,
-            min: function (value) {
-              return value.min.toFixed(3);
-            },
             name: '压力/MPa',
             nameLocation: 'middle',
             nameGap: 50,
@@ -910,8 +904,10 @@ export default {
         } else {
           valuePrediction.time = (Number(year) + 1) + '-' + (Number(month) + i - 12)
         }
-        valuePrediction.value = data.liquidSection[i]
-        valuePrediction.totalvalue = this.allPredictionData.totalvalue.liquid[i]
+        valuePrediction.value = data.liquidSection[i].map(function(item){
+          return item.toFixed(2)
+        })
+        valuePrediction.totalvalue = (this.allPredictionData.totalvalue.liquid[i]).toFixed(2)
         valuePrediction.jingming = this.allPredictionData.well_name
         this.allPredictionData.liquidSection.push(valuePrediction)
 
@@ -929,9 +925,9 @@ export default {
           valuePrediction.time = (Number(year) + 1) + '-' + (Number(month) + i - 12)
         }
         valuePrediction.value = data.wcutSectionTime[i].map(function (item) {
-          return item * 100
+          return (item * 100).toFixed(2)
         })
-        valuePrediction.totalvalue = this.allPredictionData.totalvalue.waterpercent[i] * 100
+        valuePrediction.totalvalue = (this.allPredictionData.totalvalue.waterpercent[i] * 100).toFixed(2)
         valuePrediction.jingming = this.allPredictionData.well_name
         this.allPredictionData.wcutSectionTime.push(valuePrediction)
       }
@@ -947,8 +943,10 @@ export default {
         } else {
           valuePrediction.time = (Number(year) + 1) + '-' + (Number(month) + i - 12)
         }
-        valuePrediction.value = data.pressurematrix[i]
-        valuePrediction.totalvalue = this.allPredictionData.totalvalue.press[i]
+        valuePrediction.value = data.pressurematrix[i].map(function (item) {
+          return item.toFixed(2)
+        })
+        valuePrediction.totalvalue = (this.allPredictionData.totalvalue.press[i]).toFixed(2)
         valuePrediction.jingming = this.allPredictionData.well_name
         this.allPredictionData.pressurematrix.push(valuePrediction)
       }
