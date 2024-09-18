@@ -317,7 +317,7 @@ export default {
                 }, {
                     gridIndex: 1,
                     min: function (value) {
-                        return value.min.toFixed(3);
+                        return (Number(value.min) * 0.8).toFixed(3);
                     },
                     name: '%',
                     nameTextStyle: {
@@ -612,7 +612,10 @@ export default {
             this.yujingjieguo = res.alarmTime.map(item =>{
                 return {
                     ...item,
-                    waterpercent:item.waterpercent * 100,
+                    diff:(item.diff * 100).toFixed(2),
+                    liquid:(item.liquid * 100).toFixed(2),
+                    pressure:(item.pressure * 100).toFixed(2),
+                    waterpercent:(item.waterpercent * 100).toFixed(2),
                 }
             })
         },

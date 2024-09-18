@@ -88,7 +88,7 @@
                 </el-col>
               </el-row>
               <el-row style="margin-top: 5% ;">
-                <el-button type="primary"  icon="el-icon-search">下载近两年数据</el-button>
+                <el-button type="primary"  icon="el-icon-search" @click="dataDownloadClick()">下载现场动态数据集</el-button>
               </el-row>
             </t-drawer>
           </el-form>
@@ -110,7 +110,7 @@
               </el-col>
             </el-row>
             <el-row >
-              <Echart ref="echartChartdown" :chart-data="ParmShow" height="250px"></Echart>
+              <Echart ref="echartChartdown" :chart-data="ParmShow" height="300px"></Echart>
             </el-row>
           </page-panel>
           <page-panel headerTitle="水平井产液剖面预测数据" :show-btn="true">
@@ -205,7 +205,7 @@
 </template>
 
 <script>
-import { queryDensityInfo, queryWellInfo } from "@/api/horizontalWell/horizontalWell.js";
+import { queryDensityInfo, queryWellInfo, dataDownload} from "@/api/horizontalWell/horizontalWell.js";
 import Echart from "@/components/tools/Echarts/index.vue";
 // import FileUpload from "@/components/intelligentOilfield/FileUpload/index.vue";
 import { exportExcel } from "@/lib/exportExcel";
@@ -519,19 +519,17 @@ export default {
               lte: 18,
               color: 'red'
             },
-
           ]
         },]
       },
-
-      minWater: 0,
+      // minWater: 0,
       ParmShow: {
         title: [
           {
             gridIndex: 0,
             text: '产液量显示',
             left: '10%',
-            // top:'5%',
+            top:'5%',
             textStyle: {
               color: 'white',
               fontSize: 16,
@@ -542,6 +540,7 @@ export default {
             gridIndex: 1,
             text: '含水率显示',
             left: '45%',
+            top:'5%',
             textStyle: {
               color: 'white',
               fontSize: 16,
@@ -552,6 +551,7 @@ export default {
             gridIndex: 2,
             text: '压力显示',
             left: '77%',
+            top:'5%',
             textStyle: {
               color: 'white',
               fontSize: 16,
@@ -633,9 +633,9 @@ export default {
           },
         ],
         grid: [
-          { x: "4%", y: "5%", width: "25%", height: "100%" },
-          { x: "37%", y: "5%", width: "25%", height: "100%" },
-          { x: "70%", y: "5%", width: "25%", height: "100%" },
+          { x: "4%", y: "20%", width: "25%", height: "60%" },
+          { x: "37%", y: "20%", width: "25%", height: "60%" },
+          { x: "70%", y: "20%", width: "25%", height: "60%" },
         ],
         yAxis: [
           {
@@ -757,7 +757,7 @@ export default {
             renderItem: (params, api) => {
               let yValue = api.value(2);
               let start = api.coord([api.value(0), yValue]);
-              let yDiff = yValue - this.minWater
+              let yDiff = yValue
               let size = api.size([api.value(1) - api.value(0), yDiff]);
               let style = api.style();
               return {
@@ -849,6 +849,10 @@ export default {
       })
     },
 
+    dataDownloadClick(){
+      dataDownload(`http://10.77.79.57:9474/api/v1/dl_data/data/`)
+    },
+
     liquidChart(data) {
       let liquidHistorylist = data.history.liquid.map(function (item) {
         return item.toFixed(1)
@@ -883,7 +887,11 @@ export default {
       this.$refs.table.doLayout()
     },
     alldataPrediction(data) {
-      this.tabPrediction.distance = data.distancefromb.map(function (item) {
+      let arr = data.distancefromb
+      for (let i = 0;i<10;i++){
+        arr[i] = (data.distancefromb[i+1] - data.distancefromb[i])/2 + data.distancefromb[i]
+      }
+      this.tabPrediction.distance = arr.map(function (item) {
         return item.toFixed(1) + 'm'
       })
       this.allPredictionData.liquidSection = []
@@ -973,7 +981,7 @@ export default {
       });
     },
     showChart(data, index, xDistance) {
-      this.minWater = (Math.min.apply(null, (data.wcutSectionTime[index])) * 100).toFixed(1) - 0.5
+      // this.minWater = (Math.min.apply(null, (data.wcutSectionTime[index])) * 100).toFixed(1) - 0.5
       this.ParmShow.series[0].data = []
       for (let i = 0; i < (data.liquidSection[index].length); i++) {
         let value = (xDistance.slice(i, i + 2)).concat(data.liquidSection[index][i].toFixed(1))

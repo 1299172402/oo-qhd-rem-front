@@ -171,7 +171,7 @@ export default {
         grid: { width: "80%", height: "70%" },
         yAxis: {
           min: function (value) {
-            return value.min.toFixed(3);
+            return (Number(value.min) * 0.8).toFixed(3);
           },
           name: "渗透率/mD",
           nameLocation: 'middle',
